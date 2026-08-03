@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "jtbug": {
+      "type": "http",
+      "url": "https://${BUG_HOST}/mcp",
+      "headers": { "X-Actor": "claude-habbo" }
+    }
+  }
+}
