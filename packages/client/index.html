@@ -28,12 +28,33 @@
       #login .row { display: flex; gap: 8px; }
       #login .row button { flex: 1; }
       #login-error { color: #ff9b9b; min-height: 18px; font-size: 13px; }
+      #bubbles { position: fixed; inset: 0; pointer-events: none; }
+      .bubble { position: absolute; transform: translate(-50%, -100%); max-width: 240px;
+        background: #f4f4f8; color: #16181f; border-radius: 10px; padding: 4px 9px;
+        box-shadow: 0 2px 6px #0006; opacity: 1; transition: opacity .8s linear;
+        word-wrap: break-word; }
+      .bubble.fading { opacity: 0; }
+      .bubble.shout { font-weight: 700; }
+      .bubble.whisper { font-style: italic; color: #6a1fb0; }
+      .bubble.faded { color: #808895; font-style: italic; }
+      #hud { position: fixed; left: 0; right: 0; bottom: 0; display: none;
+        flex-direction: column; gap: 8px; padding: 10px 12px; }
+      #chat-form { display: flex; }
+      #chat-input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid #444c63;
+        background: #10121ae6; color: #eef; }
     </style>
   </head>
   <body>
     <div id="stage"></div>
+    <div id="bubbles"></div>
     <div id="room-name"></div>
     <div id="toasts"></div>
+    <div id="hud">
+      <form id="chat-form" autocomplete="off">
+        <input id="chat-input" maxlength="200"
+               placeholder="Enter to say · Shift+Enter to shout · /w name message to whisper" />
+      </form>
+    </div>
     <div id="login">
       <form id="login-form">
         <h1>The Grand</h1>

@@ -4,6 +4,8 @@ import type { AvatarState, ServerMsg, Tile } from "@grand/shared";
 import { Net } from "./net.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { RoomScene } from "./scene/room.ts";
+import { ChatOverlay } from "./ui/chat.ts";
+import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 
@@ -16,6 +18,7 @@ function el<T extends HTMLElement>(id: string): T {
 const roomId = Number(new URLSearchParams(location.search).get("room")) || 1;
 const net = new Net();
 const avatars = new Map<number, AvatarSprite>();
+const chat = new ChatOverlay(el("bubbles"));
 let app: Application | null = null;
 let scene: RoomScene | null = null;
 let you = 0;
@@ -50,6 +53,7 @@ function buildRoom(msg: RoomState): void {
   you = msg.you;
   for (const sprite of avatars.values()) sprite.destroy();
   avatars.clear();
+  chat.clear();
   scene?.destroy();
 
   scene = new RoomScene(app.stage, parseHeightmap(msg.heightmap, msg.door), {
@@ -79,6 +83,9 @@ function handle(msg: ServerMsg): void {
       if (clockOffset === null) clockOffset = Date.now() - msg.startedAt;
       avatars.get(msg.id)?.walk(msg, msg.startedAt + clockOffset);
       break;
+    case "chat":
+      chat.show(msg.from, msg);
+      break;
     case "error":
       toast(msg.message);
       break;
@@ -97,6 +104,12 @@ async function start(token: string): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    chat.layout((id) => {
+      const sprite = avatars.get(id);
+      if (!sprite || !scene) return null;
+      const head = sprite.head();
+      return { sx: head.sx + scene.world.x, sy: head.sy + scene.world.y };
+    });
   });
   window.addEventListener("resize", () => {
     if (app && scene) scene.center(app.screen.width, app.screen.height);
@@ -106,7 +119,24 @@ async function start(token: string): Promise<void> {
   net.onClose(() => toast("disconnected from the server — reload to rejoin"));
   await net.connect(`ws://${location.host}/ws`, token, roomId);
   el("login").style.display = "none";
+  el("hud").style.display = "flex";
+  el<HTMLInputElement>("chat-input").focus();
 }
+
+function sendChat(input: HTMLInputElement, shiftEnter: boolean): void {
+  const intent = parseChatInput(input.value, shiftEnter);
+  input.value = "";
+  if (!intent) return;
+  if (intent.kind === "whisper") net.send({ t: "whisper", to: intent.to, text: intent.text });
+  else net.send({ t: "chat", mode: intent.kind, text: intent.text });
+}
+
+el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
+  if (e.key !== "Enter") return;
+  e.preventDefault();
+  sendChat(el<HTMLInputElement>("chat-input"), e.shiftKey);
+});
+el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
 
 async function authenticate(path: string, username: string, password: string): Promise<string> {
   const res = await fetch(path, {
