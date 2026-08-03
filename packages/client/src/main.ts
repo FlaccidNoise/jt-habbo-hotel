@@ -252,7 +252,8 @@ async function start(token: string): Promise<void> {
 
   net.onMessage(handle);
   net.onClose(() => toast("disconnected from the server — reload to rejoin"));
-  await net.connect(`ws://${location.host}/ws`, token, roomId);
+  const wsScheme = location.protocol === "https:" ? "wss" : "ws";
+  await net.connect(`${wsScheme}://${location.host}/ws`, token, roomId);
   el("login").style.display = "none";
   el("hud").style.display = "flex";
   el<HTMLInputElement>("chat-input").focus();
