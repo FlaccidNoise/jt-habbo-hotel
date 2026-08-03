@@ -624,7 +624,8 @@ export function getItem(db: Database.Database, itemId: number): (FurniItem & { o
   `0→o 1→l 3→e 5→s`. `register` calls `grantStarter`.
 - [ ] Tests (fresh `mkdtempSync` db per test, `closeDb` + rm in `afterEach`):
   register→login round-trip; wrong password → `AuthError`; unknown user login → `AuthError`;
-  bad token → null; duplicates: exact, case (`Alice`/`alice`), normalized (`al1ce`/`alice`) all
+  bad token → null; duplicates: exact, case (`Alice`/`alice`), normalized (`a1ice`/`alice` —
+  corrected during execution: `al1ce` folds to "allce", not "alice") all
   throw; regex rejections (`"ab"`, 21 chars, `"bad name"`, `"héllo"`) throw; password `"short"`
   throws; `grantStarter` grants exactly 5 inventory rows once — calling twice, or emptying the
   table and calling again, grants nothing (the `starter_granted` flag, not a count);
@@ -703,11 +704,11 @@ Behavior contracts:
   reference it). Filter tests: `"shiiit"` → `"blah"`; `"asss"` hits when `ass` is listed;
   `"as"` and `"class"`... `\b`-bounded `a+s+s+` matches inside "class"? No — `\b` before `a`:
   "class" has `a` preceded by `l` (word char) so no boundary → no match. Assert exactly that:
-  `filterChat(rs, "class assignment")` → unchanged... "assignment" starts with `ass` at a word
-  boundary → matches → known limitation, assert it as documented behavior
-  (`"blah ignment"`? no — regex consumes `a+s+s+` = "ass", leaving "blah" + "ignment" →
-  `"blahignment"`). Pin it: `expect(filterChat(rs, "assignment")).toBe("blahignment")` with a
-  comment that scunthorpe-grade precision is parked. Case-insensitivity, version parsing
+  `filterChat(rs, "class assignment")` → **unchanged**: "assignment" also never hits, because
+  the trailing `\b` in `\ba+s+s+\b` cannot match between "ass" and "ignment" (both word
+  characters). Embedded words are simply safe with this pattern shape. (Corrected during
+  execution — revision 2 pinned `"blahignment"`, which is impossible; proven in Node.)
+  Case-insensitivity, version parsing
   (`rs.version === "1"`), `hitsFilter("sh1t")` → false (normalization is parked; username
   normalization in Task 6 is separate).
 - [ ] Room tests — fixture discipline, verbatim:
