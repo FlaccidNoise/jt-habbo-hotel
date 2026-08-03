@@ -51,9 +51,11 @@ export async function register(
   username: string,
   password: string,
 ): Promise<{ token: string }> {
-  if (!CredentialsSchema.safeParse({ username, password }).success) {
-    throw new AuthError("invalid username or password");
+  if (!/^[a-z0-9_-]{3,20}$/i.test(username)) {
+    throw new AuthError("username must be 3-20 characters: letters, numbers, _ or - (no spaces)");
   }
+  if (password.length < 8) throw new AuthError("password must be at least 8 characters");
+  if (password.length > 200) throw new AuthError("password too long (max 200)");
   if (hitsFilter(usernameRuleset, username)) throw new AuthError("username not allowed");
 
   const salt = randomBytes(16);

@@ -64,8 +64,9 @@
     <div id="login">
       <form id="login-form">
         <h1>The Grand</h1>
-        <input id="username" name="username" placeholder="username" autocomplete="username" />
-        <input id="password" name="password" type="password" placeholder="password"
+        <input id="username" name="username" placeholder="username (3-20: a-z 0-9 _ -)"
+               autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" />
+        <input id="password" name="password" type="password" placeholder="password (8+ characters)"
                autocomplete="current-password" />
         <div class="row">
           <button type="submit">Log in</button>

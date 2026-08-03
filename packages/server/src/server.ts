@@ -3,9 +3,10 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import type { AddressInfo, Socket } from "node:net";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
+import { z } from "zod";
 import { ClientMsgSchema } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
-import { AuthError, CredentialsSchema, login, register, sessionAccount } from "./auth.ts";
+import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
 import { log } from "./log.ts";
 import { Room } from "./room.ts";
@@ -253,13 +254,14 @@ export async function startServer(opts: {
 
     let creds;
     try {
-      creds = CredentialsSchema.safeParse(JSON.parse(body));
+      // Shape check only — register/login produce the specific per-rule messages.
+      creds = z.object({ username: z.string(), password: z.string() }).safeParse(JSON.parse(body));
     } catch {
       json(res, 400, { error: "invalid JSON" });
       return;
     }
     if (!creds.success) {
-      json(res, 400, { error: "invalid username or password" });
+      json(res, 400, { error: "username and password are required" });
       return;
     }
     try {
