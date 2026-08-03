@@ -1,0 +1,7 @@
+{
+  "name": "@grand/client",
+  "type": "module",
+  "scripts": { "dev": "vite", "build": "vite build", "test": "vitest run --passWithNoTests" },
+  "dependencies": { "@grand/shared": "workspace:*", "pixi.js": "^8.0.0" },
+  "devDependencies": { "typescript": "^5.5.0", "vite": "^6.0.0", "vitest": "^3.0.0" }
+}

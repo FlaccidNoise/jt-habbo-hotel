@@ -1,0 +1,7 @@
+{
+  "name": "grand",
+  "private": true,
+  "packageManager": "pnpm@11.18.0",
+  "engines": { "node": ">=22.6" },
+  "scripts": { "test": "pnpm -r test", "typecheck": "pnpm -r exec tsc --noEmit" }
+}
