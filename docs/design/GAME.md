@@ -45,8 +45,10 @@ floor, charts are the billboard.
    trade** (a tradeable trophy is laundering inventory, audit R-23). Display slots are scarce
    (Habbo §1.8 badge cap — Coke Music had no display cap and grew hoard rooms, the
    counter-example).
-6. **Moderation is a core feature.** Habbo's 2012 scandal halved its users. Moderation tooling
-   ships in build step 1 with chat, never after. (Habbo §5.2, audit S4)
+6. **Fun first — integrity always.** This is a hobby prototype: moderation and legal machinery
+   are parked in [SAFETY-LEGAL-PARKED.md](SAFETY-LEGAL-PARKED.md) and never drive design. What
+   stays active is game *integrity* — anti-cheat, anti-dupe, anti-farm — because a rigged economy
+   is an unfun economy.
 
 Reserved for later, architecture planned from day one: programmable rooms (a Wired-class system).
 The room server carries the event bus and state substrate from the start (see PIPELINES §5).
@@ -399,111 +401,23 @@ Companions with light care. A second full cosmetic surface.
   trade — until tenure and activity thresholds clear (7 days, tune). One control, three problems:
   grooming surface, ban evasion, alt farming. (audit S2, S19)
 
-## Safety and moderation
+## Safety posture (prototype)
 
-The research calls moderation existential. This section is the implementation.
+Full safety and legal design is **parked, not deleted**: [SAFETY-LEGAL-PARKED.md](SAFETY-LEGAL-PARKED.md)
+holds the complete register from the trust-and-safety audit, with reopen triggers. Active in the
+prototype, kept because it is cheap and flavor-positive:
 
-### Audience and age assurance
-
-**18+, genuinely enforced.** Self-declared 18+ is not a legal position: UK OSA child-access duties,
-the ICO Children's Code, and DSA Art. 28 all attach to whether children *can* access, and the
-Commission's 2025 guidance explicitly rules self-declaration out as age assurance. A cartoon-pixel
-hotel is a mixed-audience product under amended COPPA by its look alone. So: **vendor age
-estimation at registration** (Persona/Yoti pattern), delete-on-process, storing only a band label
-and check timestamp — never the artifact. A documented false-negative path handles minors who get
-through. (audit S1) This is the enforced version of the decided adults-first position, and it is
-what keeps the casino floor, tradeable economy, and co-working posture coherent. The casino theme
-reinforces it: simulated-gambling content draws an adult rating on every scheme (PEGI's gambling
-descriptor is 18 by rule) and restricts ad networks — enforced 18+ is the posture that survives
-this theme, and self-declaration would not. If the audience ever
-widens to 13+, age-banded chat/DM/trade is the largest retrofit in the project — decided against
-for now, recorded in the decision log.
-
-### Moderation staffing and coverage
-
-- **Paid moderators only.** Volunteer moderation failed Habbo (Hobbas, terminated 2005) and was
-  refused by Coke Music.
-- **Staffed opening hours at launch.** The hotel opens when moderation is on duty — Coke Music's
-  proven lever (~10am–2am), and a hotel with a nightly closing ritual fits the fiction. Hours
-  expand with staffing, 24/7 is a scale milestone not a launch promise. There is never a time when
-  the hotel is open and nobody is on duty. (audit S4)
-- **Growth is capped to moderation capacity:** registration pauses at a stated concurrent
-  population per moderator seat. Moderation capacity, not servers, is the binding constraint.
-- **Trusted flaggers are not volunteer moderators:** no powers over players, only weighted reports
-  that jump the queue, accuracy tracked, privilege revocable. This is the different trust model
-  Habbo's failure demands.
-- Moderation tooling — filter, report queue, room watch, mute/kick/ban — ships in build step 1
-  with chat, or chat does not ship.
-
-### Filter and chat
-
-- Surfaces: chat, usernames, **mottos, group names, song titles, design names, room names,
-  descriptions, chart and Navigator entries** — every free-text field. Broadcast surfaces (charts,
-  featured rotation) get a human review tier above creation-time filtering. (audit S7)
-- Normalization before matching: NFKC, confusables mapping, whitespace/punctuation/repeat
-  collapse, zero-width stripping. (audit S9)
-- **Shadow substitution:** the sender sees their message unchanged, recipients see it filtered —
-  the filter stops being a free oracle for bypass probing.
-- A scoring layer above the wordlist is designed for now (Habbo's endpoint was Community Sift).
-  The filter is a speed bump — the controls are behavioral detection and reporting.
-- **Off-platform contact patterns** (platform handles, invite links, "add me on disc") are in the
-  filter, and handle-sharing in whispers or to new accounts is a priority behavioral flag — that
-  is the actual 2026 grooming vector. (audit S23)
-- **Single-language launch**, stated in the ToS. Non-target-language chat routes to a review queue
-  rather than through an unmatched filter. Each added language multiplies filter, classifier, and
-  staffing cost — a deliberate scope decision, not an oversight. (audit S10)
-- Usernames permanent for players, near-miss similarity rejected at registration (impersonation),
-  **staff-forced rename exists** as a moderation action distinct from a ban. (audit R-24, S26)
-
-### Private surfaces
-
-Filtered is not moderated — grooming contains no profanity. So: (audit S2, S3)
-
-- Whisper and DM traffic carry stated sampling, retention, and **behavioral scoring** — structural
-  signals that need no content reading: older account whispering many new accounts, high
-  whisper-to-room-chat ratio, rapid friend-adds with low acceptance, public-to-DM movement within
-  minutes, repeated locked-room invitations.
-- **The panic button always escapes the room** and always works — being muted, kicked, or banned
-  by a room owner never disables Call for Assistance.
-- **Staff enter any room, silently**, including private ones — stated in the ToS.
-- Owner enforcement actions are logged and are themselves signals — an owner banning a player
-  right after that player reports is a priority flag.
-- Invite-only rooms are capped in guest count and carry a higher sampling rate.
-
-### Reports, evidence, enforcement
-
-- **Rolling capture, not query-time capture:** a report snapshots N minutes of room chat before
-  and after, whispers involving the reporter, room state and guest list. Room reports (distinct
-  from player reports) carry the furni layout snapshot — composition abuse (tiled furni forming a
-  symbol) is caught reactively, and moderators can view a room's layout without entering.
-  (audit S15, S16)
-- **Two retention classes:** short operational buffer (days) for all chat, long-hold (years, with
-  legal-hold semantics surviving erasure requests) for anything attached to a report.
-- Response-time targets by category — child-safety and spam are different queues.
-- **Escalation above ban exists:** named law-enforcement contact, preservation-request process
-  wired to long-hold retention, CyberTipline reporting path. (audit S17)
-- **Escalation ladder:** filtered warning → kick → timed suspension → permanent ban. On ban: Stars
-  burned, listings cancelled to frozen inventory, rooms unreachable, minted designs withdrawn,
-  group ownership transfers. **Settled transfers to other players stay valid** — the ledger never
-  rewrites history. Trophies keep engravings, charts are not rewritten. (audit C-9)
-- **Two-stage appeals** reviewed by someone other than the actioning moderator, account state
-  frozen not deleted during appeal, covering filter rejections too. Published in the ToS.
-  (audit S18)
-- **Graduated incident response:** runtime flags, no deploy needed — whisper off, DMs off, private
-  rooms forced public, minting paused, registration paused, chat rate-limited, scoped per room or
-  region. The alternative precedent is Habbo's global mute, which is an extinction event at our
-  size. An incident playbook names who pulls each flag. (audit S6)
-- **Symmetric ignore, corrected:** ignore hides content from the ignorer's view only — it never
-  suppresses moderator visibility, logging, or the ability to report the ignored player. Inside
-  ranked matches and deduction lobbies, ignore suppresses chat but leaves game actions visible.
-  (audit R-27, S25)
-- **The red-team release gate:** monthly, staff pose as an 11-year-old; time-to-first-explicit-
-  contact is a tracked release metric. The exact test Channel 4 ran and Habbo failed. A safety
-  gate exists only if a staged bad input actually bounces. (audit S24)
-- Pre-launch legal artifacts are build-order gates, not paperwork: children's access assessment
-  (UK OSA), illegal-harms and children's risk assessments, DPIA, ToS + community standards
-  (including no off-platform directing, no real-life meeting arrangement — Coke Music's rule),
-  privacy policy covering retention classes and the age-assurance flow. (audit S22)
+- 18+ by self-declaration at signup. (Enforced age assurance is the first parked item to lift.)
+- A basic word filter on chat and names ("blah"-style substitution — genre flavor as much as
+  safety). Usernames permanent, near-miss similarity rejected (impersonation is a scam vector).
+- Ignore hides content from the ignorer's view only, and inside ranked matches and deduction
+  lobbies it suppresses chat but leaves game actions visible (game-integrity rule).
+- Room owner kick/ban/mute as a nuisance control.
+- Ban semantics stay specified because they are economy data-model rules: on ban, Stars burn,
+  listings cancel to frozen inventory, settled transfers to other players stay valid, the ledger
+  never rewrites history, trophies keep engravings. (audit C-9)
+- New-account surface restrictions (whisper/DM/trade gating) exist as tunables, **set to
+  off/near-zero for the prototype** — they matter for alt-farming at scale, not for friends.
 
 ## Non-goals for v1
 

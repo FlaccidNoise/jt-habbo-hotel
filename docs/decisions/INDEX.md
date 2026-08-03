@@ -33,7 +33,13 @@
   faucets, per-relationship vote decay, transfer-value budgets + 72h bind-on-purchase, unified
   Star+item ledger in one database, registration grant as starter furni + 7-day Star trickle,
   creator cut 30%, minted-design supply windows, trophies account-bound, first-mint-owns-recipe.
-- 2026-08-03 — **Post-audit safety structure:** staffed opening hours at launch, registration
+- 2026-08-03 — **Prototype posture: safety and legal PARKED.** Hobby project, no planned public
+  deployment. All moderation/legal machinery moved to docs/design/SAFETY-LEGAL-PARKED.md with
+  reopen triggers (public deployment / strangers / catching on). Fun and game-integrity mechanics
+  (anti-cheat, anti-dupe, vote decay, economy caps) stay active — they are fairness features. The
+  fake-money social-casino lock also stays active. Supersedes the enforced-age-assurance and
+  staffed-hours decisions below for as long as the posture holds.
+- 2026-08-03 — **(Parked by the prototype posture) Post-audit safety structure:** staffed opening hours at launch, registration
   caps tied to moderation capacity, new-account surface restrictions (no whisper/DM/trade/
   invite-only until tenure), moderation tooling in build step 1, graduated incident-response
   flags, monthly red-team as a release gate, deduction lobbies sealed (no trade/gifts/friend

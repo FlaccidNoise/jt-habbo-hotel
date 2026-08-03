@@ -95,12 +95,11 @@ recipe-to-sprite path.
    **similarity to previously rejected designs**, the reference-scene render gates (draw order,
    seating). A gate exists only if a staged known-bad recipe actually bounces — test them that
    way. (audit A5, R-07, S11)
-5. **Moderation gate (player mints).** Names and descriptions through the standard filter, a
-   hate-symbol geometry check on the rendered sprite (tractable at this resolution where general
-   image classifiers are not), then human review for flagged items. Composed furni from the
-   curated part library needs no general image screening — the part library is the gate. No
-   auto-approve on timeout, ever. Per-account mint rate limits, malicious-rejection forfeiture,
-   and the recall path are specified in GAME.md §Design minting. (audit E2, S11–S14)
+5. **Mint gate (prototype).** Names and descriptions through the basic word filter. Composed
+   furni from the curated part library needs no image screening — the part library is the gate.
+   Per-account mint rate limits and rejection economics per GAME.md §Design minting (integrity
+   rules, active). The full screening pipeline (geometry checks, review queues, recall staffing)
+   is parked: SAFETY-LEGAL-PARKED.md.
 6. **Publish.** Frozen bundle (sprite sheet + metadata JSON, **our own bundle format** — the
    `.nitro` shape bought no interop and carried GPL reference risk, audit G2) to CDN, catalog
    entry to DB.
@@ -154,7 +153,7 @@ start** — the generator reproducing art built for it proves nothing otherwise.
 
 | Service | Responsibility | Storage | Notes |
 |---|---|---|---|
-| Identity | Registration, credentials, sessions, permanent usernames + similarity check, ban state, age-band label + check timestamp, alt/device heuristics | Postgres | Every service authenticates sessions against it. Feeds signals to the ledger's anomaly detection. (audit H1) |
+| Identity | Registration, credentials, sessions, permanent usernames + similarity check, ban state, alt/device heuristics | Postgres | Every service authenticates sessions against it. Feeds signals to the ledger's anomaly detection. (audit H1) |
 | Room server | Authoritative room instances: movement, pathfinding, chat, furni state, **event bus + extensible per-object state bag + per-room execution budget** (the reserved Wired substrate) | writes through to Postgres | Furni mutations write through immediately — irreplaceable property, low write rate. Reconnect window + full-state resync message specified. (audit C4, C8) |
 | Gateway / room directory | Maps room ID → process, holds client connections, drain procedure (new joins routed away, rooms drained on emptiness or handed off) | — | A deploy is a migration that happens weekly. Rolling deploy ships with build step 1. (audit C6, H5) |
 | Economy ledger | **Stars AND item ownership in one append-only log, one Postgres database** — a purchase, trade, or stall sale is one local ACID transaction, never a distributed one | Postgres (shared with item instances) | Partial commits cannot exist. Counterparty-graph anomaly queries run here. (audit C1, R-02) |
@@ -165,8 +164,7 @@ start** — the generator reproducing art built for it proves nothing otherwise.
 | Presence | Room servers publish session state; clients subscribe once to their friend list | Redis or similar | Fan-out is subscription-based, never friend-notifies-friend. Granularity: online/offline cheap, room-level opt-in. (audit C3) |
 | Social | Friends, groups, badges, messaging | Postgres | DM retention and sampling per GAME.md §Safety. |
 | NPC | LLM gateway: prompt templates, per-NPC memory, room context | Postgres | Small local/cheap cloud models. Output through filter + outbound screen. **No payout authority.** |
-| Moderation | **Filter as a versioned ruleset artifact, evaluated in-process on every room server** (hot path is local; one artifact version everywhere), plus: ruleset builds, async ML scoring, behavioral signals, report queue with per-category SLA, audit log | Postgres | Fail-open chat is the 2012 failure, fail-closed chat is an outage — in-process evaluation avoids the dilemma. (audit E1) |
-| Room watch | Moderator live view incl. private rooms, layout view without entering | — | Own authorization model, separate audit trail, stated retention for what moderators see. (audit E3) |
+| Filter | **Versioned ruleset artifact, evaluated in-process on every room server** — basic wordlist for the prototype; the hot path stays local either way, and the artifact model is where the parked scoring layer attaches later | Postgres | (audit E1; full moderation service parked — SAFETY-LEGAL-PARKED.md) |
 | Observability | Per-faucet issuance and per-sink absorption over time, ledger latency/errors, room population and tick health, WebSocket connect/reconnect rates | — | Collusion auditing requires the data to exist before the exploit. (audit H4) |
 
 **Degradation policy** (audit C2): rooms, chat, and movement have zero ledger dependency — they
@@ -203,9 +201,8 @@ data lives outside version control and backups (and see the restore-drill rule a
 
 V1 focus is the hangout core — the resort as third place ships first.
 
-1. Room render + pathfinding + avatar walk + chat, **with the filter, Call for Assistance, report
-   queue, and mute/kick/ban tooling** — moderation ships with chat or chat does not ship. Rolling
-   deploy and room drain ship here too, because every later step inherits them. (audit E4, S4, H5)
+1. Room render + pathfinding + avatar walk + chat, with the basic word filter. Rolling deploy
+   and room drain ship here because every later step inherits them. (audit H5)
 2. Furni placement from a starter catalog **authored as generator parts**. Casino-floor and café
    public rooms, focus states.
 3. NPC staff service (liveness from the first invited player).
@@ -214,6 +211,4 @@ V1 focus is the hangout core — the resort as third place ships first.
 6. First solo arcade game end-to-end through the ledger.
 7. Music loop. 8. Design studio. 9. Multiplayer games + casino floor games.
 
-**Launch gates, not paperwork** (audit S22): children's access assessment (UK OSA), illegal-harms
-and children's risk assessments, DPIA, ToS + community standards, privacy policy covering
-retention classes and the age-assurance flow. A regulator's first question must have an answer.
+Public-deployment legal gates are parked with everything else: SAFETY-LEGAL-PARKED.md.
