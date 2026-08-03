@@ -60,8 +60,11 @@ through gates 4–5. Rejected mints refund the fee minus a small processing sink
 - Layered part types with **first-class hidden-layer rules** (hats hide hair) from day one.
 - Palette per set type. Outfit generation = garment part sprites + ramp swaps + patterns, same
   recipe model as furni.
-- Action set for launch: stand, walk, sit, lay, wave, dance, sleep, carry. 5 drawn directions,
-  2 scales.
+- Action set for launch: stand, walk, sit, lay, wave, dance, sleep, carry, plus the focus props
+  (laptop, book, sketchpad) for the co-presence layer. 5 drawn directions, 2 scales.
+- **Pets** use the same recipe model: species body types × colors × patterns from the generator,
+  plus a pet clothing layer system (collars, hats, coats) with its own hidden-layer rules. Pet
+  action set: follow, sit, sleep, react, trick.
 
 ## 4. Music pipeline
 
@@ -82,6 +85,8 @@ through gates 4–5. Rejected mints refund the fee minus a small processing sink
 | Catalog/asset service | Recipes, bundles, marketplace order book | CDN in front of sprite bundles |
 | Moderation service | Filter (reject names, substitute chat), report queue, room watch, audit log | Filter is one shared service so every surface behaves the same |
 | Social service | Friends, groups, badges, messaging | Room-independent |
+| NPC service | LLM gateway for staff characters: prompt templates, per-NPC memory, room context | Small local or cheap cloud models. Output passes the moderation filter plus an outbound screen. **No payout authority** — economic triggers are deterministic server rules |
+| Casino service | House-banked chance games, stake caps, odds tables | Odds published internally, auditable RNG, every stake and payout through the ledger |
 
 Client: TypeScript + PixiJS web client. nitro-renderer and Arcturus are **format references only**
 — GPL/AGPL forbids copying code into this project. (research/habbo-hotel.md §4.6)
@@ -107,9 +112,12 @@ reconnect windows, and no game-critical data outside version control and backups
 
 ## 7. Build order (sketch, plan to follow separately)
 
+V1 focus is the hangout core — the third-place experience ships first.
+
 1. Room render + avatar walk + chat (the vertical slice that proves the projection constants).
-2. Furni placement from a hand-made starter catalog.
-3. Generator pipeline producing that same catalog from recipes (proves stage 1–4).
-4. Trade window + ledger.
-5. First solo arcade game end-to-end through the ledger.
-6. Music loop. 7. Design studio. 8. Multiplayer games.
+2. Furni placement from a hand-made starter catalog. Lobby + café public rooms, focus states.
+3. NPC staff service (liveness from the first invited player).
+4. Generator pipeline producing the starter catalog from recipes (proves stage 1–4).
+5. Trade window + ledger. Cosmetics and pets ride the same item rails.
+6. First solo arcade game end-to-end through the ledger.
+7. Music loop. 8. Design studio. 9. Multiplayer games + Casino.

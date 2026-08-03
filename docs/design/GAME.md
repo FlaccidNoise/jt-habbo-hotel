@@ -8,11 +8,16 @@ research when it lands.
 
 ## Vision
 
-A hotel. Every player gets a room to decorate and a stage to be judged on. All currency is earned
-in play — none is sold. Players earn by making things other players rate (songs, furni designs,
-outfits, rooms) and by playing official minigames together. They spend on furni and clothing drawn
-from a procedurally generated catalog that never runs dry. The best player-made designs enter the
-catalog and pay their creators. Status lives in rooms, where visitors can see it.
+A hotel for adults. Every player gets a room to decorate and a stage to be judged on. All currency
+is earned in play — none is sold. Players earn by making things other players rate (songs, furni
+designs, outfits, rooms) and by playing official minigames together. They spend on furni, clothing,
+and pet cosmetics drawn from a procedurally generated catalog that never runs dry. The best
+player-made designs enter the catalog and pay their creators. Status lives in rooms, where
+visitors can see it.
+
+The hotel is also a **third place**: somewhere to sit with a coffee and half-work, half-hang out.
+Ambient co-presence — being visibly together without conversational obligation — is a first-class
+use case, not a byproduct.
 
 ## Pillars
 
@@ -59,6 +64,8 @@ One currency. Bound to the account, never tradeable, never sold for money.
 | Solo arcade minigames | score ÷ per-game ratio, 1,000 cap per play (tune) | 3 scored plays per game per day | Neopets model — ratios rebalanced monthly across the catalog |
 | Multiplayer games (tactics, deduction, party) | per-match, win and participation | daily cap (tune) | Server-adjudicated, see Minigames |
 | Dailies | ~100/day total (tune) | hard | Lobby café coffee, daily spin — ritual, not income |
+| NPC staff | rituals + performance tips, flat amounts | low hard cap/day (tune) | See Liveness. Server-triggered, never LLM-decided, zero chart credit |
+| Pet care | small bonus for a happy pet | tiny daily cap (tune) | Light care, no decay punishment |
 | Achievements | one-time grants | — | Badge + Stars |
 | Competitions | prize pool | weekly | Navigator placement is the real prize |
 | Registration | one-time (tune) | — | Enough to furnish a starter room modestly |
@@ -76,6 +83,13 @@ ceiling was 450/day against a 2,500 flagship item, and the slowness produced att
 - Marketplace listing runs free, sale takes a progressive commission — taxes whales, spares
   newcomers. (Habbo §1.5)
 - Room promotion slots (2-hour Navigator feature, cheap).
+- **The Casino** — house-banked games of chance, net drain via house edge. See Official minigames.
+- **The Museum wing** — donate rares for permanent public exhibition with engraved donor plaques.
+  Converts wealth to walkable status, permanently removes items. (Neopets §2 donation event)
+- **Prestige untradables** — extreme-priced, account-bound penthouse fixtures (grand staircases,
+  rooftop pools). Conspicuous consumption for the richest, Hidden Tower style. (Neopets §2)
+- **The Luck Lever** — 100 Stars per pull (tune), tiny odds of an exclusive badge or furni.
+  Collector bait, lives in the Casino. (Neopets' Lever of Doom)
 
 ### Anti-abuse
 
@@ -96,8 +110,12 @@ defense, but design charts and competitions need collusion review too. (Neopets 
   scam wave. (Habbo §1.4)
 - Marketplace: anonymous order book, cheapest listing sells first, 7-day average price shown.
   (Habbo §1.5)
-- **No wagering on random outcomes.** Chance furni exists for decoration only. The sanctioned
-  high-value sink that replaces gambling is an open question — candidates below.
+- Cosmetics are economy goods: avatar clothing and pet cosmetics trade like furni, with withdrawn
+  lines and serial-numbered limited editions. Fashion is a real economy with rare-fit status —
+  the Highrise marketplace proves the demand. Pets themselves are account-bound, never traded.
+- **Player-run wagering stays banned.** No player banker, no player-set stakes, no chance-furni
+  payouts in player hands. The official Casino is the sanctioned outlet — house-banked only, so
+  no Stars ever move between players and the bound-currency wall holds.
 
 ## Earning paths
 
@@ -168,11 +186,66 @@ Grounded in research/neopets.md. Principles:
 - **Variety inside one game beats many games.** Key Quest embedded mini-games and random events
   inside the board game. Prefer one deep, varied flagship per tier over a thin catalog.
 
+### The Casino (official, house-banked)
+
+Gambling is in, designed for from day one — the Habbo lesson is that gambling was the genre's
+highest-engagement gathering reason, and the damage came from player-run scam casinos and from
+amputating gambling after the economy grew dependent on it. (Habbo §3.3) Rules:
+
+- **House-banked only.** Every bet is player vs house. Stars never move between players through
+  the Casino — the bound-currency wall holds, and losing on purpose to an alt is impossible.
+- Wheel, dice, and card tables in a Casino wing of the hotel — a social venue with seats, a bar,
+  and NPC dealers, not a menu screen.
+- **Daily stake cap** (tune) bounds both individual loss and how dependent the economy can get on
+  the Casino as a sink. House edge makes it a net drain.
+- The Luck Lever lives here.
+- Player-run banking stays banned (see Trade).
+- 18+ audience makes this coherent. Flag: if real-money purchases ever stop being a non-goal, the
+  Casino needs legal re-review first — earned-only currency is what keeps it simple.
+
 ### Dailies
 
 Hotel-themed ritual, capped and small: a coffee at the lobby café (10 Stars, 10/day max), a daily
 spin, seasonal advent calendars in December and July. Timed free furni drops during events — they
 boost trading activity, not just logins. (Habbo §2.6)
+
+## Liveness — the density funnel and NPC staff
+
+The dead-hotel problem: at 20–200 concurrent users an open world of rooms feels abandoned, and
+empty social spaces kill social games. Two strategies, designed in from the start:
+
+**Density funnel.** At low population the Navigator concentrates everyone: one lobby, one café,
+one stage open. More public spaces unlock as concurrency grows, and re-lock when it falls.
+Density is the product early — choice is the enemy.
+
+**NPC hotel staff.** Bellhops, baristas, a lounge act — LLM-driven characters using small local or
+cheap cloud models with tight context engineering. They greet, banter, remember regulars, and
+make the hotel feel staffed even when human traffic is thin. Guardrails, all hard:
+
+- **The LLM never decides payouts.** Every Star an NPC grants is a deterministic server-side
+  trigger with a flat amount and a hard daily cap. The model supplies personality, the server
+  supplies economics. Assume players will prompt-inject from day one.
+- **NPC tips never count toward charts.** Charts are human-vote-only or they are meaningless.
+- NPCs are visibly hotel staff — name tags, uniforms, a staff badge. They never pass as players.
+- NPC output runs through the same chat filter as players, plus an outbound screen — an NPC
+  saying something awful is a brand incident.
+- NPC faucets: fixed rituals (barista coffee chat, bellhop welcome quest) plus small flat tips to
+  performers so an early-morning set to an empty room still pays something.
+
+## Pets
+
+Companions with light care, v1. A second full cosmetic surface — cosmetics are a pillar of this
+game and pets carry as much of it as avatars.
+
+- Pets follow their owner, sit, sleep, react to speakers, and idle charmingly. They are room
+  actors (visible to visitors) and social objects (visitors can pet them).
+- **Pet cosmetics — clothing, accessories, collars — are tradeable economy goods**, same rules as
+  avatar clothing. Pets themselves are adopted, account-bound, never traded.
+- Light care: a happiness meter fed by occasional feeding and play. High happiness pays a tiny
+  daily Star bonus and unlocks tricks. **No decay punishment** — a neglected pet sleeps more, it
+  never suffers. Nobody's pet starves while they're at work. (Pet Society's hook without its chore)
+- Species and colors come from the procedural pipeline like everything else. Rare species and
+  patterns are status.
 
 ## Rooms and social
 
@@ -190,6 +263,19 @@ boost trading activity, not just logins. (Habbo §2.6)
 - **Badges:** display capped at 5 + 1 group badge. Scarce display is what gives badges value.
 - **Idle honesty:** avatars sleep after 5 minutes, turn their head toward speakers.
 
+### Ambient co-presence (the co-working layer)
+
+The third-place use case gets explicit design, not just vibes:
+
+- **Focus state:** a player can sit with a laptop, book, or sketchpad prop and set a visible
+  do-not-disturb state — a small bubble icon replaces their chat head. Focused players don't
+  trigger idle sleep. Whispers still land, room chat softens to their view.
+- **Focus rooms:** café and library spaces tuned for lurking — short Speak radius, no Shout,
+  lo-fi stage sets playing curated or player-made quiet mixes.
+- Being visibly present without talking is a legitimate way to be in the hotel. Presence lists
+  show who's "around" vs "chatting" without shaming lurkers.
+- Later, if the habit forms: shared pomodoro furni and focus streaks. Not v1.
+
 ## Status systems
 
 - Engraved trophies (date, username, deed) from charts, competitions, and minigame seasons.
@@ -206,7 +292,9 @@ boost trading activity, not just logins. (Habbo §2.6)
 - Paid moderators only. Volunteer moderation failed Habbo and was refused by Coke Music.
 - Symmetric ignore: erases the ignored player's avatar and actions from your view.
 - Player-minted designs pass automated checks plus a moderation screen before catalog entry.
-- **Audience decision is open** — see Open questions. It gates the legal and moderation posture.
+- **Audience: adults-first, 18+.** Decided. Age gate at registration, adult moderation posture,
+  rating work pending. This keeps the Casino, co-working tone, and moderation economics coherent.
+  Revisit everything in this section if the audience ever widens.
 
 ## Non-goals for v1
 
@@ -214,25 +302,22 @@ boost trading activity, not just logins. (Habbo §2.6)
   Neopets Premium (frequency multipliers on existing faucets, no exclusive content — does not
   fracture the shared economy) and Habbo Builders Club (rented, non-tradeable creative tools —
   monetizes builders without adding tradeable supply). (Neopets §5, Habbo §5.1)
-- Player-run wagering or chance-based payouts.
+- Player-run wagering or player-banked games (the official house-banked Casino is in).
 - Free-form room scripting (architecture reserved, feature later).
 - Mobile client.
 - Web3 anything.
 
+## Decided
+
+See [docs/decisions/INDEX.md](../decisions/INDEX.md). Audience 18+, hangout core first, ambient
+co-presence in v1, density funnel + NPC staff for liveness, pets with light care, tradeable
+cosmetics with rare tiers, sinks (Museum, prestige untradables, Luck Lever), official house-banked
+Casino.
+
 ## Open questions
 
-1. **The high-value sink.** Without gambling, what absorbs rich players' wealth? Neopets proves
-   status-driven sinks work on the wealthiest players: prestige untradables priced in the tens of
-   millions, a 100-per-pull luck lever chased by collectors, and a donation event that drained
-   12.3 billion NP with recognition as the only reward. (Neopets §2) Candidates: a museum wing
-   that permanently exhibits donated rares with engraved donor plaques, limited-edition trade-in
-   ladders, prestige untradable furni at extreme prices, cosmetic room upgrades (penthouse
-   floors). Needs a decision before the economy ships.
-2. **Audience and age positioning.** Adult-nostalgia-first (Habbo Origins' bet, lighter legal
-   burden) vs teen-inclusive (COPPA/GDPR-K, heavy moderation cost). Recommendation: adults first,
-   rating pending.
-3. **Creator cut** on minted-design sales (tune between 30–70%).
-4. **Room capacity** and instance limits — needs netcode prototyping. Habbo's default cap is
+1. **Creator cut** on minted-design sales (tune between 30–70%).
+2. **Room capacity** and instance limits — needs netcode prototyping. Habbo's default cap is
    unverified in research. Coke Music's public cap was 25.
-5. **Wired-class system scope** and when it lands.
-6. **Naming** — "The Grand", "Stars", all placeholders.
+3. **Wired-class system scope** and when it lands.
+4. **Naming** — "The Grand", "Stars", all placeholders.
