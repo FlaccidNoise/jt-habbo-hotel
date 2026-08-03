@@ -1,13 +1,33 @@
 import { Application } from "pixi.js";
-import { parseHeightmap } from "@grand/shared";
-import type { AvatarState, ServerMsg, Tile } from "@grand/shared";
+import {
+  PROTOTYPE_CATALOG,
+  ROOM_FURNI_CAP,
+  checkPlacement,
+  footprintTiles,
+  parseHeightmap,
+  tileHeight,
+} from "@grand/shared";
+import type {
+  AvatarState,
+  FurniDef,
+  FurniItem,
+  InventoryItem,
+  PlacementCtx,
+  RoomModel,
+  ServerMsg,
+  Tile,
+} from "@grand/shared";
 import { Net } from "./net.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
+import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene } from "./scene/room.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
+
+const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
+const PLACE_DIR = 0;
 
 function el<T extends HTMLElement>(id: string): T {
   const found = document.getElementById(id);
@@ -21,7 +41,12 @@ const avatars = new Map<number, AvatarSprite>();
 const chat = new ChatOverlay(el("bubbles"));
 let app: Application | null = null;
 let scene: RoomScene | null = null;
-let you = 0;
+let furniLayer: FurniLayer | null = null;
+let model: RoomModel | null = null;
+let doorTile: Tile = { x: 0, y: 0 };
+let furni: FurniItem[] = [];
+let inventory: InventoryItem[] = [];
+let armed: number | null = null;
 let clockOffset: number | null = null;
 
 function toast(text: string): void {
@@ -40,29 +65,127 @@ function addAvatar(state: AvatarState): void {
   scene.world.addChild(sprite.view);
 }
 
-function onTileClick(x: number, y: number, button: number): void {
-  if (button === 0) net.send({ t: "move", x, y });
+function armedDef(): FurniDef | null {
+  const item = inventory.find((i) => i.id === armed);
+  return (item && DEFS.get(item.defId)) ?? null;
 }
 
-function onTileHover(_tile: Tile | null): void {
-  // Task 12 hangs the placement highlight here.
+/** The same inputs the server builds for `checkPlacement`, so the hover verdict and the server's
+ *  answer come from one implementation. */
+function placementCtx(current: RoomModel): PlacementCtx {
+  return {
+    model: current,
+    furni,
+    defs: DEFS,
+    avatars: [...avatars.values()].map((a) => {
+      const at = a.tile();
+      return { x: at.x, y: at.y };
+    }),
+    doorTile,
+    roomFurniCap: ROOM_FURNI_CAP,
+  };
+}
+
+function renderInventory(): void {
+  const strip = el("inventory");
+  strip.replaceChildren();
+  if (inventory.length === 0) {
+    const empty = document.createElement("span");
+    empty.className = "empty";
+    empty.textContent = "Inventory empty — right-click furni in the room to pick it up.";
+    strip.appendChild(empty);
+    return;
+  }
+  for (const item of inventory) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    if (item.id === armed) button.classList.add("armed");
+    button.addEventListener("click", () => {
+      armed = armed === item.id ? null : item.id;
+      scene?.clearHighlight();
+      renderInventory();
+    });
+    strip.appendChild(button);
+  }
+}
+
+function itemsOn(x: number, y: number): FurniItem[] {
+  return furni.filter((item) => {
+    const def = DEFS.get(item.defId);
+    return def
+      ? footprintTiles(def, item.x, item.y, item.dir).some((t) => t.x === x && t.y === y)
+      : false;
+  });
+}
+
+function onTileClick(x: number, y: number, button: number): void {
+  if (button === 2) {
+    // Placed items carry no owner in the protocol, so pick up the topmost item here and let the
+    // server answer `not_owner` when it is somebody else's.
+    const top = itemsOn(x, y).sort((a, b) => a.z - b.z).pop();
+    if (top) net.send({ t: "pickup", itemId: top.id });
+    return;
+  }
+  if (button !== 0) return;
+  if (armed !== null) {
+    net.send({ t: "place", itemId: armed, x, y, dir: PLACE_DIR });
+    return;
+  }
+  net.send({ t: "move", x, y });
+}
+
+function onTileHover(tile: Tile | null): void {
+  if (!scene) return;
+  const def = armedDef();
+  if (!tile || !def || !model) {
+    scene.clearHighlight();
+    return;
+  }
+  const result = checkPlacement(placementCtx(model), def, tile.x, tile.y, PLACE_DIR);
+  scene.highlight(
+    footprintTiles(def, tile.x, tile.y, PLACE_DIR),
+    result.ok,
+    result.ok ? result.z : Math.max(0, tileHeight(model, tile.x, tile.y)),
+  );
 }
 
 function buildRoom(msg: RoomState): void {
   if (!app) return;
-  you = msg.you;
   for (const sprite of avatars.values()) sprite.destroy();
   avatars.clear();
   chat.clear();
   scene?.destroy();
 
-  scene = new RoomScene(app.stage, parseHeightmap(msg.heightmap, msg.door), {
-    click: onTileClick,
-    hover: onTileHover,
-  });
+  model = parseHeightmap(msg.heightmap, msg.door);
+  doorTile = { x: msg.door.x, y: msg.door.y };
+  furni = msg.furni;
+  inventory = msg.inventory;
+  armed = null;
+
+  scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
+  furniLayer = new FurniLayer(scene.world, DEFS);
+  for (const item of furni) furniLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
+  renderInventory();
+}
+
+/** A placement or a move: replace the item if it is already in the room, add it otherwise. */
+function upsertFurni(item: FurniItem): void {
+  const i = furni.findIndex((f) => f.id === item.id);
+  if (i < 0) furni.push(item);
+  else furni[i] = item;
+  furniLayer?.apply(item);
+
+  // Only my own items are ever in my inventory, so an id leaving it means my placement landed.
+  if (inventory.some((inv) => inv.id === item.id)) {
+    inventory = inventory.filter((inv) => inv.id !== item.id);
+    if (armed === item.id) armed = null;
+    scene?.clearHighlight();
+    renderInventory();
+  }
 }
 
 function handle(msg: ServerMsg): void {
@@ -85,6 +208,18 @@ function handle(msg: ServerMsg): void {
       break;
     case "chat":
       chat.show(msg.from, msg);
+      break;
+    case "furni_placed":
+    case "furni_moved":
+      upsertFurni(msg.item);
+      break;
+    case "furni_removed":
+      furni = furni.filter((f) => f.id !== msg.itemId);
+      furniLayer?.remove(msg.itemId);
+      break;
+    case "inventory_add":
+      inventory.push(msg.item);
+      renderInventory();
       break;
     case "error":
       toast(msg.message);

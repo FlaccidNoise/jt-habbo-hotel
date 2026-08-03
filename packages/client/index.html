@@ -42,6 +42,11 @@
       #chat-form { display: flex; }
       #chat-input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid #444c63;
         background: #10121ae6; color: #eef; }
+      #inventory { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+      #inventory button { padding: 5px 10px; border-radius: 8px; border: 1px solid #444c63;
+        background: #1c1f2be6; color: #eef; cursor: pointer; }
+      #inventory button.armed { border-color: #7fd98a; background: #24422a; }
+      #inventory .empty { color: #7d8496; font-size: 13px; }
     </style>
   </head>
   <body>
@@ -50,6 +55,7 @@
     <div id="room-name"></div>
     <div id="toasts"></div>
     <div id="hud">
+      <div id="inventory"></div>
       <form id="chat-form" autocomplete="off">
         <input id="chat-input" maxlength="200"
                placeholder="Enter to say · Shift+Enter to shout · /w name message to whisper" />

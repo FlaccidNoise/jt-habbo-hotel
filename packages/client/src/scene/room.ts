@@ -36,6 +36,7 @@ export class RoomScene {
   readonly world: Container;
   private model: RoomModel;
   private stage: Container;
+  private marker: Graphics;
   private background: (e: FederatedPointerEvent) => void;
 
   constructor(stage: Container, model: RoomModel, handlers: TileHandlers) {
@@ -44,6 +45,11 @@ export class RoomScene {
     this.world = new Container();
     this.world.sortableChildren = true;
     stage.addChild(this.world);
+
+    this.marker = new Graphics();
+    this.marker.eventMode = "none";
+    this.marker.zIndex = -1;   // above every tile in the floor band, below every sprite
+    this.world.addChild(this.marker);
 
     for (let y = 0; y < model.height; y++) {
       for (let x = 0; x < model.width; x++) {
@@ -65,6 +71,19 @@ export class RoomScene {
   center(width: number, height: number): void {
     this.world.x = Math.round(width / 2 - (this.model.width - this.model.height) * (SCALE / 4));
     this.world.y = Math.round(height / 2 - (this.model.width + this.model.height - 2) * (SCALE / 8));
+  }
+
+  /** Placement preview at the height the item would rest at: green when the shared
+   *  `checkPlacement` says yes, red when it says no. */
+  highlight(tiles: Tile[], ok: boolean, z: number): void {
+    this.marker.clear();
+    for (const t of tiles) {
+      this.marker.poly(diamond(t.x, t.y, z)).fill({ color: ok ? 0x3fd94f : 0xd93f3f, alpha: 0.45 });
+    }
+  }
+
+  clearHighlight(): void {
+    this.marker.clear();
   }
 
   destroy(): void {
