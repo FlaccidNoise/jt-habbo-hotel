@@ -90,6 +90,13 @@ Duplication is the historical killer: Coke Music v2 died of dupe exploits and pa
 ledger's append-only log plus item instance IDs with ownership history is the defense. Item state
 changes are transactions, never client-reported.
 
+Migration durability is a hard constraint, not an operational afterthought. The two most-loved
+official multiplayer games in this research — Habbo's Battle Ball and Neopets' Key Quest — both
+died in infrastructure migrations (Flash rewrite, lost files in a server move), not from economy
+or fun failures. Minigame services need: match state that survives a process restart, client
+reconnect windows, and no game-critical data outside version control and backups.
+(research/neopets.md §3, §6)
+
 ## 6. Content cadence
 
 - Catalog releases on a steady clock.

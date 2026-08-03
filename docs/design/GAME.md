@@ -56,7 +56,7 @@ One currency. Bound to the account, never tradeable, never sold for money.
 | Faucet | Payout | Cap | Notes |
 |---|---|---|---|
 | Votes on your performance or design | 5 (tune) per vote | 350/day (tune) | One vote per player per creation, **ever** — the Coke Music rule that forces meeting new people |
-| Solo arcade minigames | per-game score ratio | 3 scored plays per game per day | Neopets model, numbers pending research |
+| Solo arcade minigames | score ÷ per-game ratio, 1,000 cap per play (tune) | 3 scored plays per game per day | Neopets model — ratios rebalanced monthly across the catalog |
 | Multiplayer games (tactics, deduction, party) | per-match, win and participation | daily cap (tune) | Server-adjudicated, see Minigames |
 | Dailies | ~100/day total (tune) | hard | Lobby café coffee, daily spin — ritual, not income |
 | Achievements | one-time grants | — | Badge + Stars |
@@ -83,6 +83,11 @@ Vote-once-ever plus daily caps make alt-farming slow, not impossible. Add from d
 account per person policy, device/payment-free alt heuristics, dailies and trades limited per
 account (the Decibel revival's fixes), and a single ledger service that logs every Star in and out
 with anomaly detection. Coke Music v2 died of duplication exploits and packet editing. (Coke §5)
+
+Collusion warning: Neopets' stock market let guilds coordinate purchases to inflate prices and
+mint millionaires — the fix severed prices from anything players could coordinate around. Audit
+every faucet for "can a group manufacture value from nothing." Vote-once-ever is our main
+defense, but design charts and competitions need collusion review too. (Neopets §2)
 
 ## Trade
 
@@ -121,24 +126,47 @@ it. (Habbo §1.10)
 
 ### Official minigames
 
-Principles, ahead of the Neopets detail:
+Grounded in research/neopets.md. Principles:
 
-- **Server-authoritative.** Scores and outcomes are computed or verified server-side. Results flow
-  through the ledger service with per-game caps.
+- **Server-authoritative.** Outcomes are computed server-side, never client-reported. Neopets
+  trusted client scores and needed impossible-score ceilings, suspicion tiers, and manual review
+  to survive it. Server authority removes that whole class of problem. Results flow through the
+  ledger with per-game caps. (Neopets §1)
 - **In-world, not a menu.** Game halls are public rooms. You walk in, queue at a table, spectators
-  watch from the rail. Presence makes games social. (Habbo's Gamehall, Club Penguin's Card-Jitsu)
+  watch from the rail. The Battle Ball formula repeats across every successful precedent:
+  **spectating + queues or skill tiers + a visible ranked ladder + real prizes** (badges and
+  trophy furni, not only currency). Habbo Origins chose to revive exactly this formula in 2024.
+  (Neopets §6)
 - **We run them.** No player banker, no player-set stakes, no house edge in player hands. This is
   the scam-proof replacement for what casinos gave Habbo: a high-engagement reason to gather.
-- **Three tiers:**
-  1. *Solo arcade* — score-attack games, score-to-Stars ratio, 3 scored plays per day per game.
-  2. *Turn-based tactics* — small-board 1v1 (and 2v2 later), ranked ladder with seasons, match
-     payouts capped daily, spectate and challenge from the hall.
-  3. *Social deduction* — scheduled lobbies of 8–12 in themed rooms, roles dealt by the server,
-     chat runs through the standard filter, moderator tools on every lobby. Participation pays,
-     wins pay more, both capped.
-- **Trophies are furni.** Season placements and firsts mint engraved trophies, same as charts.
+- **Forfeit and disconnect rules ship with every game.** Key Quest's top complaint was matches
+  "ending abnormally" and opponents vanishing when losing. Neopets' lobby answered async
+  disappearance with a Move-or-Lose rule. Every game defines: reconnect window, AFK forfeit
+  timer, and payout treatment on abandonment (leaver gets nothing, remaining players get a fair
+  settlement). (Neopets §3, §4)
+- **Everyone gets paid, winners get paid more.** Key Quest paid all participants during play plus
+  placement-tiered prizes from a rotating seasonal pool — that split is why queues stayed full.
+  Participation payouts capped daily. (Neopets §3)
 
-Numbers, payout ratios, and anti-cheat detail: pending `research/neopets.md`.
+**Three tiers:**
+
+1. *Solo arcade* — score-attack games. Payout = score ÷ per-game ratio, capped 1,000 Stars per
+   play (tune), 3 scored plays per game per day. Ratios rebalance monthly on a fixed, published
+   date across the whole catalog — macro-tuning inflation at the faucet, Neopets' 25-year habit.
+   Monthly per-game leaderboards award trophies to the top 17 (gold 1–3, silver 4–8, bronze
+   9–17). Trophies are permanent and only upgrade, never downgrade. (Neopets §1, §5)
+2. *Turn-based tactics* — small-board 1v1 (2v2 later), live matches at tables in the game hall,
+   ranked ladder with seasons, monthly brackets in the Neopets Geos style, match payouts capped
+   daily. Spectate and challenge from the rail.
+3. *Social deduction* — scheduled lobbies of 8–12 in themed rooms, roles dealt by the server,
+   chat through the standard filter, moderator tools on every lobby. Participation pays, wins pay
+   more, both capped. **No classic virtual world ever shipped an official hidden-role game — the
+   research found no precedent. This is a genuine first, so prototype it early and expect to
+   learn.** (Neopets §6)
+
+- **Trophies are furni.** Season placements and firsts mint engraved trophies, same as charts.
+- **Variety inside one game beats many games.** Key Quest embedded mini-games and random events
+  inside the board game. Prefer one deep, varied flagship per tier over a thin catalog.
 
 ### Dailies
 
@@ -182,7 +210,10 @@ boost trading activity, not just logins. (Habbo §2.6)
 
 ## Non-goals for v1
 
-- Real-money purchases of any kind.
+- Real-money purchases of any kind. If monetization ever comes, the researched patterns are
+  Neopets Premium (frequency multipliers on existing faucets, no exclusive content — does not
+  fracture the shared economy) and Habbo Builders Club (rented, non-tradeable creative tools —
+  monetizes builders without adding tradeable supply). (Neopets §5, Habbo §5.1)
 - Player-run wagering or chance-based payouts.
 - Free-form room scripting (architecture reserved, feature later).
 - Mobile client.
@@ -190,10 +221,13 @@ boost trading activity, not just logins. (Habbo §2.6)
 
 ## Open questions
 
-1. **The high-value sink.** Without gambling, what absorbs rich players' wealth? Candidates: a
-   museum wing that permanently exhibits donated rares with engraved donor plaques, limited-edition
-   trade-in ladders, cosmetic room upgrades (penthouse floors). Needs a decision before the economy
-   ships.
+1. **The high-value sink.** Without gambling, what absorbs rich players' wealth? Neopets proves
+   status-driven sinks work on the wealthiest players: prestige untradables priced in the tens of
+   millions, a 100-per-pull luck lever chased by collectors, and a donation event that drained
+   12.3 billion NP with recognition as the only reward. (Neopets §2) Candidates: a museum wing
+   that permanently exhibits donated rares with engraved donor plaques, limited-edition trade-in
+   ladders, prestige untradable furni at extreme prices, cosmetic room upgrades (penthouse
+   floors). Needs a decision before the economy ships.
 2. **Audience and age positioning.** Adult-nostalgia-first (Habbo Origins' bet, lighter legal
    burden) vs teen-inclusive (COPPA/GDPR-K, heavy moderation cost). Recommendation: adults first,
    rating pending.
