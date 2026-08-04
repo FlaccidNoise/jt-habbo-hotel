@@ -6,6 +6,9 @@ import { depthKey } from "./sort.ts";
 
 export const SCALE = 64;
 
+const LONG_PRESS_MS = 500;
+const LONG_PRESS_SLOP = 10;
+
 const FLOOR_A = 0x6f9e4c;
 const FLOOR_B = 0x5d8a3f;
 const DOOR = 0xa33b3b;
@@ -37,11 +40,16 @@ export class RoomScene {
   private model: RoomModel;
   private stage: Container;
   private marker: Graphics;
+  private handlers: TileHandlers;
   private background: (e: FederatedPointerEvent) => void;
+  private touchMove: (e: FederatedPointerEvent) => void;
+  private touchEnd: () => void;
+  private touch: { x: number; y: number; sx: number; sy: number; timer: ReturnType<typeof setTimeout> } | null = null;
 
   constructor(stage: Container, model: RoomModel, handlers: TileHandlers) {
     this.model = model;
     this.stage = stage;
+    this.handlers = handlers;
     this.world = new Container();
     this.world.sortableChildren = true;
     stage.addChild(this.world);
@@ -66,6 +74,17 @@ export class RoomScene {
       handlers.click(t.x, t.y, e.button);
     };
     stage.on("pointerdown", this.background);
+
+    // A drifting finger is a scroll attempt, not a press; lifting off-tile abandons the tap.
+    this.touchMove = (e) => {
+      if (this.touch && Math.hypot(e.global.x - this.touch.sx, e.global.y - this.touch.sy) > LONG_PRESS_SLOP) {
+        this.cancelTouch();
+      }
+    };
+    this.touchEnd = () => this.cancelTouch();
+    stage.on("pointermove", this.touchMove);
+    stage.on("pointerup", this.touchEnd);
+    stage.on("pointerupoutside", this.touchEnd);
   }
 
   center(width: number, height: number): void {
@@ -87,8 +106,40 @@ export class RoomScene {
   }
 
   destroy(): void {
+    this.cancelTouch();
     this.stage.off("pointerdown", this.background);
+    this.stage.off("pointermove", this.touchMove);
+    this.stage.off("pointerup", this.touchEnd);
+    this.stage.off("pointerupoutside", this.touchEnd);
     this.world.destroy({ children: true });
+  }
+
+  /** Touch has no right button, so a press on a tile decides on release: a quick lift is the
+   *  tap (left-click path), holding still for LONG_PRESS_MS is the pickup (right-click path). */
+  private beginTouch(x: number, y: number, e: FederatedPointerEvent): void {
+    this.cancelTouch();
+    this.touch = {
+      x,
+      y,
+      sx: e.global.x,
+      sy: e.global.y,
+      timer: setTimeout(() => {
+        this.touch = null;
+        this.handlers.click(x, y, 2);
+      }, LONG_PRESS_MS),
+    };
+  }
+
+  private endTouch(x: number, y: number): void {
+    if (!this.touch || this.touch.x !== x || this.touch.y !== y) return;
+    this.cancelTouch();
+    this.handlers.click(x, y, 0);
+  }
+
+  private cancelTouch(): void {
+    if (!this.touch) return;
+    clearTimeout(this.touch.timer);
+    this.touch = null;
   }
 
   private addTile(x: number, y: number, h: number, handlers: TileHandlers): void {
@@ -101,7 +152,13 @@ export class RoomScene {
     tile.eventMode = "static";
     tile.cursor = "pointer";
     tile.zIndex = depthKey({ kind: "tile", x, y, z: h });
-    tile.on("pointerdown", (e) => handlers.click(x, y, e.button));
+    tile.on("pointerdown", (e) => {
+      if (e.pointerType === "touch") this.beginTouch(x, y, e);
+      else handlers.click(x, y, e.button);
+    });
+    tile.on("pointerup", (e) => {
+      if (e.pointerType === "touch") this.endTouch(x, y);
+    });
     tile.on("pointerover", () => handlers.hover({ x, y }));
     tile.on("pointerout", () => handlers.hover(null));
     this.world.addChild(tile);

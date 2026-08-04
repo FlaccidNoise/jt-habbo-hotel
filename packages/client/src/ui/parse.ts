@@ -15,5 +15,13 @@ export function parseChatInput(raw: string, shiftEnter: boolean): ChatIntent | n
   }
   if (text.startsWith("/w")) return null;
 
+  // Touch keyboards have no Shift+Enter, so /shout is the phone path to shouting.
+  const shout = /^\/shout\s+(.+)$/s.exec(text);
+  if (shout) {
+    const body = (shout[1] ?? "").trim();
+    return body.length === 0 ? null : { kind: "shout", text: body };
+  }
+  if (text.startsWith("/shout")) return null;
+
   return { kind: shiftEnter ? "shout" : "say", text };
 }

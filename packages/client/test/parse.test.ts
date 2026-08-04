@@ -26,3 +26,12 @@ test("/w with no message is nothing", () => {
   expect(parseChatInput("/w bob", false)).toBeNull();
   expect(parseChatInput("/w bob   ", false)).toBeNull();
 });
+
+test("/shout text shouts", () => {
+  expect(parseChatInput("/shout hey all", false)).toEqual({ kind: "shout", text: "hey all" });
+});
+
+test("/shout with no message is nothing", () => {
+  expect(parseChatInput("/shout", false)).toBeNull();
+  expect(parseChatInput("/shout   ", false)).toBeNull();
+});

@@ -92,7 +92,7 @@ function renderInventory(): void {
   if (inventory.length === 0) {
     const empty = document.createElement("span");
     empty.className = "empty";
-    empty.textContent = "Inventory empty — right-click furni in the room to pick it up.";
+    empty.textContent = "Inventory empty — right-click (or long-press) furni in the room to pick it up.";
     strip.appendChild(empty);
     return;
   }
