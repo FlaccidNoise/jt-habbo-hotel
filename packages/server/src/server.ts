@@ -1,6 +1,9 @@
+import { createReadStream } from "node:fs";
+import { stat } from "node:fs/promises";
 import { createServer } from "node:http";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import type { AddressInfo, Socket } from "node:net";
+import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
@@ -15,6 +18,18 @@ import type { Emit } from "./room.ts";
 const BODY_CAP = 1024;
 const HANDSHAKE_MS = 5000;
 const DISPOSE_MS = 5 * 60 * 1000;
+
+const MIME: Record<string, string> = {
+  ".css": "text/css",
+  ".html": "text/html; charset=utf-8",
+  ".ico": "image/x-icon",
+  ".js": "text/javascript",
+  ".json": "application/json",
+  ".map": "application/json",
+  ".png": "image/png",
+  ".svg": "image/svg+xml",
+  ".woff2": "font/woff2",
+};
 
 export interface ServerHandle {
   close(): Promise<void>;
@@ -38,10 +53,12 @@ interface RoomEntry {
 export async function startServer(opts: {
   port: number;
   dbPath: string;
+  staticDir?: string;
   handshakeMs?: number;
   disposeMs?: number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
+  const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
   const handshakeMs = opts.handshakeMs ?? HANDSHAKE_MS;
   const disposeMs = opts.disposeMs ?? DISPOSE_MS;
 
@@ -242,9 +259,56 @@ export async function startServer(opts: {
     });
   }
 
+  /** Static files for `make serve`: the built client next to /api and /ws on one port. */
+  async function serveStatic(req: IncomingMessage, res: ServerResponse, root: string): Promise<void> {
+    req.resume();
+    let pathname: string;
+    try {
+      pathname = decodeURIComponent((req.url ?? "/").split("?", 1)[0] ?? "/");
+    } catch {
+      json(res, 400, { error: "bad path" });
+      return;
+    }
+    const file = normalize(join(root, pathname === "/" ? "index.html" : pathname));
+    if (!file.startsWith(root + sep)) {
+      json(res, 404, { error: "not found" });
+      return;
+    }
+    let info;
+    try {
+      info = await stat(file);
+    } catch {
+      json(res, 404, { error: "not found" });
+      return;
+    }
+    if (!info.isFile()) {
+      json(res, 404, { error: "not found" });
+      return;
+    }
+    res.writeHead(200, {
+      "content-type": MIME[extname(file)] ?? "application/octet-stream",
+      "content-length": info.size,
+      // Vite hashes filenames under /assets/; index.html must revalidate so a new build takes.
+      "cache-control": pathname.startsWith("/assets/")
+        ? "public, max-age=31536000, immutable"
+        : "no-cache",
+    });
+    if (req.method === "HEAD") {
+      res.end();
+      return;
+    }
+    createReadStream(file)
+      .on("error", () => res.destroy())
+      .pipe(res);
+  }
+
   async function handleHttp(req: IncomingMessage, res: ServerResponse): Promise<void> {
     const path = req.url ?? "";
     if (req.method !== "POST" || (path !== "/api/register" && path !== "/api/login")) {
+      if (staticRoot && (req.method === "GET" || req.method === "HEAD") && !path.startsWith("/api")) {
+        await serveStatic(req, res, staticRoot);
+        return;
+      }
       req.resume();
       json(res, 404, { error: "not found" });
       return;

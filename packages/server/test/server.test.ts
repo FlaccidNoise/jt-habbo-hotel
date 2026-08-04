@@ -1,4 +1,5 @@
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { request } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
@@ -299,5 +300,67 @@ describe("server lifecycle", () => {
     expect(rejoined.state.furni).toEqual([
       { id: chair.id, defId: "chair_basic", x: 2, y: 2, z: 0, dir: 0, state: 0 },
     ]);
+  });
+});
+
+describe("static serving", () => {
+  function makeDist(): string {
+    const root = join(dir, "dist");
+    mkdirSync(join(root, "assets"), { recursive: true });
+    writeFileSync(join(root, "index.html"), "<!doctype html><title>grand</title>");
+    writeFileSync(join(root, "assets", "app-abc123.js"), "console.log(1)");
+    return root;
+  }
+
+  /** fetch() collapses dot segments (even %2e-encoded) before sending, so traversal
+   *  attempts need a raw socket path. */
+  function rawGet(port: number, path: string): Promise<number> {
+    return new Promise((resolvePromise, reject) => {
+      const req = request({ host: "127.0.0.1", port, path, method: "GET" }, (res) => {
+        res.resume();
+        res.on("end", () => resolvePromise(res.statusCode ?? 0));
+      });
+      req.on("error", reject);
+      req.end();
+    });
+  }
+
+  test("serves index.html at / with no-cache", async () => {
+    const { port } = await start({ staticDir: makeDist() });
+    const res = await fetch(`http://127.0.0.1:${port}/`);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/html; charset=utf-8");
+    expect(res.headers.get("cache-control")).toBe("no-cache");
+    expect(await res.text()).toContain("grand");
+  });
+
+  test("serves hashed assets as immutable", async () => {
+    const { port } = await start({ staticDir: makeDist() });
+    const res = await fetch(`http://127.0.0.1:${port}/assets/app-abc123.js`);
+    expect(res.status).toBe(200);
+    expect(res.headers.get("content-type")).toBe("text/javascript");
+    expect(res.headers.get("cache-control")).toBe("public, max-age=31536000, immutable");
+  });
+
+  test("missing file 404s", async () => {
+    const { port } = await start({ staticDir: makeDist() });
+    expect((await fetch(`http://127.0.0.1:${port}/nope.js`)).status).toBe(404);
+  });
+
+  test("path traversal is rejected", async () => {
+    const { port } = await start({ staticDir: makeDist() });
+    expect(await rawGet(port, "/../test.db")).toBe(404);
+    expect(await rawGet(port, "/assets/%2e%2e/%2e%2e/test.db")).toBe(404);
+  });
+
+  test("static root does not shadow /api, and auth still works", async () => {
+    const server = await start({ staticDir: makeDist() });
+    expect((await fetch(`http://127.0.0.1:${server.port}/api/anything`)).status).toBe(404);
+    await signUp(server.port, "alice");
+  });
+
+  test("GET / without staticDir stays a 404", async () => {
+    const { port } = await start();
+    expect((await fetch(`http://127.0.0.1:${port}/`)).status).toBe(404);
   });
 });
