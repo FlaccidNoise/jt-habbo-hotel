@@ -308,8 +308,10 @@ ARM_LEN = 22
 # ball: ellipsoid at a bone-local centre.
 # The shins cap at the knee only: a bottom cap is a sphere hanging below the ankle, which puts
 # ink under the anchor row and makes the figure read as floating.
+# Keyed by figuredata set id (packages/shared/src/figuredata.ts): "<type><set>". The id is the
+# link between a mesh here and a wearable there, and figuredata set IDs are append-only forever.
 FIGURE_PARTS = {
-    "bd": {
+    "bd1": {
         "prims": [
             {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-6.5, -3.5, 0.0),
              "c1": (6.5, 3.5, float(TORSO_LEN))},
@@ -330,7 +332,7 @@ FIGURE_PARTS = {
     # The head is its own layer, not part of bd — it is selectable, and it is what makes a figure
     # readable front-from-back. The skull's y radius is 22/2 * 0.82 = 9.0, so the nose has to
     # reach past 9.0 to break the silhouette at all; a brow flush with the skull only shades.
-    "hd": {
+    "hd2": {
         "prims": [
             {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, HEAD_LEN / 2.0),
              "r": HEAD_LEN / 2.0, "squash": (1.0, 0.82, 1.0)},
@@ -338,6 +340,17 @@ FIGURE_PARTS = {
              "c1": (1.7, 11.2, 12.6)},
             {"t": "box",  "bone": "head", "slot": 0, "c0": (-4.6, 6.4, 13.0),
              "c1": (4.6, 9.2, 15.4)},
+        ],
+    },
+    # Tee (figuredata set 5, one colour slot). Sits just proud of the torso and takes the upper
+    # arm; the forearm and hands stay bare, which is what makes the holdout visible — the sleeve
+    # has to be cut where the arm passes in front of it.
+    "ch5": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-6.9, -3.9, 1.5),
+             "c1": (6.9, 3.9, 20.0)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 8.0, "r": 2.9},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 2.9},
         ],
     },
 }
@@ -511,6 +524,25 @@ def build_figure(part_ids, pose, direction):
                 obj.matrix_parent_inverse = Matrix.Identity(4)
             prim_objs.append(objs)
     return prim_objs
+
+# The canonical body every garment is cut against. Rendering a garment WITH these present and
+# then discarding their pixels by mask index is a holdout: where the body is nearer, the body wins
+# the depth test, so those pixels are simply never the garment's. Compositing is then plain
+# alpha-over with no runtime depth at all.
+#
+# This works only while the holdout set is exactly one thing. That is what the per-set hidden-layer
+# rules buy: a hat hides hair, so a hat never needs a holdout render per hair set. Adding a second
+# HEAD SHAPE would break it — every hat would need re-rendering per head — so hd stays one mesh
+# and head variety comes from colour and hair.
+HOLDOUT_PARTS = ["bd1", "hd2"]
+
+def figure_render_set(part_id):
+    """Which parts to build for one layer's render, and the prim index its own geometry starts at.
+    Everything before that index is holdout and gets discarded by figurepass."""
+    if part_id in HOLDOUT_PARTS:
+        upto = HOLDOUT_PARTS[: HOLDOUT_PARTS.index(part_id) + 1]
+        return upto, sum(len(FIGURE_PARTS[p]["prims"]) for p in upto[:-1])
+    return HOLDOUT_PARTS + [part_id], sum(len(FIGURE_PARTS[p]["prims"]) for p in HOLDOUT_PARTS)
 
 def clear_figure():
     for obj in [o for o in bpy.data.objects if o.type == "EMPTY" and o.name.startswith("fig_")]:
@@ -789,6 +821,23 @@ for part_id, part in PARTS.items():
 
 check_poses()
 
+# Shadows are fatal to layered figures and setup_scene's per-light `sun.use_shadow = False` does
+# NOT turn them off — scene.eevee.use_shadows is a master switch that overrides it. With shadows
+# on, a shirt casts onto the torso, so the bare body renders differently depending on what is worn
+# over it: measured on the tee, 1374 pixels showing the SAME primitive differed by a mean of
+# 56/255. A layer's pixels must not depend on which other layers are worn, or compositing at
+# runtime is a lie. Off, that falls to 35 pixels of mean 5.4, all on layer boundaries and none
+# inside a flat layer — antialiasing, which the postpass's fixed-threshold quantisation removes.
+#
+# use_fast_gi and use_raytracing were measured too and changed nothing in this scene (black world,
+# one unshadowed sun), so they are left alone rather than set for decoration.
+#
+# Figures ONLY, and set here rather than in setup_scene because the furni loop has already run:
+# those 22 bundles are frozen and their pixels are their identity. Contact shading comes back as
+# postpass interior lines along layer boundaries, which is where a pixel-art style wants it.
+if hasattr(bpy.context.scene.eevee, "use_shadows"):
+    bpy.context.scene.eevee.use_shadows = False
+
 meta["figures"] = {}
 meta["figureCanvas"] = {"w": CANVAS_W, "h": CANVAS_H, "height": FIGURE_H,
                         "frames": FRAMES, "sitFootDrop": SIT_FOOT_DROP}
@@ -798,13 +847,14 @@ for part_id, part in FIGURE_PARTS.items():
     if only and part_id not in only:
         continue
     assert len(part["prims"]) <= 26, f"{part_id}: mask encoding holds 26 prims max"
+    build_parts, own_from = figure_render_set(part_id)
     frames = []
     for frame in FRAMES:
         pose = POSES[frame]
         for direction in range(8):
             clear_meshes()
             clear_figure()
-            prim_objs = build_figure([part_id], pose, direction)
+            prim_objs = build_figure(build_parts, pose, direction)
             base = os.path.join(OUT, f"fig_{part_id}_{frame}_d{direction}")
             if hasattr(scene, "eevee"):
                 scene.eevee.taa_render_samples = 16
@@ -827,10 +877,18 @@ for part_id, part in FIGURE_PARTS.items():
             })
     meta["figures"][part_id] = {
         "frames": frames,
-        "prims": [{"slot": p.get("slot", 0), "bone": p["bone"]} for p in part["prims"]],
+        # Prims of every part in the render, in mask-index order. Indices below ownFrom are the
+        # holdout body: figurepass drops them, which is what cuts the garment where the body is
+        # nearer. Keeping them all instead reconstructs the combined render, which is the
+        # reference the holdout gate diffs against — so the gate costs no extra Blender time.
+        "prims": [{"slot": q.get("slot", 0), "bone": q["bone"], "part": p}
+                  for p in build_parts for q in FIGURE_PARTS[p]["prims"]],
+        "ownFrom": own_from,
+        "holdout": build_parts[:-1] if part_id not in HOLDOUT_PARTS or own_from else [],
         "src": part["prims"],
     }
-    print(f"rendered figure {part_id} ({len(frames)} dir-frames)")
+    print(f"rendered figure {part_id} ({len(frames)} dir-frames, "
+          f"{own_from} holdout prim(s) from {build_parts[:-1] or ['none']})")
 
 clear_meshes()
 clear_figure()
