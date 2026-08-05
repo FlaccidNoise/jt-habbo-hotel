@@ -51,6 +51,11 @@
         background: #1c1f2be6; color: #eef; cursor: pointer; }
       #inventory button.armed { border-color: #7fd98a; background: #24422a; }
       #inventory .empty { color: #7d8496; font-size: 13px; }
+      #wardrobe { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+      #wardrobe .label { color: #9fd0ff; font-size: 13px; font-weight: 600; }
+      #wardrobe button { padding: 5px 10px; border-radius: 8px; border: 1px solid #3c5670;
+        background: #1b2836; color: #dbe6f2; cursor: pointer; font-size: 13px; }
+      #wardrobe button.worn { border-color: #7fb2d9; background: #24405c; }
       #catalog { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
       #catalog .label { color: #ffd76a; font-size: 13px; font-weight: 600; }
       #catalog button { padding: 5px 10px; border-radius: 8px; border: 1px solid #6a5a2e;
@@ -158,6 +163,7 @@
     </div>
     <div id="hud">
       <div id="catalog"></div>
+      <div id="wardrobe"></div>
       <div id="inventory"></div>
       <div id="furni-menu" hidden></div>
       <div id="hint">Click a chair to sit · click it again to stand · R turns the item you are

@@ -5,10 +5,15 @@ import {
   PROTOTYPE_CATALOG,
   ROOM_CAPACITY,
   ROOM_FURNI_CAP,
+  STARTER_GRANT_SETS,
   checkPlacement,
   footprintTiles,
+  paletteFor,
+  parseFigure,
   parseHeightmap,
   seatAt,
+  serializeFigure,
+  setById,
   tileHeight,
 } from "@grand/shared";
 import type {
@@ -20,6 +25,7 @@ import type {
   RoomModel,
   ServerMsg,
   Tile,
+  WornPart,
 } from "@grand/shared";
 import { Net } from "./net.ts";
 import { loadFurniAssets } from "./scene/assets.ts";
@@ -70,6 +76,7 @@ let stars = 0;
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
 let myRoomId: number | null = null;
+let myFigure: string | null = null;
 let hereRoomId = roomId;
 
 function toast(text: string, kind?: "notice"): void {
@@ -158,6 +165,59 @@ function renderInventory(): void {
 function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
   renderCatalog();
+}
+
+/** Swap one garment. Composition only — the player picks type-set-colour and nothing else, the
+ *  same curated-parts rule badges and furni patterns already follow. Ownership is the server's
+ *  call: an unowned set comes back as error{code:"figure"} and nothing changes here. */
+function renderWardrobe(): void {
+  const strip = el("wardrobe");
+  strip.replaceChildren();
+  if (myFigure === null) return;
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = "Wardrobe:";
+  strip.appendChild(label);
+
+  const worn = new Map(parseFigure(myFigure).parts.map((part) => [part.type, part]));
+  const wear = (parts: WornPart[]): void => {
+    net.send({ t: "set_figure", figure: serializeFigure({ version: 1, parts }) });
+  };
+
+  for (const setId of STARTER_GRANT_SETS) {
+    const set = setById(setId);
+    if (!set || set.retired || set.type === "hd") continue;
+    const current = worn.get(set.type);
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = current?.set === set.id ? "worn" : "";
+    button.textContent = set.name;
+    button.addEventListener("click", () => {
+      // Keep the colours already worn for this type where the slots line up, so clicking through
+      // hair does not silently repaint it.
+      const palette = paletteFor(set.family);
+      const colors = Array.from({ length: set.slots }, (_, i) =>
+        current?.colors[i] ?? palette[(setId + i) % palette.length]!);
+      const next = [...worn.values()].filter((part) => part.type !== set.type);
+      next.push({ type: set.type, set: set.id, colors });
+      wear(next);
+    });
+    strip.appendChild(button);
+  }
+
+  const recolour = document.createElement("button");
+  recolour.type = "button";
+  recolour.textContent = "Recolour shirt";
+  recolour.addEventListener("click", () => {
+    const shirt = worn.get("ch");
+    if (!shirt) return;
+    const palette = paletteFor(setById(shirt.set)?.family ?? "material");
+    const at = palette.indexOf(shirt.colors[0] ?? "");
+    const colors = [...shirt.colors];
+    colors[0] = palette[(at + 1) % palette.length]!;
+    wear([...worn.values()].filter((part) => part.type !== "ch").concat({ ...shirt, colors }));
+  });
+  strip.appendChild(recolour);
 }
 
 function renderCatalog(): void {
@@ -417,11 +477,13 @@ function buildRoom(msg: RoomState): void {
   armed = null;
   placeDir = 0;
   you = msg.you;
+  myFigure = msg.avatars.find((a) => a.id === msg.you)?.figure ?? null;
   closeMenu();
   stars = msg.stars;
   trade = null;
   arcade = null;
   renderStars();
+  renderWardrobe();
   renderTrade();
   renderArcade();
   el("arcade").hidden = true;
@@ -495,6 +557,10 @@ function handle(msg: ServerMsg): void {
       break;
     case "figure_changed":
       avatars.get(msg.id)?.setFigure(msg.figure);
+      if (msg.id === you) {
+        myFigure = msg.figure;
+        renderWardrobe();
+      }
       break;
     case "wave":
       avatars.get(msg.id)?.wave(Date.now());
