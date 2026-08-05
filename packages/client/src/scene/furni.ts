@@ -1,6 +1,9 @@
-import { Container, Graphics } from "pixi.js";
+import { Container, Graphics, Sprite } from "pixi.js";
 import { worldToScreen } from "@grand/shared";
 import type { FurniDef, FurniItem } from "@grand/shared";
+import type { FurniAssets } from "./assets.ts";
+import { frameTexture } from "./assets.ts";
+import { frameFor } from "./frames.ts";
 import { SCALE } from "./room.ts";
 import { depthKey } from "./sort.ts";
 
@@ -14,9 +17,9 @@ function shade(color: number, factor: number): number {
   return (channel(16) << 16) | (channel(8) << 8) | channel(0);
 }
 
-/** Placeholder furni: an extruded box whose top face covers the footprint and whose two visible
- *  sides are `stackHeights[state]` height units tall, in three shades of the def's colour. */
-function draw(g: Graphics, def: FurniDef, item: FurniItem): void {
+/** Placeholder slab for defs with no generated bundle: an extruded box whose top face covers the
+ *  footprint, in three shades of the def's colour. */
+function drawSlab(g: Graphics, def: FurniDef, item: FurniItem): void {
   const rotated = item.dir === 2 || item.dir === 6;
   const spanX = rotated ? def.l : def.w;
   const spanY = rotated ? def.w : def.l;
@@ -36,7 +39,6 @@ function draw(g: Graphics, def: FurniDef, item: FurniItem): void {
   const sb = at(x1, y1, item.z);
   const wb = at(x0, y1, item.z);
 
-  g.clear();
   g.poly([e.sx, e.sy, s.sx, s.sy, sb.sx, sb.sy, eb.sx, eb.sy]).fill(shade(def.color, RIGHT));
   g.poly([s.sx, s.sy, w.sx, w.sy, wb.sx, wb.sy, sb.sx, sb.sy]).fill(shade(def.color, LEFT));
   g.poly([n.sx, n.sy, e.sx, e.sy, s.sx, s.sy, w.sx, w.sy])
@@ -44,16 +46,19 @@ function draw(g: Graphics, def: FurniDef, item: FurniItem): void {
     .stroke({ width: 1, color: 0x000000, alpha: 0.3 });
 }
 
-/** Every placed item in the room. `apply` covers both `furni_placed` (new id creates, known id
- *  updates) and `furni_moved` — the same redraw either way. */
+/** Every placed item in the room, drawn from generated sprite sheets when the def has a bundle.
+ *  `apply` covers `furni_placed` (new id creates, known id updates) and `furni_moved` — the same
+ *  rebuild either way. */
 export class FurniLayer {
   private world: Container;
   private defs: ReadonlyMap<string, FurniDef>;
-  private sprites = new Map<number, Graphics>();
+  private assets: FurniAssets | null;
+  private views = new Map<number, Container>();
 
-  constructor(world: Container, defs: ReadonlyMap<string, FurniDef>) {
+  constructor(world: Container, defs: ReadonlyMap<string, FurniDef>, assets: FurniAssets | null) {
     this.world = world;
     this.defs = defs;
+    this.assets = assets;
   }
 
   apply(item: FurniItem): void {
@@ -62,26 +67,43 @@ export class FurniLayer {
       console.warn(`furni ${item.id}: unknown def ${item.defId}`);
       return;
     }
-    let sprite = this.sprites.get(item.id);
-    if (!sprite) {
-      sprite = new Graphics();
-      sprite.eventMode = "none";
-      this.sprites.set(item.id, sprite);
-      this.world.addChild(sprite);
-    }
-    draw(sprite, def, item);
-    sprite.zIndex = depthKey({
+    this.remove(item.id);
+
+    const view = this.spriteFor(item) ?? this.slabFor(def, item);
+    view.eventMode = "none";
+    view.zIndex = depthKey({
       kind: def.canWalk ? "floor_furni" : "furni",
       x: item.x,
       y: item.y,
       z: item.z,
     });
+    this.views.set(item.id, view);
+    this.world.addChild(view);
   }
 
   remove(id: number): void {
-    const sprite = this.sprites.get(id);
-    if (!sprite) return;
-    sprite.destroy();
-    this.sprites.delete(id);
+    const view = this.views.get(id);
+    if (!view) return;
+    view.destroy({ children: true });   // frame textures are cached on the asset, not destroyed
+    this.views.delete(id);
+  }
+
+  private spriteFor(item: FurniItem): Sprite | null {
+    const asset = this.assets?.get(item.defId);
+    if (!asset) return null;
+    const texture = frameTexture(asset, item.dir);
+    const spec = frameFor(asset.meta, item.dir);
+    if (!texture || !spec) return null;
+    const sprite = new Sprite(texture);
+    const p = worldToScreen(item.x, item.y, item.z, SCALE);
+    sprite.x = p.sx + spec.offsetX;
+    sprite.y = p.sy + spec.offsetY;
+    return sprite;
+  }
+
+  private slabFor(def: FurniDef, item: FurniItem): Graphics {
+    const g = new Graphics();
+    drawSlab(g, def, item);
+    return g;
   }
 }

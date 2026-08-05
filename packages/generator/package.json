@@ -1,0 +1,14 @@
+{
+  "name": "@grand/generator",
+  "type": "module",
+  "scripts": {
+    "generate": "node --experimental-strip-types src/cli.ts",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": { "@grand/shared": "workspace:*" },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^3.0.0"
+  }
+}

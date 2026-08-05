@@ -18,6 +18,8 @@ import type {
   Tile,
 } from "@grand/shared";
 import { Net } from "./net.ts";
+import { loadFurniAssets } from "./scene/assets.ts";
+import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene } from "./scene/room.ts";
@@ -42,6 +44,7 @@ const chat = new ChatOverlay(el("bubbles"));
 let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
+let furniAssets: FurniAssets | null = null;
 let model: RoomModel | null = null;
 let doorTile: Tile = { x: 0, y: 0 };
 let furni: FurniItem[] = [];
@@ -165,7 +168,7 @@ function buildRoom(msg: RoomState): void {
 
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
-  furniLayer = new FurniLayer(scene.world, DEFS);
+  furniLayer = new FurniLayer(scene.world, DEFS, furniAssets);
   for (const item of furni) furniLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
@@ -231,6 +234,7 @@ function handle(msg: ServerMsg): void {
 
 async function start(token: string): Promise<void> {
   app = new Application();
+  furniAssets = await loadFurniAssets();
   await app.init({ background: 0x11131a, resizeTo: window, antialias: true });
   el("stage").appendChild(app.canvas);
   app.stage.eventMode = "static";

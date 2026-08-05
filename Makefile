@@ -13,5 +13,10 @@ serve:
 test:
 	pnpm typecheck && pnpm test && pnpm --filter @grand/client build
 
+# Regenerate the frozen furni bundles in packages/client/public/furni. The golden-hash test
+# fails until intentional style changes are regenerated and committed.
+gen:
+	pnpm --filter @grand/generator generate
+
 db-reset:
 	rm -f packages/server/grand.db*
