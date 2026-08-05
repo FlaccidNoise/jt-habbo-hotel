@@ -1,0 +1,164 @@
+{
+  "canvas": {
+    "w": 64,
+    "h": 112,
+    "height": 80,
+    "frames": [
+      "stand",
+      "walk0",
+      "walk1",
+      "walk2",
+      "walk3",
+      "sit",
+      "wave0",
+      "wave1"
+    ],
+    "sitFootDrop": 18.6
+  },
+  "layers": [
+    {
+      "partId": "bd1",
+      "setId": 1,
+      "type": "bd",
+      "name": "Body",
+      "slots": 1,
+      "hides": [],
+      "sheet": "bd1.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        103,
+        103,
+        103,
+        103,
+        103,
+        74,
+        103,
+        103
+      ],
+      "figureHeight": 80,
+      "styleVersion": 2,
+      "generatorVersion": 1,
+      "figuredataVersion": 1,
+      "recipeHash": "24302de17ccb510d61f342c3037c003490e2c599c25b2755379c79be30a6a22a",
+      "pixelHash": "4f1cdfaa396db5b5d555ea61adb20e15a661084508c747a821114d20866e3cf7"
+    },
+    {
+      "partId": "hd2",
+      "setId": 2,
+      "type": "hd",
+      "name": "Head",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hd2.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        103,
+        103,
+        103,
+        103,
+        103,
+        74,
+        103,
+        103
+      ],
+      "figureHeight": 80,
+      "styleVersion": 2,
+      "generatorVersion": 1,
+      "figuredataVersion": 1,
+      "recipeHash": "e3d9db56e26b6b97563204c0e0896e2394672d771ec4d66991d6cb78a431aa71",
+      "pixelHash": "b2fe2426171b2d9334317e9c732ea534e199a6ff769f203bcd631a4983bdc75f"
+    },
+    {
+      "partId": "ch5",
+      "setId": 5,
+      "type": "ch",
+      "name": "Tee",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ch5.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        103,
+        103,
+        103,
+        103,
+        103,
+        74,
+        103,
+        103
+      ],
+      "figureHeight": 80,
+      "styleVersion": 2,
+      "generatorVersion": 1,
+      "figuredataVersion": 1,
+      "recipeHash": "bf7ec2c0ac34ed147b98991b55a4c4fbe2668f7f9a5821858f4c35f3f64aa3eb",
+      "pixelHash": "44fa17fa74174cfcf3fde0a48a151897edc341af93c4cda81bff404e7d65da2f"
+    }
+  ]
+}

@@ -294,10 +294,10 @@ BONES = {
     "spine":  ("hip",   (0.0, 0.0, 0.0)),
     "chest":  ("spine", (0.0, 0.0, SHOULDER_Z - HIP_Z)),
     "head":   ("chest", (0.0, 0.0, CHIN_Z - SHOULDER_Z)),
-    "arm_l":  ("chest", (7.0, 0.0, 0.0)),
-    "arm_r":  ("chest", (-7.0, 0.0, 0.0)),
-    "leg_l":  ("hip",   (3.0, 0.0, 0.0)),
-    "leg_r":  ("hip",   (-3.0, 0.0, 0.0)),
+    "arm_l":  ("chest", (9.5, 0.0, 0.0)),
+    "arm_r":  ("chest", (-9.5, 0.0, 0.0)),
+    "leg_l":  ("hip",   (4.0, 0.0, 0.0)),
+    "leg_r":  ("hip",   (-4.0, 0.0, 0.0)),
     "knee_l": ("leg_l", (0.0, 0.0, -THIGH_LEN)),
     "knee_r": ("leg_r", (0.0, 0.0, -THIGH_LEN)),
 }
@@ -313,20 +313,20 @@ ARM_LEN = 22
 FIGURE_PARTS = {
     "bd1": {
         "prims": [
-            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-6.5, -3.5, 0.0),
-             "c1": (6.5, 3.5, float(TORSO_LEN))},
-            {"t": "limb", "bone": "arm_l",  "slot": 0, "len": float(ARM_LEN), "r": 2.4},
-            {"t": "limb", "bone": "arm_r",  "slot": 0, "len": float(ARM_LEN), "r": 2.4},
-            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 3.0},
-            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 3.0},
-            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 2.6,
+            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-7.5, -5.0, 0.0),
+             "c1": (7.5, 5.0, float(TORSO_LEN))},
+            {"t": "limb", "bone": "arm_l",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
+            {"t": "limb", "bone": "arm_r",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 3.9},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 3.9},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 3.4,
              "caps": "top"},
-            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 2.6,
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 3.4,
              "caps": "top"},
-            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-2.6, -2.0, -float(SHIN_LEN)),
-             "c1": (2.6, 5.0, -SHIN_LEN + 3.0)},
-            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-2.6, -2.0, -float(SHIN_LEN)),
-             "c1": (2.6, 5.0, -SHIN_LEN + 3.0)},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.4, -2.6, -float(SHIN_LEN)),
+             "c1": (3.4, 6.0, -SHIN_LEN + 3.4)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.4, -2.6, -float(SHIN_LEN)),
+             "c1": (3.4, 6.0, -SHIN_LEN + 3.4)},
         ],
     },
     # The head is its own layer, not part of bd — it is selectable, and it is what makes a figure
@@ -334,8 +334,9 @@ FIGURE_PARTS = {
     # reach past 9.0 to break the silhouette at all; a brow flush with the skull only shades.
     "hd2": {
         "prims": [
+            {"t": "limb", "bone": "head", "slot": 0, "len": 5.0, "r": 3.6},   # neck
             {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, HEAD_LEN / 2.0),
-             "r": HEAD_LEN / 2.0, "squash": (1.0, 0.82, 1.0)},
+             "r": HEAD_LEN / 2.0, "squash": (0.92, 0.86, 1.0)},
             {"t": "box",  "bone": "head", "slot": 0, "c0": (-1.7, 7.4, 9.0),
              "c1": (1.7, 11.2, 12.6)},
             {"t": "box",  "bone": "head", "slot": 0, "c0": (-4.6, 6.4, 13.0),
@@ -347,10 +348,10 @@ FIGURE_PARTS = {
     # has to be cut where the arm passes in front of it.
     "ch5": {
         "prims": [
-            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-6.9, -3.9, 1.5),
-             "c1": (6.9, 3.9, 20.0)},
-            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 8.0, "r": 2.9},
-            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 2.9},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -5.4, 1.5),
+             "c1": (7.9, 5.4, 20.0)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 8.0, "r": 3.7},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 3.7},
         ],
     },
 }
@@ -364,8 +365,8 @@ FIGURE_PARTS = {
 #
 # Measured: the standing composite is 22 x 85 px, reaching 81 above the anchor and 3 below. It
 # reaches below because the anchor is the tile-CENTRE ground point and a foot extending toward the
-# camera is genuinely nearer, so it projects lower. anchor_y 105 leaves 24 px of hat room above
-# the crown and 6 px of slack under the toe.
+# camera is genuinely nearer, so it projects lower. anchor_y 103 leaves 22 px of hat room above
+# the crown and 8 px of slack under the toe — walk contact frames reach 7 px down.
 #
 # Walk contact frames drop the root by 2.5 px. A leg swung 22 degrees is 37*(1-cos22) = 2.7 px
 # shorter vertically, so without the drop the figure hovers on every contact frame.
@@ -379,28 +380,28 @@ FIGURE_PARTS = {
 SIT_FOOT_DROP = 18.6
 
 POSES = {
-    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {}},
-    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 104, "bones": {
+    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {}},
+    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 103, "bones": {
         "leg_l": (22.0, 0.0, 0.0), "leg_r": (-22.0, 0.0, 0.0),
         "knee_l": (-5.0, 0.0, 0.0), "knee_r": (-18.0, 0.0, 0.0),
         "arm_l": (-18.0, 0.0, 0.0), "arm_r": (18.0, 0.0, 0.0)}},
-    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
         "knee_r": (-28.0, 0.0, 0.0), "leg_r": (6.0, 0.0, 0.0),
         "arm_l": (-6.0, 0.0, 0.0), "arm_r": (6.0, 0.0, 0.0)}},
-    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 104, "bones": {
+    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 103, "bones": {
         "leg_l": (-22.0, 0.0, 0.0), "leg_r": (22.0, 0.0, 0.0),
         "knee_l": (-18.0, 0.0, 0.0), "knee_r": (-5.0, 0.0, 0.0),
         "arm_l": (18.0, 0.0, 0.0), "arm_r": (-18.0, 0.0, 0.0)}},
-    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
         "knee_l": (-28.0, 0.0, 0.0), "leg_l": (6.0, 0.0, 0.0),
         "arm_l": (6.0, 0.0, 0.0), "arm_r": (-6.0, 0.0, 0.0)}},
     "sit": {"root": (0.0, 0.0, -float(HIP_Z)), "anchor_y": 74, "bones": {
         "leg_l": (88.2, 0.0, 0.0), "leg_r": (88.2, 0.0, 0.0),
         "knee_l": (-88.2, 0.0, 0.0), "knee_r": (-88.2, 0.0, 0.0),
         "arm_l": (14.0, 0.0, 0.0), "arm_r": (14.0, 0.0, 0.0)}},
-    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
         "arm_r": (0.0, 132.0, 0.0)}},
-    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
         "arm_r": (0.0, 156.0, 0.0)}},
 }
 
