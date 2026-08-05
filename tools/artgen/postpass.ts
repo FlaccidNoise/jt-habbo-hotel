@@ -139,6 +139,11 @@ for (const [id, variant] of Object.entries(VARIANTS)) {
     failures++;
     continue;
   }
+  if (meta.parts[id]) {
+    console.error(`${id}: a colorway cannot share an id with a rendered part — both would freeze`);
+    failures++;
+    continue;
+  }
   work.push([id, recolor(base, variant.ramps)]);
 }
 
