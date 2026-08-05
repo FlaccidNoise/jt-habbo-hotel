@@ -3,6 +3,7 @@ import { Container } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { parseHeightmap } from "@grand/shared";
 import { RoomScene } from "../src/scene/room.ts";
+import { DepthIndex } from "../src/scene/sort.ts";
 
 /** The touch state machine drives real gameplay on phones; emit Pixi events by hand so it runs
  *  headless. A release emits on the tile first, then on the stage — the bubble order Pixi uses.
@@ -41,7 +42,7 @@ beforeEach(() => {
   scene = new RoomScene(stage, model, {
     click: (x, y, button) => clicks.push({ x, y, button }),
     hover: () => {},
-  });
+  }, new DepthIndex());
 });
 
 afterEach(() => {
@@ -101,5 +102,5 @@ test("destroy clears a pending long-press timer", () => {
   scene.destroy();
   vi.advanceTimersByTime(500);
   expect(clicks).toEqual([]);
-  scene = new RoomScene(stage, model, { click: () => {}, hover: () => {} });
+  scene = new RoomScene(stage, model, { click: () => {}, hover: () => {} }, new DepthIndex());
 });

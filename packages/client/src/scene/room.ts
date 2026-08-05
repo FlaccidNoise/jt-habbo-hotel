@@ -2,7 +2,8 @@ import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
-import { tileDepth } from "./sort.ts";
+import { LAYER, tileDepth } from "./sort.ts";
+import type { DepthIndex } from "./sort.ts";
 
 export const SCALE = 64;
 
@@ -18,6 +19,19 @@ const SIDE_RIGHT = 0x4d7434;
 export interface TileHandlers {
   click(x: number, y: number, button: number): void;
   hover(tile: Tile | null): void;
+}
+
+/** The lowest walkable tile. Everything in the room stands at or above it, so a tile at this
+ *  height can never rise into anything's sprite — see `tileDepth`. */
+function floorHeight(m: RoomModel): number {
+  let low = Infinity;
+  for (let y = 0; y < m.height; y++) {
+    for (let x = 0; x < m.width; x++) {
+      const h = tileHeight(m, x, y);
+      if (h >= 0 && h < low) low = h;
+    }
+  }
+  return low === Infinity ? 0 : low;
 }
 
 /** Screen-space corners of the tile diamond at (x, y) whose floor sits at height z. */
@@ -40,23 +54,28 @@ export class RoomScene {
   private model: RoomModel;
   private stage: Container;
   private marker: Graphics;
+  private depth: DepthIndex;
+  private floor: number;
+  private tiles = new Map<string, Graphics>();
   private handlers: TileHandlers;
   private background: (e: FederatedPointerEvent) => void;
   private touchMove: (e: FederatedPointerEvent) => void;
   private touchEnd: () => void;
   private touch: { x: number; y: number; sx: number; sy: number; timer: ReturnType<typeof setTimeout> } | null = null;
 
-  constructor(stage: Container, model: RoomModel, handlers: TileHandlers) {
+  constructor(stage: Container, model: RoomModel, handlers: TileHandlers, depth: DepthIndex) {
     this.model = model;
     this.stage = stage;
     this.handlers = handlers;
+    this.depth = depth;
+    this.floor = floorHeight(model);
     this.world = new Container();
     this.world.sortableChildren = true;
     stage.addChild(this.world);
 
     this.marker = new Graphics();
     this.marker.eventMode = "none";
-    this.marker.zIndex = -1;   // above every tile in the floor band, below every sprite
+    this.marker.zIndex = -1;   // above every tile in the floor band; `highlight` sorts it properly
     this.world.addChild(this.marker);
 
     for (let y = 0; y < model.height; y++) {
@@ -87,22 +106,45 @@ export class RoomScene {
     stage.on("pointerupoutside", this.touchEnd);
   }
 
+  /** The floor diamond drawn for (x, y), or null where the heightmap has a void. */
+  tileAt(x: number, y: number): Graphics | null {
+    return this.tiles.get(`${x},${y}`) ?? null;
+  }
+
   center(width: number, height: number): void {
     this.world.x = Math.round(width / 2 - (this.model.width - this.model.height) * (SCALE / 4));
     this.world.y = Math.round(height / 2 - (this.model.width + this.model.height - 2) * (SCALE / 8));
   }
 
   /** Placement preview at the height the item would rest at: green when the shared
-   *  `checkPlacement` says yes, red when it says no. */
+   *  `checkPlacement` says yes, red when it says no.
+   *
+   *  It joins the painter sort like anything else, or a raised platform would be drawn over the
+   *  highlight lying on top of it. `checkPlacement` only accepts footprints of one height, so a
+   *  single box covers every highlighted tile. */
   highlight(tiles: Tile[], ok: boolean, z: number): void {
     this.marker.clear();
+    if (tiles.length === 0) return this.clearHighlight();
     for (const t of tiles) {
       this.marker.poly(diamond(t.x, t.y, z)).fill({ color: ok ? 0x3fd94f : 0xd93f3f, alpha: 0.45 });
     }
+    const xs = tiles.map((t) => t.x);
+    const ys = tiles.map((t) => t.y);
+    this.depth.set(
+      "marker",
+      {
+        x0: Math.min(...xs), y0: Math.min(...ys), z0: z,
+        x1: Math.max(...xs) + 1, y1: Math.max(...ys) + 1, z1: z,
+        layer: LAYER.marker,
+      },
+      this.marker,
+    );
   }
 
   clearHighlight(): void {
     this.marker.clear();
+    this.depth.delete("marker");
+    this.marker.zIndex = -1;
   }
 
   destroy(): void {
@@ -152,7 +194,6 @@ export class RoomScene {
       .stroke({ width: 1, color: 0x000000, alpha: 0.2 });
     tile.eventMode = "static";
     tile.cursor = "pointer";
-    tile.zIndex = tileDepth(x, y);
     tile.on("pointerdown", (e) => {
       if (e.pointerType === "touch") this.beginTouch(x, y, e);
       else handlers.click(x, y, e.button);
@@ -162,14 +203,34 @@ export class RoomScene {
     });
     tile.on("pointerover", () => handlers.hover({ x, y }));
     tile.on("pointerout", () => handlers.hover(null));
+
+    this.tiles.set(`${x},${y}`, tile);
     this.world.addChild(tile);
 
     const sides = this.sides(x, y, h);
     if (sides) {
       sides.eventMode = "none";
-      sides.zIndex = tile.zIndex;
       this.world.addChild(sides);
     }
+
+    if (h <= this.floor) {
+      tile.zIndex = tileDepth(x, y);
+      if (sides) sides.zIndex = tile.zIndex;
+      return;
+    }
+    // Raised: the tile is a column reaching from the lowest point it is drawn to up to its
+    // surface, and it sorts against furniture like anything else (#230). Its overhang faces are
+    // the same solid, so they take the same box and land in the next slot — the two never overlap
+    // on screen, so which of them comes first does not matter.
+    const south = Math.max(0, tileHeight(this.model, x, y + 1));
+    const east = Math.max(0, tileHeight(this.model, x + 1, y));
+    const box = {
+      x0: x, y0: y, z0: Math.min(h, south, east),
+      x1: x + 1, y1: y + 1, z1: h,
+      layer: LAYER.tile,
+    };
+    this.depth.set(`tile:${x},${y}`, box, tile);
+    if (sides) this.depth.set(`tile:${x},${y}:sides`, box, sides);
   }
 
   /** Vertical faces where a tile overhangs its south and east neighbours, so raised platforms

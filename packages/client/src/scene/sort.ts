@@ -11,10 +11,16 @@ const TILE_BAND = -1e6;
  *  behind it buries them in the sprite. Doing it properly — body behind a near-side chair back,
  *  in front of a far-side one — needs the per-direction occlusion groups the bundle format
  *  reserves and the generator does not emit yet (PIPELINES §2 stage 1). */
-export const LAYER = { floor_furni: 0, avatar: 1, furni: 2, seated: 3 } as const;
+export const LAYER = {
+  tile: 0, floor_furni: 1, marker: 2, avatar: 3, furni: 4, seated: 5,
+} as const;
 
-/** Floor tiles are flat, static, and never interleave with each other, so they keep a band of
- *  their own below every sprite instead of joining the painter sort each frame. */
+/** Where a tile sits when it is not in the painter sort: a band of its own below every sprite.
+ *
+ *  Only tiles at the room's own floor height get this. A tile is drawn over things north and west
+ *  of it, and to reach up-screen far enough to cover any of them its top has to clear the floor
+ *  they stand on — which nothing at the lowest height in the room ever does. Everything higher
+ *  joins the sort and occludes for real (#230, room.ts). */
 export function tileDepth(x: number, y: number): number {
   return TILE_BAND + (x + y);
 }

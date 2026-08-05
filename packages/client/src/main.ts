@@ -440,7 +440,7 @@ function buildRoom(msg: RoomState): void {
     nav.style.display = "block";
   }
 
-  scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
+  scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover }, depth);
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);

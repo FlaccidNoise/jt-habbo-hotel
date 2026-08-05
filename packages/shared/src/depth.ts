@@ -42,7 +42,10 @@ export function behind(a: DepthBox, b: DepthBox): boolean {
   const ordered =
     (yOverlap && a.x1 <= b.x0) ||
     (xOverlap && a.y1 <= b.y0) ||
-    (xOverlap && yOverlap && a.z1 <= b.z0);
+    // `a.z0 < b.z1` only ever bites when both boxes are flat at the same height — a placement
+    // marker on the tile it highlights. Neither is underneath the other there, so both directions
+    // must say no and let the layer key decide, or the answer depends on array order.
+    (xOverlap && yOverlap && a.z1 <= b.z0 && a.z0 < b.z1);
   return ordered && meet(a, b);
 }
 

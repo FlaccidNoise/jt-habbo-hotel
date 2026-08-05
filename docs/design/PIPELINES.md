@@ -48,8 +48,15 @@ boxes that pass through each other therefore always fail: each is in front of th
 so no order is right, and parts are authored to touch rather than overlap. Coverage is the box path
 only — 3D-assisted defs ship frozen pixels with no boxes to re-render (#233).
 
-Floor tiles are excluded: they are flat and static, so they keep a band below every sprite. That is
-correct only while rooms are flat — raised tiles never occlude furniture (#230).
+Floor tiles join the sort as columns, from the lowest point their overhang faces reach up to their
+surface — a platform occludes what stands behind it, and furniture on it draws over it. Tiles at
+the room's own floor height stay in a band below every sprite instead: a tile is only ever drawn
+over things north and west of it, and to reach up-screen into any of them its top has to clear the
+floor they stand on, which the lowest height in the room never does. So a flat room puts no tile in
+the sort and costs exactly what it did before — 0.36 ms per restack over 125 items. A 20×20 room
+terraced to height 2 across half its area puts 190 tiles in and costs 2.21 ms. Restacks are
+event-driven, so that is the price of a move, not of a frame; if a room ever gets big enough to
+feel it, the tile order is static and can be computed once and merged (#230).
 
 **Seating occlusion** (audit B2): every part slot declares an **occlusion group** — in front of or
 behind a seated occupant, **per direction** (the chair back is behind the avatar facing the
