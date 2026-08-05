@@ -3,7 +3,11 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, expect, test } from "vitest";
 import Database from "better-sqlite3";
-import { COLLECTION_SETS, LEVER_COST, LEVER_PRIZES, LEVER_TOTAL_WEIGHT } from "@grand/shared";
+import {
+  COLLECTION_SETS, LEVER_COST, LEVER_PRIZES, LEVER_TOTAL_WEIGHT, PROTOTYPE_CATALOG,
+  WALL_CATALOG, WALL_TOP_PX,
+} from "@grand/shared";
+import { MUSEUM_ROOM_ID, PLAQUE_V } from "../src/museum.ts";
 import { flows } from "../src/metrics.ts";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
@@ -50,10 +54,11 @@ async function joinAs(port: number, username: string): Promise<Player> {
 }
 
 /** A second session for an account that already exists — registering again would 4401. */
-async function rejoin(port: number, token: string): Promise<{ ws: WebSocket; bus: Bus }> {
+async function rejoin(
+  port: number, token: string, roomId = 2,
+): Promise<{ ws: WebSocket; bus: Bus }> {
   const [ws, bus] = await connect(port);
-  ws.send(JSON.stringify({ t: "join", token, roomId: 2 }));
-  await bus.waitFor("room_state");
+  ws.send(JSON.stringify({ t: "join", token, roomId }));
   return { ws, bus };
 }
 
@@ -199,6 +204,7 @@ test("completing a set mints its reward and badge, exactly once ever", async () 
   // Re-joining must not pay again — the badge row is the idempotence key, so a second claim
   // would double-mint a bound item that can never be traded away.
   const again = await rejoin(srv.port, alice.token);
+  await again.bus.waitFor("room_state");
   await again.bus.waitFor("sets");
   await again.bus.never("set_complete", 200);
   expect(withDb((db) =>
@@ -215,6 +221,78 @@ test("the set reward is bound and carries its inscription", async () => {
   expect(withDb((db) =>
     db.prepare("SELECT bound, inscription FROM furni_items WHERE id = ?").get(done.item.id)))
     .toEqual({ bound: 1, inscription: `${CAFE.name} — completed` });
+});
+
+// The Museum wing is an item sink: the piece leaves circulation forever. Everything below is a
+// claim the feature makes about permanence, so each one is checked rather than asserted in prose.
+test("a donation goes on show with an engraved plaque and never comes back", async () => {
+  srv = await startServer({ port: 0, dbPath, npcGenerate: null });
+  const alice = await joinAs(srv.port, "alice");
+  fund(alice.id, 500);
+  alice.ws.send(JSON.stringify({ t: "buy", defId: "plant_basic" }));
+  const bought = await alice.bus.waitFor("inventory_add");
+
+  alice.ws.send(JSON.stringify({ t: "donate", itemId: bought.item.id }));
+  const donated = await alice.bus.waitFor("donated");
+  expect(donated.roomId).toBe(MUSEUM_ROOM_ID);
+  expect(donated.inscription).toMatch(/Plant — donated by alice, \d{4}-\d{2}-\d{2}/);
+
+  // It is in the museum, bound, locked, and inscribed — with a plaque of its own on the wall.
+  const museum = await rejoin(srv.port, alice.token, MUSEUM_ROOM_ID);
+  const state = await museum.bus.waitFor("room_state");
+  const exhibit = state.furni.find((f) => f.id === bought.item.id);
+  expect(exhibit).toMatchObject({ defId: "plant_basic", y: 0, bound: true });
+  expect(exhibit?.inscription).toBe(donated.inscription);
+  const plaque = state.wallFurni.find((w) => w.x === exhibit?.x);
+  expect(plaque).toMatchObject({ defId: "record_trophy", side: "right", bound: true });
+  expect(plaque?.inscription).toBe(donated.inscription);
+
+  // Permanent means permanent: the donor still owns it, and still cannot take it down.
+  museum.ws.send(JSON.stringify({ t: "pickup", itemId: bought.item.id }));
+  expect((await museum.bus.waitFor("error")).message).toMatch(/permanent exhibition/);
+  museum.ws.send(JSON.stringify({ t: "pickup", itemId: plaque!.id }));
+  expect((await museum.bus.waitFor("error")).message).toMatch(/permanent exhibition/);
+  // Nor rearranged: the house arranges the gallery, not the donor.
+  museum.ws.send(JSON.stringify({ t: "rotate", itemId: bought.item.id }));
+  expect((await museum.bus.waitFor("error")).message).toMatch(/permanent exhibition/);
+  // The client is told, so it can hide the controls rather than offer two buttons that error.
+  expect(exhibit?.locked).toBe(true);
+  expect(plaque?.locked).toBe(true);
+});
+
+// A tall exhibit standing in front of its own donor plaque defeats the point of donating, and
+// the plaque hangs at a fixed height, so that height has to clear anything donatable.
+test("the donor plaque hangs clear of the tallest thing that can stand under it", () => {
+  const plaque = WALL_CATALOG.find((d) => d.id === "record_trophy")!;
+  const tallest = Math.max(...PROTOTYPE_CATALOG.map((d) => d.stackHeights[0] ?? 0)) * 32;
+  expect(WALL_TOP_PX - PLAQUE_V - plaque.plane.h).toBeGreaterThan(tallest);
+});
+
+test("donating something you do not have, or already gave, is refused", async () => {
+  srv = await startServer({ port: 0, dbPath, npcGenerate: null });
+  const alice = await joinAs(srv.port, "alice");
+  fund(alice.id, 500);
+  alice.ws.send(JSON.stringify({ t: "buy", defId: "plant_basic" }));
+  const bought = await alice.bus.waitFor("inventory_add");
+
+  alice.ws.send(JSON.stringify({ t: "donate", itemId: 999_999 }));
+  expect((await alice.bus.waitFor("error")).message).toMatch(/not in your inventory/);
+
+  alice.ws.send(JSON.stringify({ t: "donate", itemId: bought.item.id }));
+  await alice.bus.waitFor("donated");
+  // Now it is in the museum, so it is no longer in an inventory to give.
+  alice.ws.send(JSON.stringify({ t: "donate", itemId: bought.item.id }));
+  expect((await alice.bus.waitFor("error")).message).toMatch(/not in your inventory/);
+});
+
+test("an account-bound item cannot be donated", async () => {
+  srv = await startServer({ port: 0, dbPath, npcGenerate: null });
+  const alice = await joinAs(srv.port, "alice");
+  fund(alice.id, 2000);
+  alice.ws.send(JSON.stringify({ t: "buy", defId: "penthouse_candelabra" }));
+  const bought = await alice.bus.waitFor("inventory_add");
+  alice.ws.send(JSON.stringify({ t: "donate", itemId: bought.item.id }));
+  expect((await alice.bus.waitFor("error")).message).toMatch(/account-bound/);
 });
 
 // The reason #210 exists: /api/metrics reports absorption per op, so each sink must be its own op

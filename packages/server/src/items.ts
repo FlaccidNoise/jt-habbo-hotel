@@ -94,23 +94,28 @@ export function provisionSuite(db: Database.Database, accountId: number, usernam
 
 /** SQLite has no booleans and the protocol omits both marks on ordinary furni, so the 0/1 and
  *  NULL columns are folded away here rather than at every call site (#210). */
-function marks<T extends { bound?: number; inscription?: string | null }>(
+function marks<T extends { bound?: number; locked?: number; inscription?: string | null }>(
   row: T,
-): Omit<T, "bound" | "inscription"> & { bound?: boolean; inscription?: string } {
-  const { bound, inscription, ...rest } = row;
+): Omit<T, "bound" | "locked" | "inscription"> &
+  { bound?: boolean; locked?: boolean; inscription?: string } {
+  const { bound, locked, inscription, ...rest } = row;
   return {
     ...rest,
     ...(bound ? { bound: true } : {}),
+    ...(locked ? { locked: true } : {}),
     ...(inscription ? { inscription } : {}),
   };
 }
 
-const ITEM_COLS = "id, def_id AS defId, bound, inscription";
+/** A row as SQLite hands it back: the two flags are 0/1 integers until `marks` folds them. */
+type RawRows<T> = Array<Omit<T, "bound" | "locked"> & { bound?: number; locked?: number }>;
+
+const ITEM_COLS = "id, def_id AS defId, bound, locked, inscription";
 
 export function listInventory(db: Database.Database, accountId: number): InventoryItem[] {
   return (db
     .prepare(`SELECT ${ITEM_COLS} FROM furni_items WHERE owner_id = ? AND room_id IS NULL`)
-    .all(accountId) as Array<InventoryItem & { bound?: number }>).map(marks) as InventoryItem[];
+    .all(accountId) as RawRows<InventoryItem>).map(marks) as InventoryItem[];
 }
 
 export function listRoomFurni(db: Database.Database, roomId: number): FurniItem[] {
@@ -118,7 +123,7 @@ export function listRoomFurni(db: Database.Database, roomId: number): FurniItem[
     .prepare(
       `SELECT ${ITEM_COLS}, x, y, z, dir, state FROM furni_items WHERE room_id = ? AND wall_side IS NULL`,
     )
-    .all(roomId) as Array<FurniItem & { bound?: number }>).map(marks) as FurniItem[];
+    .all(roomId) as RawRows<FurniItem>).map(marks) as FurniItem[];
 }
 
 export function listRoomWallFurni(db: Database.Database, roomId: number): WallItem[] {
@@ -127,7 +132,7 @@ export function listRoomWallFurni(db: Database.Database, roomId: number): WallIt
       `SELECT ${ITEM_COLS}, wall_side AS side, x, y, wall_u AS u, wall_v AS v, state` +
         " FROM furni_items WHERE room_id = ? AND wall_side IS NOT NULL",
     )
-    .all(roomId) as Array<WallItem & { bound?: number }>).map(marks) as WallItem[];
+    .all(roomId) as RawRows<WallItem>).map(marks) as WallItem[];
 }
 
 export function placeItem(
@@ -185,7 +190,7 @@ export function getItem(
   itemId: number,
 ):
   | (FurniItem & {
-      ownerId: number; roomId: number | null; side: WallSide | null; locked: number;
+      ownerId: number; roomId: number | null; side: WallSide | null; locked?: boolean;
     })
   | null {
   const row = db
@@ -194,8 +199,10 @@ export function getItem(
         " wall_side AS side, bound, inscription, locked FROM furni_items WHERE id = ?",
     )
     .get(itemId) as
-    | (FurniItem & {
-        ownerId: number; roomId: number | null; side: WallSide | null; bound?: number; locked: number;
+    // The raw row carries SQLite's 0/1 for the two flags; `marks` folds them to booleans.
+    | (Omit<FurniItem, "bound" | "locked"> & {
+        ownerId: number; roomId: number | null; side: WallSide | null;
+        bound?: number; locked?: number;
       })
     | undefined;
   return row ? (marks(row) as ReturnType<typeof getItem>) : null;

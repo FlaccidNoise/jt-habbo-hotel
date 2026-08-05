@@ -67,6 +67,9 @@ export const ROOM_CAPACITY = 25;
 export const InventoryItemSchema = z.object({
   id: z.number().int(), defId: z.string(),
   bound: z.boolean().optional(),
+  /** Placed by the house and never taken down — a museum exhibit and its plaque. The client hides
+   *  the move controls for one; the server refuses them either way. */
+  locked: z.boolean().optional(),
   inscription: z.string().optional(),
 });
 export type InventoryItem = z.infer<typeof InventoryItemSchema>;
@@ -115,6 +118,8 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("buy"), defId: z.string() }),
   z.object({ t: z.literal("nav_list") }),
   z.object({ t: z.literal("lever_pull") }),
+  // Donating is irreversible, so the client confirms before sending it (#210).
+  z.object({ t: z.literal("donate"), itemId: z.number().int() }),
   z.object({ t: z.literal("arcade_start") }),
   z.object({ t: z.literal("arcade_move"), move: z.enum(["higher", "lower", "stop"]) }),
 ]);
@@ -171,6 +176,8 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              complete: z.boolean(), reward: z.string() })) }),
   z.object({ t: z.literal("set_complete"), setId: z.string(), name: z.string(),
              badge: z.string(), item: InventoryItemSchema }),
+  z.object({ t: z.literal("donated"), itemId: z.number().int(), roomId: z.number().int(),
+             inscription: z.string() }),
   z.object({ t: z.literal("nav_rooms"), rooms: z.array(z.object({
              roomId: z.number().int(), name: z.string(), players: z.number().int(),
              yours: z.boolean() })) }),

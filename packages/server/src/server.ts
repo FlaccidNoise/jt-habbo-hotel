@@ -26,6 +26,7 @@ import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
 import type { Emit } from "./room.ts";
+import { MUSEUM_ROOM_ID, donate } from "./museum.ts";
 import { claimCompletedSets, progressFor } from "./sets.ts";
 import { TradeService } from "./trade.ts";
 
@@ -424,6 +425,24 @@ export async function startServer(opts: {
           emit(accountId, { t: "inventory_add", item: won });
           settleSets(accountId);
         }
+        break;
+      }
+      // The Museum wing (#210): an item sink, not a Stars sink. The piece leaves circulation for
+      // good, which drains Stars because the donor buys another.
+      case "donate": {
+        const result = donate(db, { accountId, donor: conn.username ?? "someone", itemId: msg.itemId });
+        log("donate", { accountId, itemId: msg.itemId, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "not_owner", result.reason);
+          break;
+        }
+        // The museum is a room like any other: if it is loaded, its occupants watch it arrive.
+        const museum = rooms.get(MUSEUM_ROOM_ID);
+        if (museum) museum.room.reload();
+        emit(accountId, {
+          t: "donated", itemId: msg.itemId, roomId: MUSEUM_ROOM_ID,
+          inscription: result.inscription,
+        });
         break;
       }
       case "nav_list":

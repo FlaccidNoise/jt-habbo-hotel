@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { parseHeightmap } from "@grand/shared";
 import type { Door } from "@grand/shared";
+import { MUSEUM_ROOM_ID } from "./museum.ts";
 
 const DDL = `
 CREATE TABLE IF NOT EXISTS accounts(
@@ -78,6 +79,12 @@ const CASINO_HEIGHTMAP = [
 const CASINO_DOOR: Door = { x: 0, y: 6, dir: 2 };
 const CASINO_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: true };
 
+// The Museum wing (#210). A long gallery: donations stand on the plinth row against the back
+// wall, where the donor plaque hangs behind each one. Staff-owned, so nobody can rearrange it.
+const MUSEUM_HEIGHTMAP = Array.from({ length: 8 }, () => "0".repeat(12)).join("\n");
+const MUSEUM_DOOR: Door = { x: 0, y: 7, dir: 2 };
+const MUSEUM_CHAT: ChatConfig = { speakRadius: 6, shoutAllowed: false };
+
 function seedRoom(
   db: Database.Database,
   id: number,
@@ -120,6 +127,7 @@ export function openDb(path: string): Database.Database {
   }
   seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT);
   seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT);
+  seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
   return db;
 }
 

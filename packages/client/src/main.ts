@@ -498,12 +498,25 @@ function renderFurniBar(): void {
 
   const defId = item?.defId ?? hung?.defId ?? held?.defId ?? "";
   const onWall = held ? WALL_DEFS.has(defId) : hung !== undefined;
+  const shown = item ?? hung ?? held;
   const title = document.createElement("span");
   title.className = "label";
   title.textContent = held
     ? `Holding ${defName(defId)} — click a ${onWall ? "wall" : "tile"} to place`
     : (defName(defId));
   bar.appendChild(title);
+  // The engraving (#210): no text renderer exists, so a plaque or trophy shows its deed here.
+  if (shown?.inscription) {
+    const engraved = document.createElement("span");
+    engraved.className = "label engraved";
+    engraved.textContent = `“${shown.inscription}”`;
+    bar.appendChild(engraved);
+  } else if (shown?.bound) {
+    const mark = document.createElement("span");
+    mark.className = "label";
+    mark.textContent = "account-bound — cannot be traded";
+    bar.appendChild(mark);
+  }
 
   const action = (text: string, run: () => void): void => {
     const button = document.createElement("button");
@@ -515,18 +528,31 @@ function renderFurniBar(): void {
   if (held) {
     // A hanging item has no facing — the wall it lands on decides which way it looks.
     if (!onWall) action("Rotate (R)", rotateArmed);
-    action("Cancel", disarm);
-  } else if (item ?? hung) {
-    const id = (item ?? hung)?.id ?? 0;
-    if (item) {
-      action("Rotate", () => {
-        net.send({ t: "rotate", itemId: id });
+    // Donating is irreversible, so it asks — and only floor furni goes on a plinth.
+    if (!onWall && !held.bound) {
+      action("Donate to Museum", () => {
+        const name = defName(held.defId);
+        if (!confirm(`Donate ${name} to the Museum?\n\nIt goes on permanent public exhibition with your name on the plaque. You cannot take it back.`)) return;
+        net.send({ t: "donate", itemId: held.id });
+        disarm();
       });
     }
-    action("Pick up", () => {
-      net.send({ t: "pickup", itemId: id });
-      closeMenu();
-    });
+    action("Cancel", disarm);
+  } else if (item ?? hung) {
+    const placed = (item ?? hung)!;
+    // A museum exhibit is arranged by the house: the server refuses both, so offering them would
+    // only hand the player two buttons that error (#210).
+    if (!placed.locked) {
+      if (item) {
+        action("Rotate", () => {
+          net.send({ t: "rotate", itemId: placed.id });
+        });
+      }
+      action("Pick up", () => {
+        net.send({ t: "pickup", itemId: placed.id });
+        closeMenu();
+      });
+    }
     action("Close", closeMenu);
   }
   bar.hidden = false;
@@ -699,6 +725,12 @@ function handle(msg: ServerMsg): void {
         ? `${msg.label} — won!`
         : "No win. Pull again?";
       renderLever();
+      break;
+    case "donated":
+      inventory = inventory.filter((i) => i.id !== msg.itemId);
+      renderInventory();
+      renderFurniBar();
+      toast(`Donated — “${msg.inscription}”`, "notice");
       break;
     case "sets":
       sets = msg.sets;

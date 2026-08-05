@@ -137,8 +137,14 @@ creations are free to manufacture, so the cap must sit on the **relationship**. 
   (audit R-29)
 - **The Casino** — house-banked, net drain via house edge. See Official minigames.
 - **The Museum wing** — donate rares for permanent public exhibition with engraved donor plaques.
-- **Prestige untradables** — extreme-priced account-bound penthouse fixtures. (Neopets §2)
+  Shipped (#210): room 3, plinth row against the back wall, plaque behind each exhibit. An *item*
+  sink — the piece is bound and locked forever — which drains Stars because the donor buys another.
+- **Prestige untradables** — extreme-priced account-bound penthouse fixtures. (Neopets §2) Shipped
+  (#210): billiards table 3,300, candelabra 1,800, both minted account-bound.
 - **The Luck Lever** — 100/pull, tiny odds of exclusives, **odds published** (Decibel's practice).
+  Shipped (#210). The published odds and the draw are one table (`shared/lever.ts`), so they cannot
+  drift. ~28% expected return, 38% win rate, two lever-only prizes. **The only repeatable sink**:
+  everything else in the economy is bought out once, so this is what keeps absorbing afterwards.
 
 ### Transfer limits (the actual wall)
 
@@ -391,7 +397,8 @@ Companions with light care. A second full cosmetic surface.
 - Badges and infostand motto.
 - **Collection sets:** catalog lines ship as named sets with progress counts. Completing one mints
   a set badge and a set-only furni piece — completion, not progression, is what players chase
-  (Zynga FDG 2012, audit C-52).
+  (Zynga FDG 2012, audit C-52). Shipped (#210): café, casino floor, gallery. Nothing pays out along
+  the way, and the badge row is the idempotence key so a set can only ever be claimed once.
 
 ## First session (onboarding)
 

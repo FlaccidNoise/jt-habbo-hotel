@@ -121,6 +121,22 @@ export class Room {
     this.reindex();
   }
 
+  /** Re-reads this room's furni from the database and shows anyone standing in it what arrived.
+   *  Used when something outside the room changed its contents — a museum donation (#210). */
+  reload(): void {
+    const floorBefore = new Set(this.furni.map((f) => f.id));
+    const wallBefore = new Set(this.wallFurni.map((f) => f.id));
+    this.furni = listRoomFurni(this.db, this.roomId);
+    this.wallFurni = listRoomWallFurni(this.db, this.roomId);
+    this.reindex();
+    for (const item of this.furni) {
+      if (!floorBefore.has(item.id)) this.broadcast({ t: "furni_placed", item: { ...item } });
+    }
+    for (const item of this.wallFurni) {
+      if (!wallBefore.has(item.id)) this.broadcast({ t: "wall_placed", item: { ...item } });
+    }
+  }
+
   occupants(): readonly Occupant[] {
     return [...this.occ.values()].map((o) => ({ ...o }));
   }
@@ -397,6 +413,11 @@ export class Room {
       this.fail(accountId, "not_owner", "that item is not yours to rotate");
       return;
     }
+    // On permanent exhibition means the house arranges it, not the donor (#210).
+    if (item.locked) {
+      this.fail(accountId, "not_owner", "that is on permanent exhibition and cannot be moved");
+      return;
+    }
     const def = this.defOf(item);
     const dir = ((item.dir + 2) % 8) as 0 | 2 | 4 | 6;
     const others = this.furni.filter((f) => f.id !== itemId);
@@ -434,6 +455,12 @@ export class Room {
     const item = getItem(this.db, itemId);
     if (!item || item.ownerId !== accountId || item.roomId !== this.roomId) {
       this.fail(accountId, "not_owner", "that item is not yours to pick up");
+      return;
+    }
+    // A museum donation stays donated (#210). The donor still owns it — their name is on the
+    // plaque — but "permanent public exhibition" has to mean the house keeps it.
+    if (item.locked) {
+      this.fail(accountId, "not_owner", "that is on permanent exhibition and cannot be taken back");
       return;
     }
     // Nothing rests on a hanging item and nothing sits under it, so taking one down is the whole

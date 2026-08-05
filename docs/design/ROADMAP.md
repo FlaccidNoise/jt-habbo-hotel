@@ -29,7 +29,8 @@ jointly with the style bible), #123 pets (needs #118 rails + generator), #124 pr
 - #205 Room games v1 — falling furni, maze gate, red-light/green-light (audit C-28).
 - #204 NPC live model wiring — env config, screen-pass verification, spend counter.
 - #202 Art pipeline — style bible v1, Blender rig, post-pass, proof gate, library build-out.
-- #206 Dailies, streaks, achievements, weekly competitions (needs #118).
+- #206 Dailies, streaks, achievements, weekly competitions (needs #118). Unblocked: #210 shipped
+  the sinks, so new faucets no longer make the imbalance worse.
 - #207 Onboarding first session — **fixed**: registration provisions the suite with starter furni
   placed, café spawn, welcome quest advanced by real events (coffee → buy → place → arcade).
 - #208 Friends console, groups, badges — the Social service (PIPELINES §5).
@@ -209,17 +210,14 @@ sink, #209 observability (/api/metrics + metrics.html), #207 onboarding, the #12
 slice with room capacity 25, and #202 end to end — proof gate, per-material masks, style bible
 v1, and two build-outs taking the catalog from 5 defs to 22.
 
-1. **#210 wealth sinks.** Now the binding constraint. The catalog is the only sink and costs
-   2700 Stars to buy out; at the coffee faucet alone that is ~54 days, and adding furni only
-   moves that number, never the shape. Museum wing, prestige untradables, Luck Lever (the slot
-   machine is its host), collection sets. **Do this before #206**, which adds faucets and would
-   make the imbalance worse.
-2. **#206 dailies**, once #210 has somewhere for the Stars to go.
+1. **#206 dailies**, now that #210 has somewhere for the Stars to go.
 
 Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out. Colorways are
-free as of #229, so catalog breadth is no longer gated on Blender time — it is gated on having
-sinks worth spending at. Wall items (#203) shipped 2026-08-05 and closed #202; the museum wing's
-donor plaques and record trophies now have a surface to hang on.
+free as of #229, so catalog breadth is no longer gated on Blender time. Wall items (#203) shipped
+2026-08-05 and closed #202. Wealth sinks (#210) shipped the same day: the structural change is
+that the Luck Lever is *repeatable*, so it can absorb the whole daily earn ceiling (600 Stars = 6
+pulls), where before every sink was one-time and a maxed player ran out of things to buy in 5.6
+days. Measured through /api/metrics: prestige, lever and purchase each report separately.
 
 After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand
