@@ -1,0 +1,32 @@
+{
+  "defId": "bar_counter",
+  "archetype": "artgen",
+  "sheet": "bar_counter.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:26a356a59f9334ec",
+  "recipeHash": "26a356a59f9334ec99b35ec53581ab438e2f3098d750702312edd707551396e0",
+  "pixelHash": "eaa2710e315ada7fe9ca15fd3d4c905e0131d3386b04f79916b2f54a4cb7fc7f"
+}

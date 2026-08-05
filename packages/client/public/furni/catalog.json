@@ -467,6 +467,134 @@
       "recipeHash": "b5dd319f0affc58ca3cd089efdab043850ce7bca133d863ffebad713dd268181",
       "pixelHash": "7ffe46fb26f885cdb00d913cfe391197cc53a031b29f676c69d97d789c822b8e"
     },
+    "slot_machine": {
+      "defId": "slot_machine",
+      "archetype": "artgen",
+      "sheet": "slot_machine.png",
+      "frameW": 64,
+      "frameH": 96,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 80,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:41d2cb77d89b0e57",
+      "recipeHash": "41d2cb77d89b0e57188e5435c7deef03354e7937a26f5a04dde8a247fd565de6",
+      "pixelHash": "95261ef903c1c33e0e81e086210eb01c830cc1e6a190968f7ba48d5d7252daff"
+    },
+    "bar_counter": {
+      "defId": "bar_counter",
+      "archetype": "artgen",
+      "sheet": "bar_counter.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:26a356a59f9334ec",
+      "recipeHash": "26a356a59f9334ec99b35ec53581ab438e2f3098d750702312edd707551396e0",
+      "pixelHash": "eaa2710e315ada7fe9ca15fd3d4c905e0131d3386b04f79916b2f54a4cb7fc7f"
+    },
+    "arcade_cabinet": {
+      "defId": "arcade_cabinet",
+      "archetype": "artgen",
+      "sheet": "arcade_cabinet.png",
+      "frameW": 64,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 76,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.875,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:a59a42475be6377c",
+      "recipeHash": "a59a42475be6377ccc571744fb3da45ce2ed67655d7fab468ddea4545c605df0",
+      "pixelHash": "cf78daf6e256a97ac62eee712c1b50084445cd6f8c0fc8c9ace76a2d6cc31418"
+    },
+    "fountain": {
+      "defId": "fountain",
+      "archetype": "artgen",
+      "sheet": "fountain.png",
+      "frameW": 128,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 70,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.6875,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:568380745c4029e8",
+      "recipeHash": "568380745c4029e8a8eb02c20dcd777b1405c1d5317b032df54ec752606bd537",
+      "pixelHash": "ab79981a3609a7899900d4a717bec7dae0b84f6a0357c40be46e73d140a8ae74"
+    },
     "cafe_chair_crimson": {
       "defId": "cafe_chair_crimson",
       "archetype": "artgen",

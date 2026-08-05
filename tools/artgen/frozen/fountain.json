@@ -1,0 +1,32 @@
+{
+  "defId": "fountain",
+  "archetype": "artgen",
+  "sheet": "fountain.png",
+  "frameW": 128,
+  "frameH": 118,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 70,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.6875,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:568380745c4029e8",
+  "recipeHash": "568380745c4029e8a8eb02c20dcd777b1405c1d5317b032df54ec752606bd537",
+  "pixelHash": "ab79981a3609a7899900d4a717bec7dae0b84f6a0357c40be46e73d140a8ae74"
+}
