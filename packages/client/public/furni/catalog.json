@@ -851,6 +851,70 @@
       "recipeHash": "74f813ffc88ac05d265a8c77e09ff6236e55e10c7e995fac70d311c8515072f9",
       "pixelHash": "99b3eec4e2e052f5a35d00fd73f0f1fc4750110f8daea306ad240356dcf8fb6e"
     },
+    "cafe_table_marble": {
+      "defId": "cafe_table_marble",
+      "archetype": "artgen",
+      "sheet": "cafe_table_marble.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:c708b038a438ff7b",
+      "recipeHash": "c708b038a438ff7b3c18efd6cb6050ed00d06dde95b3a7de3c553367e51cbeab",
+      "pixelHash": "57e5371c721dc366671c95583f53ca63fc95f8b7dec476778d2ce7eb08a84586"
+    },
+    "casino_table_onyx": {
+      "defId": "casino_table_onyx",
+      "archetype": "artgen",
+      "sheet": "casino_table_onyx.png",
+      "frameW": 128,
+      "frameH": 110,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:3f1c6465c7fc5653",
+      "recipeHash": "3f1c6465c7fc5653c57dbf9ef7b05536dd1a47d9da51670f60d2aa3675d3a408",
+      "pixelHash": "82b8a561aa003133c8f3c5070c97a6c779a98b5fd1e65178ee417a2b2f8a5b80"
+    },
     "wall_art": {
       "defId": "wall_art",
       "archetype": "artgen",
@@ -998,6 +1062,43 @@
       "partLibraryHash": "artgen:4fa27515f139d01c",
       "recipeHash": "4fa27515f139d01c5d4cb1501c00db1c2455fa3136dead48560382e9848ffc2b",
       "pixelHash": "e085d4a1ae5a19e60e0a4f35bb079e5da5118e28a1b96875b2323752bf95f14e"
+    },
+    "wall_art_gilded": {
+      "defId": "wall_art_gilded",
+      "archetype": "artgen",
+      "sheet": "wall_art_gilded.png",
+      "frameW": 64,
+      "frameH": 127,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 111,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.96875,
+      "seatZ": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 23,
+        "mountU": 2,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:38382d7045687238",
+      "recipeHash": "38382d7045687238d644bef693e8d811d6e95c1bb3dbfeb180c60f27848aff57",
+      "pixelHash": "58853216323b28ff5ce98aa2e86d1f8ba3ba8b001b6e3fbaf358f354e3e75526"
     }
   }
 }

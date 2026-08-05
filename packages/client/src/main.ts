@@ -45,6 +45,7 @@ type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 type NavRooms = Extract<ServerMsg, { t: "nav_rooms" }>["rooms"];
+type SetRows = Extract<ServerMsg, { t: "sets" }>["sets"];
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
@@ -84,6 +85,7 @@ let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
 let myRoomId: number | null = null;
 let hereRoomId = roomId;
+let sets: SetRows = [];
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -333,6 +335,40 @@ function renderLever(): void {
   pull.disabled = stars < LEVER_COST;
 }
 
+/** Collection sets (#210). The missing piece is the point — naming it is what turns a set into a
+ *  reason to buy the catalog item you skipped. */
+function renderSets(): void {
+  const list = el("sets-list");
+  list.replaceChildren();
+  if (sets.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No collections yet.";
+    list.appendChild(empty);
+    return;
+  }
+  for (const set of sets) {
+    const row = document.createElement("div");
+    row.className = set.complete ? "set done" : "set";
+    const title = document.createElement("b");
+    title.textContent = set.name;
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    const total = set.owned.length + set.missing.length;
+    bar.textContent = set.complete
+      ? `Complete — ${defName(set.reward)} claimed`
+      : `${set.owned.length} / ${total}`;
+    row.append(title, bar);
+    if (!set.complete) {
+      const need = document.createElement("div");
+      need.className = "need";
+      need.textContent = `Needs: ${set.missing.map(defName).join(", ")}`;
+      row.appendChild(need);
+    }
+    list.appendChild(row);
+  }
+}
+
 /** Give the keyboard back to chat. Arming takes it so R can turn the held item; every way out of
  *  placing — cancelled, or the item landed — has to return it or typing silently stops working. */
 function releaseKeyboard(): void {
@@ -531,6 +567,7 @@ function buildRoom(msg: RoomState): void {
   el("arcade").hidden = true;
   el("lever").hidden = true;
   el("lever-result").textContent = "";
+  el("sets").hidden = true;
 
   hereRoomId = msg.roomId;
   myRoomId = msg.myRoomId ?? null;
@@ -663,6 +700,13 @@ function handle(msg: ServerMsg): void {
         : "No win. Pull again?";
       renderLever();
       break;
+    case "sets":
+      sets = msg.sets;
+      renderSets();
+      break;
+    case "set_complete":
+      toast(`${msg.name} complete — ${defName(msg.item.defId)} is yours`, "notice");
+      break;
     case "nav_rooms":
       renderNav(msg.rooms);
       break;
@@ -719,6 +763,7 @@ async function start(token: string): Promise<void> {
   el("nav-open").style.display = "block";
   el("arcade-open").style.display = "block";
   el("lever-open").style.display = "block";
+  el("sets-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
 
@@ -770,6 +815,12 @@ el("lever-open").addEventListener("click", () => {
 });
 el("lever-close").addEventListener("click", () => (el("lever").hidden = true));
 el("lever-pull").addEventListener("click", () => net.send({ t: "lever_pull" }));
+el("sets-open").addEventListener("click", () => {
+  const panel = el("sets");
+  panel.hidden = !panel.hidden;
+  if (!panel.hidden) renderSets();
+});
+el("sets-close").addEventListener("click", () => (el("sets").hidden = true));
 for (const [id, move] of [
   ["arcade-higher", "higher"],
   ["arcade-lower", "lower"],

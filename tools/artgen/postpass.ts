@@ -112,6 +112,10 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // exists purely to be rare is the cheapest thing in the pipeline to make.
   fountain_gilded:      { base: "fountain",       ramps: { slate: "gold" } },
   arcade_cabinet_plum:  { base: "arcade_cabinet", ramps: { navy: "plum", crimson: "gold" } },
+  // Collection-set rewards (#210): minted on completion, never sold, never won.
+  cafe_table_marble:    { base: "cafe_table",     ramps: { walnut: "slate", ivory: "ivory" } },
+  casino_table_onyx:    { base: "casino_table",   ramps: { walnut: "charcoal", fern: "plum" } },
+  wall_art_gilded:      { base: "wall_art",       ramps: { gold: "ivory", teal: "plum" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

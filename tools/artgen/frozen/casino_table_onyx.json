@@ -1,0 +1,32 @@
+{
+  "defId": "casino_table_onyx",
+  "archetype": "artgen",
+  "sheet": "casino_table_onyx.png",
+  "frameW": 128,
+  "frameH": 110,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:3f1c6465c7fc5653",
+  "recipeHash": "3f1c6465c7fc5653c57dbf9ef7b05536dd1a47d9da51670f60d2aa3675d3a408",
+  "pixelHash": "82b8a561aa003133c8f3c5070c97a6c779a98b5fd1e65178ee417a2b2f8a5b80"
+}

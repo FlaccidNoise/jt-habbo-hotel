@@ -37,6 +37,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  // Collection-set rewards (#210): minted account-bound on completion, obtainable no other way.
+  { id: "cafe_table_marble",   name: "Marble Café Table",   w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
+  { id: "casino_table_onyx",   name: "Onyx Casino Table",   w: 2, l: 2, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
 ];
 
 // Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
@@ -47,6 +50,7 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "poster",        name: "Poster",        span: 1, plane: { w: 24, h: 29 }, mount: { u: 4, v: 34 }, color: 0xaa3333 },
   { id: "record_trophy", name: "Record Trophy", span: 1, plane: { w: 22, h: 21 }, mount: { u: 4, v: 35 }, color: 0x3f5e9e },
   { id: "wall_shelf",    name: "Wall Shelf",    span: 1, plane: { w: 26, h: 13 }, mount: { u: 0, v: 46 }, color: 0xb5651d },
+  { id: "wall_art_gilded", name: "Gallery Piece", span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0x9c9484 },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —

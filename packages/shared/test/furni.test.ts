@@ -3,6 +3,7 @@ import { z } from "zod";
 import { FurniDefSchema, WallDefSchema } from "../src/protocol.ts";
 import { CATALOG_PRICES, PRESTIGE_DEFS, PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
 import { LEVER_EXCLUSIVE_DEFS, LEVER_PRIZES } from "../src/lever.ts";
+import { COLLECTION_SETS, SET_REWARD_DEFS } from "../src/sets.ts";
 import { WALL_SEG_PX, WALL_TOP_PX } from "../src/walls.ts";
 
 const ALL_IDS = [...PROTOTYPE_CATALOG, ...WALL_CATALOG].map((d) => d.id);
@@ -25,9 +26,25 @@ test("every wall def fits the wall it hangs on", () =>
 // Both price lookups fail closed: the HUD hides the button, the server refuses the buy. A def
 // with neither a price nor a way to win it is therefore an item nobody can ever own, with no
 // error anywhere — so every def must be reachable by exactly one of the two routes.
-test("every def is obtainable — priced, or a Luck Lever exclusive", () =>
-  expect(ALL_IDS.filter((id) => !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id)))
+test("every def is obtainable — priced, won, or minted by a completed set", () =>
+  expect(ALL_IDS.filter((id) =>
+    !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id) && !SET_REWARD_DEFS.has(id)))
     .toEqual([]));
+
+// A set whose members cannot all be bought could never be completed, and its reward would be
+// unreachable — the reward itself is the one member that must not be for sale.
+test("every collection set is completable and its reward is not", () => {
+  for (const set of COLLECTION_SETS) {
+    expect(set.members.filter((m) => !CATALOG_PRICES.has(m)), set.id).toEqual([]);
+    expect(CATALOG_PRICES.has(set.reward), set.id).toBe(false);
+    expect(ALL_IDS, set.id).toContain(set.reward);
+    expect(set.members.includes(set.reward), set.id).toBe(false);
+  }
+});
+test("collection sets do not share rewards or badges", () => {
+  expect(new Set(COLLECTION_SETS.map((s) => s.reward)).size).toBe(COLLECTION_SETS.length);
+  expect(new Set(COLLECTION_SETS.map((s) => s.badge)).size).toBe(COLLECTION_SETS.length);
+});
 test("a lever exclusive is never also for sale", () =>
   expect([...LEVER_EXCLUSIVE_DEFS].filter((id) => CATALOG_PRICES.has(id))).toEqual([]));
 test("no price names a def that left the catalog", () =>

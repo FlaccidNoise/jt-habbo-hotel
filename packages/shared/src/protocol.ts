@@ -163,6 +163,14 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   // actually drawn. `defId` null is the blank — the common outcome and the reason it drains.
   z.object({ t: z.literal("lever_result"), defId: z.string().nullable(), label: z.string(),
              balance: z.number().int(), item: InventoryItemSchema.optional() }),
+  // Collection sets (#210): progress on every join and after anything that can add a def, so the
+  // player can see what a set still needs — the missing piece is the sink.
+  z.object({ t: z.literal("sets"), sets: z.array(z.object({
+             id: z.string(), name: z.string(),
+             owned: z.array(z.string()), missing: z.array(z.string()),
+             complete: z.boolean(), reward: z.string() })) }),
+  z.object({ t: z.literal("set_complete"), setId: z.string(), name: z.string(),
+             badge: z.string(), item: InventoryItemSchema }),
   z.object({ t: z.literal("nav_rooms"), rooms: z.array(z.object({
              roomId: z.number().int(), name: z.string(), players: z.number().int(),
              yours: z.boolean() })) }),

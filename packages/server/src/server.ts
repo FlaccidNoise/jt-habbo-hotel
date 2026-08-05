@@ -26,6 +26,7 @@ import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
 import type { Emit } from "./room.ts";
+import { claimCompletedSets, progressFor } from "./sets.ts";
 import { TradeService } from "./trade.ts";
 
 const BODY_CAP = 1024;
@@ -152,7 +153,22 @@ export async function startServer(opts: {
       return found ? { accountId: found.accountId, staff: found.staff } : null;
     },
     countdownMs: opts.tradeCountdownMs,
+    onSettled: settleSets,
   });
+
+  /** Collection sets (#210). Called after anything that can add a def to an account — a buy, a
+   *  lever win, a trade — plus on join so the player sees where each set stands. */
+  function settleSets(accountId: number): void {
+    for (const done of claimCompletedSets(db, accountId)) {
+      log("set_complete", { accountId, setId: done.setId, defId: done.defId });
+      const item = { id: done.itemId, defId: done.defId, bound: true };
+      emit(accountId, {
+        t: "set_complete", setId: done.setId, name: done.name, badge: done.badge, item,
+      });
+      emit(accountId, { t: "inventory_add", item });
+    }
+    emit(accountId, { t: "sets", sets: progressFor(db, accountId) });
+  }
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
   const leverRoll = opts.leverRoll ?? Math.random;
@@ -279,6 +295,9 @@ export async function startServer(opts: {
         reason: "welcome trickle",
       });
     }
+    // Also claims: an account can complete a set through a path that predates this code, and a
+    // reward owed is a reward paid the next time it joins.
+    settleSets(account.id);
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);
     const hint = onboardingHint(db, account.id);
@@ -374,6 +393,7 @@ export async function startServer(opts: {
           t: "inventory_add",
           item: { id: result.itemId ?? 0, defId: msg.defId, ...(prestige ? { bound: true } : {}) },
         });
+        settleSets(accountId);
         quest(accountId, "purchase");
         break;
       }
@@ -400,7 +420,10 @@ export async function startServer(opts: {
           t: "lever_result", defId: prize.defId, label: prize.label, balance: result.balance,
           ...(won ? { item: won } : {}),
         });
-        if (won) emit(accountId, { t: "inventory_add", item: won });
+        if (won) {
+          emit(accountId, { t: "inventory_add", item: won });
+          settleSets(accountId);
+        }
         break;
       }
       case "nav_list":
