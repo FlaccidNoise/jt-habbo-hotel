@@ -633,3 +633,25 @@ describe("room: rotation", () => {
     expect(to(b, "error")[0]?.code).toBe("not_owner");
   });
 });
+
+describe("room: multi-tile seats", () => {
+  test("two players sit on the two tiles of one sofa", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    room.place(a, itemOf(a, "sofa_basic"), 3, 5, 0);   // 2x1: covers (3,5) and (4,5)
+
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+    room.requestSit(b, 4, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+
+    // One occupied tile must not make the whole item unavailable.
+    expect(to(b, "error")).toEqual([]);
+    const seated = (id: number) => room.occupants().find((o) => o.accountId === id);
+    expect(seated(a)).toMatchObject({ x: 3, y: 5, posture: "sit", z: 0.5625 });
+    expect(seated(b)).toMatchObject({ x: 4, y: 5, posture: "sit", z: 0.5625 });
+  });
+});
