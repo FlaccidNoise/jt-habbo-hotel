@@ -71,6 +71,15 @@ Re-render the three shipped archetype families (chair, sofa, plant) through this
 must pass every stage-4 gate and read as one style side by side in the reference room. Until
 that passes, no library build-out — the pipeline is the risk, not the part count.
 
+**Status 2026-08-05: pipeline executed end to end.** `tools/artgen/rig.py` (Blender headless,
+camera math locked to the generator projection) renders three proof meshes — an armchair with a
+cylindrical back and arm rolls, an organic-blob plant, a beveled sofa — at 4 directions.
+`tools/artgen/postpass.ts` quantizes to the style.ts ramps, assembles compose.ts-format sheets,
+and all three pass every stage-4 gate. Gaps before build-out, in order: (1) multi-ramp parts
+need per-material masks from the rig — the proof plant's pot renders fern instead of sand,
+(2) interior detail lines (cushion seams) need an edge pass or the hand-polish loop, (3) shade
+thresholds and the 12 × 5 palette expansion land with style bible v1.
+
 Build-out order after the gate: casino-floor set, café set (the public rooms every player sees),
 then the remaining floor archetypes, then wall archetypes (which also need the wall-item
 coordinate system — currently unbuilt, see its bug).
