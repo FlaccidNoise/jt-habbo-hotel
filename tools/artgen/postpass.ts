@@ -54,12 +54,18 @@ interface PartMeta {
 /** Colorways. rig.py renders white geometry lit by one sun and a flat index mask — neither pass
  *  sees a ramp, so a recolor reuses the base part's frames and costs no Blender time at all.
  *  The remap is keyed by ramp name rather than prim index, so it survives reordering the mesh.
- *  Each colorway still needs its own FurniDef, gets its own recipeHash, and runs the full gates. */
+ *  Each colorway still needs its own FurniDef, gets its own recipeHash, and runs the full gates.
+ *
+ *  Remap the whole palette, not just the dominant ramp. The gates check that a colorway is
+ *  on-palette and readable, not that it is harmonious — divider_basic_plum first shipped as a
+ *  plum body still wearing its walnut cap, which reads bright orange against purple. Single-ramp
+ *  parts like cafe_chair are safe with one substitution; multi-ramp parts need every accent
+ *  reconsidered against the new base. Look at the @3x preview before freezing. */
 const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> = {
   cafe_chair_crimson:  { base: "cafe_chair",    ramps: { teal: "crimson" } },
   cafe_chair_navy:     { base: "cafe_chair",    ramps: { teal: "navy" } },
   casino_stool_fern:   { base: "casino_stool",  ramps: { crimson: "fern" } },
-  divider_basic_plum:  { base: "divider_basic", ramps: { slate: "plum" } },
+  divider_basic_plum:  { base: "divider_basic", ramps: { slate: "plum", walnut: "ivory" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {
@@ -136,6 +142,11 @@ for (const [id, variant] of Object.entries(VARIANTS)) {
   const base = meta.parts[variant.base];
   if (!base) {
     console.error(`${id}: variant base "${variant.base}" is not in ${renderDir}/meta.json`);
+    failures++;
+    continue;
+  }
+  if (meta.parts[id]) {
+    console.error(`${id}: a colorway cannot share an id with a rendered part — both would freeze`);
     failures++;
     continue;
   }
