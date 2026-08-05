@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
-import { PROTOTYPE_CATALOG } from "@grand/shared";
+import { FIGURE_SETS, PROTOTYPE_CATALOG, paletteFor } from "@grand/shared";
 import { FROZEN_DIR, bundleFor } from "../src/catalog.ts";
 import { render } from "../src/compose.ts";
 import type { BundleMeta } from "../src/compose.ts";
@@ -106,6 +106,15 @@ describe("style bible v1", () => {
     expect(SKIN_RAMP_NAMES).toHaveLength(6);
     expect(RAMP_SHADES).toHaveLength(90);
     expect(PALETTE.size).toBe(91);   // + the global outline
+  });
+
+  test("figuredata ramp names match the style bible", () => {
+    // figuredata.ts copies the ramp names because generator depends on shared, not the other way
+    // round. style.ts stays the single source of the colours; this is what stops the copy
+    // drifting, and it is the only reason the copy is allowed to exist.
+    expect(paletteFor("material")).toEqual(RAMP_NAMES);
+    expect(paletteFor("skin")).toEqual(SKIN_RAMP_NAMES);
+    for (const set of FIGURE_SETS) expect(() => rampByName(paletteFor(set.family)[0]!)).not.toThrow();
   });
 
   test("no skin shade clamps a channel", () => {
