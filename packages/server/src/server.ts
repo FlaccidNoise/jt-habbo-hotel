@@ -15,6 +15,7 @@ import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
 import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
 import { log } from "./log.ts";
+import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
 import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
@@ -77,6 +78,7 @@ export async function startServer(opts: {
   const byAccount = new Map<number, WebSocket>();
   const rooms = new Map<number, RoomEntry>();
   const httpSockets = new Set<Socket>();
+  const lagSampler = startLagSampler();
   // Set only while a displaced socket hands its occupant to a new one: observers see neither the
   // leave nor the re-join.
   let transferring: number | null = null;
@@ -199,6 +201,7 @@ export async function startServer(opts: {
     // leave, so the old room's occupants are told.
     const silent = previous !== undefined && conns.get(previous)?.roomId === msg.roomId;
     if (previous) {
+      wsStats.reconnects++;
       byAccount.delete(account.id);
       const stale = conns.get(previous);
       if (silent) transferring = account.id;
@@ -401,8 +404,40 @@ export async function startServer(opts: {
       .pipe(res);
   }
 
+  function handleMetrics(req: IncomingMessage, res: ServerResponse): void {
+    const url = new URL(req.url ?? "", "http://localhost");
+    const auth = req.headers.authorization;
+    const token = auth?.startsWith("Bearer ")
+      ? auth.slice("Bearer ".length)
+      : (url.searchParams.get("token") ?? "");
+    if (!sessionAccount(db, token)) {
+      json(res, 401, { error: "valid session token required" });
+      return;
+    }
+    const now = Date.now();
+    const day = now - 24 * 60 * 60 * 1000;
+    json(res, 200, {
+      now,
+      day: flows(db, day),
+      week: flows(db, now - 7 * 24 * 60 * 60 * 1000),
+      hourly: hourly(db, day),
+      ledger: { ...ledgerStats },
+      ws: { ...wsStats, open: conns.size },
+      lag: lagSampler.read(),
+      rooms: [...rooms.entries()].map(([roomId, entry]) => ({
+        roomId,
+        players: entry.room.occupantCount(),
+        occupants: entry.room.occupants().length,
+      })),
+    });
+  }
+
   async function handleHttp(req: IncomingMessage, res: ServerResponse): Promise<void> {
     const path = req.url ?? "";
+    if (req.method === "GET" && path.startsWith("/api/metrics")) {
+      handleMetrics(req, res);
+      return;
+    }
     if (req.method !== "POST" || (path !== "/api/register" && path !== "/api/login")) {
       if (staticRoot && (req.method === "GET" || req.method === "HEAD") && !path.startsWith("/api")) {
         await serveStatic(req, res, staticRoot);
@@ -451,6 +486,7 @@ export async function startServer(opts: {
 
   const wss = new WebSocketServer({ server: http, path: "/ws" });
   wss.on("connection", (ws) => {
+    wsStats.connects++;
     const conn: Conn = { ws };
     conn.handshake = setTimeout(() => ws.close(4401, "handshake timeout"), handshakeMs);
     conns.set(ws, conn);
@@ -477,6 +513,7 @@ export async function startServer(opts: {
   log("listening", { port, dbPath: opts.dbPath });
 
   async function close(): Promise<void> {
+    lagSampler.stop();
     npcService.stop();
     tradeService.stop();
     for (const conn of conns.values()) clearTimeout(conn.handshake);

@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import type { InventoryItem } from "@grand/shared";
+import { timed } from "./metrics.ts";
 
 // The unified Stars-and-item ledger (decision log 2026-08-03, PIPELINES §5): one append-only
 // entry log in the one SQLite database, one local ACID transaction per operation, idempotent
@@ -52,7 +53,7 @@ export function countOps(db: Database.Database, accountId: number, op: string, s
  *  global ceiling — the last grant before a cap pays the remainder, at the cap it pays zero.
  *  Replaying an op_key grants nothing. recordZero writes an entry even for a zero grant, so the
  *  operation still counts toward countOps (a busted arcade play consumes a scored play). */
-export function settleEarn(
+export const settleEarn = timed(function settleEarn(
   db: Database.Database,
   opts: {
     opKey: string;
@@ -88,7 +89,7 @@ export function settleEarn(
     ).run(opts.accountId, granted);
     return done(granted);
   })();
-}
+});
 
 export type PurchaseResult =
   | { ok: true; itemId: number; balance: number }
@@ -97,7 +98,7 @@ export type PurchaseResult =
 /** Catalog purchase: debit + item mint + provenance rows in one transaction. Fails closed on
  *  insufficient balance — the CHECK(balance >= 0) constraint backstops this test. Replaying an
  *  op_key buys nothing twice. */
-export function settlePurchase(
+export const settlePurchase = timed(function settlePurchase(
   db: Database.Database,
   opts: { opKey: string; accountId: number; defId: string; price: number; now?: number },
 ): PurchaseResult {
@@ -126,7 +127,7 @@ export function settlePurchase(
     entry.run(opts.opKey, 1, opts.accountId, 0, itemId, now);
     return { ok: true, itemId, balance: balanceOf(db, opts.accountId) };
   })();
-}
+});
 
 /** Item-grant rows (starter kit, mints). The caller owns the surrounding transaction. */
 export function logItemGrants(
@@ -153,7 +154,7 @@ export type TradeResult =
 
 /** Items-for-items swap in one ACID transaction: every item is re-verified as owned by its side
  *  and in inventory, or nothing moves — fail closed. Replaying an op_key changes nothing. */
-export function settleTrade(
+export const settleTrade = timed(function settleTrade(
   db: Database.Database,
   opts: { opKey: string; a: TradeSideInput; b: TradeSideInput; now?: number },
 ): TradeResult {
@@ -191,4 +192,4 @@ export function settleTrade(
     const aReceived = transfer(opts.b, opts.a);
     return { ok: true, aReceived, bReceived };
   })();
-}
+});
