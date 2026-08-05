@@ -7,6 +7,7 @@ import {
   dirFromStep,
   footprintTiles,
   parseHeightmap,
+  seatAt,
   stackTop,
   tileHeight,
 } from "@grand/shared";
@@ -17,6 +18,7 @@ import type {
   FurniDef,
   FurniItem,
   PlacementCtx,
+  Posture,
   RoomModel,
   ServerMsg,
   Tile,
@@ -31,6 +33,7 @@ import {
   listRoomFurni,
   pickupItem,
   placeItem,
+  suiteOf,
   updateItemZ,
 } from "./items.ts";
 
@@ -43,6 +46,7 @@ export interface Occupant {
   y: number;
   z: number;
   dir: number;
+  posture: Posture;
   staff?: boolean;
 }
 export type Emit = (accountId: number, msg: ServerMsg) => void;
@@ -54,6 +58,7 @@ interface Walk {
   path: Step[];
   i: number;
   dest: Tile;                     // reserved until arrival or cancel
+  sitOnArrival: boolean;          // a sit request walks first, then sits
   timer: ReturnType<typeof setInterval>;
 }
 
@@ -64,7 +69,7 @@ const key = (x: number, y: number): string => `${x},${y}`;
 
 function toAvatar(o: Occupant): AvatarState {
   return {
-    id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: "stand",
+    id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: o.posture,
     ...(o.staff ? { staff: true } : {}),
   };
 }
@@ -125,6 +130,7 @@ export class Room {
       y: def.post.y,
       z: this.tileZ(def.post.x, def.post.y),
       dir: def.dir,
+      posture: "stand",
     });
   }
 
@@ -137,9 +143,11 @@ export class Room {
       y: spawn.y,
       z: this.tileZ(spawn.x, spawn.y),
       dir: this.door.dir,
+      posture: "stand",
     };
     this.occ.set(accountId, occupant);
 
+    const myRoomId = suiteOf(this.db, accountId);
     this.emit(accountId, {
       t: "room_state",
       roomId: this.roomId,
@@ -152,6 +160,7 @@ export class Room {
       inventory: listInventory(this.db, accountId),
       you: accountId,
       stars: balanceOf(this.db, accountId),
+      ...(myRoomId !== null ? { myRoomId } : {}),
     });
     for (const id of this.occ.keys()) {
       if (id !== accountId) this.emit(id, { t: "avatar_join", avatar: toAvatar(occupant) });
@@ -175,12 +184,45 @@ export class Room {
   }
 
   requestMove(accountId: number, x: number, y: number): void {
+    this.travel(accountId, x, y, false);
+  }
+
+  /** Walk to the seat tile, then sit. The seat tile is furni-blocked for everyone else, so it is
+   *  exempted for this path only — the walker may finish there, but nobody may cross it. */
+  requestSit(accountId: number, x: number, y: number): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    const seat = seatAt(this.ctx(this.furni), { x, y });
+    if (!seat) {
+      this.fail(accountId, "no_seat", "nothing to sit on there");
+      return;
+    }
+    if (occupant.x === x && occupant.y === y) {
+      this.seatOccupant(occupant, seat.z, seat.dir);
+      return;
+    }
+    for (const o of this.occ.values()) {
+      if (o.accountId !== accountId && o.x === x && o.y === y) {
+        this.fail(accountId, "occupied", "that seat is taken");
+        return;
+      }
+    }
+    this.travel(accountId, x, y, true);
+  }
+
+  requestStand(accountId: number): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant || occupant.posture === "stand") return;
+    this.standUp(occupant);
+  }
+
+  private travel(accountId: number, x: number, y: number, sitOnArrival: boolean): void {
     const occupant = this.occ.get(accountId);
     if (!occupant) return;
 
     const path = findPath(
       this.model,
-      this.blockedFor(accountId),
+      this.blockedFor(accountId, sitOnArrival ? { x, y } : undefined),
       { x: occupant.x, y: occupant.y },
       { x, y },
     );
@@ -189,15 +231,54 @@ export class Room {
       return;
     }
 
+    // Walking anywhere ends a sit, including the zero-step case of clicking your own tile.
+    if (occupant.posture === "sit") this.standUp(occupant);
+
     this.cancelWalk(accountId);
     const steps = path.map((t) => ({ x: t.x, y: t.y, z: this.tileZ(t.x, t.y) }));
     this.broadcast(this.walkMsg(occupant, steps));
-    if (steps.length === 0) return;
+    if (steps.length === 0) {
+      if (sitOnArrival) this.sitHere(accountId);
+      return;
+    }
     this.walks.set(accountId, {
       path: steps,
       i: 0,
       dest: { x, y },
+      sitOnArrival,
       timer: setInterval(() => this.step(accountId), MS_PER_TILE),
+    });
+  }
+
+  /** Seat the occupant on whatever sittable item is under it now — re-resolved on arrival,
+   *  because the chair can be picked up or rotated while the walk is in flight. */
+  private sitHere(accountId: number): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    const seat = seatAt(this.ctx(this.furni), { x: occupant.x, y: occupant.y });
+    if (!seat) {
+      this.fail(accountId, "no_seat", "the seat is gone");
+      return;
+    }
+    this.seatOccupant(occupant, seat.z, seat.dir);
+  }
+
+  private seatOccupant(occupant: Occupant, z: number, dir: 0 | 2 | 4 | 6): void {
+    occupant.posture = "sit";
+    occupant.z = z;
+    occupant.dir = dir;
+    this.broadcastPosture(occupant);
+  }
+
+  private standUp(occupant: Occupant): void {
+    occupant.posture = "stand";
+    occupant.z = this.tileZ(occupant.x, occupant.y);
+    this.broadcastPosture(occupant);
+  }
+
+  private broadcastPosture(o: Occupant): void {
+    this.broadcast({
+      t: "posture", id: o.accountId, posture: o.posture, x: o.x, y: o.y, z: o.z, dir: o.dir,
     });
   }
 
@@ -244,16 +325,16 @@ export class Room {
     if (target.accountId !== accountId) this.emit(accountId, msg);
   }
 
-  place(accountId: number, itemId: number, x: number, y: number, dir: 0 | 2 | 4 | 6): void {
+  place(accountId: number, itemId: number, x: number, y: number, dir: 0 | 2 | 4 | 6): boolean {
     const item = getItem(this.db, itemId);
     if (!item || item.ownerId !== accountId || item.roomId !== null) {
       this.fail(accountId, "not_owner", "that item is not in your inventory");
-      return;
+      return false;
     }
     const result = checkPlacement(this.ctx(this.furni), this.defOf(item), x, y, dir);
     if (!result.ok) {
       this.fail(accountId, result.code, `cannot place there: ${result.code}`);
-      return;
+      return false;
     }
 
     placeItem(this.db, itemId, this.roomId, x, y, result.z, dir);
@@ -263,6 +344,48 @@ export class Room {
     this.furni.push(placed);
     this.reindex();
     this.broadcast({ t: "furni_placed", item: { ...placed } });
+    return true;
+  }
+
+  /** Quarter turn in place. Rotation can change the footprint (a 2x1 sofa sweeps a different two
+   *  tiles), so it re-runs the full placement check against the room minus this item. */
+  rotate(accountId: number, itemId: number): void {
+    const item = getItem(this.db, itemId);
+    if (!item || item.ownerId !== accountId || item.roomId !== this.roomId) {
+      this.fail(accountId, "not_owner", "that item is not yours to rotate");
+      return;
+    }
+    const def = this.defOf(item);
+    const dir = ((item.dir + 2) % 8) as 0 | 2 | 4 | 6;
+    const others = this.furni.filter((f) => f.id !== itemId);
+    // Anyone already on the item turns with it — only a tile the turn newly sweeps into can be
+    // blocked by an avatar. Without this, a 1x1 chair could never be turned while sat on.
+    const covered = footprintTiles(def, item.x, item.y, item.dir);
+    const ctx = this.ctx(others);
+    const result = checkPlacement(
+      { ...ctx, avatars: ctx.avatars.filter((a) => !covered.some((c) => c.x === a.x && c.y === a.y)) },
+      def, item.x, item.y, dir,
+    );
+    if (!result.ok) {
+      this.fail(accountId, result.code, `cannot turn it there: ${result.code}`);
+      return;
+    }
+
+    placeItem(this.db, itemId, this.roomId, item.x, item.y, result.z, dir);
+    const turned = this.furni.find((f) => f.id === itemId);
+    if (!turned) return;
+    turned.dir = dir;
+    turned.z = result.z;
+    this.reindex();
+    this.broadcast({ t: "furni_moved", item: { ...turned } });
+
+    // Anyone sitting on it turns with it, or is put down if the seat moved out from under them.
+    for (const o of this.occ.values()) {
+      if (o.posture !== "sit") continue;
+      const seat = seatAt(this.ctx(this.furni), { x: o.x, y: o.y });
+      if (seat) this.seatOccupant(o, seat.z, seat.dir);
+      else this.standUp(o);
+    }
   }
 
   pickup(accountId: number, itemId: number): void {
@@ -299,6 +422,16 @@ export class Room {
       updateItemZ(this.db, f.id, f.z);
       this.broadcast({ t: "furni_moved", item: { ...f } });
     }
+
+    // Removing a chair out from under someone puts them on the floor rather than leaving them
+    // floating. Runs after the settle so a sitter lands on whatever is left below.
+    for (const o of this.occ.values()) {
+      if (o.posture !== "sit") continue;
+      if (!vacated.some((v) => v.x === o.x && v.y === o.y)) continue;
+      const seat = seatAt(this.ctx(this.furni), { x: o.x, y: o.y });
+      if (seat) this.seatOccupant(o, seat.z, seat.dir);
+      else this.standUp(o);
+    }
   }
 
   private step(accountId: number): void {
@@ -311,7 +444,7 @@ export class Room {
       this.cancelWalk(accountId);
       return;
     }
-    if (this.blockedFor(accountId)(next.x, next.y)) {
+    if (this.blockedFor(accountId, walk.sitOnArrival ? walk.dest : undefined)(next.x, next.y)) {
       // Blocked since path time — stop here and tell the room where the avatar actually is.
       this.cancelWalk(accountId);
       this.broadcast(this.walkMsg(occupant, []));
@@ -323,7 +456,10 @@ export class Room {
     occupant.y = next.y;
     occupant.z = next.z;
     walk.i++;
-    if (walk.i >= walk.path.length) this.cancelWalk(accountId);
+    if (walk.i < walk.path.length) return;
+    const sit = walk.sitOnArrival;
+    this.cancelWalk(accountId);
+    if (sit) this.sitHere(accountId);
   }
 
   private cancelWalk(accountId: number): void {
@@ -344,10 +480,12 @@ export class Room {
     };
   }
 
-  /** Non-walkable furni, other avatars, and other walkers' reserved destinations. */
-  private blockedFor(accountId: number): (x: number, y: number) => boolean {
+  /** Non-walkable furni, other avatars, and other walkers' reserved destinations. `exempt` is a
+   *  seat tile this mover is allowed to finish on — its furni stops blocking, its occupants and
+   *  reservations do not. */
+  private blockedFor(accountId: number, exempt?: Tile): (x: number, y: number) => boolean {
     return (x, y) => {
-      if (this.furniBlocks(x, y)) return true;
+      if (!(exempt && exempt.x === x && exempt.y === y) && this.furniBlocks(x, y)) return true;
       for (const o of this.occ.values()) {
         if (o.accountId !== accountId && o.x === x && o.y === y) return true;
       }
@@ -410,8 +548,11 @@ export class Room {
     };
   }
 
+  /** The height an avatar stands at: the floor plus anything walkable on it, like a rug. Solid
+   *  furni is deliberately ignored — you stand on a rug, never on top of a chair, and the seat
+   *  tile you can now finish a walk on must still report its floor. */
   private tileZ(x: number, y: number): number {
-    return stackTop(this.ctx(this.furni), { x, y });
+    return stackTop(this.ctx(this.furni.filter((f) => this.defOf(f).canWalk)), { x, y });
   }
 
   private defOf(item: { defId: string }): FurniDef {

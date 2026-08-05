@@ -34,6 +34,8 @@ os.makedirs(OUT, exist_ok=True)
 # hcyl: horizontal cylinder along fy (or fx with "axis": "x"). sphere: icosphere.
 # Per-prim "ramp" overrides the part ramp (postpass reads it from the mask render). Per-prim
 # "group" (ints >= 100) merges prims into one seam group — no interior line between them.
+# Per-prim "seat": True marks the sittable surface — its top becomes the part's seatZ, which the
+# seat gate checks the def's seatHeight against. Tag it on the cushion, not the frame.
 # "proof_" ids are pipeline proofs: rendered and gated but never frozen into the catalog.
 
 PARTS = {
@@ -102,7 +104,7 @@ PARTS = {
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.30, "ry": 0.30, "z0": 0.00, "z1": 0.06},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.09, "ry": 0.09, "z0": 0.06, "z1": 0.62},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.34, "ry": 0.34, "z0": 0.62, "z1": 0.82,
-             "ramp": "crimson"},
+             "ramp": "crimson", "seat": True},
         ],
     },
     # ---- café set ----
@@ -123,7 +125,8 @@ PARTS = {
             {"t": "box", "c0": (0.64, 0.28, 0.00), "c1": (0.72, 0.36, 0.48)},
             {"t": "box", "c0": (0.28, 0.64, 0.00), "c1": (0.36, 0.72, 0.48)},
             {"t": "box", "c0": (0.64, 0.64, 0.00), "c1": (0.72, 0.72, 0.48)},
-            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58,
+             "seat": True},
             {"t": "cyl", "cx": 0.30, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
             {"t": "cyl", "cx": 0.70, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
             {"t": "box", "c0": (0.18, 0.80, 0.98), "c1": (0.82, 0.92, 1.22), "bevel": 0.05},
@@ -138,7 +141,7 @@ PARTS = {
             {"t": "box", "c0": (0.08, 0.08, 0.22), "c1": (1.92, 2.86, 0.42), "bevel": 0.05,
              "ramp": "ivory"},
             {"t": "box", "c0": (0.06, 0.06, 0.40), "c1": (1.94, 1.95, 0.55), "bevel": 0.06,
-             "ramp": "navy"},
+             "ramp": "navy", "seat": True},
             {"t": "box", "c0": (0.18, 2.28, 0.42), "c1": (0.95, 2.72, 0.60), "bevel": 0.08,
              "ramp": "ivory"},
             {"t": "box", "c0": (1.05, 2.28, 0.42), "c1": (1.82, 2.72, 0.60), "bevel": 0.08,
@@ -178,6 +181,72 @@ PARTS = {
             {"t": "box", "c0": (0.00, 0.30, 0.00), "c1": (2.00, 0.70, 0.92)},
             {"t": "box", "c0": (0.00, 0.26, 0.92), "c1": (2.00, 0.74, 1.04), "bevel": 0.03,
              "ramp": "walnut"},
+        ],
+    },
+    # ---- casino floor and resort lounge ----
+    # Fronts face low fy, matching the shelf's back panel and the stereo's speaker cones.
+    "slot_machine": {
+        "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.18, 0.00), "c1": (0.86, 0.86, 0.30),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.10, 0.16, 0.30), "c1": (0.90, 0.88, 1.55), "bevel": 0.04},
+            {"t": "box", "c0": (0.18, 0.10, 0.72), "c1": (0.82, 0.18, 1.24), "ramp": "ivory"},
+            {"t": "box", "c0": (0.20, 0.08, 0.38), "c1": (0.80, 0.18, 0.50), "ramp": "gold"},
+            {"t": "box", "c0": (0.12, 0.18, 1.55), "c1": (0.88, 0.86, 1.78), "bevel": 0.05,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.52, "rx": 0.16, "ry": 0.16, "z0": 1.78, "z1": 1.98,
+             "taper": 0.60, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.92, "cy": 0.50, "rx": 0.03, "ry": 0.03, "z0": 1.10, "z1": 1.55,
+             "ramp": "slate"},
+            {"t": "sphere", "c": (0.92, 0.50, 1.60), "r": 0.07},
+        ],
+    },
+    "bar_counter": {
+        "w": 2, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.30, 0.00), "c1": (1.90, 0.85, 1.05)},
+            {"t": "box", "c0": (0.06, 0.24, 0.18), "c1": (1.94, 0.30, 0.95),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.00, 0.18, 1.05), "c1": (2.00, 0.95, 1.16), "bevel": 0.03,
+             "ramp": "ivory"},
+            {"t": "hcyl", "x": 0.22, "y0": 0.12, "y1": 1.88, "z": 0.16, "r": 0.05, "axis": "x",
+             "ramp": "gold"},
+        ],
+    },
+    "arcade_cabinet": {
+        "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.20, 0.00), "c1": (0.86, 0.84, 1.62), "bevel": 0.03},
+            {"t": "box", "c0": (0.20, 0.14, 0.92), "c1": (0.80, 0.22, 1.34),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.24, 0.12, 0.98), "c1": (0.76, 0.16, 1.28), "ramp": "teal"},
+            {"t": "box", "c0": (0.18, 0.10, 0.72), "c1": (0.82, 0.28, 0.84), "bevel": 0.02,
+             "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.36, "cy": 0.19, "rx": 0.03, "ry": 0.03, "z0": 0.84, "z1": 0.96,
+             "ramp": "slate"},
+            {"t": "sphere", "c": (0.36, 0.19, 0.99), "r": 0.06, "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.60, "cy": 0.19, "rx": 0.05, "ry": 0.05, "z0": 0.84, "z1": 0.88,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.16, 0.18, 1.62), "c1": (0.84, 0.86, 1.86), "bevel": 0.04,
+             "ramp": "gold"},
+        ],
+    },
+    "fountain": {
+        "w": 2, "l": 2, "ramp": "slate",
+        "prims": [
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.92, "ry": 0.92, "z0": 0.00, "z1": 0.28},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.78, "ry": 0.78, "z0": 0.24, "z1": 0.30,
+             "ramp": "teal"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.20, "ry": 0.20, "z0": 0.30, "z1": 0.88,
+             "taper": 0.75, "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.46, "ry": 0.46, "z0": 0.88, "z1": 1.06,
+             "taper": 1.35, "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.42, "ry": 0.42, "z0": 1.02, "z1": 1.08,
+             "ramp": "teal"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.07, "ry": 0.07, "z0": 1.08, "z1": 1.44,
+             "taper": 0.50, "ramp": "teal"},
+            {"t": "sphere", "c": (1.00, 1.00, 1.52), "r": 0.16, "ramp": "ivory"},
         ],
     },
     "stereo_basic": {
@@ -421,6 +490,8 @@ for part_id, part in PARTS.items():
     prims = [dict(p) for p in part["prims"]]
     span = (part["w"], part["l"])   # (spanX, spanY), dir-0 frame
     max_z = max(prim_top(prim) for prim in part["prims"])
+    seats = [p for p in part["prims"] if p.get("seat")]
+    seat_z = max(prim_top(p) for p in seats) if seats else None
     frames = []
     scene = bpy.context.scene
     for q in range(4):
@@ -448,7 +519,8 @@ for part_id, part in PARTS.items():
         frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
                        "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
-        "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "frames": frames,
+        "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,
+        "frames": frames,
         "prims": [{"ramp": p.get("ramp", part["ramp"]), "group": p.get("group", i)}
                   for i, p in enumerate(part["prims"])],
         "src": part["prims"],   # full authored geometry — postpass hashes it as provenance

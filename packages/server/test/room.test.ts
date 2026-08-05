@@ -453,3 +453,205 @@ describe("room: furni", () => {
     expect(at(a)).toEqual({ x: 2, y: 5, z: 0.05 });
   });
 });
+
+describe("room: sitting", () => {
+  /** Put a chair at (3,5) and stand alice next to it, with the emit log cleared. */
+  function chairAt(a: number, x: number, y: number, dir: 0 | 2 | 4 | 6 = 0): number {
+    const id = itemOf(a, "chair_basic");
+    room.place(a, id, x, y, dir);
+    emitted.length = 0;
+    return id;
+  }
+
+  test("sitting walks to the seat, lands on the seat surface, and faces the way it faces", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    chairAt(a, 3, 5, 2);
+
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+
+    const [posture] = to(a, "posture");
+    expect(posture).toMatchObject({ id: a, posture: "sit", x: 3, y: 5, dir: 2 });
+    // chair_basic seat surface, not its 1.0 stack height — a chair back is taller than its seat.
+    expect(at(a).z).toBe(0.65625);
+  });
+
+  test("a seat tile blocks everyone else, and blocks even the sitter from crossing it", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    chairAt(a, 3, 5);
+
+    // bob cannot route through or onto the chair's tile
+    room.requestMove(b, 3, 5);
+    expect(to(b, "error")[0]?.code).toBe("no_path");
+
+    // alice may finish on it, but a walk past it still routes around
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    expect(at(a)).toMatchObject({ x: 3, y: 5 });
+  });
+
+  test("walking away stands the sitter back onto the floor", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    chairAt(a, 3, 5);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+
+    room.requestMove(a, 5, 5);
+    expect(to(a, "posture")[0]).toMatchObject({ posture: "stand", z: 0 });
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    expect(at(a)).toEqual({ x: 5, y: 5, z: 0 });
+  });
+
+  test("requestStand leaves the chair without moving off its tile", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    chairAt(a, 3, 5);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+
+    room.requestStand(a);
+    expect(to(a, "posture")[0]).toMatchObject({ posture: "stand", x: 3, y: 5, z: 0 });
+  });
+
+  test("sitting on nothing is refused", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    emitted.length = 0;
+    room.requestSit(a, 5, 5);
+    expect(to(a, "error")[0]?.code).toBe("no_seat");
+  });
+
+  test("a taken seat is refused before the walk starts", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    chairAt(a, 3, 5);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+
+    room.requestSit(b, 3, 5);
+    expect(to(b, "error")[0]?.code).toBe("occupied");
+    expect(to(b, "walk")).toHaveLength(0);
+  });
+
+  test("picking the chair up out from under a sitter puts them on the floor", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const chair = chairAt(a, 3, 5);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+
+    room.pickup(a, chair);
+    expect(to(a, "posture").at(-1)).toMatchObject({ posture: "stand", x: 3, y: 5, z: 0 });
+  });
+
+  test("a seat that vanishes mid-walk refuses instead of seating on the floor", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const chair = chairAt(a, 3, 5);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE);   // still walking
+    room.pickup(a, chair);
+    emitted.length = 0;
+
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    expect(to(a, "error").at(-1)?.code).toBe("no_seat");
+    expect(room.occupants().find((o) => o.accountId === a)?.posture).toBe("stand");
+  });
+});
+
+describe("room: rotation", () => {
+  test("a quarter turn re-faces the item and broadcasts it", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const table = itemOf(a, "table_basic");
+    room.place(a, table, 3, 3, 0);
+    emitted.length = 0;
+
+    room.rotate(a, table);
+    expect(to(a, "furni_moved")[0]?.item).toMatchObject({ id: table, dir: 2, x: 3, y: 3 });
+  });
+
+  test("four turns return the item to where it started", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const table = itemOf(a, "table_basic");
+    room.place(a, table, 3, 3, 0);
+    for (let i = 0; i < 4; i++) room.rotate(a, table);
+    expect(to(a, "furni_moved").at(-1)?.item).toMatchObject({ dir: 0, x: 3, y: 3 });
+  });
+
+  test("a turn that would sweep the item onto another avatar is refused", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    const table = itemOf(a, "table_basic");   // 2x1: dir 0 covers (3,3)+(4,3), dir 2 covers (3,3)+(3,4)
+    room.place(a, table, 3, 3, 0);
+    stand(b, 3, 4);
+    emitted.length = 0;
+
+    room.rotate(a, table);
+    expect(to(a, "error")[0]?.code).toBe("occupied");
+    expect(to(a, "furni_moved")).toHaveLength(0);
+  });
+
+  test("a chair can be turned while it is being sat on, and the sitter turns with it", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const chair = itemOf(a, "chair_basic");
+    room.place(a, chair, 3, 5, 0);
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+
+    room.rotate(a, chair);
+    expect(to(a, "furni_moved")[0]?.item).toMatchObject({ dir: 2 });
+    expect(to(a, "posture").at(-1)).toMatchObject({ posture: "sit", dir: 2, x: 3, y: 5 });
+  });
+
+  test("rotating somebody else's item is refused", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    const table = itemOf(a, "table_basic");
+    room.place(a, table, 3, 3, 0);
+    emitted.length = 0;
+
+    room.rotate(b, table);
+    expect(to(b, "error")[0]?.code).toBe("not_owner");
+  });
+});
+
+describe("room: multi-tile seats", () => {
+  test("two players sit on the two tiles of one sofa", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    room.place(a, itemOf(a, "sofa_basic"), 3, 5, 0);   // 2x1: covers (3,5) and (4,5)
+
+    room.requestSit(a, 3, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+    emitted.length = 0;
+    room.requestSit(b, 4, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 40);
+
+    // One occupied tile must not make the whole item unavailable.
+    expect(to(b, "error")).toEqual([]);
+    const seated = (id: number) => room.occupants().find((o) => o.accountId === id);
+    expect(seated(a)).toMatchObject({ x: 3, y: 5, posture: "sit", z: 0.5625 });
+    expect(seated(b)).toMatchObject({ x: 4, y: 5, posture: "sit", z: 0.5625 });
+  });
+});

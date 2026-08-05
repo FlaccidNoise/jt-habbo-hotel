@@ -71,6 +71,7 @@ export class FurniLayer {
   private assets: FurniAssets | null;
   private depth: DepthIndex;
   private views = new Map<number, Container>();
+  private ghostView: Container | null = null;
 
   constructor(
     world: Container,
@@ -82,6 +83,26 @@ export class FurniLayer {
     this.defs = defs;
     this.assets = assets;
     this.depth = depth;
+  }
+
+  /** A translucent copy of the item being placed, drawn where it would land and facing the way it
+   *  would face — the player previews the actual furniture, not just the tiles it covers. */
+  ghost(def: FurniDef, x: number, y: number, z: number, dir: 0 | 2 | 4 | 6, ok: boolean): void {
+    this.clearGhost();
+    const item: FurniItem = { id: -1, defId: def.id, x, y, z, dir, state: 0 };
+    const view = this.spriteFor(item) ?? this.slabFor(def, item);
+    view.eventMode = "none";
+    view.alpha = ok ? 0.6 : 0.35;
+    if (!ok) view.tint = 0xff6b6b;
+    this.ghostView = view;
+    this.depth.set("ghost", furniBox(def, item), view);   // occludes like the real item would
+    this.world.addChild(view);
+  }
+
+  clearGhost(): void {
+    this.ghostView?.destroy({ children: true });
+    this.ghostView = null;
+    this.depth.delete("ghost");
   }
 
   apply(item: FurniItem): void {

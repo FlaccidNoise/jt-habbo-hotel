@@ -21,10 +21,8 @@
     "w": 2,
     "l": 1
   },
-  "stackHeights": [
-    1.0625
-  ],
   "drawnHeight": 1.0625,
+  "seatZ": null,
   "occlusion": [],
   "styleVersion": 1,
   "generatorVersion": 1,

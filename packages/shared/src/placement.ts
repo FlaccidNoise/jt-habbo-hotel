@@ -44,6 +44,22 @@ function itemsOn(ctx: PlacementCtx, t: Tile): FurniItem[] {
     footprintTiles(defOf(ctx, it), it.x, it.y, it.dir).some((f) => f.x === t.x && f.y === t.y));
 }
 
+export interface Seat { item: FurniItem; z: number; dir: 0 | 2 | 4 | 6 }
+
+/** The seat a player gets by clicking this tile: the highest sittable item covering it. One
+ *  definition shared by both sides, so the client never highlights a seat the server refuses.
+ *  A seated avatar faces the way the item faces — dir 0 is a chair with its back on the +y edge. */
+export function seatAt(ctx: PlacementCtx, t: Tile): Seat | null {
+  let best: Seat | null = null;
+  for (const item of itemsOn(ctx, t)) {
+    const seatHeight = defOf(ctx, item).seatHeight;
+    if (seatHeight === null) continue;
+    const z = item.z + seatHeight;
+    if (!best || z > best.z) best = { item, z, dir: item.dir };
+  }
+  return best;
+}
+
 export function stackTop(ctx: PlacementCtx, t: Tile): number {
   let top = tileHeight(ctx.model, t.x, t.y);
   for (const it of itemsOn(ctx, t)) top = Math.max(top, itemTop(ctx, it));

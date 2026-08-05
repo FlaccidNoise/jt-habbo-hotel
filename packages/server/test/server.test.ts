@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
-import { connect } from "./helpers.ts";
+import { connect, stockUp } from "./helpers.ts";
 import type { Bus } from "./helpers.ts";
 import type { ServerMsg } from "@grand/shared";
 import type { WebSocket } from "ws";
@@ -149,7 +149,9 @@ describe("room session", () => {
     expect(state).toMatchObject({ roomId: 1, name: "The Lobby Café" });
     const players = state.avatars.filter((a) => !a.staff);
     expect(players).toHaveLength(1);
-    expect(state.inventory).toHaveLength(5);
+    // Starter furni is placed in the suite at registration, not held as inventory.
+    expect(state.inventory).toHaveLength(0);
+    expect(state.myRoomId).toBeGreaterThan(2);
     expect(state.you).toBe(players[0]?.id);
   });
 
@@ -285,6 +287,7 @@ describe("server lifecycle", () => {
     const first = await start();
     const port = first.port;
     const token = await signUp(port, "alice");
+    await stockUp(port, token);
     const alice = await joinAs(port, token);
     const bob = await joinAs(port, await signUp(port, "bob"));
 

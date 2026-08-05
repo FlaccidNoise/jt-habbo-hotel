@@ -1,0 +1,32 @@
+{
+  "defId": "slot_machine",
+  "archetype": "artgen",
+  "sheet": "slot_machine.png",
+  "frameW": 64,
+  "frameH": 96,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 80,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:41d2cb77d89b0e57",
+  "recipeHash": "41d2cb77d89b0e57188e5435c7deef03354e7937a26f5a04dde8a247fd565de6",
+  "pixelHash": "95261ef903c1c33e0e81e086210eb01c830cc1e6a190968f7ba48d5d7252daff"
+}

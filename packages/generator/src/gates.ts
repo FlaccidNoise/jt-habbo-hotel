@@ -34,18 +34,45 @@ export function gatePalette(sheet: Canvas): GateResult {
   return { ok: true };
 }
 
-/** The emitted collision metadata must agree with the catalog def the server places by. */
+/** The emitted collision metadata must agree with the catalog def the server places by.
+ *
+ *  The height check runs both ways on the artgen path and one way on the box path, because
+ *  stackHeights means something different in each. Box-path recipes take it as a design input —
+ *  compose.ts feeds it to the archetype builders as ctx.h, so plant_basic legitimately declares
+ *  2.0 of headroom it only fills to 1.625. Artgen defs transcribe it from the rendered mesh, so
+ *  there any gap is a typo, and a too-high one would leave an invisible collision column. */
 export function gateFootprint(bundle: Bundle, def: FurniDef): GateResult {
   const m = bundle.meta;
   if (m.footprint.w !== def.w || m.footprint.l !== def.l) {
     return fail("footprint", `metadata ${m.footprint.w}×${m.footprint.l}, def ${def.w}×${def.l}`);
   }
-  if (m.stackHeights.join() !== def.stackHeights.join()) {
-    return fail("footprint", `stackHeights ${m.stackHeights.join()} ≠ def ${def.stackHeights.join()}`);
-  }
   // One z-pixel (1/32 height unit) of slack: drawn height rounds up to whole pixels.
-  if (m.drawnHeight > (def.stackHeights[0] ?? 0) + 1 / 32) {
-    return fail("footprint", `drawn height ${m.drawnHeight} exceeds collision height ${def.stackHeights[0]}`);
+  const declared = def.stackHeights[0] ?? 0;
+  if (m.drawnHeight > declared + 1 / 32) {
+    return fail("footprint", `drawn height ${m.drawnHeight} exceeds collision height ${declared}`);
+  }
+  if (m.archetype === "artgen" && declared > m.drawnHeight + 1 / 32) {
+    return fail("footprint",
+      `collision height ${declared} exceeds drawn height ${m.drawnHeight} — an artgen def takes its stackHeights from the mesh`);
+  }
+  return { ok: true };
+}
+
+/** A seated avatar rests at item.z + def.seatHeight (shared/placement.ts). That number is
+ *  transcribed by hand, so check it against the seat the artist actually authored: the "seat"
+ *  slot on the box path, the prim tagged "seat" on the artgen path. Drift floats the avatar
+ *  above the cushion or sinks it into one. */
+export function gateSeat(bundle: Bundle, def: FurniDef): GateResult {
+  const { seatZ } = bundle.meta;
+  if (def.seatHeight === null) {
+    return seatZ === null ? { ok: true }
+      : fail("seat", `authored seat surface at ${seatZ} but the def says you cannot sit on it`);
+  }
+  if (seatZ === null) {
+    return fail("seat", `def declares seatHeight ${def.seatHeight} but no seat geometry is tagged`);
+  }
+  if (Math.abs(seatZ - def.seatHeight) > 1 / 32) {
+    return fail("seat", `def seatHeight ${def.seatHeight} ≠ authored seat surface ${seatZ}`);
   }
   return { ok: true };
 }
@@ -102,6 +129,7 @@ export function runGates(bundle: Bundle, def: FurniDef): GateResult {
   for (const result of [
     gatePalette(bundle.sheet),
     gateFootprint(bundle, def),
+    gateSeat(bundle, def),
     gateBounds(bundle),
     gateContrast(bundle.sheet),
   ]) {

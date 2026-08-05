@@ -4,8 +4,14 @@ import type { DepthBox } from "@grand/shared";
 
 const TILE_BAND = -1e6;
 
-/** Same-space tie-break: a rug draws under an avatar, an avatar under a table on its tile. */
-export const LAYER = { floor_furni: 0, avatar: 1, furni: 2 } as const;
+/** Tie-break for boxes that share a space, where no side is west, north, or underneath the
+ *  other: a rug under an avatar, an avatar under a table on its tile.
+ *
+ *  `seated` is the one layer above furni: a sitter shares a tile with the seat, and drawing them
+ *  behind it buries them in the sprite. Doing it properly — body behind a near-side chair back,
+ *  in front of a far-side one — needs the per-direction occlusion groups the bundle format
+ *  reserves and the generator does not emit yet (PIPELINES §2 stage 1). */
+export const LAYER = { floor_furni: 0, avatar: 1, furni: 2, seated: 3 } as const;
 
 /** Floor tiles are flat, static, and never interleave with each other, so they keep a band of
  *  their own below every sprite instead of joining the painter sort each frame. */

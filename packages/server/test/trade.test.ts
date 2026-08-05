@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
-import { connect } from "./helpers.ts";
+import { connect, stockUp } from "./helpers.ts";
 import type { Bus } from "./helpers.ts";
 import type { ServerMsg } from "@grand/shared";
 import type { WebSocket } from "ws";
@@ -54,6 +54,7 @@ interface Client {
 // The casino: no greeter NPC, so trade assertions see only trade traffic.
 async function joinAs(port: number, username: string, roomId = 2): Promise<Client> {
   const token = await signUp(port, username);
+  await stockUp(port, token); // starter furni starts placed in the suite; trades need inventory
   const [ws, bus] = await connect(port);
   ws.send(JSON.stringify({ t: "join", token, roomId }));
   const state = await bus.waitFor("room_state");

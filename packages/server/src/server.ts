@@ -8,13 +8,16 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
-import { CATALOG_PRICES, ClientMsgSchema } from "@grand/shared";
+import { CATALOG_PRICES, ClientMsgSchema, ROOM_CAPACITY } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
-import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
+import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleTrickle } from "./ledger.ts";
 import { log } from "./log.ts";
+import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
+import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
+import type { OnboardingEvent } from "./onboarding.ts";
 import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
@@ -77,6 +80,7 @@ export async function startServer(opts: {
   const byAccount = new Map<number, WebSocket>();
   const rooms = new Map<number, RoomEntry>();
   const httpSockets = new Set<Socket>();
+  const lagSampler = startLagSampler();
   // Set only while a displaced socket hands its occupant to a new one: observers see neither the
   // leave nor the re-join.
   let transferring: number | null = null;
@@ -89,6 +93,11 @@ export async function startServer(opts: {
   function fail(ws: WebSocket, code: ErrorCode, message: string): void {
     send(ws, { t: "error", code, message });
   }
+
+  const quest = (accountId: number, event: OnboardingEvent): void => {
+    const text = advanceOnboarding(db, accountId, event);
+    if (text) emit(accountId, { t: "notice", text });
+  };
 
   const emit: Emit = (accountId, msg) => {
     if (transferring !== null) {
@@ -115,6 +124,7 @@ export async function startServer(opts: {
       });
       log("faucet", { op, accountId, granted, balance });
       if (granted > 0) emit(accountId, { t: "stars", balance, delta: granted, reason: ritual });
+      quest(accountId, "coffee");
       return granted;
     },
   });
@@ -139,6 +149,30 @@ export async function startServer(opts: {
   });
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
+
+  const NAV_LIMIT = 60;
+
+  /** The Navigator listing: every open room, busiest first. Rooms with nobody in them are not
+   *  loaded, so their live count is zero by construction. */
+  function navRooms(accountId: number): Array<{
+    roomId: number;
+    name: string;
+    players: number;
+    yours: boolean;
+  }> {
+    const listed = db
+      .prepare("SELECT id, name, owner_id AS ownerId FROM rooms WHERE state = 'open'")
+      .all() as Array<{ id: number; name: string; ownerId: number | null }>;
+    return listed
+      .map((r) => ({
+        roomId: r.id,
+        name: r.name,
+        players: rooms.get(r.id)?.room.occupantCount() ?? 0,
+        yours: r.ownerId === accountId,
+      }))
+      .sort((a, b) => b.players - a.players || a.roomId - b.roomId)
+      .slice(0, NAV_LIMIT);
+  }
 
   function roomExists(roomId: number): boolean {
     if (rooms.has(roomId)) return true;
@@ -191,6 +225,14 @@ export async function startServer(opts: {
       fail(conn.ws, "no_room", `no room ${msg.roomId}`);
       return;
     }
+    // Capacity counts players, not staff. Someone already inside is not turned away by their own
+    // presence — that would make a reconnect impossible in a full room.
+    const live = rooms.get(msg.roomId)?.room;
+    const inside = live?.occupants().some((o) => o.accountId === account.id) ?? false;
+    if (!inside && (live?.occupantCount() ?? 0) >= ROOM_CAPACITY) {
+      fail(conn.ws, "room_busy", `that room is full (${ROOM_CAPACITY} people)`);
+      return;
+    }
     clearTimeout(conn.handshake);
     conn.handshake = undefined;
 
@@ -199,6 +241,7 @@ export async function startServer(opts: {
     // leave, so the old room's occupants are told.
     const silent = previous !== undefined && conns.get(previous)?.roomId === msg.roomId;
     if (previous) {
+      wsStats.reconnects++;
       byAccount.delete(account.id);
       const stale = conns.get(previous);
       if (silent) transferring = account.id;
@@ -212,14 +255,27 @@ export async function startServer(opts: {
     conn.username = account.username;
     conn.roomId = msg.roomId;
     byAccount.set(account.id, conn.ws);
+    // Before the join, so room_state carries the balance the player is about to be told about.
+    const trickle = settleTrickle(db, account.id);
     if (silent) transferring = account.id;
     try {
       room.join(account.id, account.username);
     } finally {
       transferring = null;
     }
+    if (trickle.granted > 0) {
+      log("faucet", { op: "trickle", accountId: account.id, granted: trickle.granted });
+      emit(account.id, {
+        t: "stars",
+        balance: trickle.balance,
+        delta: trickle.granted,
+        reason: "welcome trickle",
+      });
+    }
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);
+    const hint = onboardingHint(db, account.id);
+    if (hint) send(conn.ws, { t: "notice", text: hint });
   }
 
   function dispatch(conn: Conn, msg: ClientMsg): void {
@@ -246,12 +302,22 @@ export async function startServer(opts: {
         room.whisper(accountId, msg.to, msg.text);
         break;
       case "place":
-        room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir);
+        if (room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir)) quest(accountId, "place");
         log("place", { accountId, roomId: conn.roomId, itemId: msg.itemId, x: msg.x, y: msg.y });
         break;
       case "pickup":
         room.pickup(accountId, msg.itemId);
         log("pickup", { accountId, roomId: conn.roomId, itemId: msg.itemId });
+        break;
+      case "rotate":
+        room.rotate(accountId, msg.itemId);
+        log("rotate", { accountId, roomId: conn.roomId, itemId: msg.itemId });
+        break;
+      case "sit":
+        room.requestSit(accountId, msg.x, msg.y);
+        break;
+      case "stand":
+        room.requestStand(accountId);
         break;
       case "trade_open":
         tradeService.open(accountId, msg.to);
@@ -284,10 +350,15 @@ export async function startServer(opts: {
         }
         emit(accountId, { t: "stars", balance: result.balance, delta: -price, reason: "purchase" });
         emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
+        quest(accountId, "purchase");
         break;
       }
+      case "nav_list":
+        send(conn.ws, { t: "nav_rooms", rooms: navRooms(accountId) });
+        break;
       case "arcade_start":
         arcadeService.start(accountId);
+        quest(accountId, "arcade");
         break;
       case "arcade_move":
         arcadeService.move(accountId, msg.move);
@@ -401,8 +472,39 @@ export async function startServer(opts: {
       .pipe(res);
   }
 
+  function handleMetrics(req: IncomingMessage, res: ServerResponse): void {
+    // Header only — a session token in the query string leaks through logs, history and
+    // referrers. Any signed-in account may read this; there is no staff role to gate on yet (#226).
+    const auth = req.headers.authorization;
+    const token = auth?.startsWith("Bearer ") ? auth.slice("Bearer ".length) : "";
+    if (!sessionAccount(db, token)) {
+      json(res, 401, { error: "valid session token required" });
+      return;
+    }
+    const now = Date.now();
+    const day = now - 24 * 60 * 60 * 1000;
+    json(res, 200, {
+      now,
+      day: flows(db, day),
+      week: flows(db, now - 7 * 24 * 60 * 60 * 1000),
+      hourly: hourly(db, day),
+      ledger: { ...ledgerStats },
+      ws: { ...wsStats, open: conns.size },
+      lag: lagSampler.read(),
+      rooms: [...rooms.entries()].map(([roomId, entry]) => ({
+        roomId,
+        players: entry.room.occupantCount(),
+        occupants: entry.room.occupants().length,
+      })),
+    });
+  }
+
   async function handleHttp(req: IncomingMessage, res: ServerResponse): Promise<void> {
     const path = req.url ?? "";
+    if (req.method === "GET" && path.startsWith("/api/metrics")) {
+      handleMetrics(req, res);
+      return;
+    }
     if (req.method !== "POST" || (path !== "/api/register" && path !== "/api/login")) {
       if (staticRoot && (req.method === "GET" || req.method === "HEAD") && !path.startsWith("/api")) {
         await serveStatic(req, res, staticRoot);
@@ -451,6 +553,7 @@ export async function startServer(opts: {
 
   const wss = new WebSocketServer({ server: http, path: "/ws" });
   wss.on("connection", (ws) => {
+    wsStats.connects++;
     const conn: Conn = { ws };
     conn.handshake = setTimeout(() => ws.close(4401, "handshake timeout"), handshakeMs);
     conns.set(ws, conn);
@@ -477,6 +580,7 @@ export async function startServer(opts: {
   log("listening", { port, dbPath: opts.dbPath });
 
   async function close(): Promise<void> {
+    lagSampler.stop();
     npcService.stop();
     tradeService.stop();
     for (const conn of conns.values()) clearTimeout(conn.handshake);

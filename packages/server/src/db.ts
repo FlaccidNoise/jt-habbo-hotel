@@ -33,6 +33,9 @@ CREATE INDEX IF NOT EXISTS ledger_by_account_time ON ledger_entries(account_id, 
 CREATE TABLE IF NOT EXISTS star_balances(
   account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
   balance INTEGER NOT NULL CHECK(balance >= 0));
+CREATE TABLE IF NOT EXISTS onboarding(
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  step TEXT NOT NULL);
 CREATE TRIGGER IF NOT EXISTS ledger_append_only_update BEFORE UPDATE ON ledger_entries
   BEGIN SELECT RAISE(ABORT, 'ledger is append-only'); END;
 CREATE TRIGGER IF NOT EXISTS ledger_append_only_delete BEFORE DELETE ON ledger_entries

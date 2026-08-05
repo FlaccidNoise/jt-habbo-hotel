@@ -1,6 +1,6 @@
 import { Container, Graphics, Text } from "pixi.js";
 import { DIR_STEPS, worldToScreen } from "@grand/shared";
-import type { AvatarState, ServerMsg } from "@grand/shared";
+import type { AvatarState, Posture, ServerMsg } from "@grand/shared";
 import { SCALE } from "./room.ts";
 import { LAYER } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
@@ -11,7 +11,10 @@ interface Step { x: number; y: number; z: number }
 
 const BODY_W = 24;
 const BODY_H = 48;
-const BODY_Z = BODY_H / (SCALE / 2);   // body height in world units, for occlusion
+/** Sitting crops the slab to roughly thigh-to-head and drops it onto the seat surface, so a
+ *  seated avatar reads as lower than a standing one even on a tall stool. */
+const SIT_H = 32;
+const ZU = SCALE / 2;   // pixels per world height unit, for the occlusion box
 const PALETTE = [0xe05c5c, 0xe0a55c, 0xd7e05c, 0x6ee05c, 0x5ce0c8, 0x5c9be0, 0xa15ce0, 0xe05cb4];
 
 function colorOf(username: string): number {
@@ -28,8 +31,13 @@ export class AvatarSprite {
   readonly view: Container;
   private depth: DepthIndex;
   private pip: Graphics;
+  private body: Graphics;
+  private label: Text;
+  private fill: number;
+  private stroke: { width: number; color: number; alpha: number };
   private at: Step;
   private dir: number;
+  private posture: Posture;
   private walking: { from: Step; path: Step[]; msPerTile: number; startedAt: number } | null = null;
 
   constructor(state: AvatarState, depth: DepthIndex) {
@@ -38,24 +46,25 @@ export class AvatarSprite {
     this.depth = depth;
     this.at = { x: state.x, y: state.y, z: state.z };
     this.dir = state.dir;
+    this.posture = state.posture;
 
     this.view = new Container();
     this.view.eventMode = "none";
 
     // Staff NPCs are visibly staff: navy uniform, gold trim, badged name tag. Never player colors.
     const staff = state.staff === true;
-    const body = new Graphics();
-    body
-      .roundRect(-BODY_W / 2, -BODY_H, BODY_W, BODY_H, 6)
-      .fill(staff ? 0x35406b : colorOf(state.username))
-      .stroke(staff ? { width: 2, color: 0xd4af37, alpha: 0.9 } : { width: 2, color: 0x000000, alpha: 0.45 });
-    this.view.addChild(body);
+    this.fill = staff ? 0x35406b : colorOf(state.username);
+    this.stroke = staff
+      ? { width: 2, color: 0xd4af37, alpha: 0.9 }
+      : { width: 2, color: 0x000000, alpha: 0.45 };
+    this.body = new Graphics();
+    this.view.addChild(this.body);
 
     this.pip = new Graphics();
     this.pip.circle(0, 0, 3).fill(0xffffff).stroke({ width: 1, color: 0x000000, alpha: 0.5 });
     this.view.addChild(this.pip);
 
-    const label = new Text({
+    this.label = new Text({
       text: staff ? `★ ${state.username} — STAFF` : state.username,
       style: {
         fill: staff ? 0xf5d76e : 0xffffff,
@@ -64,10 +73,20 @@ export class AvatarSprite {
         stroke: { color: 0x000000, width: 3 },
       },
     });
-    label.anchor.set(0.5, 1);
-    label.y = -BODY_H - 4;
-    this.view.addChild(label);
+    this.label.anchor.set(0.5, 1);
+    this.view.addChild(this.label);
 
+    this.drawBody();
+    this.place();
+  }
+
+  /** Server-authoritative pose. Sitting also carries the seat's height and facing. */
+  setPosture(posture: Posture, at: Step, dir: number): void {
+    this.walking = null;
+    this.posture = posture;
+    this.at = { ...at };
+    this.dir = dir;
+    this.drawBody();
     this.place();
   }
 
@@ -75,12 +94,21 @@ export class AvatarSprite {
     return { ...this.at };
   }
 
+  pose(): Posture {
+    return this.posture;
+  }
+
   /** Local screen point of the avatar's head, for anchoring chat bubbles. */
   head(): { sx: number; sy: number } {
-    return { sx: this.view.x, sy: this.view.y - BODY_H - 18 };
+    return { sx: this.view.x, sy: this.view.y - this.height() - 18 };
   }
 
   walk(msg: WalkMsg, startedAtLocal: number): void {
+    // A walk always means standing: the server stands you up before it moves you.
+    if (this.posture !== "stand") {
+      this.posture = "stand";
+      this.drawBody();
+    }
     if (msg.path.length === 0) {
       this.walking = null;
       this.at = { ...msg.from };
@@ -130,6 +158,20 @@ export class AvatarSprite {
     this.view.destroy({ children: true });
   }
 
+  private height(): number {
+    return this.posture === "sit" ? SIT_H : BODY_H;
+  }
+
+  private drawBody(): void {
+    const h = this.height();
+    this.body.clear();
+    this.body
+      .roundRect(-BODY_W / 2, -h, BODY_W, h, 6)
+      .fill(this.fill)
+      .stroke(this.stroke);
+    this.label.y = -h - 4;
+  }
+
   private face(dx: number, dy: number): void {
     if (dx === 0 && dy === 0) return;
     this.dir = dirFromStep(dx, dy);
@@ -144,13 +186,16 @@ export class AvatarSprite {
     this.placePip();
   }
 
+  /** A sitter shares its tile with the seat and neither is west, north, or under the other, so
+   *  the seated layer is what puts the body in front of the chair it sits on. */
   private placeDepth(): void {
+    const sitting = this.posture === "sit";
     this.depth.set(
       `avatar:${this.id}`,
       {
         x0: this.at.x, y0: this.at.y, z0: this.at.z,
-        x1: this.at.x + 1, y1: this.at.y + 1, z1: this.at.z + BODY_Z,
-        layer: LAYER.avatar,
+        x1: this.at.x + 1, y1: this.at.y + 1, z1: this.at.z + this.height() / ZU,
+        layer: sitting ? LAYER.seated : LAYER.avatar,
       },
       this.view,
     );
@@ -161,6 +206,6 @@ export class AvatarSprite {
     if (!step) return;
     const offset = worldToScreen(step.dx * 0.4, step.dy * 0.4, 0, SCALE);
     this.pip.x = offset.sx;
-    this.pip.y = -BODY_H + 10 + offset.sy;
+    this.pip.y = -this.height() + 10 + offset.sy;
   }
 }

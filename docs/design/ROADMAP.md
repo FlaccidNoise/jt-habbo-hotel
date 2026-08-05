@@ -11,17 +11,18 @@ Status date: 2026-08-05.
 | 1 | Room render, pathfinding, walk, chat, filter | Shipped (vertical slice, 178 tests) | #115 awaiting verification. Drain/rolling deploy deferred → #125 |
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
-| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Catalog is 14 defs. Wall archetypes → #203 | #117 fixed, #202 |
-| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d). #209 observability still open | #118 |
+| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall archetypes → #203 | #117 fixed, #202 |
+| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) + registration Star trickle (c30e5b7) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
 | 8 | Design studio | Not started | #121 |
 | 9 | Multiplayer games + casino floor | Not started | #122 |
 
 Cross-cutting, outside the numbered order: #125 gateway (trigger: first multi-process or remote
-deploy), #126 deferred room/social features, #127 real avatars (proportions pin jointly with the
-style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms (decided: phased,
-demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
+deploy), #126 deferred room/social features (Navigator + room capacity 25 shipped 9f90670; room
+creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (proportions pin
+jointly with the style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms
+(decided: phased, demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
 
@@ -31,11 +32,11 @@ demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 - #204 NPC live model wiring — env config, screen-pass verification, spend counter.
 - #202 Art pipeline — style bible v1, Blender rig, post-pass, proof gate, library build-out.
 - #206 Dailies, streaks, achievements, weekly competitions (needs #118).
-- #207 Onboarding first session — pre-created room, café spawn, welcome quest, guided purchase
-  (needs catalog + ledger).
+- #207 Onboarding first session — **fixed**: registration provisions the suite with starter furni
+  placed, café spawn, welcome quest advanced by real events (coffee → buy → place → arcade).
 - #208 Friends console, groups, badges — the Social service (PIPELINES §5).
-- #209 Observability — per-faucet issuance and per-sink absorption graphs, before #118 ships
-  (audit H4: the data must exist before the exploit).
+- #209 Observability — **fixed**: GET /api/metrics (per-op flows, ledger latency, WS and loop
+  health) behind a session token, graphs at /metrics.html.
 - #210 Wealth sinks — Museum wing, prestige untradables, Luck Lever, collection sets
   (needs #118).
 - #211 Density funnel low-population mode — threshold 5 concurrent, space unlock/re-lock,
@@ -53,18 +54,25 @@ bounces.** Reading the config is never evidence.
 - Speak carries 5 tiles then fades. Shout reaches the room. Whisper reaches one player.
 - A staged filtered word bounces on chat and on registration names.
 - Reconnect within the window resyncs full room state.
-- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04).
+- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04). **Met**
+  (9f90670): ROOM_CAPACITY 25, staff not counted, room_busy at the door, full rooms disabled in
+  the Navigator, and someone already inside can still reconnect.
 - Deferred to #125: drain moves a live occupied room, clients resync inside the reconnect window.
 
 ### Step 2 — furni, catalog, public rooms (shipped, gaps filed)
 
-- Place, move, pick up persist across instance unload and reload. Rotate is unbuilt — the client
-  hardcodes direction 0 (#223), though every bundle ships all 4 direction frames.
+- Place, rotate, pick up persist across instance unload and reload. Rotation works both before
+  placing (the held item turns under the cursor) and on a placed item (#223 fixed).
+- Sitting: clicking a seat walks there and seats the avatar on the seat surface, facing the way
+  the seat faces. Clicking it again stands. Walking, a rotation that moves the seat away, and a
+  pickup all put the sitter back on the floor rather than leaving them floating.
 - Stacking respects per-state heights. A staged over-stack is refused.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items.
+- Gaps: #205 room games, #203 wall items. A seated avatar draws in front of its own seat because
+  per-direction occlusion groups are specced but unemitted (PIPELINES §2 stage 1) — until they
+  exist, a chair back can never occlude the sitter.
 
 ### Step 3 — NPC staff (shipped canned-only, #204 finishes it)
 
@@ -84,6 +92,9 @@ bounces.** Reading the config is never evidence.
   gates and read as one style in the reference room. Only then does build-out start. **Met**, and
   the first build-out (casino + café sets, 5 more floor archetypes) shipped behind the same gates.
 - A frozen artgen bundle whose pixels drift from its stored hash refuses to publish (staged).
+- A def whose seatHeight disagrees with the authored seat surface refuses to publish (staged,
+  #228) — that number places a seated avatar and nothing read it before. Likewise an artgen def
+  claiming more collision height than its mesh draws.
 
 ### Step 5 — trade + ledger (#118, with #209 first)
 
@@ -100,7 +111,9 @@ bounces.** Reading the config is never evidence.
   exactly once when the ledger returns.
 - Restore drill: scheduled restore into scratch succeeds with matching row counts. RPO 24 h,
   RTO 4 h (prototype pins).
-- #209 ships first: per-faucet issuance and per-sink absorption visible per day.
+- #209 ships first: per-faucet issuance and per-sink absorption visible per day. **Met** (90617c1):
+  GET /api/metrics + /metrics.html. Any signed-in account can read it — no staff role exists to
+  gate on (#226).
 
 ### Step 6 — first arcade (#119, #206 alongside)
 
@@ -192,18 +205,23 @@ Every `(tune)` value in GAME.md is now the v1 constant. Change mechanisms:
 ## Sequencing — the next three moves (refreshed 2026-08-05, second pass)
 
 Done since the 08-04 plan: #204 NPC wiring, #118 ledger + trade, #119 first arcade, #215 catalog
-sink, and #202 end to end — proof gate, per-material masks, style bible v1, and the first
-build-out taking the catalog from 5 defs to 14.
+sink, #209 observability (/api/metrics + metrics.html), #207 onboarding, the #126 Navigator
+slice with room capacity 25, and #202 end to end — proof gate, per-material masks, style bible
+v1, and two build-outs taking the catalog from 5 defs to 22.
 
-1. **#209 observability.** The ledger is live and issuing — the plan called for the issuance
-   graphs *before* the faucets, and they now trail three shipped faucets and two sinks. This is
-   the oldest open promise in the plan; close it next.
-2. **#206 dailies + #207 onboarding.** Both ride the now-live ledger rails and turn the earn
-   loop into a daily habit. #207 also has 14 catalog items to guide a first purchase through.
-3. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
-   wall items ship v1. Needs the coordinate system before any wall archetype can be authored.
+1. **#210 wealth sinks.** Now the binding constraint. The catalog is the only sink and costs
+   2700 Stars to buy out; at the coffee faucet alone that is ~54 days, and adding furni only
+   moves that number, never the shape. Museum wing, prestige untradables, Luck Lever (the slot
+   machine is its host), collection sets. **Do this before #206**, which adds faucets and would
+   make the imbalance worse.
+2. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
+   wall items ship v1. Needs the coordinate system before any wall archetype can be authored,
+   and it is the last thing blocking #202 from closing.
+3. **#206 dailies**, once #210 has somewhere for the Stars to go.
 
-Also newly open: #223 furni rotation (all 4 direction frames exist and are unreachable).
+Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out. Colorways are
+free as of #229, so catalog breadth is no longer gated on Blender time — it is gated on having
+sinks worth spending at.
 
 After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand

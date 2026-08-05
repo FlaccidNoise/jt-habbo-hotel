@@ -27,8 +27,10 @@ export interface BundleMeta {
   anchorsX: number[];
   anchorY: number;
   footprint: { w: number; l: number };
-  stackHeights: number[];
   drawnHeight: number;
+  /** Top of the authored seat geometry, or null when the part has none. The def's seatHeight is
+   *  checked against this — it is what placement.ts rests a seated avatar on. */
+  seatZ: number | null;
   occlusion: string[];
   styleVersion: number;
   generatorVersion: number;
@@ -70,13 +72,17 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
     l: def.l,
     h: def.stackHeights[0] ?? 1,
   };
-  const boxes: Box[] = slots.flatMap((slot) => {
+  const built = slots.map((slot) => {
     const variants = spec.slots[slot] ?? {};
     const pick = recipe.parts[slot];
     const build = pick === undefined ? undefined : variants[pick];
     if (!build) throw new Error(`${recipe.archetype}.${slot}: no variant "${pick}"`);
-    return build(ctx);
+    return { slot, boxes: build(ctx) };
   });
+  const boxes: Box[] = built.flatMap((b) => b.boxes);
+  // The seat surface is geometry, never a declaration: the top of the "seat" slot's boxes.
+  const seatBoxes = built.find((b) => b.slot === "seat")?.boxes ?? [];
+  const seatZ = seatBoxes.length > 0 ? Math.max(...seatBoxes.map((b) => b.z1)) : null;
 
   const maxZ = Math.max(...boxes.map((b) => b.z1));
   const heightPx = Math.ceil(maxZ * ZU);
@@ -112,8 +118,8 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
       anchorsX,
       anchorY,
       footprint: { w: def.w, l: def.l },
-      stackHeights: [...def.stackHeights],
       drawnHeight: heightPx / ZU,
+      seatZ,
       occlusion: slots,
       styleVersion: recipe.styleVersion,
       generatorVersion: recipe.generatorVersion,

@@ -45,3 +45,17 @@ test("a moved view restacks against what is already placed", () => {
   depth.flush();
   expect(avatar.zIndex).toBeGreaterThan(table.zIndex);
 });
+test("a sitter draws over the seat it shares a tile with, and under furni one tile nearer", () => {
+  const depth = new DepthIndex();
+  const chair = new Container();
+  const sitter = new Container();
+  const nearer = new Container();
+  depth.set("chair", box(3, 3), chair);
+  depth.set("sitter", {
+    x0: 3, y0: 3, z0: 0.65625, x1: 4, y1: 4, z1: 0.65625 + 1, layer: LAYER.seated,
+  }, sitter);
+  depth.set("nearer", box(4, 3), nearer);
+  depth.flush();
+  expect(sitter.zIndex).toBeGreaterThan(chair.zIndex);
+  expect(sitter.zIndex).toBeLessThan(nearer.zIndex);
+});

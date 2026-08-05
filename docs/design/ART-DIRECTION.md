@@ -69,7 +69,10 @@ the v1 pins, marked (tune) where authoring may move them.
   | stereo | total height | 1.0–2.0 |
 
 - **Per-slot pixel bounds** (min/max width and height at 64) live in each archetype spec.
-  Variants must differ in silhouette, not only in palette — this feeds the near-duplicate gate.
+  Slot variants must differ in silhouette, not only in palette — this feeds the near-duplicate
+  gate. Colorways are the separate axis and may differ in palette alone (decided 2026-08-05):
+  they are declared as a ramp remap of a base part, never as a second mesh, so they cannot drift
+  from the silhouette they were cut from.
 - **Avatar reference:** standing figure ~100 px tall on a 64 × 110 canvas, ~3 height units
   (tune — pins jointly with the figure pipeline, bug #127).
 
@@ -106,6 +109,12 @@ bug), and hand-polish passes where a silhouette reads wrong at 64. No part has n
 
 Measured on the first build-out: 12 parts (3 proof + 9 catalog) render and gate in ~13 s total
 on the dev box, unattended. Authoring the mesh is the whole cost; the 4 directions are free.
+
+So are colorways (#229). The rig lights white geometry and emits a flat index mask, so neither
+render pass ever sees a ramp — the recolor happens entirely in the post-pass. A colorway is
+declared as `base part + ramp remap` in `postpass.ts` and reuses the base's frames, so it adds a
+catalog item for no Blender time at all: the second build-out rendered 9 parts and published 13.
+Ramp remaps are keyed by ramp name, not primitive index, so they survive editing the mesh.
 
 11 archetypes × ~3 slots × 4 variants ≈ 130 meshes, each with post-pass and possible polish.
 The 2,300-sprite figure was the hand-drawn cost. The mesh is the authored unit now. Variety

@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { openDb, closeDb } from "../src/db.ts";
 import { register, login, sessionAccount, AuthError } from "../src/auth.ts";
-import { grantStarter, listInventory } from "../src/items.ts";
+import { grantStarter, listInventory, listRoomFurni, suiteOf } from "../src/items.ts";
 import type Database from "better-sqlite3";
 
 let dir: string;
@@ -65,15 +65,46 @@ describe("auth", () => {
     await expect(register(db, "shit", "password1")).rejects.toThrow(AuthError);
   });
 
-  test("grantStarter grants exactly five items once, guarded by starter_granted", async () => {
+  test("a registration that fails partway leaves nothing behind — staged fault", async () => {
+    const counts = (): Record<string, number> => ({
+      accounts: (db.prepare("SELECT COUNT(*) AS n FROM accounts").get() as { n: number }).n,
+      items: (db.prepare("SELECT COUNT(*) AS n FROM furni_items").get() as { n: number }).n,
+      rooms: (db.prepare("SELECT COUNT(*) AS n FROM rooms").get() as { n: number }).n,
+      sessions: (db.prepare("SELECT COUNT(*) AS n FROM sessions").get() as { n: number }).n,
+    });
+    const before = counts();
+
+    // Fault staged after the account row is written: the starter grant is the next statement.
+    db.exec(
+      `CREATE TRIGGER stage_fail BEFORE INSERT ON furni_items
+       BEGIN SELECT RAISE(ABORT, 'staged failure'); END`,
+    );
+    await expect(register(db, "dave", "password1")).rejects.toThrow("staged failure");
+    db.exec("DROP TRIGGER stage_fail");
+
+    expect(counts()).toEqual(before);
+    expect(db.prepare("SELECT id FROM accounts WHERE username = 'dave'").get()).toBeUndefined();
+
+    // The name is free afterwards, so the failure did not half-claim it.
+    await expect(register(db, "dave", "password1")).resolves.toMatchObject({
+      token: expect.any(String),
+    });
+  });
+
+  test("grantStarter grants exactly five items once, placed into the suite at registration", async () => {
     await register(db, "carol", "password1");
     const account = db.prepare("SELECT id FROM accounts WHERE username = ?").get("carol") as {
       id: number;
     };
-    expect(listInventory(db, account.id)).toHaveLength(5);
+    // Registration provisions the suite with all five starter items placed — inventory is empty.
+    const suite = suiteOf(db, account.id);
+    expect(suite).not.toBeNull();
+    expect(listInventory(db, account.id)).toHaveLength(0);
+    expect(listRoomFurni(db, suite!)).toHaveLength(5);
 
     grantStarter(db, account.id); // already granted — no-op
-    expect(listInventory(db, account.id)).toHaveLength(5);
+    expect(listRoomFurni(db, suite!)).toHaveLength(5);
+    expect(listInventory(db, account.id)).toHaveLength(0);
 
     db.prepare("DELETE FROM furni_items WHERE owner_id = ?").run(account.id); // empty the table
     grantStarter(db, account.id); // flag still set — grants nothing back

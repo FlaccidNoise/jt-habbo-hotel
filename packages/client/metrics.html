@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Grand — metrics</title>
+    <link rel="icon" href="data:," />
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        color-scheme: dark;
+        --surface-1: #1a1a19;
+        --surface-2: #242423;
+        --border: #3a3a38;
+        --text-primary: #ffffff;
+        --text-secondary: #c3c2b7;
+        --series-1: #3987e5;   /* issued */
+        --series-2: #d95926;   /* absorbed */
+        background: var(--surface-1); color: var(--text-primary);
+        font: 14px/1.4 system-ui, sans-serif; padding: 20px;
+      }
+      h1 { font-size: 18px; margin: 0 0 16px; }
+      h2 { font-size: 13px; font-weight: 600; color: var(--text-secondary);
+        text-transform: uppercase; letter-spacing: .04em; margin: 0 0 8px; }
+      #login-card { max-width: 280px; display: grid; gap: 8px; background: var(--surface-2);
+        border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+      #login-card input { padding: 7px 8px; border-radius: 6px; border: 1px solid var(--border);
+        background: var(--surface-1); color: var(--text-primary); }
+      #login-card button { padding: 7px 8px; border-radius: 6px; border: 1px solid var(--border);
+        background: #2c3346; color: var(--text-primary); cursor: pointer; }
+      #login-error { color: #e66767; min-height: 18px; font-size: 13px; }
+      #dash[hidden] { display: none; }
+      #fetch-error { color: #e66767; min-height: 18px; font-size: 13px; }
+      .tiles { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+      .tile { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+        padding: 10px 14px; min-width: 120px; }
+      .tile .v { font-size: 22px; font-weight: 700; }
+      .tile .k { font-size: 12px; color: var(--text-secondary); }
+      .panel { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px;
+        padding: 14px; margin-bottom: 20px; }
+      .legend { display: flex; gap: 16px; font-size: 12px; color: var(--text-secondary);
+        margin-bottom: 8px; }
+      .legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px;
+        margin-right: 5px; vertical-align: -1px; }
+      #chart { display: flex; align-items: flex-end; gap: 2px; height: 140px; }
+      #chart .hour { flex: 1; display: flex; align-items: flex-end; gap: 2px; height: 100%;
+        border-bottom: 1px solid var(--border); }
+      #chart .bar { flex: 1; border-radius: 4px 4px 0 0; min-height: 1px; }
+      #chart .hour:hover { background: #ffffff14; }
+      .axis { display: flex; justify-content: space-between; font-size: 11px;
+        color: var(--text-secondary); margin-top: 4px; }
+      .empty { color: var(--text-secondary); }
+      #tooltip { position: fixed; pointer-events: none; background: var(--surface-1);
+        border: 1px solid var(--border); border-radius: 6px; padding: 6px 9px; font-size: 12px;
+        display: none; z-index: 10; box-shadow: 0 2px 8px #0008; }
+      .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 720px; }
+      table { border-collapse: collapse; width: 100%; }
+      th, td { text-align: left; padding: 3px 10px 3px 0; font-size: 13px; }
+      th { color: var(--text-secondary); font-weight: 600; }
+      td.n, th.n { text-align: right; }
+    </style>
+  </head>
+  <body>
+    <h1>The Grand — economy &amp; health</h1>
+    <div id="login-card">
+      <input id="username" placeholder="username" autocomplete="username" />
+      <input id="password" type="password" placeholder="password" autocomplete="current-password" />
+      <button type="button" id="login">View metrics</button>
+      <div id="login-error"></div>
+    </div>
+    <div id="dash" hidden>
+      <div id="fetch-error"></div>
+      <div class="tiles" id="tiles"></div>
+      <div class="panel">
+        <h2>Stars per hour — last 24h</h2>
+        <div class="legend">
+          <span><span class="swatch" style="background: var(--series-1)"></span>Issued</span>
+          <span><span class="swatch" style="background: var(--series-2)"></span>Absorbed</span>
+        </div>
+        <div id="chart"></div>
+        <div class="axis"><span id="axis-start"></span><span>now</span></div>
+      </div>
+      <div class="cols">
+        <div class="panel"><h2>Faucets (issued ★)</h2><div id="faucets"></div></div>
+        <div class="panel"><h2>Sinks (absorbed ★)</h2><div id="sinks"></div></div>
+      </div>
+    </div>
+    <div id="tooltip"></div>
+    <script type="module">
+      const $ = (id) => document.getElementById(id);
+      const HOUR = 60 * 60 * 1000;
+      let token = sessionStorage.getItem("metrics-token") ?? "";
+      let timer = null;
+
+      $("login").addEventListener("click", login);
+      $("password").addEventListener("keydown", (e) => { if (e.key === "Enter") login(); });
+
+      async function login() {
+        $("login-error").textContent = "";
+        try {
+          const res = await fetch("/api/login", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify({ username: $("username").value.trim(), password: $("password").value }),
+          });
+          const body = await res.json();
+          if (!res.ok || !body.token) throw new Error(body.error ?? `login failed (${res.status})`);
+          token = body.token;
+          sessionStorage.setItem("metrics-token", token);
+          show();
+        } catch (e) {
+          $("login-error").textContent = e instanceof Error ? e.message : String(e);
+        }
+      }
+
+      function show() {
+        $("login-card").style.display = "none";
+        $("dash").hidden = false;
+        void refresh();
+        timer = setInterval(refresh, 10_000);
+      }
+
+      async function refresh() {
+        try {
+          const res = await fetch("/api/metrics", { headers: { authorization: `Bearer ${token}` } });
+          if (res.status === 401) {
+            clearInterval(timer);
+            sessionStorage.removeItem("metrics-token");
+            $("dash").hidden = true;
+            $("login-card").style.display = "grid";
+            $("login-error").textContent = "session expired — log in again";
+            return;
+          }
+          if (!res.ok) throw new Error(`metrics failed (${res.status})`);
+          render(await res.json());
+          $("fetch-error").textContent = "";
+        } catch (e) {
+          $("fetch-error").textContent = e instanceof Error ? e.message : String(e);
+        }
+      }
+
+      function tile(value, label) {
+        return `<div class="tile"><div class="v">${value}</div><div class="k">${label}</div></div>`;
+      }
+
+      function flowTable(el, day, week) {
+        if (day.length === 0 && week.length === 0) {
+          el.innerHTML = '<div class="empty">none yet</div>';
+          return;
+        }
+        const ops = [...new Set([...day, ...week].map((r) => r.op))];
+        const by = (rows, op) => rows.find((r) => r.op === op)?.stars ?? 0;
+        el.innerHTML =
+          '<table><tr><th>op</th><th class="n">24h</th><th class="n">7d</th></tr>' +
+          ops.map((op) => `<tr><td>${op}</td><td class="n">${by(day, op)}</td><td class="n">${by(week, op)}</td></tr>`).join("") +
+          "</table>";
+      }
+
+      function render(m) {
+        const avgMs = m.ledger.ops > 0 ? (m.ledger.totalMs / m.ledger.ops).toFixed(2) : "0";
+        const players = m.rooms.reduce((n, r) => n + r.players, 0);
+        $("tiles").innerHTML =
+          tile(m.ws.open, "sockets open") +
+          tile(`${m.ws.connects} / ${m.ws.reconnects}`, "connects / reconnects") +
+          tile(players, "players in rooms") +
+          tile(`${m.ledger.ops}${m.ledger.errors ? ` (${m.ledger.errors} err)` : ""}`, "ledger settlements") +
+          tile(`${avgMs} / ${m.ledger.maxMs.toFixed(1)}`, "ledger avg / max ms") +
+          tile(`${m.lag.lastMs} / ${m.lag.maxMs}`, "loop lag last / max ms");
+
+        const start = Math.floor((m.now - 23 * HOUR) / HOUR) * HOUR;
+        const hours = Array.from({ length: 24 }, (_, i) => start + i * HOUR);
+        const issued = new Map(hours.map((h) => [h, 0]));
+        const absorbed = new Map(hours.map((h) => [h, 0]));
+        for (const row of m.hourly) {
+          const target = row.stars > 0 ? issued : absorbed;
+          if (target.has(row.hour)) target.set(row.hour, target.get(row.hour) + Math.abs(row.stars));
+        }
+        const max = Math.max(1, ...issued.values(), ...absorbed.values());
+        const chart = $("chart");
+        if (m.hourly.length === 0) {
+          chart.innerHTML = '<div class="empty">No Star movement in the last 24h.</div>';
+        } else {
+          chart.replaceChildren(
+            ...hours.map((h) => {
+              const cell = document.createElement("div");
+              cell.className = "hour";
+              for (const [map, color] of [[issued, "var(--series-1)"], [absorbed, "var(--series-2)"]]) {
+                const bar = document.createElement("div");
+                bar.className = "bar";
+                bar.style.background = color;
+                bar.style.height = `${(map.get(h) / max) * 100}%`;
+                cell.appendChild(bar);
+              }
+              const when = new Date(h).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+              cell.addEventListener("mousemove", (e) => {
+                const tip = $("tooltip");
+                tip.style.display = "block";
+                tip.style.left = `${e.clientX + 12}px`;
+                tip.style.top = `${e.clientY + 12}px`;
+                tip.textContent = `${when} — issued ${issued.get(h)} ★ · absorbed ${absorbed.get(h)} ★`;
+              });
+              cell.addEventListener("mouseleave", () => ($("tooltip").style.display = "none"));
+              return cell;
+            }),
+          );
+        }
+        $("axis-start").textContent = new Date(start).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        flowTable($("faucets"), m.day.faucets, m.week.faucets);
+        flowTable($("sinks"), m.day.sinks, m.week.sinks);
+      }
+
+      if (token) show();
+    </script>
+  </body>
+</html>

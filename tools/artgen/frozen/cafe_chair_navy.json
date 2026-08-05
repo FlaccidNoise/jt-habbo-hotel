@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_chair_navy",
+  "archetype": "artgen",
+  "sheet": "cafe_chair_navy.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": 0.58,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:8009a50414960938",
+  "recipeHash": "8009a504149609385ebc41bb128ae9eb32bfe41a089c88cd9210c84604b63c3d",
+  "pixelHash": "61e3b08af03cf532d023c96451c3aa77c31a9afd69f173e84750b9cbde1a0fcb"
+}

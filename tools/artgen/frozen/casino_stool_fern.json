@@ -1,0 +1,32 @@
+{
+  "defId": "casino_stool_fern",
+  "archetype": "artgen",
+  "sheet": "casino_stool_fern.png",
+  "frameW": 64,
+  "frameH": 59,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.82,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:0e8ccafa5f122aa9",
+  "recipeHash": "0e8ccafa5f122aa9bb1830865701f4101a38028d748d8e3f70663bb78ab24141",
+  "pixelHash": "e512c6f9495adf68771572491ecf68abe3312f95c335ace037ffc821b2f7d5ec"
+}

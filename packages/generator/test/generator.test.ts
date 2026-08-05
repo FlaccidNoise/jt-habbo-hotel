@@ -11,6 +11,7 @@ import {
   gateContrast,
   gateFootprint,
   gatePalette,
+  gateSeat,
   gateUniqueness,
   runGates,
 } from "../src/gates.ts";
@@ -23,6 +24,14 @@ import { FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES } from "../src/style.ts";
 const CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "chair_basic");
 const CHAIR_RECIPE = STARTER_RECIPES.get("chair_basic");
 if (!CHAIR_DEF || !CHAIR_RECIPE) throw new Error("starter chair is missing");
+const CAFE_CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "cafe_chair");
+if (!CAFE_CHAIR_DEF) throw new Error("café chair is missing");
+
+function defById(id: string) {
+  const def = PROTOTYPE_CATALOG.find((d) => d.id === id);
+  if (!def) throw new Error(`${id} is missing`);
+  return def;
+}
 
 function chairBundle() {
   return render(CHAIR_DEF!, CHAIR_RECIPE!);
@@ -109,6 +118,21 @@ describe("style bible v1", () => {
   });
 });
 
+describe("colorways", () => {
+  test("a colorway reuses its base's render but is its own design", () => {
+    // The rig renders white geometry, so a recolor costs no Blender time: same frames, ramps
+    // remapped in the post-pass. Geometry must therefore be identical and pixels must not be.
+    const base = bundleFor(defById("cafe_chair")).bundle;
+    const alt = bundleFor(defById("cafe_chair_crimson")).bundle;
+    expect(alt.meta.frameW).toBe(base.meta.frameW);
+    expect(alt.meta.frameH).toBe(base.meta.frameH);
+    expect(alt.meta.drawnHeight).toBe(base.meta.drawnHeight);
+    expect(alt.meta.seatZ).toBe(base.meta.seatZ);
+    expect(alt.meta.pixelHash).not.toBe(base.meta.pixelHash);
+    expect(alt.meta.recipeHash).not.toBe(base.meta.recipeHash);
+  });
+});
+
 describe("recipe hashing", () => {
   test("hash is independent of key order", () => {
     const a = CHAIR_RECIPE!;
@@ -162,6 +186,39 @@ describe("gates bounce staged known-bad input", () => {
       }
     }
     expect(gateBounds(floating)).toMatchObject({ ok: false, gate: "bounds" });
+  });
+
+  test("seat: a def whose seatHeight disagrees with the authored seat surface", () => {
+    const bundle = chairBundle();
+    expect(bundle.meta.seatZ).toBe(CHAIR_DEF!.seatHeight);
+    expect(gateSeat(bundle, { ...CHAIR_DEF!, seatHeight: 0.9 }))
+      .toMatchObject({ ok: false, gate: "seat" });
+  });
+
+  test("seat: a def and its geometry disagreeing about whether you can sit at all", () => {
+    const bundle = chairBundle();
+    expect(gateSeat(bundle, { ...CHAIR_DEF!, seatHeight: null }))
+      .toMatchObject({ ok: false, gate: "seat" });
+    const seatless = chairBundle();
+    seatless.meta.seatZ = null;
+    expect(gateSeat(seatless, CHAIR_DEF!)).toMatchObject({ ok: false, gate: "seat" });
+  });
+
+  test("footprint: an artgen def claiming more collision height than the mesh has", () => {
+    // The direction that used to pass silently, leaving an invisible collision column.
+    const { bundle } = bundleFor(CAFE_CHAIR_DEF!);
+    expect(bundle.meta.archetype).toBe("artgen");
+    expect(gateFootprint(bundle, { ...CAFE_CHAIR_DEF!, stackHeights: [3] }))
+      .toMatchObject({ ok: false, gate: "footprint" });
+  });
+
+  test("footprint: a box-path def may still declare headroom above its mesh", () => {
+    // plant_basic draws to 1.625 and declares 2.0. compose.ts feeds stackHeights to the archetype
+    // builders as ctx.h, so on that path it is a design input, not a measurement of the result.
+    const plant = PROTOTYPE_CATALOG.find((d) => d.id === "plant_basic");
+    const { bundle } = bundleFor(plant!);
+    expect(bundle.meta.drawnHeight).toBeLessThan(plant!.stackHeights[0]!);
+    expect(gateFootprint(bundle, plant!)).toEqual({ ok: true });
   });
 
   test("contrast: a sprite painted in the floor tone", () => {
