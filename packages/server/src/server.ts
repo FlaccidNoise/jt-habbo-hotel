@@ -13,7 +13,7 @@ import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
-import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
+import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleTrickle } from "./ledger.ts";
 import { log } from "./log.ts";
 import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
 import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
@@ -255,11 +255,22 @@ export async function startServer(opts: {
     conn.username = account.username;
     conn.roomId = msg.roomId;
     byAccount.set(account.id, conn.ws);
+    // Before the join, so room_state carries the balance the player is about to be told about.
+    const trickle = settleTrickle(db, account.id);
     if (silent) transferring = account.id;
     try {
       room.join(account.id, account.username);
     } finally {
       transferring = null;
+    }
+    if (trickle.granted > 0) {
+      log("faucet", { op: "trickle", accountId: account.id, granted: trickle.granted });
+      emit(account.id, {
+        t: "stars",
+        balance: trickle.balance,
+        delta: trickle.granted,
+        reason: "welcome trickle",
+      });
     }
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);

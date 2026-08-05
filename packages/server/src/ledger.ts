@@ -91,6 +91,40 @@ export const settleEarn = timed(function settleEarn(
   })();
 });
 
+// GAME.md §Faucets registration row: 100 Stars trickled over the first 7 days, never a day-one
+// lump (audit R-10, S19) — day 1 is the first payday, so a fresh alt is worth nothing on the day
+// it is made. No scheduler: the days owed are settled the next time the account joins, and the
+// op_key makes each day payable exactly once however often that happens.
+export const TRICKLE_SCHEDULE = [15, 15, 15, 15, 15, 15, 10];
+const TRICKLE_TOTAL = TRICKLE_SCHEDULE.reduce((a, b) => a + b, 0);
+
+export function settleTrickle(
+  db: Database.Database,
+  accountId: number,
+  now = Date.now(),
+): EarnResult {
+  const row = db.prepare("SELECT created_at AS createdAt FROM accounts WHERE id = ?").get(accountId) as
+    | { createdAt: number }
+    | undefined;
+  if (!row) return { granted: 0, balance: balanceOf(db, accountId) };
+
+  const due = Math.min(TRICKLE_SCHEDULE.length, Math.floor((now - row.createdAt) / DAY_MS));
+  let granted = 0;
+  for (let day = 1; day <= due; day++) {
+    granted += settleEarn(db, {
+      opKey: `trickle:${accountId}:${day}`,
+      op: "trickle",
+      accountId,
+      amount: TRICKLE_SCHEDULE[day - 1] ?? 0,
+      // The schedule itself is the limit, so the per-op window must not clamp a catch-up: a
+      // player away for three days is owed all three paydays at once.
+      opCap: TRICKLE_TOTAL,
+      now,
+    }).granted;
+  }
+  return { granted, balance: balanceOf(db, accountId) };
+}
+
 export type PurchaseResult =
   | { ok: true; itemId: number; balance: number }
   | { ok: false; reason: string };

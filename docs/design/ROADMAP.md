@@ -19,9 +19,10 @@ Status date: 2026-08-05.
 | 9 | Multiplayer games + casino floor | Not started | #122 |
 
 Cross-cutting, outside the numbered order: #125 gateway (trigger: first multi-process or remote
-deploy), #126 deferred room/social features, #127 real avatars (proportions pin jointly with the
-style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms (decided: phased,
-demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
+deploy), #126 deferred room/social features (Navigator + room capacity 25 shipped 9f90670; room
+creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (proportions pin
+jointly with the style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms
+(decided: phased, demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
 
