@@ -23,6 +23,7 @@ import type {
 } from "@grand/shared";
 import { Net } from "./net.ts";
 import { loadFurniAssets } from "./scene/assets.ts";
+import { FigureBaker, loadFigureAtlas } from "./scene/figure.ts";
 import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { FurniLayer } from "./scene/furni.ts";
@@ -54,6 +55,7 @@ let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
 let furniAssets: FurniAssets | null = null;
+let figureBaker: FigureBaker | null = null;
 let model: RoomModel | null = null;
 let doorTile: Tile = { x: 0, y: 0 };
 let furni: FurniItem[] = [];
@@ -81,7 +83,7 @@ function toast(text: string, kind?: "notice"): void {
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
   avatars.get(state.id)?.destroy();
-  const sprite = new AvatarSprite(state);
+  const sprite = new AvatarSprite(state, figureBaker);
   avatars.set(state.id, sprite);
   scene.world.addChild(sprite.view);
 }
@@ -486,10 +488,16 @@ function handle(msg: ServerMsg): void {
       avatars.get(msg.id)?.walk(msg, msg.startedAt + clockOffset);
       break;
     case "chat":
-      chat.show(msg.from, msg);
+      chat.show(msg.from, msg, avatars.get(msg.from)?.tint());
       break;
     case "posture":
       avatars.get(msg.id)?.setPosture(msg.posture, { x: msg.x, y: msg.y, z: msg.z }, msg.dir);
+      break;
+    case "figure_changed":
+      avatars.get(msg.id)?.setFigure(msg.figure);
+      break;
+    case "wave":
+      avatars.get(msg.id)?.wave(Date.now());
       break;
     case "furni_placed":
     case "furni_moved":
@@ -549,6 +557,8 @@ function handle(msg: ServerMsg): void {
 async function start(token: string): Promise<void> {
   app = new Application();
   furniAssets = await loadFurniAssets();
+  const atlas = await loadFigureAtlas();
+  figureBaker = atlas ? new FigureBaker(atlas) : null;
   await app.init({ background: 0x11131a, resizeTo: window, antialias: true });
   el("stage").appendChild(app.canvas);
   app.stage.eventMode = "static";

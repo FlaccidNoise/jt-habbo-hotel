@@ -12,7 +12,7 @@ export const FROZEN_DIR: string = new URL("../../../tools/artgen/frozen", import
 /** The one way a def becomes a bundle. Box-path defs render from their recipe; 3D-assisted defs
  *  (#202) load the committed frozen bytes — the pixels are the item's identity, so they are read,
  *  never re-rendered, and the stored pixel hash must match what the file actually contains. */
-export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer } {
+export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer; nearPng?: Buffer } {
   const recipe = STARTER_RECIPES.get(def.id);
   if (recipe) {
     const bundle = render(def, recipe);
@@ -32,5 +32,15 @@ export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer } {
   if (pixelHash !== meta.pixelHash) {
     throw new Error(`${def.id}: frozen png pixels do not match meta.pixelHash — bundle is corrupt`);
   }
-  return { bundle: { sheet: { w: width, h: height, px: rgba }, meta }, png };
+  // #227: the companion near-sheet is checked the same way. It is additive, so an older bundle
+  // without one is not an error — only a declared-but-wrong one is.
+  let nearPng: Buffer | undefined;
+  if (meta.nearSheet) {
+    nearPng = readFileSync(join(FROZEN_DIR, meta.nearSheet));
+    const nearHash = createHash("sha256").update(decodePng(nearPng).rgba).digest("hex");
+    if (nearHash !== meta.nearHash) {
+      throw new Error(`${def.id}: frozen near-sheet pixels do not match meta.nearHash`);
+    }
+  }
+  return { bundle: { sheet: { w: width, h: height, px: rgba }, meta }, png, nearPng };
 }

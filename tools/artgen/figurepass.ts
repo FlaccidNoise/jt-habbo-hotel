@@ -27,7 +27,7 @@ import type { LayerType } from "../../packages/shared/src/figuredata.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "../../packages/generator/src/raster.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
-import { GENERATOR_VERSION, STYLE_VERSION } from "../../packages/generator/src/style.ts";
+import { GENERATOR_VERSION, RAMP_SHADES, STYLE_VERSION } from "../../packages/generator/src/style.ts";
 
 const RES = 256;
 const ALPHA_MIN = 128;
@@ -65,6 +65,9 @@ const meta = JSON.parse(readFileSync(join(renderDir, "meta.json"), "utf8")) as {
 const CANVAS = meta.figureCanvas;
 const FRAMES = CANVAS.frames;
 const ANCHOR_X = CANVAS.w >> 1;
+
+/** The canonical body every garment is cut against, in draw order. Mirrors rig.py HOLDOUT_PARTS. */
+const HOLDOUT_IDS = ["bd1", "hd2"];
 
 const pack = (slot: number, shade: number): number => (slot << 16) | (shade << 8);
 const unpackSlot = (color: number): number => (color >> 16) & 0xff;
@@ -284,50 +287,52 @@ function gateFigureHeight(): GateResult {
  *  edges never compose into one interior edge. Measured residue is ~0.1% of lit pixels, all
  *  boundary-adjacent (see the use_shadows note in rig.py). */
 function gateHoldout(): GateResult {
-  const order = [...partIds].sort(
-    (a, b) => LAYER_ORDER.indexOf(a.replace(/\d+$/, "") as LayerType)
-      - LAYER_ORDER.indexOf(b.replace(/\d+$/, "") as LayerType),
-  );
-  const top = order[order.length - 1]!;
-  if (order.length < 2) return pass;
-  const topPart = meta.figures[top]!;
-
-  let interiorBad = 0, worst = "";
-  for (const frame of FRAMES) {
-    for (let dir = 0; dir < 8; dir++) {
-      const combined = renderFrame(topPart, frameOf(topPart, frame, dir), 0);
-      const stack = makeCanvas(CANVAS.w, CANVAS.h);
-      const owner = new Int32Array(CANVAS.w * CANVAS.h).fill(-1);
-      for (const [n, id] of order.entries()) {
-        const cell = layers.get(id)![cellIndex(frame, dir)]!;
-        for (let y = 0; y < CANVAS.h; y++) {
-          for (let x = 0; x < CANVAS.w; x++) {
-            const p = getPixel(cell, x, y);
-            if (p.alpha === 0) continue;
-            putPixel(stack, x, y, p.color);
-            owner[y * CANVAS.w + x] = n;
+  // ONE garment at a time. A garment's render contains the holdout body plus that garment and
+  // nothing else, so that is the only composite it can be checked against. Garment-against-
+  // garment has no reference render and needs none: the holdout set is the body by design, and
+  // the per-set hides rules are what keep it that way.
+  const body = HOLDOUT_IDS.filter((id) => layers.has(id));
+  for (const id of partIds) {
+    if (HOLDOUT_IDS.includes(id) || !layers.has(id)) continue;
+    const part = meta.figures[id]!;
+    const stackIds = [...body, id];
+    let interiorBad = 0, worst = "";
+    for (const frame of FRAMES) {
+      for (let dir = 0; dir < 8; dir++) {
+        const combined = renderFrame(part, frameOf(part, frame, dir), 0);
+        const stack = makeCanvas(CANVAS.w, CANVAS.h);
+        const owner = new Int32Array(CANVAS.w * CANVAS.h).fill(-1);
+        for (const [n, layerId] of stackIds.entries()) {
+          const cell = layers.get(layerId)![cellIndex(frame, dir)]!;
+          for (let y = 0; y < CANVAS.h; y++) {
+            for (let x = 0; x < CANVAS.w; x++) {
+              const p = getPixel(cell, x, y);
+              if (p.alpha === 0) continue;
+              putPixel(stack, x, y, p.color);
+              owner[y * CANVAS.w + x] = n;
+            }
+          }
+        }
+        for (let y = 1; y < CANVAS.h - 1; y++) {
+          for (let x = 1; x < CANVAS.w - 1; x++) {
+            const a = getPixel(stack, x, y), b = getPixel(combined, x, y);
+            if (a.alpha === b.alpha && a.color === b.color) continue;
+            const me = owner[y * CANVAS.w + x]!;
+            const boundary = [-1, 1, -CANVAS.w, CANVAS.w].some(
+              (d) => owner[y * CANVAS.w + x + d] !== me,
+            );
+            if (boundary) continue;
+            interiorBad++;
+            if (!worst) worst = `${frame} d${dir} at ${x},${y}`;
           }
         }
       }
-      for (let y = 1; y < CANVAS.h - 1; y++) {
-        for (let x = 1; x < CANVAS.w - 1; x++) {
-          const a = getPixel(stack, x, y), b = getPixel(combined, x, y);
-          if (a.alpha === b.alpha && a.color === b.color) continue;
-          const me = owner[y * CANVAS.w + x]!;
-          const boundary = [-1, 1, -CANVAS.w, CANVAS.w].some(
-            (d) => owner[y * CANVAS.w + x + d] !== me,
-          );
-          if (boundary) continue;
-          interiorBad++;
-          if (!worst) worst = `${frame} d${dir} at ${x},${y}`;
-        }
-      }
     }
-  }
-  if (interiorBad > 0) {
-    return fail("holdout",
-      `${interiorBad} composited pixel(s) disagree with the combined render away from any layer ` +
-      `boundary (first: ${worst}). A layer was rendered without its holdout body.`);
+    if (interiorBad > 0) {
+      return fail("holdout",
+        `${id}: ${interiorBad} composited pixel(s) disagree with its own combined render away ` +
+        `from any layer boundary (first: ${worst}). It was rendered without its holdout body.`);
+    }
   }
   return pass;
 }
@@ -347,9 +352,35 @@ for (const [name, gate] of [
 
 if (freeze && failures === 0) {
   mkdirSync(frozenDir, { recursive: true });
+  // The bundle carries its own palette, in shade order, so the client resolves (slot, shade)
+  // without importing the generator — and so a frozen sheet can never be repainted by a later
+  // style edit. Pixels are the identity; the colours they index are part of it.
+  const palette: Record<string, number[]> = {};
+  const order = ["outline", "left", "right", "top", "hi"];
+  for (const { ramp, shade, color } of RAMP_SHADES) {
+    (palette[ramp] ??= [])[order.indexOf(shade)] = color;
+  }
+  // How far the bare figure's crown sits above the anchor, per frame. The client hangs chat
+  // bubbles and name labels off this instead of guessing a height that sitting would break.
+  const crown = FRAMES.map((frame) => {
+    let top = CANVAS.h;
+    for (const id of ["bd1", "hd2"]) {
+      const cells = layers.get(id);
+      if (!cells) continue;
+      for (let dir = 0; dir < 8; dir++) {
+        const cell = cells[cellIndex(frame, dir)]!;
+        for (let y = 0; y < top; y++) {
+          for (let x = 0; x < cell.w; x++) {
+            if (getPixel(cell, x, y).alpha !== 0) { top = Math.min(top, y); break; }
+          }
+        }
+      }
+    }
+    return (meta.figures["bd1"] ? frameOf(meta.figures["bd1"], frame, 0).anchorY : 0) - top;
+  });
   writeFileSync(
     join(frozenDir, "figures.json"),
-    JSON.stringify({ canvas: CANVAS, layers: bundles }, null, 2),
+    JSON.stringify({ canvas: { ...CANVAS, crown }, palette, layers: bundles }, null, 2),
   );
   console.log(`froze ${bundles.length} figure layer(s) to tools/artgen/frozen/figure/`);
 }

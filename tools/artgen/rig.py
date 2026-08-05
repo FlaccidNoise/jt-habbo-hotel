@@ -354,6 +354,126 @@ FIGURE_PARTS = {
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 3.7},
         ],
     },
+    # Trim Shirt (set 6, two slots): body in slot 0, collar and cuffs in slot 1. This is the set
+    # that proves N-colour parts — one mesh, two independently chosen ramps, no second render.
+    "ch6": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -5.4, 1.5),
+             "c1": (7.9, 5.4, 18.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.6, -5.6, 18.4),
+             "c1": (7.6, 5.6, 20.6)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 13.0, "r": 3.7},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 13.0, "r": 3.7},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -13.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -13.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+        ],
+    },
+    # Staff Blazer (set 16, two slots). Never grantable to a player — NPC accounts own it, so a
+    # player naming set 16 fails the ownership check like any other unowned set.
+    "ch16": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -5.7, 0.5),
+             "c1": (8.2, 5.7, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.2, -6.0, 2.0),
+             "c1": (2.2, 6.0, 20.4)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -20.5), "r": 4.0,
+             "squash": (1.0, 1.0, 0.4)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -20.5), "r": 4.0,
+             "squash": (1.0, 1.0, 0.4)},
+        ],
+    },
+    # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
+    # is why the cone prim exists.
+    "cc11": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -5.9, 0.0),
+             "c1": (8.4, 5.9, 20.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.0, -6.2, 1.0),
+             "c1": (2.0, 6.2, 20.6)},
+            {"t": "cone", "bone": "hip",   "slot": 0, "len": 14.0, "r0": 8.6, "r1": 10.4},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.0},
+        ],
+    },
+    "lg7": {
+        "prims": [
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.4},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.4},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 15.0, "r": 4.0},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 15.0, "r": 4.0},
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -5.4, -2.0),
+             "c1": (8.0, 5.4, 2.6)},
+        ],
+    },
+    # Pleated Skirt (set 8). Same lg slot as trousers, so wearing one replaces the other.
+    "lg8": {
+        "prims": [
+            {"t": "cone", "bone": "hip", "slot": 0, "len": 15.0, "r0": 8.2, "r1": 11.6},
+            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-8.0, -5.4, -1.5),
+             "c1": (8.0, 5.4, 2.6)},
+        ],
+    },
+    "sh9": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.9, -3.2, -float(SHIN_LEN)),
+             "c1": (3.9, 7.0, -SHIN_LEN + 4.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.9, -3.2, -float(SHIN_LEN)),
+             "c1": (3.9, 7.0, -SHIN_LEN + 4.2)},
+        ],
+    },
+    # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
+    # stays clear because the brow and nose reach further forward than the hair does.
+    "hr3": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.4, 12.4), "r": 11.4,
+             "squash": (0.95, 0.90, 0.86)},
+        ],
+    },
+    "hr4": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.4, 12.4), "r": 11.5,
+             "squash": (0.97, 0.92, 0.90)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -5.6, 2.0), "r": 8.0,
+             "squash": (1.05, 0.62, 1.35)},
+        ],
+    },
+    # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
+    # without it a cap would need a holdout render per hair set.
+    "ha10": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 17.0), "r": 10.6,
+             "squash": (1.0, 0.94, 0.62)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-8.0, 4.0, 15.2),
+             "c1": (8.0, 11.6, 16.6)},
+        ],
+    },
+    "ea12": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),
+             "c1": (7.4, 9.6, 14.0)},
+        ],
+    },
+    "fa13": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-8.2, 6.2, 11.0),
+             "c1": (8.2, 9.9, 15.6)},
+        ],
+    },
+    "ca14": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 5.8, 15.0), "r": 2.0},
+        ],
+    },
+    "wa15": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -5.6, 0.6),
+             "c1": (8.1, 5.6, 3.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
@@ -365,8 +485,9 @@ FIGURE_PARTS = {
 #
 # Measured: the standing composite is 22 x 85 px, reaching 81 above the anchor and 3 below. It
 # reaches below because the anchor is the tile-CENTRE ground point and a foot extending toward the
-# camera is genuinely nearer, so it projects lower. anchor_y 103 leaves 22 px of hat room above
-# the crown and 8 px of slack under the toe — walk contact frames reach 7 px down.
+# camera is genuinely nearer, so it projects lower. anchor_y 102 leaves 21 px of hat room above
+# the crown and 9 px under the toe. Walk contact frames reach 7 px down bare and 9 shod, so 8
+# was not enough once real footwear existed.
 #
 # Walk contact frames drop the root by 2.5 px. A leg swung 22 degrees is 37*(1-cos22) = 2.7 px
 # shorter vertically, so without the drop the figure hovers on every contact frame.
@@ -380,28 +501,28 @@ FIGURE_PARTS = {
 SIT_FOOT_DROP = 18.6
 
 POSES = {
-    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {}},
-    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 103, "bones": {
+    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {}},
+    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 102, "bones": {
         "leg_l": (22.0, 0.0, 0.0), "leg_r": (-22.0, 0.0, 0.0),
         "knee_l": (-5.0, 0.0, 0.0), "knee_r": (-18.0, 0.0, 0.0),
         "arm_l": (-18.0, 0.0, 0.0), "arm_r": (18.0, 0.0, 0.0)}},
-    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
+    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
         "knee_r": (-28.0, 0.0, 0.0), "leg_r": (6.0, 0.0, 0.0),
         "arm_l": (-6.0, 0.0, 0.0), "arm_r": (6.0, 0.0, 0.0)}},
-    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 103, "bones": {
+    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 102, "bones": {
         "leg_l": (-22.0, 0.0, 0.0), "leg_r": (22.0, 0.0, 0.0),
         "knee_l": (-18.0, 0.0, 0.0), "knee_r": (-5.0, 0.0, 0.0),
         "arm_l": (18.0, 0.0, 0.0), "arm_r": (-18.0, 0.0, 0.0)}},
-    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
+    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
         "knee_l": (-28.0, 0.0, 0.0), "leg_l": (6.0, 0.0, 0.0),
         "arm_l": (6.0, 0.0, 0.0), "arm_r": (-6.0, 0.0, 0.0)}},
     "sit": {"root": (0.0, 0.0, -float(HIP_Z)), "anchor_y": 74, "bones": {
         "leg_l": (88.2, 0.0, 0.0), "leg_r": (88.2, 0.0, 0.0),
         "knee_l": (-88.2, 0.0, 0.0), "knee_r": (-88.2, 0.0, 0.0),
         "arm_l": (14.0, 0.0, 0.0), "arm_r": (14.0, 0.0, 0.0)}},
-    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
+    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
         "arm_r": (0.0, 132.0, 0.0)}},
-    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 103, "bones": {
+    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
         "arm_r": (0.0, 156.0, 0.0)}},
 }
 
@@ -480,6 +601,14 @@ def add_figure_prim(prim):
             cap.location = (0.0, 0.0, z)
             finish(cap, smooth=True)
             made.append(cap)
+    elif t == "cone":
+        # Truncated cone down local -Z: r0 at the bone, r1 at the far end. Skirts and coat flares.
+        length, r0, r1 = prim["len"], prim["r0"], prim["r1"]
+        bpy.ops.mesh.primitive_cone_add(vertices=24, radius1=r1, radius2=r0, depth=length)
+        obj = bpy.context.active_object
+        obj.location = (0.0, 0.0, -length / 2.0)
+        finish(obj, smooth=True)
+        made.append(obj)
     elif t == "ball":
         bpy.ops.mesh.primitive_uv_sphere_add(segments=28, ring_count=14, radius=prim["r"])
         obj = bpy.context.active_object
@@ -569,6 +698,30 @@ def prim_points(prim):
             return [(prim["x"], prim["y0"], prim["z"]), (prim["x"], prim["y1"], prim["z"])]
         return [(prim["y0"], prim["x"], prim["z"]), (prim["y1"], prim["x"], prim["z"])]
     return [prim["c"]]
+
+def prim_centroid(prim):
+    """Footprint (fx, fy) centre of a prim, for the near/far split."""
+    pts = prim_points(prim)
+    return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+
+def near_flags(prims, seat_prim):
+    """Which prims draw IN FRONT of an occupant seated on `seat_prim` (#227).
+
+    Derived from geometry, not declared. PIPELINES §2 stage 1 assumes an artist tags each slot
+    with an occlusion group per direction; the rig already knows where every primitive is, and
+    depth in the painter's algorithm is just fx+fy — larger is nearer the camera. So a prim whose
+    centroid sits nearer than the seat's is in front of whoever is sitting there, and that falls
+    out of the same rotation the direction loop already does.
+    """
+    if seat_prim is None:
+        return []
+    sx, sy = prim_centroid(seat_prim)
+    seat_depth = sx + sy
+    out = []
+    for prim in prims:
+        cx, cy = prim_centroid(prim)
+        out.append(bool(cx + cy > seat_depth + 1e-6))
+    return out
 
 def prim_top(prim):
     """Highest drawn point in height units — radii included, unlike prim_points."""
@@ -805,7 +958,10 @@ for part_id, part in PARTS.items():
         scene.render.filepath = base + "_mask.png"
         bpy.ops.render.render(write_still=True)
         dump_rgba(base + "_mask.png", base + ".mask.rgba")
-        frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
+        # #227: which prims sit in front of an occupant, in THIS direction's rotated frame.
+        seat_now = next((p for p in prims if p.get("seat")), None)
+        frames.append({"near": near_flags(prims, seat_now),
+                       "dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
                        "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
         "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,

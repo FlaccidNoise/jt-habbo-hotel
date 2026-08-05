@@ -32,6 +32,11 @@ export interface BundleMeta {
    *  checked against this — it is what placement.ts rests a seated avatar on. */
   seatZ: number | null;
   occlusion: string[];
+  /** #227: a companion sheet holding only the parts that draw IN FRONT of a seated occupant, so
+   *  the client can draw far furni, sort avatars, then draw near furni. Absent on items with no
+   *  seat. The base sheet still contains every prim, so adding this moved no existing pixel. */
+  nearSheet?: string;
+  nearHash?: string;
   styleVersion: number;
   generatorVersion: number;
   partLibraryHash: string;

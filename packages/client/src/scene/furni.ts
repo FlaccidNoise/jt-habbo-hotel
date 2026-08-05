@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite } from "pixi.js";
 import { worldToScreen } from "@grand/shared";
 import type { FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
-import { frameTexture } from "./assets.ts";
+import { frameTexture, nearFrameTexture } from "./assets.ts";
 import { frameFor } from "./frames.ts";
 import { SCALE } from "./room.ts";
 import { depthKey } from "./sort.ts";
@@ -54,6 +54,8 @@ export class FurniLayer {
   private defs: ReadonlyMap<string, FurniDef>;
   private assets: FurniAssets | null;
   private views = new Map<number, Container>();
+  /** #227: the near half of a seating item, drawn again above every avatar. */
+  private nearViews = new Map<number, Container>();
   private ghostView: Container | null = null;
 
   constructor(world: Container, defs: ReadonlyMap<string, FurniDef>, assets: FurniAssets | null) {
@@ -91,17 +93,25 @@ export class FurniLayer {
 
     const view = this.spriteFor(item) ?? this.slabFor(def, item);
     view.eventMode = "none";
-    view.zIndex = depthKey({
-      kind: def.canWalk ? "floor_furni" : "furni",
-      x: item.x,
-      y: item.y,
-      z: item.z,
-    });
+    // A seat draws BELOW avatars and puts its near half back on top (#227); everything else keeps
+    // the ordinary furni layer, because you stand under a table's sprite on the same tile.
+    const near = this.nearSpriteFor(item);
+    const kind = def.canWalk ? "floor_furni" : near ? "furni_far" : "furni";
+    view.zIndex = depthKey({ kind, x: item.x, y: item.y, z: item.z });
     this.views.set(item.id, view);
     this.world.addChild(view);
+
+    if (near) {
+      near.eventMode = "none";
+      near.zIndex = depthKey({ kind: "furni_near", x: item.x, y: item.y, z: item.z });
+      this.nearViews.set(item.id, near);
+      this.world.addChild(near);
+    }
   }
 
   remove(id: number): void {
+    this.nearViews.get(id)?.destroy({ children: true });
+    this.nearViews.delete(id);
     const view = this.views.get(id);
     if (!view) return;
     view.destroy({ children: true });   // frame textures are cached on the asset, not destroyed
@@ -112,6 +122,20 @@ export class FurniLayer {
     const asset = this.assets?.get(item.defId);
     if (!asset) return null;
     const texture = frameTexture(asset, item.dir);
+    const spec = frameFor(asset.meta, item.dir);
+    if (!texture || !spec) return null;
+    const sprite = new Sprite(texture);
+    const p = worldToScreen(item.x, item.y, item.z, SCALE);
+    sprite.x = p.sx + spec.offsetX;
+    sprite.y = p.sy + spec.offsetY;
+    return sprite;
+  }
+
+  /** Null unless the item has a companion near-sheet, which only seating items do. */
+  private nearSpriteFor(item: FurniItem): Sprite | null {
+    const asset = this.assets?.get(item.defId);
+    if (!asset?.near) return null;
+    const texture = nearFrameTexture(asset, item.dir);
     const spec = frameFor(asset.meta, item.dir);
     if (!texture || !spec) return null;
     const sprite = new Sprite(texture);

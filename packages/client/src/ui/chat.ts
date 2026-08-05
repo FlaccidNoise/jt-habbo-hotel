@@ -17,10 +17,15 @@ export class ChatOverlay {
     this.root = root;
   }
 
-  show(id: number, msg: BubbleMsg): void {
+  /** `tint` is the speaker's own colour, derived from their outfit (GAME.md) — never from the
+   *  text, so a player cannot style their own bubble by what they type. */
+  show(id: number, msg: BubbleMsg, tint?: number): void {
     this.remove(id);
     const node = document.createElement("div");
     node.className = `bubble ${msg.mode}${msg.faded ? " faded" : ""}`;
+    if (tint !== undefined) {
+      node.style.borderColor = `#${tint.toString(16).padStart(6, "0")}`;
+    }
     node.textContent = msg.text;
     node.style.visibility = "hidden";
     this.root.appendChild(node);

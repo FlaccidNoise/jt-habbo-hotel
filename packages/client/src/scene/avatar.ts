@@ -1,6 +1,7 @@
-import { Container, Graphics, Text } from "pixi.js";
-import { DIR_STEPS, worldToScreen } from "@grand/shared";
-import type { AvatarState, Posture, ServerMsg } from "@grand/shared";
+import { Container, Graphics, Sprite, Text } from "pixi.js";
+import { parseFigure, resolveLayers, worldToScreen } from "@grand/shared";
+import type { AvatarState, Figure, Posture, ServerMsg } from "@grand/shared";
+import type { FigureBaker } from "./figure.ts";
 import { SCALE } from "./room.ts";
 import { depthKey } from "./sort.ts";
 import { dirFromStep, lerpScreen, stepAt } from "./walk.ts";
@@ -8,58 +9,53 @@ import { dirFromStep, lerpScreen, stepAt } from "./walk.ts";
 type WalkMsg = Extract<ServerMsg, { t: "walk" }>;
 interface Step { x: number; y: number; z: number }
 
-const BODY_W = 24;
-const BODY_H = 48;
-/** Sitting crops the slab to roughly thigh-to-head and drops it onto the seat surface, so a
- *  seated avatar reads as lower than a standing one even on a tall stool. */
-const SIT_H = 32;
-const PALETTE = [0xe05c5c, 0xe0a55c, 0xd7e05c, 0x6ee05c, 0x5ce0c8, 0x5c9be0, 0xa15ce0, 0xe05cb4];
+/** A full 4-frame cycle per tile — two footfalls at MS_PER_TILE, which reads as a brisk walk. */
+const WALK_FRAMES = 4;
+const WAVE_MS = 1400;
+const WAVE_FRAME_MS = 350;
 
-function colorOf(username: string): number {
-  let hash = 0;
-  for (let i = 0; i < username.length; i++) hash = (hash * 31 + username.charCodeAt(i)) >>> 0;
-  return PALETTE[hash % PALETTE.length] ?? PALETTE[0] ?? 0xffffff;
+/** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
+ *  than a plausible box — a silent fallback hides a bad deploy behind an avatar that looks fine. */
+function missingMarker(): Graphics {
+  return new Graphics()
+    .rect(-12, -80, 24, 80)
+    .fill({ color: 0xff00ff, alpha: 0.8 })
+    .stroke({ width: 2, color: 0x000000 });
 }
 
-/** Placeholder avatar: a coloured slab with a name label and a facing pip. All walk timing is
- *  the pure math in walk.ts — this only draws where that math says. */
+/** A layered figure (#127). Walk timing stays the pure math in walk.ts — this only chooses which
+ *  baked cell to show and where to put it. */
 export class AvatarSprite {
   readonly id: number;
   readonly username: string;
   readonly view: Container;
-  private pip: Graphics;
-  private body: Graphics;
+  private sprite: Sprite;
+  private marker: Graphics | null = null;
   private label: Text;
-  private fill: number;
-  private stroke: { width: number; color: number; alpha: number };
+  private figure: Figure | null;
   private at: Step;
   private dir: number;
   private posture: Posture;
   private walking: { from: Step; path: Step[]; msPerTile: number; startedAt: number } | null = null;
+  private walkFrame = 0;
+  private wavingUntil = 0;
+  private waveFrame = 0;
 
-  constructor(state: AvatarState) {
+  constructor(state: AvatarState, private baker: FigureBaker | null) {
     this.id = state.id;
     this.username = state.username;
     this.at = { x: state.x, y: state.y, z: state.z };
     this.dir = state.dir;
     this.posture = state.posture;
+    this.figure = this.read(state.figure);
 
     this.view = new Container();
     this.view.eventMode = "none";
 
-    // Staff NPCs are visibly staff: navy uniform, gold trim, badged name tag. Never player colors.
+    this.sprite = new Sprite();
+    this.view.addChild(this.sprite);
+
     const staff = state.staff === true;
-    this.fill = staff ? 0x35406b : colorOf(state.username);
-    this.stroke = staff
-      ? { width: 2, color: 0xd4af37, alpha: 0.9 }
-      : { width: 2, color: 0x000000, alpha: 0.45 };
-    this.body = new Graphics();
-    this.view.addChild(this.body);
-
-    this.pip = new Graphics();
-    this.pip.circle(0, 0, 3).fill(0xffffff).stroke({ width: 1, color: 0x000000, alpha: 0.5 });
-    this.view.addChild(this.pip);
-
     this.label = new Text({
       text: staff ? `★ ${state.username} — STAFF` : state.username,
       style: {
@@ -72,7 +68,7 @@ export class AvatarSprite {
     this.label.anchor.set(0.5, 1);
     this.view.addChild(this.label);
 
-    this.drawBody();
+    this.redraw();
     this.place();
   }
 
@@ -82,8 +78,18 @@ export class AvatarSprite {
     this.posture = posture;
     this.at = { ...at };
     this.dir = dir;
-    this.drawBody();
+    this.redraw();
     this.place();
+  }
+
+  setFigure(figure: string): void {
+    this.figure = this.read(figure);
+    this.redraw();
+  }
+
+  wave(now: number): void {
+    this.wavingUntil = now + WAVE_MS;
+    this.redraw();
   }
 
   tile(): Step {
@@ -94,16 +100,26 @@ export class AvatarSprite {
     return this.posture;
   }
 
+  /** Chat bubble colour, from the shirt if one is worn and the skin otherwise. Derived from the
+   *  outfit per GAME.md, so it changes when the player changes clothes. */
+  tint(): number | undefined {
+    if (!this.figure || !this.baker) return undefined;
+    const layers = resolveLayers(this.figure);
+    const pick = layers.find((l) => l.type === "ch") ?? layers.find((l) => l.type === "hd");
+    const ramp = pick?.colors[0];
+    return ramp === undefined ? undefined : this.baker.rampColor(ramp);
+  }
+
   /** Local screen point of the avatar's head, for anchoring chat bubbles. */
   head(): { sx: number; sy: number } {
-    return { sx: this.view.x, sy: this.view.y - this.height() - 18 };
+    return { sx: this.view.x, sy: this.view.y - this.crown() - 8 };
   }
 
   walk(msg: WalkMsg, startedAtLocal: number): void {
     // A walk always means standing: the server stands you up before it moves you.
     if (this.posture !== "stand") {
       this.posture = "stand";
-      this.drawBody();
+      this.redraw();
     }
     if (msg.path.length === 0) {
       this.walking = null;
@@ -120,6 +136,12 @@ export class AvatarSprite {
   }
 
   update(now: number): void {
+    const wave = this.wavingUntil > now ? ((now / WAVE_FRAME_MS) | 0) % 2 : -1;
+    if (wave !== this.waveFrame) {
+      this.waveFrame = wave;
+      this.redraw();
+    }
+
     const walk = this.walking;
     if (!walk) return;
 
@@ -128,6 +150,8 @@ export class AvatarSprite {
     if (index >= walk.path.length) {
       this.walking = null;
       if (last) this.at = { ...last };
+      this.walkFrame = 0;
+      this.redraw();
       this.place();
       return;
     }
@@ -137,6 +161,11 @@ export class AvatarSprite {
 
     this.face(to.x - from.x, to.y - from.y);
     this.at = { ...to };
+    const phase = Math.min(WALK_FRAMES - 1, (t * WALK_FRAMES) | 0);
+    if (phase !== this.walkFrame) {
+      this.walkFrame = phase;
+    }
+    this.redraw();
     const point = lerpScreen(
       worldToScreen(from.x, from.y, from.z, SCALE),
       worldToScreen(to.x, to.y, to.z, SCALE),
@@ -151,29 +180,60 @@ export class AvatarSprite {
     this.view.destroy({ children: true });
   }
 
-  private height(): number {
-    return this.posture === "sit" ? SIT_H : BODY_H;
+  private read(figure: string): Figure | null {
+    try {
+      return parseFigure(figure);
+    } catch (e) {
+      console.error(`avatar ${this.username}: bad figure string`, e);
+      return null;
+    }
+  }
+
+  /** Which sheet row this avatar is showing right now. */
+  private frame(): string {
+    if (this.wavingUntil > 0 && this.waveFrame >= 0) return `wave${this.waveFrame}`;
+    if (this.posture === "sit") return "sit";
+    if (this.walking) return `walk${this.walkFrame}`;
+    return "stand";
+  }
+
+  private crown(): number {
+    return this.baker?.crown(this.frame()) ?? 80;
+  }
+
+  private redraw(): void {
+    const texture = this.figure && this.baker
+      ? this.baker.texture(this.figure, this.frame(), this.dir)
+      : null;
+    if (texture) {
+      if (this.marker) {
+        this.marker.destroy();
+        this.marker = null;
+      }
+      this.sprite.texture = texture;
+      const offset = this.baker!.anchor(this.frame());
+      this.sprite.x = offset.x;
+      this.sprite.y = offset.y;
+      this.sprite.visible = true;
+    } else {
+      this.sprite.visible = false;
+      if (!this.marker) {
+        this.marker = missingMarker();
+        this.view.addChildAt(this.marker, 0);
+      }
+    }
+    this.label.y = -this.crown() - 4;
   }
 
   private depth(): number {
-    const kind = this.posture === "sit" ? "seated" : "avatar";
-    return depthKey({ kind, x: this.at.x, y: this.at.y, z: this.at.z });
-  }
-
-  private drawBody(): void {
-    const h = this.height();
-    this.body.clear();
-    this.body
-      .roundRect(-BODY_W / 2, -h, BODY_W, h, 6)
-      .fill(this.fill)
-      .stroke(this.stroke);
-    this.label.y = -h - 4;
+    // Sitting no longer needs its own layer: the seat's near half draws after every avatar and
+    // its far half before, so an ordinary avatar key sorts correctly between them (#227).
+    return depthKey({ kind: "avatar", x: this.at.x, y: this.at.y, z: this.at.z });
   }
 
   private face(dx: number, dy: number): void {
     if (dx === 0 && dy === 0) return;
     this.dir = dirFromStep(dx, dy);
-    this.placePip();
   }
 
   private place(): void {
@@ -181,14 +241,5 @@ export class AvatarSprite {
     this.view.x = point.sx;
     this.view.y = point.sy;
     this.view.zIndex = this.depth();
-    this.placePip();
-  }
-
-  private placePip(): void {
-    const step = DIR_STEPS[this.dir] ?? DIR_STEPS[0];
-    if (!step) return;
-    const offset = worldToScreen(step.dx * 0.4, step.dy * 0.4, 0, SCALE);
-    this.pip.x = offset.sx;
-    this.pip.y = -this.height() + 10 + offset.sy;
   }
 }

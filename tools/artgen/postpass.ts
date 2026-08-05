@@ -44,7 +44,7 @@ const renderDir = process.argv[2] ?? "/tmp/artgen";
 const freeze = process.argv.includes("--freeze");
 const frozenDir = new URL("./frozen/", import.meta.url).pathname;
 
-interface Frame { dir: number; spanY: number; rgba: string; mask: string }
+interface Frame { dir: number; spanY: number; rgba: string; mask: string; near?: boolean[] }
 interface PartMeta {
   w: number; l: number; ramp: string; maxZ: number; seatZ: number | null; frames: Frame[];
   prims: Array<{ ramp: string; group: number }>;
@@ -165,11 +165,17 @@ for (const [id, part] of work) {
   const masks = part.frames.map((f) => readFileSync(join(renderDir, f.mask)));
 
   const sheet = makeCanvas(frameW * part.frames.length, frameH);
+  // #227: the same frames again, keeping only the prims that draw IN FRONT of a seated occupant.
+  // A companion sheet rather than a new base sheet layout, so the base bytes and the pixelHash
+  // that is the item's identity never move.
+  const nearSheet = makeCanvas(frameW * part.frames.length, frameH);
+  let hasNear = false;
   const anchorsX: number[] = [];
   for (let q = 0; q < part.frames.length; q++) {
     const { spanY } = part.frames[q]!;
     anchorsX.push(spanY * H);
     const frame = makeCanvas(frameW, frameH);
+    const nearOf = part.frames[q]!.near ?? [];
     const groupAt = new Int32Array(frameW * frameH).fill(-1);
     const rampAt = new Int32Array(frameW * frameH).fill(-1);
     const raw = raws[q]!;
@@ -211,6 +217,23 @@ for (const [id, part] of work) {
     }
     outlineSilhouette(frame);
     blit(sheet, frame, q * frameW, 0);
+
+    if (nearOf.some(Boolean)) {
+      // Cut from the FINISHED frame, so the near half carries the same outlines and detail lines
+      // the base does — re-rendering it separately would give it its own silhouette.
+      const nearFrame = makeCanvas(frameW, frameH);
+      for (let fy = 0; fy < frameH; fy++) {
+        for (let fx = 0; fx < frameW; fx++) {
+          const prim = rampAt[fy * frameW + fx]!;
+          if (prim < 0 || !nearOf[prim]) continue;
+          const px = getPixel(frame, fx, fy);
+          if (px.alpha === 0) continue;
+          putPixel(nearFrame, fx, fy, px.color);
+        }
+      }
+      blit(nearSheet, nearFrame, q * frameW, 0);
+      hasNear = true;
+    }
   }
 
   const def: FurniDef = catalogDef ?? {
@@ -224,7 +247,12 @@ for (const [id, part] of work) {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
       dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
       footprint: { w: part.w, l: part.l },
-      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: [], styleVersion: STYLE_VERSION,
+      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: [],
+      ...(hasNear
+        ? { nearSheet: `${id}.near.png`,
+            nearHash: createHash("sha256").update(nearSheet.px).digest("hex") }
+        : {}),
+      styleVersion: STYLE_VERSION,
       generatorVersion: GENERATOR_VERSION,
       partLibraryHash: `artgen:${recipeHash.slice(0, 16)}`, recipeHash,
       pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
@@ -233,6 +261,8 @@ for (const [id, part] of work) {
   const result = runGates(bundle, def);
   const png = encodePng(sheet.w, sheet.h, sheet.px);
   writeFileSync(join(renderDir, `${id}.png`), png);
+  const nearPng = hasNear ? encodePng(nearSheet.w, nearSheet.h, nearSheet.px) : null;
+  if (nearPng) writeFileSync(join(renderDir, `${id}.near.png`), nearPng);
   const big = upscale(sheet, 3);
   writeFileSync(join(renderDir, `${id}@3x.png`), encodePng(big.w, big.h, big.px));
   if (!result.ok) {
@@ -243,6 +273,7 @@ for (const [id, part] of work) {
   console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames)`);
   if (freeze && !isProof) {
     writeFileSync(join(frozenDir, `${id}.png`), png);
+    if (nearPng) writeFileSync(join(frozenDir, `${id}.near.png`), nearPng);
     writeFileSync(join(frozenDir, `${id}.json`), JSON.stringify(bundle.meta, null, 2));
     console.log(`${id}: frozen`);
   }

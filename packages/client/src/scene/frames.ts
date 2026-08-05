@@ -6,6 +6,8 @@ export interface FurniMeta {
   dirs: number[];
   anchorsX: number[];
   anchorY: number;
+  /** #227: present only on seating items. Same frame geometry as `sheet`. */
+  nearSheet?: string;
 }
 
 export interface FrameSpec {
