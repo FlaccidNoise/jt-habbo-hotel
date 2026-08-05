@@ -304,6 +304,34 @@ back; facing toward the camera it is not. `make test` green. Close #227.
   with the seat-height derivation; add the skin ramp family and `STYLE_VERSION` 2.
 - `docs/decisions/INDEX.md`: log the direction count, the figure height, and the holdout model.
 
+## What execution changed (filled in 2026-08-05)
+
+The plan was mostly right about structure and wrong in six specific places. Each is recorded
+because the reasoning matters more than the correction.
+
+1. **The seat gate measured the wrong thing.** Planned as "rendered foot within 1 px of the shin
+   length". A seated foot is 19 px forward of the hip, so its *screen* drop swings from 9 px
+   facing away to 30 px facing the camera while the leg never changes length — a pixel gate there
+   measures the dimetric projection, not the pose. `check_poses()` now does forward kinematics in
+   pose space and runs before a single frame renders.
+2. **The direction criterion was nonsense.** "dir 0 is not a mirror of dir 4" — those two are each
+   self-symmetric and were never mirror candidates. Measuring properly found the spec's mirror
+   table is wrong for this rig (see the decision log).
+3. **`POST /api/figure` was cut.** Duplicate surface: the change has to broadcast to the room
+   anyway and the socket is already authenticated. `set_figure` only.
+4. **Figure sheets had to be indexed.** Not in the plan at all, and forced: colour is per player,
+   so an RGB sheet needs one render per ramp combination. The plan's "bake per outfit" already
+   made resolving indices free.
+5. **The holdout gate as planned was tautological, then wrong.** Comparing composited layers to a
+   combined render is the real check, but it only works one garment at a time — a garment's render
+   contains the body and that garment, nothing else.
+6. **Shadows, not the plan's assumption of clean layer independence.** `scene.eevee.use_shadows`
+   overrides the per-light flag, and with it on a layer's pixels depend on what else is worn.
+
+Task 1's stated PASS was also wrong: `gatePalette` only checks set membership and the clip test
+only rejected pure white, so neither catches a single clamped channel — and four shipped ramps
+already clamp. The no-clamp rule is scoped to skin, with that evidence in the style bible.
+
 ## Self-review
 
 - Every pinned decision traces to a file:line fact or a shipped artefact, not to preference.
