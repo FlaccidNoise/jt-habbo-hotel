@@ -12,8 +12,8 @@ Verified constants, copied from Habbo (research/habbo-hotel.md §4.1–4.3):
 - Height unit: **32 px** vertical.
 - **Avatars: 8 directions, all 8 rendered natively. No mirroring.** (Revised 2026-08-05, #127 —
   supersedes "5 drawn, directions 4/5/6 are horizontal mirrors".) Mirroring exists to halve
-  *hand-drawing*; the 3D-assisted path does not hand-draw, so it saves ~13 s of Blender time per
-  layer and costs every asymmetric garment — a chest logo, a shoulder bag, side-part hair.
+  *hand-drawing*; the 3D-assisted path does not hand-draw, so it saves render minutes and costs
+  every asymmetric garment — a chest logo, a shoulder bag, side-part hair.
   The old mirror table was also simply wrong for this rig: it assumes dir 0/4 face the camera,
   but the camera sits in the +X+Y octant, so **dirs 3 and 7 are the self-symmetric ones** and the
   pairs are 0↔6, 1↔5, 2↔4. Measured on the v1 body: the self-symmetric directions still differ

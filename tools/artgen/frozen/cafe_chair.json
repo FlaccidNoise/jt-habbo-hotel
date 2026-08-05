@@ -24,9 +24,11 @@
   "drawnHeight": 1.25,
   "seatZ": 0.58,
   "occlusion": [],
-  "styleVersion": 1,
+  "nearSheet": "cafe_chair.near.png",
+  "nearHash": "ba65311fc4272959e989d938c137704517803e51991006055b422a3c15ed3b7d",
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:2b5d00aba1711d5d",
-  "recipeHash": "2b5d00aba1711d5d0692107e6c4f36b18a5e88321c8b054402a690ac89bb25c9",
+  "partLibraryHash": "artgen:b9424bdcd1c9db49",
+  "recipeHash": "b9424bdcd1c9db495fe999c6c8f7799ae35c733396d19ca33d7ced8047a06cc9",
   "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
 }

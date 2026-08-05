@@ -24,9 +24,11 @@
   "drawnHeight": 1.25,
   "seatZ": 0.58,
   "occlusion": [],
-  "styleVersion": 1,
+  "nearSheet": "cafe_chair_navy.near.png",
+  "nearHash": "c9466a96d0324e1a58cd50b1e9501d82f56b46c2062d5f6ceaa8edc7d37bc30b",
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:8009a50414960938",
-  "recipeHash": "8009a504149609385ebc41bb128ae9eb32bfe41a089c88cd9210c84604b63c3d",
+  "partLibraryHash": "artgen:b9e641c5bceb6fb7",
+  "recipeHash": "b9e641c5bceb6fb7216c2c9cfd009ef07649817bdf66830e0ba5b67002f63d7f",
   "pixelHash": "61e3b08af03cf532d023c96451c3aa77c31a9afd69f173e84750b9cbde1a0fcb"
 }

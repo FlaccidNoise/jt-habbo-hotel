@@ -138,6 +138,24 @@ identity, so they are read, never re-rendered.
 Remaining for the epic: wall archetypes (blocked on the wall-item coordinate system, see its
 bug), and hand-polish passes where a silhouette reads wrong at 64. No part has needed polish yet.
 
+## Figure render cost, measured 2026-08-05
+
+Do not extrapolate figure cost from the furni rate — it is ~5x per render, and an early estimate
+in this document's history was wrong by that factor.
+
+| Pass | Per render | Per part | Shape |
+|---|---|---|---|
+| Furni | 0.125 s | 1.0 s | 4 dirs × 2 passes = 8 renders |
+| Figure | 0.584 s | **74.8 s** | 8 frames × 8 dirs × 2 passes = 128 renders |
+
+A furni part builds its meshes once per direction and rotates. A figure dir-frame rebuilds the
+whole scene every time — the holdout body plus the garment, with every limb three objects — so
+scene construction dominates, not rendering. A 16-layer wardrobe is ~20 minutes unattended.
+
+That still leaves an action cheap: poses are authored once and shared, so adding one costs a
+re-render of every layer (minutes) rather than any drawing. It is sheet bytes and protocol surface
+that make an action expensive, not art.
+
 ## Sizing after the cuts
 
 Measured on the first build-out: 12 parts (3 proof + 9 catalog) render and gate in ~13 s total

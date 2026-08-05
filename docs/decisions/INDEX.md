@@ -3,8 +3,8 @@
 - 2026-08-05 — **Avatar figure system (#127).** Built, with five decisions that overrule earlier
   spec on measured evidence.
   - **8 directions, all rendered natively; mirroring deleted for avatars.** Mirroring exists to
-    halve hand-drawing and the 3D-assisted path does not hand-draw. It costs ~13 s of Blender time
-    per layer and buys every asymmetric garment. The old mirror table was also wrong for this rig:
+    halve hand-drawing and the 3D-assisted path does not hand-draw. It costs render minutes and
+    buys every asymmetric garment. The old mirror table was also wrong for this rig:
     it assumed dir 0/4 face the camera, but the camera is in the +X+Y octant, so dirs 3 and 7 are
     self-symmetric and the pairs are 0↔6, 1↔5, 2↔4. Even the correct pairs differ by ~25 % of lit
     pixels, so mirroring was never free here.

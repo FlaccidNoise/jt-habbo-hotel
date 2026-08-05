@@ -24,9 +24,9 @@
   "drawnHeight": 1.03125,
   "seatZ": null,
   "occlusion": [],
-  "styleVersion": 1,
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:34cf5a102725aeff",
-  "recipeHash": "34cf5a102725aeff3067b724a6151a315e1dcb0983c88c8fb1da279e22cb7bea",
+  "partLibraryHash": "artgen:5344afd7c889b504",
+  "recipeHash": "5344afd7c889b504da3722c3c3c58fa078b4ce8e839a536476dd41abaa994689",
   "pixelHash": "f4ad49895dd558869337563ee0c4598909e964b4a214594caf80a8d9a8a8377e"
 }

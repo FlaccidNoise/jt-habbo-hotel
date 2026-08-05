@@ -205,10 +205,10 @@
       "drawnHeight": 1.4375,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:be66b225f38cad7c",
-      "recipeHash": "be66b225f38cad7cefccc2c6e4d434cd50d26376b70def4e634b29aba9676298",
+      "partLibraryHash": "artgen:d6c68085d331c685",
+      "recipeHash": "d6c68085d331c6855b5c7b355c20ed93cd12385da0dcfcdebf0ba2f9b8d98945",
       "pixelHash": "e68d6ff550f1f6b64b891fa5bc1c0ef4bf869b6ab234141f7c72f68817646737"
     },
     "casino_stool": {
@@ -237,10 +237,10 @@
       "drawnHeight": 0.84375,
       "seatZ": 0.82,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:dd8d0f59f2c6eed9",
-      "recipeHash": "dd8d0f59f2c6eed97ebaeef5c7a6f40a1a9968b66641c35273557865139c117d",
+      "partLibraryHash": "artgen:68562c5efdd371c2",
+      "recipeHash": "68562c5efdd371c2d827703f4071d4ebbc495711189c3237fe344f3dc6c92f74",
       "pixelHash": "6771a3a936a4a19ddb418d04ce84cbe6db3a55915ffbc9fd5d7d7172d5bc7262"
     },
     "cafe_table": {
@@ -269,10 +269,10 @@
       "drawnHeight": 1.03125,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:34cf5a102725aeff",
-      "recipeHash": "34cf5a102725aeff3067b724a6151a315e1dcb0983c88c8fb1da279e22cb7bea",
+      "partLibraryHash": "artgen:5344afd7c889b504",
+      "recipeHash": "5344afd7c889b504da3722c3c3c58fa078b4ce8e839a536476dd41abaa994689",
       "pixelHash": "f4ad49895dd558869337563ee0c4598909e964b4a214594caf80a8d9a8a8377e"
     },
     "cafe_chair": {
@@ -301,10 +301,12 @@
       "drawnHeight": 1.25,
       "seatZ": 0.58,
       "occlusion": [],
-      "styleVersion": 1,
+      "nearSheet": "cafe_chair.near.png",
+      "nearHash": "ba65311fc4272959e989d938c137704517803e51991006055b422a3c15ed3b7d",
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:2b5d00aba1711d5d",
-      "recipeHash": "2b5d00aba1711d5d0692107e6c4f36b18a5e88321c8b054402a690ac89bb25c9",
+      "partLibraryHash": "artgen:b9424bdcd1c9db49",
+      "recipeHash": "b9424bdcd1c9db495fe999c6c8f7799ae35c733396d19ca33d7ced8047a06cc9",
       "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
     },
     "bed_basic": {
@@ -333,10 +335,12 @@
       "drawnHeight": 0.96875,
       "seatZ": 0.55,
       "occlusion": [],
-      "styleVersion": 1,
+      "nearSheet": "bed_basic.near.png",
+      "nearHash": "de3124d5e5707229227b7c6f1b8bb61d081716a4267a7c74d03c323d47aaab59",
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:4eda871e8dedf6a2",
-      "recipeHash": "4eda871e8dedf6a20912a63ed495c552355098e5bbc12f07ae9305515ae20e9e",
+      "partLibraryHash": "artgen:dea0fd0d6a0f6a80",
+      "recipeHash": "dea0fd0d6a0f6a801182fce22a3ac97d7230f8db646abe0f8e226857d5b4c170",
       "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
     },
     "lamp_basic": {
@@ -365,10 +369,10 @@
       "drawnHeight": 2.21875,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:df08eb662ebbc494",
-      "recipeHash": "df08eb662ebbc494378b70442f00dbf5c425e7e61d2057b55c208cec0bb4d08d",
+      "partLibraryHash": "artgen:dbf86873a63fa2ba",
+      "recipeHash": "dbf86873a63fa2ba26bad0a59a77d8200d7254531808d36ea6e3dfd60e11496d",
       "pixelHash": "e154936bca623f1583d9566ae4f252741fc9303e8796ca57b0e55ead2b4726f5"
     },
     "shelf_basic": {
@@ -397,10 +401,10 @@
       "drawnHeight": 1.90625,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:04009ef5192811fb",
-      "recipeHash": "04009ef5192811fb878c98a9d55dfd7b4bddcb4a7f958cdd6af1291d638bcc6f",
+      "partLibraryHash": "artgen:e560aad4cbeeffa4",
+      "recipeHash": "e560aad4cbeeffa4479c63a0fce3d167d76e9020b9b36b9acfce682a510e3176",
       "pixelHash": "5dd8f5f757bc1f32d062cfb9510c652ea3c80ee0bdcd5b54ef01e6bb9b7cb2e1"
     },
     "divider_basic": {
@@ -429,10 +433,10 @@
       "drawnHeight": 1.0625,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:2df3169f9249bfac",
-      "recipeHash": "2df3169f9249bfac8e1adcc1388de9b7d4bc67bc52b8f8d03a05579e9cd2b924",
+      "partLibraryHash": "artgen:d8a20bf21beb996b",
+      "recipeHash": "d8a20bf21beb996bb3f9a2d262952bfd1460049dbc7ded890a55e9bbb84b5558",
       "pixelHash": "21726de27eda7d3c1dbbbf8d4f1f3176571b46975f45914b8a4175a075ba9887"
     },
     "stereo_basic": {
@@ -461,10 +465,10 @@
       "drawnHeight": 1.375,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:b5dd319f0affc58c",
-      "recipeHash": "b5dd319f0affc58ca3cd089efdab043850ce7bca133d863ffebad713dd268181",
+      "partLibraryHash": "artgen:3d4f85b2c9378814",
+      "recipeHash": "3d4f85b2c9378814502bfb7d0749ab95f8cdd578522399c9f534babbb3db09f2",
       "pixelHash": "7ffe46fb26f885cdb00d913cfe391197cc53a031b29f676c69d97d789c822b8e"
     },
     "slot_machine": {
@@ -493,10 +497,10 @@
       "drawnHeight": 2,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:41d2cb77d89b0e57",
-      "recipeHash": "41d2cb77d89b0e57188e5435c7deef03354e7937a26f5a04dde8a247fd565de6",
+      "partLibraryHash": "artgen:6e968cdf5efc3fa9",
+      "recipeHash": "6e968cdf5efc3fa98412a4ee4d3305e0ede4bd6c3896a4743a5d0244cae7a145",
       "pixelHash": "95261ef903c1c33e0e81e086210eb01c830cc1e6a190968f7ba48d5d7252daff"
     },
     "bar_counter": {
@@ -525,10 +529,10 @@
       "drawnHeight": 1.1875,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:26a356a59f9334ec",
-      "recipeHash": "26a356a59f9334ec99b35ec53581ab438e2f3098d750702312edd707551396e0",
+      "partLibraryHash": "artgen:8dcc8c48219801d9",
+      "recipeHash": "8dcc8c48219801d98a6e3b8c65871a551394014940a8088164f46c26212b9906",
       "pixelHash": "eaa2710e315ada7fe9ca15fd3d4c905e0131d3386b04f79916b2f54a4cb7fc7f"
     },
     "arcade_cabinet": {
@@ -557,10 +561,10 @@
       "drawnHeight": 1.875,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:a59a42475be6377c",
-      "recipeHash": "a59a42475be6377ccc571744fb3da45ce2ed67655d7fab468ddea4545c605df0",
+      "partLibraryHash": "artgen:6fadee6c8c9ac87e",
+      "recipeHash": "6fadee6c8c9ac87ee337dca97efe2f0fd5c367d35ef3cac7145e2ec180af9e7c",
       "pixelHash": "cf78daf6e256a97ac62eee712c1b50084445cd6f8c0fc8c9ace76a2d6cc31418"
     },
     "fountain": {
@@ -589,10 +593,10 @@
       "drawnHeight": 1.6875,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:568380745c4029e8",
-      "recipeHash": "568380745c4029e8a8eb02c20dcd777b1405c1d5317b032df54ec752606bd537",
+      "partLibraryHash": "artgen:35a86926226642ea",
+      "recipeHash": "35a86926226642ea57c21a8f7f4c83a7443dd9c9696675432c09a01fb8ceaefc",
       "pixelHash": "ab79981a3609a7899900d4a717bec7dae0b84f6a0357c40be46e73d140a8ae74"
     },
     "cafe_chair_crimson": {
@@ -621,10 +625,12 @@
       "drawnHeight": 1.25,
       "seatZ": 0.58,
       "occlusion": [],
-      "styleVersion": 1,
+      "nearSheet": "cafe_chair_crimson.near.png",
+      "nearHash": "e80194898b6bf26c0f8d978802a9f5b91a3083fc49a3534e07bbfe5b0b6becbf",
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:04051a7d6e59dcd7",
-      "recipeHash": "04051a7d6e59dcd74229827aa489e4a0aa4cbaa9c7c49b3022b0f7d1ef84dd0e",
+      "partLibraryHash": "artgen:740e624146351035",
+      "recipeHash": "740e624146351035933980b7179d816a2cb377350ef2a744f9c15c61baba6f79",
       "pixelHash": "44ac141095919258543361ce0a13421a6445d1bd73d6ef3ccc5e731dc8b3eda9"
     },
     "cafe_chair_navy": {
@@ -653,10 +659,12 @@
       "drawnHeight": 1.25,
       "seatZ": 0.58,
       "occlusion": [],
-      "styleVersion": 1,
+      "nearSheet": "cafe_chair_navy.near.png",
+      "nearHash": "c9466a96d0324e1a58cd50b1e9501d82f56b46c2062d5f6ceaa8edc7d37bc30b",
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:8009a50414960938",
-      "recipeHash": "8009a504149609385ebc41bb128ae9eb32bfe41a089c88cd9210c84604b63c3d",
+      "partLibraryHash": "artgen:b9e641c5bceb6fb7",
+      "recipeHash": "b9e641c5bceb6fb7216c2c9cfd009ef07649817bdf66830e0ba5b67002f63d7f",
       "pixelHash": "61e3b08af03cf532d023c96451c3aa77c31a9afd69f173e84750b9cbde1a0fcb"
     },
     "casino_stool_fern": {
@@ -685,10 +693,10 @@
       "drawnHeight": 0.84375,
       "seatZ": 0.82,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:0e8ccafa5f122aa9",
-      "recipeHash": "0e8ccafa5f122aa9bb1830865701f4101a38028d748d8e3f70663bb78ab24141",
+      "partLibraryHash": "artgen:b36131087a36863f",
+      "recipeHash": "b36131087a36863f97d75ef8e74e8eabd381f309ad5611180bcffa613b80e6a0",
       "pixelHash": "e512c6f9495adf68771572491ecf68abe3312f95c335ace037ffc821b2f7d5ec"
     },
     "divider_basic_plum": {
@@ -717,10 +725,10 @@
       "drawnHeight": 1.0625,
       "seatZ": null,
       "occlusion": [],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:5e0a97b8a72f46a7",
-      "recipeHash": "5e0a97b8a72f46a7b132e35dc674d37e352df11d7bc5cc1afcc9140528c2e35d",
+      "partLibraryHash": "artgen:9d04cbdd3a6902cd",
+      "recipeHash": "9d04cbdd3a6902cd06c1bbeaecc08a2827751575f301b454456a59adb67e8e46",
       "pixelHash": "3d0b2bb6037ab205265a9a663796d63a8a3f104ef9c195b86d91a157bbf7277b"
     }
   }

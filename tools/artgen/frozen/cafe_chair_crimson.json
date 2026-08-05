@@ -24,9 +24,11 @@
   "drawnHeight": 1.25,
   "seatZ": 0.58,
   "occlusion": [],
-  "styleVersion": 1,
+  "nearSheet": "cafe_chair_crimson.near.png",
+  "nearHash": "e80194898b6bf26c0f8d978802a9f5b91a3083fc49a3534e07bbfe5b0b6becbf",
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:04051a7d6e59dcd7",
-  "recipeHash": "04051a7d6e59dcd74229827aa489e4a0aa4cbaa9c7c49b3022b0f7d1ef84dd0e",
+  "partLibraryHash": "artgen:740e624146351035",
+  "recipeHash": "740e624146351035933980b7179d816a2cb377350ef2a744f9c15c61baba6f79",
   "pixelHash": "44ac141095919258543361ce0a13421a6445d1bd73d6ef3ccc5e731dc8b3eda9"
 }
