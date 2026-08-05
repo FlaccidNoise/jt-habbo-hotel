@@ -102,3 +102,20 @@ export function connect(port: number): Promise<[WebSocket, Bus]> {
     ws.once("error", reject);
   });
 }
+
+/** Registration places the starter furni in the account's suite. Tests that want them as
+ *  inventory pick them all up here, then join wherever they need. */
+export async function stockUp(port: number, token: string): Promise<void> {
+  const [probe, probeBus] = await connect(port);
+  probe.send(JSON.stringify({ t: "join", token, roomId: 1 }));
+  const suite = (await probeBus.waitFor("room_state")).myRoomId;
+  if (suite === undefined) throw new Error("account has no suite to stock up from");
+
+  const [ws, b] = await connect(port);
+  ws.send(JSON.stringify({ t: "join", token, roomId: suite }));
+  const home = await b.waitFor("room_state");
+  for (const f of home.furni) ws.send(JSON.stringify({ t: "pickup", itemId: f.id }));
+  for (let i = 0; i < home.furni.length; i++) await b.waitFor("inventory_add");
+  ws.close();
+  await b.closed();
+}

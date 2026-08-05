@@ -7,7 +7,7 @@ import type { ServerHandle } from "../src/server.ts";
 import { closeDb, openDb } from "../src/db.ts";
 import { getItem } from "../src/items.ts";
 import { MS_PER_TILE } from "../src/room.ts";
-import { connect } from "./helpers.ts";
+import { connect, stockUp } from "./helpers.ts";
 import type { Bus } from "./helpers.ts";
 import type { ServerMsg } from "@grand/shared";
 import type { WebSocket } from "ws";
@@ -74,6 +74,7 @@ describe("smoke suite", () => {
       bob: await signUp("bob"),
       carol: await signUp("carol"),
     };
+    await stockUp(port, tokens.alice); // the furni tests spend alice's starter items from inventory
   }, 10000);
 
   afterAll(async () => {

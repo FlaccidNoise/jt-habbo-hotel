@@ -9,7 +9,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
-  "trade", "purchase", "arcade", "no_seat",
+  "trade", "purchase", "arcade", "no_seat", "room_busy",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -36,6 +36,10 @@ export const AvatarStateSchema = z.object({
   staff: z.boolean().optional(),   // NPC hotel staff — negative ids, visibly badged, never players
 });
 export type AvatarState = z.infer<typeof AvatarStateSchema>;
+
+// GAME.md §Rooms and social: one live instance per room, never mirrored — full rooms are
+// refused at the door and shown as full in the Navigator.
+export const ROOM_CAPACITY = 25;
 
 export const InventoryItemSchema = z.object({ id: z.number().int(), defId: z.string() });
 export type InventoryItem = z.infer<typeof InventoryItemSchema>;
@@ -69,6 +73,7 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("trade_accept") }),
   z.object({ t: z.literal("trade_cancel") }),
   z.object({ t: z.literal("buy"), defId: z.string() }),
+  z.object({ t: z.literal("nav_list") }),
   z.object({ t: z.literal("arcade_start") }),
   z.object({ t: z.literal("arcade_move"), move: z.enum(["higher", "lower", "stop"]) }),
 ]);
@@ -81,7 +86,8 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              chat: z.object({ speakRadius: z.number().int(), shoutAllowed: z.boolean() }),
              avatars: z.array(AvatarStateSchema), furni: z.array(FurniItemSchema),
              inventory: z.array(InventoryItemSchema), you: z.number().int(),
-             stars: z.number().int() }),
+             stars: z.number().int(),
+             myRoomId: z.number().int().optional() }),   // the player's own suite, when one exists
   z.object({ t: z.literal("avatar_join"), avatar: AvatarStateSchema }),
   z.object({ t: z.literal("avatar_leave"), id: z.number().int() }),
   z.object({ t: z.literal("walk"), id: z.number().int(), msPerTile: z.number().int(),
@@ -109,6 +115,10 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("arcade_state"), card: z.number().int(), score: z.number().int(),
              scored: z.boolean(), over: z.boolean(),
              outcome: z.enum(["bust", "stopped"]).optional(), paid: z.number().int().optional() }),
+  z.object({ t: z.literal("nav_rooms"), rooms: z.array(z.object({
+             roomId: z.number().int(), name: z.string(), players: z.number().int(),
+             yours: z.boolean() })) }),
+  z.object({ t: z.literal("notice"), text: z.string() }),   // onboarding and system prompts
   z.object({ t: z.literal("error"), code: ErrorCodeSchema, message: z.string() }),
 ]);
 export type ServerMsg = z.infer<typeof ServerMsgSchema>;

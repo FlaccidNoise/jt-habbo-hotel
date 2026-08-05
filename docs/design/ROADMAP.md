@@ -12,16 +12,17 @@ Status date: 2026-08-05.
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
 | 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Catalog is 14 defs. Wall archetypes → #203 | #117 fixed, #202 |
-| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d). #209 observability still open | #118 |
+| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) + registration Star trickle (c30e5b7) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
 | 8 | Design studio | Not started | #121 |
 | 9 | Multiplayer games + casino floor | Not started | #122 |
 
 Cross-cutting, outside the numbered order: #125 gateway (trigger: first multi-process or remote
-deploy), #126 deferred room/social features, #127 real avatars (proportions pin jointly with the
-style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms (decided: phased,
-demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
+deploy), #126 deferred room/social features (Navigator + room capacity 25 shipped 9f90670; room
+creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (proportions pin
+jointly with the style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms
+(decided: phased, demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
 
@@ -31,11 +32,11 @@ demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 - #204 NPC live model wiring — env config, screen-pass verification, spend counter.
 - #202 Art pipeline — style bible v1, Blender rig, post-pass, proof gate, library build-out.
 - #206 Dailies, streaks, achievements, weekly competitions (needs #118).
-- #207 Onboarding first session — pre-created room, café spawn, welcome quest, guided purchase
-  (needs catalog + ledger).
+- #207 Onboarding first session — **fixed**: registration provisions the suite with starter furni
+  placed, café spawn, welcome quest advanced by real events (coffee → buy → place → arcade).
 - #208 Friends console, groups, badges — the Social service (PIPELINES §5).
-- #209 Observability — per-faucet issuance and per-sink absorption graphs, before #118 ships
-  (audit H4: the data must exist before the exploit).
+- #209 Observability — **fixed**: GET /api/metrics (per-op flows, ledger latency, WS and loop
+  health) behind a session token, graphs at /metrics.html.
 - #210 Wealth sinks — Museum wing, prestige untradables, Luck Lever, collection sets
   (needs #118).
 - #211 Density funnel low-population mode — threshold 5 concurrent, space unlock/re-lock,
@@ -53,7 +54,9 @@ bounces.** Reading the config is never evidence.
 - Speak carries 5 tiles then fades. Shout reaches the room. Whisper reaches one player.
 - A staged filtered word bounces on chat and on registration names.
 - Reconnect within the window resyncs full room state.
-- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04).
+- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04). **Met**
+  (9f90670): ROOM_CAPACITY 25, staff not counted, room_busy at the door, full rooms disabled in
+  the Navigator, and someone already inside can still reconnect.
 - Deferred to #125: drain moves a live occupied room, clients resync inside the reconnect window.
 
 ### Step 2 — furni, catalog, public rooms (shipped, gaps filed)
@@ -105,7 +108,9 @@ bounces.** Reading the config is never evidence.
   exactly once when the ledger returns.
 - Restore drill: scheduled restore into scratch succeeds with matching row counts. RPO 24 h,
   RTO 4 h (prototype pins).
-- #209 ships first: per-faucet issuance and per-sink absorption visible per day.
+- #209 ships first: per-faucet issuance and per-sink absorption visible per day. **Met** (90617c1):
+  GET /api/metrics + /metrics.html. Any signed-in account can read it — no staff role exists to
+  gate on (#226).
 
 ### Step 6 — first arcade (#119, #206 alongside)
 

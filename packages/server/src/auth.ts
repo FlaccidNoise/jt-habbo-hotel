@@ -2,7 +2,8 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import type Database from "better-sqlite3";
 import { loadRuleset, hitsFilter } from "./filter.ts";
-import { grantStarter } from "./items.ts";
+import { grantStarter, provisionSuite } from "./items.ts";
+import { startOnboarding } from "./onboarding.ts";
 
 const SCRYPT_N = 16384;
 const SCRYPT_R = 8;
@@ -62,24 +63,31 @@ export async function register(
   const hash = await hashPassword(password, salt);
   const normalized = normalizeUsername(username);
 
-  let accountId: number;
+  // One transaction for the whole account: identity, starter grant, the suite those items are
+  // placed in, the quest, and the session. A half-registered account — items but no suite, or a
+  // suite nobody can log into — must not be reachable.
   try {
-    const info = db
-      .prepare(
-        `INSERT INTO accounts (username, username_normalized, pw_hash, pw_salt, pw_params, created_at)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-      )
-      .run(username, normalized, hash, salt, PW_PARAMS, Date.now());
-    accountId = Number(info.lastInsertRowid);
+    return db.transaction((): { token: string } => {
+      const info = db
+        .prepare(
+          `INSERT INTO accounts (username, username_normalized, pw_hash, pw_salt, pw_params, created_at)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+        )
+        .run(username, normalized, hash, salt, PW_PARAMS, Date.now());
+      const accountId = Number(info.lastInsertRowid);
+
+      grantStarter(db, accountId);
+      provisionSuite(db, accountId, username);
+      startOnboarding(db, accountId);
+      return { token: createSession(db, accountId) };
+    })();
   } catch (e) {
+    // The only uniqueness constraint this path can hit is the username.
     if (e instanceof Error && e.message.includes("UNIQUE")) {
       throw new AuthError("username already taken");
     }
     throw e;
   }
-
-  grantStarter(db, accountId);
-  return { token: createSession(db, accountId) };
 }
 
 export async function login(

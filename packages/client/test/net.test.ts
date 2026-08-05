@@ -84,6 +84,57 @@ test("send serializes a client message", async () => {
   expect(JSON.parse(socket.sent[1] ?? "null")).toEqual({ t: "move", x: 3, y: 4 });
 });
 
+async function switching(): Promise<{
+  first: FakeSocket;
+  second: FakeSocket;
+  seen: ServerMsg[];
+  disconnects: ReturnType<typeof vi.fn>;
+}> {
+  const first = new FakeSocket();
+  const second = new FakeSocket();
+  let next = first;
+  const net = new Net(() => next);
+  const seen: ServerMsg[] = [];
+  const disconnects = vi.fn();
+  net.onMessage((msg) => seen.push(msg));
+  net.onClose(disconnects);
+  const opened = net.connect("ws://localhost/ws", "tok", 1);
+  first.onopen?.();
+  await opened;
+
+  next = second;
+  const switched = net.connect("ws://localhost/ws", "tok", 3);
+  second.onopen?.();
+  await switched;
+  expect(JSON.parse(second.sent[0] ?? "null")).toEqual({ t: "join", token: "tok", roomId: 3 });
+  return { first, second, seen, disconnects };
+}
+
+test("a confirmed room switch retires the old socket without reporting a disconnect", async () => {
+  const { first, second, seen, disconnects } = await switching();
+  expect(first.closed).toBe(false); // still live until the new room confirms
+
+  second.deliver(JSON.stringify({ ...ROOM_STATE, roomId: 3 }));
+  expect(first.closed).toBe(true);
+  expect(seen).toEqual([{ ...ROOM_STATE, roomId: 3 }]);
+
+  first.onclose?.(); // the retired socket's close is not a disconnect
+  expect(disconnects).not.toHaveBeenCalled();
+  first.deliver(JSON.stringify(ROOM_STATE)); // nor does its traffic still reach the handler
+  expect(seen).toHaveLength(1);
+});
+
+test("a refused room switch leaves the player in the room they were in", async () => {
+  const { first, second, seen } = await switching();
+
+  second.deliver(JSON.stringify({ t: "error", code: "room_busy", message: "that room is full" }));
+  expect(first.closed).toBe(false);
+  expect(seen).toEqual([{ t: "error", code: "room_busy", message: "that room is full" }]);
+
+  first.deliver(JSON.stringify(ROOM_STATE)); // the old room still talks to us
+  expect(seen).toHaveLength(2);
+});
+
 test("connect rejects when the socket closes before opening", async () => {
   const socket = new FakeSocket();
   const net = new Net(() => socket);
