@@ -1,5 +1,5 @@
 {
-  "styleVersion": 1,
+  "styleVersion": 2,
   "generatorVersion": 1,
   "defs": {
     "chair_basic": {
@@ -32,10 +32,10 @@
         "seat",
         "back"
       ],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
-      "recipeHash": "a4874c4a0a54b84fb03223b5f266e94a17a0016eb4ac1d57d5c9e5aa68dbc8d6",
+      "recipeHash": "df94fee1a9c897f2b2405b7fe76d201e86960017147650d24571741bbead2308",
       "pixelHash": "d13d2431f694f498cbb2e96bd2137ddef0fd40578643cb8f55e040bda81d3fe7"
     },
     "table_basic": {
@@ -67,10 +67,10 @@
         "legs",
         "top"
       ],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
-      "recipeHash": "a2e49766e860ed94d4e1a23f362a24c90d1a3af6ecf6d67388f2b348bfb5654b",
+      "recipeHash": "f4c1d500029de6bd4b2fbe22915b155e702b800e5cf6830c598fc40e226962e7",
       "pixelHash": "93489bae38eb80aef0e3c1a1fc464a122aaf955e7c8294e716f6251b45ac910b"
     },
     "sofa_basic": {
@@ -104,10 +104,10 @@
         "back",
         "arms"
       ],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
-      "recipeHash": "70719ca1d5da254af824b03544b315f3a8fcc8c73f5f8e1cf4602e04a27ae100",
+      "recipeHash": "8235ffaaeb771ee6f0a47e80b8723a3192691406fe04acece78ef34d307d7c0f",
       "pixelHash": "3728ad26b3b1f3487d54d97158da3f0e001721371dfebecee5850fef92c1e692"
     },
     "plant_basic": {
@@ -139,10 +139,10 @@
         "pot",
         "foliage"
       ],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
-      "recipeHash": "616740c45ac56b3648343f2a5348e87dd307a953260f335a9da00bc507fe8c34",
+      "recipeHash": "138b4d955be907d876bbc8e16a268d7ecf26c5c1ad4cbe1c54f3f1bfbba7b1b4",
       "pixelHash": "d50a1f760aa755d62c8c1e7d2ee5fe1576a97e4e64bada8c966582553d12766d"
     },
     "rug_basic": {
@@ -173,10 +173,10 @@
       "occlusion": [
         "field"
       ],
-      "styleVersion": 1,
+      "styleVersion": 2,
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
-      "recipeHash": "530d8e3421f8c38da27adb7ef28db72135f79331e61726f199e1d00953fe9adb",
+      "recipeHash": "6c0c159aa5b8f23895203427b8efa5bc7d24a716bd0454584f5563c000de8ae8",
       "pixelHash": "7976a5588cc9d8015aa14fe04b9eb2d54b828daf7f3aec4c915e8dec782b2699"
     },
     "casino_table": {

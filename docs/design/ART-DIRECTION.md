@@ -45,12 +45,26 @@ its own polish pass, not a from-scratch redraw.
 A versioned artifact — `style_version` in every recipe pins it (PIPELINES §2). Values below are
 the v1 pins, marked (tune) where authoring may move them.
 
-- **Palette:** 12 ramps × 5 shades, pinned 2026-08-05 in `packages/generator/src/style.ts`.
-  Ramps: walnut, oak, plum, fern, crimson, slate, sand, teal, gold, ivory, navy, charcoal.
-  Shades per ramp are one base color × fixed light factors — outline 0.35, left 0.65, right 1.0,
-  top 1.3, hi 1.55. `hi` is the sun-facing band: bevel strips and curve crests. Ramp-indexed
-  color only — recolor is palette swap, never hue rotation. A base color bright enough to clip
-  a shade to white is a style failure, not a highlight: the palette test bounces it.
+- **Palette:** 12 material ramps + 6 skin ramps × 5 shades, in `packages/generator/src/style.ts`
+  (`style_version` 2). Material ramps: walnut, oak, plum, fern, crimson, slate, sand, teal, gold,
+  ivory, navy, charcoal. Skin ramps: `skin_1` … `skin_6`, added 2026-08-05 with the figure
+  pipeline (#127) — the material ramps hold no skin tone, and `sand`-or-`ivory` is not a palette
+  a hotel can ship. Skin is a separate family so figuredata can offer it for the head and nothing
+  else. Shades per ramp are one base color × fixed light factors — outline 0.35, left 0.65,
+  right 1.0, top 1.3, hi 1.55. `hi` is the sun-facing band: bevel strips and curve crests.
+  Ramp-indexed color only — recolor is palette swap, never hue rotation.
+- **Channel clamping:** a base bright enough that `top` or `hi` clamps a channel flattens the top
+  of the ramp. **The skin family is gated against it** (`no skin shade clamps a channel`) because
+  there a clamp drags the light band toward white, hue-shifting the tone and collapsing the deep
+  end of the family into the light end. Four material ramps — walnut, crimson, sand, gold — do
+  clamp their red channel; their pixels are frozen and cannot move, so the rule is scoped to skin
+  rather than global. The older claim that "the palette test bounces it" was not true of the
+  material ramps and is not made here.
+- **Adding a ramp bumps `style_version`.** It is additive — no existing pixel changes — but a
+  recipe naming `skin_3` while tagged `style_version 1` would fail to render under v1, so the
+  version is load-bearing. Evidence from the v1→v2 bump: 22 bundles, **0 pixel hashes moved,
+  5 recipe hashes moved** (the box-path recipes that embed the version; recipe hash is provenance
+  per PIPELINES §2). Regenerate `catalog.json` with `make gen` after any ramp change.
 - **Light:** above-front, vertically symmetric shading (audit B4).
 - **Outline:** 1 px, the part ramp's darkest shade. Pure black reserved for ground-contact
   edges (tune).

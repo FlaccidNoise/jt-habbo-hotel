@@ -1,4 +1,4 @@
-export const STYLE_VERSION = 1;
+export const STYLE_VERSION = 2;
 export const GENERATOR_VERSION = 1;
 
 /** Above-front light: top face lightest, right face base, left face darker, outline darkest —
@@ -49,17 +49,40 @@ const RAMPS: readonly Ramp[] = [
   ramp("charcoal", 0x4a4d55),
 ];
 
+/** Skin is its own family (#127): the 12 material ramps hold no skin tone, and reducing every
+ *  player to `sand` or `ivory` is not a palette we can ship. Kept separate from RAMPS so
+ *  figuredata can offer these for the head and nothing else.
+ *
+ *  Every base here has its brightest channel ≤ 164, so `hi` at 1.55 lands ≤ 254 and no channel
+ *  clamps. Clamping matters more for skin than for wood: it drags the light band toward white,
+ *  which hue-shifts the tone and collapses the deep end of the family into the light end.
+ *  (walnut, crimson, sand, and gold do clamp — their pixels are frozen and cannot move.) */
+const SKIN_RAMPS: readonly Ramp[] = [
+  ramp("skin_1", 0xa48470),
+  ramp("skin_2", 0x977463),
+  ramp("skin_3", 0x87614c),
+  ramp("skin_4", 0x6f4c39),
+  ramp("skin_5", 0x573a2b),
+  ramp("skin_6", 0x3e2920),
+];
+
+const ALL_RAMPS: readonly Ramp[] = [...RAMPS, ...SKIN_RAMPS];
+
 export function rampByName(name: string): Ramp {
-  const found = RAMPS.find((r) => r.name === name);
+  const found = ALL_RAMPS.find((r) => r.name === name);
   if (!found) throw new Error(`unknown ramp: ${name}`);
   return found;
 }
 
+/** Material ramps — what furni and garments are coloured from. Skin is deliberately excluded. */
 export const RAMP_NAMES: readonly string[] = RAMPS.map((r) => r.name);
+
+/** Head-only ramps. */
+export const SKIN_RAMP_NAMES: readonly string[] = SKIN_RAMPS.map((r) => r.name);
 
 /** Every shade of every ramp, for the distinctness test. */
 export const RAMP_SHADES: ReadonlyArray<{ ramp: string; shade: string; color: number }> =
-  RAMPS.flatMap((r) =>
+  ALL_RAMPS.flatMap((r) =>
     (["outline", "left", "right", "top", "hi"] as const).map((shade) => ({
       ramp: r.name, shade, color: r[shade],
     })),
@@ -71,7 +94,7 @@ export const OUTLINE = 0x23241f;
 /** Every color the generator is allowed to emit. The palette gate rejects anything else. */
 export const PALETTE: ReadonlySet<number> = new Set([
   OUTLINE,
-  ...RAMPS.flatMap((r) => [r.outline, r.left, r.right, r.top, r.hi]),
+  ...ALL_RAMPS.flatMap((r) => [r.outline, r.left, r.right, r.top, r.hi]),
 ]);
 
 /** The two extreme floor tones (client scene/room.ts FLOOR_A/FLOOR_B) for the contrast gate. */

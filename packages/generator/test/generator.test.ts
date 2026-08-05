@@ -19,7 +19,9 @@ import { makeCanvas, putPixel } from "../src/raster.ts";
 import { recipeHash } from "../src/recipe.ts";
 import type { Recipe } from "../src/recipe.ts";
 import { STARTER_RECIPES } from "../src/starter.ts";
-import { FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES } from "../src/style.ts";
+import {
+  FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES, SKIN_RAMP_NAMES, rampByName,
+} from "../src/style.ts";
 
 const CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "chair_basic");
 const CHAIR_RECIPE = STARTER_RECIPES.get("chair_basic");
@@ -99,10 +101,30 @@ describe("rendering", () => {
 });
 
 describe("style bible v1", () => {
-  test("the palette is 12 ramps × 5 shades", () => {
+  test("the palette is 12 material ramps + 6 skin ramps × 5 shades", () => {
     expect(RAMP_NAMES).toHaveLength(12);
-    expect(RAMP_SHADES).toHaveLength(60);
-    expect(PALETTE.size).toBe(61);   // + the global outline
+    expect(SKIN_RAMP_NAMES).toHaveLength(6);
+    expect(RAMP_SHADES).toHaveLength(90);
+    expect(PALETTE.size).toBe(91);   // + the global outline
+  });
+
+  test("no skin shade clamps a channel", () => {
+    // Skin is the one family where clamping is a correctness bug, not a highlight: it drags the
+    // light band toward white, hue-shifting the tone and flattening the deep end of the family
+    // into the light end. Four material ramps (walnut, crimson, sand, gold) do clamp — their
+    // pixels are frozen and cannot move, which is why this is scoped to skin.
+    for (const name of SKIN_RAMP_NAMES) {
+      const r = rampByName(name);
+      for (const shade of ["outline", "left", "right", "top", "hi"] as const) {
+        const c = r[shade];
+        for (const [channel, shift] of [["r", 16], ["g", 8], ["b", 0]] as const) {
+          expect(
+            (c >> shift) & 0xff,
+            `${name}.${shade} clamps ${channel}`,
+          ).toBeLessThan(255);
+        }
+      }
+    }
   });
 
   test("no shade clips to white or collides with another ramp's shade", () => {
