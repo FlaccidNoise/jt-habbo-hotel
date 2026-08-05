@@ -5,7 +5,7 @@ import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
 import { register } from "../src/auth.ts";
-import { TRICKLE_SCHEDULE, balanceOf, settleTrickle } from "../src/ledger.ts";
+import { GLOBAL_EARN_CEILING, TRICKLE_SCHEDULE, balanceOf, settleEarn, settleTrickle } from "../src/ledger.ts";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
 import { connect } from "./helpers.ts";
@@ -58,6 +58,24 @@ describe("registration Star trickle", () => {
     expect(TOTAL).toBe(100);
     expect(settleTrickle(db, alice, createdAt + 90 * DAY).granted).toBe(0);
     expect(balanceOf(db, alice)).toBe(TOTAL);
+  });
+
+  test("a payday blocked by the global ceiling is not burned — it pays on a later join", () => {
+    // Spend the whole 24h ceiling on another faucet first.
+    settleEarn(db, {
+      opKey: "grind",
+      op: "arcade_hilo",
+      accountId: alice,
+      amount: GLOBAL_EARN_CEILING,
+      opCap: GLOBAL_EARN_CEILING,
+      now: createdAt + DAY,
+    });
+    expect(settleTrickle(db, alice, createdAt + DAY).granted).toBe(0);
+
+    // A day later the rolling window has moved on and the unpaid payday is still owed.
+    expect(settleTrickle(db, alice, createdAt + 2 * DAY + 1).granted).toBe(
+      TRICKLE_SCHEDULE[0]! + TRICKLE_SCHEDULE[1]!,
+    );
   });
 
   test("the grants are ledger rows under one op, so the faucet is auditable", () => {

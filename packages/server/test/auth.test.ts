@@ -65,6 +65,32 @@ describe("auth", () => {
     await expect(register(db, "shit", "password1")).rejects.toThrow(AuthError);
   });
 
+  test("a registration that fails partway leaves nothing behind — staged fault", async () => {
+    const counts = (): Record<string, number> => ({
+      accounts: (db.prepare("SELECT COUNT(*) AS n FROM accounts").get() as { n: number }).n,
+      items: (db.prepare("SELECT COUNT(*) AS n FROM furni_items").get() as { n: number }).n,
+      rooms: (db.prepare("SELECT COUNT(*) AS n FROM rooms").get() as { n: number }).n,
+      sessions: (db.prepare("SELECT COUNT(*) AS n FROM sessions").get() as { n: number }).n,
+    });
+    const before = counts();
+
+    // Fault staged after the account row is written: the starter grant is the next statement.
+    db.exec(
+      `CREATE TRIGGER stage_fail BEFORE INSERT ON furni_items
+       BEGIN SELECT RAISE(ABORT, 'staged failure'); END`,
+    );
+    await expect(register(db, "dave", "password1")).rejects.toThrow("staged failure");
+    db.exec("DROP TRIGGER stage_fail");
+
+    expect(counts()).toEqual(before);
+    expect(db.prepare("SELECT id FROM accounts WHERE username = 'dave'").get()).toBeUndefined();
+
+    // The name is free afterwards, so the failure did not half-claim it.
+    await expect(register(db, "dave", "password1")).resolves.toMatchObject({
+      token: expect.any(String),
+    });
+  });
+
   test("grantStarter grants exactly five items once, placed into the suite at registration", async () => {
     await register(db, "carol", "password1");
     const account = db.prepare("SELECT id FROM accounts WHERE username = ?").get("carol") as {
