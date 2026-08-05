@@ -9,6 +9,7 @@ import {
   GLOBAL_EARN_CEILING,
   balanceOf,
   settleEarn,
+  settlePurchase,
   settleTrade,
 } from "../src/ledger.ts";
 import { PROTOTYPE_CATALOG } from "@grand/shared";
@@ -191,6 +192,55 @@ describe("settleTrade", () => {
       b: { accountId: b, itemIds: [] },
     });
     expect(result.ok).toBe(false);
+  });
+});
+
+describe("settlePurchase", () => {
+  test("debits, mints the item, and logs both rows under one op_key", () => {
+    const id = account();
+    earn(id, 50, { op: "test_grant", opCap: 1000 });
+    const result = settlePurchase(db, { opKey: "buy1", accountId: id, defId: "chair_basic", price: 25, now: T0 });
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.balance).toBe(25);
+    const item = db
+      .prepare("SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId FROM furni_items WHERE id = ?")
+      .get(result.itemId);
+    expect(item).toEqual({ defId: "chair_basic", ownerId: id, roomId: null });
+    const rows = db
+      .prepare("SELECT stars, item_id AS item FROM ledger_entries WHERE op_key = 'buy1' ORDER BY seq")
+      .all();
+    expect(rows).toEqual([
+      { stars: -25, item: null },
+      { stars: 0, item: result.itemId },
+    ]);
+  });
+
+  test("fails closed on insufficient balance — no debit, no item", () => {
+    const id = account();
+    earn(id, 10);
+    const before = db.prepare("SELECT COUNT(*) AS n FROM furni_items").get() as { n: number };
+    const result = settlePurchase(db, { opKey: "buy2", accountId: id, defId: "sofa_basic", price: 150 });
+    expect(result.ok).toBe(false);
+    expect(balanceOf(db, id)).toBe(10);
+    expect(db.prepare("SELECT COUNT(*) AS n FROM furni_items").get()).toEqual(before);
+    expect(db.prepare("SELECT COUNT(*) AS n FROM ledger_entries WHERE op_key = 'buy2'").get()).toEqual({ n: 0 });
+  });
+
+  test("a spent Star does not refill earn headroom", () => {
+    const id = account();
+    for (let i = 0; i < 5; i++) earn(id, 10);   // NPC faucet cap reached
+    settlePurchase(db, { opKey: "buy3", accountId: id, defId: "chair_basic", price: 25, now: T0 });
+    expect(earn(id, 10).granted).toBe(0);
+  });
+
+  test("replaying an op_key buys nothing twice", () => {
+    const id = account();
+    earn(id, 50, { op: "test_grant", opCap: 1000 });
+    const args = { opKey: "buy4", accountId: id, defId: "chair_basic", price: 25 };
+    expect(settlePurchase(db, args).ok).toBe(true);
+    expect(settlePurchase(db, args).ok).toBe(false);
+    expect(balanceOf(db, id)).toBe(25);
   });
 });
 

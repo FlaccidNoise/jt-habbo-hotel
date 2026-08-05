@@ -9,7 +9,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
-  "trade",
+  "trade", "purchase",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -57,6 +57,7 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
              itemIds: z.array(z.number().int()).max(MAX_TRADE_ITEMS) }),
   z.object({ t: z.literal("trade_accept") }),
   z.object({ t: z.literal("trade_cancel") }),
+  z.object({ t: z.literal("buy"), defId: z.string() }),
 ]);
 export type ClientMsg = z.infer<typeof ClientMsgSchema>;
 

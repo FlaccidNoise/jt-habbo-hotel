@@ -1,5 +1,6 @@
 import { Application } from "pixi.js";
 import {
+  CATALOG_PRICES,
   MAX_TRADE_ITEMS,
   PROTOTYPE_CATALOG,
   ROOM_FURNI_CAP,
@@ -129,6 +130,26 @@ function renderInventory(): void {
 
 function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
+  renderCatalog();
+}
+
+function renderCatalog(): void {
+  const strip = el("catalog");
+  strip.replaceChildren();
+  const label = document.createElement("span");
+  label.className = "label";
+  label.textContent = "Catalog:";
+  strip.appendChild(label);
+  for (const def of PROTOTYPE_CATALOG) {
+    const price = CATALOG_PRICES.get(def.id);
+    if (price === undefined) continue;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `${def.name} · ${price}★`;
+    button.disabled = price > stars;
+    button.addEventListener("click", () => net.send({ t: "buy", defId: def.id }));
+    strip.appendChild(button);
+  }
 }
 
 function renderTrade(): void {
@@ -296,7 +317,7 @@ function handle(msg: ServerMsg): void {
     case "stars":
       stars = msg.balance;
       renderStars();
-      toast(`+${msg.delta} ★ (${msg.reason})`);
+      toast(`${msg.delta > 0 ? "+" : ""}${msg.delta} ★ (${msg.reason})`);
       break;
     case "trade_invite":
       toast(`${msg.from} wants to trade — type /trade ${msg.from} to accept`);

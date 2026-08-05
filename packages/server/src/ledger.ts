@@ -70,6 +70,44 @@ export function settleEarn(
   })();
 }
 
+export type PurchaseResult =
+  | { ok: true; itemId: number; balance: number }
+  | { ok: false; reason: string };
+
+/** Catalog purchase: debit + item mint + provenance rows in one transaction. Fails closed on
+ *  insufficient balance — the CHECK(balance >= 0) constraint backstops this test. Replaying an
+ *  op_key buys nothing twice. */
+export function settlePurchase(
+  db: Database.Database,
+  opts: { opKey: string; accountId: number; defId: string; price: number; now?: number },
+): PurchaseResult {
+  const now = opts.now ?? Date.now();
+  return db.transaction((): PurchaseResult => {
+    if (settled(db, opts.opKey)) {
+      return { ok: false, reason: "this purchase was already settled" };
+    }
+    if (balanceOf(db, opts.accountId) < opts.price) {
+      return { ok: false, reason: `not enough Stars — that costs ${opts.price}` };
+    }
+    db.prepare("UPDATE star_balances SET balance = balance - ? WHERE account_id = ?").run(
+      opts.price,
+      opts.accountId,
+    );
+    const itemId = Number(
+      db
+        .prepare("INSERT INTO furni_items (def_id, owner_id, room_id, state) VALUES (?, ?, NULL, 0)")
+        .run(opts.defId, opts.accountId).lastInsertRowid,
+    );
+    const entry = db.prepare(
+      `INSERT INTO ledger_entries (op, op_key, seq, account_id, stars, item_id, created_at)
+       VALUES ('purchase', ?, ?, ?, ?, ?, ?)`,
+    );
+    entry.run(opts.opKey, 0, opts.accountId, -opts.price, null, now);
+    entry.run(opts.opKey, 1, opts.accountId, 0, itemId, now);
+    return { ok: true, itemId, balance: balanceOf(db, opts.accountId) };
+  })();
+}
+
 /** Item-grant rows (starter kit, mints). The caller owns the surrounding transaction. */
 export function logItemGrants(
   db: Database.Database,

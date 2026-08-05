@@ -49,6 +49,11 @@
         background: #1c1f2be6; color: #eef; cursor: pointer; }
       #inventory button.armed { border-color: #7fd98a; background: #24422a; }
       #inventory .empty { color: #7d8496; font-size: 13px; }
+      #catalog { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+      #catalog .label { color: #ffd76a; font-size: 13px; font-weight: 600; }
+      #catalog button { padding: 5px 10px; border-radius: 8px; border: 1px solid #6a5a2e;
+        background: #2b2517e6; color: #eee0b0; cursor: pointer; }
+      #catalog button:disabled { opacity: .45; cursor: default; }
       #trade { position: fixed; top: 60px; right: 12px; width: 320px; background: #1c1f2bf2;
         border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px; }
       #trade[hidden] { display: none; }
@@ -90,6 +95,7 @@
       </div>
     </div>
     <div id="hud">
+      <div id="catalog"></div>
       <div id="inventory"></div>
       <form id="chat-form" autocomplete="off">
         <input id="chat-input" maxlength="200"

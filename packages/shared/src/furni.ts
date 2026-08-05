@@ -7,3 +7,12 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "plant_basic", name: "Plant",  w: 1, l: 1, stackHeights: [2.0],  canWalk: false, canSit: false, canStackOn: false, color: 0x2e8b57 },
   { id: "rug_basic",   name: "Rug",    w: 3, l: 2, stackHeights: [0.05], canWalk: true,  canSit: false, canStackOn: true,  color: 0xaa3333 },
 ];
+
+// GAME.md §Price ladder (all tune): entry furni 25, median furni 150.
+export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
+  ["chair_basic", 25],
+  ["plant_basic", 25],
+  ["rug_basic", 50],
+  ["table_basic", 150],
+  ["sofa_basic", 150],
+]);

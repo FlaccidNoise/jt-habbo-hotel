@@ -8,11 +8,11 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
-import { ClientMsgSchema } from "@grand/shared";
+import { CATALOG_PRICES, ClientMsgSchema } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
-import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn } from "./ledger.ts";
+import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
 import { log } from "./log.ts";
 import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
@@ -259,6 +259,27 @@ export async function startServer(opts: {
       case "trade_cancel":
         tradeService.cancel(accountId);
         break;
+      case "buy": {
+        const price = CATALOG_PRICES.get(msg.defId);
+        if (price === undefined) {
+          fail(conn.ws, "purchase", "that item is not in the catalog");
+          break;
+        }
+        const result = settlePurchase(db, {
+          opKey: randomUUID(),
+          accountId,
+          defId: msg.defId,
+          price,
+        });
+        log("purchase", { accountId, defId: msg.defId, price, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "purchase", result.reason);
+          break;
+        }
+        emit(accountId, { t: "stars", balance: result.balance, delta: -price, reason: "purchase" });
+        emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
+        break;
+      }
     }
   }
 

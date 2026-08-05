@@ -16,6 +16,7 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
   ["trade_offer", { t: "trade_offer", itemIds: [1, 2] }, { t: "trade_offer", itemIds: [1, 2, 3, 4, 5, 6, 7, 8, 9] }],
   ["trade_accept", { t: "trade_accept" }, { t: "tradeaccept" }],
   ["trade_cancel", { t: "trade_cancel" }, { t: 5 }],
+  ["buy", { t: "buy", defId: "chair_basic" }, { t: "buy", defId: 5 }],
 ];
 
 const ROOM_STATE = {
