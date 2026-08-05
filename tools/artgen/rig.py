@@ -313,20 +313,20 @@ ARM_LEN = 22
 FIGURE_PARTS = {
     "bd1": {
         "prims": [
-            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-7.5, -5.0, 0.0),
-             "c1": (7.5, 5.0, float(TORSO_LEN))},
+            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-7.5, -6.0, 0.0),
+             "c1": (7.5, 6.0, float(TORSO_LEN))},
             {"t": "limb", "bone": "arm_l",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
             {"t": "limb", "bone": "arm_r",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
-            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 3.9},
-            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 3.9},
-            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 3.4,
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.2},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.2},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 3.7,
              "caps": "top"},
-            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 3.4,
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 3.7,
              "caps": "top"},
-            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.4, -2.6, -float(SHIN_LEN)),
-             "c1": (3.4, 6.0, -SHIN_LEN + 3.4)},
-            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.4, -2.6, -float(SHIN_LEN)),
-             "c1": (3.4, 6.0, -SHIN_LEN + 3.4)},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.7, -2.9, -float(SHIN_LEN)),
+             "c1": (3.7, 6.3, -SHIN_LEN + 3.4)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.7, -2.9, -float(SHIN_LEN)),
+             "c1": (3.7, 6.3, -SHIN_LEN + 3.4)},
         ],
     },
     # The head is its own layer, not part of bd — it is selectable, and it is what makes a figure
@@ -348,8 +348,8 @@ FIGURE_PARTS = {
     # has to be cut where the arm passes in front of it.
     "ch5": {
         "prims": [
-            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -5.4, 1.5),
-             "c1": (7.9, 5.4, 20.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 1.5),
+             "c1": (7.9, 6.4, 20.0)},
             {"t": "limb", "bone": "arm_l", "slot": 0, "len": 8.0, "r": 3.7},
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 3.7},
         ],
@@ -358,10 +358,10 @@ FIGURE_PARTS = {
     # that proves N-colour parts — one mesh, two independently chosen ramps, no second render.
     "ch6": {
         "prims": [
-            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -5.4, 1.5),
-             "c1": (7.9, 5.4, 18.4)},
-            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.6, -5.6, 18.4),
-             "c1": (7.6, 5.6, 20.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 1.5),
+             "c1": (7.9, 6.4, 18.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.6, -6.6, 18.4),
+             "c1": (7.6, 6.6, 20.6)},
             {"t": "limb", "bone": "arm_l", "slot": 0, "len": 13.0, "r": 3.7},
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 13.0, "r": 3.7},
             {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -13.5), "r": 3.9,
@@ -374,10 +374,10 @@ FIGURE_PARTS = {
     # player naming set 16 fails the ownership check like any other unowned set.
     "ch16": {
         "prims": [
-            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -5.7, 0.5),
-             "c1": (8.2, 5.7, 20.4)},
-            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.2, -6.0, 2.0),
-             "c1": (2.2, 6.0, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -6.7, 0.5),
+             "c1": (8.2, 6.7, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.2, -7.0, 2.0),
+             "c1": (2.2, 7.0, 20.4)},
             {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 3.8},
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 3.8},
             {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -20.5), "r": 4.0,
@@ -390,10 +390,10 @@ FIGURE_PARTS = {
     # is why the cone prim exists.
     "cc11": {
         "prims": [
-            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -5.9, 0.0),
-             "c1": (8.4, 5.9, 20.6)},
-            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.0, -6.2, 1.0),
-             "c1": (2.0, 6.2, 20.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -6.9, 0.0),
+             "c1": (8.4, 6.9, 20.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.0, -7.2, 1.0),
+             "c1": (2.0, 7.2, 20.6)},
             {"t": "cone", "bone": "hip",   "slot": 0, "len": 14.0, "r0": 8.6, "r1": 10.4},
             {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.0},
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.0},
@@ -401,28 +401,28 @@ FIGURE_PARTS = {
     },
     "lg7": {
         "prims": [
-            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.4},
-            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.4},
-            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 15.0, "r": 4.0},
-            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 15.0, "r": 4.0},
-            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -5.4, -2.0),
-             "c1": (8.0, 5.4, 2.6)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.7},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.7},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 15.0, "r": 4.3},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 15.0, "r": 4.3},
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -6.4, -2.0),
+             "c1": (8.0, 6.4, 2.6)},
         ],
     },
     # Pleated Skirt (set 8). Same lg slot as trousers, so wearing one replaces the other.
     "lg8": {
         "prims": [
             {"t": "cone", "bone": "hip", "slot": 0, "len": 15.0, "r0": 8.2, "r1": 11.6},
-            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-8.0, -5.4, -1.5),
-             "c1": (8.0, 5.4, 2.6)},
+            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-8.0, -6.4, -1.5),
+             "c1": (8.0, 6.4, 2.6)},
         ],
     },
     "sh9": {
         "prims": [
-            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.9, -3.2, -float(SHIN_LEN)),
-             "c1": (3.9, 7.0, -SHIN_LEN + 4.2)},
-            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.9, -3.2, -float(SHIN_LEN)),
-             "c1": (3.9, 7.0, -SHIN_LEN + 4.2)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 4.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 4.2)},
         ],
     },
     # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
@@ -465,13 +465,13 @@ FIGURE_PARTS = {
     },
     "ca14": {
         "prims": [
-            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 5.8, 15.0), "r": 2.0},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.8, 15.0), "r": 2.0},
         ],
     },
     "wa15": {
         "prims": [
-            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -5.6, 0.6),
-             "c1": (8.1, 5.6, 3.4)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.6),
+             "c1": (8.1, 6.6, 3.4)},
         ],
     },
 }
