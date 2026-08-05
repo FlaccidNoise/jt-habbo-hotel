@@ -1,5 +1,6 @@
 import {
   DIR_STEPS,
+  FigureError,
   PROTOTYPE_CATALOG,
   ROOM_FURNI_CAP,
   checkPlacement,
@@ -25,6 +26,7 @@ import type {
 } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
+import { figureOf, saveFigure, staffFigure } from "./figure.ts";
 import { balanceOf } from "./ledger.ts";
 import { findPath } from "./pathfind.ts";
 import {
@@ -47,6 +49,7 @@ export interface Occupant {
   z: number;
   dir: number;
   posture: Posture;
+  figure: string;
   staff?: boolean;
 }
 export type Emit = (accountId: number, msg: ServerMsg) => void;
@@ -70,6 +73,7 @@ const key = (x: number, y: number): string => `${x},${y}`;
 function toAvatar(o: Occupant): AvatarState {
   return {
     id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: o.posture,
+    figure: o.figure,
     ...(o.staff ? { staff: true } : {}),
   };
 }
@@ -131,6 +135,7 @@ export class Room {
       z: this.tileZ(def.post.x, def.post.y),
       dir: def.dir,
       posture: "stand",
+      figure: staffFigure(def.id),
     });
   }
 
@@ -144,6 +149,7 @@ export class Room {
       z: this.tileZ(spawn.x, spawn.y),
       dir: this.door.dir,
       posture: "stand",
+      figure: figureOf(this.db, accountId),
     };
     this.occ.set(accountId, occupant);
 
@@ -280,6 +286,27 @@ export class Room {
     this.broadcast({
       t: "posture", id: o.accountId, posture: o.posture, x: o.x, y: o.y, z: o.z, dir: o.dir,
     });
+  }
+
+  /** Ownership is checked before anything is stored, so a refused change leaves both the database
+   *  and everyone else's view exactly as they were. */
+  setFigure(accountId: number, input: string): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    let figure: string;
+    try {
+      figure = saveFigure(this.db, accountId, input);
+    } catch (e) {
+      this.fail(accountId, "figure", e instanceof FigureError ? e.message : "bad figure");
+      return;
+    }
+    occupant.figure = figure;
+    this.broadcast({ t: "figure_changed", id: accountId, figure });
+  }
+
+  wave(accountId: number): void {
+    if (!this.occ.has(accountId)) return;
+    this.broadcast({ t: "wave", id: accountId });
   }
 
   chat(accountId: number, mode: "say" | "shout", text: string): void {
