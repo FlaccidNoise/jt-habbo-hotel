@@ -463,11 +463,10 @@ export async function startServer(opts: {
   }
 
   function handleMetrics(req: IncomingMessage, res: ServerResponse): void {
-    const url = new URL(req.url ?? "", "http://localhost");
+    // Header only — a session token in the query string leaks through logs, history and
+    // referrers. Any signed-in account may read this; there is no staff role to gate on yet (#226).
     const auth = req.headers.authorization;
-    const token = auth?.startsWith("Bearer ")
-      ? auth.slice("Bearer ".length)
-      : (url.searchParams.get("token") ?? "");
+    const token = auth?.startsWith("Bearer ") ? auth.slice("Bearer ".length) : "";
     if (!sessionAccount(db, token)) {
       json(res, 401, { error: "valid session token required" });
       return;

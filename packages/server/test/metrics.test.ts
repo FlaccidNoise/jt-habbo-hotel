@@ -108,9 +108,17 @@ describe("GET /api/metrics", () => {
     const { port } = srv;
 
     expect((await fetch(`http://127.0.0.1:${port}/api/metrics`)).status).toBe(401);
-    expect((await fetch(`http://127.0.0.1:${port}/api/metrics?token=bogus`)).status).toBe(401);
+    expect(
+      (
+        await fetch(`http://127.0.0.1:${port}/api/metrics`, {
+          headers: { authorization: "Bearer bogus" },
+        })
+      ).status,
+    ).toBe(401);
 
     const token = await register(port, "alice");
+    // A token in the query string is not accepted — it would leak through logs and history.
+    expect((await fetch(`http://127.0.0.1:${port}/api/metrics?token=${token}`)).status).toBe(401);
     const wsBefore = { ...wsStats };
     const [ws, bus] = await connect(port);
     ws.send(JSON.stringify({ t: "join", token, roomId: 1 }));

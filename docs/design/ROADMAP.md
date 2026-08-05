@@ -54,7 +54,9 @@ bounces.** Reading the config is never evidence.
 - Speak carries 5 tiles then fades. Shout reaches the room. Whisper reaches one player.
 - A staged filtered word bounces on chat and on registration names.
 - Reconnect within the window resyncs full room state.
-- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04).
+- Room capacity: occupant 26 is refused with a readable reason (decision 2026-08-04). **Met**
+  (9f90670): ROOM_CAPACITY 25, staff not counted, room_busy at the door, full rooms disabled in
+  the Navigator, and someone already inside can still reconnect.
 - Deferred to #125: drain moves a live occupied room, clients resync inside the reconnect window.
 
 ### Step 2 — furni, catalog, public rooms (shipped, gaps filed)
@@ -101,7 +103,9 @@ bounces.** Reading the config is never evidence.
   exactly once when the ledger returns.
 - Restore drill: scheduled restore into scratch succeeds with matching row counts. RPO 24 h,
   RTO 4 h (prototype pins).
-- #209 ships first: per-faucet issuance and per-sink absorption visible per day.
+- #209 ships first: per-faucet issuance and per-sink absorption visible per day. **Met** (90617c1):
+  GET /api/metrics + /metrics.html. Any signed-in account can read it — no staff role exists to
+  gate on (#226).
 
 ### Step 6 — first arcade (#119, #206 alongside)
 

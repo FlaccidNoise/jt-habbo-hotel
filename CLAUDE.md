@@ -1,6 +1,8 @@
 # jt-habbo-hotel
 
-The Grand — casino-resort social world. Spec: `docs/design/GAME.md` + `PIPELINES.md`. Decisions: `docs/decisions/INDEX.md`. Run: `make dev` (server 8080 + Vite 5173), `make serve` (production: built client + /api + /ws on 8080), `make test`, `make gen` (regenerate frozen furni bundles after style/part changes).
+The Grand — casino-resort social world. Spec: `docs/design/GAME.md` + `PIPELINES.md`. Decisions: `docs/decisions/INDEX.md`. Run: `make dev` (server 8080 + Vite 5173), `make serve` (production: built client + /api + /ws on 8080), `make test`, `make gen` (regenerate frozen furni bundles after style/part changes), `make db-reset` (wipe local accounts/rooms).
+
+Economy and health graphs: `/metrics.html` (log in with any account; `GET /api/metrics` wants the token in an `Authorization: Bearer` header).
 
 ## Bug tracking (jtbug)
 
