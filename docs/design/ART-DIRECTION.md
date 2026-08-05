@@ -45,8 +45,12 @@ its own polish pass, not a from-scratch redraw.
 A versioned artifact — `style_version` in every recipe pins it (PIPELINES §2). Values below are
 the v1 pins, marked (tune) where authoring may move them.
 
-- **Palette:** 12 ramps × 5 shades (tune). Ramp-indexed color only — recolor is palette swap,
-  never hue rotation.
+- **Palette:** 12 ramps × 5 shades, pinned 2026-08-05 in `packages/generator/src/style.ts`.
+  Ramps: walnut, oak, plum, fern, crimson, slate, sand, teal, gold, ivory, navy, charcoal.
+  Shades per ramp are one base color × fixed light factors — outline 0.35, left 0.65, right 1.0,
+  top 1.3, hi 1.55. `hi` is the sun-facing band: bevel strips and curve crests. Ramp-indexed
+  color only — recolor is palette swap, never hue rotation. A base color bright enough to clip
+  a shade to white is a style failure, not a highlight: the palette test bounces it.
 - **Light:** above-front, vertically symmetric shading (audit B4).
 - **Outline:** 1 px, the part ramp's darkest shade. Pure black reserved for ground-contact
   edges (tune).
@@ -75,20 +79,33 @@ Re-render the three shipped archetype families (chair, sofa, plant) through this
 must pass every stage-4 gate and read as one style side by side in the reference room. Until
 that passes, no library build-out — the pipeline is the risk, not the part count.
 
-**Status 2026-08-05: pipeline executed end to end.** `tools/artgen/rig.py` (Blender headless,
-camera math locked to the generator projection) renders three proof meshes — an armchair with a
-cylindrical back and arm rolls, an organic-blob plant, a beveled sofa — at 4 directions.
-`tools/artgen/postpass.ts` quantizes to the style.ts ramps, assembles compose.ts-format sheets,
-and all three pass every stage-4 gate. Gaps before build-out, in order: (1) multi-ramp parts
-need per-material masks from the rig — the proof plant's pot renders fern instead of sand,
-(2) interior detail lines (cushion seams) need an edge pass or the hand-polish loop, (3) shade
-thresholds and the 12 × 5 palette expansion land with style bible v1.
+**Status 2026-08-05: gate passed, first build-out shipped.** `tools/artgen/rig.py` (Blender
+headless, camera math locked to the generator projection) renders each part at 4 directions in
+two passes: a lit pass, and a mask pass where every primitive emits a flat color encoding its
+index. `tools/artgen/postpass.ts` reads both — the mask names the primitive and so its ramp, the
+lit luma picks the shade — which is what makes multi-ramp parts work (the proof plant's pot is
+sand while its foliage is fern). It then draws interior detail lines along primitive-group
+boundaries, applies the global silhouette outline, assembles compose.ts-format sheets, and runs
+the real stage-4 gates.
 
-Build-out order after the gate: casino-floor set, café set (the public rooms every player sees),
-then the remaining floor archetypes, then wall archetypes (which also need the wall-item
-coordinate system — currently unbuilt, see its bug).
+Lighting is a single 0.9 sun over a black world, so face brightness is absolute rather than
+per-part relative, and the postpass quantizes on fixed linear-luma thresholds (0.30 / 0.62 /
+0.80). Two parts lit the same way therefore quantize the same way — the reason the set reads as
+one style rather than each part being separately normalized.
+
+The three proof parts plus nine catalog parts pass every gate: casino table, casino stool, café
+table, café chair, bed, lamp, shelf, divider, stereo. Frozen bundles live in
+`tools/artgen/frozen/` (sheet PNG + metadata JSON) and the generator CLI merges them into the
+published catalog, re-running the full gates on the committed bytes — pixels are the item's
+identity, so they are read, never re-rendered.
+
+Remaining for the epic: wall archetypes (blocked on the wall-item coordinate system, see its
+bug), and hand-polish passes where a silhouette reads wrong at 64. No part has needed polish yet.
 
 ## Sizing after the cuts
+
+Measured on the first build-out: 12 parts (3 proof + 9 catalog) render and gate in ~13 s total
+on the dev box, unattended. Authoring the mesh is the whole cost; the 4 directions are free.
 
 11 archetypes × ~3 slots × 4 variants ≈ 130 meshes, each with post-pass and possible polish.
 The 2,300-sprite figure was the hand-drawn cost. The mesh is the authored unit now. Variety

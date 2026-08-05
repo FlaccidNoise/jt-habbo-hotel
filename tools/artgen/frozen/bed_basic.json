@@ -1,0 +1,34 @@
+{
+  "defId": "bed_basic",
+  "archetype": "artgen",
+  "sheet": "bed_basic.png",
+  "frameW": 160,
+  "frameH": 111,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    96,
+    64,
+    96,
+    64
+  ],
+  "anchorY": 47,
+  "footprint": {
+    "w": 2,
+    "l": 3
+  },
+  "stackHeights": [
+    0.96875
+  ],
+  "drawnHeight": 0.96875,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:900df5a984e4fe1a",
+  "recipeHash": "900df5a984e4fe1a51436c8d024dab5acac6567230d51069cbf6e0bee56ae2ed",
+  "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
+}

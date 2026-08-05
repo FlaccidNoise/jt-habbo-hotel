@@ -1,0 +1,34 @@
+{
+  "defId": "casino_table",
+  "archetype": "artgen",
+  "sheet": "casino_table.png",
+  "frameW": 128,
+  "frameH": 110,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "stackHeights": [
+    1.4375
+  ],
+  "drawnHeight": 1.4375,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:be66b225f38cad7c",
+  "recipeHash": "be66b225f38cad7cefccc2c6e4d434cd50d26376b70def4e634b29aba9676298",
+  "pixelHash": "e68d6ff550f1f6b64b891fa5bc1c0ef4bf869b6ab234141f7c72f68817646737"
+}

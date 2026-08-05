@@ -1,0 +1,34 @@
+{
+  "defId": "lamp_basic",
+  "archetype": "artgen",
+  "sheet": "lamp_basic.png",
+  "frameW": 64,
+  "frameH": 103,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 87,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "stackHeights": [
+    2.21875
+  ],
+  "drawnHeight": 2.21875,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:df08eb662ebbc494",
+  "recipeHash": "df08eb662ebbc494378b70442f00dbf5c425e7e61d2057b55c208cec0bb4d08d",
+  "pixelHash": "e154936bca623f1583d9566ae4f252741fc9303e8796ca57b0e55ead2b4726f5"
+}

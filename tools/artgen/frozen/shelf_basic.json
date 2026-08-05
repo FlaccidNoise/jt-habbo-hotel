@@ -1,0 +1,34 @@
+{
+  "defId": "shelf_basic",
+  "archetype": "artgen",
+  "sheet": "shelf_basic.png",
+  "frameW": 96,
+  "frameH": 109,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 77,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "stackHeights": [
+    1.90625
+  ],
+  "drawnHeight": 1.90625,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:04009ef5192811fb",
+  "recipeHash": "04009ef5192811fb878c98a9d55dfd7b4bddcb4a7f958cdd6af1291d638bcc6f",
+  "pixelHash": "5dd8f5f757bc1f32d062cfb9510c652ea3c80ee0bdcd5b54ef01e6bb9b7cb2e1"
+}

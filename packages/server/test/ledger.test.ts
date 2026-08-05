@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
-import { grantStarter } from "../src/items.ts";
+import { grantStarter, listInventory } from "../src/items.ts";
 import {
   GLOBAL_EARN_CEILING,
   balanceOf,
@@ -12,7 +12,7 @@ import {
   settlePurchase,
   settleTrade,
 } from "../src/ledger.ts";
-import { PROTOTYPE_CATALOG } from "@grand/shared";
+import { PROTOTYPE_CATALOG, STARTER_GRANT_DEFS } from "@grand/shared";
 
 let dir: string;
 let db: Database.Database;
@@ -251,6 +251,17 @@ describe("item provenance", () => {
     const rows = db
       .prepare("SELECT COUNT(*) AS n FROM ledger_entries WHERE account_id = ? AND op = 'starter'")
       .get(id) as { n: number };
-    expect(rows.n).toBe(PROTOTYPE_CATALOG.length);
+    expect(rows.n).toBe(STARTER_GRANT_DEFS.length);
+  });
+
+  test("the starter grant is a proper subset of the catalog", () => {
+    // Granting the whole catalog would hand every new account every item for free, bypassing the
+    // Stars sink (#215). Adding a def must never change what a new account receives.
+    const id = account();
+    grantStarter(db, id);
+    const granted = listInventory(db, id).map((i) => i.defId);
+    const catalogIds = new Set(PROTOTYPE_CATALOG.map((d) => d.id));
+    expect(granted.filter((defId) => !catalogIds.has(defId))).toEqual([]);
+    expect(granted.length).toBeLessThan(catalogIds.size);
   });
 });

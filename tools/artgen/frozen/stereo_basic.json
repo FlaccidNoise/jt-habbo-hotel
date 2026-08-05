@@ -1,0 +1,34 @@
+{
+  "defId": "stereo_basic",
+  "archetype": "artgen",
+  "sheet": "stereo_basic.png",
+  "frameW": 64,
+  "frameH": 76,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "stackHeights": [
+    1.375
+  ],
+  "drawnHeight": 1.375,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:b5dd319f0affc58c",
+  "recipeHash": "b5dd319f0affc58ca3cd089efdab043850ce7bca133d863ffebad713dd268181",
+  "pixelHash": "7ffe46fb26f885cdb00d913cfe391197cc53a031b29f676c69d97d789c822b8e"
+}

@@ -1,4 +1,10 @@
-import { PROTOTYPE_CATALOG, ROOM_FURNI_CAP, checkPlacement, parseHeightmap } from "@grand/shared";
+import {
+  PROTOTYPE_CATALOG,
+  ROOM_FURNI_CAP,
+  STARTER_GRANT_DEFS,
+  checkPlacement,
+  parseHeightmap,
+} from "@grand/shared";
 import type { InventoryItem, FurniItem } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { logItemGrants } from "./ledger.ts";
@@ -16,6 +22,14 @@ const SUITE_SPOTS: ReadonlyMap<string, { x: number; y: number }> = new Map([
   ["rug_basic", { x: 4, y: 5 }],
 ]);
 
+// Adding a starter def without giving it a spot would silently leave it in the new player's
+// inventory. Fail at boot instead, the way an unwalkable seeded room does.
+for (const defId of STARTER_GRANT_DEFS) {
+  if (!SUITE_SPOTS.has(defId)) {
+    throw new Error(`starter def ${defId} has no spot in the stock suite layout`);
+  }
+}
+
 export function grantStarter(db: Database.Database, accountId: number): void {
   const row = db.prepare("SELECT starter_granted FROM accounts WHERE id = ?").get(accountId) as
     | { starter_granted: number }
@@ -26,7 +40,7 @@ export function grantStarter(db: Database.Database, accountId: number): void {
     "INSERT INTO furni_items (def_id, owner_id, room_id, x, y, z, dir, state) VALUES (?, ?, NULL, NULL, NULL, NULL, NULL, 0)",
   );
   const grant = db.transaction(() => {
-    const itemIds = PROTOTYPE_CATALOG.map((def) => Number(insert.run(def.id, accountId).lastInsertRowid));
+    const itemIds = STARTER_GRANT_DEFS.map((defId) => Number(insert.run(defId, accountId).lastInsertRowid));
     db.prepare("UPDATE accounts SET starter_granted = 1 WHERE id = ?").run(accountId);
     logItemGrants(db, { opKey: `starter:${accountId}`, op: "starter", accountId, itemIds });
   });
