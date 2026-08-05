@@ -44,6 +44,7 @@ const ROOM_STATE: ServerMsg = {
   furni: [],
   inventory: [],
   you: 7,
+  stars: 0,
 };
 
 test("connect sends join once the socket opens", async () => {

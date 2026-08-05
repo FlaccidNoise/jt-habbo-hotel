@@ -35,3 +35,14 @@ test("/shout with no message is nothing", () => {
   expect(parseChatInput("/shout", false)).toBeNull();
   expect(parseChatInput("/shout   ", false)).toBeNull();
 });
+
+test("/trade name opens a trade", () => {
+  expect(parseChatInput("/trade bob", false)).toEqual({ kind: "trade", to: "bob" });
+  expect(parseChatInput("/trade bob  ", false)).toEqual({ kind: "trade", to: "bob" });
+});
+
+test("/trade with no name or extra words is nothing", () => {
+  expect(parseChatInput("/trade", false)).toBeNull();
+  expect(parseChatInput("/trade   ", false)).toBeNull();
+  expect(parseChatInput("/trade bob now", false)).toBeNull();
+});

@@ -12,12 +12,20 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
   ["whisper", { t: "whisper", to: "bob", text: "hi" }, { t: "whisper", text: "hi" }],
   ["place", { t: "place", itemId: 5, x: 1, y: 2, dir: 2 }, { t: "place", itemId: 5, x: 1, y: 2, dir: 1 }],
   ["pickup", { t: "pickup", itemId: 5 }, { t: "pickup" }],
+  ["trade_open", { t: "trade_open", to: "bob" }, { t: "trade_open" }],
+  ["trade_offer", { t: "trade_offer", itemIds: [1, 2] }, { t: "trade_offer", itemIds: [1, 2, 3, 4, 5, 6, 7, 8, 9] }],
+  ["trade_accept", { t: "trade_accept" }, { t: "tradeaccept" }],
+  ["trade_cancel", { t: "trade_cancel" }, { t: 5 }],
 ];
 
 const ROOM_STATE = {
   t: "room_state", roomId: 1, name: "Cafe", heightmap: "000\n000",
   door: { x: 0, y: 0, dir: 2 }, chat: { speakRadius: 5, shoutAllowed: true },
-  avatars: [AVATAR], furni: [ITEM], inventory: [INV], you: 1,
+  avatars: [AVATAR], furni: [ITEM], inventory: [INV], you: 1, stars: 0,
+};
+const TRADE_STATE = {
+  t: "trade_state", partner: "bob", yours: [INV], theirs: [],
+  youAccepted: false, theyAccepted: true, countdown: false,
 };
 const WALK = {
   t: "walk", id: 1, msPerTile: 500, from: { x: 0, y: 0, z: 0 },
@@ -34,6 +42,11 @@ const SERVER_CASES: Array<[string, unknown, unknown]> = [
   ["furni_moved", { t: "furni_moved", item: ITEM }, { t: "furni_moved", item: { ...ITEM, z: undefined } }],
   ["furni_removed", { t: "furni_removed", itemId: 5 }, { t: "furni_removed" }],
   ["inventory_add", { t: "inventory_add", item: INV }, { t: "inventory_add", item: { id: 9 } }],
+  ["stars", { t: "stars", balance: 10, delta: 10, reason: "coffee" }, { t: "stars", delta: 10, reason: "coffee" }],
+  ["trade_invite", { t: "trade_invite", from: "ann" }, { t: "trade_invite", from: 1 }],
+  ["trade_state", TRADE_STATE, { ...TRADE_STATE, countdown: undefined }],
+  ["trade_complete", { t: "trade_complete", added: [INV], removed: [4] }, { t: "trade_complete", added: [INV] }],
+  ["trade_cancelled", { t: "trade_cancelled", reason: "left" }, { t: "trade_cancelled" }],
   ["error", { t: "error", code: "bad_position", message: "no" }, { t: "error", code: "badposition", message: "no" }],
 ];
 

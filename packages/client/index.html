@@ -12,6 +12,8 @@
       #stage canvas { display: block; }
       #room-name { position: fixed; top: 10px; left: 12px; font-weight: 600;
         text-shadow: 0 1px 3px #000; pointer-events: none; }
+      #stars { position: fixed; top: 32px; left: 12px; color: #ffd76a; font-weight: 600;
+        text-shadow: 0 1px 3px #000; pointer-events: none; }
       #toasts { position: fixed; top: 10px; right: 12px; display: flex; flex-direction: column;
         gap: 6px; align-items: flex-end; pointer-events: none; }
       .toast { background: #7a1f1f; border: 1px solid #c25555; border-radius: 6px;
@@ -47,13 +49,46 @@
         background: #1c1f2be6; color: #eef; cursor: pointer; }
       #inventory button.armed { border-color: #7fd98a; background: #24422a; }
       #inventory .empty { color: #7d8496; font-size: 13px; }
+      #trade { position: fixed; top: 60px; right: 12px; width: 320px; background: #1c1f2bf2;
+        border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px; }
+      #trade[hidden] { display: none; }
+      #trade h2 { margin: 0; font-size: 15px; }
+      #trade h3 { margin: 0 0 4px; font-size: 12px; color: #9aa3b8; font-weight: 600;
+        text-transform: uppercase; letter-spacing: .04em; }
+      #trade .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      #trade .items { display: flex; flex-direction: column; gap: 4px; min-height: 40px; }
+      #trade .items button, #trade .items div { padding: 4px 8px; border-radius: 6px;
+        border: 1px solid #444c63; background: #10121a; color: #eef; text-align: left; }
+      #trade .items button { cursor: pointer; }
+      #trade-warning { color: #ffb36a; font-size: 13px; min-height: 0; }
+      #trade-warning:empty, #trade-status:empty { display: none; }
+      #trade-status { color: #9fd9a6; font-size: 13px; }
+      #trade .row { display: flex; gap: 8px; }
+      #trade .row button { flex: 1; padding: 7px 8px; border-radius: 6px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
+      #trade .row button:disabled { opacity: .5; cursor: default; }
+      #trade-accept:not(:disabled) { border-color: #7fd98a; background: #24422a; }
     </style>
   </head>
   <body>
     <div id="stage"></div>
     <div id="bubbles"></div>
     <div id="room-name"></div>
+    <div id="stars"></div>
     <div id="toasts"></div>
+    <div id="trade" hidden>
+      <h2 id="trade-title"></h2>
+      <div class="cols">
+        <div><h3>You give</h3><div id="trade-yours" class="items"></div></div>
+        <div><h3>You get</h3><div id="trade-theirs" class="items"></div></div>
+      </div>
+      <div id="trade-warning"></div>
+      <div id="trade-status"></div>
+      <div class="row">
+        <button type="button" id="trade-accept">Accept</button>
+        <button type="button" id="trade-cancel">Cancel</button>
+      </div>
+    </div>
     <div id="hud">
       <div id="inventory"></div>
       <form id="chat-form" autocomplete="off">

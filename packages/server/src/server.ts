@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { stat } from "node:fs/promises";
 import { createServer } from "node:http";
@@ -11,11 +12,13 @@ import { ClientMsgSchema } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
+import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn } from "./ledger.ts";
 import { log } from "./log.ts";
 import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
 import type { Emit } from "./room.ts";
+import { TradeService } from "./trade.ts";
 
 const BODY_CAP = 1024;
 const HANDSHAKE_MS = 5000;
@@ -60,6 +63,7 @@ export async function startServer(opts: {
   disposeMs?: number;
   /** NPC line generator. Omit for the NPC_LLM_* env config; null for canned lines only. */
   npcGenerate?: NpcGenerate | null;
+  tradeCountdownMs?: number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -95,6 +99,40 @@ export async function startServer(opts: {
   const npcService = new NpcService({
     generate: opts.npcGenerate !== undefined ? opts.npcGenerate : llmFromEnv(),
     say: (roomId, npcId, text) => rooms.get(roomId)?.room.chat(npcId, "say", text),
+    // The one NPC payout path: a deterministic server trigger into the ledger, which clamps to
+    // the NPC faucet cap and the global earn ceiling. The LLM is not in this code path.
+    payout: (accountId, ritual) => {
+      const op = `npc_${ritual}`;
+      const { granted, balance } = settleEarn(db, {
+        opKey: randomUUID(),
+        op,
+        accountId,
+        amount: COFFEE_STARS,
+        opCap: NPC_FAUCET_CAP,
+      });
+      log("faucet", { op, accountId, granted, balance });
+      if (granted > 0) emit(accountId, { t: "stars", balance, delta: granted, reason: ritual });
+      return granted;
+    },
+  });
+
+  const tradeService = new TradeService({
+    db,
+    emit,
+    locate: (accountId) => {
+      const ws = byAccount.get(accountId);
+      const conn = ws ? conns.get(ws) : undefined;
+      if (!conn || conn.roomId === undefined || conn.username === undefined) return null;
+      return { roomId: conn.roomId, username: conn.username };
+    },
+    resolve: (roomId, username) => {
+      const found = rooms
+        .get(roomId)
+        ?.room.occupants()
+        .find((o) => o.username.toLowerCase() === username.toLowerCase());
+      return found ? { accountId: found.accountId, staff: found.staff } : null;
+    },
+    countdownMs: opts.tradeCountdownMs,
   });
 
   function roomExists(roomId: number): boolean {
@@ -119,6 +157,7 @@ export async function startServer(opts: {
     const roomId = conn.roomId;
     if (roomId === undefined || conn.accountId === undefined) return;
     conn.roomId = undefined;
+    tradeService.onLeave(conn.accountId);
     const entry = rooms.get(roomId);
     if (!entry) return;
 
@@ -207,6 +246,18 @@ export async function startServer(opts: {
       case "pickup":
         room.pickup(accountId, msg.itemId);
         log("pickup", { accountId, roomId: conn.roomId, itemId: msg.itemId });
+        break;
+      case "trade_open":
+        tradeService.open(accountId, msg.to);
+        break;
+      case "trade_offer":
+        tradeService.offer(accountId, msg.itemIds);
+        break;
+      case "trade_accept":
+        tradeService.accept(accountId);
+        break;
+      case "trade_cancel":
+        tradeService.cancel(accountId);
         break;
     }
   }
@@ -394,6 +445,7 @@ export async function startServer(opts: {
 
   async function close(): Promise<void> {
     npcService.stop();
+    tradeService.stop();
     for (const conn of conns.values()) clearTimeout(conn.handshake);
     for (const client of wss.clients) client.terminate();
     await new Promise<void>((resolve, reject) => wss.close((e) => (e ? reject(e) : resolve())));

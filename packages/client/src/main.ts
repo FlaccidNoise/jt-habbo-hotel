@@ -1,5 +1,6 @@
 import { Application } from "pixi.js";
 import {
+  MAX_TRADE_ITEMS,
   PROTOTYPE_CATALOG,
   ROOM_FURNI_CAP,
   checkPlacement,
@@ -27,6 +28,7 @@ import { ChatOverlay } from "./ui/chat.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
+type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const PLACE_DIR = 0;
@@ -51,6 +53,8 @@ let furni: FurniItem[] = [];
 let inventory: InventoryItem[] = [];
 let armed: number | null = null;
 let clockOffset: number | null = null;
+let stars = 0;
+let trade: TradeState | null = null;
 
 function toast(text: string): void {
   const node = document.createElement("div");
@@ -103,14 +107,75 @@ function renderInventory(): void {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = DEFS.get(item.defId)?.name ?? item.defId;
-    if (item.id === armed) button.classList.add("armed");
+    const offered = trade?.yours.some((i) => i.id === item.id) ?? false;
+    if (item.id === armed || offered) button.classList.add("armed");
     button.addEventListener("click", () => {
+      // While a trade window is open, inventory clicks edit the offer instead of arming.
+      if (trade) {
+        const ids = offered
+          ? trade.yours.filter((i) => i.id !== item.id).map((i) => i.id)
+          : [...trade.yours.map((i) => i.id), item.id];
+        if (ids.length > MAX_TRADE_ITEMS) toast(`at most ${MAX_TRADE_ITEMS} items per side`);
+        else net.send({ t: "trade_offer", itemIds: ids });
+        return;
+      }
       armed = armed === item.id ? null : item.id;
       scene?.clearHighlight();
       renderInventory();
     });
     strip.appendChild(button);
   }
+}
+
+function renderStars(): void {
+  el("stars").textContent = `★ ${stars}`;
+}
+
+function renderTrade(): void {
+  const panel = el("trade");
+  panel.hidden = trade === null;
+  if (!trade) return;
+  el("trade-title").textContent = `Trading with ${trade.partner}`;
+  const yours = el("trade-yours");
+  yours.replaceChildren();
+  for (const item of trade.yours) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `${DEFS.get(item.defId)?.name ?? item.defId} ✕`;
+    button.addEventListener("click", () => {
+      if (!trade) return;
+      net.send({
+        t: "trade_offer",
+        itemIds: trade.yours.filter((i) => i.id !== item.id).map((i) => i.id),
+      });
+    });
+    yours.appendChild(button);
+  }
+  const theirs = el("trade-theirs");
+  theirs.replaceChildren();
+  for (const item of trade.theirs) {
+    const row = document.createElement("div");
+    row.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    theirs.appendChild(row);
+  }
+  el("trade-warning").textContent =
+    trade.yours.length > 0 && trade.theirs.length === 0
+      ? "You are giving items and receiving nothing. Staff cannot recover items you give away."
+      : "";
+  el("trade-status").textContent = trade.countdown
+    ? "Both accepted — trading in 3 seconds…"
+    : trade.theyAccepted
+      ? `${trade.partner} accepted.`
+      : trade.youAccepted
+        ? "Waiting for your partner…"
+        : "";
+  el<HTMLButtonElement>("trade-accept").disabled = trade.youAccepted;
+}
+
+function endTrade(): void {
+  trade = null;
+  renderTrade();
+  renderInventory();
 }
 
 function itemsOn(x: number, y: number): FurniItem[] {
@@ -165,6 +230,10 @@ function buildRoom(msg: RoomState): void {
   furni = msg.furni;
   inventory = msg.inventory;
   armed = null;
+  stars = msg.stars;
+  trade = null;
+  renderStars();
+  renderTrade();
 
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
@@ -224,6 +293,29 @@ function handle(msg: ServerMsg): void {
       inventory.push(msg.item);
       renderInventory();
       break;
+    case "stars":
+      stars = msg.balance;
+      renderStars();
+      toast(`+${msg.delta} ★ (${msg.reason})`);
+      break;
+    case "trade_invite":
+      toast(`${msg.from} wants to trade — type /trade ${msg.from} to accept`);
+      break;
+    case "trade_state":
+      trade = msg;
+      renderTrade();
+      renderInventory();
+      break;
+    case "trade_complete":
+      inventory = inventory.filter((i) => !msg.removed.includes(i.id)).concat(msg.added);
+      if (armed !== null && msg.removed.includes(armed)) armed = null;
+      endTrade();
+      toast("Trade complete");
+      break;
+    case "trade_cancelled":
+      endTrade();
+      toast(msg.reason);
+      break;
     case "error":
       toast(msg.message);
       break;
@@ -267,8 +359,14 @@ function sendChat(input: HTMLInputElement, shiftEnter: boolean): void {
   const intent = parseChatInput(input.value, shiftEnter);
   input.value = "";
   if (!intent) return;
-  if (intent.kind === "whisper") net.send({ t: "whisper", to: intent.to, text: intent.text });
-  else net.send({ t: "chat", mode: intent.kind, text: intent.text });
+  if (intent.kind === "trade") {
+    net.send({ t: "trade_open", to: intent.to });
+    toast(`Trade offer sent to ${intent.to}`);
+  } else if (intent.kind === "whisper") {
+    net.send({ t: "whisper", to: intent.to, text: intent.text });
+  } else {
+    net.send({ t: "chat", mode: intent.kind, text: intent.text });
+  }
 }
 
 el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
@@ -277,6 +375,8 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
   sendChat(el<HTMLInputElement>("chat-input"), e.shiftKey);
 });
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
+el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
+el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
 
 async function authenticate(path: string, username: string, password: string): Promise<string> {
   const res = await fetch(path, {

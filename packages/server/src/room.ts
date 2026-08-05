@@ -23,6 +23,7 @@ import type {
 } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
+import { balanceOf } from "./ledger.ts";
 import { findPath } from "./pathfind.ts";
 import {
   getItem,
@@ -150,6 +151,7 @@ export class Room {
       furni: this.furni.map((f) => ({ ...f })),
       inventory: listInventory(this.db, accountId),
       you: accountId,
+      stars: balanceOf(this.db, accountId),
     });
     for (const id of this.occ.keys()) {
       if (id !== accountId) this.emit(id, { t: "avatar_join", avatar: toAvatar(occupant) });

@@ -20,6 +20,23 @@ CREATE TABLE IF NOT EXISTS furni_items(
   owner_id INTEGER NOT NULL REFERENCES accounts(id),
   room_id INTEGER REFERENCES rooms(id),
   x INTEGER, y INTEGER, z REAL, dir INTEGER, state INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS ledger_entries(
+  id INTEGER PRIMARY KEY,
+  op TEXT NOT NULL, op_key TEXT NOT NULL, seq INTEGER NOT NULL DEFAULT 0,
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  stars INTEGER NOT NULL DEFAULT 0,
+  item_id INTEGER,           -- no FK: the log outlives any item it mentions
+  counterparty_id INTEGER,   -- item rows: the previous owner (NULL for grants/mints)
+  created_at INTEGER NOT NULL,
+  UNIQUE(op_key, seq));
+CREATE INDEX IF NOT EXISTS ledger_by_account_time ON ledger_entries(account_id, created_at);
+CREATE TABLE IF NOT EXISTS star_balances(
+  account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
+  balance INTEGER NOT NULL CHECK(balance >= 0));
+CREATE TRIGGER IF NOT EXISTS ledger_append_only_update BEFORE UPDATE ON ledger_entries
+  BEGIN SELECT RAISE(ABORT, 'ledger is append-only'); END;
+CREATE TRIGGER IF NOT EXISTS ledger_append_only_delete BEFORE DELETE ON ledger_entries
+  BEGIN SELECT RAISE(ABORT, 'ledger is append-only'); END;
 `;
 
 interface ChatConfig {

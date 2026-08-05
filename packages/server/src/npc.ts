@@ -4,8 +4,9 @@ import type { Ruleset } from "./filter.ts";
 import { log } from "./log.ts";
 
 // Hard guardrails (docs/design/GAME.md §Liveness, decision log 2026-08-03):
-// - The LLM has no payout authority. Nothing in this module can touch the economy — when the
-//   ledger lands (#118), NPC Star grants attach there as deterministic server triggers.
+// - The LLM has no payout authority. The only economy path is the injected `payout` callback,
+//   fired by the deterministic ritual match below — the LLM is never consulted for a ritual
+//   message, and the ledger clamps the amount regardless of what this module asks for.
 // - Every outbound line passes the player chat filter plus screenNpcLine. Assume prompt
 //   injection from day one: a screened-out reply falls back to a canned in-character line.
 // - NPCs are visibly staff: negative ids, staff flag on the avatar state, badge on the client.
@@ -29,6 +30,7 @@ export interface NpcDef {
   persona: string;
   greeting?: string;                  // join ritual, {name} substituted
   performs?: boolean;
+  ritual?: "coffee";                  // deterministic faucet trigger — never the LLM's call
   lines: string[];                    // canned fallbacks and performance material
 }
 
@@ -56,6 +58,7 @@ export const NPC_ROSTER: NpcDef[] = [
     dir: 4,
     persona:
       "the barista at the Lobby Café. Warm, wry, remembers regulars, takes coffee very seriously.",
+    ritual: "coffee",
     lines: [
       "One espresso, coming right up.",
       "Today's house blend is called Jackpot — strong enough to wake a statue.",
@@ -153,10 +156,13 @@ interface NpcState {
 }
 
 interface Speaker {
+  accountId: number;
   username: string;
   x: number;
   y: number;
 }
+
+const RITUALS: Record<NonNullable<NpcDef["ritual"]>, RegExp> = { coffee: /\bcoffee\b/i };
 
 const day = (): string => new Date().toISOString().slice(0, 10);
 const cheb = (a: Tile, b: Tile): number => Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
@@ -164,6 +170,7 @@ const cheb = (a: Tile, b: Tile): number => Math.max(Math.abs(a.x - b.x), Math.ab
 export class NpcService {
   private generate: NpcGenerate | null;
   private say: (roomId: number, npcId: number, text: string) => void;
+  private payout?: (accountId: number, ritual: string) => number;
   private roster: NpcDef[];
   private states = new Map<number, NpcState>();
   private performers = new Map<number, ReturnType<typeof setInterval>>();
@@ -171,10 +178,13 @@ export class NpcService {
   constructor(opts: {
     generate: NpcGenerate | null;
     say: (roomId: number, npcId: number, text: string) => void;
+    /** Deterministic ledger grant; returns the Stars actually granted (0 when capped). */
+    payout?: (accountId: number, ritual: string) => number;
     roster?: NpcDef[];
   }) {
     this.generate = opts.generate;
     this.say = opts.say;
+    this.payout = opts.payout;
     this.roster = opts.roster ?? NPC_ROSTER;
   }
 
@@ -212,6 +222,24 @@ export class NpcService {
     if (heard.length === 0) return;
     const line = `${speaker.username}: ${filterChat(RULESET, text)}`;
     for (const n of heard) this.remember(n, line);
+
+    // Rituals fire before — and instead of — any LLM reply. The trigger is a proximity check
+    // plus a regex, the amount is the ledger's decision: zero LLM authority end to end.
+    if (this.payout) {
+      const server = heard.find(
+        (n) => n.ritual && cheb(n.post, speaker) <= APPROACH && RITUALS[n.ritual].test(text),
+      );
+      if (server?.ritual) {
+        const granted = this.payout(speaker.accountId, server.ritual);
+        this.speak(
+          server,
+          granted > 0
+            ? `One coffee for ${speaker.username} — plus ${granted} Stars, on the house. ☕`
+            : `You've had plenty today, ${speaker.username} — the register reopens tomorrow.`,
+        );
+        return;
+      }
+    }
 
     const mentions = (n: NpcDef): boolean => {
       const first = n.name.split(" ")[0] ?? n.name;

@@ -9,6 +9,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
+  "trade",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -31,6 +32,9 @@ export type AvatarState = z.infer<typeof AvatarStateSchema>;
 
 export const InventoryItemSchema = z.object({ id: z.number().int(), defId: z.string() });
 export type InventoryItem = z.infer<typeof InventoryItemSchema>;
+
+// GAME.md §Trade: Coke Music's 6-item cap was its documented exploit surface — ours is explicit.
+export const MAX_TRADE_ITEMS = 8;   // per side (tune)
 export const FurniItemSchema = InventoryItemSchema.extend({
   x: z.number().int(), y: z.number().int(), z: z.number(),
   dir: FurniDirSchema, state: z.number().int(),
@@ -47,6 +51,12 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("place"), itemId: z.number().int(), x: z.number().int(),
              y: z.number().int(), dir: FurniDirSchema }),
   z.object({ t: z.literal("pickup"), itemId: z.number().int() }),
+  // Trades are items-for-items only — Stars never appear in a trade (GAME.md §Currency).
+  z.object({ t: z.literal("trade_open"), to: z.string() }),
+  z.object({ t: z.literal("trade_offer"),
+             itemIds: z.array(z.number().int()).max(MAX_TRADE_ITEMS) }),
+  z.object({ t: z.literal("trade_accept") }),
+  z.object({ t: z.literal("trade_cancel") }),
 ]);
 export type ClientMsg = z.infer<typeof ClientMsgSchema>;
 
@@ -56,7 +66,8 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              door: z.object({ x: z.number().int(), y: z.number().int(), dir: DirSchema }),
              chat: z.object({ speakRadius: z.number().int(), shoutAllowed: z.boolean() }),
              avatars: z.array(AvatarStateSchema), furni: z.array(FurniItemSchema),
-             inventory: z.array(InventoryItemSchema), you: z.number().int() }),
+             inventory: z.array(InventoryItemSchema), you: z.number().int(),
+             stars: z.number().int() }),
   z.object({ t: z.literal("avatar_join"), avatar: AvatarStateSchema }),
   z.object({ t: z.literal("avatar_leave"), id: z.number().int() }),
   z.object({ t: z.literal("walk"), id: z.number().int(), msPerTile: z.number().int(),
@@ -68,6 +79,15 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("furni_moved"), item: FurniItemSchema }),   // z recomputed after a pickup
   z.object({ t: z.literal("furni_removed"), itemId: z.number().int() }),
   z.object({ t: z.literal("inventory_add"), item: InventoryItemSchema }),
+  z.object({ t: z.literal("stars"), balance: z.number().int(), delta: z.number().int(),
+             reason: z.string() }),
+  z.object({ t: z.literal("trade_invite"), from: z.string() }),
+  z.object({ t: z.literal("trade_state"), partner: z.string(),
+             yours: z.array(InventoryItemSchema), theirs: z.array(InventoryItemSchema),
+             youAccepted: z.boolean(), theyAccepted: z.boolean(), countdown: z.boolean() }),
+  z.object({ t: z.literal("trade_complete"), added: z.array(InventoryItemSchema),
+             removed: z.array(z.number().int()) }),
+  z.object({ t: z.literal("trade_cancelled"), reason: z.string() }),
   z.object({ t: z.literal("error"), code: ErrorCodeSchema, message: z.string() }),
 ]);
 export type ServerMsg = z.infer<typeof ServerMsgSchema>;
