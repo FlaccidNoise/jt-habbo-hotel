@@ -45,6 +45,30 @@ test("a moved view restacks against what is already placed", () => {
   depth.flush();
   expect(avatar.zIndex).toBeGreaterThan(table.zIndex);
 });
+test("a sitter draws between a seat's two halves, on every tile of a multi-tile seat", () => {
+  // The generator splits a seat sheet into a half behind the occupant and a half in front, and
+  // relies on this ordering holding. Geometry cannot state it — the near-side backrest sits inside
+  // the tile the sitter occupies — so the sort forces it from the layers.
+  const depth = new DepthIndex();
+  const back = new Container();
+  const front = new Container();
+  const near = new Container();
+  const far = new Container();
+  // A 2×1 sofa at (3,3): back half over the whole footprint, front half over the near-side pieces.
+  depth.set("sofa", { x0: 3, y0: 3, z0: 0, x1: 5, y1: 4, z1: 1, layer: LAYER.furni }, back);
+  depth.set("sofa:front", { x0: 3.25, y0: 3, z0: 0.34, x1: 5, y1: 4, z1: 1, layer: LAYER.seat_front }, front);
+  const sitter = (x: number) =>
+    ({ x0: x, y0: 3, z0: 0.5625, x1: x + 1, y1: 4, z1: 1.5625, layer: LAYER.seated });
+  depth.set("near", sitter(3), near);
+  depth.set("far", sitter(4), far);
+  depth.flush();
+
+  for (const body of [near, far]) {
+    expect(body.zIndex).toBeGreaterThan(back.zIndex);
+    expect(body.zIndex).toBeLessThan(front.zIndex);
+  }
+});
+
 test("a sitter draws over the seat it shares a tile with, and under furni one tile nearer", () => {
   const depth = new DepthIndex();
   const chair = new Container();

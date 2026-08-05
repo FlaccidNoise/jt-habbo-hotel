@@ -56,7 +56,13 @@ export function behind(a: DepthBox, b: DepthBox): boolean {
  *  chairs sit on the same side. So this is a topological sort over `behind`, Kahn's algorithm
  *  taking the lowest tie-break key among the ready boxes — which reduces to the plain depth key
  *  when nothing constrains the order. */
-export function painterOrder(boxes: readonly DepthBox[]): number[] {
+export function painterOrder(
+  boxes: readonly DepthBox[],
+  /** Extra "draw a before b" pairs, for orders geometry cannot state. A seat's in-front-of-the-
+   *  sitter half is the case: it shares the sitter's tile and is neither west, north, nor under
+   *  them, so nothing here would order the two. */
+  forced: ReadonlyArray<readonly [number, number]> = [],
+): number[] {
   const keys = boxes.map((b) => b.x0 + b.y0 + b.z0 * 1e-3 + b.layer * 1e-6);
   const successors = new Map<number, number[]>();
   const blockers = boxes.map(() => 0);
@@ -75,6 +81,7 @@ export function painterOrder(boxes: readonly DepthBox[]): number[] {
       else if (behind(b, a)) link(j, i);
     }
   }
+  for (const [from, to] of forced) link(from, to);
 
   const lowest = (readyOnly: boolean): number => {
     let pick = -1;

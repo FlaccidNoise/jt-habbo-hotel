@@ -2,7 +2,7 @@ import type { FurniDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { getPixel } from "./raster.ts";
 import type { Canvas } from "./raster.ts";
-import { drawOrderMismatch, referenceScenes } from "./scene.ts";
+import { drawOrderMismatch, referenceScenes, seatedScene } from "./scene.ts";
 import { FLOOR_TONES, PALETTE, luminance } from "./style.ts";
 
 // Validation gates (PIPELINES §2 stage 4). Every gate has a staged known-bad test — a gate
@@ -112,10 +112,10 @@ export function gateBounds(bundle: Bundle): GateResult {
  *  diff instead (#233). */
 export function gateDrawOrder(bundle: Bundle, def: FurniDef): GateResult {
   if (!bundle.geometry) return { ok: true };
-  for (const [q, boxes] of bundle.geometry.entries()) {
+  for (const [q, half] of bundle.geometry.entries()) {
     const rotated = q % 2 === 1;
     const scenes = referenceScenes(
-      boxes,
+      [...half.back, ...half.front],
       rotated ? def.l : def.w,
       rotated ? def.w : def.l,
       bundle.meta.drawnHeight,
@@ -123,6 +123,36 @@ export function gateDrawOrder(bundle: Bundle, def: FurniDef): GateResult {
     for (const scene of scenes) {
       const detail = drawOrderMismatch(scene);
       if (detail) return fail("draw-order", `dir ${bundle.meta.dirs[q]}: ${detail}`);
+    }
+  }
+  return { ok: true };
+}
+
+/** Seating occlusion (PIPELINES §1 audit B2): render the item with a test occupant on every seat
+ *  tile, in every direction, and diff the result.
+ *
+ *  The generator splits a seat's geometry around a sitter derived from the tagged seat slot; the
+ *  client sorts the two halves against a sitter that fills its tile. Those are different boxes, so
+ *  agreeing is a property to check, not to assume. A backrest on the near side has to end up over
+ *  the body and one on the far side under it, and getting that backwards is what this bounces.
+ *
+ *  Same coverage limit as the draw-order gate: 3D-assisted seats ship pixels, not boxes (#233). */
+export function gateSeatOcclusion(bundle: Bundle, def: FurniDef): GateResult {
+  const { geometry, meta } = bundle;
+  if (!geometry || meta.seatZ === null) return { ok: true };
+  for (const [q, half] of geometry.entries()) {
+    const rotated = q % 2 === 1;
+    const spanX = rotated ? def.l : def.w;
+    const spanY = rotated ? def.w : def.l;
+    for (let ty = 0; ty < spanY; ty++) {
+      for (let tx = 0; tx < spanX; tx++) {
+        const scene = seatedScene(
+          half, meta.occlusion?.[q] ?? null, meta.seatZ, spanX, spanY, meta.drawnHeight, tx, ty,
+        );
+        // seatedScene builds them in the order the client draws them: back, sitter, front.
+        const detail = drawOrderMismatch(scene, scene.map((_, i) => i));
+        if (detail) return fail("seat-occlusion", `dir ${meta.dirs[q]}, seat ${tx},${ty}: ${detail}`);
+      }
     }
   }
   return { ok: true };
@@ -163,6 +193,7 @@ export function runGates(bundle: Bundle, def: FurniDef): GateResult {
     gateBounds(bundle),
     gateContrast(bundle.sheet),
     gateDrawOrder(bundle, def),
+    gateSeatOcclusion(bundle, def),
   ]) {
     if (!result.ok) return result;
   }

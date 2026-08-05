@@ -23,7 +23,7 @@
   },
   "drawnHeight": 0.96875,
   "seatZ": 0.55,
-  "occlusion": [],
+  "occlusion": null,
   "styleVersion": 1,
   "generatorVersion": 1,
   "partLibraryHash": "artgen:4eda871e8dedf6a2",

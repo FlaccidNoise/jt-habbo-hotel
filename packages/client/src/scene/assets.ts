@@ -1,25 +1,23 @@
 import { Assets, Rectangle, Texture } from "pixi.js";
-import type { FurniMeta } from "./frames.ts";
-import { frameFor } from "./frames.ts";
+import type { FrameSpec, FurniMeta } from "./frames.ts";
 
 export interface FurniAsset {
   base: Texture;
   meta: FurniMeta;
-  frames: Map<number, Texture>;   // per-dir sub-textures, cut lazily
+  frames: Map<string, Texture>;   // sub-textures per sheet rect, cut lazily
 }
 
 export type FurniAssets = ReadonlyMap<string, FurniAsset>;
 
-export function frameTexture(asset: FurniAsset, dir: number): Texture | null {
-  const cached = asset.frames.get(dir);
+export function frameTexture(asset: FurniAsset, spec: FrameSpec): Texture {
+  const key = `${spec.x},${spec.y}`;
+  const cached = asset.frames.get(key);
   if (cached) return cached;
-  const spec = frameFor(asset.meta, dir);
-  if (!spec) return null;
   const texture = new Texture({
     source: asset.base.source,
     frame: new Rectangle(spec.x, spec.y, spec.w, spec.h),
   });
-  asset.frames.set(dir, texture);
+  asset.frames.set(key, texture);
   return texture;
 }
 

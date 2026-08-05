@@ -3,7 +3,8 @@ import { worldToScreen } from "@grand/shared";
 import type { DepthBox, FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture } from "./assets.ts";
-import { frameFor } from "./frames.ts";
+import { frameFor, occluderFor } from "./frames.ts";
+import type { FrameSpec, Occluder } from "./frames.ts";
 import { SCALE } from "./room.ts";
 import { LAYER } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
@@ -47,6 +48,16 @@ function drawSlab(g: Graphics, def: FurniDef, item: FurniItem): void {
     .stroke({ width: 1, color: 0x000000, alpha: 0.3 });
 }
 
+/** The occluding half's own box, in the same units as `furniBox`. The generator emits it in the
+ *  dir's footprint units, so placing it is the item's origin plus the extent. */
+function occluderBox(item: FurniItem, occ: Occluder): DepthBox {
+  return {
+    x0: item.x + occ.x0, y0: item.y + occ.y0, z0: item.z + occ.z0,
+    x1: item.x + occ.x1, y1: item.y + occ.y1, z1: item.z + occ.z1,
+    layer: LAYER.seat_front,
+  };
+}
+
 /** The tiles an item covers and the height it stands to, in the tile-index units the painter
  *  sort works in. `item.z` is already the absolute floor the item rests on. */
 function furniBox(def: FurniDef, item: FurniItem): DepthBox {
@@ -71,6 +82,7 @@ export class FurniLayer {
   private assets: FurniAssets | null;
   private depth: DepthIndex;
   private views = new Map<number, Container>();
+  private fronts = new Map<number, Container>();
   private ghostView: Container | null = null;
 
   constructor(
@@ -90,7 +102,8 @@ export class FurniLayer {
   ghost(def: FurniDef, x: number, y: number, z: number, dir: 0 | 2 | 4 | 6, ok: boolean): void {
     this.clearGhost();
     const item: FurniItem = { id: -1, defId: def.id, x, y, z, dir, state: 0 };
-    const view = this.spriteFor(item) ?? this.slabFor(def, item);
+    // Nobody sits in a preview, so the two halves go up as one unit.
+    const view = this.wholeFor(item) ?? this.slabFor(def, item);
     view.eventMode = "none";
     view.alpha = ok ? 0.6 : 0.35;
     if (!ok) view.tint = 0xff6b6b;
@@ -105,6 +118,10 @@ export class FurniLayer {
     this.depth.delete("ghost");
   }
 
+  /** A seat goes up as two views with its own box between them, so a sitter lands in the gap: the
+   *  legs and the far side draw behind the body, the near-side back and arm draw over it. Ordering
+   *  them is the painter sort's job like everything else — the front half carries the box the
+   *  generator measured for it, and the sitter's box already sorts after that. */
   apply(item: FurniItem): void {
     const def = this.defs.get(item.defId);
     if (!def) {
@@ -113,28 +130,57 @@ export class FurniLayer {
     }
     this.remove(item.id);
 
-    const view = this.spriteFor(item) ?? this.slabFor(def, item);
+    const view = this.backFor(item) ?? this.slabFor(def, item);
     view.eventMode = "none";
     this.views.set(item.id, view);
     this.depth.set(`furni:${item.id}`, furniBox(def, item), view);
     this.world.addChild(view);
+
+    const front = this.frontFor(item);
+    if (!front) return;
+    this.fronts.set(item.id, front.view);
+    this.depth.set(`furni:${item.id}:front`, occluderBox(item, front.box), front.view);
+    this.world.addChild(front.view);
   }
 
   remove(id: number): void {
-    const view = this.views.get(id);
-    if (!view) return;
-    view.destroy({ children: true });   // frame textures are cached on the asset, not destroyed
-    this.views.delete(id);
-    this.depth.delete(`furni:${id}`);
+    for (const [views, key] of [[this.views, `furni:${id}`], [this.fronts, `furni:${id}:front`]] as const) {
+      const view = views.get(id);
+      if (!view) continue;
+      view.destroy({ children: true });   // frame textures are cached on the asset, not destroyed
+      views.delete(id);
+      this.depth.delete(key);
+    }
   }
 
-  private spriteFor(item: FurniItem): Sprite | null {
+  private backFor(item: FurniItem): Sprite | null {
+    const asset = this.assets?.get(item.defId);
+    return asset ? this.spriteFor(item, frameFor(asset.meta, item.dir)) : null;
+  }
+
+  private frontFor(item: FurniItem): { view: Sprite; box: Occluder } | null {
     const asset = this.assets?.get(item.defId);
     if (!asset) return null;
-    const texture = frameTexture(asset, item.dir);
-    const spec = frameFor(asset.meta, item.dir);
-    if (!texture || !spec) return null;
-    const sprite = new Sprite(texture);
+    const front = occluderFor(asset.meta, item.dir);
+    const view = front && this.spriteFor(item, front.frame);
+    return view && front ? { view, box: front.box } : null;
+  }
+
+  /** Both halves in one container — for the ghost, where no sitter comes between them. */
+  private wholeFor(item: FurniItem): Container | null {
+    const back = this.backFor(item);
+    if (!back) return null;
+    const front = this.frontFor(item);
+    if (!front) return back;
+    const group = new Container();
+    group.addChild(back, front.view);
+    return group;
+  }
+
+  private spriteFor(item: FurniItem, spec: FrameSpec | null): Sprite | null {
+    const asset = this.assets?.get(item.defId);
+    if (!asset || !spec) return null;
+    const sprite = new Sprite(frameTexture(asset, spec));
     const p = worldToScreen(item.x, item.y, item.z, SCALE);
     sprite.x = p.sx + spec.offsetX;
     sprite.y = p.sy + spec.offsetY;

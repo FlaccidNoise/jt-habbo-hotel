@@ -12,7 +12,7 @@ const TILE_BAND = -1e6;
  *  in front of a far-side one — needs the per-direction occlusion groups the bundle format
  *  reserves and the generator does not emit yet (PIPELINES §2 stage 1). */
 export const LAYER = {
-  tile: 0, floor_furni: 1, marker: 2, avatar: 3, furni: 4, seated: 5,
+  tile: 0, floor_furni: 1, marker: 2, avatar: 3, furni: 4, seated: 5, seat_front: 6,
 } as const;
 
 /** Where a tile sits when it is not in the painter sort: a band of its own below every sprite.
@@ -23,6 +23,25 @@ export const LAYER = {
  *  joins the sort and occludes for real (#230, room.ts). */
 export function tileDepth(x: number, y: number): number {
   return TILE_BAND + (x + y);
+}
+
+/** A sitter always draws before the half of their seat that belongs in front of them.
+ *
+ *  Geometry cannot say this. The near-side backrest of a chair sits inside the tile the sitter
+ *  occupies, so neither is west, north, or under the other, and on a 2-tile sofa one backrest has
+ *  to come after sitters on either tile — no single box orders it against both. So it is a forced
+ *  edge on the two layers instead, for every overlapping pair. */
+function seatEdges(boxes: readonly DepthBox[]): Array<[number, number]> {
+  const at = (layer: number): number[] =>
+    boxes.flatMap((b, i) => (b.layer === layer ? [i] : []));
+  const fronts = at(LAYER.seat_front);
+  if (fronts.length === 0) return [];
+  return at(LAYER.seated).flatMap((s) =>
+    fronts.flatMap((f): Array<[number, number]> => {
+      const a = boxes[s], b = boxes[f];
+      if (!a || !b || a.x0 >= b.x1 || b.x0 >= a.x1 || a.y0 >= b.y1 || b.y0 >= a.y1) return [];
+      return [[s, f]];
+    }));
 }
 
 /** Draw order for everything standing on the floor. Items are boxes, not points: a 2×3 bed has
@@ -46,7 +65,7 @@ export class DepthIndex {
     if (!this.dirty) return;
     this.dirty = false;
     const nodes = [...this.nodes.values()];
-    const order = painterOrder(nodes.map((n) => n.box));
+    const order = painterOrder(nodes.map((n) => n.box), seatEdges(nodes.map((n) => n.box)));
     for (const [depth, i] of order.entries()) {
       const node = nodes[i];
       if (node) node.view.zIndex = depth;

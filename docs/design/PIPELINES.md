@@ -58,11 +58,23 @@ terraced to height 2 across half its area puts 190 tiles in and costs 2.21 ms. R
 event-driven, so that is the price of a move, not of a frame; if a room ever gets big enough to
 feel it, the tile order is static and can be computed once and merged (#230).
 
-**Seating occlusion** (audit B2): every part slot declares an **occlusion group** — in front of or
-behind a seated occupant, **per direction** (the chair back is behind the avatar facing the
-camera, in front facing away). The generator derives per-direction layer depths from the
-declaration. A stage-4 gate renders every seating item with a test avatar in all directions and
-diffs against reference.
+**Seating occlusion** (audit B2): a seat's geometry splits into a half **behind** a seated occupant
+and a half **in front**, **per direction** — a chair back is in front of the avatar facing away
+from the camera, behind it facing toward. Nothing is declared: the occupant joins the sprite's own
+painter sort as one more box, over the tagged seat slot's footprint from its surface up, and the
+order is cut where it lands. The two halves concatenated are therefore the order the whole sprite
+would draw in, so every constraint between parts still holds by construction.
+
+A split sheet has a second frame row — row 0 the back half, row 1 the front — and the client builds
+two Sprites. Geometry cannot order the front half against the occupant (the near-side backrest sits
+inside the tile they occupy, and on a 2-tile sofa one backrest has to follow sitters on either
+tile), so that one edge is forced from the layers: `seated` always draws before `seat_front`
+(client scene/sort.ts `seatEdges`, `painterOrder`'s `forced` argument).
+
+`gateSeatOcclusion` is the stage-4 gate: it renders every seating item with a test occupant on
+every seat tile in every direction and diffs against the depth test. Box path only — a 3D-assisted
+seat ships pixels with no boxes to split, so it stays one row and a sitter still draws over all of
+it (#235).
 
 **Pathfinding** (audit B5): build step 1 includes it explicitly — heightmap, per-tile blocked
 state, furni stack heights, per-item walk/sit flags, climb-delta rule, door special case.
@@ -96,7 +108,9 @@ recipe-to-sprite path.
 
 1. **Archetype specs.** Floor archetypes: chair, sofa, table, bed, lamp, plant, shelf, rug,
    divider, stereo, casino table. Wall archetypes: wall art, poster, record trophy, wall shelf.
-   Each spec: part slots with **occlusion groups per direction**, footprint (or wall-span),
+   Each spec: part slots — a slot named `seat` is what makes the item sittable, and the
+   per-direction occlusion split is derived from its geometry, not declared — footprint (or
+   wall-span),
    **per-state stack heights** (the `multiheight` list — server needs it for placement and
    pathing, audit A3), seat/lay points, state count, and an **animations block** — per-layer frame
    sequences with per-frame offsets, per direction, per scale. Animated archetypes are named

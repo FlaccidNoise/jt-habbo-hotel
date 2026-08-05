@@ -1,8 +1,9 @@
 import { createHash } from "node:crypto";
-import type { FurniDef } from "@grand/shared";
+import { painterOrder } from "@grand/shared";
+import type { DepthBox, FurniDef } from "@grand/shared";
 import { ARCHETYPES } from "./archetypes.ts";
 import type { Box } from "./iso.ts";
-import { H, V, ZU, drawBox, painterSort, rotateBox } from "./iso.ts";
+import { H, V, ZU, drawBox, rotateBox } from "./iso.ts";
 import { mulberry32 } from "./prng.ts";
 import type { Canvas } from "./raster.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "./raster.ts";
@@ -11,6 +12,13 @@ import { recipeHash } from "./recipe.ts";
 import { OUTLINE, rampByName } from "./style.ts";
 
 export const DIRS = [0, 2, 4, 6] as const;
+
+/** How tall a seated avatar is, in world units — client scene/avatar.ts SIT_H over ZU. */
+const SITTER_HEIGHT = 1;
+
+/** The half of a sprite that draws in front of a seated occupant, as the box the client sorts it
+ *  by. In the dir-0 frame's footprint units, like the rest of the geometry. */
+export type Occluder = { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number };
 
 export interface BundleMeta {
   defId: string;
@@ -27,7 +35,10 @@ export interface BundleMeta {
   /** Top of the authored seat geometry, or null when the part has none. The def's seatHeight is
    *  checked against this — it is what placement.ts rests a seated avatar on. */
   seatZ: number | null;
-  occlusion: string[];
+  /** Per dir, the half of the sprite that draws in front of a seated occupant, or null for a dir
+   *  with nothing in front. Null outright when the sheet is one row: no seat, or no direction puts
+   *  anything in front of one. The sheet has a second row exactly when this is not null. */
+  occlusion: Array<Occluder | null> | null;
   styleVersion: number;
   generatorVersion: number;
   partLibraryHash: string;
@@ -35,12 +46,65 @@ export interface BundleMeta {
   pixelHash: string;
 }
 
+/** One dir's part boxes, in the order they are drawn and split where a seated occupant goes.
+ *  `front` is empty for everything you cannot sit on, so `back` is then the whole sprite. */
+export interface Halves {
+  back: Box[];
+  front: Box[];
+}
+
 export interface Bundle {
   sheet: Canvas;
   meta: BundleMeta;
-  /** Part boxes per dir frame, in that frame's footprint units — what the draw-order gate
-   *  re-renders. Null for 3D-assisted defs (#202): they ship frozen pixels, not geometry. */
-  geometry: Box[][] | null;
+  /** Part boxes per dir frame, in that frame's footprint units — what the draw-order and
+   *  seat-occlusion gates re-render. Null for 3D-assisted defs (#202): they ship frozen pixels,
+   *  not geometry. */
+  geometry: Halves[] | null;
+}
+
+/** Where a seated occupant sits: over the seat slot's own footprint, from its surface up.
+ *
+ *  Deriving it from the tagged slot is what makes the split come out at all. A sitter modelled as
+ *  the whole tile would *contain* the backrest rather than being ordered against it, and every
+ *  part would fall on the same side. */
+function sitterBox(seat: readonly Box[]): DepthBox {
+  const top = Math.max(...seat.map((b) => b.z1));
+  return {
+    x0: Math.min(...seat.map((b) => b.x0)),
+    y0: Math.min(...seat.map((b) => b.y0)),
+    z0: top,
+    x1: Math.max(...seat.map((b) => b.x1)),
+    y1: Math.max(...seat.map((b) => b.y1)),
+    z1: top + SITTER_HEIGHT,
+    layer: 1,   // client LAYER.seated sits above LAYER.furni, so ties put the sitter second
+  };
+}
+
+/** Split one dir's part boxes around a seated occupant.
+ *
+ *  The sitter joins the painter sort as one more box, and the order is cut where it lands. So the
+ *  two halves concatenated are exactly the order the whole sprite would draw in with the sitter
+ *  removed — every constraint between parts still holds, by construction rather than by check. */
+function splitAroundSitter(boxes: readonly Box[], seat: readonly Box[]): Halves {
+  const nodes = boxes.map((b) => ({ ...b, layer: 0 }));
+  if (seat.length === 0) {
+    return { back: painterOrder(nodes).flatMap((i) => boxes[i] ?? []), front: [] };
+  }
+  const order = painterOrder([...nodes, sitterBox(seat)]);
+  const cut = order.indexOf(boxes.length);
+  const pick = (from: number, to: number): Box[] =>
+    order.slice(from, to).flatMap((i) => boxes[i] ?? []);
+  return { back: pick(0, cut), front: pick(cut + 1, order.length) };
+}
+
+/** The box the client sorts a front half by: everything it draws. */
+function extentOf(boxes: readonly Box[]): Occluder | null {
+  if (boxes.length === 0) return null;
+  return {
+    x0: Math.min(...boxes.map((b) => b.x0)), y0: Math.min(...boxes.map((b) => b.y0)),
+    z0: Math.min(...boxes.map((b) => b.z0)), x1: Math.max(...boxes.map((b) => b.x1)),
+    y1: Math.max(...boxes.map((b) => b.y1)), z1: Math.max(...boxes.map((b) => b.z1)),
+  };
 }
 
 /** Any opaque pixel touching transparency (or the frame edge) becomes the global outline. */
@@ -79,6 +143,8 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
     return { slot, boxes: build(ctx) };
   });
   const boxes: Box[] = built.flatMap((b) => b.boxes);
+  // Which slot each box came from, kept parallel through rotation so the seat stays findable.
+  const slotOf: string[] = built.flatMap((b) => b.boxes.map(() => b.slot));
   // The seat surface is geometry, never a declaration: the top of the "seat" slot's boxes.
   const seatBoxes = built.find((b) => b.slot === "seat")?.boxes ?? [];
   const seatZ = seatBoxes.length > 0 ? Math.max(...seatBoxes.map((b) => b.z1)) : null;
@@ -89,9 +155,10 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
   const frameH = (def.w + def.l) * V + heightPx;
   const anchorY = V + heightPx;
 
-  const sheet = makeCanvas(frameW * DIRS.length, frameH);
+  // Row 0 is the whole sprite, or its half behind a seated occupant. Row 1, when a seat splits
+  // the geometry in any direction, is the half in front (PIPELINES §1 Seating occlusion).
   const anchorsX: number[] = [];
-  const geometry: Box[][] = [];
+  const geometry: Halves[] = [];
   let current = boxes;
   let spanY = def.l;
   for (let q = 0; q < DIRS.length; q++) {
@@ -100,11 +167,21 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
       spanY = spanY === def.l ? def.w : def.l;
     }
     anchorsX.push(spanY * H);
-    geometry.push(current);
-    const frame = makeCanvas(frameW, frameH);
-    for (const b of painterSort(current)) drawBox(frame, { x: spanY * H, y: anchorY }, b);
-    outlineSilhouette(frame);
-    blit(sheet, frame, q * frameW, 0);
+    const seat = current.filter((_, i) => slotOf[i] === "seat");
+    geometry.push(splitAroundSitter(current, seat));
+  }
+
+  const occlusion = geometry.map((h) => extentOf(h.front));
+  const rows = occlusion.some((o) => o !== null) ? 2 : 1;
+  const sheet = makeCanvas(frameW * DIRS.length, frameH * rows);
+  for (const [q, half] of geometry.entries()) {
+    for (const [row, group] of [half.back, half.front].entries()) {
+      if (group.length === 0) continue;
+      const frame = makeCanvas(frameW, frameH);
+      for (const b of group) drawBox(frame, { x: anchorsX[q] ?? 0, y: anchorY }, b);
+      outlineSilhouette(frame);
+      blit(sheet, frame, q * frameW, row * frameH);
+    }
   }
 
   return {
@@ -122,7 +199,7 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
       footprint: { w: def.w, l: def.l },
       drawnHeight: heightPx / ZU,
       seatZ,
-      occlusion: slots,
+      occlusion: rows === 2 ? occlusion : null,
       styleVersion: recipe.styleVersion,
       generatorVersion: recipe.generatorVersion,
       partLibraryHash: recipe.partLibraryHash,

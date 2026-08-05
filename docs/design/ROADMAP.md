@@ -70,9 +70,9 @@ bounces.** Reading the config is never evidence.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items. A seated avatar draws in front of its own seat because
-  per-direction occlusion groups are specced but unemitted (PIPELINES §2 stage 1) — until they
-  exist, a chair back can never occlude the sitter.
+- Gaps: #205 room games, #203 wall items. Per-direction seating occlusion ships on the box path —
+  a chair back drawn over the sitter facing away, behind them facing toward. 3D-assisted seats
+  (café chair, casino stool, bed) still draw a sitter over the whole item: #235.
 
 ### Step 3 — NPC staff (shipped canned-only, #204 finishes it)
 

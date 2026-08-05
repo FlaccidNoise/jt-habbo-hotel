@@ -235,7 +235,7 @@ for (const [id, part] of work) {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
       dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
       footprint: { w: part.w, l: part.l },
-      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: [], styleVersion: STYLE_VERSION,
+      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: null, styleVersion: STYLE_VERSION,
       generatorVersion: GENERATOR_VERSION,
       partLibraryHash: `artgen:${recipeHash.slice(0, 16)}`, recipeHash,
       pixelHash: createHash("sha256").update(sheet.px).digest("hex"),

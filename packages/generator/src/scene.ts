@@ -66,7 +66,12 @@ function exitT(b: Box, sx: number, sy: number): number {
  *  would have painted. Two boxes tied at the same depth both count (coincident faces are a real
  *  ambiguity, not an error), and so do two boxes of the same ramp painting the same face — those
  *  are indistinguishable on screen, which is the only thing this gate is entitled to judge. */
-export function drawOrderMismatch(items: readonly SceneItem[]): string | null {
+export function drawOrderMismatch(
+  items: readonly SceneItem[],
+  /** The order the client draws these in, when something other than geometry decides it — a seat's
+   *  two halves around a sitter are ordered by a forced edge (client scene/sort.ts seatEdges). */
+  forced?: readonly number[],
+): string | null {
   const boxes = items.flatMap((it) => [...it.boxes]);
   if (boxes.length === 0) return null;
 
@@ -80,7 +85,7 @@ export function drawOrderMismatch(items: readonly SceneItem[]): string | null {
 
   // What the game draws: objects in room order, part boxes in sprite order, last write wins.
   const paint = makeCanvas(w, h);
-  for (const i of painterOrder(items.map((it) => it.depth))) {
+  for (const i of forced ?? painterOrder(items.map((it) => it.depth))) {
     for (const b of painterSort([...(items[i]?.boxes ?? [])])) {
       for (const [k, face] of boxFaces(anchor, b).entries()) {
         fillPoly(paint, face, b.ramp[FACE_KEYS[k] ?? "top"]);
@@ -135,6 +140,42 @@ export function drawOrderMismatch(items: readonly SceneItem[]): string | null {
 const PROBE_RAMP = "charcoal";   // used by no box-path recipe, so a probe never masks a mismatch
 const PROBE_HEIGHT = 1.5;
 const STACK = 0.5;
+const SITTER_HEIGHT = 1;   // client scene/avatar.ts SIT_H over ZU
+const SITTER_INSET = 0.25;   // a body is narrower than the tile it sits on
+
+/** One seating item with a test occupant on the tile at (tx, ty): the half behind the body, the
+ *  body, the half in front. Each carries the box the *client* sorts it by — the whole item, the
+ *  occupant's tile, and the extent the generator measured for the front half — so this checks the
+ *  thing that can actually go wrong. The generator splits the geometry using a sitter derived from
+ *  the seat slot; the client sorts using a sitter that fills its tile. If those two disagree, the
+ *  body lands on the wrong side of a backrest and these pixels say so. */
+export function seatedScene(
+  half: { back: readonly Box[]; front: readonly Box[] },
+  front: { x0: number; y0: number; z0: number; x1: number; y1: number; z1: number } | null,
+  seatZ: number,
+  spanX: number,
+  spanY: number,
+  top: number,
+  tx: number,
+  ty: number,
+): SceneItem[] {
+  const body: Box = {
+    x0: tx + SITTER_INSET, y0: ty + SITTER_INSET, z0: seatZ,
+    x1: tx + 1 - SITTER_INSET, y1: ty + 1 - SITTER_INSET, z1: seatZ + SITTER_HEIGHT,
+    ramp: rampByName(PROBE_RAMP),
+  };
+  const scene: SceneItem[] = [
+    { boxes: half.back, depth: { x0: 0, y0: 0, z0: 0, x1: spanX, y1: spanY, z1: top, layer: 0 } },
+    {
+      boxes: [body],
+      depth: {
+        x0: tx, y0: ty, z0: seatZ, x1: tx + 1, y1: ty + 1, z1: seatZ + SITTER_HEIGHT, layer: 1,
+      },
+    },
+  ];
+  if (front) scene.push({ boxes: half.front, depth: { ...front, layer: 0 } });
+  return scene;
+}
 
 /** The two scenes every generated item is checked in.
  *

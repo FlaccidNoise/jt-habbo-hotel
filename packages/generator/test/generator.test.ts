@@ -13,13 +13,14 @@ import {
   gateFootprint,
   gatePalette,
   gateSeat,
+  gateSeatOcclusion,
   gateUniqueness,
   runGates,
 } from "../src/gates.ts";
 import { makeCanvas, putPixel } from "../src/raster.ts";
 import { recipeHash } from "../src/recipe.ts";
 import type { Recipe } from "../src/recipe.ts";
-import { drawOrderMismatch, referenceScenes } from "../src/scene.ts";
+import { drawOrderMismatch, referenceScenes, seatedScene } from "../src/scene.ts";
 import { STARTER_RECIPES } from "../src/starter.ts";
 import { FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES, rampByName } from "../src/style.ts";
 
@@ -228,7 +229,7 @@ describe("gates bounce staged known-bad input", () => {
     // stopped constraining the neighbours at its far end and slid to one side of both.
     const table = defById("table_basic");
     const { geometry, meta } = render(table, STARTER_RECIPES.get("table_basic")!);
-    const ring = referenceScenes(geometry![0]!, table.w, table.l, meta.drawnHeight)[1]!;
+    const ring = referenceScenes(geometry![0]!.back, table.w, table.l, meta.drawnHeight)[1]!;
     expect(drawOrderMismatch(ring)).toBeNull();
 
     const off = ring.map((it, i) => (i === 0 ? { ...it, depth: { ...it.depth, x1: 1 } } : it));
@@ -240,8 +241,34 @@ describe("gates bounce staged known-bad input", () => {
     // is right — the failure the sofa's cushions and the plant's foliage are both authored around.
     const bundle = chairBundle();
     const rail = { x0: 0, y0: 0.40625, z0: 0.46875, x1: 1, y1: 0.59375, z1: 0.625, ramp: rampByName("teal") };
-    for (const frame of bundle.geometry ?? []) frame.push(rail);
+    for (const half of bundle.geometry ?? []) half.back.push(rail);
     expect(gateDrawOrder(bundle, CHAIR_DEF!)).toMatchObject({ ok: false, gate: "draw-order" });
+  });
+
+  test("seat-occlusion: a backrest put behind the sitter instead of in front", () => {
+    // The shipped behaviour this replaces: a sitter drew over the whole seat, so a chair back on
+    // the near side went behind the body. Stage it by moving the front half back.
+    const bundle = chairBundle();
+    expect(gateSeatOcclusion(bundle, CHAIR_DEF!)).toEqual({ ok: true });
+    for (const half of bundle.geometry ?? []) {
+      half.back.push(...half.front.splice(0));
+    }
+    expect(gateSeatOcclusion(bundle, CHAIR_DEF!))
+      .toMatchObject({ ok: false, gate: "seat-occlusion" });
+  });
+
+  test("seat-occlusion: a multi-tile seat is checked from every seat tile", () => {
+    // A 2×1 sofa's near-side backrest has to draw over a sitter on either tile. Only the far tile
+    // catches a front half that sorts by its own extent, which starts at the near tile.
+    const sofa = defById("sofa_basic");
+    const bundle = render(sofa, STARTER_RECIPES.get("sofa_basic")!);
+    expect(gateSeatOcclusion(bundle, sofa)).toEqual({ ok: true });
+    const far = seatedScene(
+      bundle.geometry![0]!, bundle.meta.occlusion?.[0] ?? null, bundle.meta.seatZ!,
+      sofa.w, sofa.l, bundle.meta.drawnHeight, 1, 0,
+    );
+    // Sitter last instead of between the halves — what a plain painter sort does to this scene.
+    expect(drawOrderMismatch(far, [0, 2, 1])).toMatch(/hidden behind a farther surface/);
   });
 
   test("draw-order: a frozen bundle carries no geometry, so the gate cannot reach it", () => {
