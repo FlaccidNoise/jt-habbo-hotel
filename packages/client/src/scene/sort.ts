@@ -7,10 +7,10 @@ const TILE_BAND = -1e6;
 /** Tie-break for boxes that share a space, where no side is west, north, or underneath the
  *  other: a rug under an avatar, an avatar under a table on its tile.
  *
- *  `seated` is the one layer above furni: a sitter shares a tile with the seat, and drawing them
- *  behind it buries them in the sprite. Doing it properly — body behind a near-side chair back,
- *  in front of a far-side one — needs the per-direction occlusion groups the bundle format
- *  reserves and the generator does not emit yet (PIPELINES §2 stage 1). */
+ *  The top two are a pair. A sitter shares a tile with the seat, so `seated` puts the body over
+ *  it; `seat_front` is the half of that seat which belongs over the body in turn — the near-side
+ *  back and arm the generator splits off (PIPELINES §1 Seating occlusion). `seatEdges` is what
+ *  actually orders those two, because their boxes cannot. */
 export const LAYER = {
   tile: 0, floor_furni: 1, marker: 2, avatar: 3, furni: 4, seated: 5, seat_front: 6,
 } as const;
@@ -65,7 +65,8 @@ export class DepthIndex {
     if (!this.dirty) return;
     this.dirty = false;
     const nodes = [...this.nodes.values()];
-    const order = painterOrder(nodes.map((n) => n.box), seatEdges(nodes.map((n) => n.box)));
+    const boxes = nodes.map((n) => n.box);
+    const order = painterOrder(boxes, seatEdges(boxes));
     for (const [depth, i] of order.entries()) {
       const node = nodes[i];
       if (node) node.view.zIndex = depth;

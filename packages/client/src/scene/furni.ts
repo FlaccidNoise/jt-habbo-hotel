@@ -118,10 +118,10 @@ export class FurniLayer {
     this.depth.delete("ghost");
   }
 
-  /** A seat goes up as two views with its own box between them, so a sitter lands in the gap: the
-   *  legs and the far side draw behind the body, the near-side back and arm draw over it. Ordering
-   *  them is the painter sort's job like everything else — the front half carries the box the
-   *  generator measured for it, and the sitter's box already sorts after that. */
+  /** A seat goes up as two views, so a sitter lands between them: the legs and the far side draw
+   *  behind the body, the near-side back and arm draw over it. The front half carries the box the
+   *  generator measured for it, which is what sorts it against the rest of the room; what puts it
+   *  after the body is the forced `seat_front` edge in sort.ts, since no box can say that. */
   apply(item: FurniItem): void {
     const def = this.defs.get(item.defId);
     if (!def) {

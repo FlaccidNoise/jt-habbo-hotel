@@ -13,8 +13,9 @@ import { OUTLINE, rampByName } from "./style.ts";
 
 export const DIRS = [0, 2, 4, 6] as const;
 
-/** How tall a seated avatar is, in world units — client scene/avatar.ts SIT_H over ZU. */
-const SITTER_HEIGHT = 1;
+/** How tall a seated avatar is, in world units — client scene/avatar.ts SIT_H over ZU. The gate
+ *  stands a test occupant of the same height, and the two disagreeing would be silent. */
+export const SITTER_HEIGHT = 1;
 
 /** The half of a sprite that draws in front of a seated occupant, as the box the client sorts it
  *  by. In the dir-0 frame's footprint units, like the rest of the geometry. */

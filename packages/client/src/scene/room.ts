@@ -153,6 +153,13 @@ export class RoomScene {
     this.stage.off("pointermove", this.touchMove);
     this.stage.off("pointerup", this.touchEnd);
     this.stage.off("pointerupoutside", this.touchEnd);
+    // Whatever this room put in the sort comes back out: the views are about to be destroyed, and
+    // a stale node would have the next flush write to a dead Container.
+    this.clearHighlight();
+    for (const key of this.tiles.keys()) {
+      this.depth.delete(`tile:${key}`);
+      this.depth.delete(`tile:${key}:sides`);
+    }
     this.world.destroy({ children: true });
   }
 

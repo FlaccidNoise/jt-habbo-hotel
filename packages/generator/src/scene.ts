@@ -1,5 +1,6 @@
 import { painterOrder } from "@grand/shared";
 import type { DepthBox } from "@grand/shared";
+import { SITTER_HEIGHT } from "./compose.ts";
 import type { Box } from "./iso.ts";
 import { FACE_KEYS, H, V, boxFaces, painterSort } from "./iso.ts";
 import { fillPoly, getPixel, makeCanvas } from "./raster.ts";
@@ -140,7 +141,6 @@ export function drawOrderMismatch(
 const PROBE_RAMP = "charcoal";   // used by no box-path recipe, so a probe never masks a mismatch
 const PROBE_HEIGHT = 1.5;
 const STACK = 0.5;
-const SITTER_HEIGHT = 1;   // client scene/avatar.ts SIT_H over ZU
 const SITTER_INSET = 0.25;   // a body is narrower than the tile it sits on
 
 /** One seating item with a test occupant on the tile at (tx, ty): the half behind the body, the
