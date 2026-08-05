@@ -25,3 +25,14 @@ gen:
 
 db-reset:
 	rm -f packages/server/grand.db*
+
+# 3D-assisted furni parts (#202): Blender renders each part white at 4 directions, the post-pass
+# quantizes to the style.ts ramps, runs the gates, and freezes the passing bundles. Renders land
+# in ART_DIR so a PART= re-render can merge into the existing meta.json.
+#   make art             — every part
+#   make art PART=<id>   — one part (plus any colorway built on it)
+ART_DIR ?= /tmp/artgen
+art:
+	blender --background --factory-startup --python tools/artgen/rig.py -- \
+		--out $(ART_DIR) $(if $(PART),--only $(PART))
+	node --experimental-strip-types tools/artgen/postpass.ts $(ART_DIR) --freeze

@@ -8,7 +8,12 @@
 // @grand/shared and additionally freeze to tools/artgen/frozen/ (<id>.png + <id>.json) —
 // the committed bundle cli.ts merges into the catalog. Gate failure freezes nothing.
 //
+// VARIANTS below are colorways: extra catalog items assembled from a base part's existing
+// frames with its ramps remapped, so they cost no Blender render (see the note there).
+//
 //   node --experimental-strip-types tools/artgen/postpass.ts <renderDir> [--freeze]
+//   make art            — render every part, gate, freeze
+//   make art PART=<id>  — re-render one part and its colorways
 
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
@@ -41,9 +46,29 @@ const frozenDir = new URL("./frozen/", import.meta.url).pathname;
 
 interface Frame { dir: number; spanY: number; rgba: string; mask: string }
 interface PartMeta {
-  w: number; l: number; ramp: string; maxZ: number; frames: Frame[];
+  w: number; l: number; ramp: string; maxZ: number; seatZ: number | null; frames: Frame[];
   prims: Array<{ ramp: string; group: number }>;
   src: unknown;
+}
+
+/** Colorways. rig.py renders white geometry lit by one sun and a flat index mask — neither pass
+ *  sees a ramp, so a recolor reuses the base part's frames and costs no Blender time at all.
+ *  The remap is keyed by ramp name rather than prim index, so it survives reordering the mesh.
+ *  Each colorway still needs its own FurniDef, gets its own recipeHash, and runs the full gates. */
+const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> = {
+  cafe_chair_crimson:  { base: "cafe_chair",    ramps: { teal: "crimson" } },
+  cafe_chair_navy:     { base: "cafe_chair",    ramps: { teal: "navy" } },
+  casino_stool_fern:   { base: "casino_stool",  ramps: { crimson: "fern" } },
+  divider_basic_plum:  { base: "divider_basic", ramps: { slate: "plum" } },
+};
+
+function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {
+  const swap = (name: string): string => remap[name] ?? name;
+  return {
+    ...base,
+    ramp: swap(base.ramp),
+    prims: base.prims.map((p) => ({ ...p, ramp: swap(p.ramp) })),
+  };
 }
 const meta = JSON.parse(readFileSync(join(renderDir, "meta.json"), "utf8")) as {
   res: number;
@@ -106,16 +131,34 @@ function provenanceHash(id: string, part: PartMeta): string {
 if (freeze) mkdirSync(frozenDir, { recursive: true });
 let failures = 0;
 
-for (const [id, part] of Object.entries(meta.parts)) {
+const work: Array<[string, PartMeta]> = Object.entries(meta.parts);
+for (const [id, variant] of Object.entries(VARIANTS)) {
+  const base = meta.parts[variant.base];
+  if (!base) {
+    console.error(`${id}: variant base "${variant.base}" is not in ${renderDir}/meta.json`);
+    failures++;
+    continue;
+  }
+  work.push([id, recolor(base, variant.ramps)]);
+}
+
+for (const [id, part] of work) {
   const isProof = id.startsWith("proof_");
   const catalogDef = PROTOTYPE_CATALOG.find((d) => d.id === id);
+  const heightPx = Math.ceil(part.maxZ * ZU);
   if (!isProof && !catalogDef) {
-    console.error(`${id}: no FurniDef in shared/furni.ts — add it before freezing`);
+    // Both numbers come off the mesh, so hand them over rather than making the author derive
+    // ceil(maxZ*32)/32 and read the seat surface out of the rig by eye.
+    console.error(
+      `${id}: no FurniDef in packages/shared/src/furni.ts. Add this, then re-run:\n` +
+      `  { id: "${id}", name: "${id}", w: ${part.w}, l: ${part.l}, ` +
+      `stackHeights: [${heightPx / ZU}], canWalk: false, canStackOn: false, ` +
+      `seatHeight: ${part.seatZ}, color: 0x000000 },`,
+    );
     failures++;
     continue;
   }
   const ramps = part.prims.map((p) => rampByName(p.ramp));
-  const heightPx = Math.ceil(part.maxZ * ZU);
   const frameW = (part.w + part.l) * H;
   const frameH = (part.w + part.l) * V + heightPx;
   const raws = part.frames.map((f) => readFileSync(join(renderDir, f.rgba)));
@@ -171,8 +214,8 @@ for (const [id, part] of Object.entries(meta.parts)) {
   }
 
   const def: FurniDef = catalogDef ?? {
-    id, name: id, w: part.w, l: part.l, stackHeights: [part.maxZ],
-    canWalk: false, canStackOn: false, seatHeight: null, color: 0,
+    id, name: id, w: part.w, l: part.l, stackHeights: [heightPx / ZU],
+    canWalk: false, canStackOn: false, seatHeight: part.seatZ, color: 0,
   };
   const recipeHash = provenanceHash(id, part);
   const bundle: Bundle = {
@@ -180,8 +223,8 @@ for (const [id, part] of Object.entries(meta.parts)) {
     meta: {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
       dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
-      footprint: { w: part.w, l: part.l }, stackHeights: def.stackHeights,
-      drawnHeight: heightPx / ZU, occlusion: [], styleVersion: STYLE_VERSION,
+      footprint: { w: part.w, l: part.l },
+      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: [], styleVersion: STYLE_VERSION,
       generatorVersion: GENERATOR_VERSION,
       partLibraryHash: `artgen:${recipeHash.slice(0, 16)}`, recipeHash,
       pixelHash: createHash("sha256").update(sheet.px).digest("hex"),

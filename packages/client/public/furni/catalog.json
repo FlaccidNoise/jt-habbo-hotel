@@ -25,10 +25,8 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        1
-      ],
       "drawnHeight": 1,
+      "seatZ": 0.65625,
       "occlusion": [
         "legs",
         "seat",
@@ -63,10 +61,8 @@
         "w": 2,
         "l": 1
       },
-      "stackHeights": [
-        1
-      ],
       "drawnHeight": 1,
+      "seatZ": null,
       "occlusion": [
         "legs",
         "top"
@@ -100,10 +96,8 @@
         "w": 2,
         "l": 1
       },
-      "stackHeights": [
-        1
-      ],
       "drawnHeight": 1,
+      "seatZ": 0.5625,
       "occlusion": [
         "base",
         "seat",
@@ -139,10 +133,8 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        2
-      ],
       "drawnHeight": 1.625,
+      "seatZ": null,
       "occlusion": [
         "pot",
         "foliage"
@@ -176,10 +168,8 @@
         "w": 3,
         "l": 2
       },
-      "stackHeights": [
-        0.05
-      ],
       "drawnHeight": 0.0625,
+      "seatZ": null,
       "occlusion": [
         "field"
       ],
@@ -212,10 +202,8 @@
         "w": 2,
         "l": 2
       },
-      "stackHeights": [
-        1.4375
-      ],
       "drawnHeight": 1.4375,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
@@ -246,15 +234,13 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        0.84375
-      ],
       "drawnHeight": 0.84375,
+      "seatZ": 0.82,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:00f4a240c4a1972e",
-      "recipeHash": "00f4a240c4a1972e2d5af481813ccd7f8bff67a9b3b2be423b7ecdb350803282",
+      "partLibraryHash": "artgen:dd8d0f59f2c6eed9",
+      "recipeHash": "dd8d0f59f2c6eed97ebaeef5c7a6f40a1a9968b66641c35273557865139c117d",
       "pixelHash": "6771a3a936a4a19ddb418d04ce84cbe6db3a55915ffbc9fd5d7d7172d5bc7262"
     },
     "cafe_table": {
@@ -280,10 +266,8 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        1.03125
-      ],
       "drawnHeight": 1.03125,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
@@ -314,15 +298,13 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        1.25
-      ],
       "drawnHeight": 1.25,
+      "seatZ": 0.58,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:edac26dcf9ad81cb",
-      "recipeHash": "edac26dcf9ad81cbd8ac2722f6ab568460f1eb20647f3aa0f6ea770a861f7584",
+      "partLibraryHash": "artgen:2b5d00aba1711d5d",
+      "recipeHash": "2b5d00aba1711d5d0692107e6c4f36b18a5e88321c8b054402a690ac89bb25c9",
       "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
     },
     "bed_basic": {
@@ -348,15 +330,13 @@
         "w": 2,
         "l": 3
       },
-      "stackHeights": [
-        0.96875
-      ],
       "drawnHeight": 0.96875,
+      "seatZ": 0.55,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
-      "partLibraryHash": "artgen:900df5a984e4fe1a",
-      "recipeHash": "900df5a984e4fe1a51436c8d024dab5acac6567230d51069cbf6e0bee56ae2ed",
+      "partLibraryHash": "artgen:4eda871e8dedf6a2",
+      "recipeHash": "4eda871e8dedf6a20912a63ed495c552355098e5bbc12f07ae9305515ae20e9e",
       "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
     },
     "lamp_basic": {
@@ -382,10 +362,8 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        2.21875
-      ],
       "drawnHeight": 2.21875,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
@@ -416,10 +394,8 @@
         "w": 2,
         "l": 1
       },
-      "stackHeights": [
-        1.90625
-      ],
       "drawnHeight": 1.90625,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
@@ -450,10 +426,8 @@
         "w": 2,
         "l": 1
       },
-      "stackHeights": [
-        1.0625
-      ],
       "drawnHeight": 1.0625,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
@@ -484,16 +458,142 @@
         "w": 1,
         "l": 1
       },
-      "stackHeights": [
-        1.375
-      ],
       "drawnHeight": 1.375,
+      "seatZ": null,
       "occlusion": [],
       "styleVersion": 1,
       "generatorVersion": 1,
       "partLibraryHash": "artgen:b5dd319f0affc58c",
       "recipeHash": "b5dd319f0affc58ca3cd089efdab043850ce7bca133d863ffebad713dd268181",
       "pixelHash": "7ffe46fb26f885cdb00d913cfe391197cc53a031b29f676c69d97d789c822b8e"
+    },
+    "cafe_chair_crimson": {
+      "defId": "cafe_chair_crimson",
+      "archetype": "artgen",
+      "sheet": "cafe_chair_crimson.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": 0.58,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:04051a7d6e59dcd7",
+      "recipeHash": "04051a7d6e59dcd74229827aa489e4a0aa4cbaa9c7c49b3022b0f7d1ef84dd0e",
+      "pixelHash": "44ac141095919258543361ce0a13421a6445d1bd73d6ef3ccc5e731dc8b3eda9"
+    },
+    "cafe_chair_navy": {
+      "defId": "cafe_chair_navy",
+      "archetype": "artgen",
+      "sheet": "cafe_chair_navy.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": 0.58,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:8009a50414960938",
+      "recipeHash": "8009a504149609385ebc41bb128ae9eb32bfe41a089c88cd9210c84604b63c3d",
+      "pixelHash": "61e3b08af03cf532d023c96451c3aa77c31a9afd69f173e84750b9cbde1a0fcb"
+    },
+    "casino_stool_fern": {
+      "defId": "casino_stool_fern",
+      "archetype": "artgen",
+      "sheet": "casino_stool_fern.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.82,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:0e8ccafa5f122aa9",
+      "recipeHash": "0e8ccafa5f122aa9bb1830865701f4101a38028d748d8e3f70663bb78ab24141",
+      "pixelHash": "e512c6f9495adf68771572491ecf68abe3312f95c335ace037ffc821b2f7d5ec"
+    },
+    "divider_basic_plum": {
+      "defId": "divider_basic_plum",
+      "archetype": "artgen",
+      "sheet": "divider_basic_plum.png",
+      "frameW": 96,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:5e0a97b8a72f46a7",
+      "recipeHash": "5e0a97b8a72f46a7b132e35dc674d37e352df11d7bc5cc1afcc9140528c2e35d",
+      "pixelHash": "3d0b2bb6037ab205265a9a663796d63a8a3f104ef9c195b86d91a157bbf7277b"
     }
   }
 }

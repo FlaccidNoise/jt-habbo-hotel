@@ -34,6 +34,8 @@ os.makedirs(OUT, exist_ok=True)
 # hcyl: horizontal cylinder along fy (or fx with "axis": "x"). sphere: icosphere.
 # Per-prim "ramp" overrides the part ramp (postpass reads it from the mask render). Per-prim
 # "group" (ints >= 100) merges prims into one seam group — no interior line between them.
+# Per-prim "seat": True marks the sittable surface — its top becomes the part's seatZ, which the
+# seat gate checks the def's seatHeight against. Tag it on the cushion, not the frame.
 # "proof_" ids are pipeline proofs: rendered and gated but never frozen into the catalog.
 
 PARTS = {
@@ -102,7 +104,7 @@ PARTS = {
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.30, "ry": 0.30, "z0": 0.00, "z1": 0.06},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.09, "ry": 0.09, "z0": 0.06, "z1": 0.62},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.34, "ry": 0.34, "z0": 0.62, "z1": 0.82,
-             "ramp": "crimson"},
+             "ramp": "crimson", "seat": True},
         ],
     },
     # ---- café set ----
@@ -123,7 +125,8 @@ PARTS = {
             {"t": "box", "c0": (0.64, 0.28, 0.00), "c1": (0.72, 0.36, 0.48)},
             {"t": "box", "c0": (0.28, 0.64, 0.00), "c1": (0.36, 0.72, 0.48)},
             {"t": "box", "c0": (0.64, 0.64, 0.00), "c1": (0.72, 0.72, 0.48)},
-            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58,
+             "seat": True},
             {"t": "cyl", "cx": 0.30, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
             {"t": "cyl", "cx": 0.70, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
             {"t": "box", "c0": (0.18, 0.80, 0.98), "c1": (0.82, 0.92, 1.22), "bevel": 0.05},
@@ -138,7 +141,7 @@ PARTS = {
             {"t": "box", "c0": (0.08, 0.08, 0.22), "c1": (1.92, 2.86, 0.42), "bevel": 0.05,
              "ramp": "ivory"},
             {"t": "box", "c0": (0.06, 0.06, 0.40), "c1": (1.94, 1.95, 0.55), "bevel": 0.06,
-             "ramp": "navy"},
+             "ramp": "navy", "seat": True},
             {"t": "box", "c0": (0.18, 2.28, 0.42), "c1": (0.95, 2.72, 0.60), "bevel": 0.08,
              "ramp": "ivory"},
             {"t": "box", "c0": (1.05, 2.28, 0.42), "c1": (1.82, 2.72, 0.60), "bevel": 0.08,
@@ -421,6 +424,8 @@ for part_id, part in PARTS.items():
     prims = [dict(p) for p in part["prims"]]
     span = (part["w"], part["l"])   # (spanX, spanY), dir-0 frame
     max_z = max(prim_top(prim) for prim in part["prims"])
+    seats = [p for p in part["prims"] if p.get("seat")]
+    seat_z = max(prim_top(p) for p in seats) if seats else None
     frames = []
     scene = bpy.context.scene
     for q in range(4):
@@ -448,7 +453,8 @@ for part_id, part in PARTS.items():
         frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
                        "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
-        "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "frames": frames,
+        "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,
+        "frames": frames,
         "prims": [{"ramp": p.get("ramp", part["ramp"]), "group": p.get("group", i)}
                   for i, p in enumerate(part["prims"])],
         "src": part["prims"],   # full authored geometry — postpass hashes it as provenance

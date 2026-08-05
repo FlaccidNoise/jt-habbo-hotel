@@ -1,7 +1,7 @@
 {
-  "defId": "divider_basic",
+  "defId": "divider_basic_plum",
   "archetype": "artgen",
-  "sheet": "divider_basic.png",
+  "sheet": "divider_basic_plum.png",
   "frameW": 96,
   "frameH": 82,
   "dirs": [
@@ -26,7 +26,7 @@
   "occlusion": [],
   "styleVersion": 1,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:2df3169f9249bfac",
-  "recipeHash": "2df3169f9249bfac8e1adcc1388de9b7d4bc67bc52b8f8d03a05579e9cd2b924",
-  "pixelHash": "21726de27eda7d3c1dbbbf8d4f1f3176571b46975f45914b8a4175a075ba9887"
+  "partLibraryHash": "artgen:5e0a97b8a72f46a7",
+  "recipeHash": "5e0a97b8a72f46a7b132e35dc674d37e352df11d7bc5cc1afcc9140528c2e35d",
+  "pixelHash": "3d0b2bb6037ab205265a9a663796d63a8a3f104ef9c195b86d91a157bbf7277b"
 }

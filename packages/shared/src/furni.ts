@@ -20,6 +20,12 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "shelf_basic",   name: "Shelf",        w: 2, l: 1, stackHeights: [1.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
   { id: "divider_basic", name: "Divider",      w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "stereo_basic",  name: "Stereo",       w: 1, l: 1, stackHeights: [1.375],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  // Colorways (#229): the same authored mesh with its ramps remapped, so they share their base's
+  // geometry exactly — heights and seat surfaces are identical and the gates check that.
+  { id: "cafe_chair_crimson",  name: "Crimson Café Chair", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
+  { id: "cafe_chair_navy",     name: "Navy Café Chair",    w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0x3f5e9e },
+  { id: "casino_stool_fern",   name: "Baize Stool",        w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x2e8b57 },
+  { id: "divider_basic_plum",  name: "Plum Divider",       w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x7a3e9d },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -44,4 +50,8 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["shelf_basic", 150],
   ["stereo_basic", 150],
   ["casino_table", 300],
+  ["cafe_chair_crimson", 25],
+  ["cafe_chair_navy", 25],
+  ["casino_stool_fern", 25],
+  ["divider_basic_plum", 75],
 ]);

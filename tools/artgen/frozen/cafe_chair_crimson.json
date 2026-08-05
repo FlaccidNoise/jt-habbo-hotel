@@ -1,7 +1,7 @@
 {
-  "defId": "cafe_chair",
+  "defId": "cafe_chair_crimson",
   "archetype": "artgen",
-  "sheet": "cafe_chair.png",
+  "sheet": "cafe_chair_crimson.png",
   "frameW": 64,
   "frameH": 72,
   "dirs": [
@@ -26,7 +26,7 @@
   "occlusion": [],
   "styleVersion": 1,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:2b5d00aba1711d5d",
-  "recipeHash": "2b5d00aba1711d5d0692107e6c4f36b18a5e88321c8b054402a690ac89bb25c9",
-  "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
+  "partLibraryHash": "artgen:04051a7d6e59dcd7",
+  "recipeHash": "04051a7d6e59dcd74229827aa489e4a0aa4cbaa9c7c49b3022b0f7d1ef84dd0e",
+  "pixelHash": "44ac141095919258543361ce0a13421a6445d1bd73d6ef3ccc5e731dc8b3eda9"
 }
