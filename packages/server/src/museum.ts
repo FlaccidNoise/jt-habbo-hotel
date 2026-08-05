@@ -6,7 +6,7 @@ import {
   checkWallPlacement,
   parseHeightmap,
 } from "@grand/shared";
-import type { FurniDef, FurniItem, WallDef, WallItem } from "@grand/shared";
+import type { FurniDef, FurniItem, WallDef } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { listRoomFurni, listRoomWallFurni } from "./items.ts";
 import { logItemGrants } from "./ledger.ts";
@@ -56,24 +56,6 @@ function museumModel(db: Database.Database): ReturnType<typeof parseHeightmap> {
 export function engraving(donor: string, defName: string, at: number): string {
   const date = new Date(at).toISOString().slice(0, 10);
   return `${defName} — donated by ${donor}, ${date}`;
-}
-
-export interface Exhibit {
-  item: FurniItem;
-  plaque: WallItem;
-}
-
-/** Everything on show, paired with its plaque by the plinth it stands on. */
-export function exhibits(db: Database.Database): Exhibit[] {
-  const floor = listRoomFurni(db, MUSEUM_ROOM_ID);
-  const walls = listRoomWallFurni(db, MUSEUM_ROOM_ID);
-  const out: Exhibit[] = [];
-  for (const spot of PLINTHS) {
-    const item = floor.find((f) => f.x === spot.x && f.y === spot.y);
-    const plaque = walls.find((w) => w.side === "right" && w.x === spot.x);
-    if (item && plaque) out.push({ item, plaque });
-  }
-  return out;
 }
 
 /** The first plinth this piece actually fits on, asked of the real placement checker rather than

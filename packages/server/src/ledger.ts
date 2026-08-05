@@ -230,14 +230,6 @@ export function awardBadge(
   );
 }
 
-export function badgesOf(db: Database.Database, accountId: number): string[] {
-  return (
-    db
-      .prepare("SELECT badge_id AS id FROM badges WHERE account_id = ? ORDER BY earned_at")
-      .all(accountId) as Array<{ id: string }>
-  ).map((r) => r.id);
-}
-
 /** Item-grant rows (starter kit, mints). The caller owns the surrounding transaction. */
 export function logItemGrants(
   db: Database.Database,

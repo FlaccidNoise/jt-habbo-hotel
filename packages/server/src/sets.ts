@@ -15,7 +15,9 @@ export interface SetCompletion {
   itemId: number;
 }
 
-/** Every def the account owns, wherever it is — inventory, its own room, or hung on a wall. */
+/** Every def the account owns, wherever it is — inventory, its own room, hung on a wall, or on
+ *  permanent exhibition. A museum donation keeps its owner, so donating a set member does not
+ *  un-complete the set: you collected it, and giving it to the house is not losing it. */
 export function ownedDefIds(db: Database.Database, accountId: number): string[] {
   return (
     db
@@ -43,19 +45,28 @@ export function claimCompletedSets(
     if (!progress.complete) continue;
     const set = COLLECTION_SETS.find((s) => s.id === progress.id);
     if (!set) continue;
-    if (!awardBadge(db, accountId, set.badge, now)) continue;   // already claimed, ever
-    const result = settleSpend(db, {
-      opKey: `set:${accountId}:${set.id}`,
-      op: "set_reward",
-      accountId,
-      price: 0,
-      mint: { defId: set.reward, bound: true, inscription: `${set.name} — completed` },
-      now,
+    // Badge and reward in one transaction. The badge is the idempotence key, so awarding it
+    // outside the mint would let a failed mint strand the account: badge held, reward owed,
+    // and the next claim skipped because the badge is already there.
+    const claim = db.transaction((): SetCompletion | null => {
+      if (!awardBadge(db, accountId, set.badge, now)) return null;   // already claimed, ever
+      const result = settleSpend(db, {
+        opKey: `set:${accountId}:${set.id}`,
+        op: "set_reward",
+        accountId,
+        price: 0,
+        mint: { defId: set.reward, bound: true, inscription: `${set.name} — completed` },
+        now,
+      });
+      if (!result.ok || result.itemId === undefined) {
+        throw new Error(`${set.id} reward mint failed: ${result.ok ? "no item" : result.reason}`);
+      }
+      return {
+        setId: set.id, name: set.name, badge: set.badge, defId: set.reward, itemId: result.itemId,
+      };
     });
-    if (!result.ok || result.itemId === undefined) continue;
-    done.push({
-      setId: set.id, name: set.name, badge: set.badge, defId: set.reward, itemId: result.itemId,
-    });
+    const claimed = claim();
+    if (claimed) done.push(claimed);
   }
   return done;
 }

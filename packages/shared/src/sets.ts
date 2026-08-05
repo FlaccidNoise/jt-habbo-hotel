@@ -1,5 +1,3 @@
-import { CATALOG_PRICES } from "./furni.ts";
-
 // Collection sets (GAME.md §Status systems, #210). Catalog lines ship as named sets with progress
 // counts; completing one mints a set badge and a set-only furni piece. Completion is what players
 // chase, not progression — so the reward lands on the last item, never in slices along the way.
@@ -70,9 +68,4 @@ export function setProgress(ownedDefIds: Iterable<string>): SetProgress[] {
       reward: set.reward,
     };
   });
-}
-
-/** What finishing a set costs at catalog prices — the sink it actually represents. */
-export function setCost(set: CollectionSet): number {
-  return set.members.reduce((n, m) => n + (CATALOG_PRICES.get(m) ?? 0), 0);
 }
