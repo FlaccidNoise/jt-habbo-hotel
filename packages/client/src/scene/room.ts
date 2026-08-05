@@ -115,7 +115,8 @@ export class RoomScene {
   }
 
   /** Touch has no right button, so a press on a tile decides on release: a quick lift is the
-   *  tap (left-click path), holding still for LONG_PRESS_MS is the pickup (right-click path). */
+   *  tap (left-click path), holding still for LONG_PRESS_MS opens the furni menu (right-click
+   *  path) — the same rotate/pick-up actions a mouse gets. */
   private beginTouch(x: number, y: number, e: FederatedPointerEvent): void {
     this.cancelTouch();
     this.touch = {

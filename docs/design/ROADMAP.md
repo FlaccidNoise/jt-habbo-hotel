@@ -58,13 +58,18 @@ bounces.** Reading the config is never evidence.
 
 ### Step 2 — furni, catalog, public rooms (shipped, gaps filed)
 
-- Place, move, pick up persist across instance unload and reload. Rotate is unbuilt — the client
-  hardcodes direction 0 (#223), though every bundle ships all 4 direction frames.
+- Place, rotate, pick up persist across instance unload and reload. Rotation works both before
+  placing (the held item turns under the cursor) and on a placed item (#223 fixed).
+- Sitting: clicking a seat walks there and seats the avatar on the seat surface, facing the way
+  the seat faces. Clicking it again stands. Walking, a rotation that moves the seat away, and a
+  pickup all put the sitter back on the floor rather than leaving them floating.
 - Stacking respects per-state heights. A staged over-stack is refused.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items.
+- Gaps: #205 room games, #203 wall items. A seated avatar draws in front of its own seat because
+  per-direction occlusion groups are specced but unemitted (PIPELINES §2 stage 1) — until they
+  exist, a chair back can never occlude the sitter.
 
 ### Step 3 — NPC staff (shipped canned-only, #204 finishes it)
 
@@ -203,7 +208,7 @@ build-out taking the catalog from 5 defs to 14.
 3. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
    wall items ship v1. Needs the coordinate system before any wall archetype can be authored.
 
-Also newly open: #223 furni rotation (all 4 direction frames exist and are unreachable).
+Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out.
 
 After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand

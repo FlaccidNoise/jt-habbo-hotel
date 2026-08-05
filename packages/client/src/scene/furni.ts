@@ -54,11 +54,31 @@ export class FurniLayer {
   private defs: ReadonlyMap<string, FurniDef>;
   private assets: FurniAssets | null;
   private views = new Map<number, Container>();
+  private ghostView: Container | null = null;
 
   constructor(world: Container, defs: ReadonlyMap<string, FurniDef>, assets: FurniAssets | null) {
     this.world = world;
     this.defs = defs;
     this.assets = assets;
+  }
+
+  /** A translucent copy of the item being placed, drawn where it would land and facing the way it
+   *  would face — the player previews the actual furniture, not just the tiles it covers. */
+  ghost(def: FurniDef, x: number, y: number, z: number, dir: 0 | 2 | 4 | 6, ok: boolean): void {
+    this.clearGhost();
+    const item: FurniItem = { id: -1, defId: def.id, x, y, z, dir, state: 0 };
+    const view = this.spriteFor(item) ?? this.slabFor(def, item);
+    view.eventMode = "none";
+    view.alpha = ok ? 0.6 : 0.35;
+    if (!ok) view.tint = 0xff6b6b;
+    view.zIndex = depthKey({ kind: "furni", x, y, z });
+    this.ghostView = view;
+    this.world.addChild(view);
+  }
+
+  clearGhost(): void {
+    this.ghostView?.destroy({ children: true });
+    this.ghostView = null;
   }
 
   apply(item: FurniItem): void {

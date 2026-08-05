@@ -54,6 +54,12 @@
       #catalog button { padding: 5px 10px; border-radius: 8px; border: 1px solid #6a5a2e;
         background: #2b2517e6; color: #eee0b0; cursor: pointer; }
       #catalog button:disabled { opacity: .45; cursor: default; }
+      #furni-menu { display: flex; gap: 6px; align-items: center; }
+      #furni-menu[hidden] { display: none; }
+      #furni-menu .label { color: #9aa3b8; font-size: 13px; font-weight: 600; }
+      #furni-menu button { padding: 5px 10px; border-radius: 8px; border: 1px solid #4b5f7d;
+        background: #1b2433e6; color: #dbe7ff; cursor: pointer; }
+      #hint { color: #7d8496; font-size: 12px; }
       #trade { position: fixed; top: 60px; right: 12px; width: 320px; background: #1c1f2bf2;
         border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px; }
       #trade[hidden] { display: none; }
@@ -127,6 +133,9 @@
     <div id="hud">
       <div id="catalog"></div>
       <div id="inventory"></div>
+      <div id="furni-menu" hidden></div>
+      <div id="hint">Click a chair to sit · click it again to stand · R turns the item you are
+        holding · right-click furni to rotate or pick it up</div>
       <form id="chat-form" autocomplete="off">
         <input id="chat-input" maxlength="200"
                placeholder="Enter to say · Shift+Enter to shout · /w name message to whisper" />

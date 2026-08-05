@@ -32,3 +32,11 @@ test("avatar draws under furni one tile nearer", () =>
 test("equal keys are possible and identical (stable sort resolves them)", () =>
   expect(depthKey({ kind: "furni", x: 2, y: 3, z: 0 }))
     .toBe(depthKey({ kind: "furni", x: 3, y: 2, z: 0 })));
+test("a sitter draws over the seat it shares a tile with", () => {
+  const chair = depthKey({ kind: "furni", x: 3, y: 3, z: 0 });
+  const sitter = depthKey({ kind: "seated", x: 3, y: 3, z: 0.65625 });
+  expect(sitter).toBeGreaterThan(chair);
+});
+test("a sitter still draws under furni one tile nearer", () =>
+  expect(depthKey({ kind: "seated", x: 3, y: 3, z: 0.65625 }))
+    .toBeLessThan(depthKey({ kind: "furni", x: 4, y: 3, z: 0 })));

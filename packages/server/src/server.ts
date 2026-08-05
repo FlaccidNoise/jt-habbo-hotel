@@ -253,6 +253,16 @@ export async function startServer(opts: {
         room.pickup(accountId, msg.itemId);
         log("pickup", { accountId, roomId: conn.roomId, itemId: msg.itemId });
         break;
+      case "rotate":
+        room.rotate(accountId, msg.itemId);
+        log("rotate", { accountId, roomId: conn.roomId, itemId: msg.itemId });
+        break;
+      case "sit":
+        room.requestSit(accountId, msg.x, msg.y);
+        break;
+      case "stand":
+        room.requestStand(accountId);
+        break;
       case "trade_open":
         tradeService.open(accountId, msg.to);
         break;

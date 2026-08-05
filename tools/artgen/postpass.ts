@@ -172,7 +172,7 @@ for (const [id, part] of Object.entries(meta.parts)) {
 
   const def: FurniDef = catalogDef ?? {
     id, name: id, w: part.w, l: part.l, stackHeights: [part.maxZ],
-    canWalk: false, canSit: false, canStackOn: false, color: 0,
+    canWalk: false, canStackOn: false, seatHeight: null, color: 0,
   };
   const recipeHash = provenanceHash(id, part);
   const bundle: Bundle = {

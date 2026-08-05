@@ -7,6 +7,7 @@ import {
   checkPlacement,
   footprintTiles,
   parseHeightmap,
+  seatAt,
   tileHeight,
 } from "@grand/shared";
 import type {
@@ -33,7 +34,7 @@ type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
-const PLACE_DIR = 0;
+const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
 
 function el<T extends HTMLElement>(id: string): T {
   const found = document.getElementById(id);
@@ -54,6 +55,10 @@ let doorTile: Tile = { x: 0, y: 0 };
 let furni: FurniItem[] = [];
 let inventory: InventoryItem[] = [];
 let armed: number | null = null;
+let placeDir: 0 | 2 | 4 | 6 = 0;   // the armed item's facing; R turns it before it lands
+let hoverTile: Tile | null = null;
+let menuItem: number | null = null;   // placed item whose edit menu is open
+let you: number | null = null;
 let clockOffset: number | null = null;
 let stars = 0;
 let trade: TradeState | null = null;
@@ -102,7 +107,8 @@ function renderInventory(): void {
   if (inventory.length === 0) {
     const empty = document.createElement("span");
     empty.className = "empty";
-    empty.textContent = "Inventory empty — right-click (or long-press) furni in the room to pick it up.";
+    empty.textContent =
+      "Inventory empty — right-click (or long-press) furni in the room to rotate or pick it up.";
     strip.appendChild(empty);
     return;
   }
@@ -122,9 +128,19 @@ function renderInventory(): void {
         else net.send({ t: "trade_offer", itemIds: ids });
         return;
       }
-      armed = armed === item.id ? null : item.id;
+      if (armed === item.id) {
+        disarm();
+        return;
+      }
+      armed = item.id;
+      placeDir = 0;
+      menuItem = null;
       scene?.clearHighlight();
+      furniLayer?.clearGhost();
+      // The chat box holds focus by default, so hand the keyboard to the room while placing.
+      el<HTMLInputElement>("chat-input").blur();
       renderInventory();
+      renderFurniBar();
     });
     strip.appendChild(button);
   }
@@ -219,6 +235,14 @@ function renderArcade(): void {
   el<HTMLButtonElement>("arcade-deal").disabled = running;
 }
 
+function disarm(): void {
+  armed = null;
+  scene?.clearHighlight();
+  furniLayer?.clearGhost();
+  renderInventory();
+  renderFurniBar();
+}
+
 function itemsOn(x: number, y: number): FurniItem[] {
   return furni.filter((item) => {
     const def = DEFS.get(item.defId);
@@ -228,35 +252,112 @@ function itemsOn(x: number, y: number): FurniItem[] {
   });
 }
 
+/** The topmost item on a tile — what every per-tile action addresses. */
+function topItemOn(x: number, y: number): FurniItem | undefined {
+  return itemsOn(x, y).sort((a, b) => a.z - b.z).pop();
+}
+
 function onTileClick(x: number, y: number, button: number): void {
+  closeMenu();
   if (button === 2) {
-    // Placed items carry no owner in the protocol, so pick up the topmost item here and let the
-    // server answer `not_owner` when it is somebody else's.
-    const top = itemsOn(x, y).sort((a, b) => a.z - b.z).pop();
-    if (top) net.send({ t: "pickup", itemId: top.id });
+    // Placed items carry no owner in the protocol, so offer the menu on the topmost item here
+    // and let the server answer `not_owner` when it is somebody else's.
+    const top = topItemOn(x, y);
+    if (top) openMenu(top);
     return;
   }
   if (button !== 0) return;
   if (armed !== null) {
-    net.send({ t: "place", itemId: armed, x, y, dir: PLACE_DIR });
+    net.send({ t: "place", itemId: armed, x, y, dir: placeDir });
+    return;
+  }
+  // Clicking a seat sits on it — the server walks you there first. Clicking the seat you are
+  // sitting on stands you up, so one control both takes and leaves a chair. Standing on a seat
+  // tile without sitting is possible (you can be stood up under one), so the toggle reads the
+  // posture, not just the position.
+  if (model && seatAt(placementCtx(model), { x, y })) {
+    const me = you === null ? undefined : avatars.get(you);
+    const sittingHere = me?.pose() === "sit" && me.tile().x === x && me.tile().y === y;
+    net.send(sittingHere ? { t: "stand" } : { t: "sit", x, y });
     return;
   }
   net.send({ t: "move", x, y });
 }
 
 function onTileHover(tile: Tile | null): void {
+  hoverTile = tile;
   if (!scene) return;
   const def = armedDef();
   if (!tile || !def || !model) {
     scene.clearHighlight();
+    furniLayer?.clearGhost();
     return;
   }
-  const result = checkPlacement(placementCtx(model), def, tile.x, tile.y, PLACE_DIR);
-  scene.highlight(
-    footprintTiles(def, tile.x, tile.y, PLACE_DIR),
-    result.ok,
-    result.ok ? result.z : Math.max(0, tileHeight(model, tile.x, tile.y)),
-  );
+  const result = checkPlacement(placementCtx(model), def, tile.x, tile.y, placeDir);
+  const z = result.ok ? result.z : Math.max(0, tileHeight(model, tile.x, tile.y));
+  scene.highlight(footprintTiles(def, tile.x, tile.y, placeDir), result.ok, z);
+  furniLayer?.ghost(def, tile.x, tile.y, z, placeDir, result.ok);
+}
+
+/** Turn the armed item before it lands. Nothing is sent until it is placed. */
+function rotateArmed(): void {
+  if (armed === null) return;
+  placeDir = DIRS[(DIRS.indexOf(placeDir) + 1) % DIRS.length] ?? 0;
+  onTileHover(hoverTile);
+}
+
+/** One bar for both edit contexts: the item you are holding, or the placed item you right-clicked.
+ *  Every action is a button because the chat box owns the keyboard — R is only an accelerator for
+ *  players who have clicked away from it. */
+function renderFurniBar(): void {
+  const bar = el("furni-menu");
+  bar.replaceChildren();
+  const item = menuItem === null ? undefined : furni.find((f) => f.id === menuItem);
+  const held = armed === null ? undefined : inventory.find((i) => i.id === armed);
+  if (!item && !held) {
+    bar.hidden = true;
+    return;
+  }
+
+  const defId = item?.defId ?? held?.defId ?? "";
+  const title = document.createElement("span");
+  title.className = "label";
+  title.textContent = held
+    ? `Holding ${DEFS.get(defId)?.name ?? defId} — click a tile to place`
+    : (DEFS.get(defId)?.name ?? defId);
+  bar.appendChild(title);
+
+  const action = (text: string, run: () => void): void => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = text;
+    button.addEventListener("click", run);
+    bar.appendChild(button);
+  };
+  if (held) {
+    action("Rotate (R)", rotateArmed);
+    action("Cancel", disarm);
+  } else if (item) {
+    action("Rotate", () => {
+      net.send({ t: "rotate", itemId: item.id });
+    });
+    action("Pick up", () => {
+      net.send({ t: "pickup", itemId: item.id });
+      closeMenu();
+    });
+    action("Close", closeMenu);
+  }
+  bar.hidden = false;
+}
+
+function openMenu(item: FurniItem): void {
+  menuItem = item.id;
+  renderFurniBar();
+}
+
+function closeMenu(): void {
+  menuItem = null;
+  renderFurniBar();
 }
 
 function buildRoom(msg: RoomState): void {
@@ -271,6 +372,9 @@ function buildRoom(msg: RoomState): void {
   furni = msg.furni;
   inventory = msg.inventory;
   armed = null;
+  placeDir = 0;
+  you = msg.you;
+  closeMenu();
   stars = msg.stars;
   trade = null;
   arcade = null;
@@ -300,8 +404,10 @@ function upsertFurni(item: FurniItem): void {
     inventory = inventory.filter((inv) => inv.id !== item.id);
     if (armed === item.id) armed = null;
     scene?.clearHighlight();
+    furniLayer?.clearGhost();
     renderInventory();
   }
+  renderFurniBar();
 }
 
 function handle(msg: ServerMsg): void {
@@ -325,6 +431,9 @@ function handle(msg: ServerMsg): void {
     case "chat":
       chat.show(msg.from, msg);
       break;
+    case "posture":
+      avatars.get(msg.id)?.setPosture(msg.posture, { x: msg.x, y: msg.y, z: msg.z }, msg.dir);
+      break;
     case "furni_placed":
     case "furni_moved":
       upsertFurni(msg.item);
@@ -332,6 +441,7 @@ function handle(msg: ServerMsg): void {
     case "furni_removed":
       furni = furni.filter((f) => f.id !== msg.itemId);
       furniLayer?.remove(msg.itemId);
+      if (menuItem === msg.itemId) closeMenu();
       break;
     case "inventory_add":
       inventory.push(msg.item);
@@ -393,6 +503,17 @@ async function start(token: string): Promise<void> {
   });
   window.addEventListener("resize", () => {
     if (app && scene) scene.center(app.screen.width, app.screen.height);
+  });
+  // Keyboard belongs to the room only while the chat box does not have it.
+  window.addEventListener("keydown", (e) => {
+    if (e.target instanceof HTMLInputElement || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "r" || e.key === "R") {
+      rotateArmed();
+      e.preventDefault();
+    } else if (e.key === "Escape") {
+      if (armed !== null) disarm();
+      closeMenu();
+    }
   });
 
   net.onMessage(handle);
