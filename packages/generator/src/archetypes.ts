@@ -4,7 +4,8 @@ import type { Prng } from "./prng.ts";
 import type { Ramp } from "./style.ts";
 import { rampByName } from "./style.ts";
 
-export const PART_LIBRARY_VERSION = 1;
+// 2: plant.foliage.bush regrown as a non-interpenetrating voxel cluster (gateDrawOrder).
+export const PART_LIBRARY_VERSION = 2;
 
 /** Slot variants build geometry in the dir-0 frame: footprint units [0..w]×[0..l], facing -y
  *  (the back of a chair sits on the +y edge). Rotation to the other three dirs is mechanical. */
@@ -52,8 +53,11 @@ const CHAIR: ArchetypeSpec = {
       tapered: (ctx) => posts(ctx, 0.125, 0.45),
     },
     seat: {
-      flat: (ctx) => [box(ctx.ramp, 0.0625, 0.0625, 0.45, 0.9375, 0.9375, 0.578125)],
-      cushion: (ctx) => [box(ctx.ramp, 0.09375, 0.09375, 0.45, 0.90625, 0.90625, 0.65625)],
+      // Both stop at the back slot's near edge (y 0.78125). Running under it instead puts the
+      // back through whichever seat variant tops out above its own z0, and two boxes that pass
+      // through each other have no correct draw order — the same seam the sofa's cushions avoid.
+      flat: (ctx) => [box(ctx.ramp, 0.0625, 0.0625, 0.45, 0.9375, 0.78125, 0.578125)],
+      cushion: (ctx) => [box(ctx.ramp, 0.09375, 0.09375, 0.45, 0.90625, 0.78125, 0.65625)],
     },
     back: {
       solid: (ctx) => [box(ctx.ramp, 0.0625, 0.78125, 0.578125, 0.9375, 0.9375, ctx.h)],
@@ -121,16 +125,43 @@ const PLANT: ArchetypeSpec = {
     },
     foliage: {
       bush: (ctx) => {
-        // Seeded cluster: quantized jitter keeps every vertex on the pixel grid.
-        const blobs: Box[] = [box(ctx.ramp, 0.4375, 0.4375, 0.40625, 0.5625, 0.5625, 0.75)];
-        for (let i = 0; i < 6; i++) {
-          const cx = 0.21875 + ctx.prng.int(10) * 0.0625;
-          const cy = 0.21875 + ctx.prng.int(10) * 0.0625;
-          const z0 = 0.625 + ctx.prng.int(6) * 0.125;
-          const s = 0.1875 + ctx.prng.int(3) * 0.0625;
-          blobs.push(box(ctx.ramp, cx - s / 2, cy - s / 2, z0, cx + s / 2, cy + s / 2, z0 + s * 2));
+        // Seeded voxel cluster, grown outward from the cell the stem holds up. Blobs share faces
+        // and never interpenetrate: two boxes that pass through each other have no correct draw
+        // order at all — each is in front of the other somewhere — so gateDrawOrder rejects them.
+        // The lattice keeps every vertex on the pixel grid for free.
+        const cell = 0.1875;
+        const x0 = 0.21875;
+        const z0 = 0.75;
+        const blob = (gx: number, gy: number, gz: number): Box =>
+          box(ctx.ramp,
+            x0 + gx * cell, x0 + gy * cell, z0 + gz * cell,
+            x0 + (gx + 1) * cell, x0 + (gy + 1) * cell, z0 + (gz + 1) * cell);
+        // Lateral steps outnumber vertical ones 4:2, or the walk climbs into a staircase instead
+        // of filling out into a mass.
+        const steps = [
+          [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0],
+          [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0],
+          [0, 0, 1], [0, 0, -1],
+        ];
+        const cells: Array<[number, number, number]> = [[1, 1, 0]];
+        const taken = new Set(["1,1,0"]);
+        for (let tries = 0; cells.length < 14 && tries < 200; tries++) {
+          const from = cells[ctx.prng.int(cells.length)] ?? [1, 1, 0];
+          const step = steps[ctx.prng.int(steps.length)] ?? [0, 0, 1];
+          const c: [number, number, number] = [
+            (from[0] ?? 0) + (step[0] ?? 0),
+            (from[1] ?? 0) + (step[1] ?? 0),
+            (from[2] ?? 0) + (step[2] ?? 0),
+          ];
+          if (c[0] < 0 || c[0] > 2 || c[1] < 0 || c[1] > 2 || c[2] < 0 || c[2] > 2) continue;
+          if (taken.has(c.join(","))) continue;
+          taken.add(c.join(","));
+          cells.push(c);
         }
-        return blobs;
+        return [
+          box(ctx.ramp, 0.4375, 0.4375, 0.40625, 0.5625, 0.5625, z0),
+          ...cells.map((c) => blob(...c)),
+        ];
       },
       palm: (ctx) => {
         const trunk = box(ctx.ramp, 0.4375, 0.4375, 0.40625, 0.5625, 0.5625, 1.25);
@@ -153,10 +184,19 @@ const RUG: ArchetypeSpec = {
     // The curated pattern set for procedural classes (PIPELINES §2 stage 2) — no free seed space.
     field: {
       solid: (ctx) => [box(ctx.ramp, 0, 0, 0, ctx.w, ctx.l, ctx.h)],
-      border: (ctx) => [
-        box(ctx.ramp, 0, 0, 0, ctx.w, ctx.l, ctx.h),
-        box(rampByName("sand"), 0.375, 0.375, 0, ctx.w - 0.375, ctx.l - 0.375, ctx.h),
-      ],
+      // Four rails around an inlay, tiling the footprint. Laying the inlay *over* a full-size
+      // field instead would put two boxes in one volume, where no draw order is right: the
+      // inlay's east and south faces stamp a rim that a depth test never draws.
+      border: (ctx) => {
+        const m = 0.375;
+        return [
+          box(ctx.ramp, 0, 0, 0, ctx.w, m, ctx.h),
+          box(ctx.ramp, 0, m, 0, m, ctx.l - m, ctx.h),
+          box(rampByName("sand"), m, m, 0, ctx.w - m, ctx.l - m, ctx.h),
+          box(ctx.ramp, ctx.w - m, m, 0, ctx.w, ctx.l - m, ctx.h),
+          box(ctx.ramp, 0, ctx.l - m, 0, ctx.w, ctx.l, ctx.h),
+        ];
+      },
       checker: (ctx) => {
         const alt = rampByName("slate");
         const tiles: Box[] = [];

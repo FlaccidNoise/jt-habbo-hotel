@@ -2,17 +2,13 @@ import { createHash } from "node:crypto";
 import type { FurniDef } from "@grand/shared";
 import { ARCHETYPES } from "./archetypes.ts";
 import type { Box } from "./iso.ts";
-import { drawBox, painterSort, rotateBox } from "./iso.ts";
+import { H, V, ZU, drawBox, painterSort, rotateBox } from "./iso.ts";
 import { mulberry32 } from "./prng.ts";
 import type { Canvas } from "./raster.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "./raster.ts";
 import type { Recipe } from "./recipe.ts";
 import { recipeHash } from "./recipe.ts";
 import { OUTLINE, rampByName } from "./style.ts";
-
-const H = 32;
-const V = 16;
-const ZU = 32;
 
 export const DIRS = [0, 2, 4, 6] as const;
 
@@ -42,6 +38,9 @@ export interface BundleMeta {
 export interface Bundle {
   sheet: Canvas;
   meta: BundleMeta;
+  /** Part boxes per dir frame, in that frame's footprint units — what the draw-order gate
+   *  re-renders. Null for 3D-assisted defs (#202): they ship frozen pixels, not geometry. */
+  geometry: Box[][] | null;
 }
 
 /** Any opaque pixel touching transparency (or the frame edge) becomes the global outline. */
@@ -92,6 +91,7 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
 
   const sheet = makeCanvas(frameW * DIRS.length, frameH);
   const anchorsX: number[] = [];
+  const geometry: Box[][] = [];
   let current = boxes;
   let spanY = def.l;
   for (let q = 0; q < DIRS.length; q++) {
@@ -100,6 +100,7 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
       spanY = spanY === def.l ? def.w : def.l;
     }
     anchorsX.push(spanY * H);
+    geometry.push(current);
     const frame = makeCanvas(frameW, frameH);
     for (const b of painterSort(current)) drawBox(frame, { x: spanY * H, y: anchorY }, b);
     outlineSilhouette(frame);
@@ -108,6 +109,7 @@ export function render(def: FurniDef, recipe: Recipe): Bundle {
 
   return {
     sheet,
+    geometry,
     meta: {
       defId: def.id,
       archetype: recipe.archetype,

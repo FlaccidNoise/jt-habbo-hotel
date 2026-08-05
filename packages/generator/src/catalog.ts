@@ -32,5 +32,5 @@ export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer } {
   if (pixelHash !== meta.pixelHash) {
     throw new Error(`${def.id}: frozen png pixels do not match meta.pixelHash — bundle is corrupt`);
   }
-  return { bundle: { sheet: { w: width, h: height, px: rgba }, meta }, png };
+  return { bundle: { sheet: { w: width, h: height, px: rgba }, meta, geometry: null }, png };
 }

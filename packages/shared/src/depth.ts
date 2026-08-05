@@ -7,18 +7,43 @@ export interface DepthBox {
   layer: number;
 }
 
+/** Whether two boxes can share a screen pixel at all.
+ *
+ *  The projection sends a world point to column (x − y)·h and row (x + y − 2z)·v — z counts double
+ *  because zu is always 2v. Each box therefore covers one span of columns and one span of rows,
+ *  and boxes whose spans miss on either axis are nowhere near each other on screen.
+ *
+ *  Conservative on purpose: these are bounding spans, so `meet` says yes to some pairs that never
+ *  touch. It only has to say no to pairs that certainly never touch. */
+function meet(a: DepthBox, b: DepthBox): boolean {
+  return (
+    a.x0 - a.y1 < b.x1 - b.y0 && b.x0 - b.y1 < a.x1 - a.y0 &&
+    a.x0 + a.y0 - 2 * a.z1 < b.x1 + b.y1 - 2 * b.z0 &&
+    b.x0 + b.y0 - 2 * b.z1 < a.x1 + a.y1 - 2 * a.z0
+  );
+}
+
 /** True when `a` can only ever be occluded by `b`, never the reverse: `a` is west, north, or
  *  underneath, and the two share the axes that would let their sprites meet on screen.
  *
  *  The overlap requirement is what keeps the relation acyclic. Diagonal neighbours — (0,1) and
  *  (1,0) — satisfy both "a is west of b" and "b is north of a"; their sprite columns never touch,
- *  so neither constrains the other and they fall through to the tie-break key. */
+ *  so neither constrains the other and they fall through to the tie-break key.
+ *
+ *  `meet` carries that argument to the third axis. "West of" is sound at any pair of heights, but
+ *  between a low box and a high one it is also *vacuous* — the two are nowhere near each other on
+ *  screen. A vacuous constraint still closes a cycle, and a cycle makes `painterOrder` fall back
+ *  and drop some constraint that was not vacuous. A chair found this one: a back slat is west of a
+ *  back leg it never touches, which closed leg → seat → slat → leg and let the leg stamp its lid
+ *  over the seat. Keeping only the constraints that can matter is what stops it. */
 export function behind(a: DepthBox, b: DepthBox): boolean {
   const xOverlap = a.x0 < b.x1 && b.x0 < a.x1;
   const yOverlap = a.y0 < b.y1 && b.y0 < a.y1;
-  if (yOverlap && a.x1 <= b.x0) return true;
-  if (xOverlap && a.y1 <= b.y0) return true;
-  return xOverlap && yOverlap && a.z1 <= b.z0;
+  const ordered =
+    (yOverlap && a.x1 <= b.x0) ||
+    (xOverlap && a.y1 <= b.y0) ||
+    (xOverlap && yOverlap && a.z1 <= b.z0);
+  return ordered && meet(a, b);
 }
 
 /** Back-to-front draw order, as indices into `boxes`.

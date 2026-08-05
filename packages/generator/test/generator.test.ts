@@ -9,6 +9,7 @@ import { decodePng, encodePng } from "../src/png.ts";
 import {
   gateBounds,
   gateContrast,
+  gateDrawOrder,
   gateFootprint,
   gatePalette,
   gateSeat,
@@ -18,8 +19,9 @@ import {
 import { makeCanvas, putPixel } from "../src/raster.ts";
 import { recipeHash } from "../src/recipe.ts";
 import type { Recipe } from "../src/recipe.ts";
+import { drawOrderMismatch, referenceScenes } from "../src/scene.ts";
 import { STARTER_RECIPES } from "../src/starter.ts";
-import { FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES } from "../src/style.ts";
+import { FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES, rampByName } from "../src/style.ts";
 
 const CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "chair_basic");
 const CHAIR_RECIPE = STARTER_RECIPES.get("chair_basic");
@@ -219,6 +221,34 @@ describe("gates bounce staged known-bad input", () => {
     const { bundle } = bundleFor(plant!);
     expect(bundle.meta.drawnHeight).toBeLessThan(plant!.stackHeights[0]!);
     expect(gateFootprint(bundle, plant!)).toEqual({ ok: true });
+  });
+
+  test("draw-order: a multi-tile item sorted off its origin tile", () => {
+    // The shipped defect. The whole-object box covered only the origin tile, so a 2×1 table
+    // stopped constraining the neighbours at its far end and slid to one side of both.
+    const table = defById("table_basic");
+    const { geometry, meta } = render(table, STARTER_RECIPES.get("table_basic")!);
+    const ring = referenceScenes(geometry![0]!, table.w, table.l, meta.drawnHeight)[1]!;
+    expect(drawOrderMismatch(ring)).toBeNull();
+
+    const off = ring.map((it, i) => (i === 0 ? { ...it, depth: { ...it.depth, x1: 1 } } : it));
+    expect(drawOrderMismatch(off)).toMatch(/hidden behind a farther surface/);
+  });
+
+  test("draw-order: part boxes driven through each other", () => {
+    // Two boxes that interpenetrate are each in front of the other somewhere, so no painter order
+    // is right — the failure the sofa's cushions and the plant's foliage are both authored around.
+    const bundle = chairBundle();
+    const rail = { x0: 0, y0: 0.40625, z0: 0.46875, x1: 1, y1: 0.59375, z1: 0.625, ramp: rampByName("teal") };
+    for (const frame of bundle.geometry ?? []) frame.push(rail);
+    expect(gateDrawOrder(bundle, CHAIR_DEF!)).toMatchObject({ ok: false, gate: "draw-order" });
+  });
+
+  test("draw-order: a frozen bundle carries no geometry, so the gate cannot reach it", () => {
+    // The stated coverage limit (#233): 3D-assisted defs ship pixels, not boxes.
+    const { bundle } = bundleFor(CAFE_CHAIR_DEF!);
+    expect(bundle.geometry).toBeNull();
+    expect(gateDrawOrder(bundle, CAFE_CHAIR_DEF!)).toEqual({ ok: true });
   });
 
   test("contrast: a sprite painted in the floor tone", () => {

@@ -33,8 +33,20 @@ in the axes that let their sprites meet. A scalar depth key cannot do this — a
 chair behind it at one end and in front at the other, and one number puts both on the same side.
 Ties (diagonal neighbours, boxes sharing a space) fall back to a depth key and then to insertion
 order, so they never flicker. The same order runs inside one sprite, over its part boxes, which is
-what keeps a leg from stamping its lid over the tabletop. A rendering-correctness gate (stage 4)
-renders each generated item in a reference scene of stacked and adjacent items and diffs the result.
+what keeps a leg from stamping its lid over the tabletop.
+
+A constraint is kept only when the two boxes could share a pixel (`meet`). "West of" holds at any
+pair of heights, but between a low box and a high one it is also vacuous — and a vacuous constraint
+still closes a cycle, which makes `painterOrder` fall back and drop a constraint that was not
+vacuous.
+
+The rendering-correctness gate (stage 4) is `gateDrawOrder`. It renders each generated item twice —
+alone, and in a reference scene of a neighbour on every adjacent tile plus one stacked on top — and
+diffs the painter render against a per-pixel depth test (packages/generator/src/scene.ts). A pixel
+passes when the colour the painter left is one that a nearest-surface box would have painted. Two
+boxes that pass through each other therefore always fail: each is in front of the other somewhere,
+so no order is right, and parts are authored to touch rather than overlap. Coverage is the box path
+only — 3D-assisted defs ship frozen pixels with no boxes to re-render (#233).
 
 Floor tiles are excluded: they are flat and static, so they keep a band below every sprite. That is
 correct only while rooms are flat — raised tiles never occlude furniture (#230).

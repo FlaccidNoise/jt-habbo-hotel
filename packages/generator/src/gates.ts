@@ -2,6 +2,7 @@ import type { FurniDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { getPixel } from "./raster.ts";
 import type { Canvas } from "./raster.ts";
+import { drawOrderMismatch, referenceScenes } from "./scene.ts";
 import { FLOOR_TONES, PALETTE, luminance } from "./style.ts";
 
 // Validation gates (PIPELINES §2 stage 4). Every gate has a staged known-bad test — a gate
@@ -98,6 +99,35 @@ export function gateBounds(bundle: Bundle): GateResult {
   return { ok: true };
 }
 
+/** Draw-order correctness: render the item in a reference scene of adjacent and stacked
+ *  neighbours, and diff the painter render against a per-pixel depth test (scene.ts).
+ *
+ *  It bounces two kinds of failure at once. Inside the sprite, part boxes that no order can
+ *  resolve — a leg whose lid stamps over the tabletop, a cushion driven through a backrest.
+ *  Between sprites, a whole-object box that disagrees with the geometry it stands for, which is
+ *  what sorted a multi-tile item off its origin tile.
+ *
+ *  Coverage limit: box-path defs only (STARTER_RECIPES). A 3D-assisted def ships frozen pixels
+ *  with no boxes to re-render, so nothing here can reach it — those want a stored-reference pixel
+ *  diff instead (#233). */
+export function gateDrawOrder(bundle: Bundle, def: FurniDef): GateResult {
+  if (!bundle.geometry) return { ok: true };
+  for (const [q, boxes] of bundle.geometry.entries()) {
+    const rotated = q % 2 === 1;
+    const scenes = referenceScenes(
+      boxes,
+      rotated ? def.l : def.w,
+      rotated ? def.w : def.l,
+      bundle.meta.drawnHeight,
+    );
+    for (const scene of scenes) {
+      const detail = drawOrderMismatch(scene);
+      if (detail) return fail("draw-order", `dir ${bundle.meta.dirs[q]}: ${detail}`);
+    }
+  }
+  return { ok: true };
+}
+
 /** Silhouette pixels must read against both extreme floor tones. */
 export function gateContrast(sheet: Canvas): GateResult {
   let sum = 0;
@@ -132,6 +162,7 @@ export function runGates(bundle: Bundle, def: FurniDef): GateResult {
     gateSeat(bundle, def),
     gateBounds(bundle),
     gateContrast(bundle.sheet),
+    gateDrawOrder(bundle, def),
   ]) {
     if (!result.ok) return result;
   }
