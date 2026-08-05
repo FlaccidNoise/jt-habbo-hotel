@@ -20,8 +20,9 @@ Status date: 2026-08-05.
 
 Cross-cutting, outside the numbered order: #125 gateway (trigger: first multi-process or remote
 deploy), #126 deferred room/social features (Navigator + room capacity 25 shipped 9f90670; room
-creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (proportions pin
-jointly with the style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms
+creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (SHIPPED — layered
+figure-string avatars, 80 px / 2.5 units pinned against the shipped seat heights, 8 native
+directions, ownership-gated wearing; deferred actions #232), #123 pets (needs #118 rails + generator), #124 programmable rooms
 (decided: phased, demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
@@ -70,9 +71,9 @@ bounces.** Reading the config is never evidence.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items. A seated avatar draws in front of its own seat because
-  per-direction occlusion groups are specced but unemitted (PIPELINES §2 stage 1) — until they
-  exist, a chair back can never occlude the sitter.
+- Gaps: #205 room games, #203 wall items. Seated occlusion is fixed (#227): the rig derives the
+  near/far split from primitive depth against the seat point, ships it as an additive companion
+  sheet, and the client sorts avatars between a seat's two halves.
 
 ### Step 3 — NPC staff (shipped canned-only, #204 finishes it)
 
