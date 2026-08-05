@@ -67,7 +67,7 @@ describe("smoke suite", () => {
   beforeAll(async () => {
     dir = mkdtempSync(join(tmpdir(), "grand-smoke-"));
     dbPath = join(dir, "smoke.db");
-    srv = await startServer({ port: 0, dbPath, disposeMs: DISPOSE_MS });
+    srv = await startServer({ port: 0, dbPath, disposeMs: DISPOSE_MS, npcGenerate: null });
     port = srv.port;
     tokens = {
       alice: await signUp("alice"),
@@ -87,9 +87,13 @@ describe("smoke suite", () => {
   test("joins are mutually visible", { timeout: 5000 }, async () => {
     alice = await joinAs(tokens.alice, 1);
     expect(alice.state).toMatchObject({ roomId: 1, name: "The Lobby Café" });
-    expect(alice.state.avatars).toEqual([
+    expect(alice.state.avatars.filter((a) => !a.staff)).toEqual([
       { id: alice.id, username: "alice", x: 0, y: 5, z: 0, dir: 2, posture: "stand" },
     ]);
+    // The café is staffed from the first join — bellhop and barista at their posts.
+    expect(alice.state.avatars.filter((a) => a.staff).map((a) => a.username).sort()).toEqual(
+      ["Maya", "Pierre"],
+    );
 
     bob = await joinAs(tokens.bob, 1);
     expect(bob.state.avatars.find((a) => a.id === alice.id)).toMatchObject({ username: "alice" });
@@ -218,7 +222,7 @@ describe("smoke suite", () => {
 
   test("furni state survives a server restart with the same token", { timeout: 8000 }, async () => {
     await srv.close();
-    srv = await startServer({ port, dbPath, disposeMs: DISPOSE_MS });
+    srv = await startServer({ port, dbPath, disposeMs: DISPOSE_MS, npcGenerate: null });
     expect(srv.port).toBe(port);
 
     aliceAgain = await joinAs(tokens.alice, 2);

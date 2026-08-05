@@ -38,11 +38,13 @@ export class AvatarSprite {
     this.view = new Container();
     this.view.eventMode = "none";
 
+    // Staff NPCs are visibly staff: navy uniform, gold trim, badged name tag. Never player colors.
+    const staff = state.staff === true;
     const body = new Graphics();
     body
       .roundRect(-BODY_W / 2, -BODY_H, BODY_W, BODY_H, 6)
-      .fill(colorOf(state.username))
-      .stroke({ width: 2, color: 0x000000, alpha: 0.45 });
+      .fill(staff ? 0x35406b : colorOf(state.username))
+      .stroke(staff ? { width: 2, color: 0xd4af37, alpha: 0.9 } : { width: 2, color: 0x000000, alpha: 0.45 });
     this.view.addChild(body);
 
     this.pip = new Graphics();
@@ -50,9 +52,9 @@ export class AvatarSprite {
     this.view.addChild(this.pip);
 
     const label = new Text({
-      text: state.username,
+      text: staff ? `★ ${state.username} — STAFF` : state.username,
       style: {
-        fill: 0xffffff,
+        fill: staff ? 0xf5d76e : 0xffffff,
         fontFamily: "system-ui, sans-serif",
         fontSize: 12,
         stroke: { color: 0x000000, width: 3 },

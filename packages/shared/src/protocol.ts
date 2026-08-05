@@ -25,6 +25,7 @@ export const AvatarStateSchema = z.object({
   id: z.number().int(), username: z.string(),
   x: z.number().int(), y: z.number().int(), z: z.number(),
   dir: DirSchema, posture: z.enum(["stand", "sit"]),   // server always sends "stand" in this slice
+  staff: z.boolean().optional(),   // NPC hotel staff — negative ids, visibly badged, never players
 });
 export type AvatarState = z.infer<typeof AvatarStateSchema>;
 

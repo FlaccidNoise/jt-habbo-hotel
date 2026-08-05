@@ -42,6 +42,7 @@ export interface Occupant {
   y: number;
   z: number;
   dir: number;
+  staff?: boolean;
 }
 export type Emit = (accountId: number, msg: ServerMsg) => void;
 
@@ -61,7 +62,10 @@ const RULESET = loadRuleset(new URL("../filter-words.txt", import.meta.url).path
 const key = (x: number, y: number): string => `${x},${y}`;
 
 function toAvatar(o: Occupant): AvatarState {
-  return { id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: "stand" };
+  return {
+    id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: "stand",
+    ...(o.staff ? { staff: true } : {}),
+  };
 }
 
 export class Room {
@@ -104,8 +108,23 @@ export class Room {
     return [...this.occ.values()].map((o) => ({ ...o }));
   }
 
+  /** Players only — staff NPCs never keep a room alive. */
   occupantCount(): number {
-    return this.occ.size;
+    return [...this.occ.values()].filter((o) => !o.staff).length;
+  }
+
+  /** Staff NPCs stand at a fixed post. No socket exists for their id, so emits to them no-op. */
+  addNpc(def: { id: number; name: string; post: Tile; dir: number }): void {
+    if (this.occ.has(def.id)) return;
+    this.occ.set(def.id, {
+      accountId: def.id,
+      username: def.name,
+      staff: true,
+      x: def.post.x,
+      y: def.post.y,
+      z: this.tileZ(def.post.x, def.post.y),
+      dir: def.dir,
+    });
   }
 
   join(accountId: number, username: string): void {

@@ -31,7 +31,7 @@ afterEach(async () => {
 });
 
 async function start(opts: Partial<Opts> = {}): Promise<ServerHandle> {
-  srv = await startServer({ port: 0, dbPath, ...opts });
+  srv = await startServer({ port: 0, dbPath, npcGenerate: null, ...opts });
   return srv;
 }
 
@@ -147,9 +147,10 @@ describe("room session", () => {
 
     const state = await bus.waitFor("room_state");
     expect(state).toMatchObject({ roomId: 1, name: "The Lobby Café" });
-    expect(state.avatars).toHaveLength(1);
+    const players = state.avatars.filter((a) => !a.staff);
+    expect(players).toHaveLength(1);
     expect(state.inventory).toHaveLength(5);
-    expect(state.you).toBe(state.avatars[0]?.id);
+    expect(state.you).toBe(players[0]?.id);
   });
 
   test("a second client raises avatar_join on the first", async () => {
@@ -196,10 +197,11 @@ describe("room session", () => {
   });
 
   test("a whisper reaches the target and the sender only", async () => {
+    // Casino: no greeter NPC, so the only chat traffic is the whisper itself.
     const { port } = await start();
-    const alice = await joinAs(port, await signUp(port, "alice"));
-    const bob = await joinAs(port, await signUp(port, "bob"));
-    const carol = await joinAs(port, await signUp(port, "carol"));
+    const alice = await joinAs(port, await signUp(port, "alice"), 2);
+    const bob = await joinAs(port, await signUp(port, "bob"), 2);
+    const carol = await joinAs(port, await signUp(port, "carol"), 2);
 
     alice.ws.send(JSON.stringify({ t: "whisper", to: "bob", text: "psst" }));
     expect(await bob.bus.waitFor("chat")).toMatchObject({ from: alice.id, mode: "whisper", text: "psst" });
@@ -241,7 +243,9 @@ describe("room session", () => {
 
     const second = await joinAs(port, token);
     expect(second.id).toBe(alice.id);
-    expect(second.state.avatars.map((a) => a.id).sort()).toEqual([alice.id, bob.id].sort());
+    expect(second.state.avatars.filter((a) => !a.staff).map((a) => a.id).sort()).toEqual(
+      [alice.id, bob.id].sort(),
+    );
     expect(await alice.bus.closed()).toBe(4409);
     await bob.bus.never("avatar_join");
     await bob.bus.never("avatar_leave");

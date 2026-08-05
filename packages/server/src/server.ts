@@ -12,6 +12,8 @@ import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
 import { log } from "./log.ts";
+import { NpcService, llmFromEnv } from "./npc.ts";
+import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
 import type { Emit } from "./room.ts";
 
@@ -56,6 +58,8 @@ export async function startServer(opts: {
   staticDir?: string;
   handshakeMs?: number;
   disposeMs?: number;
+  /** NPC line generator. Omit for the NPC_LLM_* env config; null for canned lines only. */
+  npcGenerate?: NpcGenerate | null;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -88,6 +92,11 @@ export async function startServer(opts: {
     if (ws) send(ws, msg);
   };
 
+  const npcService = new NpcService({
+    generate: opts.npcGenerate !== undefined ? opts.npcGenerate : llmFromEnv(),
+    say: (roomId, npcId, text) => rooms.get(roomId)?.room.chat(npcId, "say", text),
+  });
+
   function roomExists(roomId: number): boolean {
     if (rooms.has(roomId)) return true;
     return db.prepare("SELECT 1 FROM rooms WHERE id = ?").get(roomId) !== undefined;
@@ -101,6 +110,7 @@ export async function startServer(opts: {
       return entry.room;
     }
     const room = new Room(db, roomId, emit);
+    for (const def of npcService.npcsFor(roomId)) room.addNpc(def);
     rooms.set(roomId, { room });
     return room;
   }
@@ -115,6 +125,7 @@ export async function startServer(opts: {
     entry.room.leave(conn.accountId);
     log("leave", { accountId: conn.accountId, roomId });
     if (entry.room.occupantCount() > 0) return;
+    npcService.onRoomEmpty(roomId);
     entry.dispose = setTimeout(() => {
       entry.room.dispose();
       rooms.delete(roomId);
@@ -163,6 +174,7 @@ export async function startServer(opts: {
       transferring = null;
     }
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
+    npcService.onPlayerJoin(msg.roomId, account.username);
   }
 
   function dispatch(conn: Conn, msg: ClientMsg): void {
@@ -179,9 +191,12 @@ export async function startServer(opts: {
       case "move":
         room.requestMove(accountId, msg.x, msg.y);
         break;
-      case "chat":
+      case "chat": {
         room.chat(accountId, msg.mode, msg.text);
+        const speaker = room.occupants().find((o) => o.accountId === accountId);
+        if (speaker) npcService.onPlayerChat(room.roomId, speaker, msg.mode, msg.text);
         break;
+      }
       case "whisper":
         room.whisper(accountId, msg.to, msg.text);
         break;
@@ -378,6 +393,7 @@ export async function startServer(opts: {
   log("listening", { port, dbPath: opts.dbPath });
 
   async function close(): Promise<void> {
+    npcService.stop();
     for (const conn of conns.values()) clearTimeout(conn.handshake);
     for (const client of wss.clients) client.terminate();
     await new Promise<void>((resolve, reject) => wss.close((e) => (e ? reject(e) : resolve())));
