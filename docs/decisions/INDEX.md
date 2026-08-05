@@ -84,3 +84,10 @@
   invite-only until tenure), moderation tooling in build step 1, graduated incident-response
   flags, monthly red-team as a release gate, deduction lobbies sealed (no trade/gifts/friend
   requests/whisper in-match, per-match names).
+- 2026-08-05 — **Depth is a topological sort over boxes, not a scalar key.** Every sprite carries
+  its footprint and height; `painterOrder` (packages/shared/src/depth.ts) orders them by "west,
+  north, or underneath, given axis overlap", falling back to a depth key for incomparable pairs.
+  Supersedes the origin-tile depth key, which is provably unfixable: a 4×1 table needs a chair
+  behind it at one end and in front at the other, and no single number can do both. The same
+  routine sorts the part boxes inside one generated sprite. Tiles stay in a flat band below every
+  sprite, so raised tiles do not occlude — #230. Detail: docs/design/PIPELINES.md §Draw order.

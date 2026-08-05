@@ -87,11 +87,13 @@ const SOFA: ArchetypeSpec = {
       slab: (ctx) => [box(ctx.ramp, 0, 0, 0, ctx.w, ctx.l, 0.34375)],
     },
     seat: {
+      // Cushions stop at the backrest's near edge (y 0.75). Overlapping it leaves the two halves
+      // of one seat on opposite sides of the back in any painter order — a visible seam.
       cushions: (ctx) => {
         const cushion = rampByName("sand");
         return [
-          box(cushion, 0.25, 0.09375, 0.34375, 0.984375, 0.90625, 0.5625),
-          box(cushion, 1.015625, 0.09375, 0.34375, 1.75, 0.90625, 0.5625),
+          box(cushion, 0.25, 0.09375, 0.34375, 0.984375, 0.75, 0.5625),
+          box(cushion, 1.015625, 0.09375, 0.34375, 1.75, 0.75, 0.5625),
         ];
       },
     },

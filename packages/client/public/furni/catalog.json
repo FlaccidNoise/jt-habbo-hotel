@@ -38,7 +38,7 @@
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
       "recipeHash": "a4874c4a0a54b84fb03223b5f266e94a17a0016eb4ac1d57d5c9e5aa68dbc8d6",
-      "pixelHash": "d13d2431f694f498cbb2e96bd2137ddef0fd40578643cb8f55e040bda81d3fe7"
+      "pixelHash": "c3f2bf1f47781376837ba07e4e21b1006dbbd737a8445b6ec936d4ad9c3bf5c4"
     },
     "table_basic": {
       "defId": "table_basic",
@@ -75,7 +75,7 @@
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
       "recipeHash": "a2e49766e860ed94d4e1a23f362a24c90d1a3af6ecf6d67388f2b348bfb5654b",
-      "pixelHash": "93489bae38eb80aef0e3c1a1fc464a122aaf955e7c8294e716f6251b45ac910b"
+      "pixelHash": "5275308563d733b9a60889f3c6589a85c284d9d3243c5e82620ae179bf15f115"
     },
     "sofa_basic": {
       "defId": "sofa_basic",
@@ -114,7 +114,7 @@
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
       "recipeHash": "70719ca1d5da254af824b03544b315f3a8fcc8c73f5f8e1cf4602e04a27ae100",
-      "pixelHash": "3728ad26b3b1f3487d54d97158da3f0e001721371dfebecee5850fef92c1e692"
+      "pixelHash": "c51e4638b10ace8ecd8c6e01e7d64d68535b70f2bf4160acf62f11ba06521aeb"
     },
     "plant_basic": {
       "defId": "plant_basic",
@@ -151,7 +151,7 @@
       "generatorVersion": 1,
       "partLibraryHash": "f63dde8efb417164",
       "recipeHash": "616740c45ac56b3648343f2a5348e87dd307a953260f335a9da00bc507fe8c34",
-      "pixelHash": "d50a1f760aa755d62c8c1e7d2ee5fe1576a97e4e64bada8c966582553d12766d"
+      "pixelHash": "8ec751c53c38e6da0092dfab7b9ae7df8833fd8f41c8b074aca0a60e78ab35ee"
     },
     "rug_basic": {
       "defId": "rug_basic",

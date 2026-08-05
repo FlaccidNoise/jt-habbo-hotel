@@ -25,6 +25,7 @@ import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene } from "./scene/room.ts";
+import { DepthIndex } from "./scene/sort.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
@@ -45,6 +46,7 @@ const roomId = Number(new URLSearchParams(location.search).get("room")) || 1;
 const net = new Net();
 const avatars = new Map<number, AvatarSprite>();
 const chat = new ChatOverlay(el("bubbles"));
+let depth = new DepthIndex();
 let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
@@ -70,7 +72,7 @@ function toast(text: string): void {
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
   avatars.get(state.id)?.destroy();
-  const sprite = new AvatarSprite(state);
+  const sprite = new AvatarSprite(state, depth);
   avatars.set(state.id, sprite);
   scene.world.addChild(sprite.view);
 }
@@ -279,9 +281,10 @@ function buildRoom(msg: RoomState): void {
   renderArcade();
   el("arcade").hidden = true;
 
+  depth = new DepthIndex();   // the old room's views are gone with it
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
-  furniLayer = new FurniLayer(scene.world, DEFS, furniAssets);
+  furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
@@ -384,6 +387,7 @@ async function start(token: string): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    depth.flush();
     chat.layout((id) => {
       const sprite = avatars.get(id);
       if (!sprite || !scene) return null;

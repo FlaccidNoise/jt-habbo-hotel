@@ -26,12 +26,18 @@ internal 64. Wall archetypes (wall art, trophies, posters, shelves) use a wall s
 wall-span, offset bounds, anchor — in place of footprint and stack height. Engraved record
 trophies are wall items, so this ships v1.
 
-**Draw order** (audit B1): painter's algorithm — all room sprites sorted by projected depth every
-frame, with explicit tiebreakers (horizontal epsilon, stable per-sprite epsilon) so ties never
-flicker. Multi-tile furni takes one base depth from its origin tile, so correct occlusion comes
-from **per-layer z offsets the generator computes from footprint geometry** — there is no artist
-to hide the problem in. A rendering-correctness gate (stage 4) renders each generated item in a
-reference scene of stacked and adjacent items and diffs the result.
+**Draw order** (audit B1): painter's algorithm over **boxes, not points**. Every sprite carries its
+whole footprint and height (`DepthBox`), and `painterOrder` (packages/shared/src/depth.ts) sorts
+them topologically: A draws before B when A is west, north, or underneath B *and* the two overlap
+in the axes that let their sprites meet. A scalar depth key cannot do this — a 4×1 table needs a
+chair behind it at one end and in front at the other, and one number puts both on the same side.
+Ties (diagonal neighbours, boxes sharing a space) fall back to a depth key and then to insertion
+order, so they never flicker. The same order runs inside one sprite, over its part boxes, which is
+what keeps a leg from stamping its lid over the tabletop. A rendering-correctness gate (stage 4)
+renders each generated item in a reference scene of stacked and adjacent items and diffs the result.
+
+Floor tiles are excluded: they are flat and static, so they keep a band below every sprite. That is
+correct only while rooms are flat — raised tiles never occlude furniture (#230).
 
 **Seating occlusion** (audit B2): every part slot declares an **occlusion group** — in front of or
 behind a seated occupant, **per direction** (the chair back is behind the avatar facing the

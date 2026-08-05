@@ -2,7 +2,7 @@ import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
-import { depthKey } from "./sort.ts";
+import { tileDepth } from "./sort.ts";
 
 export const SCALE = 64;
 
@@ -151,7 +151,7 @@ export class RoomScene {
       .stroke({ width: 1, color: 0x000000, alpha: 0.2 });
     tile.eventMode = "static";
     tile.cursor = "pointer";
-    tile.zIndex = depthKey({ kind: "tile", x, y, z: h });
+    tile.zIndex = tileDepth(x, y);
     tile.on("pointerdown", (e) => {
       if (e.pointerType === "touch") this.beginTouch(x, y, e);
       else handlers.click(x, y, e.button);

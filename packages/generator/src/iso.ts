@@ -1,3 +1,4 @@
+import { painterOrder } from "@grand/shared";
 import type { Canvas, Pt } from "./raster.ts";
 import { drawLine, fillPoly } from "./raster.ts";
 import type { Ramp } from "./style.ts";
@@ -47,8 +48,10 @@ export function drawBox(c: Canvas, anchor: Pt, b: Box): void {
   drawLine(c, w, n, b.ramp.outline);
 }
 
-/** Painter order: back-to-front by footprint depth, then bottom-up. Stable for ties, so
- *  same-tile layering (rug patterns) follows authoring order. */
+/** Painter order: back-to-front over the box extents, so a leg under a tabletop draws before it
+ *  instead of stamping its lid over the table's front edge. Ties keep authoring order, which is
+ *  what same-space layering (rug patterns) relies on. */
 export function painterSort(boxes: Box[]): Box[] {
-  return [...boxes].sort((a, b) => a.x0 + a.y0 - (b.x0 + b.y0) || a.z0 - b.z0);
+  const order = painterOrder(boxes.map((b) => ({ ...b, layer: 0 })));
+  return order.flatMap((i) => boxes[i] ?? []);
 }

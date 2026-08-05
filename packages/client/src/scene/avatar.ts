@@ -2,7 +2,8 @@ import { Container, Graphics, Text } from "pixi.js";
 import { DIR_STEPS, worldToScreen } from "@grand/shared";
 import type { AvatarState, ServerMsg } from "@grand/shared";
 import { SCALE } from "./room.ts";
-import { depthKey } from "./sort.ts";
+import { LAYER } from "./sort.ts";
+import type { DepthIndex } from "./sort.ts";
 import { dirFromStep, lerpScreen, stepAt } from "./walk.ts";
 
 type WalkMsg = Extract<ServerMsg, { t: "walk" }>;
@@ -10,6 +11,7 @@ interface Step { x: number; y: number; z: number }
 
 const BODY_W = 24;
 const BODY_H = 48;
+const BODY_Z = BODY_H / (SCALE / 2);   // body height in world units, for occlusion
 const PALETTE = [0xe05c5c, 0xe0a55c, 0xd7e05c, 0x6ee05c, 0x5ce0c8, 0x5c9be0, 0xa15ce0, 0xe05cb4];
 
 function colorOf(username: string): number {
@@ -24,14 +26,16 @@ export class AvatarSprite {
   readonly id: number;
   readonly username: string;
   readonly view: Container;
+  private depth: DepthIndex;
   private pip: Graphics;
   private at: Step;
   private dir: number;
   private walking: { from: Step; path: Step[]; msPerTile: number; startedAt: number } | null = null;
 
-  constructor(state: AvatarState) {
+  constructor(state: AvatarState, depth: DepthIndex) {
     this.id = state.id;
     this.username = state.username;
+    this.depth = depth;
     this.at = { x: state.x, y: state.y, z: state.z };
     this.dir = state.dir;
 
@@ -108,6 +112,8 @@ export class AvatarSprite {
     if (!to || !from) return;
 
     this.face(to.x - from.x, to.y - from.y);
+    // Depth follows whole tiles, so it is restacked on the step, not on every frame of the slide.
+    const stepped = to.x !== this.at.x || to.y !== this.at.y || to.z !== this.at.z;
     this.at = { ...to };
     const point = lerpScreen(
       worldToScreen(from.x, from.y, from.z, SCALE),
@@ -116,10 +122,11 @@ export class AvatarSprite {
     );
     this.view.x = point.sx;
     this.view.y = point.sy;
-    this.view.zIndex = depthKey({ kind: "avatar", x: this.at.x, y: this.at.y, z: this.at.z });
+    if (stepped) this.placeDepth();
   }
 
   destroy(): void {
+    this.depth.delete(`avatar:${this.id}`);
     this.view.destroy({ children: true });
   }
 
@@ -133,8 +140,20 @@ export class AvatarSprite {
     const point = worldToScreen(this.at.x, this.at.y, this.at.z, SCALE);
     this.view.x = point.sx;
     this.view.y = point.sy;
-    this.view.zIndex = depthKey({ kind: "avatar", x: this.at.x, y: this.at.y, z: this.at.z });
+    this.placeDepth();
     this.placePip();
+  }
+
+  private placeDepth(): void {
+    this.depth.set(
+      `avatar:${this.id}`,
+      {
+        x0: this.at.x, y0: this.at.y, z0: this.at.z,
+        x1: this.at.x + 1, y1: this.at.y + 1, z1: this.at.z + BODY_Z,
+        layer: LAYER.avatar,
+      },
+      this.view,
+    );
   }
 
   private placePip(): void {

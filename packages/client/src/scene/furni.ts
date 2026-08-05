@@ -1,11 +1,12 @@
 import { Container, Graphics, Sprite } from "pixi.js";
 import { worldToScreen } from "@grand/shared";
-import type { FurniDef, FurniItem } from "@grand/shared";
+import type { DepthBox, FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture } from "./assets.ts";
 import { frameFor } from "./frames.ts";
 import { SCALE } from "./room.ts";
-import { depthKey } from "./sort.ts";
+import { LAYER } from "./sort.ts";
+import type { DepthIndex } from "./sort.ts";
 
 const TOP = 1.3;
 const RIGHT = 1.0;
@@ -46,6 +47,21 @@ function drawSlab(g: Graphics, def: FurniDef, item: FurniItem): void {
     .stroke({ width: 1, color: 0x000000, alpha: 0.3 });
 }
 
+/** The tiles an item covers and the height it stands to, in the tile-index units the painter
+ *  sort works in. `item.z` is already the absolute floor the item rests on. */
+function furniBox(def: FurniDef, item: FurniItem): DepthBox {
+  const rotated = item.dir === 2 || item.dir === 6;
+  return {
+    x0: item.x,
+    y0: item.y,
+    z0: item.z,
+    x1: item.x + (rotated ? def.l : def.w),
+    y1: item.y + (rotated ? def.w : def.l),
+    z1: item.z + (def.stackHeights[item.state] ?? 0),
+    layer: def.canWalk ? LAYER.floor_furni : LAYER.furni,
+  };
+}
+
 /** Every placed item in the room, drawn from generated sprite sheets when the def has a bundle.
  *  `apply` covers `furni_placed` (new id creates, known id updates) and `furni_moved` — the same
  *  rebuild either way. */
@@ -53,12 +69,19 @@ export class FurniLayer {
   private world: Container;
   private defs: ReadonlyMap<string, FurniDef>;
   private assets: FurniAssets | null;
+  private depth: DepthIndex;
   private views = new Map<number, Container>();
 
-  constructor(world: Container, defs: ReadonlyMap<string, FurniDef>, assets: FurniAssets | null) {
+  constructor(
+    world: Container,
+    defs: ReadonlyMap<string, FurniDef>,
+    assets: FurniAssets | null,
+    depth: DepthIndex,
+  ) {
     this.world = world;
     this.defs = defs;
     this.assets = assets;
+    this.depth = depth;
   }
 
   apply(item: FurniItem): void {
@@ -71,13 +94,8 @@ export class FurniLayer {
 
     const view = this.spriteFor(item) ?? this.slabFor(def, item);
     view.eventMode = "none";
-    view.zIndex = depthKey({
-      kind: def.canWalk ? "floor_furni" : "furni",
-      x: item.x,
-      y: item.y,
-      z: item.z,
-    });
     this.views.set(item.id, view);
+    this.depth.set(`furni:${item.id}`, furniBox(def, item), view);
     this.world.addChild(view);
   }
 
@@ -86,6 +104,7 @@ export class FurniLayer {
     if (!view) return;
     view.destroy({ children: true });   // frame textures are cached on the asset, not destroyed
     this.views.delete(id);
+    this.depth.delete(`furni:${id}`);
   }
 
   private spriteFor(item: FurniItem): Sprite | null {
