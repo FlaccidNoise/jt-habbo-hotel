@@ -9,9 +9,9 @@ Status date: 2026-08-05.
 | §7 step | System | State | Bug |
 |---|---|---|---|
 | 1 | Room render, pathfinding, walk, chat, filter | Shipped (vertical slice, 178 tests) | #115 awaiting verification. Drain/rolling deploy deferred → #125 |
-| 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
+| 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, focus props → #126. Wall items shipped (#203) | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
-| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall archetypes → #203 | #117 fixed, #202 |
+| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall items closed it out (#203): 4 wall archetypes, catalog 26 | #117 fixed, #202 fixed |
 | 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) + registration Star trickle (c30e5b7) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
@@ -27,8 +27,6 @@ jointly with the style bible), #123 pets (needs #118 rails + generator), #124 pr
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
 
 - #205 Room games v1 — falling furni, maze gate, red-light/green-light (audit C-28).
-- #203 Wall-item pipeline — coordinate space, wall archetypes, generator support. PIPELINES §1
-  says this ships v1 (record trophies are wall items). Zero wall code exists in `packages/`.
 - #204 NPC live model wiring — env config, screen-pass verification, spend counter.
 - #202 Art pipeline — style bible v1, Blender rig, post-pass, proof gate, library build-out.
 - #206 Dailies, streaks, achievements, weekly competitions (needs #118).
@@ -70,7 +68,9 @@ bounces.** Reading the config is never evidence.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items. A seated avatar draws in front of its own seat because
+- Walls render from the heightmap and carry hung items (#203). A room walls every floor tile whose
+  north-west or north-east neighbour is void, so notched rooms wall themselves; the door is a hole.
+- Gaps: #205 room games. A seated avatar draws in front of its own seat because
   per-direction occlusion groups are specced but unemitted (PIPELINES §2 stage 1) — until they
   exist, a chair back can never occlude the sitter.
 
@@ -214,14 +214,12 @@ v1, and two build-outs taking the catalog from 5 defs to 22.
    moves that number, never the shape. Museum wing, prestige untradables, Luck Lever (the slot
    machine is its host), collection sets. **Do this before #206**, which adds faucets and would
    make the imbalance worse.
-2. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
-   wall items ship v1. Needs the coordinate system before any wall archetype can be authored,
-   and it is the last thing blocking #202 from closing.
-3. **#206 dailies**, once #210 has somewhere for the Stars to go.
+2. **#206 dailies**, once #210 has somewhere for the Stars to go.
 
 Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out. Colorways are
 free as of #229, so catalog breadth is no longer gated on Blender time — it is gated on having
-sinks worth spending at.
+sinks worth spending at. Wall items (#203) shipped 2026-08-05 and closed #202; the museum wing's
+donor plaques and record trophies now have a surface to hang on.
 
 After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand

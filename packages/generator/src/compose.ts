@@ -31,6 +31,16 @@ export interface BundleMeta {
   /** Top of the authored seat geometry, or null when the part has none. The def's seatHeight is
    *  checked against this — it is what placement.ts rests a seated avatar on. */
   seatZ: number | null;
+  /** Wall bundles only (#203). Absent on floor bundles, so their frozen metadata is unchanged.
+   *  planeW/planeH are the drawn size in the wall plane and mountU/mountV where it was authored,
+   *  all read off the render; gap/depth are how far the mesh starts from and reaches off the
+   *  wall, in tiles — the wall gates check all six. */
+  wall?: {
+    span: number;
+    planeW: number; planeH: number;
+    mountU: number; mountV: number;
+    gap: number; depth: number;
+  };
   occlusion: string[];
   styleVersion: number;
   generatorVersion: number;

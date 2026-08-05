@@ -5,11 +5,15 @@ import {
   PROTOTYPE_CATALOG,
   ROOM_CAPACITY,
   ROOM_FURNI_CAP,
+  WALL_CATALOG,
   checkPlacement,
+  checkWallPlacement,
   footprintTiles,
   parseHeightmap,
+  screenToTile,
   seatAt,
   tileHeight,
+  wallOffsetLimits,
 } from "@grand/shared";
 import type {
   AvatarState,
@@ -20,13 +24,18 @@ import type {
   RoomModel,
   ServerMsg,
   Tile,
+  WallDef,
+  WallItem,
+  WallPlacementCtx,
+  WallPos,
 } from "@grand/shared";
 import { Net } from "./net.ts";
 import { loadFurniAssets } from "./scene/assets.ts";
 import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { FurniLayer } from "./scene/furni.ts";
-import { RoomScene } from "./scene/room.ts";
+import { RoomScene, SCALE } from "./scene/room.ts";
+import { WallLayer } from "./scene/walls.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
@@ -36,7 +45,9 @@ type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 type NavRooms = Extract<ServerMsg, { t: "nav_rooms" }>["rooms"];
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
+const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
+const defName = (id: string): string => DEFS.get(id)?.name ?? WALL_DEFS.get(id)?.name ?? id;
 
 function el<T extends HTMLElement>(id: string): T {
   const found = document.getElementById(id);
@@ -53,10 +64,12 @@ const chat = new ChatOverlay(el("bubbles"));
 let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
+let wallLayer: WallLayer | null = null;
 let furniAssets: FurniAssets | null = null;
 let model: RoomModel | null = null;
 let doorTile: Tile = { x: 0, y: 0 };
 let furni: FurniItem[] = [];
+let wallFurni: WallItem[] = [];
 let inventory: InventoryItem[] = [];
 let armed: number | null = null;
 let placeDir: 0 | 2 | 4 | 6 = 0;   // the armed item's facing; R turns it before it lands
@@ -91,6 +104,35 @@ function armedDef(): FurniDef | null {
   return (item && DEFS.get(item.defId)) ?? null;
 }
 
+/** The armed item when it is a wall item — the two are mutually exclusive, so whichever returns
+ *  non-null decides which surface the pointer is arming. */
+function armedWallDef(): WallDef | null {
+  const item = inventory.find((i) => i.id === armed);
+  return (item && WALL_DEFS.get(item.defId)) ?? null;
+}
+
+function wallCtx(current: RoomModel): WallPlacementCtx {
+  return {
+    model: current,
+    wallFurni,
+    defs: WALL_DEFS,
+    furniCount: furni.length + wallFurni.length,
+    roomFurniCap: ROOM_FURNI_CAP,
+  };
+}
+
+/** Where a wall item lands for a pointer at `pos`: centred on the cursor, snapped to the wall's
+ *  2 px lattice, and clamped so it never overhangs its own span or the wall. */
+function wallDrop(def: WallDef, pos: WallPos): WallPos {
+  const { maxU, maxV } = wallOffsetLimits(def);
+  const clamp = (n: number, hi: number): number => Math.max(0, Math.min(hi, n));
+  return {
+    ...pos,
+    u: clamp(2 * Math.round((pos.u - def.plane.w / 2) / 2), maxU),
+    v: clamp(Math.round(pos.v - def.plane.h / 2), maxV),
+  };
+}
+
 /** The same inputs the server builds for `checkPlacement`, so the hover verdict and the server's
  *  answer come from one implementation. */
 function placementCtx(current: RoomModel): PlacementCtx {
@@ -121,7 +163,7 @@ function renderInventory(): void {
   for (const item of inventory) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    button.textContent = defName(item.defId);
     const offered = trade?.yours.some((i) => i.id === item.id) ?? false;
     if (item.id === armed || offered) button.classList.add("armed");
     button.addEventListener("click", () => {
@@ -165,7 +207,7 @@ function renderCatalog(): void {
   label.className = "label";
   label.textContent = "Catalog:";
   strip.appendChild(label);
-  for (const def of PROTOTYPE_CATALOG) {
+  for (const def of [...PROTOTYPE_CATALOG, ...WALL_CATALOG]) {
     const price = CATALOG_PRICES.get(def.id);
     if (price === undefined) continue;
     const button = document.createElement("button");
@@ -187,7 +229,7 @@ function renderTrade(): void {
   for (const item of trade.yours) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = `${DEFS.get(item.defId)?.name ?? item.defId} ✕`;
+    button.textContent = `${defName(item.defId)} ✕`;
     button.addEventListener("click", () => {
       if (!trade) return;
       net.send({
@@ -201,7 +243,7 @@ function renderTrade(): void {
   theirs.replaceChildren();
   for (const item of trade.theirs) {
     const row = document.createElement("div");
-    row.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    row.textContent = defName(item.defId);
     theirs.appendChild(row);
   }
   el("trade-warning").textContent =
@@ -279,6 +321,7 @@ function disarm(): void {
   armed = null;
   scene?.clearHighlight();
   furniLayer?.clearGhost();
+  wallLayer?.clearGhost();
   renderInventory();
   renderFurniBar();
   releaseKeyboard();
@@ -304,11 +347,13 @@ function onTileClick(x: number, y: number, button: number): void {
     // Placed items carry no owner in the protocol, so offer the menu on the topmost item here
     // and let the server answer `not_owner` when it is somebody else's.
     const top = topItemOn(x, y);
-    if (top) openMenu(top);
+    if (top) openMenu(top.id);
     return;
   }
   if (button !== 0) return;
   if (armed !== null) {
+    // A wall item ignores the floor — it only lands when the click reaches a wall segment.
+    if (armedWallDef()) return;
     net.send({ t: "place", itemId: armed, x, y, dir: placeDir });
     return;
   }
@@ -323,6 +368,38 @@ function onTileClick(x: number, y: number, button: number): void {
     return;
   }
   net.send({ t: "move", x, y });
+}
+
+/** A click on a wall. With a wall item held it hangs; otherwise it offers the item under the
+ *  pointer, or falls through to the floor so the wall never swallows a walk command. */
+function onWallClick(
+  pos: WallPos, itemId: number | null, button: number, local: { x: number; y: number },
+): void {
+  closeMenu();
+  if (button === 2) {
+    if (itemId !== null) openMenu(itemId);
+    return;
+  }
+  if (button !== 0) return;
+  const def = armedWallDef();
+  if (def && armed !== null) {
+    const drop = wallDrop(def, pos);
+    net.send({ t: "place_wall", itemId: armed, side: drop.side, x: drop.x, y: drop.y, u: drop.u, v: drop.v });
+    return;
+  }
+  const t = screenToTile(local.x, local.y, SCALE);
+  onTileClick(t.x, t.y, button);
+}
+
+function onWallHover(pos: WallPos | null): void {
+  const def = armedWallDef();
+  if (!pos || !def || !model) {
+    wallLayer?.clearGhost();
+    return;
+  }
+  const drop = wallDrop(def, pos);
+  const result = checkWallPlacement(wallCtx(model), def, drop.side, drop.x, drop.y, drop.u, drop.v);
+  wallLayer?.ghost(def, drop, result.ok);
 }
 
 function onTileHover(tile: Tile | null): void {
@@ -354,18 +431,20 @@ function renderFurniBar(): void {
   const bar = el("furni-menu");
   bar.replaceChildren();
   const item = menuItem === null ? undefined : furni.find((f) => f.id === menuItem);
+  const hung = menuItem === null ? undefined : wallFurni.find((f) => f.id === menuItem);
   const held = armed === null ? undefined : inventory.find((i) => i.id === armed);
-  if (!item && !held) {
+  if (!item && !hung && !held) {
     bar.hidden = true;
     return;
   }
 
-  const defId = item?.defId ?? held?.defId ?? "";
+  const defId = item?.defId ?? hung?.defId ?? held?.defId ?? "";
+  const onWall = held ? WALL_DEFS.has(defId) : hung !== undefined;
   const title = document.createElement("span");
   title.className = "label";
   title.textContent = held
-    ? `Holding ${DEFS.get(defId)?.name ?? defId} — click a tile to place`
-    : (DEFS.get(defId)?.name ?? defId);
+    ? `Holding ${defName(defId)} — click a ${onWall ? "wall" : "tile"} to place`
+    : (defName(defId));
   bar.appendChild(title);
 
   const action = (text: string, run: () => void): void => {
@@ -376,14 +455,18 @@ function renderFurniBar(): void {
     bar.appendChild(button);
   };
   if (held) {
-    action("Rotate (R)", rotateArmed);
+    // A hanging item has no facing — the wall it lands on decides which way it looks.
+    if (!onWall) action("Rotate (R)", rotateArmed);
     action("Cancel", disarm);
-  } else if (item) {
-    action("Rotate", () => {
-      net.send({ t: "rotate", itemId: item.id });
-    });
+  } else if (item ?? hung) {
+    const id = (item ?? hung)?.id ?? 0;
+    if (item) {
+      action("Rotate", () => {
+        net.send({ t: "rotate", itemId: id });
+      });
+    }
     action("Pick up", () => {
-      net.send({ t: "pickup", itemId: item.id });
+      net.send({ t: "pickup", itemId: id });
       closeMenu();
     });
     action("Close", closeMenu);
@@ -391,8 +474,8 @@ function renderFurniBar(): void {
   bar.hidden = false;
 }
 
-function openMenu(item: FurniItem): void {
-  menuItem = item.id;
+function openMenu(itemId: number): void {
+  menuItem = itemId;
   renderFurniBar();
 }
 
@@ -411,6 +494,7 @@ function buildRoom(msg: RoomState): void {
   model = parseHeightmap(msg.heightmap, msg.door);
   doorTile = { x: msg.door.x, y: msg.door.y };
   furni = msg.furni;
+  wallFurni = msg.wallFurni;
   inventory = msg.inventory;
   armed = null;
   placeDir = 0;
@@ -441,9 +525,31 @@ function buildRoom(msg: RoomState): void {
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets);
   for (const item of furni) furniLayer.apply(item);
+  // No explicit teardown: scene.destroy() above took the old world and every layer's children
+  // with it, the same way furniLayer is simply replaced.
+  wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
+    { click: onWallClick, hover: onWallHover });
+  for (const item of wallFurni) wallLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
   renderInventory();
+}
+
+/** Only my own items are ever in my inventory, so an id leaving it means my placement landed —
+ *  true on either surface. */
+function claimPlaced(itemId: number): void {
+  if (inventory.some((inv) => inv.id === itemId)) {
+    inventory = inventory.filter((inv) => inv.id !== itemId);
+    if (armed === itemId) {
+      armed = null;
+      releaseKeyboard();
+    }
+    scene?.clearHighlight();
+    furniLayer?.clearGhost();
+    wallLayer?.clearGhost();
+    renderInventory();
+  }
+  renderFurniBar();
 }
 
 /** A placement or a move: replace the item if it is already in the room, add it otherwise. */
@@ -452,19 +558,7 @@ function upsertFurni(item: FurniItem): void {
   if (i < 0) furni.push(item);
   else furni[i] = item;
   furniLayer?.apply(item);
-
-  // Only my own items are ever in my inventory, so an id leaving it means my placement landed.
-  if (inventory.some((inv) => inv.id === item.id)) {
-    inventory = inventory.filter((inv) => inv.id !== item.id);
-    if (armed === item.id) {
-      armed = null;
-      releaseKeyboard();
-    }
-    scene?.clearHighlight();
-    furniLayer?.clearGhost();
-    renderInventory();
-  }
-  renderFurniBar();
+  claimPlaced(item.id);
 }
 
 function handle(msg: ServerMsg): void {
@@ -495,9 +589,16 @@ function handle(msg: ServerMsg): void {
     case "furni_moved":
       upsertFurni(msg.item);
       break;
+    case "wall_placed":
+      wallFurni = wallFurni.filter((f) => f.id !== msg.item.id).concat(msg.item);
+      wallLayer?.apply(msg.item);
+      claimPlaced(msg.item.id);
+      break;
     case "furni_removed":
       furni = furni.filter((f) => f.id !== msg.itemId);
+      wallFurni = wallFurni.filter((f) => f.id !== msg.itemId);
       furniLayer?.remove(msg.itemId);
+      wallLayer?.remove(msg.itemId);
       if (menuItem === msg.itemId) closeMenu();
       break;
     case "inventory_add":

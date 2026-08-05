@@ -1,4 +1,5 @@
-import type { FurniDef } from "@grand/shared";
+import { WALL_HEIGHT, WALL_MAX_DEPTH, WALL_SEG_PX, WALL_TOP_PX } from "@grand/shared";
+import type { FurniDef, WallDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { getPixel } from "./raster.ts";
 import type { Canvas } from "./raster.ts";
@@ -77,22 +78,117 @@ export function gateSeat(bundle: Bundle, def: FurniDef): GateResult {
   return { ok: true };
 }
 
-/** Grid alignment: every frame has pixels, and its geometry reaches the ground line. */
-export function gateBounds(bundle: Bundle): GateResult {
-  const { frameW, frameH, dirs } = bundle.meta;
-  for (let f = 0; f < dirs.length; f++) {
-    let lowest = -1;
-    let count = 0;
-    for (let y = 0; y < frameH; y++) {
-      for (let x = f * frameW; x < (f + 1) * frameW; x++) {
-        if (getPixel(bundle.sheet, x, y).alpha === 0) continue;
-        count++;
-        if (y > lowest) lowest = y;
+interface BBox { minX: number; minY: number; maxX: number; maxY: number }
+
+/** Opaque extent of one frame, in frame-local pixels. Null when the frame is empty. */
+function frameBox(bundle: Bundle, f: number): BBox | null {
+  const { frameW, frameH } = bundle.meta;
+  let box: BBox | null = null;
+  for (let y = 0; y < frameH; y++) {
+    for (let x = 0; x < frameW; x++) {
+      if (getPixel(bundle.sheet, f * frameW + x, y).alpha === 0) continue;
+      if (!box) box = { minX: x, minY: y, maxX: x, maxY: y };
+      else {
+        if (x < box.minX) box.minX = x;
+        if (x > box.maxX) box.maxX = x;
+        if (y < box.minY) box.minY = y;
+        if (y > box.maxY) box.maxY = y;
       }
     }
-    if (count === 0) return fail("bounds", `dir ${dirs[f]}: frame is empty`);
-    if (lowest < frameH - 1 - GROUND_TOLERANCE) {
-      return fail("bounds", `dir ${dirs[f]}: lowest pixel ${lowest} floats above ground ${frameH - 1}`);
+  }
+  return box;
+}
+
+/** Grid alignment: every frame has pixels, and its geometry reaches the ground line. Floor only —
+ *  a hanging item never touches the ground, so wall bundles run gateWallBounds instead. */
+export function gateBounds(bundle: Bundle): GateResult {
+  const { frameH, dirs } = bundle.meta;
+  for (let f = 0; f < dirs.length; f++) {
+    const box = frameBox(bundle, f);
+    if (!box) return fail("bounds", `dir ${dirs[f]}: frame is empty`);
+    if (box.maxY < frameH - 1 - GROUND_TOLERANCE) {
+      return fail("bounds", `dir ${dirs[f]}: lowest pixel ${box.maxY} floats above ground ${frameH - 1}`);
+    }
+  }
+  return { ok: true };
+}
+
+// --- wall gates (#203) ----------------------------------------------------------------------
+// The floor gates above are untouched: gateFootprint, gateSeat and gateBounds all key off fields
+// a wall def does not have. These two replace them for wall bundles and are no weaker — a poster
+// floating off the wall, overhanging its span, or standing off it like a table still bounces.
+
+/** Slack allowed between the declared wall plane box and the pixels it must cover. The box is
+ *  snapped out to the wall's 2 px lattice, so it can exceed the render by just under 2 px. */
+const PLANE_SLACK = 2;
+
+/** The declared wall plane box must agree with the def, sit on the wall's lattice, and describe a
+ *  mesh that is actually hung on the wall rather than standing in front of it. */
+export function gateWallFit(bundle: Bundle, def: WallDef): GateResult {
+  const w = bundle.meta.wall;
+  if (!w) return fail("wall_fit", "wall bundle has no wall metadata — re-freeze it through tools/artgen/postpass.ts");
+  if (bundle.meta.seatZ !== null) return fail("wall_fit", "a wall item cannot carry a seat surface");
+  if (w.span !== def.span) return fail("wall_fit", `metadata span ${w.span}, def span ${def.span}`);
+  if (w.planeW !== def.plane.w || w.planeH !== def.plane.h) {
+    return fail("wall_fit", `metadata plane ${w.planeW}×${w.planeH}, def plane ${def.plane.w}×${def.plane.h}`);
+  }
+  if (w.mountU !== def.mount.u || w.mountV !== def.mount.v) {
+    return fail("wall_fit", `metadata mount ${w.mountU},${w.mountV}, def mount ${def.mount.u},${def.mount.v}`);
+  }
+  if (w.mountU % 2 !== 0 || w.planeW % 2 !== 0) {
+    return fail("wall_fit",
+      `mount u ${w.mountU} and plane width ${w.planeW} must both be even — the wall's 2:1 axis moves ` +
+      `a sprite (±1, +0.5) px, so an odd offset lands it half a pixel off the wall`);
+  }
+  if (w.mountU + w.planeW > def.span * WALL_SEG_PX) {
+    return fail("wall_fit",
+      `authored at u ${w.mountU} + width ${w.planeW} overhangs its ${def.span}-segment span ` +
+      `(${def.span * WALL_SEG_PX} px) — widen span or narrow the mesh`);
+  }
+  if (w.mountV + w.planeH > WALL_TOP_PX) {
+    return fail("wall_fit",
+      `authored at v ${w.mountV} + height ${w.planeH} runs past the ${WALL_TOP_PX} px wall — ` +
+      `lower the mesh or shorten it`);
+  }
+  if (w.gap > 1 / 32) {
+    return fail("wall_fit",
+      `mesh starts ${w.gap} tiles off the wall — a wall part is authored flush at fy 0, not floating`);
+  }
+  if (w.depth > WALL_MAX_DEPTH) {
+    return fail("wall_fit",
+      `mesh stands ${w.depth} tiles off the wall, over the ${WALL_MAX_DEPTH} limit — that is floor furni`);
+  }
+  return { ok: true };
+}
+
+/** Every frame has pixels, and the declared plane box covers them snugly. Both frames are checked
+ *  against one declaration, so the left and right walls must render the same item. */
+export function gateWallBounds(bundle: Bundle): GateResult {
+  const { dirs, anchorsX, anchorY, wall } = bundle.meta;
+  if (!wall) return fail("wall_bounds", "wall bundle has no wall metadata");
+  if (dirs.length !== 2) return fail("wall_bounds", `wall bundles render 2 frames, got ${dirs.length}`);
+
+  const originY = anchorY - WALL_SEG_PX / 2 - WALL_HEIGHT * 32;
+  for (let f = 0; f < dirs.length; f++) {
+    const box = frameBox(bundle, f);
+    if (!box) return fail("wall_bounds", `dir ${dirs[f]}: frame is empty`);
+    const originX = anchorsX[f] ?? 0;
+    // dir 0 hangs on the right wall and runs +x on screen; dir 6 hangs on the left and runs -x,
+    // so its near edge is the far side of the box.
+    const rawU = dirs[f] === 0 ? box.minX - originX : originX - (box.maxX + 1);
+    const rawV = box.minY - originY - rawU / 2;
+    const overU = wall.mountU + wall.planeW - (rawU + (box.maxX + 1 - box.minX));
+    const overV = wall.mountV + wall.planeH - (rawV + (box.maxY + 1 - box.minY) - (box.maxX + 1 - box.minX) / 2);
+    if (rawU < wall.mountU || overU < 0 || rawV < wall.mountV || overV < 0) {
+      return fail("wall_bounds",
+        `dir ${dirs[f]}: pixels at u ${rawU}, v ${rawV} escape the declared plane box ` +
+        `${wall.mountU},${wall.mountV} ${wall.planeW}×${wall.planeH}`);
+    }
+    if (rawU - wall.mountU >= PLANE_SLACK || overU >= PLANE_SLACK ||
+        rawV - wall.mountV >= PLANE_SLACK || overV >= PLANE_SLACK) {
+      return fail("wall_bounds",
+        `dir ${dirs[f]}: declared plane box ${wall.planeW}×${wall.planeH} at ${wall.mountU},${wall.mountV} ` +
+        `is looser than the render by ${PLANE_SLACK} px or more — re-freeze so it matches the pixels`);
     }
   }
   return { ok: true };
@@ -124,13 +220,27 @@ export function gateContrast(sheet: Canvas): GateResult {
   return { ok: true };
 }
 
-/** All artifact gates for one bundle, first failure wins. Uniqueness runs at registry level. */
+/** All artifact gates for one floor bundle, first failure wins. Uniqueness runs at registry level. */
 export function runGates(bundle: Bundle, def: FurniDef): GateResult {
   for (const result of [
     gatePalette(bundle.sheet),
     gateFootprint(bundle, def),
     gateSeat(bundle, def),
     gateBounds(bundle),
+    gateContrast(bundle.sheet),
+  ]) {
+    if (!result.ok) return result;
+  }
+  return { ok: true };
+}
+
+/** The same for a wall bundle: palette and contrast are surface-blind, footprint/seat/bounds are
+ *  replaced rather than relaxed. */
+export function runWallGates(bundle: Bundle, def: WallDef): GateResult {
+  for (const result of [
+    gatePalette(bundle.sheet),
+    gateWallFit(bundle, def),
+    gateWallBounds(bundle),
     gateContrast(bundle.sheet),
   ]) {
     if (!result.ok) return result;

@@ -1,0 +1,37 @@
+{
+  "defId": "poster",
+  "archetype": "artgen",
+  "sheet": "poster.png",
+  "frameW": 64,
+  "frameH": 127,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 111,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.96875,
+  "seatZ": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 29,
+    "mountU": 4,
+    "mountV": 34,
+    "gap": 0,
+    "depth": 0.04
+  },
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:5a8f9790fbac4417",
+  "recipeHash": "5a8f9790fbac441708c5a812b9191ed25a22bd15cc51e40bd95a226b47e6ff62",
+  "pixelHash": "f0a1fd0c25acedc2c540b7cca7a1e3075dbe802eab81df0e9c864afd83234278"
+}

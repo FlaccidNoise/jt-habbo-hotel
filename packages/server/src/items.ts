@@ -5,7 +5,7 @@ import {
   checkPlacement,
   parseHeightmap,
 } from "@grand/shared";
-import type { InventoryItem, FurniItem } from "@grand/shared";
+import type { InventoryItem, FurniItem, WallItem, WallSide } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { logItemGrants } from "./ledger.ts";
 
@@ -100,8 +100,19 @@ export function listInventory(db: Database.Database, accountId: number): Invento
 
 export function listRoomFurni(db: Database.Database, roomId: number): FurniItem[] {
   return db
-    .prepare("SELECT id, def_id AS defId, x, y, z, dir, state FROM furni_items WHERE room_id = ?")
+    .prepare(
+      "SELECT id, def_id AS defId, x, y, z, dir, state FROM furni_items WHERE room_id = ? AND wall_side IS NULL",
+    )
     .all(roomId) as FurniItem[];
+}
+
+export function listRoomWallFurni(db: Database.Database, roomId: number): WallItem[] {
+  return db
+    .prepare(
+      "SELECT id, def_id AS defId, wall_side AS side, x, y, wall_u AS u, wall_v AS v, state" +
+        " FROM furni_items WHERE room_id = ? AND wall_side IS NOT NULL",
+    )
+    .all(roomId) as WallItem[];
 }
 
 export function placeItem(
@@ -123,9 +134,28 @@ export function placeItem(
   );
 }
 
+export function placeWallItem(
+  db: Database.Database,
+  itemId: number,
+  roomId: number,
+  side: WallSide,
+  x: number,
+  y: number,
+  u: number,
+  v: number,
+): void {
+  db.prepare(
+    "UPDATE furni_items SET room_id = ?, x = ?, y = ?, z = NULL, dir = NULL," +
+      " wall_side = ?, wall_u = ?, wall_v = ? WHERE id = ?",
+  ).run(roomId, x, y, side, u, v, itemId);
+}
+
+/** Clears both coordinate spaces: an item taken off a wall must not keep wall columns that would
+ *  make it reappear there the next time it is placed on the floor. */
 export function pickupItem(db: Database.Database, itemId: number): void {
   db.prepare(
-    "UPDATE furni_items SET room_id = NULL, x = NULL, y = NULL, z = NULL, dir = NULL WHERE id = ?",
+    "UPDATE furni_items SET room_id = NULL, x = NULL, y = NULL, z = NULL, dir = NULL," +
+      " wall_side = NULL, wall_u = NULL, wall_v = NULL WHERE id = ?",
   ).run(itemId);
 }
 
@@ -133,14 +163,19 @@ export function updateItemZ(db: Database.Database, itemId: number, z: number): v
   db.prepare("UPDATE furni_items SET z = ? WHERE id = ?").run(z, itemId);
 }
 
+/** `side` is what tells the two surfaces apart: non-null means the item is hanging, and its z and
+ *  dir are meaningless. */
 export function getItem(
   db: Database.Database,
   itemId: number,
-): (FurniItem & { ownerId: number; roomId: number | null }) | null {
+): (FurniItem & { ownerId: number; roomId: number | null; side: WallSide | null }) | null {
   const row = db
     .prepare(
-      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, x, y, z, dir, state FROM furni_items WHERE id = ?",
+      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, x, y, z, dir, state," +
+        " wall_side AS side FROM furni_items WHERE id = ?",
     )
-    .get(itemId) as (FurniItem & { ownerId: number; roomId: number | null }) | undefined;
+    .get(itemId) as
+    | (FurniItem & { ownerId: number; roomId: number | null; side: WallSide | null })
+    | undefined;
   return row ?? null;
 }

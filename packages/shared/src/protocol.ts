@@ -26,6 +26,26 @@ export const FurniDefSchema = z.object({
 });
 export type FurniDef = z.infer<typeof FurniDefSchema>;
 
+// Wall items are a parallel shape, not a variant of FurniDef: none of w, l, stackHeights,
+// canWalk, canStackOn or seatHeight means anything for a poster, and every floor rule —
+// footprintTiles, seatAt, stackTop — is floor-only by nature. See walls.ts for the coordinates.
+export const WallSideSchema = z.enum(["left", "right"]);
+export type WallSide = z.infer<typeof WallSideSchema>;
+
+export const WallDefSchema = z.object({
+  id: z.string(), name: z.string(),
+  /** Wall segments the item covers, measured along the wall. */
+  span: z.number().int().min(1),
+  /** Drawn size in the wall plane, scale-64 px: w along the wall, h straight down. */
+  plane: z.object({ w: z.number().int().min(1), h: z.number().int().min(1) }),
+  /** Where the authored sprite's near-top corner sits in the plane — the offsets the mesh was
+   *  modelled at. Moving the item draws it (u - mount.u) along the wall, so mount.u is even for
+   *  the same reason u is; the wall-fit gate rejects an odd one. */
+  mount: z.object({ u: z.number().int().min(0).multipleOf(2), v: z.number().int().min(0) }),
+  color: z.number().int(),
+});
+export type WallDef = z.infer<typeof WallDefSchema>;
+
 export const PostureSchema = z.enum(["stand", "sit"]);
 export type Posture = z.infer<typeof PostureSchema>;
 
@@ -52,6 +72,15 @@ export const FurniItemSchema = InventoryItemSchema.extend({
 });
 export type FurniItem = z.infer<typeof FurniItemSchema>;
 
+// (x, y) is the segment tile the item hangs from — its first one when the item spans several.
+export const WallItemSchema = InventoryItemSchema.extend({
+  side: WallSideSchema,
+  x: z.number().int(), y: z.number().int(),
+  u: z.number().int().min(0).multipleOf(2), v: z.number().int().min(0),
+  state: z.number().int(),
+});
+export type WallItem = z.infer<typeof WallItemSchema>;
+
 const StepSchema = z.object({ x: z.number().int(), y: z.number().int(), z: z.number() });
 
 export const ClientMsgSchema = z.discriminatedUnion("t", [
@@ -61,6 +90,10 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("whisper"), to: z.string(), text: z.string().min(1).max(200) }),
   z.object({ t: z.literal("place"), itemId: z.number().int(), x: z.number().int(),
              y: z.number().int(), dir: FurniDirSchema }),
+  z.object({ t: z.literal("place_wall"), itemId: z.number().int(), side: WallSideSchema,
+             x: z.number().int(), y: z.number().int(),
+             u: z.number().int().min(0).multipleOf(2), v: z.number().int().min(0) }),
+  // One pickup for both surfaces: an item id says where it is without the client repeating it.
   z.object({ t: z.literal("pickup"), itemId: z.number().int() }),
   z.object({ t: z.literal("rotate"), itemId: z.number().int() }),
   // Seat, not item: a 2-tile sofa has a seat per tile, and the tile is what the player clicked.
@@ -85,6 +118,7 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              door: z.object({ x: z.number().int(), y: z.number().int(), dir: DirSchema }),
              chat: z.object({ speakRadius: z.number().int(), shoutAllowed: z.boolean() }),
              avatars: z.array(AvatarStateSchema), furni: z.array(FurniItemSchema),
+             wallFurni: z.array(WallItemSchema),
              inventory: z.array(InventoryItemSchema), you: z.number().int(),
              stars: z.number().int(),
              myRoomId: z.number().int().optional() }),   // the player's own suite, when one exists
@@ -101,6 +135,8 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              x: z.number().int(), y: z.number().int(), z: z.number(), dir: DirSchema }),
   z.object({ t: z.literal("furni_placed"), item: FurniItemSchema }),
   z.object({ t: z.literal("furni_moved"), item: FurniItemSchema }),   // z recomputed after a pickup
+  z.object({ t: z.literal("wall_placed"), item: WallItemSchema }),
+  // Removal is surface-blind: the client drops the id from whichever layer holds it.
   z.object({ t: z.literal("furni_removed"), itemId: z.number().int() }),
   z.object({ t: z.literal("inventory_add"), item: InventoryItemSchema }),
   z.object({ t: z.literal("stars"), balance: z.number().int(), delta: z.number().int(),

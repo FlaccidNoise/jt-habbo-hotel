@@ -102,8 +102,19 @@ table, café chair, bed, lamp, shelf, divider, stereo. Frozen bundles live in
 published catalog, re-running the full gates on the committed bytes — pixels are the item's
 identity, so they are read, never re-rendered.
 
-Remaining for the epic: wall archetypes (blocked on the wall-item coordinate system, see its
-bug), and hand-polish passes where a silhouette reads wrong at 64. No part has needed polish yet.
+Wall archetypes closed the epic (#203): wall art, poster, record trophy, wall shelf. A wall part
+declares `"surface": "wall"` and is authored against the plane fy 0, extending into the room. It
+costs *less* than a floor part, not more — dir 0 is the right wall and three quarter turns carry
+the same mesh onto the left one as dir 6, so only two frames render. Two authoring rules the rig
+asserts, both consequences of the projection folding depth into screen width:
+
+- **Start at least your own depth along the wall** (`min fx >= max fy`), or the sprite renders
+  before its segment begins.
+- **Centre the bounds in the span** (`min fx + max fx == span`). Three quarter turns mirror about
+  the tile centre, so an off-centre mesh hangs at a different offset on each wall and one
+  declaration cannot describe both frames. Contents may sit anywhere inside; the bounds may not.
+
+Remaining: hand-polish passes where a silhouette reads wrong at 64. No part has needed polish yet.
 
 ## Sizing after the cuts
 

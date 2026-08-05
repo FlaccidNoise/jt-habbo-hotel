@@ -20,11 +20,20 @@ Verified constants, copied from Habbo (research/habbo-hotel.md §4.1–4.3):
 vertically symmetric shading — so horizontal mirroring is shading-safe. Highlights avoid lateral
 bias by rule. Parts whose shading must break this declare themselves non-mirrorable.
 
-**Wall coordinate system** (audit A1): wall items live in a second coordinate space — wall-tile
-pair, sub-tile pixel offset, left/right wall selector, anchor rules — at wall scale 32 against
-internal 64. Wall archetypes (wall art, trophies, posters, shelves) use a wall spec shape:
-wall-span, offset bounds, anchor — in place of footprint and stack height. Engraved record
-trophies are wall items, so this ships v1.
+**Wall coordinate system** (audit A1, shipped #203): wall items live in a second coordinate space.
+A segment is named by the floor tile it borders plus a left/right selector — left is the plane at
+`x-0.5` running along +y, right is `y-0.5` running along +x — and a position on it is `(u, v)` in
+scale-64 screen pixels, `u` along the wall from the segment's near corner, `v` down from the wall
+top (`WALL_HEIGHT` 4 units, 128 px). **`u` is even by rule**: the wall's horizontal axis is the
+projection's 2:1 diagonal, so one along-wall pixel moves a sprite (±1, +0.5) and an odd offset
+would land it half a pixel off the plane. `packages/shared/src/walls.ts` owns all of it.
+
+Wall archetypes (wall art, poster, record trophy, wall shelf) use `WallDef` — span, plane box,
+mount — in place of footprint and stack height, a parallel shape rather than a variant of
+`FurniDef`, since none of `w`/`l`/`stackHeights`/`canWalk`/`canStackOn`/`seatHeight` means
+anything for a poster. `span`/`plane`/`mount` are read off the render by the post-pass, which
+prints the def line to paste; the wall gates check the declaration back against the pixels.
+Engraved record trophies are wall items, which is why this shipped before the museum wing (#210).
 
 **Draw order** (audit B1): painter's algorithm — all room sprites sorted by projected depth every
 frame, with explicit tiebreakers (horizontal epsilon, stable per-sprite epsilon) so ties never
@@ -96,6 +105,13 @@ recipe-to-sprite path.
    **similarity to previously rejected designs**, the reference-scene render gates (draw order,
    seating). A gate exists only if a staged known-bad recipe actually bounces — test them that
    way. (audit A5, R-07, S11)
+
+   Gates run by surface. Palette, contrast and uniqueness are surface-blind. Footprint, seat and
+   ground-contact bounds are floor-only, and wall bundles **replace** them rather than relaxing
+   them — `gateWallFit` and `gateWallBounds` reject a mesh that floats off the wall, stands off it
+   like a table, carries a seat, overhangs its span, or declares a plane box that no longer matches
+   the render. `gateBounds` still rejects every wall sprite, and a test asserts that: it is why the
+   variant exists.
 5. **Mint gate (prototype).** Names and descriptions through the basic word filter. Composed
    furni from the curated part library needs no image screening — the part library is the gate.
    Per-account mint rate limits and rejection economics per GAME.md §Design minting (integrity

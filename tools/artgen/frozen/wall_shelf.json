@@ -1,0 +1,37 @@
+{
+  "defId": "wall_shelf",
+  "archetype": "artgen",
+  "sheet": "wall_shelf.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 13,
+    "mountU": 0,
+    "mountV": 46,
+    "gap": 0,
+    "depth": 0.2
+  },
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:4fa27515f139d01c",
+  "recipeHash": "4fa27515f139d01c5d4cb1501c00db1c2455fa3136dead48560382e9848ffc2b",
+  "pixelHash": "e085d4a1ae5a19e60e0a4f35bb079e5da5118e28a1b96875b2323752bf95f14e"
+}

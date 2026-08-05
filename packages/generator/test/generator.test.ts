@@ -1,8 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
-import { PROTOTYPE_CATALOG } from "@grand/shared";
-import { FROZEN_DIR, bundleFor } from "../src/catalog.ts";
+import { PROTOTYPE_CATALOG, WALL_CATALOG, WALL_MAX_DEPTH } from "@grand/shared";
+import type { WallDef } from "@grand/shared";
+import { FROZEN_DIR, bundleFor, frozenBundle } from "../src/catalog.ts";
 import { render } from "../src/compose.ts";
 import type { BundleMeta } from "../src/compose.ts";
 import { decodePng, encodePng } from "../src/png.ts";
@@ -13,7 +14,10 @@ import {
   gatePalette,
   gateSeat,
   gateUniqueness,
+  gateWallBounds,
+  gateWallFit,
   runGates,
+  runWallGates,
 } from "../src/gates.ts";
 import { makeCanvas, putPixel } from "../src/raster.ts";
 import { recipeHash } from "../src/recipe.ts";
@@ -63,6 +67,21 @@ describe("rendering", () => {
       const { bundle } = bundleFor(def);
       expect(gateUniqueness(seen, bundle.meta.recipeHash)).toEqual({ ok: true });
       expect(runGates(bundle, def), def.id).toEqual({ ok: true });
+    }
+    for (const def of WALL_CATALOG) {
+      const { bundle } = frozenBundle(def.id);
+      expect(gateUniqueness(seen, bundle.meta.recipeHash)).toEqual({ ok: true });
+      expect(runWallGates(bundle, def), def.id).toEqual({ ok: true });
+    }
+  });
+
+  test("every wall bundle matches the committed frozen catalog", () => {
+    const committed = JSON.parse(
+      readFileSync(new URL("../../client/public/furni/catalog.json", import.meta.url), "utf8"),
+    ) as { defs: Record<string, BundleMeta> };
+    for (const def of WALL_CATALOG) {
+      const { bundle } = frozenBundle(def.id);
+      expect(bundle.meta.pixelHash, def.id).toBe(committed.defs[def.id]?.pixelHash);
     }
   });
 
@@ -227,5 +246,83 @@ describe("gates bounce staged known-bad input", () => {
       for (let x = 0; x < 8; x++) putPixel(c, x, y, FLOOR_TONES[0] ?? 0);
     }
     expect(gateContrast(c)).toMatchObject({ ok: false, gate: "contrast" });
+  });
+
+  // --- wall gates (#203). These replace footprint/seat/bounds for hanging items, so each one
+  // needs its own staged bad input — swapping a gate out is not the same as keeping it honest.
+  const WALL_DEF = WALL_CATALOG[0]!;
+  const wallBundle = () => frozenBundle(WALL_DEF.id).bundle;
+
+  test("wall_fit: a floor item's ground-contact gate is not what checks a wall item", () => {
+    // The reason a variant exists at all: a hung sprite never reaches the ground line, so the
+    // floor bounds gate would reject every wall item ever authored.
+    expect(gateBounds(wallBundle())).toMatchObject({ ok: false, gate: "bounds" });
+    expect(runWallGates(wallBundle(), WALL_DEF)).toEqual({ ok: true });
+  });
+
+  test("wall_fit: a plane box that disagrees with the def", () => {
+    const wider: WallDef = { ...WALL_DEF, plane: { ...WALL_DEF.plane, w: WALL_DEF.plane.w + 2 } };
+    expect(gateWallFit(wallBundle(), wider)).toMatchObject({ ok: false, gate: "wall_fit" });
+  });
+
+  test("wall_fit: an odd mount lands the sprite half a pixel off the wall", () => {
+    const bundle = wallBundle();
+    bundle.meta.wall!.mountU += 1;
+    const odd: WallDef = { ...WALL_DEF, mount: { ...WALL_DEF.mount, u: bundle.meta.wall!.mountU } };
+    expect(gateWallFit(bundle, odd)).toMatchObject({ ok: false, gate: "wall_fit" });
+  });
+
+  test("wall_fit: an item that overhangs its own span", () => {
+    const bundle = wallBundle();
+    bundle.meta.wall!.mountU = 2;
+    bundle.meta.wall!.planeW = 64;   // wider than the one segment it claims
+    const over: WallDef = { ...WALL_DEF, mount: { u: 2, v: WALL_DEF.mount.v }, plane: { w: 64, h: WALL_DEF.plane.h } };
+    expect(gateWallFit(bundle, over)).toMatchObject({ ok: false, gate: "wall_fit" });
+  });
+
+  test("wall_fit: a mesh standing off the wall is floor furni", () => {
+    const floating = wallBundle();
+    floating.meta.wall!.gap = 0.5;
+    expect(gateWallFit(floating, WALL_DEF)).toMatchObject({ ok: false, gate: "wall_fit" });
+    const deep = wallBundle();
+    deep.meta.wall!.depth = WALL_MAX_DEPTH + 0.1;
+    expect(gateWallFit(deep, WALL_DEF)).toMatchObject({ ok: false, gate: "wall_fit" });
+  });
+
+  test("wall_fit: a wall item cannot carry a seat", () => {
+    const seated = wallBundle();
+    seated.meta.seatZ = 0.5;
+    expect(gateWallFit(seated, WALL_DEF)).toMatchObject({ ok: false, gate: "wall_fit" });
+  });
+
+  test("wall_bounds: a plane box that no longer covers the pixels", () => {
+    const bundle = wallBundle();
+    bundle.meta.wall!.mountV += 4;   // claim the sprite hangs lower than it renders
+    expect(gateWallBounds(bundle)).toMatchObject({ ok: false, gate: "wall_bounds" });
+  });
+
+  test("wall_bounds: a plane box looser than the render", () => {
+    const bundle = wallBundle();
+    bundle.meta.wall!.planeH += 8;
+    expect(gateWallBounds(bundle)).toMatchObject({ ok: false, gate: "wall_bounds" });
+  });
+
+  // Dir 6 is dir 0 turned three quarters, which mirrors about the tile centre. A mesh that is
+  // off-centre in its span comes back hanging at a different u, and one declaration cannot
+  // describe both frames — this is what caught wall_shelf during authoring.
+  test("wall_bounds: the two walls must render the same item", () => {
+    const bundle = wallBundle();
+    const { frameW, frameH } = bundle.meta;
+    const shifted = makeCanvas(bundle.sheet.w, frameH);
+    for (let y = 0; y < frameH; y++) {
+      for (let x = 0; x < bundle.sheet.w; x++) {
+        const src = x >= frameW && x < bundle.sheet.w - 4 ? x + 4 : x;
+        const i = (y * bundle.sheet.w + src) * 4;
+        const j = (y * bundle.sheet.w + x) * 4;
+        for (let k = 0; k < 4; k++) shifted.px[j + k] = bundle.sheet.px[i + k] ?? 0;
+      }
+    }
+    expect(gateWallBounds({ ...bundle, sheet: shifted }))
+      .toMatchObject({ ok: false, gate: "wall_bounds" });
   });
 });

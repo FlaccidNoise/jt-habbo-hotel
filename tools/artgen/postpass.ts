@@ -18,12 +18,13 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
-import { PROTOTYPE_CATALOG } from "../../packages/shared/src/furni.ts";
-import type { FurniDef } from "../../packages/shared/src/protocol.ts";
+import { PROTOTYPE_CATALOG, WALL_CATALOG } from "../../packages/shared/src/furni.ts";
+import type { FurniDef, WallDef } from "../../packages/shared/src/protocol.ts";
+import { WALL_HEIGHT } from "../../packages/shared/src/walls.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { makeCanvas, putPixel, getPixel, blit } from "../../packages/generator/src/raster.ts";
 import { rampByName, OUTLINE, STYLE_VERSION, GENERATOR_VERSION } from "../../packages/generator/src/style.ts";
-import { runGates } from "../../packages/generator/src/gates.ts";
+import { runGates, runWallGates } from "../../packages/generator/src/gates.ts";
 import type { Bundle } from "../../packages/generator/src/compose.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
 
@@ -47,8 +48,49 @@ const frozenDir = new URL("./frozen/", import.meta.url).pathname;
 interface Frame { dir: number; spanY: number; rgba: string; mask: string }
 interface PartMeta {
   w: number; l: number; ramp: string; maxZ: number; seatZ: number | null; frames: Frame[];
+  surface?: "floor" | "wall";
+  wallGap: number; wallDepth: number;
   prims: Array<{ ramp: string; group: number }>;
   src: unknown;
+}
+
+interface BBox { minX: number; minY: number; maxX: number; maxY: number }
+
+function opaqueBox(c: Canvas): BBox | null {
+  let box: BBox | null = null;
+  for (let y = 0; y < c.h; y++) {
+    for (let x = 0; x < c.w; x++) {
+      if (getPixel(c, x, y).alpha === 0) continue;
+      if (!box) box = { minX: x, minY: y, maxX: x, maxY: y };
+      else {
+        if (x < box.minX) box.minX = x;
+        if (x > box.maxX) box.maxX = x;
+        if (y < box.minY) box.minY = y;
+        if (y > box.maxY) box.maxY = y;
+      }
+    }
+  }
+  return box;
+}
+
+/** Where the dir-0 render sits in the wall plane, snapped out to the wall's 2 px lattice so the
+ *  declared box always covers the pixels. Screen width folds in the item's depth, and the plane's
+ *  own tilt costs half its width in screen height — both come back out here. */
+function wallPlane(box: BBox, anchorX: number, anchorY: number): {
+  planeW: number; planeH: number; mountU: number; mountV: number;
+} {
+  const w = box.maxX + 1 - box.minX;
+  const h = box.maxY + 1 - box.minY;
+  const rawU = box.minX - anchorX;
+  const rawV = box.minY - (anchorY - V - WALL_HEIGHT * ZU) - rawU / 2;
+  const mountU = 2 * Math.floor(rawU / 2);
+  const mountV = Math.floor(rawV);
+  return {
+    planeW: 2 * Math.ceil((rawU + w - mountU) / 2),
+    planeH: Math.ceil(rawV + h - w / 2 - mountV),
+    mountU,
+    mountV,
+  };
 }
 
 /** Colorways. rig.py renders white geometry lit by one sun and a flat index mask — neither pass
@@ -155,9 +197,13 @@ for (const [id, variant] of Object.entries(VARIANTS)) {
 
 for (const [id, part] of work) {
   const isProof = id.startsWith("proof_");
-  const catalogDef = PROTOTYPE_CATALOG.find((d) => d.id === id);
+  const isWall = part.surface === "wall";
+  const catalogDef = isWall ? undefined : PROTOTYPE_CATALOG.find((d) => d.id === id);
+  const wallDef = isWall ? WALL_CATALOG.find((d) => d.id === id) : undefined;
   const heightPx = Math.ceil(part.maxZ * ZU);
-  if (!isProof && !catalogDef) {
+  // A wall def's numbers come off the assembled sheet, not the mesh, so its missing-def message
+  // waits until after the frames exist. The floor one can bail early.
+  if (!isWall && !isProof && !catalogDef) {
     // Both numbers come off the mesh, so hand them over rather than making the author derive
     // ceil(maxZ*32)/32 and read the seat surface out of the rig by eye.
     console.error(
@@ -177,6 +223,7 @@ for (const [id, part] of work) {
 
   const sheet = makeCanvas(frameW * part.frames.length, frameH);
   const anchorsX: number[] = [];
+  const boxes: Array<BBox | null> = [];
   for (let q = 0; q < part.frames.length; q++) {
     const { spanY } = part.frames[q]!;
     anchorsX.push(spanY * H);
@@ -221,7 +268,42 @@ for (const [id, part] of work) {
       }
     }
     outlineSilhouette(frame);
+    boxes.push(opaqueBox(frame));
     blit(sheet, frame, q * frameW, 0);
+  }
+
+  const png = encodePng(sheet.w, sheet.h, sheet.px);
+  writeFileSync(join(renderDir, `${id}.png`), png);
+  const big = upscale(sheet, 3);
+  writeFileSync(join(renderDir, `${id}@3x.png`), encodePng(big.w, big.h, big.px));
+
+  const plane = isWall && boxes[0]
+    ? wallPlane(boxes[0], anchorsX[0] ?? 0, V + heightPx)
+    : null;
+  if (isWall && !plane) {
+    console.error(`${id}: dir 0 frame is empty — nothing to hang`);
+    failures++;
+    continue;
+  }
+  if (plane && plane.mountU < 0) {
+    console.error(
+      `${id}: renders ${-plane.mountU}px before its own segment starts. Depth projects into ` +
+      `screen width, so shift the mesh along the wall until min fx >= max fy.`,
+    );
+    failures++;
+    continue;
+  }
+  if (isWall && !wallDef) {
+    // Every number is read off the render — hand them over rather than making the author
+    // measure a parallelogram by eye.
+    console.error(
+      `${id}: no WallDef in packages/shared/src/furni.ts. Add this, then re-run:\n` +
+      `  { id: "${id}", name: "${id}", span: ${part.w}, ` +
+      `plane: { w: ${plane?.planeW}, h: ${plane?.planeH} }, ` +
+      `mount: { u: ${plane?.mountU}, v: ${plane?.mountV} }, color: 0x000000 },`,
+    );
+    failures++;
+    continue;
   }
 
   const def: FurniDef = catalogDef ?? {
@@ -235,17 +317,15 @@ for (const [id, part] of work) {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
       dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
       footprint: { w: part.w, l: part.l },
-      drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: [], styleVersion: STYLE_VERSION,
+      drawnHeight: heightPx / ZU, seatZ: part.seatZ,
+      ...(plane ? { wall: { span: part.w, ...plane, gap: part.wallGap, depth: part.wallDepth } } : {}),
+      occlusion: [], styleVersion: STYLE_VERSION,
       generatorVersion: GENERATOR_VERSION,
       partLibraryHash: `artgen:${recipeHash.slice(0, 16)}`, recipeHash,
       pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
     },
   };
-  const result = runGates(bundle, def);
-  const png = encodePng(sheet.w, sheet.h, sheet.px);
-  writeFileSync(join(renderDir, `${id}.png`), png);
-  const big = upscale(sheet, 3);
-  writeFileSync(join(renderDir, `${id}@3x.png`), encodePng(big.w, big.h, big.px));
+  const result = wallDef ? runWallGates(bundle, wallDef) : runGates(bundle, def);
   if (!result.ok) {
     failures++;
     console.error(`${id}: FAIL ${result.gate} gate: ${result.detail}`);

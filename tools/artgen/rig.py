@@ -36,7 +36,16 @@ os.makedirs(OUT, exist_ok=True)
 # "group" (ints >= 100) merges prims into one seam group — no interior line between them.
 # Per-prim "seat": True marks the sittable surface — its top becomes the part's seatZ, which the
 # seat gate checks the def's seatHeight against. Tag it on the cushion, not the frame.
+# Per-prim "caps": False drops an hcyl's end spheres, leaving a bare cylinder — a record disc
+# rather than a capsule.
 # "proof_" ids are pipeline proofs: rendered and gated but never frozen into the catalog.
+#
+# A part with "surface": "wall" (#203) hangs instead of standing. It is authored against the wall
+# plane at fy 0, extending into the room, and spans "w" wall segments along fx. Only two frames
+# are rendered: dir 0 is the right wall, and three quarter turns carry the same mesh onto the left
+# wall as dir 6 — the rotation that maps the plane fy=0 onto fx=0. Because the projection folds
+# depth into screen width, a wall part must start at least its own depth along the wall
+# (min fx >= max fy) or it overhangs the segment before it.
 
 PARTS = {
     "proof_armchair": {
@@ -249,6 +258,52 @@ PARTS = {
             {"t": "sphere", "c": (1.00, 1.00, 1.52), "r": 0.16, "ramp": "ivory"},
         ],
     },
+    # ---- wall archetypes (#203) ----
+    # Authored flush at fy 0 and hung at eye level on a 4-unit wall. The catalog def's mount v is
+    # only the authored height; players slide the item anywhere the wall allows.
+    "wall_art": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.00, 2.26), "c1": (0.82, 0.06, 2.90), "ramp": "teal"},
+            {"t": "box", "c0": (0.14, 0.00, 2.20), "c1": (0.86, 0.08, 2.26)},
+            {"t": "box", "c0": (0.14, 0.00, 2.90), "c1": (0.86, 0.08, 2.96)},
+            {"t": "box", "c0": (0.14, 0.00, 2.20), "c1": (0.20, 0.08, 2.96)},
+            {"t": "box", "c0": (0.80, 0.00, 2.20), "c1": (0.86, 0.08, 2.96)},
+        ],
+    },
+    "poster": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.05), "c1": (0.84, 0.03, 2.95)},
+            {"t": "box", "c0": (0.16, 0.03, 2.62), "c1": (0.84, 0.04, 2.80), "ramp": "ivory"},
+            {"t": "box", "c0": (0.16, 0.03, 2.12), "c1": (0.84, 0.04, 2.22), "ramp": "charcoal"},
+        ],
+    },
+    # Navy plaque, not walnut: walnut (0xb5651d) and gold (0xdaa520) sit a few degrees apart, so a
+    # gold engraving plate on a wooden plaque disappears into it.
+    "record_trophy": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.22, 0.00, 2.28), "c1": (0.78, 0.05, 2.92), "bevel": 0.02},
+            {"t": "hcyl", "x": 0.50, "y0": 0.05, "y1": 0.08, "z": 2.68, "r": 0.185,
+             "caps": False, "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.08, "y1": 0.10, "z": 2.68, "r": 0.06,
+             "caps": False, "ramp": "gold"},
+            {"t": "box", "c0": (0.30, 0.05, 2.32), "c1": (0.70, 0.07, 2.42), "ramp": "gold"},
+        ],
+    },
+    "wall_shelf": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.21, 0.00, 2.40), "c1": (0.79, 0.20, 2.47), "bevel": 0.02},
+            {"t": "box", "c0": (0.27, 0.00, 2.22), "c1": (0.32, 0.16, 2.40), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.68, 0.00, 2.22), "c1": (0.73, 0.16, 2.40), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.29, 0.04, 2.47), "c1": (0.37, 0.17, 2.73), "ramp": "navy"},
+            {"t": "box", "c0": (0.38, 0.04, 2.47), "c1": (0.45, 0.17, 2.68), "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.63, "cy": 0.11, "rx": 0.08, "ry": 0.08, "z0": 2.47, "z1": 2.70,
+             "taper": 0.70, "ramp": "teal"},
+        ],
+    },
     "stereo_basic": {
         "w": 1, "l": 1, "ramp": "charcoal",
         "prims": [
@@ -280,6 +335,34 @@ def prim_points(prim):
             return [(prim["x"], prim["y0"], prim["z"]), (prim["x"], prim["y1"], prim["z"])]
         return [(prim["y0"], prim["x"], prim["z"]), (prim["y1"], prim["x"], prim["z"])]
     return [prim["c"]]
+
+def prim_fy_range(prim):
+    """Footprint depth the prim occupies, radii included. For a wall part fy 0 is the wall, so
+    this is how far it hangs off — min is the gap, max is the stand-off."""
+    if prim["t"] == "box":
+        return (prim["c0"][1], prim["c1"][1])
+    if prim["t"] == "cyl":
+        return (prim["cy"] - prim["ry"], prim["cy"] + prim["ry"])
+    if prim["t"] == "hcyl":
+        # world x is fy: a run along fy is bounded by its ends (plus caps), one along fx by r.
+        if prim.get("axis", "y") == "y":
+            pad = prim["r"] if prim.get("caps", True) else 0.0
+            return (prim["y0"] - pad, prim["y1"] + pad)
+        return (prim["x"] - prim["r"], prim["x"] + prim["r"])
+    return (prim["c"][1] - prim["r"], prim["c"][1] + prim["r"])
+
+def prim_fx_range(prim):
+    """The same along the wall. hcyl swaps roles: a run along fy is bounded by its radius here."""
+    if prim["t"] == "box":
+        return (prim["c0"][0], prim["c1"][0])
+    if prim["t"] == "cyl":
+        return (prim["cx"] - prim["rx"], prim["cx"] + prim["rx"])
+    if prim["t"] == "hcyl":
+        if prim.get("axis", "y") == "y":
+            return (prim["x"] - prim["r"], prim["x"] + prim["r"])
+        pad = prim["r"] if prim.get("caps", True) else 0.0
+        return (prim["y0"] - pad, prim["y1"] + pad)
+    return (prim["c"][0] - prim["r"], prim["c"][0] + prim["r"])
 
 def prim_top(prim):
     """Highest drawn point in height units — radii included, unlike prim_points."""
@@ -405,7 +488,7 @@ def add_prim(prim):
         obj.rotation_euler = run.to_track_quat("Z", "Y").to_euler()
         finish(obj, smooth=True)
         made.append(obj)
-        for end in (a, b):
+        for end in (a, b) if prim.get("caps", True) else ():
             bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=12, radius=prim["r"],
                                                  location=end)
             finish(bpy.context.active_object, smooth=True)
@@ -492,12 +575,33 @@ for part_id, part in PARTS.items():
     max_z = max(prim_top(prim) for prim in part["prims"])
     seats = [p for p in part["prims"] if p.get("seat")]
     seat_z = max(prim_top(p) for p in seats) if seats else None
+    # A wall part is authored on the plane fy=0; dir 0 is the right wall and dir 6 the left, so
+    # quarter turns 1 and 2 exist only to carry the mesh round and are never rendered.
+    is_wall = part.get("surface") == "wall"
+    fy = [prim_fy_range(prim) for prim in part["prims"]]
+    wall_gap, wall_depth = min(r[0] for r in fy), max(r[1] for r in fy)
+    if is_wall:
+        fx = [prim_fx_range(prim) for prim in part["prims"]]
+        fx_min, fx_max = min(r[0] for r in fx), max(r[1] for r in fx)
+        assert wall_gap >= -1e-6, f"{part_id}: mesh crosses the wall at fy {wall_gap}"
+        assert fx_min + 1e-6 >= wall_depth, (
+            f"{part_id}: starts at fx {fx_min} but stands {wall_depth} off the wall — "
+            f"depth projects into screen width, so shift the mesh to fx >= {wall_depth}")
+        # Dir 6 is dir 0 turned three times, which mirrors the mesh about the tile centre. Only a
+        # mesh whose extremes straddle that centre comes back as a true mirror; an off-centre one
+        # hangs at a different u on each wall. Contents may sit anywhere inside — the bounds may not.
+        assert abs(fx_min + fx_max - part["w"]) < 1e-6, (
+            f"{part_id}: spans fx {fx_min}..{fx_max}, off-centre in its {part['w']}-segment span. "
+            f"Centre the bounds so the left and right walls mirror: fx_min + fx_max == {part['w']}")
+    dirs = (0, 3) if is_wall else (0, 1, 2, 3)
     frames = []
     scene = bpy.context.scene
     for q in range(4):
         if q > 0:
             prims = [rotate_prim(p, span[1]) for p in prims]
             span = (span[1], span[0])
+        if q not in dirs:
+            continue
         clear_meshes()
         prim_objs = [add_prim(prim) for prim in prims]
         base = os.path.join(OUT, f"{part_id}_d{q * 2}")
@@ -520,6 +624,8 @@ for part_id, part in PARTS.items():
                        "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
         "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,
+        "surface": part.get("surface", "floor"),
+        "wallGap": wall_gap, "wallDepth": wall_depth,
         "frames": frames,
         "prims": [{"ramp": p.get("ramp", part["ramp"]), "group": p.get("group", i)}
                   for i, p in enumerate(part["prims"])],

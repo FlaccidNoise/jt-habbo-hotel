@@ -722,6 +722,154 @@
       "partLibraryHash": "artgen:f4d5a4147487f945",
       "recipeHash": "f4d5a4147487f9457845599459304c6f3b929836fbf2d1c8754aa1903d6d7779",
       "pixelHash": "2a9efc978c2e905e96b4840ab1298b806c2bc123e1175603fb5809569c668516"
+    },
+    "wall_art": {
+      "defId": "wall_art",
+      "archetype": "artgen",
+      "sheet": "wall_art.png",
+      "frameW": 64,
+      "frameH": 127,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 111,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.96875,
+      "seatZ": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 23,
+        "mountU": 2,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:2eba31daac08ffe4",
+      "recipeHash": "2eba31daac08ffe4bbe98120656a1a3fd83b6894877c6e934fc855e831530b76",
+      "pixelHash": "130acdbb82c1799c9c30aa11ddc885f81a18b164253aaee4b2c923519fbd5a42"
+    },
+    "poster": {
+      "defId": "poster",
+      "archetype": "artgen",
+      "sheet": "poster.png",
+      "frameW": 64,
+      "frameH": 127,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 111,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.96875,
+      "seatZ": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 29,
+        "mountU": 4,
+        "mountV": 34,
+        "gap": 0,
+        "depth": 0.04
+      },
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:5a8f9790fbac4417",
+      "recipeHash": "5a8f9790fbac441708c5a812b9191ed25a22bd15cc51e40bd95a226b47e6ff62",
+      "pixelHash": "f0a1fd0c25acedc2c540b7cca7a1e3075dbe802eab81df0e9c864afd83234278"
+    },
+    "record_trophy": {
+      "defId": "record_trophy",
+      "archetype": "artgen",
+      "sheet": "record_trophy.png",
+      "frameW": 64,
+      "frameH": 126,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 110,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.9375,
+      "seatZ": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 21,
+        "mountU": 4,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:9714410a531fd182",
+      "recipeHash": "9714410a531fd1824433653b84d9341681b7bac23e175715c7f000e879d49374",
+      "pixelHash": "da70b8927c47aac02f0fab093447c53227cefbadb9b84ff7ebe0d3d7a090f63a"
+    },
+    "wall_shelf": {
+      "defId": "wall_shelf",
+      "archetype": "artgen",
+      "sheet": "wall_shelf.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 13,
+        "mountU": 0,
+        "mountV": 46,
+        "gap": 0,
+        "depth": 0.2
+      },
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:4fa27515f139d01c",
+      "recipeHash": "4fa27515f139d01c5d4cb1501c00db1c2455fa3136dead48560382e9848ffc2b",
+      "pixelHash": "e085d4a1ae5a19e60e0a4f35bb079e5da5118e28a1b96875b2323752bf95f14e"
     }
   }
 }

@@ -305,6 +305,14 @@ export async function startServer(opts: {
         if (room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir)) quest(accountId, "place");
         log("place", { accountId, roomId: conn.roomId, itemId: msg.itemId, x: msg.x, y: msg.y });
         break;
+      case "place_wall":
+        if (room.placeWall(accountId, msg.itemId, msg.side, msg.x, msg.y, msg.u, msg.v)) {
+          quest(accountId, "place");
+        }
+        log("place_wall", {
+          accountId, roomId: conn.roomId, itemId: msg.itemId, side: msg.side, x: msg.x, y: msg.y,
+        });
+        break;
       case "pickup":
         room.pickup(accountId, msg.itemId);
         log("pickup", { accountId, roomId: conn.roomId, itemId: msg.itemId });

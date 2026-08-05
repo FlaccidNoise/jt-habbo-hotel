@@ -1,4 +1,4 @@
-import type { FurniDef } from "./protocol.ts";
+import type { FurniDef, WallDef } from "./protocol.ts";
 
 // seatHeight is the seat surface read off the authored geometry, not guessed: the box-path defs
 // come from archetypes.ts slot boxes, the 3D-assisted ones from the rig.py primitive that forms
@@ -32,6 +32,16 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "divider_basic_plum",  name: "Plum Divider",       w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x7a3e9d },
 ];
 
+// Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
+// which prints the line to paste — never measure a parallelogram by hand. plane is the drawn size
+// in the wall plane and mount the offsets it was authored at, both in scale-64 px.
+export const WALL_CATALOG: WallDef[] = [
+  { id: "wall_art",      name: "Wall Art",      span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0xdaa520 },
+  { id: "poster",        name: "Poster",        span: 1, plane: { w: 24, h: 29 }, mount: { u: 4, v: 34 }, color: 0xaa3333 },
+  { id: "record_trophy", name: "Record Trophy", span: 1, plane: { w: 22, h: 21 }, mount: { u: 4, v: 35 }, color: 0x3f5e9e },
+  { id: "wall_shelf",    name: "Wall Shelf",    span: 1, plane: { w: 26, h: 13 }, mount: { u: 0, v: 46 }, color: 0xb5651d },
+];
+
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
  *  every def added later must be earned through the Stars sink, not granted for free. */
 export const STARTER_GRANT_DEFS: readonly string[] = [
@@ -62,4 +72,8 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["cafe_chair_navy", 25],
   ["casino_stool_fern", 25],
   ["divider_basic_plum", 75],
+  ["poster", 50],
+  ["wall_art", 150],
+  ["wall_shelf", 150],
+  ["record_trophy", 300],
 ]);

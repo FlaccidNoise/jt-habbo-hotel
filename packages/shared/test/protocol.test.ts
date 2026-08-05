@@ -4,6 +4,7 @@ import { ClientMsgSchema, ServerMsgSchema } from "../src/protocol.ts";
 const AVATAR = { id: 1, username: "ann", x: 0, y: 0, z: 0, dir: 2, posture: "stand" };
 const ITEM = { id: 5, defId: "chair_basic", x: 1, y: 2, z: 0, dir: 2, state: 0 };
 const INV = { id: 9, defId: "plant_basic" };
+const WALL_ITEM = { id: 7, defId: "poster", side: "left", x: 0, y: 3, u: 4, v: 20, state: 0 };
 
 const CLIENT_CASES: Array<[string, unknown, unknown]> = [
   ["join", { t: "join", token: "tok", roomId: 1 }, { t: "join", token: "tok" }],
@@ -12,6 +13,9 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
   ["whisper", { t: "whisper", to: "bob", text: "hi" }, { t: "whisper", text: "hi" }],
   ["place", { t: "place", itemId: 5, x: 1, y: 2, dir: 2 }, { t: "place", itemId: 5, x: 1, y: 2, dir: 1 }],
   ["pickup", { t: "pickup", itemId: 5 }, { t: "pickup" }],
+  // u is even by rule — the wall's 2:1 axis has no odd position to land on.
+  ["place_wall", { t: "place_wall", itemId: 5, side: "left", x: 0, y: 3, u: 4, v: 20 },
+                 { t: "place_wall", itemId: 5, side: "left", x: 0, y: 3, u: 5, v: 20 }],
   ["trade_open", { t: "trade_open", to: "bob" }, { t: "trade_open" }],
   ["trade_offer", { t: "trade_offer", itemIds: [1, 2] }, { t: "trade_offer", itemIds: [1, 2, 3, 4, 5, 6, 7, 8, 9] }],
   ["trade_accept", { t: "trade_accept" }, { t: "tradeaccept" }],
@@ -24,7 +28,7 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
 const ROOM_STATE = {
   t: "room_state", roomId: 1, name: "Cafe", heightmap: "000\n000",
   door: { x: 0, y: 0, dir: 2 }, chat: { speakRadius: 5, shoutAllowed: true },
-  avatars: [AVATAR], furni: [ITEM], inventory: [INV], you: 1, stars: 0,
+  avatars: [AVATAR], furni: [ITEM], wallFurni: [WALL_ITEM], inventory: [INV], you: 1, stars: 0,
 };
 const TRADE_STATE = {
   t: "trade_state", partner: "bob", yours: [INV], theirs: [],
@@ -43,6 +47,8 @@ const SERVER_CASES: Array<[string, unknown, unknown]> = [
   ["chat", { t: "chat", from: 1, mode: "whisper", text: "hi", faded: false }, { t: "chat", from: 1, mode: "whisper", text: "hi" }],
   ["furni_placed", { t: "furni_placed", item: ITEM }, { t: "furni_placed", item: { ...ITEM, dir: 1 } }],
   ["furni_moved", { t: "furni_moved", item: ITEM }, { t: "furni_moved", item: { ...ITEM, z: undefined } }],
+  ["wall_placed", { t: "wall_placed", item: WALL_ITEM },
+                  { t: "wall_placed", item: { ...WALL_ITEM, side: "top" } }],
   ["furni_removed", { t: "furni_removed", itemId: 5 }, { t: "furni_removed" }],
   ["inventory_add", { t: "inventory_add", item: INV }, { t: "inventory_add", item: { id: 9 } }],
   ["stars", { t: "stars", balance: 10, delta: 10, reason: "coffee" }, { t: "stars", delta: 10, reason: "coffee" }],
