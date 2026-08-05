@@ -188,6 +188,312 @@
       "partLibraryHash": "f63dde8efb417164",
       "recipeHash": "530d8e3421f8c38da27adb7ef28db72135f79331e61726f199e1d00953fe9adb",
       "pixelHash": "7976a5588cc9d8015aa14fe04b9eb2d54b828daf7f3aec4c915e8dec782b2699"
+    },
+    "casino_table": {
+      "defId": "casino_table",
+      "archetype": "artgen",
+      "sheet": "casino_table.png",
+      "frameW": 128,
+      "frameH": 110,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "stackHeights": [
+        1.4375
+      ],
+      "drawnHeight": 1.4375,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:be66b225f38cad7c",
+      "recipeHash": "be66b225f38cad7cefccc2c6e4d434cd50d26376b70def4e634b29aba9676298",
+      "pixelHash": "e68d6ff550f1f6b64b891fa5bc1c0ef4bf869b6ab234141f7c72f68817646737"
+    },
+    "casino_stool": {
+      "defId": "casino_stool",
+      "archetype": "artgen",
+      "sheet": "casino_stool.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "stackHeights": [
+        0.84375
+      ],
+      "drawnHeight": 0.84375,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:00f4a240c4a1972e",
+      "recipeHash": "00f4a240c4a1972e2d5af481813ccd7f8bff67a9b3b2be423b7ecdb350803282",
+      "pixelHash": "6771a3a936a4a19ddb418d04ce84cbe6db3a55915ffbc9fd5d7d7172d5bc7262"
+    },
+    "cafe_table": {
+      "defId": "cafe_table",
+      "archetype": "artgen",
+      "sheet": "cafe_table.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "stackHeights": [
+        1.03125
+      ],
+      "drawnHeight": 1.03125,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:34cf5a102725aeff",
+      "recipeHash": "34cf5a102725aeff3067b724a6151a315e1dcb0983c88c8fb1da279e22cb7bea",
+      "pixelHash": "f4ad49895dd558869337563ee0c4598909e964b4a214594caf80a8d9a8a8377e"
+    },
+    "cafe_chair": {
+      "defId": "cafe_chair",
+      "archetype": "artgen",
+      "sheet": "cafe_chair.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "stackHeights": [
+        1.25
+      ],
+      "drawnHeight": 1.25,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:edac26dcf9ad81cb",
+      "recipeHash": "edac26dcf9ad81cbd8ac2722f6ab568460f1eb20647f3aa0f6ea770a861f7584",
+      "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
+    },
+    "bed_basic": {
+      "defId": "bed_basic",
+      "archetype": "artgen",
+      "sheet": "bed_basic.png",
+      "frameW": 160,
+      "frameH": 111,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        96,
+        64,
+        96,
+        64
+      ],
+      "anchorY": 47,
+      "footprint": {
+        "w": 2,
+        "l": 3
+      },
+      "stackHeights": [
+        0.96875
+      ],
+      "drawnHeight": 0.96875,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:900df5a984e4fe1a",
+      "recipeHash": "900df5a984e4fe1a51436c8d024dab5acac6567230d51069cbf6e0bee56ae2ed",
+      "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
+    },
+    "lamp_basic": {
+      "defId": "lamp_basic",
+      "archetype": "artgen",
+      "sheet": "lamp_basic.png",
+      "frameW": 64,
+      "frameH": 103,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 87,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "stackHeights": [
+        2.21875
+      ],
+      "drawnHeight": 2.21875,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:df08eb662ebbc494",
+      "recipeHash": "df08eb662ebbc494378b70442f00dbf5c425e7e61d2057b55c208cec0bb4d08d",
+      "pixelHash": "e154936bca623f1583d9566ae4f252741fc9303e8796ca57b0e55ead2b4726f5"
+    },
+    "shelf_basic": {
+      "defId": "shelf_basic",
+      "archetype": "artgen",
+      "sheet": "shelf_basic.png",
+      "frameW": 96,
+      "frameH": 109,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 77,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "stackHeights": [
+        1.90625
+      ],
+      "drawnHeight": 1.90625,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:04009ef5192811fb",
+      "recipeHash": "04009ef5192811fb878c98a9d55dfd7b4bddcb4a7f958cdd6af1291d638bcc6f",
+      "pixelHash": "5dd8f5f757bc1f32d062cfb9510c652ea3c80ee0bdcd5b54ef01e6bb9b7cb2e1"
+    },
+    "divider_basic": {
+      "defId": "divider_basic",
+      "archetype": "artgen",
+      "sheet": "divider_basic.png",
+      "frameW": 96,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "stackHeights": [
+        1.0625
+      ],
+      "drawnHeight": 1.0625,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:2df3169f9249bfac",
+      "recipeHash": "2df3169f9249bfac8e1adcc1388de9b7d4bc67bc52b8f8d03a05579e9cd2b924",
+      "pixelHash": "21726de27eda7d3c1dbbbf8d4f1f3176571b46975f45914b8a4175a075ba9887"
+    },
+    "stereo_basic": {
+      "defId": "stereo_basic",
+      "archetype": "artgen",
+      "sheet": "stereo_basic.png",
+      "frameW": 64,
+      "frameH": 76,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "stackHeights": [
+        1.375
+      ],
+      "drawnHeight": 1.375,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:b5dd319f0affc58c",
+      "recipeHash": "b5dd319f0affc58ca3cd089efdab043850ce7bca133d863ffebad713dd268181",
+      "pixelHash": "7ffe46fb26f885cdb00d913cfe391197cc53a031b29f676c69d97d789c822b8e"
     }
   }
 }

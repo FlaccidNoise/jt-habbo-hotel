@@ -1,4 +1,4 @@
-import { deflateSync } from "node:zlib";
+import { deflateSync, inflateSync } from "node:zlib";
 
 // Minimal PNG writer: 8-bit RGBA, filter 0 on every scanline. Determinism note: the frozen
 // artifact identity is the pixel hash in the bundle metadata, not these bytes — zlib output may
@@ -47,4 +47,31 @@ export function encodePng(width: number, height: number, rgba: Uint8Array): Buff
     chunk("IDAT", deflateSync(raw, { level: 9 })),
     chunk("IEND", new Uint8Array(0)),
   ]);
+}
+
+/** Reads PNGs this module wrote (8-bit RGBA, filter 0) — enough to re-gate frozen bundles. */
+export function decodePng(png: Buffer): { width: number; height: number; rgba: Uint8Array } {
+  let width = 0, height = 0;
+  const idat: Buffer[] = [];
+  for (let off = 8; off + 8 <= png.length;) {
+    const len = png.readUInt32BE(off);
+    const type = png.toString("ascii", off + 4, off + 8);
+    const data = png.subarray(off + 8, off + 8 + len);
+    if (type === "IHDR") {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      if (data[8] !== 8 || data[9] !== 6) throw new Error("decodePng: not 8-bit RGBA");
+    } else if (type === "IDAT") {
+      idat.push(data);
+    }
+    off += 12 + len;
+  }
+  const raw = inflateSync(Buffer.concat(idat));
+  const stride = width * 4 + 1;
+  const rgba = new Uint8Array(width * height * 4);
+  for (let y = 0; y < height; y++) {
+    if (raw[y * stride] !== 0) throw new Error(`decodePng: filter ${raw[y * stride]} at row ${y}`);
+    rgba.set(raw.subarray(y * stride + 1, (y + 1) * stride), y * width * 4);
+  }
+  return { width, height, rgba };
 }

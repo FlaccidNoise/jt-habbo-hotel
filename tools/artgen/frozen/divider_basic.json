@@ -1,0 +1,34 @@
+{
+  "defId": "divider_basic",
+  "archetype": "artgen",
+  "sheet": "divider_basic.png",
+  "frameW": 96,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "stackHeights": [
+    1.0625
+  ],
+  "drawnHeight": 1.0625,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:2df3169f9249bfac",
+  "recipeHash": "2df3169f9249bfac8e1adcc1388de9b7d4bc67bc52b8f8d03a05579e9cd2b924",
+  "pixelHash": "21726de27eda7d3c1dbbbf8d4f1f3176571b46975f45914b8a4175a075ba9887"
+}

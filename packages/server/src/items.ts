@@ -1,4 +1,4 @@
-import { PROTOTYPE_CATALOG } from "@grand/shared";
+import { STARTER_GRANT_DEFS } from "@grand/shared";
 import type { InventoryItem, FurniItem } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { logItemGrants } from "./ledger.ts";
@@ -13,7 +13,7 @@ export function grantStarter(db: Database.Database, accountId: number): void {
     "INSERT INTO furni_items (def_id, owner_id, room_id, x, y, z, dir, state) VALUES (?, ?, NULL, NULL, NULL, NULL, NULL, 0)",
   );
   const grant = db.transaction(() => {
-    const itemIds = PROTOTYPE_CATALOG.map((def) => Number(insert.run(def.id, accountId).lastInsertRowid));
+    const itemIds = STARTER_GRANT_DEFS.map((defId) => Number(insert.run(defId, accountId).lastInsertRowid));
     db.prepare("UPDATE accounts SET starter_granted = 1 WHERE id = ?").run(accountId);
     logItemGrants(db, { opKey: `starter:${accountId}`, op: "starter", accountId, itemIds });
   });

@@ -1,0 +1,34 @@
+{
+  "defId": "cafe_chair",
+  "archetype": "artgen",
+  "sheet": "cafe_chair.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "stackHeights": [
+    1.25
+  ],
+  "drawnHeight": 1.25,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:edac26dcf9ad81cb",
+  "recipeHash": "edac26dcf9ad81cbd8ac2722f6ab568460f1eb20647f3aa0f6ea770a861f7584",
+  "pixelHash": "3fdc490c4c0711b2c9002ad1a77ed376580cd5697fab743c51f5eb13773d48f6"
+}

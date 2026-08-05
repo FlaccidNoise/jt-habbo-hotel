@@ -1,0 +1,34 @@
+{
+  "defId": "cafe_table",
+  "archetype": "artgen",
+  "sheet": "cafe_table.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "stackHeights": [
+    1.03125
+  ],
+  "drawnHeight": 1.03125,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:34cf5a102725aeff",
+  "recipeHash": "34cf5a102725aeff3067b724a6151a315e1dcb0983c88c8fb1da279e22cb7bea",
+  "pixelHash": "f4ad49895dd558869337563ee0c4598909e964b4a214594caf80a8d9a8a8377e"
+}

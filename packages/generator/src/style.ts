@@ -2,8 +2,9 @@ export const STYLE_VERSION = 1;
 export const GENERATOR_VERSION = 1;
 
 /** Above-front light: top face lightest, right face base, left face darker, outline darkest —
- *  the same shading rule the placeholder slabs used, so sprites sit naturally in the room. */
-const FACTORS = { outline: 0.35, left: 0.65, right: 1.0, top: 1.3 } as const;
+ *  the same shading rule the placeholder slabs used, so sprites sit naturally in the room.
+ *  `hi` is the fifth style-bible shade: specular rims on curved surfaces (3D-assisted path). */
+const FACTORS = { outline: 0.35, left: 0.65, right: 1.0, top: 1.3, hi: 1.55 } as const;
 
 export interface Ramp {
   name: string;
@@ -11,6 +12,7 @@ export interface Ramp {
   left: number;
   right: number;
   top: number;
+  hi: number;
 }
 
 function shade(color: number, factor: number): number {
@@ -26,10 +28,12 @@ function ramp(name: string, base: number): Ramp {
     left: shade(base, FACTORS.left),
     right: shade(base, FACTORS.right),
     top: shade(base, FACTORS.top),
+    hi: shade(base, FACTORS.hi),
   };
 }
 
-/** Curated global palette: ramp-indexed color, recoloring is ramp swapping (PIPELINES §2). */
+/** Curated global palette: ramp-indexed color, recoloring is ramp swapping (PIPELINES §2).
+ *  Style bible v1 pin: 12 ramps × 5 shades (ART-DIRECTION.md). */
 const RAMPS: readonly Ramp[] = [
   ramp("walnut", 0xb5651d),
   ramp("oak", 0x8b4513),
@@ -39,6 +43,10 @@ const RAMPS: readonly Ramp[] = [
   ramp("slate", 0x5b6672),
   ramp("sand", 0xc2a36b),
   ramp("teal", 0x2f8f8f),
+  ramp("gold", 0xdaa520),
+  ramp("ivory", 0x9c9484),   // dark enough that top/hi stay distinct instead of clipping to white
+  ramp("navy", 0x3f5e9e),
+  ramp("charcoal", 0x4a4d55),
 ];
 
 export function rampByName(name: string): Ramp {
@@ -47,13 +55,23 @@ export function rampByName(name: string): Ramp {
   return found;
 }
 
+export const RAMP_NAMES: readonly string[] = RAMPS.map((r) => r.name);
+
+/** Every shade of every ramp, for the distinctness test. */
+export const RAMP_SHADES: ReadonlyArray<{ ramp: string; shade: string; color: number }> =
+  RAMPS.flatMap((r) =>
+    (["outline", "left", "right", "top", "hi"] as const).map((shade) => ({
+      ramp: r.name, shade, color: r[shade],
+    })),
+  );
+
 /** Global silhouette outline — guarantees contrast against any floor tone. */
 export const OUTLINE = 0x23241f;
 
 /** Every color the generator is allowed to emit. The palette gate rejects anything else. */
 export const PALETTE: ReadonlySet<number> = new Set([
   OUTLINE,
-  ...RAMPS.flatMap((r) => [r.outline, r.left, r.right, r.top]),
+  ...RAMPS.flatMap((r) => [r.outline, r.left, r.right, r.top, r.hi]),
 ]);
 
 /** The two extreme floor tones (client scene/room.ts FLOOR_A/FLOOR_B) for the contrast gate. */

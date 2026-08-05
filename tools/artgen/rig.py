@@ -29,9 +29,12 @@ argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 OUT = os.path.abspath(argv[argv.index("--out") + 1]) if "--out" in argv else "/tmp/artgen"
 os.makedirs(OUT, exist_ok=True)
 
-# ---- proof parts: primitives in footprint coords, z in height units ------------------------
+# ---- parts: primitives in footprint coords, z in height units ------------------------------
 # box: c0/c1 corners + bevel width. cyl: vertical cylinder (rx, ry ellipse radii).
-# hcyl: horizontal cylinder along fy. sphere: icosphere.
+# hcyl: horizontal cylinder along fy (or fx with "axis": "x"). sphere: icosphere.
+# Per-prim "ramp" overrides the part ramp (postpass reads it from the mask render). Per-prim
+# "group" (ints >= 100) merges prims into one seam group — no interior line between them.
+# "proof_" ids are pipeline proofs: rendered and gated but never frozen into the catalog.
 
 PARTS = {
     "proof_armchair": {
@@ -39,8 +42,10 @@ PARTS = {
         "prims": [
             {"t": "box", "c0": (0.14, 0.14, 0.00), "c1": (0.86, 0.86, 0.12), "bevel": 0.02},
             {"t": "box", "c0": (0.10, 0.10, 0.12), "c1": (0.90, 0.90, 0.44), "bevel": 0.04},
-            {"t": "box", "c0": (0.08, 0.08, 0.44), "c1": (0.92, 0.92, 0.64), "bevel": 0.06},
-            {"t": "cyl", "cx": 0.50, "cy": 0.84, "rx": 0.42, "ry": 0.14, "z0": 0.50, "z1": 1.25},
+            {"t": "box", "c0": (0.08, 0.08, 0.44), "c1": (0.92, 0.92, 0.64), "bevel": 0.06,
+             "ramp": "plum"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.84, "rx": 0.42, "ry": 0.14, "z0": 0.50, "z1": 1.25,
+             "ramp": "plum"},
             {"t": "hcyl", "x": 0.13, "y0": 0.16, "y1": 0.88, "z": 0.74, "r": 0.09},
             {"t": "hcyl", "x": 0.87, "y0": 0.16, "y1": 0.88, "z": 0.74, "r": 0.09},
         ],
@@ -49,7 +54,7 @@ PARTS = {
         "w": 1, "l": 1, "ramp": "fern",
         "prims": [
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.28, "ry": 0.28, "z0": 0.0, "z1": 0.40,
-             "taper": 0.68},
+             "taper": 0.68, "ramp": "sand"},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.05, "ry": 0.05, "z0": 0.40, "z1": 0.95},
             {"t": "sphere", "c": (0.50, 0.50, 1.12), "r": 0.30},
             {"t": "sphere", "c": (0.30, 0.42, 0.98), "r": 0.20},
@@ -63,11 +68,125 @@ PARTS = {
         "prims": [
             {"t": "box", "c0": (0.12, 0.12, 0.00), "c1": (1.88, 0.88, 0.12), "bevel": 0.02},
             {"t": "box", "c0": (0.06, 0.06, 0.12), "c1": (1.94, 0.94, 0.40), "bevel": 0.04},
-            {"t": "box", "c0": (0.20, 0.10, 0.40), "c1": (0.98, 0.90, 0.62), "bevel": 0.06},
-            {"t": "box", "c0": (1.02, 0.10, 0.40), "c1": (1.80, 0.90, 0.62), "bevel": 0.06},
+            {"t": "box", "c0": (0.20, 0.10, 0.40), "c1": (0.98, 0.90, 0.62), "bevel": 0.06,
+             "ramp": "sand"},
+            {"t": "box", "c0": (1.02, 0.10, 0.40), "c1": (1.80, 0.90, 0.62), "bevel": 0.06,
+             "ramp": "sand"},
             {"t": "box", "c0": (0.16, 0.70, 0.40), "c1": (1.84, 0.96, 1.10), "bevel": 0.10},
             {"t": "box", "c0": (0.00, 0.06, 0.28), "c1": (0.16, 0.94, 0.86), "bevel": 0.07},
             {"t": "box", "c0": (1.84, 0.06, 0.28), "c1": (2.00, 0.94, 0.86), "bevel": 0.07},
+        ],
+    },
+    # ---- casino set ----
+    "casino_table": {
+        "w": 2, "l": 2, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.22, 0.22, 0.00), "c1": (0.42, 0.42, 1.18)},
+            {"t": "box", "c0": (1.58, 0.22, 0.00), "c1": (1.78, 0.42, 1.18)},
+            {"t": "box", "c0": (0.22, 1.58, 0.00), "c1": (0.42, 1.78, 1.18)},
+            {"t": "box", "c0": (1.58, 1.58, 0.00), "c1": (1.78, 1.78, 1.18)},
+            {"t": "box", "c0": (0.18, 0.18, 1.06), "c1": (1.82, 1.82, 1.18)},
+            {"t": "box", "c0": (0.10, 0.10, 1.18), "c1": (1.90, 1.90, 1.32), "bevel": 0.03,
+             "ramp": "fern"},
+            {"t": "hcyl", "x": 0.13, "y0": 0.13, "y1": 1.87, "z": 1.32, "r": 0.09, "group": 100},
+            {"t": "hcyl", "x": 1.87, "y0": 0.13, "y1": 1.87, "z": 1.32, "r": 0.09, "group": 100},
+            {"t": "hcyl", "x": 0.13, "y0": 0.13, "y1": 1.87, "z": 1.32, "r": 0.09, "axis": "x",
+             "group": 100},
+            {"t": "hcyl", "x": 1.87, "y0": 0.13, "y1": 1.87, "z": 1.32, "r": 0.09, "axis": "x",
+             "group": 100},
+        ],
+    },
+    "casino_stool": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.30, "ry": 0.30, "z0": 0.00, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.09, "ry": 0.09, "z0": 0.06, "z1": 0.62},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.34, "ry": 0.34, "z0": 0.62, "z1": 0.82,
+             "ramp": "crimson"},
+        ],
+    },
+    # ---- café set ----
+    "cafe_table": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.26, "ry": 0.26, "z0": 0.00, "z1": 0.07,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.07, "ry": 0.07, "z0": 0.07, "z1": 0.92},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.42, "ry": 0.42, "z0": 0.92, "z1": 1.02,
+             "ramp": "ivory"},
+        ],
+    },
+    "cafe_chair": {
+        "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.28, 0.28, 0.00), "c1": (0.36, 0.36, 0.48)},
+            {"t": "box", "c0": (0.64, 0.28, 0.00), "c1": (0.72, 0.36, 0.48)},
+            {"t": "box", "c0": (0.28, 0.64, 0.00), "c1": (0.36, 0.72, 0.48)},
+            {"t": "box", "c0": (0.64, 0.64, 0.00), "c1": (0.72, 0.72, 0.48)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58},
+            {"t": "cyl", "cx": 0.30, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
+            {"t": "cyl", "cx": 0.70, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
+            {"t": "box", "c0": (0.18, 0.80, 0.98), "c1": (0.82, 0.92, 1.22), "bevel": 0.05},
+        ],
+    },
+    # ---- remaining floor archetypes ----
+    "bed_basic": {
+        "w": 2, "l": 3, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.00, 0.00), "c1": (2.00, 3.00, 0.22)},
+            {"t": "box", "c0": (0.00, 2.82, 0.00), "c1": (2.00, 3.00, 0.95), "bevel": 0.04},
+            {"t": "box", "c0": (0.08, 0.08, 0.22), "c1": (1.92, 2.86, 0.42), "bevel": 0.05,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (0.06, 0.06, 0.40), "c1": (1.94, 1.95, 0.55), "bevel": 0.06,
+             "ramp": "navy"},
+            {"t": "box", "c0": (0.18, 2.28, 0.42), "c1": (0.95, 2.72, 0.60), "bevel": 0.08,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (1.05, 2.28, 0.42), "c1": (1.82, 2.72, 0.60), "bevel": 0.08,
+             "ramp": "ivory"},
+        ],
+    },
+    "lamp_basic": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.22, "ry": 0.22, "z0": 0.00, "z1": 0.08,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.045, "ry": 0.045, "z0": 0.08, "z1": 1.75},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.30, "ry": 0.30, "z0": 1.75, "z1": 2.20,
+             "taper": 0.65, "ramp": "ivory"},
+        ],
+    },
+    "shelf_basic": {
+        "w": 2, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.15, 0.00), "c1": (0.08, 0.85, 1.90)},
+            {"t": "box", "c0": (1.92, 0.15, 0.00), "c1": (2.00, 0.85, 1.90)},
+            {"t": "box", "c0": (0.00, 0.78, 0.00), "c1": (2.00, 0.86, 1.90), "group": 101},
+            {"t": "box", "c0": (0.08, 0.15, 0.00), "c1": (1.92, 0.85, 0.08)},
+            {"t": "box", "c0": (0.08, 0.15, 0.60), "c1": (1.92, 0.85, 0.68)},
+            {"t": "box", "c0": (0.08, 0.15, 1.20), "c1": (1.92, 0.85, 1.28)},
+            {"t": "box", "c0": (0.08, 0.15, 1.82), "c1": (1.92, 0.85, 1.90)},
+            {"t": "box", "c0": (0.20, 0.25, 0.08), "c1": (0.45, 0.75, 0.52), "ramp": "navy"},
+            {"t": "box", "c0": (0.50, 0.25, 0.08), "c1": (0.80, 0.75, 0.48), "ramp": "crimson"},
+            {"t": "box", "c0": (0.95, 0.25, 0.68), "c1": (1.30, 0.75, 1.12), "ramp": "teal"},
+            {"t": "box", "c0": (1.40, 0.25, 0.68), "c1": (1.60, 0.75, 1.05), "ramp": "gold"},
+            {"t": "box", "c0": (0.30, 0.25, 1.28), "c1": (0.60, 0.75, 1.74), "ramp": "plum"},
+        ],
+    },
+    "divider_basic": {
+        "w": 2, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.30, 0.00), "c1": (2.00, 0.70, 0.92)},
+            {"t": "box", "c0": (0.00, 0.26, 0.92), "c1": (2.00, 0.74, 1.04), "bevel": 0.03,
+             "ramp": "walnut"},
+        ],
+    },
+    "stereo_basic": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.25, 0.00), "c1": (0.90, 0.75, 1.30), "bevel": 0.03},
+            {"t": "hcyl", "x": 0.50, "y0": 0.14, "y1": 0.26, "z": 0.32, "r": 0.17, "ramp": "gold"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.16, "y1": 0.26, "z": 0.96, "r": 0.11, "ramp": "gold"},
+            {"t": "box", "c0": (0.14, 0.28, 1.30), "c1": (0.86, 0.72, 1.36), "ramp": "slate"},
         ],
     },
 }
@@ -88,7 +207,9 @@ def prim_points(prim):
     if prim["t"] == "cyl":
         return [(prim["cx"], prim["cy"], prim["z0"]), (prim["cx"], prim["cy"], prim["z1"])]
     if prim["t"] == "hcyl":
-        return [(prim["x"], prim["y0"], prim["z"]), (prim["x"], prim["y1"], prim["z"])]
+        if prim.get("axis", "y") == "y":
+            return [(prim["x"], prim["y0"], prim["z"]), (prim["x"], prim["y1"], prim["z"])]
+        return [(prim["y0"], prim["x"], prim["z"]), (prim["y1"], prim["x"], prim["z"])]
     return [prim["c"]]
 
 def prim_top(prim):
@@ -153,7 +274,26 @@ def finish(obj, smooth):
         except AttributeError:
             bpy.ops.object.shade_smooth()
 
+def mask_material(n):
+    """Flat emission encoding prim index n in base 3 over RGB. Channel levels {0, .5, 1} survive
+    the sRGB display transform far enough apart (0/188/255) to decode by nearest level."""
+    name = f"artgen_mask_{n}"
+    mat = bpy.data.materials.get(name)
+    if mat:
+        return mat
+    mat = bpy.data.materials.new(name)
+    mat.use_nodes = True
+    nodes = mat.node_tree.nodes
+    nodes.clear()
+    em = nodes.new("ShaderNodeEmission")
+    em.inputs["Color"].default_value = ((n % 3) * 0.5, (n // 3 % 3) * 0.5, (n // 9 % 3) * 0.5, 1.0)
+    out = nodes.new("ShaderNodeOutputMaterial")
+    mat.node_tree.links.new(em.outputs["Emission"], out.inputs["Surface"])
+    return mat
+
 def add_prim(prim):
+    """Build one prim's mesh objects; returns them so the mask pass can retag materials."""
+    made = []
     t = prim["t"]
     if t == "box":
         c0, c1 = world(prim["c0"]), world(prim["c1"])
@@ -167,6 +307,7 @@ def add_prim(prim):
             mod.width = prim["bevel"]
             mod.segments = 3
         finish(obj, smooth=bool(prim.get("bevel")))
+        made.append(obj)
     elif t == "cyl":
         z0, z1 = prim["z0"] * ZSCALE, prim["z1"] * ZSCALE
         bpy.ops.mesh.primitive_cylinder_add(
@@ -180,6 +321,7 @@ def add_prim(prim):
             mod.deform_method = "TAPER"
             mod.factor = prim["taper"] - 1.0
         finish(obj, smooth=True)
+        made.append(obj)
     elif t == "hcyl":
         axis = prim.get("axis", "y")
         a = world((prim["x"], prim["y0"], prim["z"]) if axis == "y"
@@ -193,16 +335,20 @@ def add_prim(prim):
         obj = bpy.context.active_object
         obj.rotation_euler = run.to_track_quat("Z", "Y").to_euler()
         finish(obj, smooth=True)
+        made.append(obj)
         for end in (a, b):
             bpy.ops.mesh.primitive_uv_sphere_add(segments=24, ring_count=12, radius=prim["r"],
                                                  location=end)
             finish(bpy.context.active_object, smooth=True)
+            made.append(bpy.context.active_object)
     elif t == "sphere":
         bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=3, radius=prim["r"],
                                               location=world(prim["c"]))
         obj = bpy.context.active_object
         obj.scale = (1.0, 1.0, ZSCALE)
         finish(obj, smooth=True)
+        made.append(obj)
+    return made
 
 def setup_scene():
     scene = bpy.context.scene
@@ -231,8 +377,14 @@ def setup_scene():
     scene.collection.objects.link(cam_obj)
     scene.camera = cam_obj
 
+    # Black world: face brightness is sun-only, so postpass can quantize on absolute levels.
+    if scene.world and scene.world.node_tree:
+        bg = scene.world.node_tree.nodes.get("Background")
+        if bg:
+            bg.inputs[0].default_value = (0.0, 0.0, 0.0, 1.0)
+
     sun = bpy.data.lights.new("artgen_sun", "SUN")
-    sun.energy = 3.0
+    sun.energy = 0.9   # unclipped: the sun-facing band must stay separable from flat tops
     sun.angle = 0.0
     if hasattr(sun, "use_shadow"):
         sun.use_shadow = False
@@ -260,28 +412,55 @@ def dump_rgba(png_path, raw_path):
 setup_scene()
 meta = {"res": RES, "parts": {}}
 
+only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else None
+
 for part_id, part in PARTS.items():
+    if only and part_id not in only:
+        continue
+    assert len(part["prims"]) <= 26, f"{part_id}: mask encoding holds 26 prims max"
     prims = [dict(p) for p in part["prims"]]
     span = (part["w"], part["l"])   # (spanX, spanY), dir-0 frame
     max_z = max(prim_top(prim) for prim in part["prims"])
     frames = []
+    scene = bpy.context.scene
     for q in range(4):
         if q > 0:
             prims = [rotate_prim(p, span[1]) for p in prims]
             span = (span[1], span[0])
         clear_meshes()
-        for prim in prims:
-            add_prim(prim)
+        prim_objs = [add_prim(prim) for prim in prims]
         base = os.path.join(OUT, f"{part_id}_d{q * 2}")
-        bpy.context.scene.render.filepath = base + ".png"
+        if hasattr(scene, "eevee"):
+            scene.eevee.taa_render_samples = 16
+        scene.render.filepath = base + ".png"
         bpy.ops.render.render(write_still=True)
         dump_rgba(base + ".png", base + ".rgba")
-        frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba"})
+        # mask pass: same geometry, flat per-prim emission, no AA so indices decode exactly
+        for i, objs in enumerate(prim_objs):
+            for obj in objs:
+                obj.data.materials.clear()
+                obj.data.materials.append(mask_material(i + 1))
+        if hasattr(scene, "eevee"):
+            scene.eevee.taa_render_samples = 1
+        scene.render.filepath = base + "_mask.png"
+        bpy.ops.render.render(write_still=True)
+        dump_rgba(base + "_mask.png", base + ".mask.rgba")
+        frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
+                       "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
         "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "frames": frames,
+        "prims": [{"ramp": p.get("ramp", part["ramp"]), "group": p.get("group", i)}
+                  for i, p in enumerate(part["prims"])],
+        "src": part["prims"],   # full authored geometry — postpass hashes it as provenance
     }
     print(f"rendered {part_id} (maxZ {max_z})")
 
-with open(os.path.join(OUT, "meta.json"), "w") as f:
+meta_path = os.path.join(OUT, "meta.json")
+if only and os.path.exists(meta_path):   # partial re-render: merge into the existing meta
+    with open(meta_path) as f:
+        prior = json.load(f)
+    prior["parts"].update(meta["parts"])
+    meta = prior
+with open(meta_path, "w") as f:
     json.dump(meta, f, indent=2)
-print(f"wrote {OUT}/meta.json")
+print(f"wrote {meta_path}")
