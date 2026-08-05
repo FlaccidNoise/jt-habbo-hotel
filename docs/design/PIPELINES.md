@@ -10,15 +10,29 @@ Verified constants, copied from Habbo (research/habbo-hotel.md §4.1–4.3):
 
 - Floor tile: **64 × 32 px diamond** at zoom 1, exact 2:1 dimetric. Zoom 0.5 halves everything.
 - Height unit: **32 px** vertical.
-- **Avatars:** 8 directions, 5 drawn — directions 4, 5, 6 are horizontal mirrors.
+- **Avatars: 8 directions, all 8 rendered natively. No mirroring.** (Revised 2026-08-05, #127 —
+  supersedes "5 drawn, directions 4/5/6 are horizontal mirrors".) Mirroring exists to halve
+  *hand-drawing*; the 3D-assisted path does not hand-draw, so it saves ~13 s of Blender time per
+  layer and costs every asymmetric garment — a chest logo, a shoulder bag, side-part hair.
+  The old mirror table was also simply wrong for this rig: it assumes dir 0/4 face the camera,
+  but the camera sits in the +X+Y octant, so **dirs 3 and 7 are the self-symmetric ones** and the
+  pairs are 0↔6, 1↔5, 2↔4. Measured on the v1 body: the self-symmetric directions still differ
+  from their own mirror by ~12 % of lit pixels and the best true pair by 25 %, so mirroring was
+  never free here. Movement is 8-way (`heightmap.ts` walks all of `DIR_STEPS`), so all 8 are
+  needed regardless.
 - **Furni:** 4 authored directions by default, per-item override. Mirroring is a per-asset
   authored flag used only where the art is symmetric — not a blanket direction rule. (audit B3)
 - **Two authored art scales** (64 and 32), no runtime downscaling. V1 authors 64 only — the 32
   pass is deferred, architecture unchanged ([ART-DIRECTION.md](ART-DIRECTION.md), resolves C-45).
 
-**Light and mirroring reconciled** (audit B4): the style lights from directly above-front —
-vertically symmetric shading — so horizontal mirroring is shading-safe. Highlights avoid lateral
-bias by rule. Parts whose shading must break this declare themselves non-mirrorable.
+**Light and mirroring** (audit B4, revised 2026-08-05): B4 claimed the above-front key gives
+vertically symmetric shading, so horizontal mirroring is shading-safe. **That is not true of the
+shipped rig** — the sun is `(-0.22, -0.80, -1.05)` (`rig.py`), whose lateral component breaks
+left-right symmetry by construction. Measured, it accounts for ~5 points of mirror-pair
+difference; the remaining ~20 comes from the dimetric camera itself. Nothing depends on the claim
+today: furni renders 4 directions natively and avatars render 8, so no asset is ever mirrored.
+The sun stays as it is because 22 frozen bundles are lit by it and their pixels are their
+identity. Do not build a mirroring optimisation on B4 without re-measuring first.
 
 **Wall coordinate system** (audit A1): wall items live in a second coordinate space — wall-tile
 pair, sub-tile pixel offset, left/right wall selector, anchor rules — at wall scale 32 against

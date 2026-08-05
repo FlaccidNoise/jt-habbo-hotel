@@ -19,7 +19,7 @@ import os
 import sys
 
 import bpy
-from mathutils import Vector
+from mathutils import Matrix, Vector
 
 RES = 256
 ZSCALE = 32.0 / (32.0 * math.sqrt(2.0) * math.cos(math.radians(30.0)))   # 0.8164966
@@ -259,6 +259,188 @@ PARTS = {
         ],
     },
 }
+
+# ---- figure rig (#127) ---------------------------------------------------------------------
+# A figure is a primitive list like any part, but hung off a bone hierarchy so an action is joint
+# angles rather than a redrawn sprite. Poses are authored once and every garment ever made
+# inherits them.
+#
+# Everything inside the figure is authored in a UNIFORM px space — 1 unit = 1 px at scale 64 —
+# and the dimetric squash lives on the single root empty. That order is load-bearing: bone
+# rotations happen inside the uniform space, so a limb keeps its authored length when it swings.
+# Posing inside a pre-squashed space would quietly shorten every rotated limb, and the seat gate
+# measures exactly that length.
+#
+# Figure prims declare a "slot", not a ramp. Colour is per player, so the frozen sheet stores
+# (slot, shade) indices and the client resolves them through the worn ramps when it bakes the
+# outfit — a sheet per colour would put the combinatorics back in colour space.
+
+FIGURE_PX = 1.0 / (32.0 * math.sqrt(2.0))                 # one horizontal px, in world units
+FIGURE_PZ = FIGURE_PX / math.cos(math.radians(30.0))      # one vertical px, pre-squashed
+
+# 80 px = 2.5 height units, pinned against the shipped seat heights (cafe_chair seatZ 0.58 =
+# 18.6 px, and a 90-degree knee needs shin ~= seat height). Segments sum to it exactly.
+FIGURE_H = 80
+HEAD_LEN, TORSO_LEN, THIGH_LEN, SHIN_LEN = 22, 21, 19, 18
+HIP_Z = THIGH_LEN + SHIN_LEN          # 37
+SHOULDER_Z = HIP_Z + 15               # 52
+CHIN_Z = HIP_Z + TORSO_LEN            # 58, and + HEAD_LEN = 80
+
+CANVAS_W, CANVAS_H = 64, 112
+
+# name -> (parent, rest offset from the parent, in figure px). +Y is the way the figure faces.
+BONES = {
+    "hip":    (None,    (0.0, 0.0, HIP_Z)),
+    "spine":  ("hip",   (0.0, 0.0, 0.0)),
+    "chest":  ("spine", (0.0, 0.0, SHOULDER_Z - HIP_Z)),
+    "head":   ("chest", (0.0, 0.0, CHIN_Z - SHOULDER_Z)),
+    "arm_l":  ("chest", (7.0, 0.0, 0.0)),
+    "arm_r":  ("chest", (-7.0, 0.0, 0.0)),
+    "leg_l":  ("hip",   (3.0, 0.0, 0.0)),
+    "leg_r":  ("hip",   (-3.0, 0.0, 0.0)),
+    "knee_l": ("leg_l", (0.0, 0.0, -THIGH_LEN)),
+    "knee_r": ("leg_r", (0.0, 0.0, -THIGH_LEN)),
+}
+
+ARM_LEN = 22
+
+# box: c0/c1 corners in bone-local px. limb: capsule down local -Z, length + radius.
+# ball: ellipsoid at a bone-local centre.
+# The shins cap at the knee only: a bottom cap is a sphere hanging below the ankle, which puts
+# ink under the anchor row and makes the figure read as floating.
+FIGURE_PARTS = {
+    "bd": {
+        "prims": [
+            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-6.5, -3.5, 0.0),
+             "c1": (6.5, 3.5, float(TORSO_LEN))},
+            {"t": "limb", "bone": "arm_l",  "slot": 0, "len": float(ARM_LEN), "r": 2.4},
+            {"t": "limb", "bone": "arm_r",  "slot": 0, "len": float(ARM_LEN), "r": 2.4},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 3.0},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 3.0},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 2.6,
+             "caps": "top"},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 2.6,
+             "caps": "top"},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-2.6, -2.0, -float(SHIN_LEN)),
+             "c1": (2.6, 5.0, -SHIN_LEN + 3.0)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-2.6, -2.0, -float(SHIN_LEN)),
+             "c1": (2.6, 5.0, -SHIN_LEN + 3.0)},
+        ],
+    },
+    # The head is its own layer, not part of bd — it is selectable, and it is what makes a figure
+    # readable front-from-back. The skull's y radius is 22/2 * 0.82 = 9.0, so the nose has to
+    # reach past 9.0 to break the silhouette at all; a brow flush with the skull only shades.
+    "hd": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, HEAD_LEN / 2.0),
+             "r": HEAD_LEN / 2.0, "squash": (1.0, 0.82, 1.0)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-1.7, 7.4, 9.0),
+             "c1": (1.7, 11.2, 12.6)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-4.6, 6.4, 13.0),
+             "c1": (4.6, 9.2, 15.4)},
+        ],
+    },
+}
+
+# A pose is joint angles in degrees plus where the figure's own origin sits relative to the
+# avatar's world position point. Standing, that point is the feet; seated, it is the hip contact,
+# because the client already lifts the sprite by the seat's z and seat heights vary 0.55-0.82.
+# anchor_y is where that point lands in the 64x112 frame.
+# Measured: the standing composite is 22 x 85 px, reaching 81 above the anchor and 3 below. It
+# reaches below because the anchor is the tile-CENTRE ground point and a foot extending toward the
+# camera is genuinely nearer, so it projects lower. anchor_y 105 leaves 24 px of hat room above
+# the crown and 6 px of slack under the toe.
+POSES = {
+    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 105, "bones": {}},
+}
+
+FRAMES = ["stand"]
+
+def figure_yaw(direction):
+    """Tile dir -> yaw about the figure's own centre. A figure occupies one tile, so direction is
+    a rotation, never the quarter-turn footprint remap furni uses. dir 0=N .. 7=NW, and the rig's
+    world axes are (x, y) = (fy, fx)."""
+    steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
+    dx, dy = steps[direction]
+    return math.atan2(-float(dy), float(dx))
+
+def add_figure_prim(prim):
+    """Build one figure prim in bone-local px. Caller parents the results to the bone."""
+    made = []
+    t = prim["t"]
+    if t == "box":
+        c0, c1 = prim["c0"], prim["c1"]
+        lo = Vector(tuple(min(c0[i], c1[i]) for i in range(3)))
+        hi = Vector(tuple(max(c0[i], c1[i]) for i in range(3)))
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        obj = bpy.context.active_object
+        obj.location = (lo + hi) / 2
+        obj.scale = hi - lo
+        finish(obj, smooth=False)
+        made.append(obj)
+    elif t == "limb":
+        length, r = prim["len"], prim["r"]
+        bpy.ops.mesh.primitive_cylinder_add(vertices=24, radius=r, depth=length)
+        obj = bpy.context.active_object
+        obj.location = (0.0, 0.0, -length / 2.0)
+        finish(obj, smooth=True)
+        made.append(obj)
+        caps = (0.0,) if prim.get("caps") == "top" else (0.0, -length)
+        for z in caps:   # capsule caps, so a swung limb keeps a round joint
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=20, ring_count=10, radius=r)
+            cap = bpy.context.active_object
+            cap.location = (0.0, 0.0, z)
+            finish(cap, smooth=True)
+            made.append(cap)
+    elif t == "ball":
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=28, ring_count=14, radius=prim["r"])
+        obj = bpy.context.active_object
+        obj.location = prim["c"]
+        obj.scale = prim.get("squash", (1.0, 1.0, 1.0))
+        finish(obj, smooth=True)
+        made.append(obj)
+    return made
+
+def build_figure(part_ids, pose, direction):
+    """Bone empties + every named part's prims. Returns the per-prim object lists in order, so the
+    mask pass can retag them exactly the way the furni path does."""
+    scene = bpy.context.scene
+    root = bpy.data.objects.new("fig_root", None)
+    root.rotation_euler = (0.0, 0.0, figure_yaw(direction))
+    root.scale = (FIGURE_PX, FIGURE_PX, FIGURE_PZ)
+    scene.collection.objects.link(root)
+
+    origin = bpy.data.objects.new("fig_origin", None)
+    origin.location = pose["root"]
+    scene.collection.objects.link(origin)
+    origin.parent = root
+    origin.matrix_parent_inverse = Matrix.Identity(4)
+
+    bones = {}
+    for name, (_, offset) in BONES.items():
+        empty = bpy.data.objects.new(f"fig_{name}", None)
+        empty.location = offset
+        angles = pose["bones"].get(name, (0.0, 0.0, 0.0))
+        empty.rotation_euler = tuple(math.radians(a) for a in angles)
+        scene.collection.objects.link(empty)
+        bones[name] = empty
+    for name, (parent, _) in BONES.items():
+        bones[name].parent = bones[parent] if parent else origin
+        bones[name].matrix_parent_inverse = Matrix.Identity(4)
+
+    prim_objs = []
+    for part_id in part_ids:
+        for prim in FIGURE_PARTS[part_id]["prims"]:
+            objs = add_figure_prim(prim)
+            for obj in objs:
+                obj.parent = bones[prim["bone"]]
+                obj.matrix_parent_inverse = Matrix.Identity(4)
+            prim_objs.append(objs)
+    return prim_objs
+
+def clear_figure():
+    for obj in [o for o in bpy.data.objects if o.type == "EMPTY" and o.name.startswith("fig_")]:
+        bpy.data.objects.remove(obj, do_unlink=True)
 
 # ---- footprint-frame transforms ------------------------------------------------------------
 
@@ -527,11 +709,62 @@ for part_id, part in PARTS.items():
     }
     print(f"rendered {part_id} (maxZ {max_z})")
 
+# ---- figure render loop ---------------------------------------------------------------------
+# 8 native directions, no mirroring. Mirroring exists to halve hand-drawing and we do not
+# hand-draw; rendering all 8 costs Blender seconds and buys asymmetric garments.
+
+meta["figures"] = {}
+meta["figureCanvas"] = {"w": CANVAS_W, "h": CANVAS_H, "height": FIGURE_H}
+
+scene = bpy.context.scene
+for part_id, part in FIGURE_PARTS.items():
+    if only and part_id not in only:
+        continue
+    assert len(part["prims"]) <= 26, f"{part_id}: mask encoding holds 26 prims max"
+    frames = []
+    for frame in FRAMES:
+        pose = POSES[frame]
+        for direction in range(8):
+            clear_meshes()
+            clear_figure()
+            prim_objs = build_figure([part_id], pose, direction)
+            base = os.path.join(OUT, f"fig_{part_id}_{frame}_d{direction}")
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 16
+            scene.render.filepath = base + ".png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + ".png", base + ".rgba")
+            for i, objs in enumerate(prim_objs):
+                for obj in objs:
+                    obj.data.materials.clear()
+                    obj.data.materials.append(mask_material(i + 1))
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 1
+            scene.render.filepath = base + "_mask.png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + "_mask.png", base + ".mask.rgba")
+            frames.append({
+                "frame": frame, "dir": direction, "anchorY": pose["anchor_y"],
+                "rgba": os.path.basename(base) + ".rgba",
+                "mask": os.path.basename(base) + ".mask.rgba",
+            })
+    meta["figures"][part_id] = {
+        "frames": frames,
+        "prims": [{"slot": p.get("slot", 0), "bone": p["bone"]} for p in part["prims"]],
+        "src": part["prims"],
+    }
+    print(f"rendered figure {part_id} ({len(frames)} dir-frames)")
+
+clear_meshes()
+clear_figure()
+
 meta_path = os.path.join(OUT, "meta.json")
 if only and os.path.exists(meta_path):   # partial re-render: merge into the existing meta
     with open(meta_path) as f:
         prior = json.load(f)
     prior["parts"].update(meta["parts"])
+    prior.setdefault("figures", {}).update(meta["figures"])
+    prior["figureCanvas"] = meta["figureCanvas"]
     meta = prior
 with open(meta_path, "w") as f:
     json.dump(meta, f, indent=2)
