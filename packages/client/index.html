@@ -73,6 +73,20 @@
         border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
       #trade .row button:disabled { opacity: .5; cursor: default; }
       #trade-accept:not(:disabled) { border-color: #7fd98a; background: #24422a; }
+      #arcade-open { position: fixed; top: 56px; left: 12px; padding: 5px 10px;
+        border-radius: 8px; border: 1px solid #6a5a2e; background: #2b2517e6; color: #eee0b0;
+        cursor: pointer; display: none; }
+      #arcade { position: fixed; top: 96px; left: 12px; width: 220px; background: #1c1f2bf2;
+        border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px;
+        text-align: center; }
+      #arcade[hidden] { display: none; }
+      #arcade h2 { margin: 0; font-size: 15px; }
+      #arcade-card { font-size: 40px; font-weight: 700; line-height: 1.1; }
+      #arcade-score, #arcade-status { font-size: 13px; color: #9aa3b8; min-height: 18px; }
+      #arcade .row { display: flex; gap: 6px; }
+      #arcade .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
+      #arcade .row button:disabled { opacity: .4; cursor: default; }
     </style>
   </head>
   <body>
@@ -80,6 +94,22 @@
     <div id="bubbles"></div>
     <div id="room-name"></div>
     <div id="stars"></div>
+    <button type="button" id="arcade-open">🎰 Hi-Lo</button>
+    <div id="arcade" hidden>
+      <h2>Hi-Lo</h2>
+      <div id="arcade-card"></div>
+      <div id="arcade-score"></div>
+      <div class="row">
+        <button type="button" id="arcade-higher">Higher</button>
+        <button type="button" id="arcade-lower">Lower</button>
+        <button type="button" id="arcade-stop">Stop</button>
+      </div>
+      <div id="arcade-status"></div>
+      <div class="row">
+        <button type="button" id="arcade-deal">Deal</button>
+        <button type="button" id="arcade-close">Close</button>
+      </div>
+    </div>
     <div id="toasts"></div>
     <div id="trade" hidden>
       <h2 id="trade-title"></h2>

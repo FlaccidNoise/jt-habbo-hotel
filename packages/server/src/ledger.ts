@@ -11,7 +11,7 @@ import type { InventoryItem } from "@grand/shared";
 export const GLOBAL_EARN_CEILING = 600;
 export const NPC_FAUCET_CAP = 50;    // GAME.md §Faucets: NPC staff rituals + tips, per 24h
 export const COFFEE_STARS = 10;      // GAME.md §Dailies: the barista coffee
-const DAY_MS = 24 * 60 * 60 * 1000;
+export const DAY_MS = 24 * 60 * 60 * 1000;
 
 export function balanceOf(db: Database.Database, accountId: number): number {
   const row = db.prepare("SELECT balance FROM star_balances WHERE account_id = ?").get(accountId) as
@@ -38,12 +38,31 @@ export interface EarnResult {
   balance: number;
 }
 
+/** Settled operations of one kind inside a window — the scored-plays counter. */
+export function countOps(db: Database.Database, accountId: number, op: string, since: number): number {
+  const row = db
+    .prepare(
+      "SELECT COUNT(DISTINCT op_key) AS n FROM ledger_entries WHERE account_id = ? AND op = ? AND created_at > ?",
+    )
+    .get(accountId, op, since) as { n: number };
+  return row.n;
+}
+
 /** Deterministic faucet grant, clamped so rolling-24h earnings never pass the per-op cap or the
  *  global ceiling — the last grant before a cap pays the remainder, at the cap it pays zero.
- *  Replaying an op_key grants nothing. */
+ *  Replaying an op_key grants nothing. recordZero writes an entry even for a zero grant, so the
+ *  operation still counts toward countOps (a busted arcade play consumes a scored play). */
 export function settleEarn(
   db: Database.Database,
-  opts: { opKey: string; op: string; accountId: number; amount: number; opCap: number; now?: number },
+  opts: {
+    opKey: string;
+    op: string;
+    accountId: number;
+    amount: number;
+    opCap: number;
+    now?: number;
+    recordZero?: boolean;
+  },
 ): EarnResult {
   const now = opts.now ?? Date.now();
   const since = now - DAY_MS;
@@ -58,10 +77,11 @@ export function settleEarn(
         GLOBAL_EARN_CEILING - earnedSince(db, opts.accountId, since),
       ),
     );
-    if (granted === 0) return done(0);
+    if (granted === 0 && !opts.recordZero) return done(0);
     db.prepare(
       "INSERT INTO ledger_entries (op, op_key, account_id, stars, created_at) VALUES (?, ?, ?, ?, ?)",
     ).run(opts.op, opts.opKey, opts.accountId, granted, now);
+    if (granted === 0) return done(0);
     db.prepare(
       `INSERT INTO star_balances (account_id, balance) VALUES (?, ?)
        ON CONFLICT(account_id) DO UPDATE SET balance = balance + excluded.balance`,

@@ -17,6 +17,8 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
   ["trade_accept", { t: "trade_accept" }, { t: "tradeaccept" }],
   ["trade_cancel", { t: "trade_cancel" }, { t: 5 }],
   ["buy", { t: "buy", defId: "chair_basic" }, { t: "buy", defId: 5 }],
+  ["arcade_start", { t: "arcade_start" }, { t: "arcadestart" }],
+  ["arcade_move", { t: "arcade_move", move: "higher" }, { t: "arcade_move", move: "fold" }],
 ];
 
 const ROOM_STATE = {
@@ -48,6 +50,9 @@ const SERVER_CASES: Array<[string, unknown, unknown]> = [
   ["trade_state", TRADE_STATE, { ...TRADE_STATE, countdown: undefined }],
   ["trade_complete", { t: "trade_complete", added: [INV], removed: [4] }, { t: "trade_complete", added: [INV] }],
   ["trade_cancelled", { t: "trade_cancelled", reason: "left" }, { t: "trade_cancelled" }],
+  ["arcade_state",
+   { t: "arcade_state", card: 7, score: 20, scored: true, over: true, outcome: "stopped", paid: 10 },
+   { t: "arcade_state", card: 7, score: 20, scored: true, over: true, outcome: "folded" }],
   ["error", { t: "error", code: "bad_position", message: "no" }, { t: "error", code: "badposition", message: "no" }],
 ];
 

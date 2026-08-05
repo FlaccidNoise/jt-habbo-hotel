@@ -10,6 +10,7 @@ import type { RawData } from "ws";
 import { z } from "zod";
 import { CATALOG_PRICES, ClientMsgSchema } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
+import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
 import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
@@ -64,6 +65,8 @@ export async function startServer(opts: {
   /** NPC line generator. Omit for the NPC_LLM_* env config; null for canned lines only. */
   npcGenerate?: NpcGenerate | null;
   tradeCountdownMs?: number;
+  /** Hi-Lo card source, 1..13. Tests inject a scripted deck. */
+  arcadeDraw?: () => number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -135,6 +138,8 @@ export async function startServer(opts: {
     countdownMs: opts.tradeCountdownMs,
   });
 
+  const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
+
   function roomExists(roomId: number): boolean {
     if (rooms.has(roomId)) return true;
     return db.prepare("SELECT 1 FROM rooms WHERE id = ?").get(roomId) !== undefined;
@@ -158,6 +163,7 @@ export async function startServer(opts: {
     if (roomId === undefined || conn.accountId === undefined) return;
     conn.roomId = undefined;
     tradeService.onLeave(conn.accountId);
+    arcadeService.onLeave(conn.accountId);
     const entry = rooms.get(roomId);
     if (!entry) return;
 
@@ -280,6 +286,12 @@ export async function startServer(opts: {
         emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
         break;
       }
+      case "arcade_start":
+        arcadeService.start(accountId);
+        break;
+      case "arcade_move":
+        arcadeService.move(accountId, msg.move);
+        break;
     }
   }
 

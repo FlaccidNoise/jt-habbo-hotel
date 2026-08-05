@@ -30,6 +30,7 @@ import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
+type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const PLACE_DIR = 0;
@@ -56,6 +57,7 @@ let armed: number | null = null;
 let clockOffset: number | null = null;
 let stars = 0;
 let trade: TradeState | null = null;
+let arcade: ArcadeState | null = null;
 
 function toast(text: string): void {
   const node = document.createElement("div");
@@ -199,6 +201,24 @@ function endTrade(): void {
   renderInventory();
 }
 
+function renderArcade(): void {
+  const running = arcade !== null && !arcade.over;
+  el("arcade-card").textContent = arcade ? String(arcade.card) : "—";
+  el("arcade-score").textContent = arcade
+    ? `score ${arcade.score}${arcade.scored ? "" : " · practice (daily scored plays used)"}`
+    : "";
+  el("arcade-status").textContent =
+    arcade?.over === true
+      ? arcade.outcome === "bust"
+        ? "Bust!"
+        : `Cashed out — +${arcade.paid ?? 0} ★`
+      : "";
+  for (const id of ["arcade-higher", "arcade-lower", "arcade-stop"]) {
+    el<HTMLButtonElement>(id).disabled = !running;
+  }
+  el<HTMLButtonElement>("arcade-deal").disabled = running;
+}
+
 function itemsOn(x: number, y: number): FurniItem[] {
   return furni.filter((item) => {
     const def = DEFS.get(item.defId);
@@ -253,8 +273,11 @@ function buildRoom(msg: RoomState): void {
   armed = null;
   stars = msg.stars;
   trade = null;
+  arcade = null;
   renderStars();
   renderTrade();
+  renderArcade();
+  el("arcade").hidden = true;
 
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
@@ -337,6 +360,11 @@ function handle(msg: ServerMsg): void {
       endTrade();
       toast(msg.reason);
       break;
+    case "arcade_state":
+      arcade = msg;
+      el("arcade").hidden = false;
+      renderArcade();
+      break;
     case "error":
       toast(msg.message);
       break;
@@ -373,6 +401,7 @@ async function start(token: string): Promise<void> {
   await net.connect(`${wsScheme}://${location.host}/ws`, token, roomId);
   el("login").style.display = "none";
   el("hud").style.display = "flex";
+  el("arcade-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
 
@@ -398,6 +427,20 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
+el("arcade-open").addEventListener("click", () => {
+  el("arcade").hidden = false;
+  renderArcade();
+  if (arcade === null || arcade.over) net.send({ t: "arcade_start" });
+});
+el("arcade-deal").addEventListener("click", () => net.send({ t: "arcade_start" }));
+el("arcade-close").addEventListener("click", () => (el("arcade").hidden = true));
+for (const [id, move] of [
+  ["arcade-higher", "higher"],
+  ["arcade-lower", "lower"],
+  ["arcade-stop", "stop"],
+] as const) {
+  el(id).addEventListener("click", () => net.send({ t: "arcade_move", move }));
+}
 
 async function authenticate(path: string, username: string, password: string): Promise<string> {
   const res = await fetch(path, {
