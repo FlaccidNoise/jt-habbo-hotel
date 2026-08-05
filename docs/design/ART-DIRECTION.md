@@ -29,6 +29,10 @@ Pipeline per part:
 Authored cost per part falls from 8 drawn sprites (4 directions × 2 scales) to one mesh plus
 polish. The mesh is also the source for future animation frames and the 32 scale.
 
+Determinism note: Blender output is not expected to be bit-identical across machines or GPU
+drivers. That is safe because bundles freeze at publish (PIPELINES §2) — the render is an
+authoring step, and the frozen pixels are the item's identity, never a re-render.
+
 ## Scale: 64 only in v1
 
 Resolves deferred audit item C-45. The 32 pass was "near a second full pass" — deferring it

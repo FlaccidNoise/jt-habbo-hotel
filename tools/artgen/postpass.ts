@@ -11,7 +11,7 @@ import { createHash } from "node:crypto";
 import type { FurniDef } from "../../packages/shared/src/protocol.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { makeCanvas, putPixel, getPixel, blit } from "../../packages/generator/src/raster.ts";
-import { rampByName, OUTLINE, luminance } from "../../packages/generator/src/style.ts";
+import { rampByName, OUTLINE } from "../../packages/generator/src/style.ts";
 import { runGates } from "../../packages/generator/src/gates.ts";
 import type { Bundle } from "../../packages/generator/src/compose.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
@@ -124,15 +124,7 @@ for (const [id, part] of Object.entries(meta.parts)) {
   };
   const result = runGates(bundle, def);
   if (result.ok) {
-    // silhouette-mean detail for the report (gates only assert the threshold)
-    let sum = 0, n = 0;
-    for (let y = 0; y < sheet.h; y++) {
-      for (let x = 0; x < sheet.w; x++) {
-        const p = getPixel(sheet, x, y);
-        if (p.alpha !== 0 && p.color === OUTLINE) { sum += luminance(p.color); n++; }
-      }
-    }
-    console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames, outline luma ${(sum / n).toFixed(0)})`);
+    console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames)`);
   } else {
     failures++;
     console.error(`${id}: FAIL ${result.gate} gate: ${result.detail}`);

@@ -2,7 +2,7 @@
 
 Reconciles [PIPELINES.md](PIPELINES.md) §7, the jtbug backlog (group `habbo`), and the gaps
 found in the 2026-08-04 design pass. Binding decisions: [decisions/INDEX.md](../decisions/INDEX.md).
-Status date: 2026-08-04.
+Status date: 2026-08-05.
 
 ## State
 
@@ -10,10 +10,10 @@ Status date: 2026-08-04.
 |---|---|---|---|
 | 1 | Room render, pathfinding, walk, chat, filter | Shipped (vertical slice, 178 tests) | #115 awaiting verification. Drain/rolling deploy deferred → #125 |
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
-| 3 | NPC staff service | Shipped, canned lines only. Live model decided → wiring #204 | #116 fixed |
-| 4 | Generator reproduces starter catalog | Shipped. Art quality path → #202 ([ART-DIRECTION.md](ART-DIRECTION.md)) | #117 fixed |
-| 5 | Trade window + unified ledger | Not started. Observability lands first → #209 | #118 |
-| 6 | First solo arcade | Not started. Dailies ride the same ledger rails → #206 | #119 |
+| 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
+| 4 | Generator reproduces starter catalog | Shipped. Art proof gate passed (f15e137), build-out → #202 ([ART-DIRECTION.md](ART-DIRECTION.md)) | #117 fixed |
+| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d). #209 observability still open | #118 |
+| 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
 | 8 | Design studio | Not started | #121 |
 | 9 | Multiplayer games + casino floor | Not started | #122 |
@@ -186,15 +186,18 @@ Every `(tune)` value in GAME.md is now the v1 constant. Change mechanisms:
 | Playback alignment | 50 ms | measured |
 | Sample bank budget | 16 MiB decoded | decided |
 
-## Sequencing — the next three moves
+## Sequencing — the next three moves (refreshed 2026-08-05)
 
-1. **#202 art proof gate.** Largest line item, zero dependencies, and until the pipeline proves
-   itself the part count is unknowable. Nothing else de-risks the project more per hour.
-2. **#204 NPC wiring.** One env file. The model is verified (gemma3:4b local, 0.65 s warm).
-   Turns liveness on for the first invited player.
-3. **#209 then #118.** Observability before the ledger, then the ledger. This unblocks steps
-   6–9 and five of the filed systems (#206, #207, #208, #210, plus pets #123).
+Done since the 08-04 plan: #204 NPC wiring, #202 proof gate (pipeline proven, build-out
+remains), #118 ledger + trade, #119 first arcade, #215 catalog sink.
 
-After that, follow §7 order: #119, #120 (start the license text now — it gates the first bank),
+1. **#209 observability.** The ledger is live and issuing — the plan called for the issuance
+   graphs *before* the faucets, and they now trail two shipped faucets. Close the gap first.
+2. **#202 build-out step: per-material ramp masks + style bible v1.** The pipeline works; the
+   next iteration makes multi-ramp parts possible (proof plant's pot) and pins the palette.
+3. **#206 dailies + #207 onboarding.** Both ride the now-live ledger rails and turn the
+   earn loop into a daily habit.
+
+After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand
 evidence. #129 stays parked.
