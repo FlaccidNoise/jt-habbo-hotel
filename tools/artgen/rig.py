@@ -258,6 +258,75 @@ PARTS = {
             {"t": "sphere", "c": (1.00, 1.00, 1.52), "r": 0.16, "ramp": "ivory"},
         ],
     },
+    # ---- prestige fixtures (#210) ----
+    # The deep end of the sink: account-bound, flagship-priced, and deliberately not a recolour of
+    # anything else — a 3,300-Star fixture has to read as its own object across the room.
+    # A billiards table, not the grand piano this slot started as. gateBounds sets the ground line
+    # from the declared footprint and wants the lowest pixel within half a tile of it in every
+    # direction; a grand piano's plan leaves two corners of its bounding rectangle empty and can
+    # never satisfy that. Filling the rectangle turned the piano into a grey slab, so the object
+    # changed rather than the gate — a billiards table genuinely is a rectangle, and it belongs in
+    # a casino resort besides.
+    "billiards_table": {
+        "w": 3, "l": 2, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.12, 0.16, 0.00), "c1": (0.42, 0.46, 0.56)},
+            {"t": "box", "c0": (2.58, 0.16, 0.00), "c1": (2.88, 0.46, 0.56)},
+            {"t": "box", "c0": (0.12, 1.54, 0.00), "c1": (0.42, 1.84, 0.56)},
+            {"t": "box", "c0": (2.58, 1.54, 0.00), "c1": (2.88, 1.84, 0.56)},
+            {"t": "box", "c0": (0.06, 0.10, 0.56), "c1": (2.94, 1.90, 0.78), "bevel": 0.03},
+            {"t": "box", "c0": (0.02, 0.06, 0.78), "c1": (2.98, 1.94, 0.90), "bevel": 0.04},
+            {"t": "box", "c0": (0.02, 0.06, 0.90), "c1": (2.98, 1.94, 0.93), "ramp": "gold"},
+            {"t": "box", "c0": (0.20, 0.24, 0.86), "c1": (2.80, 1.76, 0.94), "ramp": "fern"},
+            # pockets, sunk into the baize at the corners and the mid-rails
+            {"t": "cyl", "cx": 0.26, "cy": 0.30, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "cyl", "cx": 1.50, "cy": 0.26, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "cyl", "cx": 2.74, "cy": 0.30, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "cyl", "cx": 0.26, "cy": 1.70, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "cyl", "cx": 1.50, "cy": 1.74, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "cyl", "cx": 2.74, "cy": 1.70, "rx": 0.11, "ry": 0.11, "z0": 0.92, "z1": 0.96},
+            {"t": "sphere", "c": (1.90, 1.00, 0.99), "r": 0.075, "ramp": "ivory"},
+            {"t": "sphere", "c": (2.14, 0.88, 0.99), "r": 0.075, "ramp": "crimson"},
+            {"t": "sphere", "c": (2.14, 1.12, 0.99), "r": 0.075, "ramp": "gold"},
+            {"t": "sphere", "c": (0.72, 1.02, 0.99), "r": 0.075, "ramp": "ivory"},
+        ],
+    },
+    # A standing candelabra, not a hanging chandelier: there is no ceiling surface, and the
+    # ground-contact gate is right to refuse a fixture that touches nothing. Inventing a third
+    # surface for one item would cost more than the item is worth.
+    # One tile, not four: the frame is sized to the declared footprint, so a slim object in a 2x2
+    # footprint is mostly air and its base cannot reach the ground line the bounds gate checks.
+    "penthouse_candelabra": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.40, "ry": 0.40, "z0": 0.00, "z1": 0.07,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.22, "ry": 0.22, "z0": 0.07, "z1": 0.16,
+             "taper": 0.45},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 0.16, "z1": 1.34},
+            {"t": "sphere", "c": (0.50, 0.50, 0.86), "r": 0.10},
+            # arms: a slim tier, not a disc — the first pass used a 0.46 ring and read as a lump
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.32, "ry": 0.32, "z0": 1.34, "z1": 1.39},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 1.39, "z1": 1.68},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.17, "ry": 0.17, "z0": 1.68, "z1": 1.73},
+            # candles: long enough to read as candles against the metal
+            {"t": "cyl", "cx": 0.18, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 1.39, "z1": 1.90,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.82, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 1.39, "z1": 1.90,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.18, "rx": 0.045, "ry": 0.045, "z0": 1.39, "z1": 1.90,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.82, "rx": 0.045, "ry": 0.045, "z0": 1.39, "z1": 1.90,
+             "ramp": "ivory"},
+            {"t": "sphere", "c": (0.18, 0.50, 1.96), "r": 0.06},
+            {"t": "sphere", "c": (0.82, 0.50, 1.96), "r": 0.06},
+            {"t": "sphere", "c": (0.50, 0.18, 1.96), "r": 0.06},
+            {"t": "sphere", "c": (0.50, 0.82, 1.96), "r": 0.06},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 1.73, "z1": 2.20,
+             "ramp": "ivory"},
+            {"t": "sphere", "c": (0.50, 0.50, 2.26), "r": 0.06},
+        ],
+    },
     # ---- wall archetypes (#203) ----
     # Authored flush at fy 0 and hung at eye level on a 4-unit wall. The catalog def's mount v is
     # only the authored height; players slide the item anywhere the wall allows.

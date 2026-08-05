@@ -24,12 +24,19 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   { id: "arcade_cabinet", name: "Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
   { id: "fountain",       name: "Fountain",       w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
+  // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
+  { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "penthouse_candelabra", name: "Candelabra",  w: 1, l: 1, stackHeights: [2.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
   // Colorways (#229): the same authored mesh with its ramps remapped, so they share their base's
   // geometry exactly — heights and seat surfaces are identical and the gates check that.
   { id: "cafe_chair_crimson",  name: "Crimson Café Chair", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
   { id: "cafe_chair_navy",     name: "Navy Café Chair",    w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0x3f5e9e },
   { id: "casino_stool_fern",   name: "Baize Stool",        w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x2e8b57 },
   { id: "divider_basic_plum",  name: "Plum Divider",       w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x7a3e9d },
+  // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
+  { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
+  { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
 ];
 
 // Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
@@ -76,4 +83,15 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["wall_art", 150],
   ["wall_shelf", 150],
   ["record_trophy", 300],
+  // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
+  // ceiling, so it is weeks of play rather than an afternoon's.
+  ["billiards_table", 3300],
+  ["penthouse_candelabra", 1800],
+]);
+
+/** Bought like anything else, but minted account-bound: these never enter the trade economy, so
+ *  the Stars they absorb are gone rather than recirculating as goods (GAME.md §Sinks). */
+export const PRESTIGE_DEFS: ReadonlySet<string> = new Set([
+  "billiards_table",
+  "penthouse_candelabra",
 ]);

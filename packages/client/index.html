@@ -112,6 +112,21 @@
       #arcade .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
         border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
       #arcade .row button:disabled { opacity: .4; cursor: default; }
+      #lever-open { position: fixed; top: 152px; left: 12px; padding: 5px 10px;
+        border-radius: 8px; border: 1px solid #6a5a2e; background: #2b2517e6; color: #eee0b0;
+        cursor: pointer; display: none; }
+      #lever { position: fixed; top: 192px; left: 12px; width: 240px; background: #1c1f2bf2;
+        border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px;
+        text-align: center; }
+      #lever[hidden] { display: none; }
+      #lever h2 { margin: 0; font-size: 15px; }
+      #lever-result { font-size: 15px; font-weight: 600; min-height: 20px; }
+      #lever-odds { font-size: 12px; color: #9aa3b8; display: grid; gap: 2px; text-align: left; }
+      #lever-odds div { display: flex; justify-content: space-between; gap: 8px; }
+      #lever .row { display: flex; gap: 6px; }
+      #lever .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
+      #lever .row button:disabled { opacity: .4; cursor: default; }
     </style>
   </head>
   <body>
@@ -122,6 +137,7 @@
     <button type="button" id="nav-open">🧭 Rooms</button>
     <button type="button" id="suite-nav"></button>
     <button type="button" id="arcade-open">🎰 Hi-Lo</button>
+    <button type="button" id="lever-open">🎟️ Luck Lever</button>
     <div id="nav" hidden>
       <h2>Navigator</h2>
       <div id="nav-list"></div>
@@ -141,6 +157,15 @@
         <button type="button" id="arcade-deal">Deal</button>
         <button type="button" id="arcade-close">Close</button>
       </div>
+    </div>
+    <div id="lever" hidden>
+      <h2>Luck Lever</h2>
+      <div id="lever-result"></div>
+      <div class="row">
+        <button type="button" id="lever-pull"></button>
+        <button type="button" id="lever-close">Close</button>
+      </div>
+      <div id="lever-odds"></div>
     </div>
     <div id="toasts"></div>
     <div id="trade" hidden>

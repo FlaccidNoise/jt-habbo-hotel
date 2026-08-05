@@ -92,27 +92,42 @@ export function provisionSuite(db: Database.Database, accountId: number, usernam
   })();
 }
 
+/** SQLite has no booleans and the protocol omits both marks on ordinary furni, so the 0/1 and
+ *  NULL columns are folded away here rather than at every call site (#210). */
+function marks<T extends { bound?: number; inscription?: string | null }>(
+  row: T,
+): Omit<T, "bound" | "inscription"> & { bound?: boolean; inscription?: string } {
+  const { bound, inscription, ...rest } = row;
+  return {
+    ...rest,
+    ...(bound ? { bound: true } : {}),
+    ...(inscription ? { inscription } : {}),
+  };
+}
+
+const ITEM_COLS = "id, def_id AS defId, bound, inscription";
+
 export function listInventory(db: Database.Database, accountId: number): InventoryItem[] {
-  return db
-    .prepare("SELECT id, def_id AS defId FROM furni_items WHERE owner_id = ? AND room_id IS NULL")
-    .all(accountId) as InventoryItem[];
+  return (db
+    .prepare(`SELECT ${ITEM_COLS} FROM furni_items WHERE owner_id = ? AND room_id IS NULL`)
+    .all(accountId) as Array<InventoryItem & { bound?: number }>).map(marks) as InventoryItem[];
 }
 
 export function listRoomFurni(db: Database.Database, roomId: number): FurniItem[] {
-  return db
+  return (db
     .prepare(
-      "SELECT id, def_id AS defId, x, y, z, dir, state FROM furni_items WHERE room_id = ? AND wall_side IS NULL",
+      `SELECT ${ITEM_COLS}, x, y, z, dir, state FROM furni_items WHERE room_id = ? AND wall_side IS NULL`,
     )
-    .all(roomId) as FurniItem[];
+    .all(roomId) as Array<FurniItem & { bound?: number }>).map(marks) as FurniItem[];
 }
 
 export function listRoomWallFurni(db: Database.Database, roomId: number): WallItem[] {
-  return db
+  return (db
     .prepare(
-      "SELECT id, def_id AS defId, wall_side AS side, x, y, wall_u AS u, wall_v AS v, state" +
+      `SELECT ${ITEM_COLS}, wall_side AS side, x, y, wall_u AS u, wall_v AS v, state` +
         " FROM furni_items WHERE room_id = ? AND wall_side IS NOT NULL",
     )
-    .all(roomId) as WallItem[];
+    .all(roomId) as Array<WallItem & { bound?: number }>).map(marks) as WallItem[];
 }
 
 export function placeItem(
@@ -164,18 +179,24 @@ export function updateItemZ(db: Database.Database, itemId: number, z: number): v
 }
 
 /** `side` is what tells the two surfaces apart: non-null means the item is hanging, and its z and
- *  dir are meaningless. */
+ *  dir are meaningless. `locked` is a museum donation — placed by the house, never taken down. */
 export function getItem(
   db: Database.Database,
   itemId: number,
-): (FurniItem & { ownerId: number; roomId: number | null; side: WallSide | null }) | null {
+):
+  | (FurniItem & {
+      ownerId: number; roomId: number | null; side: WallSide | null; locked: number;
+    })
+  | null {
   const row = db
     .prepare(
       "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, x, y, z, dir, state," +
-        " wall_side AS side FROM furni_items WHERE id = ?",
+        " wall_side AS side, bound, inscription, locked FROM furni_items WHERE id = ?",
     )
     .get(itemId) as
-    | (FurniItem & { ownerId: number; roomId: number | null; side: WallSide | null })
+    | (FurniItem & {
+        ownerId: number; roomId: number | null; side: WallSide | null; bound?: number; locked: number;
+      })
     | undefined;
-  return row ?? null;
+  return row ? (marks(row) as ReturnType<typeof getItem>) : null;
 }

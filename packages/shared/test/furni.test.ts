@@ -1,7 +1,8 @@
 import { expect, test } from "vitest";
 import { z } from "zod";
 import { FurniDefSchema, WallDefSchema } from "../src/protocol.ts";
-import { CATALOG_PRICES, PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
+import { CATALOG_PRICES, PRESTIGE_DEFS, PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
+import { LEVER_EXCLUSIVE_DEFS, LEVER_PRIZES } from "../src/lever.ts";
 import { WALL_SEG_PX, WALL_TOP_PX } from "../src/walls.ts";
 
 const ALL_IDS = [...PROTOTYPE_CATALOG, ...WALL_CATALOG].map((d) => d.id);
@@ -22,8 +23,22 @@ test("every wall def fits the wall it hangs on", () =>
     d.plane.w > d.span * WALL_SEG_PX || d.plane.h > WALL_TOP_PX).map((d) => d.id)).toEqual([]));
 
 // Both price lookups fail closed: the HUD hides the button, the server refuses the buy. A def
-// without a price is therefore an item nobody can ever own, with no error anywhere.
-test("every catalog def has a price", () =>
-  expect(ALL_IDS.filter((id) => !CATALOG_PRICES.has(id))).toEqual([]));
+// with neither a price nor a way to win it is therefore an item nobody can ever own, with no
+// error anywhere — so every def must be reachable by exactly one of the two routes.
+test("every def is obtainable — priced, or a Luck Lever exclusive", () =>
+  expect(ALL_IDS.filter((id) => !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id)))
+    .toEqual([]));
+test("a lever exclusive is never also for sale", () =>
+  expect([...LEVER_EXCLUSIVE_DEFS].filter((id) => CATALOG_PRICES.has(id))).toEqual([]));
 test("no price names a def that left the catalog", () =>
   expect([...CATALOG_PRICES.keys()].filter((id) => !ALL_IDS.includes(id))).toEqual([]));
+
+// A prize that names a def nobody can render is a silent dead drop: the server would mint an
+// item the client cannot draw and the player would see an empty inventory slot.
+test("every lever prize names a real def", () =>
+  expect(LEVER_PRIZES.filter((p) => p.defId !== null && !ALL_IDS.includes(p.defId)).map((p) => p.label))
+    .toEqual([]));
+test("prestige fixtures are priced and never won", () => {
+  expect([...PRESTIGE_DEFS].filter((id) => !CATALOG_PRICES.has(id))).toEqual([]);
+  expect(LEVER_PRIZES.filter((p) => p.defId !== null && PRESTIGE_DEFS.has(p.defId))).toEqual([]);
+});

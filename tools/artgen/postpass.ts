@@ -108,6 +108,10 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   cafe_chair_navy:     { base: "cafe_chair",    ramps: { teal: "navy" } },
   casino_stool_fern:   { base: "casino_stool",  ramps: { crimson: "fern" } },
   divider_basic_plum:  { base: "divider_basic", ramps: { slate: "plum", walnut: "ivory" } },
+  // Luck Lever exclusives (#210): never sold, only won. Colorways cost no render, so an item that
+  // exists purely to be rare is the cheapest thing in the pipeline to make.
+  fountain_gilded:      { base: "fountain",       ramps: { slate: "gold" } },
+  arcade_cabinet_plum:  { base: "arcade_cabinet", ramps: { navy: "plum", crimson: "gold" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

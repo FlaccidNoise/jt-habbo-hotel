@@ -163,6 +163,81 @@ export const settlePurchase = timed(function settlePurchase(
   })();
 });
 
+export type SpendResult =
+  | { ok: true; balance: number; itemId?: number }
+  | { ok: false; reason: string };
+
+/** The shape every #210 sink shares: debit Stars, optionally mint one item, log both under one
+ *  op so /api/metrics can show what each sink absorbs. `bound` items can never be traded away
+ *  (settleTrade refuses them) and `inscription` is the engraving shown on click.
+ *
+ *  A sink with `price` 0 still writes its entry — a Luck Lever pull that wins nothing has to be
+ *  visible, and a free mint (a completed collection set) is absorption of a different kind. */
+export const settleSpend = timed(function settleSpend(
+  db: Database.Database,
+  opts: {
+    opKey: string;
+    op: string;
+    accountId: number;
+    price: number;
+    mint?: { defId: string; bound?: boolean; inscription?: string };
+    now?: number;
+  },
+): SpendResult {
+  const now = opts.now ?? Date.now();
+  return db.transaction((): SpendResult => {
+    if (settled(db, opts.opKey)) return { ok: false, reason: "that was already settled" };
+    if (balanceOf(db, opts.accountId) < opts.price) {
+      return { ok: false, reason: `not enough Stars — that costs ${opts.price}` };
+    }
+    if (opts.price > 0) {
+      db.prepare("UPDATE star_balances SET balance = balance - ? WHERE account_id = ?")
+        .run(opts.price, opts.accountId);
+    }
+    const entry = db.prepare(
+      `INSERT INTO ledger_entries (op, op_key, seq, account_id, stars, item_id, created_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    );
+    entry.run(opts.op, opts.opKey, 0, opts.accountId, -opts.price, null, now);
+    let itemId: number | undefined;
+    if (opts.mint) {
+      itemId = Number(
+        db
+          .prepare(
+            "INSERT INTO furni_items (def_id, owner_id, room_id, state, bound, inscription)" +
+              " VALUES (?, ?, NULL, 0, ?, ?)",
+          )
+          .run(opts.mint.defId, opts.accountId, opts.mint.bound ? 1 : 0, opts.mint.inscription ?? null)
+          .lastInsertRowid,
+      );
+      entry.run(opts.op, opts.opKey, 1, opts.accountId, 0, itemId, now);
+    }
+    return { ok: true, balance: balanceOf(db, opts.accountId), ...(itemId ? { itemId } : {}) };
+  })();
+});
+
+/** Awards a badge once. Returns false when the account already had it. */
+export function awardBadge(
+  db: Database.Database,
+  accountId: number,
+  badgeId: string,
+  now = Date.now(),
+): boolean {
+  return (
+    db
+      .prepare("INSERT OR IGNORE INTO badges (account_id, badge_id, earned_at) VALUES (?, ?, ?)")
+      .run(accountId, badgeId, now).changes > 0
+  );
+}
+
+export function badgesOf(db: Database.Database, accountId: number): string[] {
+  return (
+    db
+      .prepare("SELECT badge_id AS id FROM badges WHERE account_id = ? ORDER BY earned_at")
+      .all(accountId) as Array<{ id: string }>
+  ).map((r) => r.id);
+}
+
 /** Item-grant rows (starter kit, mints). The caller owns the surrounding transaction. */
 export function logItemGrants(
   db: Database.Database,
@@ -196,16 +271,22 @@ export const settleTrade = timed(function settleTrade(
   return db.transaction((): TradeResult => {
     if (settled(db, opts.opKey)) return { ok: true, aReceived: [], bReceived: [] };
     const pick = db.prepare(
-      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId FROM furni_items WHERE id = ?",
+      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound FROM furni_items WHERE id = ?",
     );
     const defIds = new Map<number, string>();
     for (const side of [opts.a, opts.b]) {
       for (const itemId of side.itemIds) {
         const row = pick.get(itemId) as
-          | { id: number; defId: string; ownerId: number; roomId: number | null }
+          | { id: number; defId: string; ownerId: number; roomId: number | null; bound: number }
           | undefined;
         if (!row || row.ownerId !== side.accountId || row.roomId !== null) {
           return { ok: false, reason: "an offered item is no longer available" };
+        }
+        // Account-bound items never change hands (GAME.md §Status systems, #210). The check lives
+        // here, in the only code that moves an owner_id, rather than only in the trade UI —
+        // a client that never asks the UI still cannot launder a prestige fixture.
+        if (row.bound) {
+          return { ok: false, reason: "an offered item is account-bound and cannot be traded" };
         }
         defIds.set(itemId, row.defId);
       }

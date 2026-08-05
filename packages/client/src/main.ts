@@ -5,12 +5,14 @@ import {
   PROTOTYPE_CATALOG,
   ROOM_CAPACITY,
   ROOM_FURNI_CAP,
+  LEVER_COST,
   WALL_CATALOG,
   checkPlacement,
   checkWallPlacement,
   footprintTiles,
   parseHeightmap,
   screenToTile,
+  leverOdds,
   seatAt,
   tileHeight,
   wallOffsetLimits,
@@ -198,6 +200,7 @@ function renderInventory(): void {
 function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
   renderCatalog();
+  renderLever();
 }
 
 function renderCatalog(): void {
@@ -309,6 +312,25 @@ function renderArcade(): void {
     el<HTMLButtonElement>(id).disabled = !running;
   }
   el<HTMLButtonElement>("arcade-deal").disabled = running;
+}
+
+/** The Luck Lever's odds are the same table the server draws from (shared/lever.ts), rendered
+ *  straight from it — a published number cannot drift from the real one if there is only one. */
+function renderLever(): void {
+  const odds = el("lever-odds");
+  odds.replaceChildren();
+  for (const row of leverOdds()) {
+    const line = document.createElement("div");
+    const label = document.createElement("span");
+    label.textContent = row.label;
+    const percent = document.createElement("span");
+    percent.textContent = row.percent;
+    line.append(label, percent);
+    odds.appendChild(line);
+  }
+  const pull = el<HTMLButtonElement>("lever-pull");
+  pull.textContent = `Pull · ${LEVER_COST}★`;
+  pull.disabled = stars < LEVER_COST;
 }
 
 /** Give the keyboard back to chat. Arming takes it so R can turn the held item; every way out of
@@ -507,6 +529,8 @@ function buildRoom(msg: RoomState): void {
   renderTrade();
   renderArcade();
   el("arcade").hidden = true;
+  el("lever").hidden = true;
+  el("lever-result").textContent = "";
 
   hereRoomId = msg.roomId;
   myRoomId = msg.myRoomId ?? null;
@@ -633,6 +657,12 @@ function handle(msg: ServerMsg): void {
       el("arcade").hidden = false;
       renderArcade();
       break;
+    case "lever_result":
+      el("lever-result").textContent = msg.defId
+        ? `${msg.label} — won!`
+        : "No win. Pull again?";
+      renderLever();
+      break;
     case "nav_rooms":
       renderNav(msg.rooms);
       break;
@@ -688,6 +718,7 @@ async function start(token: string): Promise<void> {
   el("hud").style.display = "flex";
   el("nav-open").style.display = "block";
   el("arcade-open").style.display = "block";
+  el("lever-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
 
@@ -732,6 +763,13 @@ el("arcade-open").addEventListener("click", () => {
 });
 el("arcade-deal").addEventListener("click", () => net.send({ t: "arcade_start" }));
 el("arcade-close").addEventListener("click", () => (el("arcade").hidden = true));
+el("lever-open").addEventListener("click", () => {
+  const panel = el("lever");
+  panel.hidden = !panel.hidden;
+  if (!panel.hidden) renderLever();
+});
+el("lever-close").addEventListener("click", () => (el("lever").hidden = true));
+el("lever-pull").addEventListener("click", () => net.send({ t: "lever_pull" }));
 for (const [id, move] of [
   ["arcade-higher", "higher"],
   ["arcade-lower", "lower"],

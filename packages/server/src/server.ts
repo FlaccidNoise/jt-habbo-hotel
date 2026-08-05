@@ -8,12 +8,16 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
-import { CATALOG_PRICES, ClientMsgSchema, ROOM_CAPACITY } from "@grand/shared";
+import {
+  CATALOG_PRICES, ClientMsgSchema, LEVER_COST, PRESTIGE_DEFS, ROOM_CAPACITY, leverDraw,
+} from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
-import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleTrickle } from "./ledger.ts";
+import {
+  COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleSpend, settleTrickle,
+} from "./ledger.ts";
 import { log } from "./log.ts";
 import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
 import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
@@ -70,6 +74,8 @@ export async function startServer(opts: {
   tradeCountdownMs?: number;
   /** Hi-Lo card source, 1..13. Tests inject a scripted deck. */
   arcadeDraw?: () => number;
+  /** Luck Lever roll source in [0, 1). Tests pin it to land on a chosen prize. */
+  leverRoll?: () => number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -149,6 +155,7 @@ export async function startServer(opts: {
   });
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
+  const leverRoll = opts.leverRoll ?? Math.random;
 
   const NAV_LIMIT = 60;
 
@@ -345,20 +352,55 @@ export async function startServer(opts: {
           fail(conn.ws, "purchase", "that item is not in the catalog");
           break;
         }
-        const result = settlePurchase(db, {
-          opKey: randomUUID(),
-          accountId,
-          defId: msg.defId,
-          price,
-        });
-        log("purchase", { accountId, defId: msg.defId, price, ok: result.ok });
+        // Prestige fixtures mint account-bound under their own ledger op, so /api/metrics can
+        // tell "the catalog absorbed 3,300" from "the deep sink absorbed 3,300" (#210).
+        const prestige = PRESTIGE_DEFS.has(msg.defId);
+        const result = prestige
+          ? settleSpend(db, {
+              opKey: randomUUID(), op: "prestige", accountId, price,
+              mint: { defId: msg.defId, bound: true },
+            })
+          : settlePurchase(db, { opKey: randomUUID(), accountId, defId: msg.defId, price });
+        log("purchase", { accountId, defId: msg.defId, price, prestige, ok: result.ok });
         if (!result.ok) {
           fail(conn.ws, "purchase", result.reason);
           break;
         }
-        emit(accountId, { t: "stars", balance: result.balance, delta: -price, reason: "purchase" });
-        emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
+        emit(accountId, {
+          t: "stars", balance: result.balance, delta: -price,
+          reason: prestige ? "prestige" : "purchase",
+        });
+        emit(accountId, {
+          t: "inventory_add",
+          item: { id: result.itemId ?? 0, defId: msg.defId, ...(prestige ? { bound: true } : {}) },
+        });
         quest(accountId, "purchase");
+        break;
+      }
+      // The Luck Lever (#210): one message, one draw, no session — the only repeatable sink, so
+      // it is the one that keeps absorbing after the catalog has been bought out.
+      case "lever_pull": {
+        const prize = leverDraw(leverRoll());
+        const result = settleSpend(db, {
+          opKey: randomUUID(), op: "lever", accountId, price: LEVER_COST,
+          ...(prize.defId ? { mint: { defId: prize.defId } } : {}),
+        });
+        log("lever", { accountId, prize: prize.defId, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "purchase", result.reason);
+          break;
+        }
+        emit(accountId, {
+          t: "stars", balance: result.balance, delta: -LEVER_COST, reason: "Luck Lever",
+        });
+        const won = prize.defId && result.itemId
+          ? { id: result.itemId, defId: prize.defId }
+          : undefined;
+        emit(accountId, {
+          t: "lever_result", defId: prize.defId, label: prize.label, balance: result.balance,
+          ...(won ? { item: won } : {}),
+        });
+        if (won) emit(accountId, { t: "inventory_add", item: won });
         break;
       }
       case "nav_list":

@@ -23,6 +23,13 @@ CREATE TABLE IF NOT EXISTS furni_items(
   -- Wall items (#203) share the table so an item keeps one identity across both surfaces. They
   -- use x, y for the segment tile and u, v for the offsets on it; z and dir stay NULL.
   wall_side TEXT, wall_u INTEGER, wall_v INTEGER);
+-- Status systems (GAME.md §Status systems, #210). A badge is earned once and never spent, so the
+-- row's existence is the whole record.
+CREATE TABLE IF NOT EXISTS badges(
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  badge_id TEXT NOT NULL,
+  earned_at INTEGER NOT NULL,
+  PRIMARY KEY(account_id, badge_id));
 CREATE TABLE IF NOT EXISTS ledger_entries(
   id INTEGER PRIMARY KEY,
   op TEXT NOT NULL, op_key TEXT NOT NULL, seq INTEGER NOT NULL DEFAULT 0,
@@ -101,7 +108,14 @@ export function openDb(path: string): Database.Database {
   db.pragma("journal_mode = WAL");
   db.pragma("foreign_keys = ON");
   db.exec(DDL);
-  for (const [col, decl] of [["wall_side", "TEXT"], ["wall_u", "INTEGER"], ["wall_v", "INTEGER"]]) {
+  for (const [col, decl] of [
+    ["wall_side", "TEXT"], ["wall_u", "INTEGER"], ["wall_v", "INTEGER"],
+    // #210. `bound` is account-bound-forever: prestige fixtures, set pieces, museum donations.
+    // `inscription` is the engraving — there is no text renderer, so it is data shown on click.
+    // `locked` is a museum donation: placed by the house, never picked up again.
+    ["bound", "INTEGER NOT NULL DEFAULT 0"], ["inscription", "TEXT"],
+    ["locked", "INTEGER NOT NULL DEFAULT 0"],
+  ]) {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }
   seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT);

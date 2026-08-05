@@ -595,6 +595,70 @@
       "recipeHash": "568380745c4029e8a8eb02c20dcd777b1405c1d5317b032df54ec752606bd537",
       "pixelHash": "ab79981a3609a7899900d4a717bec7dae0b84f6a0357c40be46e73d140a8ae74"
     },
+    "billiards_table": {
+      "defId": "billiards_table",
+      "archetype": "artgen",
+      "sheet": "billiards_table.png",
+      "frameW": 160,
+      "frameH": 115,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        96,
+        64,
+        96
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 3,
+        "l": 2
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:b6363259c1390730",
+      "recipeHash": "b6363259c1390730e10b820fabf362ba6a7bec03cc3d0dcb55570ebbec32cb20",
+      "pixelHash": "c659595b892fa933aa22aa955779b43fee9f12a81b448848ee546a07f40b3110"
+    },
+    "penthouse_candelabra": {
+      "defId": "penthouse_candelabra",
+      "archetype": "artgen",
+      "sheet": "penthouse_candelabra.png",
+      "frameW": 64,
+      "frameH": 107,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 91,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.34375,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:b5685c34bf0dd6c1",
+      "recipeHash": "b5685c34bf0dd6c13e2a8fc64196cd133321e9ff399a7637fda0c6dc9f044bbd",
+      "pixelHash": "314c639e48de8fcf481f3cc572ac2c01d19469315e384d458224b0dc8ef6f1b6"
+    },
     "cafe_chair_crimson": {
       "defId": "cafe_chair_crimson",
       "archetype": "artgen",
@@ -722,6 +786,70 @@
       "partLibraryHash": "artgen:f4d5a4147487f945",
       "recipeHash": "f4d5a4147487f9457845599459304c6f3b929836fbf2d1c8754aa1903d6d7779",
       "pixelHash": "2a9efc978c2e905e96b4840ab1298b806c2bc123e1175603fb5809569c668516"
+    },
+    "arcade_cabinet_plum": {
+      "defId": "arcade_cabinet_plum",
+      "archetype": "artgen",
+      "sheet": "arcade_cabinet_plum.png",
+      "frameW": 64,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 76,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.875,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:674bdebf1572e228",
+      "recipeHash": "674bdebf1572e228001d530aed2a005e1d65bd448ff17e1b3996591de79be653",
+      "pixelHash": "2e261d6410bf140a259b18848cbb5c7fe2e080994188377472e5f285940955fa"
+    },
+    "fountain_gilded": {
+      "defId": "fountain_gilded",
+      "archetype": "artgen",
+      "sheet": "fountain_gilded.png",
+      "frameW": 128,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 70,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.6875,
+      "seatZ": null,
+      "occlusion": [],
+      "styleVersion": 1,
+      "generatorVersion": 1,
+      "partLibraryHash": "artgen:74f813ffc88ac05d",
+      "recipeHash": "74f813ffc88ac05d265a8c77e09ff6236e55e10c7e995fac70d311c8515072f9",
+      "pixelHash": "99b3eec4e2e052f5a35d00fd73f0f1fc4750110f8daea306ad240356dcf8fb6e"
     },
     "wall_art": {
       "defId": "wall_art",

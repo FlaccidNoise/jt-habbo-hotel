@@ -61,7 +61,14 @@ export type AvatarState = z.infer<typeof AvatarStateSchema>;
 // refused at the door and shown as full in the Navigator.
 export const ROOM_CAPACITY = 25;
 
-export const InventoryItemSchema = z.object({ id: z.number().int(), defId: z.string() });
+// #210: `bound` items never change hands (the ledger refuses it), and `inscription` is the
+// engraving — with no text renderer, an engraved plaque or trophy carries its deed as data the
+// client shows on click. Both are absent on ordinary catalog furni.
+export const InventoryItemSchema = z.object({
+  id: z.number().int(), defId: z.string(),
+  bound: z.boolean().optional(),
+  inscription: z.string().optional(),
+});
 export type InventoryItem = z.infer<typeof InventoryItemSchema>;
 
 // GAME.md §Trade: Coke Music's 6-item cap was its documented exploit surface — ours is explicit.
@@ -107,6 +114,7 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("trade_cancel") }),
   z.object({ t: z.literal("buy"), defId: z.string() }),
   z.object({ t: z.literal("nav_list") }),
+  z.object({ t: z.literal("lever_pull") }),
   z.object({ t: z.literal("arcade_start") }),
   z.object({ t: z.literal("arcade_move"), move: z.enum(["higher", "lower", "stop"]) }),
 ]);
@@ -151,6 +159,10 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("arcade_state"), card: z.number().int(), score: z.number().int(),
              scored: z.boolean(), over: z.boolean(),
              outcome: z.enum(["bust", "stopped"]).optional(), paid: z.number().int().optional() }),
+  // The odds are shipped in the client bundle (lever.ts), so the result carries only what was
+  // actually drawn. `defId` null is the blank — the common outcome and the reason it drains.
+  z.object({ t: z.literal("lever_result"), defId: z.string().nullable(), label: z.string(),
+             balance: z.number().int(), item: InventoryItemSchema.optional() }),
   z.object({ t: z.literal("nav_rooms"), rooms: z.array(z.object({
              roomId: z.number().int(), name: z.string(), players: z.number().int(),
              yours: z.boolean() })) }),

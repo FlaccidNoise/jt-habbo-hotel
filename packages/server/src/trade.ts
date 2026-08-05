@@ -99,15 +99,21 @@ export class TradeService {
       return;
     }
     const pick = this.db.prepare(
-      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId FROM furni_items WHERE id = ?",
+      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound FROM furni_items WHERE id = ?",
     );
     const items: InventoryItem[] = [];
     for (const id of ids) {
       const row = pick.get(id) as
-        | { defId: string; ownerId: number; roomId: number | null }
+        | { defId: string; ownerId: number; roomId: number | null; bound: number }
         | undefined;
       if (!row || row.ownerId !== accountId || row.roomId !== null) {
         this.fail(accountId, "that item is not in your inventory");
+        return;
+      }
+      // The ledger refuses this too, but silently cancelling a settled trade three seconds after
+      // both sides accepted is a worse way to learn it (#210).
+      if (row.bound) {
+        this.fail(accountId, "that one is account-bound — it cannot be traded");
         return;
       }
       items.push({ id, defId: row.defId });
