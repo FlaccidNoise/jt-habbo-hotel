@@ -1,3 +1,8 @@
+# NPC live model (decision 2026-08-04, #204). Override or blank NPC_LLM_MODEL for canned-only.
+# Ollama down → connection error per attempt, logged npc_llm_error, canned fallback.
+export NPC_LLM_URL ?= http://localhost:11434/v1
+export NPC_LLM_MODEL ?= gemma3:4b
+
 setup:
 	pnpm install
 
