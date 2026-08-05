@@ -1,5 +1,29 @@
 # Decision Log
 
+- 2026-08-05 — **Avatar figure system (#127).** Built, with five decisions that overrule earlier
+  spec on measured evidence.
+  - **8 directions, all rendered natively; mirroring deleted for avatars.** Mirroring exists to
+    halve hand-drawing and the 3D-assisted path does not hand-draw. It costs ~13 s of Blender time
+    per layer and buys every asymmetric garment. The old mirror table was also wrong for this rig:
+    it assumed dir 0/4 face the camera, but the camera is in the +X+Y octant, so dirs 3 and 7 are
+    self-symmetric and the pairs are 0↔6, 1↔5, 2↔4. Even the correct pairs differ by ~25 % of lit
+    pixels, so mirroring was never free here.
+  - **Audit B4 is false for the shipped rig.** "Above-front light gives symmetric shading, so
+    mirroring is shading-safe" — the sun is `(-0.22, -0.80, -1.05)` and its lateral component
+    breaks left-right symmetry by construction. Nothing depends on it today; the sun cannot move
+    because 22 frozen bundles are lit by it.
+  - **Figure is 80 px / 2.5 height units, not the spec's ~100 px / 3.** The shipped seat heights
+    pinned it — see ART-DIRECTION for the derivation.
+  - **Compositing is body-only holdout + alpha-over**, and per-set hidden-layer rules are what
+    keep the holdout set at size one. That is the difference between `layers × dirs × frames` and
+    combinatorial.
+  - **Seating occlusion (#227) is derived from geometry, not declared per slot**, and ships as an
+    additive companion sheet so no frozen bundle's pixels move.
+- 2026-08-05 — **Skin is its own ramp family.** `style.ts` had 12 material ramps and no skin tone;
+  `sand`-or-`ivory` is not a palette a hotel can ship. Six skin ramps, gated against channel
+  clamping (four material ramps do clamp, and their pixels are frozen, so the rule is scoped).
+  `style_version` → 2: additive, 0 pixel hashes moved, 5 recipe hashes moved.
+
 - 2026-08-03 — **Audience: adults-first, 18+.** Nostalgia demographic, co-working coherent,
   lightest legal burden. Revisit all safety design if this widens.
 - 2026-08-03 — **V1 focus: hangout core.** Rooms, chat, café, co-presence before creation loops

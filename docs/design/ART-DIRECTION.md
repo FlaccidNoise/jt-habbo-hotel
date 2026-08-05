@@ -87,8 +87,27 @@ the v1 pins, marked (tune) where authoring may move them.
   gate. Colorways are the separate axis and may differ in palette alone (decided 2026-08-05):
   they are declared as a ramp remap of a base part, never as a second mesh, so they cannot drift
   from the silhouette they were cut from.
-- **Avatar reference:** standing figure ~100 px tall on a 64 × 110 canvas, ~3 height units
-  (tune — pins jointly with the figure pipeline, bug #127).
+- **Avatar reference (pinned 2026-08-05, #127): standing figure 80 px on a 64 × 112 canvas,
+  2.5 height units.** Supersedes "~100 px, ~3 height units". The shipped seats fixed it, not
+  taste: `cafe_chair` has `seatZ 0.58` (18.6 px) and `bed_basic` 0.55, and a seated figure with a
+  90° knee needs shin ≈ seat height. 18.6 px is 23 % of 80 px — stylised, short-legged, coherent.
+  At 100 px it is 19 %, which puts the knees above the hips on every chair in the catalog.
+  Cross-check: `cafe_chair drawnHeight 1.25` = 40 px for a ~0.87 m chair back makes one height
+  unit ≈ 0.7 m, so an adult is 2.5 units. Segments sum exactly: head 22 + torso 21 + thigh 19 +
+  shin 18 = 80.
+- **Figure anchor is per frame**, not per bundle: the feet standing, the hip/seat contact sitting.
+  One fixed anchor cannot serve both, because the client already lifts a sitter by the seat's `z`
+  and seat heights range 0.55–0.82. Standing frames anchor at canvas y 102, leaving 21 px of hat
+  room above the crown and 9 px under the toe — walk contact frames reach 7 px below the anchor
+  bare and 9 shod, because the anchor is the tile-CENTRE ground point and a foot toward the camera
+  is genuinely nearer, so it projects lower.
+- **Figure mass is not gated; height is.** The first body was geometrically correct and read as a
+  stick: a torso 13 wide but 7 deep went nearly edge-on at dirs 1 and 5 and vanished. Widened to
+  15 × 10 with thicker limbs and a neck. This is the hand-polish pass this document already
+  anticipated for silhouettes that read wrong at 64.
+- **Figure sheets are indexed, not RGB.** A pixel stores (colour slot, shade index); the client
+  resolves them through the worn ramps while compositing. Colour is per player, so a baked-colour
+  sheet would need one render per ramp combination.
 
 ## Proof gate before build-out
 

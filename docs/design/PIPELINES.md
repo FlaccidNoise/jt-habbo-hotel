@@ -47,11 +47,17 @@ from **per-layer z offsets the generator computes from footprint geometry** — 
 to hide the problem in. A rendering-correctness gate (stage 4) renders each generated item in a
 reference scene of stacked and adjacent items and diffs the result.
 
-**Seating occlusion** (audit B2): every part slot declares an **occlusion group** — in front of or
-behind a seated occupant, **per direction** (the chair back is behind the avatar facing the
-camera, in front facing away). The generator derives per-direction layer depths from the
-declaration. A stage-4 gate renders every seating item with a test avatar in all directions and
-diffs against reference.
+**Seating occlusion** (audit B2, built 2026-08-05 as #227): the split is **derived, not declared**.
+B2 assumed every part slot would be tagged with an occlusion group per direction; the rig already
+knows where every primitive is, and depth in the painter's algorithm is just `fx+fy`, so "nearer
+than the seat point" falls out of the rotation the direction loop already does. No artist in the
+loop, and no way for a declaration to disagree with the geometry.
+
+The near half ships as a **companion sheet** (`<id>.near.png`, `nearHash`), cut from the finished
+frame so it carries the same outlines and detail lines as the base. Additive on purpose: every
+base sheet stays byte-identical, so no frozen bundle loses the pixels that are its identity. The
+client draws the far half below avatars and the near half above — five same-tile layers, floor →
+far seat → avatars → furni → near seat.
 
 **Pathfinding** (audit B5): build step 1 includes it explicitly — heightmap, per-tile blocked
 state, furni stack heights, per-item walk/sit flags, climb-delta rule, door special case.
@@ -138,12 +144,38 @@ sizing: [ART-DIRECTION.md](ART-DIRECTION.md). Tracked as #202 (wall archetypes n
 
 ## 3. Avatar and outfit pipeline
 
-- Figure string model: `type-set-color` triples. **Set IDs are append-only and never reused**;
-  retiring a garment flags it, never deletes; stored figure strings carry the figuredata version
-  they were authored against. (audit F2)
-- Layered part types with first-class hidden-layer rules (hats hide hair) from day one.
-- Action set: stand, walk, sit, lay, wave, dance, sleep, carry, plus the focus props (laptop,
-  book, sketchpad). 5 drawn directions, 2 scales.
+Built 2026-08-05 (#127). Revisions below are what the build actually produced.
+
+- Figure string model: `v<N>|type-set-color(-color)*`, parts joined by `.`. **N colours per part**,
+  the slot count declared by the set — a two-tone shirt is one mesh with two independently chosen
+  ramps, which the colorway machinery (#229, remaps keyed by ramp *name*) already supported.
+  **Set IDs are append-only and never reused**; retiring a garment flags it, never deletes. The
+  figuredata version rides in the string itself because the string is stored, broadcast, and
+  copied between systems. (audit F2)
+- **12 layer types in render order, 11 selectable:** `bd hd lg sh ch wa cc ca hr fa ea ha`.
+  `bd` is implicit and inherits `hd`'s skin ramp — a separately chosen body colour is a
+  neck-mismatch bug with no upside, so the parser refuses it.
+- **Order is per type; hiding is per set** (`hides: [type…]`, backwards in the order only, gated).
+  A tiara and a beanie are both `ha` and only one hides hair, so there is no type × type matrix to
+  design before garments exist.
+- **Hidden-layer rules are load-bearing, not cosmetic.** A garment renders against the canonical
+  body as a holdout and keeps only its own pixels, so where the body is nearer it won the depth
+  test and the client composites with plain alpha-over and no runtime depth. That works only while
+  the holdout set is exactly one thing. A hat hides hair so a hat never needs a holdout render per
+  hair set — which is what keeps the cost `layers × dirs × frames` instead of combinatorial.
+  Corollary: a second **head shape** would break it, so `hd` stays one mesh and head variety comes
+  from colour and hair.
+- **Figure sheets are indexed.** A pixel stores (colour slot, shade index) and the client resolves
+  it through the worn ramps while it composites. Colour is per player; baking colour into the
+  sheet would move the combinatorics into colour space.
+- **Shadows must stay off for figures** (`scene.eevee.use_shadows`, a master switch that overrides
+  the per-light flag). With them on, a shirt casts onto the torso and the bare body renders
+  differently depending on what is worn over it — 1374 pixels of the same primitive differing by a
+  mean of 56/255. Layer independence is the whole model.
+- Action set v1: **stand, walk (4 frames), sit, wave (2)** — 8 frames, 8 directions, scale 64.
+  lay, dance, sleep, carry and the focus props are deferred to #232. Poses are authored once as
+  bone angles and every garment ever made inherits them, so an action costs protocol surface and
+  sheet bytes, not art.
 - **Pets:** same recipe model — species body types × colors × patterns, pet clothing layer system
   with its own hidden-layer rules. Actions: follow, sit, sleep, react, trick.
 
