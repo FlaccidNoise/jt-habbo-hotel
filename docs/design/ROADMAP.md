@@ -11,7 +11,7 @@ Status date: 2026-08-05.
 | 1 | Room render, pathfinding, walk, chat, filter | Shipped (vertical slice, 178 tests) | #115 awaiting verification. Drain/rolling deploy deferred → #125 |
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
-| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Catalog is 14 defs. Wall archetypes → #203 | #117 fixed, #202 |
+| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall archetypes → #203 | #117 fixed, #202 |
 | 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) + registration Star trickle (c30e5b7) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
@@ -92,6 +92,9 @@ bounces.** Reading the config is never evidence.
   gates and read as one style in the reference room. Only then does build-out start. **Met**, and
   the first build-out (casino + café sets, 5 more floor archetypes) shipped behind the same gates.
 - A frozen artgen bundle whose pixels drift from its stored hash refuses to publish (staged).
+- A def whose seatHeight disagrees with the authored seat surface refuses to publish (staged,
+  #228) — that number places a seated avatar and nothing read it before. Likewise an artgen def
+  claiming more collision height than its mesh draws.
 
 ### Step 5 — trade + ledger (#118, with #209 first)
 
@@ -202,18 +205,23 @@ Every `(tune)` value in GAME.md is now the v1 constant. Change mechanisms:
 ## Sequencing — the next three moves (refreshed 2026-08-05, second pass)
 
 Done since the 08-04 plan: #204 NPC wiring, #118 ledger + trade, #119 first arcade, #215 catalog
-sink, and #202 end to end — proof gate, per-material masks, style bible v1, and the first
-build-out taking the catalog from 5 defs to 14.
+sink, #209 observability (/api/metrics + metrics.html), #207 onboarding, the #126 Navigator
+slice with room capacity 25, and #202 end to end — proof gate, per-material masks, style bible
+v1, and two build-outs taking the catalog from 5 defs to 22.
 
-1. **#209 observability.** The ledger is live and issuing — the plan called for the issuance
-   graphs *before* the faucets, and they now trail three shipped faucets and two sinks. This is
-   the oldest open promise in the plan; close it next.
-2. **#206 dailies + #207 onboarding.** Both ride the now-live ledger rails and turn the earn
-   loop into a daily habit. #207 also has 14 catalog items to guide a first purchase through.
-3. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
-   wall items ship v1. Needs the coordinate system before any wall archetype can be authored.
+1. **#210 wealth sinks.** Now the binding constraint. The catalog is the only sink and costs
+   2700 Stars to buy out; at the coffee faucet alone that is ~54 days, and adding furni only
+   moves that number, never the shape. Museum wing, prestige untradables, Luck Lever (the slot
+   machine is its host), collection sets. **Do this before #206**, which adds faucets and would
+   make the imbalance worse.
+2. **#203 wall items.** The only piece of the art pipeline still unbuilt, and PIPELINES §1 says
+   wall items ship v1. Needs the coordinate system before any wall archetype can be authored,
+   and it is the last thing blocking #202 from closing.
+3. **#206 dailies**, once #210 has somewhere for the Stars to go.
 
-Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out.
+Sitting and furni rotation (#223) shipped 2026-08-05 alongside the art build-out. Colorways are
+free as of #229, so catalog breadth is no longer gated on Blender time — it is gated on having
+sinks worth spending at.
 
 After that, follow §7 order: #120 (start the license text now — it gates the first bank),
 #121, #122. #125 gateway waits for its trigger. #124 Wired Phase B waits for step 9 plus demand
