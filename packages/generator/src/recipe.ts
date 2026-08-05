@@ -13,7 +13,7 @@ export interface Recipe {
 }
 
 /** Canonical JSON: sorted keys at every level, so hashing is representation-independent. */
-export function canonicalRecipe(recipe: Recipe): string {
+function canonicalRecipe(recipe: Recipe): string {
   const sorted = (value: unknown): unknown => {
     if (value === null || typeof value !== "object" || Array.isArray(value)) return value;
     return Object.fromEntries(

@@ -30,7 +30,7 @@ function ramp(name: string, base: number): Ramp {
 }
 
 /** Curated global palette: ramp-indexed color, recoloring is ramp swapping (PIPELINES §2). */
-export const RAMPS: readonly Ramp[] = [
+const RAMPS: readonly Ramp[] = [
   ramp("walnut", 0xb5651d),
   ramp("oak", 0x8b4513),
   ramp("plum", 0x7a3e9d),

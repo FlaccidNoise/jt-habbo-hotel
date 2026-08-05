@@ -15,7 +15,7 @@ export interface Box {
 }
 
 /** Footprint point → pixel offset from the origin-tile center at z=0. */
-export function project(fx: number, fy: number, z: number): Pt {
+function project(fx: number, fy: number, z: number): Pt {
   return { x: (fx - fy) * H, y: (fx + fy - 1) * V - z * ZU };
 }
 
