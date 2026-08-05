@@ -8,7 +8,7 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
-import { CATALOG_PRICES, ClientMsgSchema } from "@grand/shared";
+import { CATALOG_PRICES, ClientMsgSchema, ROOM_CAPACITY } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
@@ -150,6 +150,30 @@ export async function startServer(opts: {
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
 
+  const NAV_LIMIT = 60;
+
+  /** The Navigator listing: every open room, busiest first. Rooms with nobody in them are not
+   *  loaded, so their live count is zero by construction. */
+  function navRooms(accountId: number): Array<{
+    roomId: number;
+    name: string;
+    players: number;
+    yours: boolean;
+  }> {
+    const listed = db
+      .prepare("SELECT id, name, owner_id AS ownerId FROM rooms WHERE state = 'open'")
+      .all() as Array<{ id: number; name: string; ownerId: number | null }>;
+    return listed
+      .map((r) => ({
+        roomId: r.id,
+        name: r.name,
+        players: rooms.get(r.id)?.room.occupantCount() ?? 0,
+        yours: r.ownerId === accountId,
+      }))
+      .sort((a, b) => b.players - a.players || a.roomId - b.roomId)
+      .slice(0, NAV_LIMIT);
+  }
+
   function roomExists(roomId: number): boolean {
     if (rooms.has(roomId)) return true;
     return db.prepare("SELECT 1 FROM rooms WHERE id = ?").get(roomId) !== undefined;
@@ -199,6 +223,14 @@ export async function startServer(opts: {
     }
     if (!roomExists(msg.roomId)) {
       fail(conn.ws, "no_room", `no room ${msg.roomId}`);
+      return;
+    }
+    // Capacity counts players, not staff. Someone already inside is not turned away by their own
+    // presence — that would make a reconnect impossible in a full room.
+    const live = rooms.get(msg.roomId)?.room;
+    const inside = live?.occupants().some((o) => o.accountId === account.id) ?? false;
+    if (!inside && (live?.occupantCount() ?? 0) >= ROOM_CAPACITY) {
+      fail(conn.ws, "room_busy", `that room is full (${ROOM_CAPACITY} people)`);
       return;
     }
     clearTimeout(conn.handshake);
@@ -300,6 +332,9 @@ export async function startServer(opts: {
         quest(accountId, "purchase");
         break;
       }
+      case "nav_list":
+        send(conn.ws, { t: "nav_rooms", rooms: navRooms(accountId) });
+        break;
       case "arcade_start":
         arcadeService.start(accountId);
         quest(accountId, "arcade");

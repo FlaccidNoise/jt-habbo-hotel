@@ -16,6 +16,7 @@ const browserSocket = (url: string): SocketLike => new WebSocket(url) as unknown
 export class Net {
   private open: (url: string) => SocketLike;
   private socket: SocketLike | null = null;
+  private superseded: SocketLike | null = null;
   private handler: (msg: ServerMsg) => void = () => {};
   private closeHandler: () => void = () => {};
   private warned = false;
@@ -24,17 +25,13 @@ export class Net {
     this.open = open;
   }
 
-  /** Also the room switch: the previous socket is detached before it is closed, so leaving the
-   *  old room never reads as a disconnect. */
+  /** Also the room switch. The old socket keeps running until the new one reports a room_state:
+   *  a refused join (a full room) leaves the player where they were, and a successful one never
+   *  reads as a disconnect. */
   connect(url: string, token: string, roomId: number): Promise<void> {
     return new Promise((resolve, reject) => {
-      const previous = this.socket;
-      if (previous) {
-        previous.onmessage = null;
-        previous.onclose = null;
-        previous.onerror = null;
-        previous.close();
-      }
+      this.retireSuperseded();          // a switch started while one was pending
+      this.superseded = this.socket;
       const socket = this.open(url);
       this.socket = socket;
       let opened = false;
@@ -62,6 +59,17 @@ export class Net {
     }
   }
 
+  /** Drops the socket the switch replaced: silent close, no more frames from the old room. */
+  private retireSuperseded(): void {
+    const old = this.superseded;
+    this.superseded = null;
+    if (!old) return;
+    old.onmessage = null;
+    old.onclose = null;
+    old.onerror = null;
+    old.close();
+  }
+
   onMessage(handler: (msg: ServerMsg) => void): void {
     this.handler = handler;
   }
@@ -85,6 +93,8 @@ export class Net {
       this.warnOnce("net: dropped a frame the schema rejected");
       return;
     }
+    // room_state is the join confirmation: only now is the room the switch left behind finished.
+    if (parsed.data.t === "room_state") this.retireSuperseded();
     try {
       this.handler(parsed.data);
     } catch (e) {

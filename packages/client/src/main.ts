@@ -3,6 +3,7 @@ import {
   CATALOG_PRICES,
   MAX_TRADE_ITEMS,
   PROTOTYPE_CATALOG,
+  ROOM_CAPACITY,
   ROOM_FURNI_CAP,
   checkPlacement,
   footprintTiles,
@@ -31,6 +32,7 @@ import { parseChatInput } from "./ui/parse.ts";
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
+type NavRooms = Extract<ServerMsg, { t: "nav_rooms" }>["rooms"];
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const PLACE_DIR = 0;
@@ -61,6 +63,7 @@ let stars = 0;
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
 let myRoomId: number | null = null;
+let hereRoomId = roomId;
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -204,6 +207,33 @@ function endTrade(): void {
   renderInventory();
 }
 
+function renderNav(rooms: NavRooms): void {
+  const list = el("nav-list");
+  list.replaceChildren();
+  if (rooms.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No rooms are open.";
+    list.appendChild(empty);
+    return;
+  }
+  for (const room of rooms) {
+    const button = document.createElement("button");
+    button.type = "button";
+    const here = room.roomId === hereRoomId;
+    const full = room.players >= ROOM_CAPACITY;
+    button.textContent = `${room.name}${room.yours ? " (yours)" : ""} — ${
+      here ? "you are here" : full ? "full" : `${room.players}/${ROOM_CAPACITY}`
+    }`;
+    button.disabled = here || full;
+    button.addEventListener("click", () => {
+      el("nav").hidden = true;
+      void net.connect(wsUrl, session, room.roomId);
+    });
+    list.appendChild(button);
+  }
+}
+
 function renderArcade(): void {
   const running = arcade !== null && !arcade.over;
   el("arcade-card").textContent = arcade ? String(arcade.card) : "—";
@@ -282,7 +312,9 @@ function buildRoom(msg: RoomState): void {
   renderArcade();
   el("arcade").hidden = true;
 
+  hereRoomId = msg.roomId;
   myRoomId = msg.myRoomId ?? null;
+  el("nav").hidden = true;
   const nav = el<HTMLButtonElement>("suite-nav");
   if (myRoomId === null) {
     nav.style.display = "none";
@@ -379,6 +411,9 @@ function handle(msg: ServerMsg): void {
       el("arcade").hidden = false;
       renderArcade();
       break;
+    case "nav_rooms":
+      renderNav(msg.rooms);
+      break;
     case "notice":
       toast(msg.text, "notice");
       break;
@@ -418,6 +453,7 @@ async function start(token: string): Promise<void> {
   await net.connect(wsUrl, token, roomId);
   el("login").style.display = "none";
   el("hud").style.display = "flex";
+  el("nav-open").style.display = "block";
   el("arcade-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
@@ -444,6 +480,14 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
+el("nav-open").addEventListener("click", () => {
+  const panel = el("nav");
+  panel.hidden = !panel.hidden;
+  if (panel.hidden) return;
+  el("nav-list").textContent = "Loading rooms…";
+  net.send({ t: "nav_list" });
+});
+el("nav-close").addEventListener("click", () => (el("nav").hidden = true));
 el("suite-nav").addEventListener("click", () => {
   const target = Number(el("suite-nav").dataset["target"]);
   if (target) void net.connect(wsUrl, session, target);
