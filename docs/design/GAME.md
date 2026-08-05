@@ -1,4 +1,4 @@
-# Game Design — working title "The Grand"
+# Game Design — The Grand
 
 An isometric hotel world in the Habbo / Coke Music lineage. Claims of the form "X worked in game
 Y" trace to [docs/research/](../research/00-synthesis.md). This revision integrates the four
@@ -50,8 +50,13 @@ floor, charts are the billboard.
    stays active is game *integrity* — anti-cheat, anti-dupe, anti-farm — because a rigged economy
    is an unfun economy.
 
-Reserved for later, architecture planned from day one: programmable rooms (a Wired-class system).
-The room server carries the event bus and state substrate from the start (see PIPELINES §5).
+Programmable rooms (a Wired-class system) are phased and demand-gated (decided 2026-08-04):
+Phase A is the three hand-built room game sets (#205). Phase B "Wired Lite" — trigger→effect
+pairs, no variables — comes no earlier than build step 9, on the event-bus substrate the room
+server carries from the start (PIPELINES §5). Phase C (conditions, selectors, scoped variables)
+only if Phase B shows sustained use. Permanent exclusions at every phase: wired never mutates
+Stars, items, or inventories, never acts across rooms, never speaks as a player, never grants
+room rights — a programmable room that can move items is a player-run wagering machine (R-26).
 
 ## Core loops
 
@@ -64,7 +69,7 @@ ranked → goods circulate by trade → charts and trophies feed status.
 **Minigame:** queue in a game hall → play an official game → capped payout plus ladder points →
 trophies for seasons and firsts.
 
-## Currency — Stars (working name)
+## Currency — Stars
 
 One currency. No direct gift, drop, or trade of Stars exists. Stars are never sold for money.
 
@@ -311,7 +316,7 @@ drops during events — they raise trading activity, not just logins. (Habbo §2
 the anchor space, one café, one lounge stage. Spaces unlock as concurrency grows, re-lock as it
 falls.
 
-**Low-population mode** (audit C-7): below N concurrent, Navigator categories collapse to one
+**Low-population mode** (audit C-7): below 5 concurrent (tune), Navigator categories collapse to one
 list, deduction drops to one nightly slot, the café doubles vote payouts as the designed
 concentration point (Coke's Red Room). Charts publish with however many entries exist. The arcade
 and dailies are the two faucets that must work with one player online, and the catalog stays
@@ -342,6 +347,8 @@ Companions with light care. A second full cosmetic surface.
 
 - **Rooms:** free to create, 6 per account (tune), stock layouts at start, ~100 furni per room
   (tune), locked / password / invite-only states — with the safety bounds in §Safety.
+  **Capacity: 25 occupants (tune), one live instance per room, never mirrored** — full rooms
+  redirect in the Navigator. The density funnel concentrates; splitting instances would fight it.
 - **Room lifecycle:** instances load on first entry, unload minutes after the last occupant
   leaves, furni state persists on every change. Owner presence is not required for entry.
   **Deleting a room returns all furni to inventory** and destroys only wallpaper/flooring (the
@@ -440,17 +447,20 @@ prototype, kept because it is cheap and flavor-positive:
 
 ## Decided
 
-See [docs/decisions/INDEX.md](../decisions/INDEX.md). Audience 18+ **enforced by age estimation**,
-hangout core first, ambient co-presence v1, density funnel + NPC staff, pets with light care,
-tradeable cosmetics with rare tiers, sinks (Museum, prestige untradables, Luck Lever), house-banked
-Casino, staffed opening hours at launch, creator cut 30%, trophies account-bound, global daily earn
-ceiling, registration grant as furni + trickle.
+See [docs/decisions/INDEX.md](../decisions/INDEX.md). Audience 18+ **enforced by age estimation**
+(parked with the safety register), hangout core first, ambient co-presence v1, density funnel +
+NPC staff, pets with light care, tradeable cosmetics with rare tiers, sinks (Museum, prestige
+untradables, Luck Lever), house-banked Casino, creator cut 30%, trophies account-bound, global
+daily earn ceiling, registration grant as furni + trickle. Added 2026-08-04: room capacity 25,
+names "The Grand"/"Stars" permanent for the prototype, Wired phased and demand-gated, art path
+3D-assisted at 64 scale ([ART-DIRECTION.md](ART-DIRECTION.md)), NPC model gemma3:4b local,
+tunables pinned v1 ([ROADMAP.md](ROADMAP.md)).
 
 ## Open questions
 
-1. **Room capacity** and instance limits — needs netcode prototyping. (Coke's public cap was 25.)
-2. **Wired-class system scope** and timing (substrate reserved in PIPELINES §5).
-3. **Naming** — "The Grand", "Stars", placeholders.
-4. **Moderation staffing quote** — audit cost arithmetic (~£160–275k/year per always-on seat) is
-   derived, not benchmarked. Get a real trust-and-safety vendor quote before budgeting; it sets
-   launch opening hours.
+None. The post-audit draft carried four — all resolved 2026-08-04 (decision log):
+
+1. Room capacity → 25 per room, one instance, never mirrored. Per-process count is a measurement.
+2. Wired scope and timing → phased and demand-gated, permanent economy exclusions (§Pillars).
+3. Naming → "The Grand" and "Stars" stand. Trademark clearance parked as a launch gate.
+4. Moderation staffing quote → re-homed to SAFETY-LEGAL-PARKED.md as the first reopen action.

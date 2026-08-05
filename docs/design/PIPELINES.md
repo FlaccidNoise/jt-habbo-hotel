@@ -13,7 +13,8 @@ Verified constants, copied from Habbo (research/habbo-hotel.md §4.1–4.3):
 - **Avatars:** 8 directions, 5 drawn — directions 4, 5, 6 are horizontal mirrors.
 - **Furni:** 4 authored directions by default, per-item override. Mirroring is a per-asset
   authored flag used only where the art is symmetric — not a blanket direction rule. (audit B3)
-- **Two authored art scales** (64 and 32), no runtime downscaling.
+- **Two authored art scales** (64 and 32), no runtime downscaling. V1 authors 64 only — the 32
+  pass is deferred, architecture unchanged ([ART-DIRECTION.md](ART-DIRECTION.md), resolves C-45).
 
 **Light and mirroring reconciled** (audit B4): the style lights from directly above-front —
 vertically symmetric shading — so horizontal mirroring is shading-safe. Highlights avoid lateral
@@ -116,6 +117,11 @@ near-duplicate gate and by per-slot proportion parameters so silhouettes actuall
 Build order note (audit A7): the starter catalog is **authored as generator parts from the
 start** — the generator reproducing art built for it proves nothing otherwise.
 
+**Authoring path decided 2026-08-04:** 3D-assisted — parts modeled once as low-poly meshes, a
+fixed dimetric rig renders the directions, a post-pass quantizes to palette and draws outlines,
+hand polish behind the stage-4 gates. Style bible, proportion parameters, proof gate, and
+sizing: [ART-DIRECTION.md](ART-DIRECTION.md). Tracked as #202 (wall archetypes need #203).
+
 ## 3. Avatar and outfit pipeline
 
 - Figure string model: `type-set-color` triples. **Set IDs are append-only and never reused**;
@@ -199,7 +205,8 @@ data lives outside version control and backups (and see the restore-drill rule a
 
 ## 7. Build order (sketch, plan to follow separately)
 
-V1 focus is the hangout core — the resort as third place ships first.
+V1 focus is the hangout core — the resort as third place ships first. Per-step acceptance
+criteria, step↔bug mapping, and the pinned tunables table: [ROADMAP.md](ROADMAP.md).
 
 1. Room render + pathfinding + avatar walk + chat, with the basic word filter. Rolling deploy
    and room drain ship here because every later step inherits them. (audit H5)

@@ -39,6 +39,46 @@
   (anti-cheat, anti-dupe, vote decay, economy caps) stay active — they are fairness features. The
   fake-money social-casino lock also stays active. Supersedes the enforced-age-assurance and
   staffed-hours decisions below for as long as the posture holds.
+- 2026-08-04 — **Room capacity: 25 occupants per room (tune), one live instance per room — never
+  mirrored.** Coke Music's public cap, readable at speak radius 5. Full rooms redirect in the
+  Navigator: the density funnel concentrates by design, and mirrored instances would fight it.
+  Per-process room count is a measurement, not a design number — bot-harness target: 5 rooms ×
+  25 bots, tick p95 under 50 ms on the dev box. Resolves GAME.md open question 1 (#128).
+- 2026-08-04 — **Naming decided for the prototype: "The Grand", currency "Stars".** Both are
+  already load-bearing in code, NPC personas, and docs, and a rename grows costlier with every
+  shipped system. No trademark exposure while private. Trademark clearance added to the parked
+  launch gates — it must pass before any public deployment. Resolves open question 3 (#128).
+- 2026-08-04 — **Moderation staffing quote re-homed to the parked register.** Its only consumer
+  (staffed opening hours) is parked, and no vendor quotes a private hobby build meaningfully.
+  First action on the reopen trigger in SAFETY-LEGAL-PARKED.md. Resolves open question 4 (#128).
+- 2026-08-04 — **Programmable rooms: phased and demand-gated.** Phase A (in v1 scope): the three
+  hand-built room game sets (#205). Phase B "Wired Lite" no earlier than build step 9 complete:
+  trigger→effect pairs on furni (walk-on, say-keyword, timer, state-change → move, toggle,
+  in-room teleport, message), on the reserved event-bus substrate, no variables. Phase C (full:
+  conditions, selectors, scoped variables) only if Phase B shows sustained use. **Permanent
+  exclusions at every phase: wired never mutates Stars, items, or inventories, never acts across
+  rooms, never speaks as a player, never grants room rights.** A programmable room that can move
+  items is a player-run wagering machine — this extends the inert-chance-furni rule (R-26).
+  Resolves #124, open question 2.
+- 2026-08-04 — **Art path: 3D-assisted part authoring, 64 scale only in v1.** Parts modeled once
+  as low-poly meshes, a fixed dimetric rig renders the directions, a post-pass quantizes to the
+  palette and draws outlines, hand polish where gates or the eye fail it. Deferring the 32 scale
+  resolves audit C-45. The ~2,300-sprite line item becomes ~130 meshes plus polish. Style bible
+  v1 pinned (palette 12 ramps × 5 shades, outline, dither, proportion parameters). Proof gate
+  before build-out: chair, sofa, plant re-rendered at target quality through the new path.
+  Detail: docs/design/ART-DIRECTION.md. Tracked: #202.
+- 2026-08-04 — **NPC model: gemma3:4b on local Ollama. Budget $0 local, cloud fallback capped
+  $2/month.** Config: NPC_LLM_URL=http://localhost:11434/v1, NPC_LLM_MODEL=gemma3:4b, no key.
+  Verified against the real prompt shape: 0.65 s warm, one in-character line, staged injection
+  ignored, no reasoning leakage. The pre-installed qwen-pi:9b was rejected on evidence — a
+  thinking model, it spent the whole 60-token budget on reasoning and returned empty content at
+  6.3 s. Fallback if quality disappoints: OpenRouter at ≤ $0.20/MTok, which keeps full
+  DAILY_LLM_CAP usage (≈9 MTok/month) under $2. Canned lines stay the floor. Wiring: #204.
+- 2026-08-04 — **Tunables pinned v1.** Every (tune) value in GAME.md is now the v1 constant,
+  movable only on the monthly rebalance date once ledger data exists — first rebalance 30 days
+  after the first arcade ships, reading the #209 graphs. New pins: low-population threshold 5
+  concurrent, room capacity 25, palette 12 × 5, streak bonus +2/day capped +20, prototype RPO
+  24 h / RTO 4 h. Full table with change mechanisms: docs/design/ROADMAP.md.
 - 2026-08-03 — **(Parked by the prototype posture) Post-audit safety structure:** staffed opening hours at launch, registration
   caps tied to moderation capacity, new-account surface restrictions (no whisper/DM/trade/
   invite-only until tenure), moderation tooling in build step 1, graduated incident-response

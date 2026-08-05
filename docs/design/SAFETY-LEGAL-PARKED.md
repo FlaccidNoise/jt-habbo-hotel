@@ -28,6 +28,8 @@ this file drives design or build decisions. Full detail and sources live in
 - Launch-gating artifacts for any public deployment: OSA children's access assessment,
   illegal-harms + children's risk assessments, DPIA, ToS/community standards, privacy policy.
   (S22)
+- Trademark clearance for "The Grand" and "Stars" before any public deployment — the names were
+  made permanent for the prototype on 2026-08-04 without a clearance search.
 - NCMEC/law-enforcement escalation path, preservation requests, long-hold evidence retention.
   (S16, S17)
 - US state app-store age laws — trigger only on a mobile client. (v2 gate)
@@ -36,7 +38,9 @@ this file drives design or build decisions. Full detail and sources live in
 
 - Staffing: paid-only, staffed opening hours as the launch lever, registration caps tied to
   moderation capacity, trusted flaggers (weighted reports, no powers). Cost arithmetic:
-  ~£160–275k/yr per always-on seat, derived not benchmarked — get a vendor quote. (S4)
+  ~£160–275k/yr per always-on seat, derived not benchmarked. **First action on reopen: get a
+  real trust-and-safety vendor quote — it sets opening hours.** (Re-homed from GAME.md open
+  question 4, 2026-08-04, #128.) (S4)
 - Behavioral scoring over private surfaces (whisper/DM sampling, grooming-pattern signals that
   need no content reading). (S2, S5)
 - Private-room posture: panic button always escapes, staff enter silently, owner-action logging,
