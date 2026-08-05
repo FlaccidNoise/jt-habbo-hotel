@@ -11,7 +11,7 @@ Status date: 2026-08-05.
 | 1 | Room render, pathfinding, walk, chat, filter | Shipped (vertical slice, 178 tests) | #115 awaiting verification. Drain/rolling deploy deferred → #125 |
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, focus props → #126. Wall items shipped (#203) | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
-| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall items closed it out (#203): 4 wall archetypes, catalog 26 | #117 fixed, #202 fixed |
+| 4 | Generator reproduces starter catalog | Shipped. Art pipeline complete: proof gate (f15e137), then masks + style bible v1 + 9-part build-out. Second build-out took the catalog to 22 defs and made colorways free (#229); seat and height numbers are now gated (#228). Wall items closed it out (#203): 4 wall archetypes. Catalog 33 after #210's prestige, lever and set pieces | #117 fixed, #202 fixed |
 | 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) + registration Star trickle (c30e5b7) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
@@ -67,7 +67,7 @@ bounces.** Reading the config is never evidence.
   pickup all put the sitter back on the floor rather than leaving them floating.
 - Stacking respects per-state heights. A staged over-stack is refused.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
-- Casino floor and café exist as staff-owned public rooms.
+- Casino floor, café and the Museum exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
 - Walls render from the heightmap and carry hung items (#203). A room walls every floor tile whose
   north-west or north-east neighbour is void, so notched rooms wall themselves; the door is a hole.
@@ -112,6 +112,8 @@ bounces.** Reading the config is never evidence.
   exactly once when the ledger returns.
 - Restore drill: scheduled restore into scratch succeeds with matching row counts. RPO 24 h,
   RTO 4 h (prototype pins).
+- Account-bound items never change hands (#210). The check lives in `settleTrade`, the only code
+  that moves an `owner_id`, so a client that skips the trade UI still cannot move one.
 - #209 ships first: per-faucet issuance and per-sink absorption visible per day. **Met** (90617c1):
   GET /api/metrics + /metrics.html. Any signed-in account can read it — no staff role exists to
   gate on (#226).

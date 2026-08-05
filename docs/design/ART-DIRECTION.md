@@ -125,6 +125,8 @@ So are colorways (#229). The rig lights white geometry and emits a flat index ma
 render pass ever sees a ramp — the recolor happens entirely in the post-pass. A colorway is
 declared as `base part + ramp remap` in `postpass.ts` and reuses the base's frames, so it adds a
 catalog item for no Blender time at all: the second build-out rendered 9 parts and published 13.
+#210 leaned on this hardest — its two Luck Lever exclusives and all three collection-set rewards
+are colorways, so five of the seven items it added cost no render at all. 28 frozen bundles now.
 Ramp remaps are keyed by ramp name, not primitive index, so they survive editing the mesh.
 
 11 archetypes × ~3 slots × 4 variants ≈ 130 meshes, each with post-pass and possible polish.
