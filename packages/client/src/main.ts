@@ -144,6 +144,7 @@ function renderInventory(): void {
       scene?.clearHighlight();
       furniLayer?.clearGhost();
       // The chat box holds focus by default, so hand the keyboard to the room while placing.
+      // Every path out of placing hands it back — see releaseKeyboard.
       el<HTMLInputElement>("chat-input").blur();
       renderInventory();
       renderFurniBar();
@@ -268,12 +269,19 @@ function renderArcade(): void {
   el<HTMLButtonElement>("arcade-deal").disabled = running;
 }
 
+/** Give the keyboard back to chat. Arming takes it so R can turn the held item; every way out of
+ *  placing — cancelled, or the item landed — has to return it or typing silently stops working. */
+function releaseKeyboard(): void {
+  el<HTMLInputElement>("chat-input").focus();
+}
+
 function disarm(): void {
   armed = null;
   scene?.clearHighlight();
   furniLayer?.clearGhost();
   renderInventory();
   renderFurniBar();
+  releaseKeyboard();
 }
 
 function itemsOn(x: number, y: number): FurniItem[] {
@@ -448,7 +456,10 @@ function upsertFurni(item: FurniItem): void {
   // Only my own items are ever in my inventory, so an id leaving it means my placement landed.
   if (inventory.some((inv) => inv.id === item.id)) {
     inventory = inventory.filter((inv) => inv.id !== item.id);
-    if (armed === item.id) armed = null;
+    if (armed === item.id) {
+      armed = null;
+      releaseKeyboard();
+    }
     scene?.clearHighlight();
     furniLayer?.clearGhost();
     renderInventory();
