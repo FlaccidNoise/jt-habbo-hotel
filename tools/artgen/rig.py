@@ -19,7 +19,7 @@ import os
 import sys
 
 import bpy
-from mathutils import Matrix, Vector
+from mathutils import Euler, Matrix, Vector
 
 RES = 256
 ZSCALE = 32.0 / (32.0 * math.sqrt(2.0) * math.cos(math.radians(30.0)))   # 0.8164966
@@ -346,15 +346,89 @@ FIGURE_PARTS = {
 # avatar's world position point. Standing, that point is the feet; seated, it is the hip contact,
 # because the client already lifts the sprite by the seat's z and seat heights vary 0.55-0.82.
 # anchor_y is where that point lands in the 64x112 frame.
+# Bone angles are degrees about the bone's own axes. The figure faces +Y, so a positive X rotation
+# swings a limb forward and a negative one swings it back; positive Y raises an arm out sideways.
+#
 # Measured: the standing composite is 22 x 85 px, reaching 81 above the anchor and 3 below. It
 # reaches below because the anchor is the tile-CENTRE ground point and a foot extending toward the
 # camera is genuinely nearer, so it projects lower. anchor_y 105 leaves 24 px of hat room above
 # the crown and 6 px of slack under the toe.
+#
+# Walk contact frames drop the root by 2.5 px. A leg swung 22 degrees is 37*(1-cos22) = 2.7 px
+# shorter vertically, so without the drop the figure hovers on every contact frame.
+#
+# The sit pose is not a free choice — the shipped seats fix it. The hip sits at the anchor, the
+# shin hangs vertical at its full 18 px, and the thigh must then be almost horizontal for the foot
+# to land SIT_FOOT_DROP below the hip: 19*cos(88.2) + 18 = 18.6 px, which is cafe_chair's
+# seatZ 0.58 x 32. That one pose serves the whole catalog: on bed_basic (0.55 = 17.6 px) the feet
+# are 1 px into the floor, and on casino_stool (0.82 = 26.2 px) they dangle 7.6 px clear, which is
+# what a bar stool should look like.
+SIT_FOOT_DROP = 18.6
+
 POSES = {
-    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 105, "bones": {}},
+    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {}},
+    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 104, "bones": {
+        "leg_l": (22.0, 0.0, 0.0), "leg_r": (-22.0, 0.0, 0.0),
+        "knee_l": (-5.0, 0.0, 0.0), "knee_r": (-18.0, 0.0, 0.0),
+        "arm_l": (-18.0, 0.0, 0.0), "arm_r": (18.0, 0.0, 0.0)}},
+    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+        "knee_r": (-28.0, 0.0, 0.0), "leg_r": (6.0, 0.0, 0.0),
+        "arm_l": (-6.0, 0.0, 0.0), "arm_r": (6.0, 0.0, 0.0)}},
+    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 104, "bones": {
+        "leg_l": (-22.0, 0.0, 0.0), "leg_r": (22.0, 0.0, 0.0),
+        "knee_l": (-18.0, 0.0, 0.0), "knee_r": (-5.0, 0.0, 0.0),
+        "arm_l": (18.0, 0.0, 0.0), "arm_r": (-18.0, 0.0, 0.0)}},
+    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+        "knee_l": (-28.0, 0.0, 0.0), "leg_l": (6.0, 0.0, 0.0),
+        "arm_l": (6.0, 0.0, 0.0), "arm_r": (-6.0, 0.0, 0.0)}},
+    "sit": {"root": (0.0, 0.0, -float(HIP_Z)), "anchor_y": 74, "bones": {
+        "leg_l": (88.2, 0.0, 0.0), "leg_r": (88.2, 0.0, 0.0),
+        "knee_l": (-88.2, 0.0, 0.0), "knee_r": (-88.2, 0.0, 0.0),
+        "arm_l": (14.0, 0.0, 0.0), "arm_r": (14.0, 0.0, 0.0)}},
+    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+        "arm_r": (0.0, 132.0, 0.0)}},
+    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 104, "bones": {
+        "arm_r": (0.0, 156.0, 0.0)}},
 }
 
-FRAMES = ["stand"]
+FRAMES = ["stand", "walk0", "walk1", "walk2", "walk3", "sit", "wave0", "wave1"]
+
+def fk(pose, bone, local):
+    """Where a bone-local point lands in the figure's uniform px space. Pure math — the pose gate
+    has to measure anatomy, and a rendered pixel measures the projection instead: a seated foot is
+    19 px forward of the hip, so its screen drop swings from 9 px facing away to 30 px facing the
+    camera while the leg never changes length."""
+    p = Vector(local)
+    name = bone
+    while name is not None:
+        parent, offset = BONES[name]
+        angles = pose["bones"].get(name, (0.0, 0.0, 0.0))
+        rot = Euler(tuple(math.radians(a) for a in angles), "XYZ").to_matrix()
+        p = rot @ p + Vector(offset)
+        name = parent
+    return p + Vector(pose["root"])
+
+def check_poses():
+    """Gate the pose table before a single frame renders. These are the numbers ART-DIRECTION
+    pins, and they are the reason the figure is 80 px rather than the spec's old 100."""
+    crown = fk(POSES["stand"], "head", (0.0, 0.0, float(HEAD_LEN))).z
+    assert abs(crown - FIGURE_H) < 0.01, f"stand: crown at {crown:.2f} px, want {FIGURE_H}"
+    for side in ("knee_l", "knee_r"):
+        sole = fk(POSES["stand"], side, (0.0, 0.0, -float(SHIN_LEN))).z
+        assert abs(sole) < 0.01, f"stand: {side} sole at {sole:.2f} px, want 0"
+
+    hip_z = fk(POSES["sit"], "hip", (0.0, 0.0, 0.0)).z
+    assert abs(hip_z) < 0.01, f"sit: hip at {hip_z:.2f} px, want 0 (the hip IS the anchor)"
+    for side in ("knee_l", "knee_r"):
+        drop = hip_z - fk(POSES["sit"], side, (0.0, 0.0, -float(SHIN_LEN))).z
+        assert abs(drop - SIT_FOOT_DROP) < 0.5, (
+            f"sit: {side} sole {drop:.2f} px below the hip, want {SIT_FOOT_DROP} "
+            f"(cafe_chair seatZ 0.58 x 32) — the feet miss the floor"
+        )
+
+    for name, pose in POSES.items():
+        for bone in pose["bones"]:
+            assert bone in BONES, f"{name}: no bone named {bone}"
 
 def figure_yaw(direction):
     """Tile dir -> yaw about the figure's own centre. A figure occupies one tile, so direction is
@@ -713,8 +787,11 @@ for part_id, part in PARTS.items():
 # 8 native directions, no mirroring. Mirroring exists to halve hand-drawing and we do not
 # hand-draw; rendering all 8 costs Blender seconds and buys asymmetric garments.
 
+check_poses()
+
 meta["figures"] = {}
-meta["figureCanvas"] = {"w": CANVAS_W, "h": CANVAS_H, "height": FIGURE_H}
+meta["figureCanvas"] = {"w": CANVAS_W, "h": CANVAS_H, "height": FIGURE_H,
+                        "frames": FRAMES, "sitFootDrop": SIT_FOOT_DROP}
 
 scene = bpy.context.scene
 for part_id, part in FIGURE_PARTS.items():
