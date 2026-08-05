@@ -16,6 +16,8 @@ import { closeDb, openDb } from "./db.ts";
 import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase } from "./ledger.ts";
 import { log } from "./log.ts";
 import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
+import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
+import type { OnboardingEvent } from "./onboarding.ts";
 import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
@@ -92,6 +94,11 @@ export async function startServer(opts: {
     send(ws, { t: "error", code, message });
   }
 
+  const quest = (accountId: number, event: OnboardingEvent): void => {
+    const text = advanceOnboarding(db, accountId, event);
+    if (text) emit(accountId, { t: "notice", text });
+  };
+
   const emit: Emit = (accountId, msg) => {
     if (transferring !== null) {
       if (msg.t === "avatar_join" && msg.avatar.id === transferring) return;
@@ -117,6 +124,7 @@ export async function startServer(opts: {
       });
       log("faucet", { op, accountId, granted, balance });
       if (granted > 0) emit(accountId, { t: "stars", balance, delta: granted, reason: ritual });
+      quest(accountId, "coffee");
       return granted;
     },
   });
@@ -223,6 +231,8 @@ export async function startServer(opts: {
     }
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);
+    const hint = onboardingHint(db, account.id);
+    if (hint) send(conn.ws, { t: "notice", text: hint });
   }
 
   function dispatch(conn: Conn, msg: ClientMsg): void {
@@ -249,7 +259,7 @@ export async function startServer(opts: {
         room.whisper(accountId, msg.to, msg.text);
         break;
       case "place":
-        room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir);
+        if (room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir)) quest(accountId, "place");
         log("place", { accountId, roomId: conn.roomId, itemId: msg.itemId, x: msg.x, y: msg.y });
         break;
       case "pickup":
@@ -287,10 +297,12 @@ export async function startServer(opts: {
         }
         emit(accountId, { t: "stars", balance: result.balance, delta: -price, reason: "purchase" });
         emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
+        quest(accountId, "purchase");
         break;
       }
       case "arcade_start":
         arcadeService.start(accountId);
+        quest(accountId, "arcade");
         break;
       case "arcade_move":
         arcadeService.move(accountId, msg.move);

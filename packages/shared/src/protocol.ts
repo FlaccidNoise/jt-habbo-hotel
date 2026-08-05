@@ -70,7 +70,8 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
              chat: z.object({ speakRadius: z.number().int(), shoutAllowed: z.boolean() }),
              avatars: z.array(AvatarStateSchema), furni: z.array(FurniItemSchema),
              inventory: z.array(InventoryItemSchema), you: z.number().int(),
-             stars: z.number().int() }),
+             stars: z.number().int(),
+             myRoomId: z.number().int().optional() }),   // the player's own suite, when one exists
   z.object({ t: z.literal("avatar_join"), avatar: AvatarStateSchema }),
   z.object({ t: z.literal("avatar_leave"), id: z.number().int() }),
   z.object({ t: z.literal("walk"), id: z.number().int(), msPerTile: z.number().int(),
@@ -94,6 +95,7 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("arcade_state"), card: z.number().int(), score: z.number().int(),
              scored: z.boolean(), over: z.boolean(),
              outcome: z.enum(["bust", "stopped"]).optional(), paid: z.number().int().optional() }),
+  z.object({ t: z.literal("notice"), text: z.string() }),   // onboarding and system prompts
   z.object({ t: z.literal("error"), code: ErrorCodeSchema, message: z.string() }),
 ]);
 export type ServerMsg = z.infer<typeof ServerMsgSchema>;

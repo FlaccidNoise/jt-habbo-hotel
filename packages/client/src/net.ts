@@ -24,8 +24,17 @@ export class Net {
     this.open = open;
   }
 
+  /** Also the room switch: the previous socket is detached before it is closed, so leaving the
+   *  old room never reads as a disconnect. */
   connect(url: string, token: string, roomId: number): Promise<void> {
     return new Promise((resolve, reject) => {
+      const previous = this.socket;
+      if (previous) {
+        previous.onmessage = null;
+        previous.onclose = null;
+        previous.onerror = null;
+        previous.close();
+      }
       const socket = this.open(url);
       this.socket = socket;
       let opened = false;

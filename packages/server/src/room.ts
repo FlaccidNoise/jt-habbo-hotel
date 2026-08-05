@@ -31,6 +31,7 @@ import {
   listRoomFurni,
   pickupItem,
   placeItem,
+  suiteOf,
   updateItemZ,
 } from "./items.ts";
 
@@ -140,6 +141,7 @@ export class Room {
     };
     this.occ.set(accountId, occupant);
 
+    const myRoomId = suiteOf(this.db, accountId);
     this.emit(accountId, {
       t: "room_state",
       roomId: this.roomId,
@@ -152,6 +154,7 @@ export class Room {
       inventory: listInventory(this.db, accountId),
       you: accountId,
       stars: balanceOf(this.db, accountId),
+      ...(myRoomId !== null ? { myRoomId } : {}),
     });
     for (const id of this.occ.keys()) {
       if (id !== accountId) this.emit(id, { t: "avatar_join", avatar: toAvatar(occupant) });
@@ -244,16 +247,16 @@ export class Room {
     if (target.accountId !== accountId) this.emit(accountId, msg);
   }
 
-  place(accountId: number, itemId: number, x: number, y: number, dir: 0 | 2 | 4 | 6): void {
+  place(accountId: number, itemId: number, x: number, y: number, dir: 0 | 2 | 4 | 6): boolean {
     const item = getItem(this.db, itemId);
     if (!item || item.ownerId !== accountId || item.roomId !== null) {
       this.fail(accountId, "not_owner", "that item is not in your inventory");
-      return;
+      return false;
     }
     const result = checkPlacement(this.ctx(this.furni), this.defOf(item), x, y, dir);
     if (!result.ok) {
       this.fail(accountId, result.code, `cannot place there: ${result.code}`);
-      return;
+      return false;
     }
 
     placeItem(this.db, itemId, this.roomId, x, y, result.z, dir);
@@ -263,6 +266,7 @@ export class Room {
     this.furni.push(placed);
     this.reindex();
     this.broadcast({ t: "furni_placed", item: { ...placed } });
+    return true;
   }
 
   pickup(accountId: number, itemId: number): void {

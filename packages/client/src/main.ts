@@ -42,7 +42,9 @@ function el<T extends HTMLElement>(id: string): T {
 }
 
 const roomId = Number(new URLSearchParams(location.search).get("room")) || 1;
+const wsUrl = `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
 const net = new Net();
+let session = "";
 const avatars = new Map<number, AvatarSprite>();
 const chat = new ChatOverlay(el("bubbles"));
 let app: Application | null = null;
@@ -58,13 +60,14 @@ let clockOffset: number | null = null;
 let stars = 0;
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
+let myRoomId: number | null = null;
 
-function toast(text: string): void {
+function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
-  node.className = "toast";
+  node.className = kind ? `toast ${kind}` : "toast";
   node.textContent = text;
   el("toasts").appendChild(node);
-  setTimeout(() => node.remove(), 4000);
+  setTimeout(() => node.remove(), kind === "notice" ? 10000 : 4000);
 }
 
 function addAvatar(state: AvatarState): void {
@@ -279,6 +282,17 @@ function buildRoom(msg: RoomState): void {
   renderArcade();
   el("arcade").hidden = true;
 
+  myRoomId = msg.myRoomId ?? null;
+  const nav = el<HTMLButtonElement>("suite-nav");
+  if (myRoomId === null) {
+    nav.style.display = "none";
+  } else {
+    const home = msg.roomId === myRoomId;
+    nav.textContent = home ? "☕ Café" : "🏠 My suite";
+    nav.dataset["target"] = String(home ? 1 : myRoomId);
+    nav.style.display = "block";
+  }
+
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover });
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets);
@@ -365,6 +379,9 @@ function handle(msg: ServerMsg): void {
       el("arcade").hidden = false;
       renderArcade();
       break;
+    case "notice":
+      toast(msg.text, "notice");
+      break;
     case "error":
       toast(msg.message);
       break;
@@ -397,8 +414,8 @@ async function start(token: string): Promise<void> {
 
   net.onMessage(handle);
   net.onClose(() => toast("disconnected from the server — reload to rejoin"));
-  const wsScheme = location.protocol === "https:" ? "wss" : "ws";
-  await net.connect(`${wsScheme}://${location.host}/ws`, token, roomId);
+  session = token;
+  await net.connect(wsUrl, token, roomId);
   el("login").style.display = "none";
   el("hud").style.display = "flex";
   el("arcade-open").style.display = "block";
@@ -427,6 +444,10 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
+el("suite-nav").addEventListener("click", () => {
+  const target = Number(el("suite-nav").dataset["target"]);
+  if (target) void net.connect(wsUrl, session, target);
+});
 el("arcade-open").addEventListener("click", () => {
   el("arcade").hidden = false;
   renderArcade();

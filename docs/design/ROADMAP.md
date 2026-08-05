@@ -12,7 +12,7 @@ Status date: 2026-08-05.
 | 2 | Furni placement, starter catalog, public rooms, focus states | Shipped with gaps: room games #205, wall items #203, focus props → #126 | #115 |
 | 3 | NPC staff service | Shipped live: gemma3:4b on by default (9ff889b) | #116 fixed, #204 fixed |
 | 4 | Generator reproduces starter catalog | Shipped. Art proof gate passed (f15e137), build-out → #202 ([ART-DIRECTION.md](ART-DIRECTION.md)) | #117 fixed |
-| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d). #209 observability still open | #118 |
+| 5 | Trade window + unified ledger | Shipped (efa7f84) + catalog-purchase sink (#215, 558143d) + observability (#209 fixed: /api/metrics + metrics.html) | #118 |
 | 6 | First solo arcade | Shipped: Hi-Lo end-to-end through the ledger (200c50c). Dailies → #206 | #119 |
 | 7 | Music loop | Not started. Licensing gate before the first bank | #120 |
 | 8 | Design studio | Not started | #121 |
@@ -31,11 +31,11 @@ demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 - #204 NPC live model wiring — env config, screen-pass verification, spend counter.
 - #202 Art pipeline — style bible v1, Blender rig, post-pass, proof gate, library build-out.
 - #206 Dailies, streaks, achievements, weekly competitions (needs #118).
-- #207 Onboarding first session — pre-created room, café spawn, welcome quest, guided purchase
-  (needs catalog + ledger).
+- #207 Onboarding first session — **fixed**: registration provisions the suite with starter furni
+  placed, café spawn, welcome quest advanced by real events (coffee → buy → place → arcade).
 - #208 Friends console, groups, badges — the Social service (PIPELINES §5).
-- #209 Observability — per-faucet issuance and per-sink absorption graphs, before #118 ships
-  (audit H4: the data must exist before the exploit).
+- #209 Observability — **fixed**: GET /api/metrics (per-op flows, ledger latency, WS and loop
+  health) behind a session token, graphs at /metrics.html.
 - #210 Wealth sinks — Museum wing, prestige untradables, Luck Lever, collection sets
   (needs #118).
 - #211 Density funnel low-population mode — threshold 5 concurrent, space unlock/re-lock,

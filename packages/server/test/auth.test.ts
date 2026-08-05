@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import { openDb, closeDb } from "../src/db.ts";
 import { register, login, sessionAccount, AuthError } from "../src/auth.ts";
-import { grantStarter, listInventory } from "../src/items.ts";
+import { grantStarter, listInventory, listRoomFurni, suiteOf } from "../src/items.ts";
 import type Database from "better-sqlite3";
 
 let dir: string;
@@ -65,15 +65,20 @@ describe("auth", () => {
     await expect(register(db, "shit", "password1")).rejects.toThrow(AuthError);
   });
 
-  test("grantStarter grants exactly five items once, guarded by starter_granted", async () => {
+  test("grantStarter grants exactly five items once, placed into the suite at registration", async () => {
     await register(db, "carol", "password1");
     const account = db.prepare("SELECT id FROM accounts WHERE username = ?").get("carol") as {
       id: number;
     };
-    expect(listInventory(db, account.id)).toHaveLength(5);
+    // Registration provisions the suite with all five starter items placed — inventory is empty.
+    const suite = suiteOf(db, account.id);
+    expect(suite).not.toBeNull();
+    expect(listInventory(db, account.id)).toHaveLength(0);
+    expect(listRoomFurni(db, suite!)).toHaveLength(5);
 
     grantStarter(db, account.id); // already granted — no-op
-    expect(listInventory(db, account.id)).toHaveLength(5);
+    expect(listRoomFurni(db, suite!)).toHaveLength(5);
+    expect(listInventory(db, account.id)).toHaveLength(0);
 
     db.prepare("DELETE FROM furni_items WHERE owner_id = ?").run(account.id); // empty the table
     grantStarter(db, account.id); // flag still set — grants nothing back

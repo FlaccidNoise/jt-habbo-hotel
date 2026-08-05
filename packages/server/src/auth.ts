@@ -2,7 +2,8 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import type Database from "better-sqlite3";
 import { loadRuleset, hitsFilter } from "./filter.ts";
-import { grantStarter } from "./items.ts";
+import { grantStarter, provisionSuite } from "./items.ts";
+import { startOnboarding } from "./onboarding.ts";
 
 const SCRYPT_N = 16384;
 const SCRYPT_R = 8;
@@ -79,6 +80,8 @@ export async function register(
   }
 
   grantStarter(db, accountId);
+  provisionSuite(db, accountId, username);
+  startOnboarding(db, accountId);
   return { token: createSession(db, accountId) };
 }
 

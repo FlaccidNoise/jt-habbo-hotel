@@ -84,6 +84,35 @@ test("send serializes a client message", async () => {
   expect(JSON.parse(socket.sent[1] ?? "null")).toEqual({ t: "move", x: 3, y: 4 });
 });
 
+test("switching rooms closes the old socket without reporting a disconnect", async () => {
+  const first = new FakeSocket();
+  const second = new FakeSocket();
+  let next = first;
+  const net = new Net(() => next);
+  const seen: ServerMsg[] = [];
+  const disconnects = vi.fn();
+  net.onMessage((msg) => seen.push(msg));
+  net.onClose(disconnects);
+  const opened = net.connect("ws://localhost/ws", "tok", 1);
+  first.onopen?.();
+  await opened;
+
+  next = second;
+  const switched = net.connect("ws://localhost/ws", "tok", 3);
+  second.onopen?.();
+  await switched;
+
+  expect(first.closed).toBe(true);
+  expect(JSON.parse(second.sent[0] ?? "null")).toEqual({ t: "join", token: "tok", roomId: 3 });
+  first.onclose?.(); // a late close from the abandoned socket is not a disconnect
+  expect(disconnects).not.toHaveBeenCalled();
+
+  first.deliver(JSON.stringify(ROOM_STATE)); // nor does its traffic still reach the handler
+  expect(seen).toHaveLength(0);
+  second.deliver(JSON.stringify(ROOM_STATE));
+  expect(seen).toHaveLength(1);
+});
+
 test("connect rejects when the socket closes before opening", async () => {
   const socket = new FakeSocket();
   const net = new Net(() => socket);

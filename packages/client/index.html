@@ -19,6 +19,7 @@
         gap: 6px; align-items: flex-end; pointer-events: none; }
       .toast { background: #7a1f1f; border: 1px solid #c25555; border-radius: 6px;
         padding: 6px 10px; max-width: 320px; box-shadow: 0 2px 8px #0008; }
+      .toast.notice { background: #1f3a5f; border-color: #4a7ac2; }
       #login { position: fixed; inset: 0; display: grid; place-items: center;
         background: #11131aee; }
       #login form { display: grid; gap: 8px; width: 260px; background: #1c1f2b;
@@ -74,10 +75,13 @@
         border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
       #trade .row button:disabled { opacity: .5; cursor: default; }
       #trade-accept:not(:disabled) { border-color: #7fd98a; background: #24422a; }
-      #arcade-open { position: fixed; top: 56px; left: 12px; padding: 5px 10px;
+      #suite-nav { position: fixed; top: 56px; left: 12px; padding: 5px 10px;
+        border-radius: 8px; border: 1px solid #444c63; background: #1c1f2be6; color: #eef;
+        cursor: pointer; display: none; }
+      #arcade-open { position: fixed; top: 88px; left: 12px; padding: 5px 10px;
         border-radius: 8px; border: 1px solid #6a5a2e; background: #2b2517e6; color: #eee0b0;
         cursor: pointer; display: none; }
-      #arcade { position: fixed; top: 96px; left: 12px; width: 220px; background: #1c1f2bf2;
+      #arcade { position: fixed; top: 128px; left: 12px; width: 220px; background: #1c1f2bf2;
         border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px;
         text-align: center; }
       #arcade[hidden] { display: none; }
@@ -95,6 +99,7 @@
     <div id="bubbles"></div>
     <div id="room-name"></div>
     <div id="stars"></div>
+    <button type="button" id="suite-nav"></button>
     <button type="button" id="arcade-open">🎰 Hi-Lo</button>
     <div id="arcade" hidden>
       <h2>Hi-Lo</h2>

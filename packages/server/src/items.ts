@@ -1,7 +1,20 @@
-import { PROTOTYPE_CATALOG } from "@grand/shared";
+import { PROTOTYPE_CATALOG, ROOM_FURNI_CAP, checkPlacement, parseHeightmap } from "@grand/shared";
 import type { InventoryItem, FurniItem } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { logItemGrants } from "./ledger.ts";
+
+// GAME.md §First session 0:00: registration creates the suite with the starter furni already
+// placed — nobody faces an empty room. 8x8, same doc shape as the seeded rooms.
+const SUITE_HEIGHTMAP = Array.from({ length: 8 }, () => "0".repeat(8)).join("\n");
+const SUITE_DOOR = { x: 0, y: 4, dir: 2 } as const;
+const SUITE_CHAT = { speakRadius: 5, shoutAllowed: false } as const;
+const SUITE_SPOTS: ReadonlyMap<string, { x: number; y: number }> = new Map([
+  ["chair_basic", { x: 2, y: 2 }],
+  ["table_basic", { x: 2, y: 1 }],
+  ["sofa_basic", { x: 5, y: 1 }],
+  ["plant_basic", { x: 7, y: 7 }],
+  ["rug_basic", { x: 4, y: 5 }],
+]);
 
 export function grantStarter(db: Database.Database, accountId: number): void {
   const row = db.prepare("SELECT starter_granted FROM accounts WHERE id = ?").get(accountId) as
@@ -18,6 +31,51 @@ export function grantStarter(db: Database.Database, accountId: number): void {
     logItemGrants(db, { opKey: `starter:${accountId}`, op: "starter", accountId, itemIds });
   });
   grant();
+}
+
+/** The account's own room. Null only for accounts that predate suites. */
+export function suiteOf(db: Database.Database, accountId: number): number | null {
+  const row = db.prepare("SELECT id FROM rooms WHERE owner_id = ?").get(accountId) as
+    | { id: number }
+    | undefined;
+  return row?.id ?? null;
+}
+
+/** Creates the account's suite and moves the starter furni into it, through the real placement
+ *  checker so the stock layout can never disagree with the rules. Idempotent per account. */
+export function provisionSuite(db: Database.Database, accountId: number, username: string): number {
+  const existing = suiteOf(db, accountId);
+  if (existing !== null) return existing;
+
+  const model = parseHeightmap(SUITE_HEIGHTMAP, SUITE_DOOR);
+  const defs = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
+  return db.transaction((): number => {
+    const doc = JSON.stringify({ v: 1, heightmap: SUITE_HEIGHTMAP, door: SUITE_DOOR, chat: SUITE_CHAT });
+    const roomId = Number(
+      db
+        .prepare("INSERT INTO rooms (owner_id, name, doc) VALUES (?, ?, ?)")
+        .run(accountId, `${username}'s Suite`, doc).lastInsertRowid,
+    );
+    const placed: FurniItem[] = [];
+    for (const item of listInventory(db, accountId)) {
+      const spot = SUITE_SPOTS.get(item.defId);
+      const def = defs.get(item.defId);
+      if (!spot || !def) continue;
+      const ctx = {
+        model,
+        furni: placed,
+        defs,
+        avatars: [],
+        doorTile: { x: SUITE_DOOR.x, y: SUITE_DOOR.y },
+        roomFurniCap: ROOM_FURNI_CAP,
+      };
+      const result = checkPlacement(ctx, def, spot.x, spot.y, 0);
+      if (!result.ok) throw new Error(`stock suite layout rejects ${item.defId}: ${result.code}`);
+      placeItem(db, item.id, roomId, spot.x, spot.y, result.z, 0);
+      placed.push({ id: item.id, defId: item.defId, x: spot.x, y: spot.y, z: result.z, dir: 0, state: 0 });
+    }
+    return roomId;
+  })();
 }
 
 export function listInventory(db: Database.Database, accountId: number): InventoryItem[] {
