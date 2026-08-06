@@ -6,10 +6,13 @@ export function worldToScreen(x: number, y: number, z: number, scale: Scale): { 
 }
 
 /** Inverse of worldToScreen on the z=0 plane ONLY. A point over a surface at height H resolves
- *  (H, H) tiles up-left of the visual tile — call it only for empty-floor hit-testing. */
+ *  (H, H) tiles up-left of the visual tile — call it only for empty-floor hit-testing.
+ *  Rounds, not floors: worldToScreen treats (x, y) as the tile CENTRE, so the nearest integer
+ *  is the tile whose `diamond()` polygon contains the point. */
 export function screenToTile(sx: number, sy: number, scale: Scale): { x: number; y: number } {
   const h = scale / 2, v = scale / 4;
-  return { x: Math.floor(sx / h / 2 + sy / v / 2), y: Math.floor(sy / v / 2 - sx / h / 2) };
+  // `+ 0` folds Math.round's -0 (any input in [-0.5, 0)) back to 0.
+  return { x: Math.round(sx / h / 2 + sy / v / 2) + 0, y: Math.round(sy / v / 2 - sx / h / 2) + 0 };
 }
 
 /** dir 0=N .. 7=NW per the global convention table. */
