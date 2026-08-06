@@ -181,6 +181,16 @@ recipe-to-sprite path.
    like a table, carries a seat, overhangs its span, or declares a plane box that no longer matches
    the render. `gateBounds` still rejects every wall sprite, and a test asserts that: it is why the
    variant exists.
+
+   **Visual review is a separate tier (#258, `packages/generator/src/review.ts`).** The gates check
+   that an artifact is correct, not that it looks like what it claims to be — #252 and #256 both
+   shipped through every gate and were caught by a human looking at the room. A review runs on the
+   same sheet and prints a warning next to the `@3x` preview; it never fails a build. It is not a
+   gate because the standard above cannot be met yet: a part seen side-on can legitimately split,
+   so promotion waits on a measured false-positive rate. `reviewIslands` (connected components)
+   flags 0 of 33 shipped bundles and catches a #252-class defect. It provably cannot catch a
+   #256-class one, where the loose part still touches the body — that needs interior structure,
+   which is the vision pass, not geometry.
 5. **Mint gate (prototype).** Names and descriptions through the basic word filter. Composed
    furni from the curated part library needs no image screening — the part library is the gate.
    Per-account mint rate limits and rejection economics per GAME.md §Design minting (integrity

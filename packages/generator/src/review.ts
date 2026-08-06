@@ -61,9 +61,9 @@ function islands(bundle: Bundle, f: number): Island[] {
   return out.sort((a, b) => b.size - a.size);
 }
 
-/** Detached geometry: a frame whose opaque pixels form more than one island. Both #252 (café
- *  chair back resting past the seat's rear edge) and #256 (chair back starting above the leg
- *  tops) shipped as a loose second island and passed every gate — nothing looked. */
+/** Detached geometry: a frame whose opaque pixels form more than one island. #252 shipped this
+ *  way — the café chair's back rested past the seat's rear edge — and passed every gate, because
+ *  nothing looked. See the header for why #256 is NOT of this shape. */
 export function reviewIslands(bundle: Bundle): Warning[] {
   const warnings: Warning[] = [];
   for (let f = 0; f < bundle.meta.dirs.length; f++) {

@@ -5,3 +5,6 @@ dist/
 *.db-wal
 *.db-shm
 .playwright-mcp/
+
+# Agent worktrees — git worktrees, never project content.
+.claude/
