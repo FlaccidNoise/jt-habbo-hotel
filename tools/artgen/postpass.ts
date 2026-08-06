@@ -6,7 +6,8 @@
 //
 // Proof parts ("proof_*") render and gate only. Catalog parts must have a FurniDef in
 // @grand/shared and additionally freeze to tools/artgen/frozen/ (<id>.png + <id>.json) —
-// the committed bundle cli.ts merges into the catalog. Gate failure freezes nothing.
+// the committed bundle cli.ts merges into the catalog. Gate failure freezes nothing, and so does
+// a bundle that only moved its style pins — see PROVENANCE_KEYS.
 //
 // VARIANTS below are colorways: extra catalog items assembled from a base part's existing
 // frames with its ramps remapped, so they cost no Blender render (see the note there).
@@ -15,7 +16,7 @@
 //   make art            — render every part, gate, freeze
 //   make art PART=<id>  — re-render one part and its colorways
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { PROTOTYPE_CATALOG, WALL_CATALOG } from "../../packages/shared/src/furni.ts";
@@ -166,17 +167,32 @@ function upscale(c: Canvas, k: number): Canvas {
   return out;
 }
 
+/** Key-sorted copy, so JSON.stringify is canonical. */
+function sorted(value: unknown): unknown {
+  if (value === null || typeof value !== "object") return value;
+  if (Array.isArray(value)) return value.map(sorted);
+  return Object.fromEntries(
+    Object.entries(value as Record<string, unknown>)
+      .sort(([a], [b]) => (a < b ? -1 : 1))
+      .map(([k, v]) => [k, sorted(v)]),
+  );
+}
+
+// What the bundle was authored against. PIPELINES §2: freezing makes the bundle the item's
+// identity and demotes the recipe to provenance — a record of the past, not a mirror of the
+// current pins.
+const PROVENANCE_KEYS = ["styleVersion", "generatorVersion", "partLibraryHash", "recipeHash"];
+
+/** The bundle meta minus its provenance, canonical — equality here means the pixels and every
+ *  declared measurement are unmoved and only the style pins have advanced (#234). */
+function withoutProvenance(meta: object): string {
+  return JSON.stringify(sorted(
+    Object.fromEntries(Object.entries(meta).filter(([k]) => !PROVENANCE_KEYS.includes(k))),
+  ));
+}
+
 /** Canonical JSON (sorted keys) of the authored mesh + style pins — the provenance hash. */
 function provenanceHash(id: string, part: PartMeta): string {
-  const sorted = (value: unknown): unknown => {
-    if (value === null || typeof value !== "object") return value;
-    if (Array.isArray(value)) return value.map(sorted);
-    return Object.fromEntries(
-      Object.entries(value as Record<string, unknown>)
-        .sort(([a], [b]) => (a < b ? -1 : 1))
-        .map(([k, v]) => [k, sorted(v)]),
-    );
-  };
   return createHash("sha256")
     .update(JSON.stringify(sorted({
       id, w: part.w, l: part.l, ramp: part.ramp, prims: part.prims, src: part.src,
@@ -382,10 +398,21 @@ for (const [id, part] of work) {
   }
   console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames)`);
   if (freeze && !isProof) {
-    writeFileSync(join(frozenDir, `${id}.png`), png);
-    if (nearPng) writeFileSync(join(frozenDir, `${id}.near.png`), nearPng);
-    writeFileSync(join(frozenDir, `${id}.json`), JSON.stringify(bundle.meta, null, 2));
-    console.log(`${id}: frozen`);
+    const metaPath = join(frozenDir, `${id}.json`);
+    // #234: a style or generator bump moves every recipeHash, but a bundle it did not repaint was
+    // still authored under the old pins. Leave it saying so — otherwise `make art` for one part
+    // sweeps a false provenance record onto every other frozen bundle, visible only in git status.
+    const prior = existsSync(metaPath)
+      ? JSON.parse(readFileSync(metaPath, "utf8")) as Record<string, unknown>
+      : null;
+    if (prior && withoutProvenance(prior) === withoutProvenance(bundle.meta)) {
+      console.log(`${id}: unchanged — kept the provenance it was frozen with`);
+    } else {
+      writeFileSync(join(frozenDir, `${id}.png`), png);
+      if (nearPng) writeFileSync(join(frozenDir, `${id}.near.png`), nearPng);
+      writeFileSync(metaPath, JSON.stringify(bundle.meta, null, 2));
+      console.log(`${id}: frozen`);
+    }
   }
 }
 
