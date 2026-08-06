@@ -15,9 +15,15 @@ describe("scale 32 halves each step separately", () => {
 describe("screenToTile inverts the floor plane", () => {
   for (const [x, y] of [[0, 0], [5, 3], [9, 9], [-2, 4]] as const)
     test(`tile ${x},${y} round-trips through its center`, () => {
-      const { sx, sy } = worldToScreen(x + 0.5, y + 0.5, 0, 64);
+      const { sx, sy } = worldToScreen(x, y, 0, 64);
       expect(screenToTile(sx, sy, 64)).toEqual({ x, y });
     });
+
+  // Every point inside a tile resolves to that tile, not to a neighbour: the diamond for (0,0)
+  // spans sy -16..+16 at sx 0, so a point just inside any edge must still land on (0,0).
+  for (const [sx, sy] of [[0, -15], [0, 15], [-31, 0], [31, 0], [15, 7]] as const)
+    test(`screen ${sx},${sy} is inside tile 0,0`, () =>
+      expect(screenToTile(sx, sy, 64)).toEqual({ x: 0, y: 0 }));
 });
 describe("direction table", () => {
   test("all eight", () => {
