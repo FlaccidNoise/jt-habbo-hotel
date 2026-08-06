@@ -127,6 +127,9 @@ export function openDb(path: string): Database.Database {
   db.pragma("foreign_keys = ON");
   db.exec(DDL);
   addColumn(db, "accounts", "figure", "TEXT");
+  // #226. One bit, flagged by hand with `make staff USER=<username>`. It gates /api/metrics and
+  // nothing else — the `staff` flag in the protocol describes NPC occupants, not accounts.
+  addColumn(db, "accounts", "is_staff", "INTEGER NOT NULL DEFAULT 0");
   for (const [col, decl] of [
     ["wall_side", "TEXT"], ["wall_u", "INTEGER"], ["wall_v", "INTEGER"],
     // #210. `bound` is account-bound-forever: prestige fixtures, set pieces, museum donations.

@@ -112,13 +112,13 @@ export async function login(
 export function sessionAccount(
   db: Database.Database,
   token: string,
-): { id: number; username: string } | null {
+): { id: number; username: string; isStaff: boolean } | null {
   const row = db
     .prepare(
-      `SELECT accounts.id AS id, accounts.username AS username
+      `SELECT accounts.id AS id, accounts.username AS username, accounts.is_staff AS is_staff
        FROM sessions JOIN accounts ON accounts.id = sessions.account_id
        WHERE sessions.token = ?`,
     )
-    .get(token) as { id: number; username: string } | undefined;
-  return row ?? null;
+    .get(token) as { id: number; username: string; is_staff: number } | undefined;
+  return row ? { id: row.id, username: row.username, isStaff: row.is_staff === 1 } : null;
 }

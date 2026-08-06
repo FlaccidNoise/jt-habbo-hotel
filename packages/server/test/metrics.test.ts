@@ -2,6 +2,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import SQLite from "better-sqlite3";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
 import { settleEarn, settlePurchase } from "../src/ledger.ts";
@@ -93,6 +94,15 @@ describe("GET /api/metrics", () => {
     rmSync(dir, { recursive: true, force: true });
   });
 
+  /** What `make staff USER=<username>` does, against the running server's own database. */
+  function makeStaff(dbPath: string, username: string): void {
+    const side = new SQLite(dbPath);
+    const n = side.prepare("UPDATE accounts SET is_staff = 1 WHERE username = ?").run(username)
+      .changes;
+    side.close();
+    expect(n).toBe(1);
+  }
+
   async function register(port: number, username: string): Promise<string> {
     const res = await fetch(`http://127.0.0.1:${port}/api/register`, {
       method: "POST",
@@ -104,7 +114,8 @@ describe("GET /api/metrics", () => {
   }
 
   test("requires a valid session and reports flows, ws and room stats", async () => {
-    srv = await startServer({ port: 0, dbPath: join(dir, "test.db"), npcGenerate: null });
+    const dbPath = join(dir, "test.db");
+    srv = await startServer({ port: 0, dbPath, npcGenerate: null });
     const { port } = srv;
 
     expect((await fetch(`http://127.0.0.1:${port}/api/metrics`)).status).toBe(401);
@@ -119,6 +130,18 @@ describe("GET /api/metrics", () => {
     const token = await register(port, "alice");
     // A token in the query string is not accepted — it would leak through logs and history.
     expect((await fetch(`http://127.0.0.1:${port}/api/metrics?token=${token}`)).status).toBe(401);
+
+    // #226: a signed-in ordinary player is authenticated but not authorized. 403, not 401 —
+    // logging in again would not help them. This is the hole the bug was about.
+    expect(
+      (
+        await fetch(`http://127.0.0.1:${port}/api/metrics`, {
+          headers: { authorization: `Bearer ${token}` },
+        })
+      ).status,
+    ).toBe(403);
+    makeStaff(dbPath, "alice");
+
     const wsBefore = { ...wsStats };
     const [ws, bus] = await connect(port);
     ws.send(JSON.stringify({ t: "join", token, roomId: 1 }));

@@ -572,11 +572,18 @@ export async function startServer(opts: {
 
   function handleMetrics(req: IncomingMessage, res: ServerResponse): void {
     // Header only — a session token in the query string leaks through logs, history and
-    // referrers. Any signed-in account may read this; there is no staff role to gate on yet (#226).
+    // referrers.
     const auth = req.headers.authorization;
     const token = auth?.startsWith("Bearer ") ? auth.slice("Bearer ".length) : "";
-    if (!sessionAccount(db, token)) {
+    const account = sessionAccount(db, token);
+    if (!account) {
       json(res, 401, { error: "valid session token required" });
+      return;
+    }
+    // 403, not 401 (#226): the caller authenticated fine, so bouncing them to a login screen
+    // would not help. These numbers are what an exploiter wants for calibration.
+    if (!account.isStaff) {
+      json(res, 403, { error: "staff only" });
       return;
     }
     const now = Date.now();

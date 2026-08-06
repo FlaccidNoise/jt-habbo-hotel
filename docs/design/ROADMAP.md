@@ -36,7 +36,7 @@ directions, ownership-gated wearing; deferred actions #232), #123 pets (needs #1
   placed, café spawn, welcome quest advanced by real events (coffee → buy → place → arcade).
 - #208 Friends console, groups, badges — the Social service (PIPELINES §5).
 - #209 Observability — **fixed**: GET /api/metrics (per-op flows, ledger latency, WS and loop
-  health) behind a session token, graphs at /metrics.html.
+  health) behind a staff session, graphs at /metrics.html.
 - #210 Wealth sinks — Museum wing, prestige untradables, Luck Lever, collection sets
   (needs #118).
 - #211 Density funnel low-population mode — threshold 5 concurrent, space unlock/re-lock,
@@ -120,8 +120,8 @@ bounces.** Reading the config is never evidence.
 - Account-bound items never change hands (#210). The check lives in `settleTrade`, the only code
   that moves an `owner_id`, so a client that skips the trade UI still cannot move one.
 - #209 ships first: per-faucet issuance and per-sink absorption visible per day. **Met** (90617c1):
-  GET /api/metrics + /metrics.html. Any signed-in account can read it — no staff role exists to
-  gate on (#226).
+  GET /api/metrics + /metrics.html, staff-only (#226 fixed): `accounts.is_staff`, flagged by hand
+  with `make staff USER=<username>`. A signed-in non-staff account gets 403.
 
 ### Step 6 — first arcade (#119, #206 alongside)
 

@@ -132,6 +132,13 @@
             $("login-error").textContent = "session expired — log in again";
             return;
           }
+          if (res.status === 403) {
+            clearInterval(timer);
+            $("dash").hidden = true;
+            $("login-card").style.display = "grid";
+            $("login-error").textContent = "staff only — this account cannot read metrics";
+            return;
+          }
           if (!res.ok) throw new Error(`metrics failed (${res.status})`);
           render(await res.json());
           $("fetch-error").textContent = "";

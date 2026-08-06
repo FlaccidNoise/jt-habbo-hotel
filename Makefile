@@ -26,6 +26,22 @@ gen:
 db-reset:
 	rm -f packages/server/grand.db*
 
+# Flag an account as staff, which is the only thing that can read /api/metrics (#226). Hand-run
+# on purpose — there is no self-serve path to staff, and there should not be one.
+#   make staff USER=alice
+# USER is already your login name in the environment, so only a command-line USER counts here.
+STAFF_USER := $(if $(filter command line,$(origin USER)),$(USER))
+staff:
+	@[ -n "$(STAFF_USER)" ] || { echo 'usage: make staff USER=<username>'; exit 1; }
+	@cd packages/server && node --input-type=module -e "\
+	  import Database from 'better-sqlite3'; \
+	  const db = new Database(process.env.DB_PATH ?? 'grand.db'); \
+	  const user = process.argv[1]; \
+	  const n = db.prepare('UPDATE accounts SET is_staff = 1 WHERE username = ?').run(user).changes; \
+	  if (!n) { console.error('no such account: ' + user); process.exit(1); } \
+	  console.log(user + ' is now staff'); \
+	" $(STAFF_USER)
+
 # Flat decor (#260): quantize the authored rasters in tools/decor/source to the palette, gate
 # them, and freeze one tile each. No Blender — the class is raster by design. Run it after
 # editing a source PNG or a DECOR_CATALOG tile size, then `make gen` to publish.
