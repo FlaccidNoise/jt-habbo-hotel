@@ -97,7 +97,9 @@ export const PALETTE: ReadonlySet<number> = new Set([
   ...ALL_RAMPS.flatMap((r) => [r.outline, r.left, r.right, r.top, r.hi]),
 ]);
 
-/** The two extreme floor tones (client scene/room.ts FLOOR_A/FLOOR_B) for the contrast gate. */
+/** The default floor tones (client scene/room.ts FLOOR_A/FLOOR_B), drawn by any room that has
+ *  chosen no floor decor. Kept here so a test can hold them to the same backdrop rule the decor
+ *  class is gated by — they are a floor like any other, they just are not an asset. */
 export const FLOOR_TONES: readonly number[] = [0x6f9e4c, 0x5d8a3f];
 
 /** Rec. 601 luma, 0-255. */
@@ -105,3 +107,17 @@ export function luminance(color: number): number {
   const r = (color >> 16) & 0xff, g = (color >> 8) & 0xff, b = color & 0xff;
   return 0.299 * r + 0.587 * g + 0.114 * b;
 }
+
+/** Luma a silhouette must clear the surface behind it by. */
+export const MIN_CONTRAST = 24;
+
+/** The lightest outline any ramp can paint — sand and gold, at 58.0. Every silhouette in the game
+ *  is an outline shade: furni takes the global OUTLINE, and a figure layer takes its worn ramp's
+ *  own (figurepass.ts SHADE_OUTLINE), which is per player and so not knowable in advance. */
+const OUTLINE_LUMA_MAX: number = Math.max(...ALL_RAMPS.map((r) => luminance(r.outline)));
+
+/** Floors and walls are behind everything, so one rule covers the whole backdrop: a surface an
+ *  avatar or a sprite is seen against must clear the lightest outline by MIN_CONTRAST. Before
+ *  #260 the floor was two fixed greens and the furni gate could name them; a decor floor may be
+ *  any palette colour, so the bound is what the gates compare against now. */
+export const BACKDROP_LUMA_MIN: number = OUTLINE_LUMA_MAX + MIN_CONTRAST;

@@ -1,10 +1,10 @@
-import { WALL_HEIGHT, WALL_MAX_DEPTH, WALL_SEG_PX, WALL_TOP_PX } from "@grand/shared";
-import type { FurniDef, WallDef } from "@grand/shared";
+import { WALL_HEIGHT, WALL_MAX_DEPTH, WALL_SEG_PX, WALL_TOP_PX, decorTileFault } from "@grand/shared";
+import type { DecorDef, FurniDef, WallDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { getPixel } from "./raster.ts";
 import type { Canvas } from "./raster.ts";
 import { drawOrderMismatch, referenceScenes, seatedScene } from "./scene.ts";
-import { FLOOR_TONES, PALETTE, luminance } from "./style.ts";
+import { BACKDROP_LUMA_MIN, MIN_CONTRAST, PALETTE, luminance } from "./style.ts";
 
 // Validation gates (PIPELINES §2 stage 4). Every gate has a staged known-bad test — a gate
 // exists only if a known-bad input actually bounces.
@@ -13,7 +13,6 @@ export type GateResult = { ok: true } | { ok: false; gate: string; detail: strin
 
 const fail = (gate: string, detail: string): GateResult => ({ ok: false, gate, detail });
 
-const MIN_CONTRAST = 24;
 const GROUND_TOLERANCE = 16;   // half a tile of vertical slack for inset parts
 
 /** Duplicate recipe hashes reject — a re-mint of an existing design is a counterfeit. */
@@ -254,7 +253,14 @@ export function gateSeatOcclusion(bundle: Bundle, def: FurniDef): GateResult {
   return { ok: true };
 }
 
-/** Silhouette pixels must read against both extreme floor tones. */
+/** Silhouette pixels must read against the floor they stand on.
+ *
+ *  Until #260 the floor was two fixed greens and this named them, which let a light silhouette
+ *  pass by being brighter than both. A decor floor may be any palette colour at or above
+ *  BACKDROP_LUMA_MIN, so "brighter than the floor" is no longer a guarantee anything can give:
+ *  the only surviving rule is that a silhouette must be darker than the darkest floor by
+ *  MIN_CONTRAST. Every shipped bundle passes at 35.1 — outlineSilhouette paints every edge the
+ *  global OUTLINE — so this tightens the bound without moving a pixel. */
 export function gateContrast(sheet: Canvas): GateResult {
   let sum = 0;
   let n = 0;
@@ -272,10 +278,103 @@ export function gateContrast(sheet: Canvas): GateResult {
   }
   if (n === 0) return fail("contrast", "no silhouette pixels");
   const mean = sum / n;
-  for (const tone of FLOOR_TONES) {
-    if (Math.abs(mean - luminance(tone)) < MIN_CONTRAST) {
-      return fail("contrast", `silhouette luma ${mean.toFixed(1)} too close to floor #${tone.toString(16)}`);
+  if (mean > BACKDROP_LUMA_MIN - MIN_CONTRAST) {
+    return fail("contrast",
+      `silhouette luma ${mean.toFixed(1)} is within ${MIN_CONTRAST} of the darkest floor a room ` +
+      `can lay (${BACKDROP_LUMA_MIN.toFixed(1)})`);
+  }
+  return { ok: true };
+}
+
+// --- flat decor gates (#260) ------------------------------------------------------------------
+// The class ships raster, so none of the geometry gates apply — there is no box, no footprint and
+// no seat. What replaces them is the three properties a repeating backdrop has to have: it lands
+// on the surface's lattice, it actually repeats, and everything drawn over it still reads.
+
+/** The declared tile must land on the lattice its surface tessellates on. Pure def check — a
+ *  wrong size here shifts the pattern against itself forever, and no raster can fix it. */
+export function gateDecorLattice(def: DecorDef): GateResult {
+  const fault = decorTileFault(def);
+  return fault ? fail("decor_lattice", fault) : { ok: true };
+}
+
+/** The authored raster must be its own tile, repeated — exactly, pixel for pixel.
+ *
+ *  This is the seam check, and it is exact rather than a threshold. Measuring a discontinuity at
+ *  the wrap edge cannot work: a stripe pattern is a discontinuity by design, and the dead-band
+ *  check #258 proposed died of exactly that (see review.ts). So the author supplies more than one
+ *  period and the build proves the periods agree. Art that does not truly tile fails here; art
+ *  that does cannot fail. Runs at authoring time only — the frozen artifact is one tile, which
+ *  repeats by construction. */
+export function gateDecorTiles(source: Canvas, def: DecorDef): GateResult {
+  const { w, h } = def.tile;
+  if (source.w % w !== 0 || source.h % h !== 0) {
+    return fail("decor_tiles",
+      `source is ${source.w}x${source.h}, not a whole number of ${w}x${h} tiles`);
+  }
+  if (source.w < w * 2 && source.h < h * 2) {
+    return fail("decor_tiles",
+      `source is one ${w}x${h} tile, so nothing proves the art repeats — author at least 2x2 ` +
+      `tiles and let the build cut one out`);
+  }
+  for (let y = 0; y < source.h; y++) {
+    for (let x = 0; x < source.w; x++) {
+      const a = getPixel(source, x, y);
+      const b = getPixel(source, x % w, y % h);
+      if (a.alpha === b.alpha && a.color === b.color) continue;
+      return fail("decor_tiles",
+        `pixel ${x},${y} is #${a.color.toString(16)} but its tile says #${b.color.toString(16)} ` +
+        `— the pattern does not repeat on ${w}x${h}`);
     }
+  }
+  return { ok: true };
+}
+
+/** Nothing drawn over the backdrop may sink into it, and the backdrop may not have holes.
+ *
+ *  The bound is the lightest outline any ramp can paint plus MIN_CONTRAST, so it covers avatars
+ *  as well as furni: a figure layer's outline is its worn ramp's own darkest shade, chosen by the
+ *  player, so the check cannot know which one it will be and holds against all of them. */
+export function gateDecorContrast(tile: Canvas, def: DecorDef): GateResult {
+  const check = (color: number, where: string): GateResult => {
+    if (!PALETTE.has(color)) return fail("decor_contrast", `${where} #${color.toString(16)} is off-palette`);
+    const luma = luminance(color);
+    if (luma < BACKDROP_LUMA_MIN) {
+      return fail("decor_contrast",
+        `${where} #${color.toString(16)} has luma ${luma.toFixed(1)}, under the ` +
+        `${BACKDROP_LUMA_MIN.toFixed(1)} a backdrop needs — an outline drawn over it stops reading`);
+    }
+    return { ok: true };
+  };
+  for (let y = 0; y < tile.h; y++) {
+    for (let x = 0; x < tile.w; x++) {
+      const p = getPixel(tile, x, y);
+      if (p.alpha !== 255) {
+        return fail("decor_contrast", `pixel ${x},${y} is not opaque — a backdrop has no holes`);
+      }
+      const result = check(p.color, `pixel ${x},${y}`);
+      if (!result.ok) return result;
+    }
+  }
+  const declared: Array<[number, string]> = def.kind === "floor"
+    ? [[def.sides.left, "sides.left"], [def.sides.right, "sides.right"]]
+    : [[def.cap, "cap"]];
+  for (const [color, where] of declared) {
+    const result = check(color, where);
+    if (!result.ok) return result;
+  }
+  return { ok: true };
+}
+
+/** Every artifact gate for one frozen decor tile. `gateDecorTiles` is deliberately absent: it
+ *  needs the multi-tile source, which only the authoring pass has. */
+export function runDecorGates(tile: Canvas, def: DecorDef): GateResult {
+  for (const result of [
+    gatePalette(tile),
+    gateDecorLattice(def),
+    gateDecorContrast(tile, def),
+  ]) {
+    if (!result.ok) return result;
   }
   return { ok: true };
 }

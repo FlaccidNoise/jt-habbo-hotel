@@ -1,13 +1,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
-import type { FurniDef } from "@grand/shared";
+import type { DecorDef, FurniDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { render } from "./compose.ts";
 import { decodePng, encodePng } from "./png.ts";
+import type { Canvas } from "./raster.ts";
 import { STARTER_RECIPES } from "./starter.ts";
 
 export const FROZEN_DIR: string = new URL("../../../tools/artgen/frozen", import.meta.url).pathname;
+export const DECOR_FROZEN_DIR: string = new URL("../../../tools/decor/frozen", import.meta.url).pathname;
 
 /** The one way a def becomes a bundle. Box-path defs render from their recipe; 3D-assisted defs
  *  (#202) load the committed frozen bytes — the pixels are the item's identity, so they are read,
@@ -50,4 +52,28 @@ export function frozenBundle(id: string): { bundle: Bundle; png: Buffer; nearPng
   return {
     bundle: { sheet: { w: width, h: height, px: rgba }, meta, geometry: null }, png, nearPng,
   };
+}
+
+interface FrozenDecor { id: string; sheet: string; pixelHash: string }
+
+/** The frozen tile for one decor def (#260), checked against its recorded hash and its declared
+ *  size. Same contract as `frozenBundle`: the pixels are the pattern's identity, so they are read
+ *  and verified, never re-derived from the authored source. */
+export function frozenDecor(def: DecorDef): { tile: Canvas; png: Buffer } {
+  const doc = JSON.parse(readFileSync(join(DECOR_FROZEN_DIR, "decor.json"), "utf8")) as {
+    decor: FrozenDecor[];
+  };
+  const frozen = doc.decor.find((d) => d.id === def.id);
+  if (!frozen) {
+    throw new Error(`${def.id}: in DECOR_CATALOG but never frozen — run make decor`);
+  }
+  const png = readFileSync(join(DECOR_FROZEN_DIR, frozen.sheet));
+  const { width, height, rgba } = decodePng(png);
+  if (createHash("sha256").update(rgba).digest("hex") !== frozen.pixelHash) {
+    throw new Error(`${def.id}: frozen tile does not match its recorded pixelHash`);
+  }
+  if (width !== def.tile.w || height !== def.tile.h) {
+    throw new Error(`${def.id}: frozen tile is ${width}x${height}, def says ${def.tile.w}x${def.tile.h}`);
+  }
+  return { tile: { w: width, h: height, px: rgba }, png };
 }

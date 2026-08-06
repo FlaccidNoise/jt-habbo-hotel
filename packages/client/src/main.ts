@@ -42,6 +42,8 @@ import { loadFurniAssets } from "./scene/assets.ts";
 import { FigureBaker, loadFigureAtlas } from "./scene/figure.ts";
 import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
+import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
+import type { DecorAssets } from "./scene/decor.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
@@ -78,6 +80,7 @@ let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
 let wallLayer: WallLayer | null = null;
 let furniAssets: FurniAssets | null = null;
+let decorAssets: DecorAssets | null = null;
 let figureBaker: FigureBaker | null = null;
 let model: RoomModel | null = null;
 let doorTile: Tile = { x: 0, y: 0 };
@@ -675,14 +678,15 @@ function buildRoom(msg: RoomState): void {
     nav.style.display = "block";
   }
 
-  scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover }, depth);
+  scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover }, depth,
+    floorDecor(decorAssets, msg.decor.floor));
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);
   // No explicit teardown: scene.destroy() above took the old world and every layer's children
   // with it, the same way furniLayer is simply replaced.
   wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
-    { click: onWallClick, hover: onWallHover }, depth);
+    { click: onWallClick, hover: onWallHover }, depth, wallDecor(decorAssets, msg.decor.wall));
   for (const item of wallFurni) wallLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
@@ -833,6 +837,7 @@ function handle(msg: ServerMsg): void {
 async function start(token: string): Promise<void> {
   app = new Application();
   furniAssets = await loadFurniAssets();
+  decorAssets = await loadDecorAssets();
   const atlas = await loadFigureAtlas();
   figureBaker = atlas ? new FigureBaker(atlas) : null;
   await app.init({ background: 0x11131a, resizeTo: window, antialias: true });

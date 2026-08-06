@@ -26,6 +26,12 @@ gen:
 db-reset:
 	rm -f packages/server/grand.db*
 
+# Flat decor (#260): quantize the authored rasters in tools/decor/source to the palette, gate
+# them, and freeze one tile each. No Blender — the class is raster by design. Run it after
+# editing a source PNG or a DECOR_CATALOG tile size, then `make gen` to publish.
+decor:
+	node --experimental-strip-types tools/decor/decorpass.ts --freeze
+
 # 3D-assisted furni parts (#202): Blender renders each part white at 4 directions, the post-pass
 # quantizes to the style.ts ramps, runs the gates, and freezes the passing bundles. Renders land
 # in ART_DIR so a PART= re-render can merge into the existing meta.json.

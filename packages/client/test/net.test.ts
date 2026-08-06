@@ -38,6 +38,7 @@ const ROOM_STATE: ServerMsg = {
   roomId: 1,
   name: "The Lobby Café",
   heightmap: "00\n00",
+  decor: {},
   door: { x: 0, y: 0, dir: 2 },
   chat: { speakRadius: 5, shoutAllowed: false },
   avatars: [],

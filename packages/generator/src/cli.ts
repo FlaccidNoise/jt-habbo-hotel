@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
-import { PROTOTYPE_CATALOG, WALL_CATALOG } from "@grand/shared";
-import { bundleFor, frozenBundle } from "./catalog.ts";
+import { DECOR_CATALOG, PROTOTYPE_CATALOG, WALL_CATALOG } from "@grand/shared";
+import { bundleFor, frozenBundle, frozenDecor } from "./catalog.ts";
 import type { BundleMeta } from "./compose.ts";
-import { gateUniqueness, runGates, runWallGates } from "./gates.ts";
+import { gateUniqueness, runDecorGates, runGates, runWallGates } from "./gates.ts";
 import { decodePng } from "./png.ts";
 import { reviewIslands } from "./review.ts";
 import { GENERATOR_VERSION, STYLE_VERSION } from "./style.ts";
@@ -70,6 +70,25 @@ writeFileSync(
   JSON.stringify({ styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION, defs }, null, 2),
 );
 console.log(`wrote ${Object.keys(defs).length} bundles to ${outDir}`);
+
+// Flat decor (#260): one tile per wallpaper and floor pattern, which the client repeats. Read
+// from the frozen bytes and re-gated here like everything else, so a bad tile cannot reach a room.
+// Its own directory, not /furni: it has no BundleMeta, no frames and no dirs — the client asks for
+// it by def id and hands it straight to a texture fill.
+const decorOut = resolve(outDir, "..", "decor");
+try {
+  mkdirSync(decorOut, { recursive: true });
+  for (const def of DECOR_CATALOG) {
+    const { tile, png } = frozenDecor(def);
+    const result = runDecorGates(tile, def);
+    if (!result.ok) throw new Error(`${def.id}: ${result.gate} gate: ${result.detail}`);
+    writeFileSync(join(decorOut, `${def.id}.png`), png);
+  }
+  console.log(`wrote ${DECOR_CATALOG.length} decor tiles to ${decorOut}`);
+} catch (err) {
+  console.error(`decor not published: ${err instanceof Error ? err.message : err}`);
+  process.exit(1);
+}
 
 // Avatar figure layers (#127). Copied from the frozen bundles, never re-rendered — the pixels are
 // the layer's identity, exactly as for furni.

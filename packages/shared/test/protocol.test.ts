@@ -30,6 +30,7 @@ const CLIENT_CASES: Array<[string, unknown, unknown]> = [
 
 const ROOM_STATE = {
   t: "room_state", roomId: 1, name: "Cafe", heightmap: "000\n000",
+  decor: { floor: "floor_marble", wall: "wall_pinstripe" },
   door: { x: 0, y: 0, dir: 2 }, chat: { speakRadius: 5, shoutAllowed: true },
   avatars: [AVATAR], furni: [ITEM], wallFurni: [WALL_ITEM], inventory: [INV], you: 1, stars: 0,
 };

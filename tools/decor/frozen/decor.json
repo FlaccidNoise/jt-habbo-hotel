@@ -1,0 +1,56 @@
+{
+  "decor": [
+    {
+      "id": "floor_marble",
+      "kind": "floor",
+      "sheet": "floor_marble.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 2,
+      "pixelHash": "12453d2a3fd5e6445815b1a4075fff75d887daee305cedc8b62aadd7cf76e67d"
+    },
+    {
+      "id": "floor_parquet",
+      "kind": "floor",
+      "sheet": "floor_parquet.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 2,
+      "pixelHash": "e705565812f6d08894b50e0fe12fa0df9d809d72adaf2620feac169f25685738"
+    },
+    {
+      "id": "wall_wainscot",
+      "kind": "wall",
+      "sheet": "wall_wainscot.png",
+      "tileW": 16,
+      "tileH": 128,
+      "source": {
+        "w": 32,
+        "h": 128
+      },
+      "styleVersion": 2,
+      "pixelHash": "b114044284e267d53465ae227651b5fbf93f08116878a60d475c2832da83f4e0"
+    },
+    {
+      "id": "wall_pinstripe",
+      "kind": "wall",
+      "sheet": "wall_pinstripe.png",
+      "tileW": 16,
+      "tileH": 32,
+      "source": {
+        "w": 32,
+        "h": 128
+      },
+      "styleVersion": 2,
+      "pixelHash": "2b4a038d2889508aedda97622cf3f478e4d372f7158fa11764c8d2d478f4f61a"
+    }
+  ]
+}

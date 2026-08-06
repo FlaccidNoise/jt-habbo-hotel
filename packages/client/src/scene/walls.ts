@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite } from "pixi.js";
+import { Container, Graphics, Matrix, Sprite } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import {
   WALL_SEG_PX,
@@ -14,6 +14,7 @@ import {
 import type { RoomModel, WallDef, WallItem, WallPos } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture } from "./assets.ts";
+import type { DecorAsset, WallDecor } from "./decor.ts";
 import { frameFor } from "./frames.ts";
 import { SCALE } from "./room.ts";
 import { LAYER } from "./sort.ts";
@@ -47,6 +48,7 @@ export class WallLayer {
   private assets: FurniAssets | null;
   private handlers: WallHandlers;
   private depth: DepthIndex;
+  private decor: DecorAsset<WallDecor> | null;
   private faces: Graphics[] = [];
   private items = new Map<number, { item: WallItem; view: Sprite | Graphics }>();
   private ghostView: Sprite | Graphics | null = null;
@@ -58,12 +60,14 @@ export class WallLayer {
     assets: FurniAssets | null,
     handlers: WallHandlers,
     depth: DepthIndex,
+    decor: DecorAsset<WallDecor> | null = null,
   ) {
     this.world = world;
     this.defs = defs;
     this.assets = assets;
     this.handlers = handlers;
     this.depth = depth;
+    this.decor = decor;
     for (const seg of wallSegments(model)) this.addFace(seg.side, seg.x, seg.y);
   }
 
@@ -185,14 +189,29 @@ export class WallLayer {
       far.x, far.y,
       far.x, far.y + WALL_TOP_PX,
       o.sx, o.sy + WALL_TOP_PX,
-    ]).fill(side === "left" ? FACE_LEFT : FACE_RIGHT).stroke({ width: 1, color: 0x000000, alpha: 0.13 });
+    ]);
+    if (this.decor) {
+      // The paper is authored in the wall's own two axes (u along, v down), the same axes a
+      // hanging item is measured in, and this matrix is exactly wallOffset: u moves the texture
+      // (sign, +0.5) on screen and v moves it straight down. Anchored at the segment's own origin,
+      // so the pattern starts at the wall top and restarts every segment — which is why the tile
+      // width has to divide WALL_SEG_PX (shared/decor.ts).
+      g.fill({
+        texture: this.decor.texture,
+        matrix: new Matrix(sign, 0.5, 0, 1, o.sx, o.sy),
+        textureSpace: "global",
+      });
+    } else {
+      g.fill(side === "left" ? FACE_LEFT : FACE_RIGHT)
+        .stroke({ width: 1, color: 0x000000, alpha: 0.13 });
+    }
     // The cap: the wall's own thickness, receding away from the room so it reads as a solid slab.
     g.poly([
       o.sx, o.sy,
       far.x, far.y,
       far.x - sign * THICKNESS, far.y - THICKNESS / 2,
       o.sx - sign * THICKNESS, o.sy - THICKNESS / 2,
-    ]).fill(CAP);
+    ]).fill(this.decor?.def.cap ?? CAP);
     g.eventMode = "static";
     this.depth.set(`wall:${side}:${x}:${y}`, wallBox(side, x, y, LAYER.wall), g);
     const at = (e: FederatedPointerEvent): { pos: WallPos; local: { x: number; y: number } } => {

@@ -2,16 +2,20 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import {
-  FIGURE_SETS, PROTOTYPE_CATALOG, WALL_CATALOG, WALL_MAX_DEPTH, paletteFor,
+  DECOR_CATALOG, FIGURE_SETS, PROTOTYPE_CATALOG, WALL_CATALOG, WALL_MAX_DEPTH, paletteFor,
 } from "@grand/shared";
-import type { WallDef } from "@grand/shared";
-import { FROZEN_DIR, bundleFor, frozenBundle } from "../src/catalog.ts";
+import type { DecorDef, WallDef } from "@grand/shared";
+import { FROZEN_DIR, bundleFor, frozenBundle, frozenDecor } from "../src/catalog.ts";
+import { nearestPaletteColor, quantize } from "../src/decor.ts";
 import { render } from "../src/compose.ts";
 import type { BundleMeta } from "../src/compose.ts";
 import { decodePng, encodePng } from "../src/png.ts";
 import {
   gateBounds,
   gateContrast,
+  gateDecorContrast,
+  gateDecorLattice,
+  gateDecorTiles,
   gateDrawOrder,
   gateFootprint,
   gatePalette,
@@ -20,6 +24,7 @@ import {
   gateUniqueness,
   gateWallBounds,
   gateWallFit,
+  runDecorGates,
   runGates,
   runWallGates,
 } from "../src/gates.ts";
@@ -30,7 +35,8 @@ import type { Recipe } from "../src/recipe.ts";
 import { drawOrderMismatch, referenceScenes, seatedScene } from "../src/scene.ts";
 import { STARTER_RECIPES } from "../src/starter.ts";
 import {
-  FLOOR_TONES, PALETTE, RAMP_NAMES, RAMP_SHADES, SKIN_RAMP_NAMES, rampByName,
+  BACKDROP_LUMA_MIN, FLOOR_TONES, MIN_CONTRAST, PALETTE, RAMP_NAMES, RAMP_SHADES,
+  SKIN_RAMP_NAMES, luminance, rampByName,
 } from "../src/style.ts";
 
 const CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "chair_basic");
@@ -339,6 +345,21 @@ describe("gates bounce staged known-bad input", () => {
     expect(gateContrast(c)).toMatchObject({ ok: false, gate: "contrast" });
   });
 
+  test("contrast: a silhouette lighter than the floor no longer escapes (#260)", () => {
+    // Before decor floors existed this gate named two greens, so a silhouette brighter than both
+    // passed. Any palette colour at or above BACKDROP_LUMA_MIN can now be the floor, so the only
+    // rule left is that a silhouette is darker than the darkest floor.
+    const bright = RAMP_SHADES.find((s) => luminance(s.color) > 200);
+    const c = makeCanvas(8, 8);
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) putPixel(c, x, y, bright!.color);
+    }
+    for (const tone of FLOOR_TONES) {
+      expect(Math.abs(luminance(bright!.color) - luminance(tone))).toBeGreaterThan(MIN_CONTRAST);
+    }
+    expect(gateContrast(c)).toMatchObject({ ok: false, gate: "contrast" });
+  });
+
   // --- wall gates (#203). These replace footprint/seat/bounds for hanging items, so each one
   // needs its own staged bad input — swapping a gate out is not the same as keeping it honest.
   const WALL_DEF = WALL_CATALOG[0]!;
@@ -439,5 +460,107 @@ describe("visual review warns on staged detached geometry", () => {
     }
     expect(runGates(bundle, CHAIR_DEF!)).toEqual({ ok: true });
     expect(reviewIslands(bundle)).toMatchObject([{ dir: 0, detail: expect.stringContaining("islands") }]);
+  });
+});
+
+// Flat decor (#260). The class ships raster, so its gates are the three properties a repeating
+// backdrop must have, and each needs a staged known-bad input like every other gate here.
+describe("flat decor", () => {
+  type FloorDecorDef = Extract<DecorDef, { kind: "floor" }>;
+  type WallDecorDef = Extract<DecorDef, { kind: "wall" }>;
+  const FLOOR = DECOR_CATALOG.find(
+    (d): d is FloorDecorDef => d.id === "floor_marble" && d.kind === "floor");
+  const WALL = DECOR_CATALOG.find(
+    (d): d is WallDecorDef => d.id === "wall_pinstripe" && d.kind === "wall");
+  if (!FLOOR || !WALL) throw new Error("the proof decor defs are missing from DECOR_CATALOG");
+
+  test("every frozen tile matches its hash and passes its own gates", () => {
+    for (const def of DECOR_CATALOG) {
+      const { tile } = frozenDecor(def);   // throws on a hash or size mismatch
+      expect(runDecorGates(tile, def), `${def.id}`).toEqual({ ok: true });
+    }
+  });
+
+  test("the default floor tones clear the bound the decor class is held to", () => {
+    // The furni contrast gate compares against BACKDROP_LUMA_MIN alone, which is only sound if
+    // the undecorated floor also clears it.
+    for (const tone of FLOOR_TONES) expect(luminance(tone)).toBeGreaterThanOrEqual(BACKDROP_LUMA_MIN);
+  });
+
+  test("lattice: a floor tile off the diamond lattice", () => {
+    // 32 wide is half a lattice cell, so every other row of tiles would draw the pattern shifted.
+    expect(gateDecorLattice({ ...FLOOR, tile: { w: 32, h: 32 } }))
+      .toMatchObject({ ok: false, gate: "decor_lattice" });
+    expect(gateDecorLattice({ ...FLOOR, tile: { w: 64, h: 48 } }))
+      .toMatchObject({ ok: false, gate: "decor_lattice" });
+    expect(gateDecorLattice(FLOOR)).toEqual({ ok: true });
+  });
+
+  test("lattice: an odd wall tile, and one that does not divide the segment", () => {
+    expect(gateDecorLattice({ ...WALL, tile: { w: 7, h: 32 } }))
+      .toMatchObject({ ok: false, gate: "decor_lattice" });
+    expect(gateDecorLattice({ ...WALL, tile: { w: 12, h: 32 } }))
+      .toMatchObject({ ok: false, gate: "decor_lattice" });
+    expect(gateDecorLattice({ ...WALL, tile: { w: 16, h: 48 } }))
+      .toMatchObject({ ok: false, gate: "decor_lattice" });
+    expect(gateDecorLattice(WALL)).toEqual({ ok: true });
+  });
+
+  test("tiles: art that does not repeat on its declared tile", () => {
+    const source = makeCanvas(FLOOR.tile.w * 2, FLOOR.tile.h * 2);
+    for (let y = 0; y < source.h; y++) {
+      for (let x = 0; x < source.w; x++) putPixel(source, x, y, 0xcbc0ac);
+    }
+    expect(gateDecorTiles(source, FLOOR)).toEqual({ ok: true });
+    // One pixel of a motif that runs off the edge instead of wrapping.
+    putPixel(source, FLOOR.tile.w + 3, 3, 0x768594);
+    expect(gateDecorTiles(source, FLOOR)).toMatchObject({ ok: false, gate: "decor_tiles" });
+  });
+
+  test("tiles: a one-tile source proves nothing and is refused", () => {
+    const source = makeCanvas(FLOOR.tile.w, FLOOR.tile.h);
+    for (let y = 0; y < source.h; y++) {
+      for (let x = 0; x < source.w; x++) putPixel(source, x, y, 0xcbc0ac);
+    }
+    expect(gateDecorTiles(source, FLOOR)).toMatchObject({ ok: false, gate: "decor_tiles" });
+  });
+
+  test("contrast: a backdrop dark enough to swallow an outline", () => {
+    const dark = RAMP_SHADES.find((s) => luminance(s.color) < BACKDROP_LUMA_MIN - 10);
+    const tile = makeCanvas(WALL.tile.w, WALL.tile.h);
+    for (let y = 0; y < tile.h; y++) {
+      for (let x = 0; x < tile.w; x++) putPixel(tile, x, y, dark!.color);
+    }
+    expect(gateDecorContrast(tile, WALL)).toMatchObject({ ok: false, gate: "decor_contrast" });
+  });
+
+  test("contrast: a hole in the backdrop", () => {
+    const { tile } = frozenDecor(WALL);
+    tile.px[(2 * tile.w + 2) * 4 + 3] = 0;
+    expect(gateDecorContrast(tile, WALL)).toMatchObject({ ok: false, gate: "decor_contrast" });
+  });
+
+  test("contrast: declared riser and cap colours are held to the same rule", () => {
+    const { tile } = frozenDecor(FLOOR);
+    expect(gateDecorContrast(tile, { ...FLOOR, sides: { ...FLOOR.sides, left: 0x123456 } }))
+      .toMatchObject({ ok: false, gate: "decor_contrast" });
+    // In the palette, but too dark to be a backdrop.
+    expect(gateDecorContrast(tile, { ...FLOOR, sides: { ...FLOOR.sides, left: 0x311807 } }))
+      .toMatchObject({ ok: false, gate: "decor_contrast" });
+    const wallTile = frozenDecor(WALL).tile;
+    expect(gateDecorContrast(wallTile, { ...WALL, cap: 0x311807 }))
+      .toMatchObject({ ok: false, gate: "decor_contrast" });
+  });
+
+  test("quantize drags an arbitrary raster onto the palette", () => {
+    const source = makeCanvas(4, 4);
+    for (let y = 0; y < 4; y++) {
+      for (let x = 0; x < 4; x++) putPixel(source, x, y, 0x123456 + x * 0x010101);
+    }
+    const out = quantize(source);
+    expect(gatePalette(out)).toEqual({ ok: true });
+    expect(PALETTE.has(nearestPaletteColor(0x123456))).toBe(true);
+    // Idempotent: a palette colour is already its own nearest.
+    for (const color of PALETTE) expect(nearestPaletteColor(color)).toBe(color);
   });
 });

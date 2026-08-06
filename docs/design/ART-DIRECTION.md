@@ -150,6 +150,33 @@ all four passed every gate in the state that read wrong.
 What this does **not** reach: marks that are not extrudable — a monogram, a crest, lettering — and
 anything on a curved face. Those need raster, which is what the flat-decor class (#260) is for.
 
+## Flat decor: raster backdrops (#260, built 2026-08-05)
+
+Wallpapers and floor patterns are authored as plain rasters and quantized nearest-in-RGB, not
+through the artgen luma buckets — a flat texture is already the colour it will be drawn in.
+Mechanism, lattice rules and gates are in [PIPELINES.md](PIPELINES.md) §2a. What belongs here is
+the style, and one finding that carries straight over from trim:
+
+- **A backdrop has a luma floor, and it is derived, not chosen.** `BACKDROP_LUMA_MIN` is the
+  lightest outline any ramp can paint (58.0, sand and gold) plus `MIN_CONTRAST`. Anything darker
+  swallows the outline of whatever stands on it — and an avatar's outline is its *worn* ramp's,
+  chosen by the player, so no decor can be designed against a known one. The two default floor
+  greens clear it, which is what lets the furni contrast gate compare against one number.
+- **The accent-contrast trap is worse in raster than in trim.** `floor_marble`'s first vein was a
+  slightly-off-white over an ivory-top field and quantized straight back into the field —
+  invisible, and nothing bounced it. The ivory ramp jumps 148.6 → 193 with nothing between, so
+  "a shade off" is not a colour this palette has. Same lesson as gold-on-walnut, and the raster
+  class is more exposed to it because a texture invites tonal detail that 12 five-step ramps
+  cannot carry. Pick the neighbouring *shade*, or pick a different ramp.
+- **The decor's own seams belong in the texture.** A floor decor drops the client's per-tile
+  stroke, so `floor_marble` draws its grout and `floor_parquet` does not — a fixed grid over a
+  parquet weave would cut the weave into squares.
+- **Style so far.** `floor_marble` (ivory/slate chequer, grouted, one vein a slab),
+  `floor_parquet` (sand/walnut basket weave, quarter-turned every slab), `wall_wainscot` (plaster
+  over a walnut dado with a sand rail and a skirting), `wall_pinstripe` (gold pinstripe on
+  charcoal, 16 px repeat). Café takes the parquet and wainscot, the Casino Floor the marble and
+  pinstripe.
+
 ## Proof gate before build-out
 
 Re-render the three shipped archetype families (chair, sofa, plant) through this path. All three

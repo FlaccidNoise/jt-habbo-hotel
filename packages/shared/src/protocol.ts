@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { RoomDecorSchema } from "./decor.ts";
 
 export interface Tile { x: number; y: number }
 export const DirSchema = z.number().int().min(0).max(7);
@@ -135,6 +136,9 @@ export type ClientMsg = z.infer<typeof ClientMsgSchema>;
 export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("room_state"), roomId: z.number().int(), name: z.string(),
              heightmap: z.string(),
+             // #260. Absent on a room that has chosen neither, which is every room until one is
+             // decorated — the client then draws the default checker and plaster.
+             decor: RoomDecorSchema,
              door: z.object({ x: z.number().int(), y: z.number().int(), dir: DirSchema }),
              chat: z.object({ speakRadius: z.number().int(), shoutAllowed: z.boolean() }),
              avatars: z.array(AvatarStateSchema), furni: z.array(FurniItemSchema),

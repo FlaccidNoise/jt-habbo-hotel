@@ -7,5 +7,6 @@ export * from "./placement.ts";
 export * from "./figuredata.ts";
 export * from "./figure.ts";
 export * from "./walls.ts";
+export * from "./decor.ts";
 export * from "./lever.ts";
 export * from "./sets.ts";

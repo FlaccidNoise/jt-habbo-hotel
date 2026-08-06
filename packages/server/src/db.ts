@@ -1,6 +1,6 @@
 import Database from "better-sqlite3";
 import { parseHeightmap } from "@grand/shared";
-import type { Door } from "@grand/shared";
+import type { Door, RoomDecor } from "@grand/shared";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
 
 const DDL = `
@@ -68,6 +68,7 @@ interface ChatConfig {
 const CAFE_HEIGHTMAP = Array.from({ length: 10 }, () => "0".repeat(10)).join("\n");
 const CAFE_DOOR: Door = { x: 0, y: 5, dir: 2 };
 const CAFE_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: false };
+const CAFE_DECOR: RoomDecor = { floor: "floor_parquet", wall: "wall_wainscot" };
 
 const CASINO_HEIGHTMAP = [
   "xx0000000000",
@@ -85,6 +86,7 @@ const CASINO_HEIGHTMAP = [
 ].join("\n");
 const CASINO_DOOR: Door = { x: 0, y: 6, dir: 2 };
 const CASINO_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: true };
+const CASINO_DECOR: RoomDecor = { floor: "floor_marble", wall: "wall_pinstripe" };
 
 // The Museum wing (#210). A long gallery: donations stand on the plinth row against the back
 // wall, where the donor plaque hangs behind each one. Staff-owned, so nobody can rearrange it.
@@ -99,9 +101,10 @@ function seedRoom(
   heightmap: string,
   door: Door,
   chat: ChatConfig,
+  decor: RoomDecor = {},
 ): void {
   parseHeightmap(heightmap, door); // never skip: an unwalkable seed must fail loudly at boot
-  const doc = JSON.stringify({ v: 1, heightmap, door, chat });
+  const doc = JSON.stringify({ v: 1, heightmap, door, chat, decor });
   db.prepare("INSERT OR IGNORE INTO rooms (id, owner_id, name, doc) VALUES (?, NULL, ?, ?)").run(
     id,
     name,
@@ -134,8 +137,8 @@ export function openDb(path: string): Database.Database {
   ]) {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }
-  seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT);
-  seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT);
+  seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR);
+  seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR);
   seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
   return db;
 }

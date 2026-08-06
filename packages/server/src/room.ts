@@ -22,6 +22,7 @@ import type {
   FurniItem,
   PlacementCtx,
   Posture,
+  RoomDecor,
   RoomModel,
   ServerMsg,
   Tile,
@@ -64,7 +65,8 @@ export type Emit = (accountId: number, msg: ServerMsg) => void;
 
 interface Step { x: number; y: number; z: number }
 interface ChatConfig { speakRadius: number; shoutAllowed: boolean }
-interface RoomDoc { heightmap: string; door: Door; chat: ChatConfig }
+// A room seeded before #260 has no decor key at all, which is exactly the "chose neither" case.
+interface RoomDoc { heightmap: string; door: Door; chat: ChatConfig; decor?: RoomDecor }
 interface Walk {
   path: Step[];
   i: number;
@@ -93,6 +95,7 @@ export class Room {
   readonly model: RoomModel;
   readonly door: Door;
   readonly chatConfig: ChatConfig;
+  readonly decor: RoomDecor;
   private db: Database.Database;
   private emit: Emit;
   private heightmap: string;
@@ -116,6 +119,7 @@ export class Room {
     this.heightmap = doc.heightmap;
     this.door = doc.door;
     this.chatConfig = doc.chat;
+    this.decor = doc.decor ?? {};
     this.model = parseHeightmap(doc.heightmap, doc.door);
     this.furni = listRoomFurni(db, roomId);
     this.wallFurni = listRoomWallFurni(db, roomId);
@@ -186,6 +190,7 @@ export class Room {
       roomId: this.roomId,
       name: this.name,
       heightmap: this.heightmap,
+      decor: this.decor,
       door: this.door,
       chat: this.chatConfig,
       avatars: [...this.occ.values()].map(toAvatar),

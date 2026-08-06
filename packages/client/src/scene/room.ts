@@ -2,6 +2,7 @@ import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
+import type { DecorAsset, FloorDecor } from "./decor.ts";
 import { LAYER, tileDepth } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
@@ -15,6 +16,9 @@ const FLOOR_B = 0x5d8a3f;
 const DOOR = 0xa33b3b;
 const SIDE_LEFT = 0x3f6029;
 const SIDE_RIGHT = 0x4d7434;
+/** Grout between the default checker's tiles. A floor decor draws its own seams into the tile, so
+ *  this comes off — a fixed grid over a parquet weave would cut it into squares. */
+const SEAM = { width: 1, color: 0x000000, alpha: 0.2 } as const;
 
 export interface TileHandlers {
   click(x: number, y: number, button: number): void;
@@ -58,16 +62,24 @@ export class RoomScene {
   private floor: number;
   private tiles = new Map<string, Graphics>();
   private handlers: TileHandlers;
+  private decor: DecorAsset<FloorDecor> | null;
   private background: (e: FederatedPointerEvent) => void;
   private touchMove: (e: FederatedPointerEvent) => void;
   private touchEnd: () => void;
   private touch: { x: number; y: number; sx: number; sy: number; timer: ReturnType<typeof setTimeout> } | null = null;
 
-  constructor(stage: Container, model: RoomModel, handlers: TileHandlers, depth: DepthIndex) {
+  constructor(
+    stage: Container,
+    model: RoomModel,
+    handlers: TileHandlers,
+    depth: DepthIndex,
+    decor: DecorAsset<FloorDecor> | null = null,
+  ) {
     this.model = model;
     this.stage = stage;
     this.handlers = handlers;
     this.depth = depth;
+    this.decor = decor;
     this.floor = floorHeight(model);
     this.world = new Container();
     this.world.sortableChildren = true;
@@ -195,10 +207,14 @@ export class RoomScene {
   private addTile(x: number, y: number, h: number, handlers: TileHandlers): void {
     const isDoor = x === this.model.door.x && y === this.model.door.y;
     const tile = new Graphics();
-    tile
-      .poly(diamond(x, y, h))
-      .fill(isDoor ? DOOR : (x + y) % 2 === 0 ? FLOOR_A : FLOOR_B)
-      .stroke({ width: 1, color: 0x000000, alpha: 0.2 });
+    // The decor tile is laid down once across the whole floor plane and each diamond cuts its own
+    // window out of it (textureSpace "global"), so the pattern runs on unbroken between tiles and
+    // a raised tile still lands on the same phase — its lift is a whole number of tile heights.
+    // Hit-testing is untouched: the shape is still the polygon, only the paint changed.
+    tile.poly(diamond(x, y, h));
+    if (isDoor) tile.fill(DOOR).stroke(SEAM);
+    else if (this.decor) tile.fill({ texture: this.decor.texture, textureSpace: "global" });
+    else tile.fill((x + y) % 2 === 0 ? FLOOR_A : FLOOR_B).stroke(SEAM);
     tile.eventMode = "static";
     tile.cursor = "pointer";
     tile.on("pointerdown", (e) => {
@@ -255,8 +271,12 @@ export class RoomScene {
       const bb = worldToScreen(bx, by, bottom, SCALE);
       g.poly([at.sx, at.sy, bt.sx, bt.sy, bb.sx, bb.sy, ab.sx, ab.sy]).fill(color);
     };
-    if (south < h) face(x - 0.5, y + 0.5, x + 0.5, y + 0.5, south, SIDE_LEFT);
-    if (east < h) face(x + 0.5, y + 0.5, x + 0.5, y - 0.5, east, SIDE_RIGHT);
+    // Flat colours even under a decor floor: a riser is the ground plane turned on edge, and
+    // shearing the tile pattern up it would read as a smear rather than as the same material.
+    const left = this.decor?.def.sides.left ?? SIDE_LEFT;
+    const right = this.decor?.def.sides.right ?? SIDE_RIGHT;
+    if (south < h) face(x - 0.5, y + 0.5, x + 0.5, y + 0.5, south, left);
+    if (east < h) face(x + 0.5, y + 0.5, x + 0.5, y - 0.5, east, right);
     return g;
   }
 }
