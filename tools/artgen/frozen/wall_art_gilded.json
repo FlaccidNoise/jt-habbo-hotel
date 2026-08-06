@@ -19,6 +19,7 @@
   },
   "drawnHeight": 2.96875,
   "seatZ": null,
+  "occlusion": null,
   "wall": {
     "span": 1,
     "planeW": 26,
@@ -28,10 +29,9 @@
     "gap": 0,
     "depth": 0.08
   },
-  "occlusion": [],
-  "styleVersion": 1,
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:38382d7045687238",
-  "recipeHash": "38382d7045687238d644bef693e8d811d6e95c1bb3dbfeb180c60f27848aff57",
+  "partLibraryHash": "artgen:7dfcf276de4e92a1",
+  "recipeHash": "7dfcf276de4e92a1387a2760426e0c809b8d1febf2268760c764fc288fee82bb",
   "pixelHash": "58853216323b28ff5ce98aa2e86d1f8ba3ba8b001b6e3fbaf358f354e3e75526"
 }

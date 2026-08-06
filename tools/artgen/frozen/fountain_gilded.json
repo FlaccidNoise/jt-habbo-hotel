@@ -23,10 +23,10 @@
   },
   "drawnHeight": 1.6875,
   "seatZ": null,
-  "occlusion": [],
-  "styleVersion": 1,
+  "occlusion": null,
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:74f813ffc88ac05d",
-  "recipeHash": "74f813ffc88ac05d265a8c77e09ff6236e55e10c7e995fac70d311c8515072f9",
+  "partLibraryHash": "artgen:03cf238a3752f2cf",
+  "recipeHash": "03cf238a3752f2cf5538646d7a99469fdcd57f8b0906ea554b614ae5be49f443",
   "pixelHash": "99b3eec4e2e052f5a35d00fd73f0f1fc4750110f8daea306ad240356dcf8fb6e"
 }

@@ -305,6 +305,8 @@ for (const [id, part] of work) {
 
   const png = encodePng(sheet.w, sheet.h, sheet.px);
   writeFileSync(join(renderDir, `${id}.png`), png);
+  const nearPng = hasNear ? encodePng(nearSheet.w, nearSheet.h, nearSheet.px) : null;
+  if (nearPng) writeFileSync(join(renderDir, `${id}.near.png`), nearPng);
   const big = upscale(sheet, 3);
   writeFileSync(join(renderDir, `${id}@3x.png`), encodePng(big.w, big.h, big.px));
 
@@ -364,12 +366,6 @@ for (const [id, part] of work) {
     },
   };
   const result = wallDef ? runWallGates(bundle, wallDef) : runGates(bundle, def);
-  const png = encodePng(sheet.w, sheet.h, sheet.px);
-  writeFileSync(join(renderDir, `${id}.png`), png);
-  const nearPng = hasNear ? encodePng(nearSheet.w, nearSheet.h, nearSheet.px) : null;
-  if (nearPng) writeFileSync(join(renderDir, `${id}.near.png`), nearPng);
-  const big = upscale(sheet, 3);
-  writeFileSync(join(renderDir, `${id}@3x.png`), encodePng(big.w, big.h, big.px));
   if (!result.ok) {
     failures++;
     console.error(`${id}: FAIL ${result.gate} gate: ${result.detail}`);

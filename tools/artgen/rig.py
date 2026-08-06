@@ -136,9 +136,14 @@ PARTS = {
             {"t": "box", "c0": (0.64, 0.64, 0.00), "c1": (0.72, 0.72, 0.48)},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.32, "ry": 0.32, "z0": 0.48, "z1": 0.58,
              "seat": True},
-            {"t": "cyl", "cx": 0.30, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
-            {"t": "cyl", "cx": 0.70, "cy": 0.86, "rx": 0.035, "ry": 0.035, "z0": 0.58, "z1": 0.98},
-            {"t": "box", "c0": (0.18, 0.80, 0.98), "c1": (0.82, 0.92, 1.22), "bevel": 0.05},
+            # Back uprights. They rise from INSIDE the seat slab (z0 below its 0.58 top) and stand
+            # over it, so the back is visibly carried by the chair. They used to sit at cy 0.86 —
+            # past the seat cylinder's rear edge at 0.82 — resting on nothing, and at r 0.035 they
+            # were ~2 px wide, so the whole back read as a slab hovering beside a stool (#252).
+            {"t": "cyl", "cx": 0.32, "cy": 0.76, "rx": 0.06, "ry": 0.06, "z0": 0.50, "z1": 1.00},
+            {"t": "cyl", "cx": 0.68, "cy": 0.76, "rx": 0.06, "ry": 0.06, "z0": 0.50, "z1": 1.00},
+            # Flush with the seat's rear edge, and overlapping the posts in z so the joint is solid.
+            {"t": "box", "c0": (0.18, 0.70, 0.98), "c1": (0.82, 0.82, 1.22), "bevel": 0.05},
         ],
     },
     # ---- remaining floor archetypes ----

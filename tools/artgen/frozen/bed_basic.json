@@ -24,8 +24,6 @@
   "drawnHeight": 0.96875,
   "seatZ": 0.55,
   "occlusion": null,
-  "nearSheet": "bed_basic.near.png",
-  "nearHash": "de3124d5e5707229227b7c6f1b8bb61d081716a4267a7c74d03c323d47aaab59",
   "styleVersion": 2,
   "generatorVersion": 1,
   "partLibraryHash": "artgen:dea0fd0d6a0f6a80",

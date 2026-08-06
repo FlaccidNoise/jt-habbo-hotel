@@ -25,10 +25,10 @@
   "seatZ": 0.58,
   "occlusion": null,
   "nearSheet": "cafe_chair_navy.near.png",
-  "nearHash": "c9466a96d0324e1a58cd50b1e9501d82f56b46c2062d5f6ceaa8edc7d37bc30b",
+  "nearHash": "acd6355390c4670204e4ec66495cd2748a0e3dd5a027e79d58980e9246cfe611",
   "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:b9e641c5bceb6fb7",
-  "recipeHash": "b9e641c5bceb6fb7216c2c9cfd009ef07649817bdf66830e0ba5b67002f63d7f",
-  "pixelHash": "61e3b08af03cf532d023c96451c3aa77c31a9afd69f173e84750b9cbde1a0fcb"
+  "partLibraryHash": "artgen:27a7cb113907aefb",
+  "recipeHash": "27a7cb113907aefb4158126a87337864c1d43e9116aae437969abe0f03ea88bc",
+  "pixelHash": "c7a614c0e5934f9b8daa544eaefc203c8b3cc6699986d4efe70a2ce656cf00db"
 }
