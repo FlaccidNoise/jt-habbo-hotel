@@ -110,9 +110,13 @@ bounces.** Reading the config is never evidence.
 - Trade window: 3-second delay after both accept, any change resets both accepts, 8-item cap.
 - A staged one-sided trade shows the loud warning and offers lending mode.
 - A staged transfer past the 7-day outbound budget bounces. A staged resale inside the 72-hour
-  bind bounces.
+  bind bounces. **Met** (#237): both enforced in `settleTrade`, the only code that moves an
+  `owner_id`, and staged in `limits.test.ts`.
 - The counterparty-graph queries surface a staged 3-account pod within one scheduled run, and
-  freeze the receiving balance, not the account.
+  freeze the receiving balance, not the account. **Half met** (#237): all three queries ship under
+  `collusion` on /api/metrics and the staged pod test asserts the 3-account funnel surfaces in one
+  read. The freeze and its review ticket are unbuilt — there is no frozen state and no moderation
+  queue to raise a ticket in (#308).
 - Ledger down: rooms, chat, movement unaffected. Purchases fail closed. A queued vote settles
   exactly once when the ledger returns.
 - Restore drill: scheduled restore into scratch succeeds with matching row counts. RPO 24 h,

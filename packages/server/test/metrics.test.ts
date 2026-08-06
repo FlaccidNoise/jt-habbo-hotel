@@ -164,7 +164,10 @@ describe("GET /api/metrics", () => {
       ws: { connects: number; reconnects: number; open: number };
       lag: { lastMs: number; maxMs: number };
       rooms: Array<{ roomId: number; players: number; occupants: number }>;
+      collusion: { pairs: unknown[]; overEarners: unknown[]; pods: unknown[] };
     };
+    // The three standing queries ride this endpoint — each read is their scheduled run (#237).
+    expect(body.collusion).toEqual({ pairs: [], overEarners: [], pods: [] });
     expect(body.ws.connects).toBe(wsBefore.connects + 2);
     expect(body.ws.reconnects).toBe(wsBefore.reconnects + 1);
     expect(body.rooms).toEqual([{ roomId: 1, players: 1, occupants: 3 }]); // alice + 2 NPCs

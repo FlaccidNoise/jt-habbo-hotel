@@ -1,5 +1,6 @@
 import type Database from "better-sqlite3";
 import type { InventoryItem } from "@grand/shared";
+import { BIND_MS, checkBudget, swingOf } from "./limits.ts";
 import { timed } from "./metrics.ts";
 
 // The unified Stars-and-item ledger (decision log 2026-08-03, PIPELINES §5): one append-only
@@ -148,10 +149,13 @@ export const settlePurchase = timed(function settlePurchase(
       opts.price,
       opts.accountId,
     );
+    // Bind-on-purchase, 72 hours (#237): a bought item cannot be handed on until it clears.
     const itemId = Number(
       db
-        .prepare("INSERT INTO furni_items (def_id, owner_id, room_id, state) VALUES (?, ?, NULL, 0)")
-        .run(opts.defId, opts.accountId).lastInsertRowid,
+        .prepare(
+          "INSERT INTO furni_items (def_id, owner_id, room_id, state, bind_until) VALUES (?, ?, NULL, 0, ?)",
+        )
+        .run(opts.defId, opts.accountId, now + BIND_MS).lastInsertRowid,
     );
     const entry = db.prepare(
       `INSERT INTO ledger_entries (op, op_key, seq, account_id, stars, item_id, created_at)
@@ -204,10 +208,19 @@ export const settleSpend = timed(function settleSpend(
       itemId = Number(
         db
           .prepare(
-            "INSERT INTO furni_items (def_id, owner_id, room_id, state, bound, inscription)" +
-              " VALUES (?, ?, NULL, 0, ?, ?)",
+            "INSERT INTO furni_items (def_id, owner_id, room_id, state, bound, inscription, bind_until)" +
+              " VALUES (?, ?, NULL, 0, ?, ?, ?)",
           )
-          .run(opts.mint.defId, opts.accountId, opts.mint.bound ? 1 : 0, opts.mint.inscription ?? null)
+          .run(
+            opts.mint.defId,
+            opts.accountId,
+            opts.mint.bound ? 1 : 0,
+            opts.mint.inscription ?? null,
+            // A permanently bound mint never trades, so a timer on it would be noise. The
+            // tradeable ones — Luck Lever prizes — bind for 72 hours like a purchase (#237):
+            // the lever is the pod's cheapest route to fresh tradeable goods.
+            opts.mint.bound ? null : now + BIND_MS,
+          )
           .lastInsertRowid,
       );
       entry.run(opts.op, opts.opKey, 1, opts.accountId, 0, itemId, now);
@@ -263,13 +276,17 @@ export const settleTrade = timed(function settleTrade(
   return db.transaction((): TradeResult => {
     if (settled(db, opts.opKey)) return { ok: true, aReceived: [], bReceived: [] };
     const pick = db.prepare(
-      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound FROM furni_items WHERE id = ?",
+      "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound, bind_until AS bindUntil" +
+        " FROM furni_items WHERE id = ?",
     );
     const defIds = new Map<number, string>();
     for (const side of [opts.a, opts.b]) {
       for (const itemId of side.itemIds) {
         const row = pick.get(itemId) as
-          | { id: number; defId: string; ownerId: number; roomId: number | null; bound: number }
+          | {
+              id: number; defId: string; ownerId: number; roomId: number | null;
+              bound: number; bindUntil: number | null;
+            }
           | undefined;
         if (!row || row.ownerId !== side.accountId || row.roomId !== null) {
           return { ok: false, reason: "an offered item is no longer available" };
@@ -280,7 +297,24 @@ export const settleTrade = timed(function settleTrade(
         if (row.bound) {
           return { ok: false, reason: "an offered item is account-bound and cannot be traded" };
         }
+        if (row.bindUntil !== null && row.bindUntil > now) {
+          return { ok: false, reason: "an offered item is still within its 72-hour bind" };
+        }
         defIds.set(itemId, row.defId);
+      }
+    }
+    // GAME.md §Transfer limits (#237): the rolling 7-day net outbound budget, enforced at the
+    // ledger so every path that moves goods inherits it. Checked after the items are verified so
+    // a stale offer fails as a stale offer, not as a budget refusal.
+    const values = (side: TradeSideInput): string[] =>
+      side.itemIds.map((itemId) => defIds.get(itemId) ?? "");
+    for (const [side, other] of [[opts.a, opts.b], [opts.b, opts.a]] as const) {
+      const check = checkBudget(db, side.accountId, swingOf(values(side), values(other)), now);
+      if (!check.ok) {
+        return {
+          ok: false,
+          reason: `that would pass a 7-day transfer limit (${check.used + check.swing} of ${check.budget})`,
+        };
       }
     }
     const move = db.prepare("UPDATE furni_items SET owner_id = ? WHERE id = ?");

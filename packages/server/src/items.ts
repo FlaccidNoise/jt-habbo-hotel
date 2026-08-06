@@ -94,23 +94,31 @@ export function provisionSuite(db: Database.Database, accountId: number, usernam
 
 /** SQLite has no booleans and the protocol omits both marks on ordinary furni, so the 0/1 and
  *  NULL columns are folded away here rather than at every call site (#210). */
-function marks<T extends { bound?: number; locked?: number; inscription?: string | null }>(
+function marks<
+  T extends { bound?: number; locked?: number; inscription?: string | null; bind_until?: number | null },
+>(
   row: T,
-): Omit<T, "bound" | "locked" | "inscription"> &
-  { bound?: boolean; locked?: boolean; inscription?: string } {
-  const { bound, locked, inscription, ...rest } = row;
+): Omit<T, "bound" | "locked" | "inscription" | "bind_until"> &
+  { bound?: boolean; locked?: boolean; inscription?: string; bindUntil?: number } {
+  const { bound, locked, inscription, bind_until: bindUntil, ...rest } = row;
   return {
     ...rest,
     ...(bound ? { bound: true } : {}),
     ...(locked ? { locked: true } : {}),
     ...(inscription ? { inscription } : {}),
+    // Dropped once it has passed, so the client never has to decide whether a stale timestamp
+    // still means anything (#237).
+    ...(bindUntil && bindUntil > Date.now() ? { bindUntil } : {}),
   };
 }
 
 /** A row as SQLite hands it back: the two flags are 0/1 integers until `marks` folds them. */
-type RawRows<T> = Array<Omit<T, "bound" | "locked"> & { bound?: number; locked?: number }>;
+type RawRows<T> = Array<
+  Omit<T, "bound" | "locked" | "bindUntil"> &
+    { bound?: number; locked?: number; bind_until?: number | null }
+>;
 
-const ITEM_COLS = "id, def_id AS defId, bound, locked, inscription";
+const ITEM_COLS = "id, def_id AS defId, bound, locked, inscription, bind_until";
 
 export function listInventory(db: Database.Database, accountId: number): InventoryItem[] {
   return (db
@@ -196,13 +204,13 @@ export function getItem(
   const row = db
     .prepare(
       "SELECT id, def_id AS defId, owner_id AS ownerId, room_id AS roomId, x, y, z, dir, state," +
-        " wall_side AS side, bound, inscription, locked FROM furni_items WHERE id = ?",
+        " wall_side AS side, bound, inscription, locked, bind_until FROM furni_items WHERE id = ?",
     )
     .get(itemId) as
     // The raw row carries SQLite's 0/1 for the two flags; `marks` folds them to booleans.
-    | (Omit<FurniItem, "bound" | "locked"> & {
+    | (Omit<FurniItem, "bound" | "locked" | "bindUntil"> & {
         ownerId: number; roomId: number | null; side: WallSide | null;
-        bound?: number; locked?: number;
+        bound?: number; locked?: number; bind_until?: number | null;
       })
     | undefined;
   return row ? (marks(row) as ReturnType<typeof getItem>) : null;

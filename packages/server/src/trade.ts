@@ -3,6 +3,7 @@ import type Database from "better-sqlite3";
 import { MAX_TRADE_ITEMS } from "@grand/shared";
 import type { InventoryItem, ServerMsg } from "@grand/shared";
 import { settleTrade } from "./ledger.ts";
+import { checkBudget, swingOf } from "./limits.ts";
 import { log } from "./log.ts";
 
 // GAME.md §Trade: items-for-items only, both sides preview, any change resets both accepts,
@@ -103,12 +104,17 @@ export class TradeService {
       return;
     }
     const pick = this.db.prepare(
-      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound FROM furni_items WHERE id = ?",
+      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound, bind_until AS bindUntil" +
+        " FROM furni_items WHERE id = ?",
     );
+    const now = Date.now();
     const items: InventoryItem[] = [];
     for (const id of ids) {
       const row = pick.get(id) as
-        | { defId: string; ownerId: number; roomId: number | null; bound: number }
+        | {
+            defId: string; ownerId: number; roomId: number | null;
+            bound: number; bindUntil: number | null;
+          }
         | undefined;
       if (!row || row.ownerId !== accountId || row.roomId !== null) {
         this.fail(accountId, "that item is not in your inventory");
@@ -118,6 +124,11 @@ export class TradeService {
       // both sides accepted is a worse way to learn it (#210).
       if (row.bound) {
         this.fail(accountId, "that one is account-bound — it cannot be traded");
+        return;
+      }
+      if (row.bindUntil !== null && row.bindUntil > now) {
+        const hours = Math.ceil((row.bindUntil - now) / (60 * 60 * 1000));
+        this.fail(accountId, `that one is new — it can be traded in ${hours}h`);
         return;
       }
       items.push({ id, defId: row.defId });
@@ -135,6 +146,17 @@ export class TradeService {
     }
     this.mySide(session, accountId).accepted = true;
     if (session.a.accepted && session.b.accepted && session.countdown === undefined) {
+      // The ledger enforces the budget too, but it can only refuse the whole trade after the
+      // countdown. Both offers are final at this point, so say which side is over and by how
+      // much while there is still something either of them can do about it (#237).
+      const over = this.overBudget(session);
+      if (over) {
+        this.mySide(session, accountId).accepted = false;
+        this.fail(session.a.accountId, over);
+        this.fail(session.b.accountId, over);
+        this.broadcast(session);
+        return;
+      }
       session.countdown = setTimeout(() => this.settle(session), this.countdownMs);
     }
     this.broadcast(session);
@@ -216,6 +238,28 @@ export class TradeService {
       aGave: session.a.offer.length,
       bGave: session.b.offer.length,
     });
+  }
+
+  /** The message for whichever side the 7-day net outbound budget refuses, or null when both
+   *  sides fit. Named because a one-sided trade is the common shape and "someone is over" would
+   *  leave two players guessing which of them it is. */
+  private overBudget(session: Session): string | null {
+    const now = Date.now();
+    for (const [side, other] of [
+      [session.a, session.b],
+      [session.b, session.a],
+    ] as const) {
+      const swing = swingOf(
+        side.offer.map((i) => i.defId),
+        other.offer.map((i) => i.defId),
+      );
+      const check = checkBudget(this.db, side.accountId, swing, now);
+      if (!check.ok) {
+        return `${side.username} can give away ${Math.max(0, check.budget - check.used)} more` +
+          ` in value this week — this trade is ${check.swing}`;
+      }
+    }
+    return null;
   }
 
   private close(session: Session): void {

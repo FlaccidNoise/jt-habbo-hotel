@@ -18,6 +18,7 @@ import { closeDb, openDb } from "./db.ts";
 import {
   COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleSpend, settleTrickle,
 } from "./ledger.ts";
+import { TRANSFER_WINDOW_MS, overEarners, pairFlows, pods } from "./limits.ts";
 import { log } from "./log.ts";
 import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
 import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
@@ -588,10 +589,14 @@ export async function startServer(opts: {
     }
     const now = Date.now();
     const day = now - 24 * 60 * 60 * 1000;
+    const week = now - TRANSFER_WINDOW_MS;
     json(res, 200, {
       now,
       day: flows(db, day),
-      week: flows(db, now - 7 * 24 * 60 * 60 * 1000),
+      week: flows(db, week),
+      // GAME.md §Transfer limits, the three standing queries (#237). Every read of this endpoint
+      // is a scheduled run — there is no separate job, and staff-only (#226) is where they belong.
+      collusion: { pairs: pairFlows(db, week), overEarners: overEarners(db, week), pods: pods(db, week) },
       hourly: hourly(db, day),
       ledger: { ...ledgerStats },
       ws: { ...wsStats, open: conns.size },

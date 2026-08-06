@@ -151,13 +151,20 @@ creations are free to manufacture, so the cap must sit on the **relationship**. 
 - Every account has a rolling **7-day net outbound value budget** — the catalog value of goods it
   may hand out net of receipts — low at creation, rising with tenure and non-farmable milestones.
   Enforced at the ledger across trades, marketplace, stalls, and gifts together. (audit R-01)
+  Shipped (#237, `server/limits.ts`): 150 at creation, +100 per day of tenure, capped at 4,200 —
+  7 × the daily earn ceiling, the most an account could have legitimately earned in the window.
+  The milestone term is deliberately absent: the only milestone that exists is a collection-set
+  badge, which is bought with Stars and so is farmable by exactly the pod this wall is for.
 - Catalog furni is **bind-on-purchase for 72 hours** — costs a real player nothing, forces a
-  laundering pod to carry three days of inventory risk.
+  laundering pod to carry three days of inventory risk. Shipped (#237): `furni_items.bind_until`,
+  set by every Stars-spending mint, refused by `settleTrade`. Granted items have no clock.
 - Per-pair flow is watched: the ledger's standing queries are (1) net value flow per account pair
   per 7 days, (2) accounts whose outbound value exceeds inbound plus own earnings, (3) trade-graph
-  components whose internal volume exceeds external. (audit R-02)
+  components whose internal volume exceeds external. (audit R-02) Shipped (#237): all three under
+  `collusion` on /api/metrics, which is staff-only (#226). Each read of the page is their run.
 - Anomaly triggers **freeze the receiving balance**, not the account, and open a review ticket.
-  (audit C-14)
+  (audit C-14) **Not built** — there is no review-ticket system and no frozen state to put a
+  balance in, so the queries above surface pods to a human and stop there (#308).
 
 ### Alt strategy
 

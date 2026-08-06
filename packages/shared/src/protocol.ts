@@ -71,6 +71,9 @@ export const ROOM_CAPACITY = 25;
 export const InventoryItemSchema = z.object({
   id: z.number().int(), defId: z.string(),
   bound: z.boolean().optional(),
+  /** #237: epoch ms this item leaves its 72-hour bind-on-purchase. Absent once it has cleared, so
+   *  the client only ever sees it on an item it actually cannot trade yet. */
+  bindUntil: z.number().int().optional(),
   /** Placed by the house and never taken down — a museum exhibit and its plaque. The client hides
    *  the move controls for one; the server refuses them either way. */
   locked: z.boolean().optional(),

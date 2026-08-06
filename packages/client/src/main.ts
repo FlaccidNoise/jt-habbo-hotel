@@ -586,6 +586,14 @@ function renderFurniBar(): void {
     mark.className = "label";
     mark.textContent = "account-bound — cannot be traded";
     bar.appendChild(mark);
+  } else if (shown?.bindUntil !== undefined && shown.bindUntil > Date.now()) {
+    // Bind-on-purchase (#237). The server only sends the timestamp while it is still running,
+    // so anything here is genuinely untradeable right now.
+    const hours = Math.ceil((shown.bindUntil - Date.now()) / (60 * 60 * 1000));
+    const mark = document.createElement("span");
+    mark.className = "label";
+    mark.textContent = `new — tradeable in ${hours}h`;
+    bar.appendChild(mark);
   }
 
   const action = (text: string, run: () => void): void => {

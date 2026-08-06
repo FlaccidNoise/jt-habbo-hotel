@@ -85,6 +85,16 @@
         <div class="panel"><h2>Faucets (issued ★)</h2><div id="faucets"></div></div>
         <div class="panel"><h2>Sinks (absorbed ★)</h2><div id="sinks"></div></div>
       </div>
+      <div class="panel">
+        <h2>Counterparty watch — last 7 days</h2>
+        <p class="empty" style="margin: 0 0 12px; font-size: 12px;">
+          Catalog value of goods that changed hands. Nothing here is proof of anything — a pod and a
+          generous friend look alike until you read the accounts.
+        </p>
+        <h2>Net flow per pair</h2><div id="pairs"></div>
+        <h2 style="margin-top: 14px;">Gave away more than earned plus received</h2><div id="over"></div>
+        <h2 style="margin-top: 14px;">Insular groups (internal &gt; external volume)</h2><div id="pods"></div>
+      </div>
     </div>
     <div id="tooltip"></div>
     <script type="module">
@@ -216,6 +226,29 @@
 
         flowTable($("faucets"), m.day.faucets, m.week.faucets);
         flowTable($("sinks"), m.day.sinks, m.week.sinks);
+
+        // GAME.md §Transfer limits, the three standing queries (#237). Each read of this page is
+        // the scheduled run.
+        rows($("pairs"), ["giver", "receiver", "net", "volume"], m.collusion.pairs,
+          (p) => [p.a, p.b, p.net, p.volume]);
+        rows($("over"), ["account", "outbound", "inbound", "earned ★"], m.collusion.overEarners,
+          (r) => [r.accountId, r.outbound, r.inbound, r.earned]);
+        rows($("pods"), ["accounts", "internal", "external"], m.collusion.pods,
+          (p) => [p.members.join(", "), p.internal, p.external]);
+      }
+
+      function rows(el, headers, data, cells) {
+        if (data.length === 0) {
+          el.innerHTML = '<div class="empty">nothing flagged</div>';
+          return;
+        }
+        const head = headers.map((h, i) => `<th${i ? ' class="n"' : ""}>${h}</th>`).join("");
+        el.innerHTML =
+          `<table><tr>${head}</tr>` +
+          data
+            .map((d) => `<tr>${cells(d).map((c, i) => `<td${i ? ' class="n"' : ""}>${c}</td>`).join("")}</tr>`)
+            .join("") +
+          "</table>";
       }
 
       if (token) show();

@@ -137,6 +137,10 @@ export function openDb(path: string): Database.Database {
     // `locked` is a museum donation: placed by the house, never picked up again.
     ["bound", "INTEGER NOT NULL DEFAULT 0"], ["inscription", "TEXT"],
     ["locked", "INTEGER NOT NULL DEFAULT 0"],
+    // #237. Bind-on-purchase: the timestamp the item becomes tradeable. NULL means never bound —
+    // starter grants and anything minted before the column existed. Distinct from `bound`, which
+    // is forever.
+    ["bind_until", "INTEGER"],
   ]) {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }

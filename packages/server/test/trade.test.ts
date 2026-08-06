@@ -2,6 +2,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import SQLite from "better-sqlite3";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
 import { connect, stockUp } from "./helpers.ts";
@@ -188,6 +189,50 @@ describe("trade guards", () => {
     bob.send({ t: "trade_offer", itemIds: [alice.state.inventory[0]!.id] });
     const err = await bob.bus.waitFor("error");
     expect(err.code).toBe("trade");
+  });
+
+  // #237: both walls are enforced at the ledger, but a player has to learn about them from the
+  // trade window rather than from a trade that dies three seconds after both sides accepted.
+  test("an item still inside its 72-hour bind is refused at the offer, with the time left", async () => {
+    const { port } = await start();
+    const alice = await joinAs(port, "alice");
+    const bob = await joinAs(port, "bob");
+    const fresh = alice.state.inventory[0]!;
+    const db = new SQLite(dbPath);
+    db.prepare("UPDATE furni_items SET bind_until = ? WHERE id = ?").run(Date.now() + 2 * 3600_000, fresh.id);
+    db.close();
+
+    await openTrade(alice, bob, "alice", "bob");
+    alice.send({ t: "trade_offer", itemIds: [fresh.id] });
+    const err = await alice.bus.waitFor("error");
+    expect(err.code).toBe("trade");
+    expect(err.message).toMatch(/can be traded in 2h/);
+  });
+
+  test("a one-sided trade past the 7-day budget is refused at the accept, naming the side", async () => {
+    const { port } = await start();
+    const alice = await joinAs(port, "alice");
+    const bob = await joinAs(port, "bob");
+    // Fresh accounts get 150 of budget. Two median items is 300 — over, and one-sided so the
+    // swing is the whole amount.
+    const medians = alice.state.inventory.filter((i) => i.defId === "table_basic" || i.defId === "sofa_basic");
+    expect(medians).toHaveLength(2);
+
+    await openTrade(alice, bob, "alice", "bob");
+    alice.send({ t: "trade_offer", itemIds: medians.map((i) => i.id) });
+    await alice.bus.waitFor("trade_state");
+    await bob.bus.waitFor("trade_state");
+    alice.send({ t: "trade_accept" });
+    await alice.bus.waitFor("trade_state");
+    await bob.bus.waitFor("trade_state");
+    bob.send({ t: "trade_accept" });
+
+    const err = await bob.bus.waitFor("error");
+    expect(err.message).toMatch(/alice can give away 150 more in value this week — this trade is 300/);
+    // Bob's accept is rolled back rather than left standing against a trade that cannot settle.
+    // Alice's stands — she is the side that has to change something.
+    expect(await bob.bus.waitFor("trade_state")).toMatchObject({ youAccepted: false, theyAccepted: true });
+    await bob.bus.never("trade_complete", 200);
   });
 
   test("accepting with no open trade is an error, and a 9-item offer never parses", async () => {
