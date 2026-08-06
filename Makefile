@@ -36,3 +36,4 @@ art:
 	blender --background --factory-startup --python tools/artgen/rig.py -- \
 		--out $(ART_DIR) $(if $(PART),--only $(PART))
 	node --experimental-strip-types tools/artgen/postpass.ts $(ART_DIR) --freeze
+	node --experimental-strip-types tools/artgen/figurepass.ts $(ART_DIR) --freeze

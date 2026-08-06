@@ -9,7 +9,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
-  "trade", "purchase", "arcade", "no_seat", "room_busy",
+  "trade", "purchase", "arcade", "no_seat", "room_busy", "figure",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -33,6 +33,9 @@ export const AvatarStateSchema = z.object({
   id: z.number().int(), username: z.string(),
   x: z.number().int(), y: z.number().int(), z: z.number(),
   dir: DirSchema, posture: PostureSchema,
+  /** Figure string (#127). Broadcast with the avatar because everyone in the room has to draw it,
+   *  and it is what the chat bubble colour derives from. */
+  figure: z.string(),
   staff: z.boolean().optional(),   // NPC hotel staff — negative ids, visibly badged, never players
 });
 export type AvatarState = z.infer<typeof AvatarStateSchema>;
@@ -66,6 +69,10 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   // Seat, not item: a 2-tile sofa has a seat per tile, and the tile is what the player clicked.
   z.object({ t: z.literal("sit"), x: z.number().int(), y: z.number().int() }),
   z.object({ t: z.literal("stand") }),
+  // Wearing is one path, not two: the change has to reach everyone in the room anyway, and the
+  // socket is already open and already authenticated.
+  z.object({ t: z.literal("set_figure"), figure: z.string().max(400) }),
+  z.object({ t: z.literal("wave") }),
   // Trades are items-for-items only — Stars never appear in a trade (GAME.md §Currency).
   z.object({ t: z.literal("trade_open"), to: z.string() }),
   z.object({ t: z.literal("trade_offer"),
@@ -99,6 +106,9 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   // to face the way the seat faces, so one message settles position, height, and facing together.
   z.object({ t: z.literal("posture"), id: z.number().int(), posture: PostureSchema,
              x: z.number().int(), y: z.number().int(), z: z.number(), dir: DirSchema }),
+  z.object({ t: z.literal("figure_changed"), id: z.number().int(), figure: z.string() }),
+  // Transient: no posture, no server-held state. The client plays the two frames and drops back.
+  z.object({ t: z.literal("wave"), id: z.number().int() }),
   z.object({ t: z.literal("furni_placed"), item: FurniItemSchema }),
   z.object({ t: z.literal("furni_moved"), item: FurniItemSchema }),   // z recomputed after a pickup
   z.object({ t: z.literal("furni_removed"), itemId: z.number().int() }),

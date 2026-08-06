@@ -19,7 +19,7 @@ import os
 import sys
 
 import bpy
-from mathutils import Vector
+from mathutils import Euler, Matrix, Vector
 
 RES = 256
 ZSCALE = 32.0 / (32.0 * math.sqrt(2.0) * math.cos(math.radians(30.0)))   # 0.8164966
@@ -260,6 +260,424 @@ PARTS = {
     },
 }
 
+# ---- figure rig (#127) ---------------------------------------------------------------------
+# A figure is a primitive list like any part, but hung off a bone hierarchy so an action is joint
+# angles rather than a redrawn sprite. Poses are authored once and every garment ever made
+# inherits them.
+#
+# Everything inside the figure is authored in a UNIFORM px space — 1 unit = 1 px at scale 64 —
+# and the dimetric squash lives on the single root empty. That order is load-bearing: bone
+# rotations happen inside the uniform space, so a limb keeps its authored length when it swings.
+# Posing inside a pre-squashed space would quietly shorten every rotated limb, and the seat gate
+# measures exactly that length.
+#
+# Figure prims declare a "slot", not a ramp. Colour is per player, so the frozen sheet stores
+# (slot, shade) indices and the client resolves them through the worn ramps when it bakes the
+# outfit — a sheet per colour would put the combinatorics back in colour space.
+
+FIGURE_PX = 1.0 / (32.0 * math.sqrt(2.0))                 # one horizontal px, in world units
+FIGURE_PZ = FIGURE_PX / math.cos(math.radians(30.0))      # one vertical px, pre-squashed
+
+# 80 px = 2.5 height units, pinned against the shipped seat heights (cafe_chair seatZ 0.58 =
+# 18.6 px, and a 90-degree knee needs shin ~= seat height). Segments sum to it exactly.
+FIGURE_H = 80
+HEAD_LEN, TORSO_LEN, THIGH_LEN, SHIN_LEN = 22, 21, 19, 18
+HIP_Z = THIGH_LEN + SHIN_LEN          # 37
+SHOULDER_Z = HIP_Z + 15               # 52
+CHIN_Z = HIP_Z + TORSO_LEN            # 58, and + HEAD_LEN = 80
+
+CANVAS_W, CANVAS_H = 64, 112
+
+# name -> (parent, rest offset from the parent, in figure px). +Y is the way the figure faces.
+BONES = {
+    "hip":    (None,    (0.0, 0.0, HIP_Z)),
+    "spine":  ("hip",   (0.0, 0.0, 0.0)),
+    "chest":  ("spine", (0.0, 0.0, SHOULDER_Z - HIP_Z)),
+    "head":   ("chest", (0.0, 0.0, CHIN_Z - SHOULDER_Z)),
+    "arm_l":  ("chest", (9.5, 0.0, 0.0)),
+    "arm_r":  ("chest", (-9.5, 0.0, 0.0)),
+    "leg_l":  ("hip",   (4.0, 0.0, 0.0)),
+    "leg_r":  ("hip",   (-4.0, 0.0, 0.0)),
+    "knee_l": ("leg_l", (0.0, 0.0, -THIGH_LEN)),
+    "knee_r": ("leg_r", (0.0, 0.0, -THIGH_LEN)),
+}
+
+ARM_LEN = 22
+
+# box: c0/c1 corners in bone-local px. limb: capsule down local -Z, length + radius.
+# ball: ellipsoid at a bone-local centre.
+# The shins cap at the knee only: a bottom cap is a sphere hanging below the ankle, which puts
+# ink under the anchor row and makes the figure read as floating.
+# Keyed by figuredata set id (packages/shared/src/figuredata.ts): "<type><set>". The id is the
+# link between a mesh here and a wearable there, and figuredata set IDs are append-only forever.
+FIGURE_PARTS = {
+    "bd1": {
+        "prims": [
+            {"t": "box",  "bone": "spine",  "slot": 0, "c0": (-7.5, -6.0, 0.0),
+             "c1": (7.5, 6.0, float(TORSO_LEN))},
+            {"t": "limb", "bone": "arm_l",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
+            {"t": "limb", "bone": "arm_r",  "slot": 0, "len": float(ARM_LEN), "r": 3.2},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.2},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.2},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 3.7,
+             "caps": "top"},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 3.7,
+             "caps": "top"},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.7, -2.9, -float(SHIN_LEN)),
+             "c1": (3.7, 6.3, -SHIN_LEN + 3.4)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.7, -2.9, -float(SHIN_LEN)),
+             "c1": (3.7, 6.3, -SHIN_LEN + 3.4)},
+        ],
+    },
+    # The head is its own layer, not part of bd — it is selectable, and it is what makes a figure
+    # readable front-from-back. The skull's y radius is 22/2 * 0.82 = 9.0, so the nose has to
+    # reach past 9.0 to break the silhouette at all; a brow flush with the skull only shades.
+    "hd2": {
+        "prims": [
+            {"t": "limb", "bone": "head", "slot": 0, "len": 5.0, "r": 3.6},   # neck
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, HEAD_LEN / 2.0),
+             "r": HEAD_LEN / 2.0, "squash": (0.92, 0.86, 1.0)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-1.7, 7.4, 9.0),
+             "c1": (1.7, 11.2, 12.6)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-4.6, 6.4, 13.0),
+             "c1": (4.6, 9.2, 15.4)},
+        ],
+    },
+    # Tee (figuredata set 5, one colour slot). Sits just proud of the torso and takes the upper
+    # arm; the forearm and hands stay bare, which is what makes the holdout visible — the sleeve
+    # has to be cut where the arm passes in front of it.
+    "ch5": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 1.5),
+             "c1": (7.9, 6.4, 20.0)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 8.0, "r": 3.7},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 8.0, "r": 3.7},
+        ],
+    },
+    # Trim Shirt (set 6, two slots): body in slot 0, collar and cuffs in slot 1. This is the set
+    # that proves N-colour parts — one mesh, two independently chosen ramps, no second render.
+    "ch6": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 1.5),
+             "c1": (7.9, 6.4, 18.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.6, -6.6, 18.4),
+             "c1": (7.6, 6.6, 20.6)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 13.0, "r": 3.7},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 13.0, "r": 3.7},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -13.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -13.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+        ],
+    },
+    # Staff Blazer (set 16, two slots). Never grantable to a player — NPC accounts own it, so a
+    # player naming set 16 fails the ownership check like any other unowned set.
+    "ch16": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -6.7, 0.5),
+             "c1": (8.2, 6.7, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.2, -7.0, 2.0),
+             "c1": (2.2, 7.0, 20.4)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -20.5), "r": 4.0,
+             "squash": (1.0, 1.0, 0.4)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -20.5), "r": 4.0,
+             "squash": (1.0, 1.0, 0.4)},
+        ],
+    },
+    # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
+    # is why the cone prim exists.
+    "cc11": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -6.9, 0.0),
+             "c1": (8.4, 6.9, 20.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.0, -7.2, 1.0),
+             "c1": (2.0, 7.2, 20.6)},
+            {"t": "cone", "bone": "hip",   "slot": 0, "len": 14.0, "r0": 8.6, "r1": 10.4},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.0},
+        ],
+    },
+    "lg7": {
+        "prims": [
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.7},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.7},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 15.0, "r": 4.3},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 15.0, "r": 4.3},
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -6.4, -2.0),
+             "c1": (8.0, 6.4, 2.6)},
+        ],
+    },
+    # Pleated Skirt (set 8). Same lg slot as trousers, so wearing one replaces the other.
+    "lg8": {
+        "prims": [
+            {"t": "cone", "bone": "hip", "slot": 0, "len": 15.0, "r0": 8.2, "r1": 11.6},
+            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-8.0, -6.4, -1.5),
+             "c1": (8.0, 6.4, 2.6)},
+        ],
+    },
+    "sh9": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 4.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 4.2)},
+        ],
+    },
+    # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
+    # stays clear because the brow and nose reach further forward than the hair does.
+    "hr3": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.4, 12.4), "r": 11.4,
+             "squash": (0.95, 0.90, 0.86)},
+        ],
+    },
+    "hr4": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.4, 12.4), "r": 11.5,
+             "squash": (0.97, 0.92, 0.90)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -5.6, 2.0), "r": 8.0,
+             "squash": (1.05, 0.62, 1.35)},
+        ],
+    },
+    # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
+    # without it a cap would need a holdout render per hair set.
+    "ha10": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 17.0), "r": 10.6,
+             "squash": (1.0, 0.94, 0.62)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-8.0, 4.0, 15.2),
+             "c1": (8.0, 11.6, 16.6)},
+        ],
+    },
+    "ea12": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),
+             "c1": (7.4, 9.6, 14.0)},
+        ],
+    },
+    "fa13": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-8.2, 6.2, 11.0),
+             "c1": (8.2, 9.9, 15.6)},
+        ],
+    },
+    "ca14": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.8, 15.0), "r": 2.0},
+        ],
+    },
+    "wa15": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.6),
+             "c1": (8.1, 6.6, 3.4)},
+        ],
+    },
+}
+
+# A pose is joint angles in degrees plus where the figure's own origin sits relative to the
+# avatar's world position point. Standing, that point is the feet; seated, it is the hip contact,
+# because the client already lifts the sprite by the seat's z and seat heights vary 0.55-0.82.
+# anchor_y is where that point lands in the 64x112 frame.
+# Bone angles are degrees about the bone's own axes. The figure faces +Y, so a positive X rotation
+# swings a limb forward and a negative one swings it back; positive Y raises an arm out sideways.
+#
+# Measured: the standing composite is 22 x 85 px, reaching 81 above the anchor and 3 below. It
+# reaches below because the anchor is the tile-CENTRE ground point and a foot extending toward the
+# camera is genuinely nearer, so it projects lower. anchor_y 102 leaves 21 px of hat room above
+# the crown and 9 px under the toe. Walk contact frames reach 7 px down bare and 9 shod, so 8
+# was not enough once real footwear existed.
+#
+# Walk contact frames drop the root by 2.5 px. A leg swung 22 degrees is 37*(1-cos22) = 2.7 px
+# shorter vertically, so without the drop the figure hovers on every contact frame.
+#
+# The sit pose is not a free choice — the shipped seats fix it. The hip sits at the anchor, the
+# shin hangs vertical at its full 18 px, and the thigh must then be almost horizontal for the foot
+# to land SIT_FOOT_DROP below the hip: 19*cos(88.2) + 18 = 18.6 px, which is cafe_chair's
+# seatZ 0.58 x 32. That one pose serves the whole catalog: on bed_basic (0.55 = 17.6 px) the feet
+# are 1 px into the floor, and on casino_stool (0.82 = 26.2 px) they dangle 7.6 px clear, which is
+# what a bar stool should look like.
+SIT_FOOT_DROP = 18.6
+
+POSES = {
+    "stand": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {}},
+    "walk0": {"root": (0.0, 0.0, -2.5), "anchor_y": 102, "bones": {
+        "leg_l": (22.0, 0.0, 0.0), "leg_r": (-22.0, 0.0, 0.0),
+        "knee_l": (-5.0, 0.0, 0.0), "knee_r": (-18.0, 0.0, 0.0),
+        "arm_l": (-18.0, 0.0, 0.0), "arm_r": (18.0, 0.0, 0.0)}},
+    "walk1": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
+        "knee_r": (-28.0, 0.0, 0.0), "leg_r": (6.0, 0.0, 0.0),
+        "arm_l": (-6.0, 0.0, 0.0), "arm_r": (6.0, 0.0, 0.0)}},
+    "walk2": {"root": (0.0, 0.0, -2.5), "anchor_y": 102, "bones": {
+        "leg_l": (-22.0, 0.0, 0.0), "leg_r": (22.0, 0.0, 0.0),
+        "knee_l": (-18.0, 0.0, 0.0), "knee_r": (-5.0, 0.0, 0.0),
+        "arm_l": (18.0, 0.0, 0.0), "arm_r": (-18.0, 0.0, 0.0)}},
+    "walk3": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
+        "knee_l": (-28.0, 0.0, 0.0), "leg_l": (6.0, 0.0, 0.0),
+        "arm_l": (6.0, 0.0, 0.0), "arm_r": (-6.0, 0.0, 0.0)}},
+    "sit": {"root": (0.0, 0.0, -float(HIP_Z)), "anchor_y": 74, "bones": {
+        "leg_l": (88.2, 0.0, 0.0), "leg_r": (88.2, 0.0, 0.0),
+        "knee_l": (-88.2, 0.0, 0.0), "knee_r": (-88.2, 0.0, 0.0),
+        "arm_l": (14.0, 0.0, 0.0), "arm_r": (14.0, 0.0, 0.0)}},
+    "wave0": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
+        "arm_r": (0.0, 132.0, 0.0)}},
+    "wave1": {"root": (0.0, 0.0, 0.0), "anchor_y": 102, "bones": {
+        "arm_r": (0.0, 156.0, 0.0)}},
+}
+
+FRAMES = ["stand", "walk0", "walk1", "walk2", "walk3", "sit", "wave0", "wave1"]
+
+def fk(pose, bone, local):
+    """Where a bone-local point lands in the figure's uniform px space. Pure math — the pose gate
+    has to measure anatomy, and a rendered pixel measures the projection instead: a seated foot is
+    19 px forward of the hip, so its screen drop swings from 9 px facing away to 30 px facing the
+    camera while the leg never changes length."""
+    p = Vector(local)
+    name = bone
+    while name is not None:
+        parent, offset = BONES[name]
+        angles = pose["bones"].get(name, (0.0, 0.0, 0.0))
+        rot = Euler(tuple(math.radians(a) for a in angles), "XYZ").to_matrix()
+        p = rot @ p + Vector(offset)
+        name = parent
+    return p + Vector(pose["root"])
+
+def check_poses():
+    """Gate the pose table before a single frame renders. These are the numbers ART-DIRECTION
+    pins, and they are the reason the figure is 80 px rather than the spec's old 100."""
+    crown = fk(POSES["stand"], "head", (0.0, 0.0, float(HEAD_LEN))).z
+    assert abs(crown - FIGURE_H) < 0.01, f"stand: crown at {crown:.2f} px, want {FIGURE_H}"
+    for side in ("knee_l", "knee_r"):
+        sole = fk(POSES["stand"], side, (0.0, 0.0, -float(SHIN_LEN))).z
+        assert abs(sole) < 0.01, f"stand: {side} sole at {sole:.2f} px, want 0"
+
+    hip_z = fk(POSES["sit"], "hip", (0.0, 0.0, 0.0)).z
+    assert abs(hip_z) < 0.01, f"sit: hip at {hip_z:.2f} px, want 0 (the hip IS the anchor)"
+    for side in ("knee_l", "knee_r"):
+        drop = hip_z - fk(POSES["sit"], side, (0.0, 0.0, -float(SHIN_LEN))).z
+        assert abs(drop - SIT_FOOT_DROP) < 0.5, (
+            f"sit: {side} sole {drop:.2f} px below the hip, want {SIT_FOOT_DROP} "
+            f"(cafe_chair seatZ 0.58 x 32) — the feet miss the floor"
+        )
+
+    for name, pose in POSES.items():
+        for bone in pose["bones"]:
+            assert bone in BONES, f"{name}: no bone named {bone}"
+
+def figure_yaw(direction):
+    """Tile dir -> yaw about the figure's own centre. A figure occupies one tile, so direction is
+    a rotation, never the quarter-turn footprint remap furni uses. dir 0=N .. 7=NW, and the rig's
+    world axes are (x, y) = (fy, fx)."""
+    steps = [(0, -1), (1, -1), (1, 0), (1, 1), (0, 1), (-1, 1), (-1, 0), (-1, -1)]
+    dx, dy = steps[direction]
+    return math.atan2(-float(dy), float(dx))
+
+def add_figure_prim(prim):
+    """Build one figure prim in bone-local px. Caller parents the results to the bone."""
+    made = []
+    t = prim["t"]
+    if t == "box":
+        c0, c1 = prim["c0"], prim["c1"]
+        lo = Vector(tuple(min(c0[i], c1[i]) for i in range(3)))
+        hi = Vector(tuple(max(c0[i], c1[i]) for i in range(3)))
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        obj = bpy.context.active_object
+        obj.location = (lo + hi) / 2
+        obj.scale = hi - lo
+        finish(obj, smooth=False)
+        made.append(obj)
+    elif t == "limb":
+        length, r = prim["len"], prim["r"]
+        bpy.ops.mesh.primitive_cylinder_add(vertices=24, radius=r, depth=length)
+        obj = bpy.context.active_object
+        obj.location = (0.0, 0.0, -length / 2.0)
+        finish(obj, smooth=True)
+        made.append(obj)
+        caps = (0.0,) if prim.get("caps") == "top" else (0.0, -length)
+        for z in caps:   # capsule caps, so a swung limb keeps a round joint
+            bpy.ops.mesh.primitive_uv_sphere_add(segments=20, ring_count=10, radius=r)
+            cap = bpy.context.active_object
+            cap.location = (0.0, 0.0, z)
+            finish(cap, smooth=True)
+            made.append(cap)
+    elif t == "cone":
+        # Truncated cone down local -Z: r0 at the bone, r1 at the far end. Skirts and coat flares.
+        length, r0, r1 = prim["len"], prim["r0"], prim["r1"]
+        bpy.ops.mesh.primitive_cone_add(vertices=24, radius1=r1, radius2=r0, depth=length)
+        obj = bpy.context.active_object
+        obj.location = (0.0, 0.0, -length / 2.0)
+        finish(obj, smooth=True)
+        made.append(obj)
+    elif t == "ball":
+        bpy.ops.mesh.primitive_uv_sphere_add(segments=28, ring_count=14, radius=prim["r"])
+        obj = bpy.context.active_object
+        obj.location = prim["c"]
+        obj.scale = prim.get("squash", (1.0, 1.0, 1.0))
+        finish(obj, smooth=True)
+        made.append(obj)
+    return made
+
+def build_figure(part_ids, pose, direction):
+    """Bone empties + every named part's prims. Returns the per-prim object lists in order, so the
+    mask pass can retag them exactly the way the furni path does."""
+    scene = bpy.context.scene
+    root = bpy.data.objects.new("fig_root", None)
+    root.rotation_euler = (0.0, 0.0, figure_yaw(direction))
+    root.scale = (FIGURE_PX, FIGURE_PX, FIGURE_PZ)
+    scene.collection.objects.link(root)
+
+    origin = bpy.data.objects.new("fig_origin", None)
+    origin.location = pose["root"]
+    scene.collection.objects.link(origin)
+    origin.parent = root
+    origin.matrix_parent_inverse = Matrix.Identity(4)
+
+    bones = {}
+    for name, (_, offset) in BONES.items():
+        empty = bpy.data.objects.new(f"fig_{name}", None)
+        empty.location = offset
+        angles = pose["bones"].get(name, (0.0, 0.0, 0.0))
+        empty.rotation_euler = tuple(math.radians(a) for a in angles)
+        scene.collection.objects.link(empty)
+        bones[name] = empty
+    for name, (parent, _) in BONES.items():
+        bones[name].parent = bones[parent] if parent else origin
+        bones[name].matrix_parent_inverse = Matrix.Identity(4)
+
+    prim_objs = []
+    for part_id in part_ids:
+        for prim in FIGURE_PARTS[part_id]["prims"]:
+            objs = add_figure_prim(prim)
+            for obj in objs:
+                obj.parent = bones[prim["bone"]]
+                obj.matrix_parent_inverse = Matrix.Identity(4)
+            prim_objs.append(objs)
+    return prim_objs
+
+# The canonical body every garment is cut against. Rendering a garment WITH these present and
+# then discarding their pixels by mask index is a holdout: where the body is nearer, the body wins
+# the depth test, so those pixels are simply never the garment's. Compositing is then plain
+# alpha-over with no runtime depth at all.
+#
+# This works only while the holdout set is exactly one thing. That is what the per-set hidden-layer
+# rules buy: a hat hides hair, so a hat never needs a holdout render per hair set. Adding a second
+# HEAD SHAPE would break it — every hat would need re-rendering per head — so hd stays one mesh
+# and head variety comes from colour and hair.
+HOLDOUT_PARTS = ["bd1", "hd2"]
+
+def figure_render_set(part_id):
+    """Which parts to build for one layer's render, and the prim index its own geometry starts at.
+    Everything before that index is holdout and gets discarded by figurepass."""
+    if part_id in HOLDOUT_PARTS:
+        upto = HOLDOUT_PARTS[: HOLDOUT_PARTS.index(part_id) + 1]
+        return upto, sum(len(FIGURE_PARTS[p]["prims"]) for p in upto[:-1])
+    return HOLDOUT_PARTS + [part_id], sum(len(FIGURE_PARTS[p]["prims"]) for p in HOLDOUT_PARTS)
+
+def clear_figure():
+    for obj in [o for o in bpy.data.objects if o.type == "EMPTY" and o.name.startswith("fig_")]:
+        bpy.data.objects.remove(obj, do_unlink=True)
+
 # ---- footprint-frame transforms ------------------------------------------------------------
 
 def rot_pt(p, span_y):
@@ -280,6 +698,30 @@ def prim_points(prim):
             return [(prim["x"], prim["y0"], prim["z"]), (prim["x"], prim["y1"], prim["z"])]
         return [(prim["y0"], prim["x"], prim["z"]), (prim["y1"], prim["x"], prim["z"])]
     return [prim["c"]]
+
+def prim_centroid(prim):
+    """Footprint (fx, fy) centre of a prim, for the near/far split."""
+    pts = prim_points(prim)
+    return (sum(p[0] for p in pts) / len(pts), sum(p[1] for p in pts) / len(pts))
+
+def near_flags(prims, seat_prim):
+    """Which prims draw IN FRONT of an occupant seated on `seat_prim` (#227).
+
+    Derived from geometry, not declared. PIPELINES §2 stage 1 assumes an artist tags each slot
+    with an occlusion group per direction; the rig already knows where every primitive is, and
+    depth in the painter's algorithm is just fx+fy — larger is nearer the camera. So a prim whose
+    centroid sits nearer than the seat's is in front of whoever is sitting there, and that falls
+    out of the same rotation the direction loop already does.
+    """
+    if seat_prim is None:
+        return []
+    sx, sy = prim_centroid(seat_prim)
+    seat_depth = sx + sy
+    out = []
+    for prim in prims:
+        cx, cy = prim_centroid(prim)
+        out.append(bool(cx + cy > seat_depth + 1e-6))
+    return out
 
 def prim_top(prim):
     """Highest drawn point in height units — radii included, unlike prim_points."""
@@ -516,7 +958,10 @@ for part_id, part in PARTS.items():
         scene.render.filepath = base + "_mask.png"
         bpy.ops.render.render(write_still=True)
         dump_rgba(base + "_mask.png", base + ".mask.rgba")
-        frames.append({"dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
+        # #227: which prims sit in front of an occupant, in THIS direction's rotated frame.
+        seat_now = next((p for p in prims if p.get("seat")), None)
+        frames.append({"near": near_flags(prims, seat_now),
+                       "dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
                        "mask": f"{part_id}_d{q * 2}.mask.rgba"})
     meta["parts"][part_id] = {
         "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,
@@ -527,11 +972,91 @@ for part_id, part in PARTS.items():
     }
     print(f"rendered {part_id} (maxZ {max_z})")
 
+# ---- figure render loop ---------------------------------------------------------------------
+# 8 native directions, no mirroring. Mirroring exists to halve hand-drawing and we do not
+# hand-draw; rendering all 8 costs Blender seconds and buys asymmetric garments.
+
+check_poses()
+
+# Shadows are fatal to layered figures and setup_scene's per-light `sun.use_shadow = False` does
+# NOT turn them off — scene.eevee.use_shadows is a master switch that overrides it. With shadows
+# on, a shirt casts onto the torso, so the bare body renders differently depending on what is worn
+# over it: measured on the tee, 1374 pixels showing the SAME primitive differed by a mean of
+# 56/255. A layer's pixels must not depend on which other layers are worn, or compositing at
+# runtime is a lie. Off, that falls to 35 pixels of mean 5.4, all on layer boundaries and none
+# inside a flat layer — antialiasing, which the postpass's fixed-threshold quantisation removes.
+#
+# use_fast_gi and use_raytracing were measured too and changed nothing in this scene (black world,
+# one unshadowed sun), so they are left alone rather than set for decoration.
+#
+# Figures ONLY, and set here rather than in setup_scene because the furni loop has already run:
+# those 22 bundles are frozen and their pixels are their identity. Contact shading comes back as
+# postpass interior lines along layer boundaries, which is where a pixel-art style wants it.
+if hasattr(bpy.context.scene.eevee, "use_shadows"):
+    bpy.context.scene.eevee.use_shadows = False
+
+meta["figures"] = {}
+meta["figureCanvas"] = {"w": CANVAS_W, "h": CANVAS_H, "height": FIGURE_H,
+                        "frames": FRAMES, "sitFootDrop": SIT_FOOT_DROP}
+
+scene = bpy.context.scene
+for part_id, part in FIGURE_PARTS.items():
+    if only and part_id not in only:
+        continue
+    assert len(part["prims"]) <= 26, f"{part_id}: mask encoding holds 26 prims max"
+    build_parts, own_from = figure_render_set(part_id)
+    frames = []
+    for frame in FRAMES:
+        pose = POSES[frame]
+        for direction in range(8):
+            clear_meshes()
+            clear_figure()
+            prim_objs = build_figure(build_parts, pose, direction)
+            base = os.path.join(OUT, f"fig_{part_id}_{frame}_d{direction}")
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 16
+            scene.render.filepath = base + ".png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + ".png", base + ".rgba")
+            for i, objs in enumerate(prim_objs):
+                for obj in objs:
+                    obj.data.materials.clear()
+                    obj.data.materials.append(mask_material(i + 1))
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 1
+            scene.render.filepath = base + "_mask.png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + "_mask.png", base + ".mask.rgba")
+            frames.append({
+                "frame": frame, "dir": direction, "anchorY": pose["anchor_y"],
+                "rgba": os.path.basename(base) + ".rgba",
+                "mask": os.path.basename(base) + ".mask.rgba",
+            })
+    meta["figures"][part_id] = {
+        "frames": frames,
+        # Prims of every part in the render, in mask-index order. Indices below ownFrom are the
+        # holdout body: figurepass drops them, which is what cuts the garment where the body is
+        # nearer. Keeping them all instead reconstructs the combined render, which is the
+        # reference the holdout gate diffs against — so the gate costs no extra Blender time.
+        "prims": [{"slot": q.get("slot", 0), "bone": q["bone"], "part": p}
+                  for p in build_parts for q in FIGURE_PARTS[p]["prims"]],
+        "ownFrom": own_from,
+        "holdout": build_parts[:-1] if part_id not in HOLDOUT_PARTS or own_from else [],
+        "src": part["prims"],
+    }
+    print(f"rendered figure {part_id} ({len(frames)} dir-frames, "
+          f"{own_from} holdout prim(s) from {build_parts[:-1] or ['none']})")
+
+clear_meshes()
+clear_figure()
+
 meta_path = os.path.join(OUT, "meta.json")
 if only and os.path.exists(meta_path):   # partial re-render: merge into the existing meta
     with open(meta_path) as f:
         prior = json.load(f)
     prior["parts"].update(meta["parts"])
+    prior.setdefault("figures", {}).update(meta["figures"])
+    prior["figureCanvas"] = meta["figureCanvas"]
     meta = prior
 with open(meta_path, "w") as f:
     json.dump(meta, f, indent=2)

@@ -10,15 +10,29 @@ Verified constants, copied from Habbo (research/habbo-hotel.md §4.1–4.3):
 
 - Floor tile: **64 × 32 px diamond** at zoom 1, exact 2:1 dimetric. Zoom 0.5 halves everything.
 - Height unit: **32 px** vertical.
-- **Avatars:** 8 directions, 5 drawn — directions 4, 5, 6 are horizontal mirrors.
+- **Avatars: 8 directions, all 8 rendered natively. No mirroring.** (Revised 2026-08-05, #127 —
+  supersedes "5 drawn, directions 4/5/6 are horizontal mirrors".) Mirroring exists to halve
+  *hand-drawing*; the 3D-assisted path does not hand-draw, so it saves render minutes and costs
+  every asymmetric garment — a chest logo, a shoulder bag, side-part hair.
+  The old mirror table was also simply wrong for this rig: it assumes dir 0/4 face the camera,
+  but the camera sits in the +X+Y octant, so **dirs 3 and 7 are the self-symmetric ones** and the
+  pairs are 0↔6, 1↔5, 2↔4. Measured on the v1 body: the self-symmetric directions still differ
+  from their own mirror by ~12 % of lit pixels and the best true pair by 25 %, so mirroring was
+  never free here. Movement is 8-way (`heightmap.ts` walks all of `DIR_STEPS`), so all 8 are
+  needed regardless.
 - **Furni:** 4 authored directions by default, per-item override. Mirroring is a per-asset
   authored flag used only where the art is symmetric — not a blanket direction rule. (audit B3)
 - **Two authored art scales** (64 and 32), no runtime downscaling. V1 authors 64 only — the 32
   pass is deferred, architecture unchanged ([ART-DIRECTION.md](ART-DIRECTION.md), resolves C-45).
 
-**Light and mirroring reconciled** (audit B4): the style lights from directly above-front —
-vertically symmetric shading — so horizontal mirroring is shading-safe. Highlights avoid lateral
-bias by rule. Parts whose shading must break this declare themselves non-mirrorable.
+**Light and mirroring** (audit B4, revised 2026-08-05): B4 claimed the above-front key gives
+vertically symmetric shading, so horizontal mirroring is shading-safe. **That is not true of the
+shipped rig** — the sun is `(-0.22, -0.80, -1.05)` (`rig.py`), whose lateral component breaks
+left-right symmetry by construction. Measured, it accounts for ~5 points of mirror-pair
+difference; the remaining ~20 comes from the dimetric camera itself. Nothing depends on the claim
+today: furni renders 4 directions natively and avatars render 8, so no asset is ever mirrored.
+The sun stays as it is because 22 frozen bundles are lit by it and their pixels are their
+identity. Do not build a mirroring optimisation on B4 without re-measuring first.
 
 **Wall coordinate system** (audit A1): wall items live in a second coordinate space — wall-tile
 pair, sub-tile pixel offset, left/right wall selector, anchor rules — at wall scale 32 against
@@ -73,8 +87,24 @@ tile), so that one edge is forced from the layers: `seated` always draws before 
 
 `gateSeatOcclusion` is the stage-4 gate: it renders every seating item with a test occupant on
 every seat tile in every direction and diffs against the depth test. Box path only — a 3D-assisted
-seat ships pixels with no boxes to split, so it stays one row and a sitter still draws over all of
-it (#235).
+seat ships pixels, not boxes, so the gate has nothing to re-render (#235).
+
+**The 3D-assisted path splits too, by a different route** (#227). The split is derived, not
+declared: the rig already knows where every primitive is, and depth in the painter's algorithm is
+just `fx+fy`, so "nearer than the seat point" falls out of the rotation the direction loop already
+does. No artist in the loop, and no way for a declaration to disagree with the geometry.
+
+Its near half ships as a **companion sheet** (`<id>.near.png`, `nearHash`) rather than a second
+row, cut from the finished frame so it carries the same outlines and detail lines as the base.
+Additive on purpose: every base sheet stays byte-identical, so no frozen bundle loses the pixels
+that are its identity. `occlusion` stays null on these bundles — that field means the in-sheet
+row-1 split, and the Blender path has never measured one.
+
+So the two paths differ only in where the near pixels live. Both draw as a second Sprite on
+`seat_front`, and both are ordered against their sitter by the same forced edge. What the
+companion sheet lacks is a measured box, so the client sorts it by the item's own extent
+instead — sound, because every near pixel is a subset of the base frame, but coarser than the
+box path against a neighbour that overlaps the same tile (#235).
 
 **Pathfinding** (audit B5): build step 1 includes it explicitly — heightmap, per-tile blocked
 state, furni stack heights, per-item walk/sit flags, climb-delta rule, door special case.
@@ -163,12 +193,38 @@ sizing: [ART-DIRECTION.md](ART-DIRECTION.md). Tracked as #202 (wall archetypes n
 
 ## 3. Avatar and outfit pipeline
 
-- Figure string model: `type-set-color` triples. **Set IDs are append-only and never reused**;
-  retiring a garment flags it, never deletes; stored figure strings carry the figuredata version
-  they were authored against. (audit F2)
-- Layered part types with first-class hidden-layer rules (hats hide hair) from day one.
-- Action set: stand, walk, sit, lay, wave, dance, sleep, carry, plus the focus props (laptop,
-  book, sketchpad). 5 drawn directions, 2 scales.
+Built 2026-08-05 (#127). Revisions below are what the build actually produced.
+
+- Figure string model: `v<N>|type-set-color(-color)*`, parts joined by `.`. **N colours per part**,
+  the slot count declared by the set — a two-tone shirt is one mesh with two independently chosen
+  ramps, which the colorway machinery (#229, remaps keyed by ramp *name*) already supported.
+  **Set IDs are append-only and never reused**; retiring a garment flags it, never deletes. The
+  figuredata version rides in the string itself because the string is stored, broadcast, and
+  copied between systems. (audit F2)
+- **12 layer types in render order, 11 selectable:** `bd hd lg sh ch wa cc ca hr fa ea ha`.
+  `bd` is implicit and inherits `hd`'s skin ramp — a separately chosen body colour is a
+  neck-mismatch bug with no upside, so the parser refuses it.
+- **Order is per type; hiding is per set** (`hides: [type…]`, backwards in the order only, gated).
+  A tiara and a beanie are both `ha` and only one hides hair, so there is no type × type matrix to
+  design before garments exist.
+- **Hidden-layer rules are load-bearing, not cosmetic.** A garment renders against the canonical
+  body as a holdout and keeps only its own pixels, so where the body is nearer it won the depth
+  test and the client composites with plain alpha-over and no runtime depth. That works only while
+  the holdout set is exactly one thing. A hat hides hair so a hat never needs a holdout render per
+  hair set — which is what keeps the cost `layers × dirs × frames` instead of combinatorial.
+  Corollary: a second **head shape** would break it, so `hd` stays one mesh and head variety comes
+  from colour and hair.
+- **Figure sheets are indexed.** A pixel stores (colour slot, shade index) and the client resolves
+  it through the worn ramps while it composites. Colour is per player; baking colour into the
+  sheet would move the combinatorics into colour space.
+- **Shadows must stay off for figures** (`scene.eevee.use_shadows`, a master switch that overrides
+  the per-light flag). With them on, a shirt casts onto the torso and the bare body renders
+  differently depending on what is worn over it — 1374 pixels of the same primitive differing by a
+  mean of 56/255. Layer independence is the whole model.
+- Action set v1: **stand, walk (4 frames), sit, wave (2)** — 8 frames, 8 directions, scale 64.
+  lay, dance, sleep, carry and the focus props are deferred to #232. Poses are authored once as
+  bone angles and every garment ever made inherits them, so an action costs protocol surface and
+  sheet bytes, not art.
 - **Pets:** same recipe model — species body types × colors × patterns, pet clothing layer system
   with its own hidden-layer rules. Actions: follow, sit, sleep, react, trick.
 

@@ -2,6 +2,7 @@ import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import type Database from "better-sqlite3";
 import { loadRuleset, hitsFilter } from "./filter.ts";
+import { grantFigure } from "./figure.ts";
 import { grantStarter, provisionSuite } from "./items.ts";
 import { startOnboarding } from "./onboarding.ts";
 
@@ -77,6 +78,7 @@ export async function register(
       const accountId = Number(info.lastInsertRowid);
 
       grantStarter(db, accountId);
+      grantFigure(db, accountId);
       provisionSuite(db, accountId, username);
       startOnboarding(db, accountId);
       return { token: createSession(db, accountId) };

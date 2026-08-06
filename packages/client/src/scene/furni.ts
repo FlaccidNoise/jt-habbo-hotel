@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite } from "pixi.js";
 import { worldToScreen } from "@grand/shared";
 import type { DepthBox, FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
-import { frameTexture } from "./assets.ts";
+import { frameTexture, nearFrameTexture } from "./assets.ts";
 import { frameFor, occluderFor } from "./frames.ts";
 import type { FrameSpec, Occluder } from "./frames.ts";
 import { SCALE } from "./room.ts";
@@ -82,6 +82,7 @@ export class FurniLayer {
   private assets: FurniAssets | null;
   private depth: DepthIndex;
   private views = new Map<number, Container>();
+  /** #227: the half of a seating item that draws again above every avatar. */
   private fronts = new Map<number, Container>();
   private ghostView: Container | null = null;
 
@@ -138,6 +139,7 @@ export class FurniLayer {
 
     const front = this.frontFor(item);
     if (!front) return;
+    front.view.eventMode = "none";
     this.fronts.set(item.id, front.view);
     this.depth.set(`furni:${item.id}:front`, occluderBox(item, front.box), front.view);
     this.world.addChild(front.view);
@@ -162,8 +164,37 @@ export class FurniLayer {
     const asset = this.assets?.get(item.defId);
     if (!asset) return null;
     const front = occluderFor(asset.meta, item.dir);
-    const view = front && this.spriteFor(item, front.frame);
-    return view && front ? { view, box: front.box } : null;
+    if (front) {
+      const view = this.spriteFor(item, front.frame);
+      return view ? { view, box: front.box } : null;
+    }
+    // A 3D-assisted seat splits through a companion sheet rather than a second sheet row, and the
+    // Blender path never measured a box to go with it (#235). The item's own extent is a sound
+    // stand-in: every near pixel is a subset of the base frame, so the box cannot under-cover.
+    // It ties with the base box, and `seat_front` is what orders it after the base; what orders
+    // it after the sitter is the forced edge in sort.ts, same as for a procedural seat.
+    const spec = frameFor(asset.meta, item.dir);
+    const texture = spec && nearFrameTexture(asset, spec);
+    const box = this.localExtent(item);
+    if (!spec || !texture || !box) return null;
+    const sprite = new Sprite(texture);
+    const p = worldToScreen(item.x, item.y, item.z, SCALE);
+    sprite.x = p.sx + spec.offsetX;
+    sprite.y = p.sy + spec.offsetY;
+    return { view: sprite, box };
+  }
+
+  /** The item's own extent, in the local footprint units the generator emits occluders in. */
+  private localExtent(item: FurniItem): Occluder | null {
+    const def = this.defs.get(item.defId);
+    if (!def) return null;
+    const rotated = item.dir === 2 || item.dir === 6;
+    return {
+      x0: 0, y0: 0, z0: 0,
+      x1: rotated ? def.l : def.w,
+      y1: rotated ? def.w : def.l,
+      z1: def.stackHeights[item.state] ?? 0,
+    };
   }
 
   /** Both halves in one container — for the ghost, where no sitter comes between them. */

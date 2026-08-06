@@ -20,8 +20,9 @@ Status date: 2026-08-05.
 
 Cross-cutting, outside the numbered order: #125 gateway (trigger: first multi-process or remote
 deploy), #126 deferred room/social features (Navigator + room capacity 25 shipped 9f90670; room
-creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (proportions pin
-jointly with the style bible), #123 pets (needs #118 rails + generator), #124 programmable rooms
+creation, locked states, kick/ban, ignore, DND still open), #127 real avatars (SHIPPED — layered
+figure-string avatars, 80 px / 2.5 units pinned against the shipped seat heights, 8 native
+directions, ownership-gated wearing; deferred actions #232), #123 pets (needs #118 rails + generator), #124 programmable rooms
 (decided: phased, demand-gated), #129 safety program (parked, trigger-based), #154 root epic.
 
 ## Systems in GAME.md with no §7 step (filed 2026-08-04)
@@ -70,9 +71,11 @@ bounces.** Reading the config is never evidence.
 - A purchase that would exceed inventory capacity fails before it commits (C-5).
 - Casino floor and café exist as staff-owned public rooms.
 - Focus posture round-trips through the protocol. Props and DND bubble: #126.
-- Gaps: #205 room games, #203 wall items. Per-direction seating occlusion ships on the box path —
-  a chair back drawn over the sitter facing away, behind them facing toward. 3D-assisted seats
-  (café chair, casino stool, bed) still draw a sitter over the whole item: #235.
+- Gaps: #205 room games, #203 wall items. Per-direction seating occlusion ships on both paths —
+  a chair back drawn over the sitter facing away, behind them facing toward. The box path splits
+  into a second sheet row with a measured box; 3D-assisted seats (café chair, bed) derive the same
+  split in the rig and ship it as an additive companion sheet (#227). What is left of #235 is the
+  box: a companion sheet carries none, so the client sorts it by the item's whole extent.
 
 ### Step 3 — NPC staff (shipped canned-only, #204 finishes it)
 

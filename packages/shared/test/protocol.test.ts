@@ -1,7 +1,10 @@
 import { expect, test } from "vitest";
 import { ClientMsgSchema, ServerMsgSchema } from "../src/protocol.ts";
 
-const AVATAR = { id: 1, username: "ann", x: 0, y: 0, z: 0, dir: 2, posture: "stand" };
+const AVATAR = {
+  id: 1, username: "ann", x: 0, y: 0, z: 0, dir: 2, posture: "stand",
+  figure: "v1|hd-2-skin_3.ch-5-crimson.lg-7-navy",
+};
 const ITEM = { id: 5, defId: "chair_basic", x: 1, y: 2, z: 0, dir: 2, state: 0 };
 const INV = { id: 9, defId: "plant_basic" };
 

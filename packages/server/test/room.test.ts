@@ -6,6 +6,7 @@ import { ServerMsgSchema } from "@grand/shared";
 import type { ServerMsg } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
+import { defaultFigure } from "../src/figure.ts";
 import { grantStarter } from "../src/items.ts";
 import { Room, MS_PER_TILE } from "../src/room.ts";
 import type { Emit } from "../src/room.ts";
@@ -89,7 +90,10 @@ describe("room: join and presence", () => {
     expect(state?.inventory).toHaveLength(5);
     expect(state?.furni).toEqual([]);
     expect(state?.avatars).toEqual([
-      { id: a, username: "alice", x: 0, y: 5, z: 0, dir: 2, posture: "stand" },
+      {
+        id: a, username: "alice", x: 0, y: 5, z: 0, dir: 2, posture: "stand",
+        figure: defaultFigure(a),
+      },
     ]);
   });
 

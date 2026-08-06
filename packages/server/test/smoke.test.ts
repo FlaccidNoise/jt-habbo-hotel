@@ -5,6 +5,7 @@ import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import { startServer } from "../src/server.ts";
 import type { ServerHandle } from "../src/server.ts";
 import { closeDb, openDb } from "../src/db.ts";
+import { defaultFigure } from "../src/figure.ts";
 import { getItem } from "../src/items.ts";
 import { MS_PER_TILE } from "../src/room.ts";
 import { connect, stockUp } from "./helpers.ts";
@@ -89,7 +90,10 @@ describe("smoke suite", () => {
     alice = await joinAs(tokens.alice, 1);
     expect(alice.state).toMatchObject({ roomId: 1, name: "The Lobby Café" });
     expect(alice.state.avatars.filter((a) => !a.staff)).toEqual([
-      { id: alice.id, username: "alice", x: 0, y: 5, z: 0, dir: 2, posture: "stand" },
+      {
+        id: alice.id, username: "alice", x: 0, y: 5, z: 0, dir: 2, posture: "stand",
+        figure: defaultFigure(alice.id),
+      },
     ]);
     // The café is staffed from the first join — bellhop and barista at their posts.
     expect(alice.state.avatars.filter((a) => a.staff).map((a) => a.username).sort()).toEqual(

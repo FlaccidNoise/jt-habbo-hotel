@@ -40,6 +40,11 @@ export interface BundleMeta {
    *  with nothing in front. Null outright when the sheet is one row: no seat, or no direction puts
    *  anything in front of one. The sheet has a second row exactly when this is not null. */
   occlusion: Array<Occluder | null> | null;
+  /** #227: the same split for a 3D-assisted part, which ships it as a companion sheet instead of
+   *  a second row — the base sheet keeps every prim, so adding this moved no existing pixel.
+   *  Absent on items with no seat, and never set at the same time as `occlusion`. */
+  nearSheet?: string;
+  nearHash?: string;
   styleVersion: number;
   generatorVersion: number;
   partLibraryHash: string;

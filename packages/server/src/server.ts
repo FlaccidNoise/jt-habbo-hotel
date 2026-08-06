@@ -319,6 +319,12 @@ export async function startServer(opts: {
       case "stand":
         room.requestStand(accountId);
         break;
+      case "set_figure":
+        room.setFigure(accountId, msg.figure);
+        break;
+      case "wave":
+        room.wave(accountId);
+        break;
       case "trade_open":
         tradeService.open(accountId, msg.to);
         break;

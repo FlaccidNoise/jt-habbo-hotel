@@ -24,9 +24,11 @@
   "drawnHeight": 0.96875,
   "seatZ": 0.55,
   "occlusion": null,
-  "styleVersion": 1,
+  "nearSheet": "bed_basic.near.png",
+  "nearHash": "de3124d5e5707229227b7c6f1b8bb61d081716a4267a7c74d03c323d47aaab59",
+  "styleVersion": 2,
   "generatorVersion": 1,
-  "partLibraryHash": "artgen:4eda871e8dedf6a2",
-  "recipeHash": "4eda871e8dedf6a20912a63ed495c552355098e5bbc12f07ae9305515ae20e9e",
+  "partLibraryHash": "artgen:dea0fd0d6a0f6a80",
+  "recipeHash": "dea0fd0d6a0f6a801182fce22a3ac97d7230f8db646abe0f8e226857d5b4c170",
   "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
 }

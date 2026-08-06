@@ -13,8 +13,16 @@ export interface FurniMeta {
   anchorsX: number[];
   anchorY: number;
   /** Per dir, the half of the sprite that draws in front of a seated occupant. Null throughout
-   *  when the sheet is a single row, which is every item you cannot sit on. */
+   *  when the sheet is a single row, which is every item you cannot sit on.
+   *
+   *  This is the procedural composer's encoding: row 1 of the same sheet, with a measured box.
+   *  A 3D-assisted part carries `nearSheet` instead — same split, different container. */
   occlusion?: Array<Occluder | null> | null;
+  /** #227: present only on 3D-assisted seating, where the split ships as a companion sheet so
+   *  the base bytes and the `pixelHash` that identifies the item never move. Same frame geometry
+   *  as `sheet`, so `frameFor` places it. It carries no box of its own — the Blender path never
+   *  measured one (#235) — so the client falls back to the item's own footprint. */
+  nearSheet?: string;
 }
 
 export interface FrameSpec {

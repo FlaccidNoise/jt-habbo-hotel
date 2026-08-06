@@ -36,6 +36,13 @@ CREATE TABLE IF NOT EXISTS star_balances(
 CREATE TABLE IF NOT EXISTS onboarding(
   account_id INTEGER PRIMARY KEY REFERENCES accounts(id),
   step TEXT NOT NULL);
+-- Garment ownership (#127). Wearing is gated on a row here from day one; today the only writer is
+-- the registration grant, and #118's ledger takes the table over without the check moving.
+CREATE TABLE IF NOT EXISTS owned_sets(
+  account_id INTEGER NOT NULL REFERENCES accounts(id),
+  set_id INTEGER NOT NULL,
+  granted_at INTEGER NOT NULL,
+  PRIMARY KEY (account_id, set_id));
 CREATE TRIGGER IF NOT EXISTS ledger_append_only_update BEFORE UPDATE ON ledger_entries
   BEGIN SELECT RAISE(ABORT, 'ledger is append-only'); END;
 CREATE TRIGGER IF NOT EXISTS ledger_append_only_delete BEFORE DELETE ON ledger_entries
@@ -85,11 +92,20 @@ function seedRoom(
   );
 }
 
+/** `CREATE TABLE IF NOT EXISTS` never adds a column to a table that already exists, so a dev
+ *  database made before the column was declared would reach the server missing it and fail at the
+ *  first read. Add it explicitly instead of finding out at runtime. */
+function addColumn(db: Database.Database, table: string, column: string, decl: string): void {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
+  if (!cols.some((c) => c.name === column)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${decl}`);
+}
+
 export function openDb(path: string): Database.Database {
   const db = new Database(path);
   db.pragma("journal_mode = WAL");
   db.pragma("foreign_keys = ON");
   db.exec(DDL);
+  addColumn(db, "accounts", "figure", "figure TEXT");
   seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT);
   seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT);
   return db;
