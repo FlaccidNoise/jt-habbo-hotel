@@ -3,7 +3,9 @@ import {
   FigureError,
   PROTOTYPE_CATALOG,
   ROOM_FURNI_CAP,
+  WALL_CATALOG,
   checkPlacement,
+  checkWallPlacement,
   climbOk,
   dirFromStep,
   footprintTiles,
@@ -23,6 +25,10 @@ import type {
   RoomModel,
   ServerMsg,
   Tile,
+  WallDef,
+  WallItem,
+  WallPlacementCtx,
+  WallSide,
 } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
@@ -33,8 +39,10 @@ import {
   getItem,
   listInventory,
   listRoomFurni,
+  listRoomWallFurni,
   pickupItem,
   placeItem,
+  placeWallItem,
   suiteOf,
   updateItemZ,
 } from "./items.ts";
@@ -66,6 +74,7 @@ interface Walk {
 }
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
+const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
 const RULESET = loadRuleset(new URL("../filter-words.txt", import.meta.url).pathname);
 
 const key = (x: number, y: number): string => `${x},${y}`;
@@ -88,6 +97,7 @@ export class Room {
   private emit: Emit;
   private heightmap: string;
   private furni: FurniItem[];
+  private wallFurni: WallItem[];
   private index: Map<string, FurniItem[]>;   // occupancy: tile → items covering it
   private occ: Map<number, Occupant>;
   private walks: Map<number, Walk>;
@@ -108,10 +118,27 @@ export class Room {
     this.chatConfig = doc.chat;
     this.model = parseHeightmap(doc.heightmap, doc.door);
     this.furni = listRoomFurni(db, roomId);
+    this.wallFurni = listRoomWallFurni(db, roomId);
     this.index = new Map();
     this.occ = new Map();
     this.walks = new Map();
     this.reindex();
+  }
+
+  /** Re-reads this room's furni from the database and shows anyone standing in it what arrived.
+   *  Used when something outside the room changed its contents — a museum donation (#210). */
+  reload(): void {
+    const floorBefore = new Set(this.furni.map((f) => f.id));
+    const wallBefore = new Set(this.wallFurni.map((f) => f.id));
+    this.furni = listRoomFurni(this.db, this.roomId);
+    this.wallFurni = listRoomWallFurni(this.db, this.roomId);
+    this.reindex();
+    for (const item of this.furni) {
+      if (!floorBefore.has(item.id)) this.broadcast({ t: "furni_placed", item: { ...item } });
+    }
+    for (const item of this.wallFurni) {
+      if (!wallBefore.has(item.id)) this.broadcast({ t: "wall_placed", item: { ...item } });
+    }
   }
 
   occupants(): readonly Occupant[] {
@@ -163,6 +190,7 @@ export class Room {
       chat: this.chatConfig,
       avatars: [...this.occ.values()].map(toAvatar),
       furni: this.furni.map((f) => ({ ...f })),
+      wallFurni: this.wallFurni.map((f) => ({ ...f })),
       inventory: listInventory(this.db, accountId),
       you: accountId,
       stars: balanceOf(this.db, accountId),
@@ -358,6 +386,10 @@ export class Room {
       this.fail(accountId, "not_owner", "that item is not in your inventory");
       return false;
     }
+    if (WALL_DEFS.has(item.defId)) {
+      this.fail(accountId, "bad_position", "that one hangs on a wall, not the floor");
+      return false;
+    }
     const result = checkPlacement(this.ctx(this.furni), this.defOf(item), x, y, dir);
     if (!result.ok) {
       this.fail(accountId, result.code, `cannot place there: ${result.code}`);
@@ -374,12 +406,43 @@ export class Room {
     return true;
   }
 
+  placeWall(
+    accountId: number, itemId: number, side: WallSide, x: number, y: number, u: number, v: number,
+  ): boolean {
+    const item = getItem(this.db, itemId);
+    if (!item || item.ownerId !== accountId || item.roomId !== null) {
+      this.fail(accountId, "not_owner", "that item is not in your inventory");
+      return false;
+    }
+    const def = WALL_DEFS.get(item.defId);
+    if (!def) {
+      this.fail(accountId, "bad_position", "that one stands on the floor, not a wall");
+      return false;
+    }
+    const result = checkWallPlacement(this.wallCtx(this.wallFurni), def, side, x, y, u, v);
+    if (!result.ok) {
+      this.fail(accountId, result.code, `cannot hang it there: ${result.code}`);
+      return false;
+    }
+
+    placeWallItem(this.db, itemId, this.roomId, side, x, y, u, v);
+    const hung: WallItem = { id: itemId, defId: item.defId, side, x, y, u, v, state: item.state };
+    this.wallFurni.push(hung);
+    this.broadcast({ t: "wall_placed", item: { ...hung } });
+    return true;
+  }
+
   /** Quarter turn in place. Rotation can change the footprint (a 2x1 sofa sweeps a different two
    *  tiles), so it re-runs the full placement check against the room minus this item. */
   rotate(accountId: number, itemId: number): void {
     const item = getItem(this.db, itemId);
     if (!item || item.ownerId !== accountId || item.roomId !== this.roomId) {
       this.fail(accountId, "not_owner", "that item is not yours to rotate");
+      return;
+    }
+    // On permanent exhibition means the house arranges it, not the donor (#210).
+    if (item.locked) {
+      this.fail(accountId, "not_owner", "that is on permanent exhibition and cannot be moved");
       return;
     }
     const def = this.defOf(item);
@@ -419,6 +482,21 @@ export class Room {
     const item = getItem(this.db, itemId);
     if (!item || item.ownerId !== accountId || item.roomId !== this.roomId) {
       this.fail(accountId, "not_owner", "that item is not yours to pick up");
+      return;
+    }
+    // A museum donation stays donated (#210). The donor still owns it — their name is on the
+    // plaque — but "permanent public exhibition" has to mean the house keeps it.
+    if (item.locked) {
+      this.fail(accountId, "not_owner", "that is on permanent exhibition and cannot be taken back");
+      return;
+    }
+    // Nothing rests on a hanging item and nothing sits under it, so taking one down is the whole
+    // job — no settle pass, no seat re-resolve.
+    if (item.side !== null) {
+      pickupItem(this.db, itemId);
+      this.wallFurni = this.wallFurni.filter((f) => f.id !== itemId);
+      this.broadcast({ t: "furni_removed", itemId });
+      this.emit(accountId, { t: "inventory_add", item: { id: itemId, defId: item.defId } });
       return;
     }
     const def = this.defOf(item);
@@ -571,6 +649,17 @@ export class Room {
       defs: DEFS,
       avatars: [...this.occ.values()].map((o) => ({ x: o.x, y: o.y })),
       doorTile: { x: this.door.x, y: this.door.y },
+      roomFurniCap: ROOM_FURNI_CAP,
+    };
+  }
+
+  /** The cap counts both surfaces — a room full of posters is still a full room. */
+  private wallCtx(wallFurni: WallItem[]): WallPlacementCtx {
+    return {
+      model: this.model,
+      wallFurni,
+      defs: WALL_DEFS,
+      furniCount: this.furni.length + wallFurni.length,
       roomFurniCap: ROOM_FURNI_CAP,
     };
   }

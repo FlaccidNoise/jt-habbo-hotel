@@ -1,0 +1,32 @@
+{
+  "defId": "fountain_gilded",
+  "archetype": "artgen",
+  "sheet": "fountain_gilded.png",
+  "frameW": 128,
+  "frameH": 118,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 70,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.6875,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:74f813ffc88ac05d",
+  "recipeHash": "74f813ffc88ac05d265a8c77e09ff6236e55e10c7e995fac70d311c8515072f9",
+  "pixelHash": "99b3eec4e2e052f5a35d00fd73f0f1fc4750110f8daea306ad240356dcf8fb6e"
+}

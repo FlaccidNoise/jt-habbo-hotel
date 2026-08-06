@@ -1,4 +1,4 @@
-import type { FurniDef } from "./protocol.ts";
+import type { FurniDef, WallDef } from "./protocol.ts";
 
 // seatHeight is the seat surface read off the authored geometry, not guessed: the box-path defs
 // come from archetypes.ts slot boxes, the 3D-assisted ones from the rig.py primitive that forms
@@ -24,12 +24,33 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   { id: "arcade_cabinet", name: "Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
   { id: "fountain",       name: "Fountain",       w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
+  // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
+  { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "penthouse_candelabra", name: "Candelabra",  w: 1, l: 1, stackHeights: [2.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
   // Colorways (#229): the same authored mesh with its ramps remapped, so they share their base's
   // geometry exactly — heights and seat surfaces are identical and the gates check that.
   { id: "cafe_chair_crimson",  name: "Crimson Café Chair", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
   { id: "cafe_chair_navy",     name: "Navy Café Chair",    w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0x3f5e9e },
   { id: "casino_stool_fern",   name: "Baize Stool",        w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x2e8b57 },
   { id: "divider_basic_plum",  name: "Plum Divider",       w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x7a3e9d },
+  // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
+  { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
+  { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  // Collection-set rewards (#210): minted account-bound on completion, obtainable no other way.
+  { id: "cafe_table_marble",   name: "Marble Café Table",   w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
+  { id: "casino_table_onyx",   name: "Onyx Casino Table",   w: 2, l: 2, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+];
+
+// Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
+// which prints the line to paste — never measure a parallelogram by hand. plane is the drawn size
+// in the wall plane and mount the offsets it was authored at, both in scale-64 px.
+export const WALL_CATALOG: WallDef[] = [
+  { id: "wall_art",      name: "Wall Art",      span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0xdaa520 },
+  { id: "poster",        name: "Poster",        span: 1, plane: { w: 24, h: 29 }, mount: { u: 4, v: 34 }, color: 0xaa3333 },
+  { id: "record_trophy", name: "Record Trophy", span: 1, plane: { w: 22, h: 21 }, mount: { u: 4, v: 35 }, color: 0x3f5e9e },
+  { id: "wall_shelf",    name: "Wall Shelf",    span: 1, plane: { w: 26, h: 13 }, mount: { u: 0, v: 46 }, color: 0xb5651d },
+  { id: "wall_art_gilded", name: "Gallery Piece", span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0x9c9484 },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -62,4 +83,19 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["cafe_chair_navy", 25],
   ["casino_stool_fern", 25],
   ["divider_basic_plum", 75],
+  ["poster", 50],
+  ["wall_art", 150],
+  ["wall_shelf", 150],
+  ["record_trophy", 300],
+  // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
+  // ceiling, so it is weeks of play rather than an afternoon's.
+  ["billiards_table", 3300],
+  ["penthouse_candelabra", 1800],
+]);
+
+/** Bought like anything else, but minted account-bound: these never enter the trade economy, so
+ *  the Stars they absorb are gone rather than recirculating as goods (GAME.md §Sinks). */
+export const PRESTIGE_DEFS: ReadonlySet<string> = new Set([
+  "billiards_table",
+  "penthouse_candelabra",
 ]);

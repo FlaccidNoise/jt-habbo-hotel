@@ -45,6 +45,16 @@ export interface BundleMeta {
    *  Absent on items with no seat, and never set at the same time as `occlusion`. */
   nearSheet?: string;
   nearHash?: string;
+  /** Wall bundles only (#203). Absent on floor bundles, so their frozen metadata is unchanged.
+   *  planeW/planeH are the drawn size in the wall plane and mountU/mountV where it was authored,
+   *  all read off the render; gap/depth are how far the mesh starts from and reaches off the
+   *  wall, in tiles — the wall gates check all six. */
+  wall?: {
+    span: number;
+    planeW: number; planeH: number;
+    mountU: number; mountV: number;
+    gap: number; depth: number;
+  };
   styleVersion: number;
   generatorVersion: number;
   partLibraryHash: string;

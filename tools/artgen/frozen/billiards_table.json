@@ -1,0 +1,32 @@
+{
+  "defId": "billiards_table",
+  "archetype": "artgen",
+  "sheet": "billiards_table.png",
+  "frameW": 160,
+  "frameH": 115,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    96,
+    64,
+    96
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 3,
+    "l": 2
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:b6363259c1390730",
+  "recipeHash": "b6363259c1390730e10b820fabf362ba6a7bec03cc3d0dcb55570ebbec32cb20",
+  "pixelHash": "c659595b892fa933aa22aa955779b43fee9f12a81b448848ee546a07f40b3110"
+}

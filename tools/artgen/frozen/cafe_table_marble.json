@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_table_marble",
+  "archetype": "artgen",
+  "sheet": "cafe_table_marble.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:c708b038a438ff7b",
+  "recipeHash": "c708b038a438ff7b3c18efd6cb6050ed00d06dde95b3a7de3c553367e51cbeab",
+  "pixelHash": "57e5371c721dc366671c95583f53ca63fc95f8b7dec476778d2ce7eb08a84586"
+}

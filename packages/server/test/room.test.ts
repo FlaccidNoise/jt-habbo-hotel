@@ -659,3 +659,95 @@ describe("room: multi-tile seats", () => {
     expect(seated(b)).toMatchObject({ x: 4, y: 5, posture: "sit", z: 0.5625 });
   });
 });
+
+describe("room: wall items (#203)", () => {
+  /** Wall defs are granted to nobody, so mint one straight into the inventory. */
+  function giveWallItem(accountId: number, defId = "poster"): number {
+    const info = db
+      .prepare(
+        "INSERT INTO furni_items (def_id, owner_id, room_id, x, y, z, dir, state)" +
+          " VALUES (?, ?, NULL, NULL, NULL, NULL, NULL, 0)",
+      )
+      .run(defId, accountId);
+    return Number(info.lastInsertRowid);
+  }
+
+  test("hanging an item broadcasts it and it survives a reload", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const item = giveWallItem(a);
+    expect(room.placeWall(a, item, "right", 3, 0, 4, 20)).toBe(true);
+    expect(to(a, "wall_placed").at(-1)?.item).toMatchObject({
+      id: item, defId: "poster", side: "right", x: 3, y: 0, u: 4, v: 20,
+    });
+
+    // The room is rebuilt from the database on every load, so the hang has to be in there — and
+    // it must not come back as floor furni, whose def lookup would throw.
+    const reloaded = new Room(db, 1, emit);
+    const b = account("bob");
+    reloaded.join(b, "bob");
+    expect(to(b, "room_state").at(-1)?.wallFurni).toMatchObject([
+      { id: item, side: "right", x: 3, y: 0, u: 4, v: 20 },
+    ]);
+    expect(to(b, "room_state").at(-1)?.furni.some((f) => f.id === item)).toBe(false);
+    reloaded.dispose();
+  });
+
+  test("a wall item is refused by the floor, and a floor item by the wall", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const poster = giveWallItem(a);
+    expect(room.place(a, poster, 3, 3, 0)).toBe(false);
+    expect(to(a, "error").at(-1)?.message).toMatch(/hangs on a wall/);
+
+    const chair = itemOf(a, "chair_basic");
+    expect(room.placeWall(a, chair, "right", 3, 0, 0, 20)).toBe(false);
+    expect(to(a, "error").at(-1)?.message).toMatch(/stands on the floor/);
+  });
+
+  test("hanging where the room has no wall is refused", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const item = giveWallItem(a);
+    // (3,3) is interior floor, and the door tile is a hole in the wall.
+    expect(room.placeWall(a, item, "right", 3, 3, 0, 20)).toBe(false);
+    expect(room.placeWall(a, item, "left", 0, 5, 0, 20)).toBe(false);
+    expect(to(a, "error").at(-1)?.code).toBe("bad_position");
+  });
+
+  test("taking one down clears both coordinate spaces", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const item = giveWallItem(a);
+    expect(room.placeWall(a, item, "left", 0, 2, 0, 20)).toBe(true);
+    room.pickup(a, item);
+    expect(to(a, "furni_removed").at(-1)?.itemId).toBe(item);
+    expect(to(a, "inventory_add").at(-1)?.item).toMatchObject({ id: item, defId: "poster" });
+
+    // Leaving wall_side set would strand the item on a wall it is no longer on.
+    const row = db.prepare("SELECT room_id, x, wall_side, wall_u FROM furni_items WHERE id = ?")
+      .get(item);
+    expect(row).toMatchObject({ room_id: null, x: null, wall_side: null, wall_u: null });
+    expect(room.placeWall(a, item, "left", 0, 2, 0, 20)).toBe(true);
+  });
+
+  test("two items cannot share a spot on the wall", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    const first = giveWallItem(a);
+    const second = giveWallItem(a);
+    expect(room.placeWall(a, first, "right", 3, 0, 0, 20)).toBe(true);
+    expect(room.placeWall(a, second, "right", 3, 0, 0, 20)).toBe(false);
+    expect(to(a, "error").at(-1)?.code).toBe("occupied");
+    expect(room.placeWall(a, second, "right", 4, 0, 0, 20)).toBe(true);
+  });
+
+  test("hanging someone else's item is refused", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    const item = giveWallItem(b);
+    expect(room.placeWall(a, item, "right", 3, 0, 0, 20)).toBe(false);
+    expect(to(a, "error").at(-1)?.code).toBe("not_owner");
+  });
+});

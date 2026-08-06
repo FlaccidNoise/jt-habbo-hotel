@@ -36,6 +36,7 @@ export class TradeService {
     username: string,
   ) => { accountId: number; staff?: boolean } | null;
   private countdownMs: number;
+  private onSettled: (accountId: number) => void;
 
   constructor(opts: {
     db: Database.Database;
@@ -45,12 +46,15 @@ export class TradeService {
     /** The named occupant of a room, staff included so they can be refused by name. */
     resolve: (roomId: number, username: string) => { accountId: number; staff?: boolean } | null;
     countdownMs?: number;
+    /** Called for each side after a settled trade — a received item can complete a set (#210). */
+    onSettled?: (accountId: number) => void;
   }) {
     this.db = opts.db;
     this.emit = opts.emit;
     this.locate = opts.locate;
     this.resolve = opts.resolve;
     this.countdownMs = opts.countdownMs ?? COUNTDOWN_MS;
+    this.onSettled = opts.onSettled ?? (() => {});
   }
 
   /** Invite, or start the trade when the named player already invited us. */
@@ -99,15 +103,21 @@ export class TradeService {
       return;
     }
     const pick = this.db.prepare(
-      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId FROM furni_items WHERE id = ?",
+      "SELECT def_id AS defId, owner_id AS ownerId, room_id AS roomId, bound FROM furni_items WHERE id = ?",
     );
     const items: InventoryItem[] = [];
     for (const id of ids) {
       const row = pick.get(id) as
-        | { defId: string; ownerId: number; roomId: number | null }
+        | { defId: string; ownerId: number; roomId: number | null; bound: number }
         | undefined;
       if (!row || row.ownerId !== accountId || row.roomId !== null) {
         this.fail(accountId, "that item is not in your inventory");
+        return;
+      }
+      // The ledger refuses this too, but silently cancelling a settled trade three seconds after
+      // both sides accepted is a worse way to learn it (#210).
+      if (row.bound) {
+        this.fail(accountId, "that one is account-bound — it cannot be traded");
         return;
       }
       items.push({ id, defId: row.defId });
@@ -198,6 +208,7 @@ export class TradeService {
       added: result.bReceived,
       removed: session.b.offer.map((i) => i.id),
     });
+    for (const side of [session.a, session.b]) this.onSettled(side.accountId);
     log("trade_settled", {
       opKey: session.opKey,
       a: session.a.accountId,

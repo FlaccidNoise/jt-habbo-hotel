@@ -1,0 +1,32 @@
+{
+  "defId": "penthouse_candelabra",
+  "archetype": "artgen",
+  "sheet": "penthouse_candelabra.png",
+  "frameW": 64,
+  "frameH": 107,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 91,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.34375,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:b5685c34bf0dd6c1",
+  "recipeHash": "b5685c34bf0dd6c13e2a8fc64196cd133321e9ff399a7637fda0c6dc9f044bbd",
+  "pixelHash": "314c639e48de8fcf481f3cc572ac2c01d19469315e384d458224b0dc8ef6f1b6"
+}

@@ -6,15 +6,21 @@ import {
   ROOM_CAPACITY,
   ROOM_FURNI_CAP,
   STARTER_GRANT_SETS,
+  LEVER_COST,
+  WALL_CATALOG,
   checkPlacement,
+  checkWallPlacement,
   footprintTiles,
   paletteFor,
   parseFigure,
   parseHeightmap,
+  screenToTile,
+  leverOdds,
   seatAt,
   serializeFigure,
   setById,
   tileHeight,
+  wallOffsetLimits,
 } from "@grand/shared";
 import type {
   AvatarState,
@@ -26,6 +32,10 @@ import type {
   ServerMsg,
   Tile,
   WornPart,
+  WallDef,
+  WallItem,
+  WallPlacementCtx,
+  WallPos,
 } from "@grand/shared";
 import { Net } from "./net.ts";
 import { loadFurniAssets } from "./scene/assets.ts";
@@ -33,8 +43,9 @@ import { FigureBaker, loadFigureAtlas } from "./scene/figure.ts";
 import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { FurniLayer } from "./scene/furni.ts";
-import { RoomScene } from "./scene/room.ts";
+import { RoomScene, SCALE } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
+import { WallLayer } from "./scene/walls.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
@@ -42,9 +53,12 @@ type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 type NavRooms = Extract<ServerMsg, { t: "nav_rooms" }>["rooms"];
+type SetRows = Extract<ServerMsg, { t: "sets" }>["sets"];
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
+const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
+const defName = (id: string): string => DEFS.get(id)?.name ?? WALL_DEFS.get(id)?.name ?? id;
 
 function el<T extends HTMLElement>(id: string): T {
   const found = document.getElementById(id);
@@ -62,11 +76,13 @@ let depth = new DepthIndex();
 let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
+let wallLayer: WallLayer | null = null;
 let furniAssets: FurniAssets | null = null;
 let figureBaker: FigureBaker | null = null;
 let model: RoomModel | null = null;
 let doorTile: Tile = { x: 0, y: 0 };
 let furni: FurniItem[] = [];
+let wallFurni: WallItem[] = [];
 let inventory: InventoryItem[] = [];
 let armed: number | null = null;
 let placeDir: 0 | 2 | 4 | 6 = 0;   // the armed item's facing; R turns it before it lands
@@ -80,6 +96,7 @@ let arcade: ArcadeState | null = null;
 let myRoomId: number | null = null;
 let myFigure: string | null = null;
 let hereRoomId = roomId;
+let sets: SetRows = [];
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -100,6 +117,35 @@ function addAvatar(state: AvatarState): void {
 function armedDef(): FurniDef | null {
   const item = inventory.find((i) => i.id === armed);
   return (item && DEFS.get(item.defId)) ?? null;
+}
+
+/** The armed item when it is a wall item — the two are mutually exclusive, so whichever returns
+ *  non-null decides which surface the pointer is arming. */
+function armedWallDef(): WallDef | null {
+  const item = inventory.find((i) => i.id === armed);
+  return (item && WALL_DEFS.get(item.defId)) ?? null;
+}
+
+function wallCtx(current: RoomModel): WallPlacementCtx {
+  return {
+    model: current,
+    wallFurni,
+    defs: WALL_DEFS,
+    furniCount: furni.length + wallFurni.length,
+    roomFurniCap: ROOM_FURNI_CAP,
+  };
+}
+
+/** Where a wall item lands for a pointer at `pos`: centred on the cursor, snapped to the wall's
+ *  2 px lattice, and clamped so it never overhangs its own span or the wall. */
+function wallDrop(def: WallDef, pos: WallPos): WallPos {
+  const { maxU, maxV } = wallOffsetLimits(def);
+  const clamp = (n: number, hi: number): number => Math.max(0, Math.min(hi, n));
+  return {
+    ...pos,
+    u: clamp(2 * Math.round((pos.u - def.plane.w / 2) / 2), maxU),
+    v: clamp(Math.round(pos.v - def.plane.h / 2), maxV),
+  };
 }
 
 /** The same inputs the server builds for `checkPlacement`, so the hover verdict and the server's
@@ -132,7 +178,7 @@ function renderInventory(): void {
   for (const item of inventory) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    button.textContent = defName(item.defId);
     const offered = trade?.yours.some((i) => i.id === item.id) ?? false;
     if (item.id === armed || offered) button.classList.add("armed");
     button.addEventListener("click", () => {
@@ -167,6 +213,7 @@ function renderInventory(): void {
 function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
   renderCatalog();
+  renderLever();
 }
 
 /** Swap one garment. Composition only — the player picks type-set-colour and nothing else, the
@@ -229,7 +276,7 @@ function renderCatalog(): void {
   label.className = "label";
   label.textContent = "Catalog:";
   strip.appendChild(label);
-  for (const def of PROTOTYPE_CATALOG) {
+  for (const def of [...PROTOTYPE_CATALOG, ...WALL_CATALOG]) {
     const price = CATALOG_PRICES.get(def.id);
     if (price === undefined) continue;
     const button = document.createElement("button");
@@ -251,7 +298,7 @@ function renderTrade(): void {
   for (const item of trade.yours) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = `${DEFS.get(item.defId)?.name ?? item.defId} ✕`;
+    button.textContent = `${defName(item.defId)} ✕`;
     button.addEventListener("click", () => {
       if (!trade) return;
       net.send({
@@ -265,7 +312,7 @@ function renderTrade(): void {
   theirs.replaceChildren();
   for (const item of trade.theirs) {
     const row = document.createElement("div");
-    row.textContent = DEFS.get(item.defId)?.name ?? item.defId;
+    row.textContent = defName(item.defId);
     theirs.appendChild(row);
   }
   el("trade-warning").textContent =
@@ -333,6 +380,59 @@ function renderArcade(): void {
   el<HTMLButtonElement>("arcade-deal").disabled = running;
 }
 
+/** The Luck Lever's odds are the same table the server draws from (shared/lever.ts), rendered
+ *  straight from it — a published number cannot drift from the real one if there is only one. */
+function renderLever(): void {
+  const odds = el("lever-odds");
+  odds.replaceChildren();
+  for (const row of leverOdds()) {
+    const line = document.createElement("div");
+    const label = document.createElement("span");
+    label.textContent = row.label;
+    const percent = document.createElement("span");
+    percent.textContent = row.percent;
+    line.append(label, percent);
+    odds.appendChild(line);
+  }
+  const pull = el<HTMLButtonElement>("lever-pull");
+  pull.textContent = `Pull · ${LEVER_COST}★`;
+  pull.disabled = stars < LEVER_COST;
+}
+
+/** Collection sets (#210). The missing piece is the point — naming it is what turns a set into a
+ *  reason to buy the catalog item you skipped. */
+function renderSets(): void {
+  const list = el("sets-list");
+  list.replaceChildren();
+  if (sets.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "No collections yet.";
+    list.appendChild(empty);
+    return;
+  }
+  for (const set of sets) {
+    const row = document.createElement("div");
+    row.className = set.complete ? "set done" : "set";
+    const title = document.createElement("b");
+    title.textContent = set.name;
+    const bar = document.createElement("div");
+    bar.className = "bar";
+    const total = set.owned.length + set.missing.length;
+    bar.textContent = set.complete
+      ? `Complete — ${defName(set.reward)} claimed`
+      : `${set.owned.length} / ${total}`;
+    row.append(title, bar);
+    if (!set.complete) {
+      const need = document.createElement("div");
+      need.className = "need";
+      need.textContent = `Needs: ${set.missing.map(defName).join(", ")}`;
+      row.appendChild(need);
+    }
+    list.appendChild(row);
+  }
+}
+
 /** Give the keyboard back to chat. Arming takes it so R can turn the held item; every way out of
  *  placing — cancelled, or the item landed — has to return it or typing silently stops working. */
 function releaseKeyboard(): void {
@@ -343,6 +443,7 @@ function disarm(): void {
   armed = null;
   scene?.clearHighlight();
   furniLayer?.clearGhost();
+  wallLayer?.clearGhost();
   renderInventory();
   renderFurniBar();
   releaseKeyboard();
@@ -368,11 +469,13 @@ function onTileClick(x: number, y: number, button: number): void {
     // Placed items carry no owner in the protocol, so offer the menu on the topmost item here
     // and let the server answer `not_owner` when it is somebody else's.
     const top = topItemOn(x, y);
-    if (top) openMenu(top);
+    if (top) openMenu(top.id);
     return;
   }
   if (button !== 0) return;
   if (armed !== null) {
+    // A wall item ignores the floor — it only lands when the click reaches a wall segment.
+    if (armedWallDef()) return;
     net.send({ t: "place", itemId: armed, x, y, dir: placeDir });
     return;
   }
@@ -387,6 +490,38 @@ function onTileClick(x: number, y: number, button: number): void {
     return;
   }
   net.send({ t: "move", x, y });
+}
+
+/** A click on a wall. With a wall item held it hangs; otherwise it offers the item under the
+ *  pointer, or falls through to the floor so the wall never swallows a walk command. */
+function onWallClick(
+  pos: WallPos, itemId: number | null, button: number, local: { x: number; y: number },
+): void {
+  closeMenu();
+  if (button === 2) {
+    if (itemId !== null) openMenu(itemId);
+    return;
+  }
+  if (button !== 0) return;
+  const def = armedWallDef();
+  if (def && armed !== null) {
+    const drop = wallDrop(def, pos);
+    net.send({ t: "place_wall", itemId: armed, side: drop.side, x: drop.x, y: drop.y, u: drop.u, v: drop.v });
+    return;
+  }
+  const t = screenToTile(local.x, local.y, SCALE);
+  onTileClick(t.x, t.y, button);
+}
+
+function onWallHover(pos: WallPos | null): void {
+  const def = armedWallDef();
+  if (!pos || !def || !model) {
+    wallLayer?.clearGhost();
+    return;
+  }
+  const drop = wallDrop(def, pos);
+  const result = checkWallPlacement(wallCtx(model), def, drop.side, drop.x, drop.y, drop.u, drop.v);
+  wallLayer?.ghost(def, drop, result.ok);
 }
 
 function onTileHover(tile: Tile | null): void {
@@ -418,19 +553,34 @@ function renderFurniBar(): void {
   const bar = el("furni-menu");
   bar.replaceChildren();
   const item = menuItem === null ? undefined : furni.find((f) => f.id === menuItem);
+  const hung = menuItem === null ? undefined : wallFurni.find((f) => f.id === menuItem);
   const held = armed === null ? undefined : inventory.find((i) => i.id === armed);
-  if (!item && !held) {
+  if (!item && !hung && !held) {
     bar.hidden = true;
     return;
   }
 
-  const defId = item?.defId ?? held?.defId ?? "";
+  const defId = item?.defId ?? hung?.defId ?? held?.defId ?? "";
+  const onWall = held ? WALL_DEFS.has(defId) : hung !== undefined;
+  const shown = item ?? hung ?? held;
   const title = document.createElement("span");
   title.className = "label";
   title.textContent = held
-    ? `Holding ${DEFS.get(defId)?.name ?? defId} — click a tile to place`
-    : (DEFS.get(defId)?.name ?? defId);
+    ? `Holding ${defName(defId)} — click a ${onWall ? "wall" : "tile"} to place`
+    : (defName(defId));
   bar.appendChild(title);
+  // The engraving (#210): no text renderer exists, so a plaque or trophy shows its deed here.
+  if (shown?.inscription) {
+    const engraved = document.createElement("span");
+    engraved.className = "label engraved";
+    engraved.textContent = `“${shown.inscription}”`;
+    bar.appendChild(engraved);
+  } else if (shown?.bound) {
+    const mark = document.createElement("span");
+    mark.className = "label";
+    mark.textContent = "account-bound — cannot be traded";
+    bar.appendChild(mark);
+  }
 
   const action = (text: string, run: () => void): void => {
     const button = document.createElement("button");
@@ -440,23 +590,40 @@ function renderFurniBar(): void {
     bar.appendChild(button);
   };
   if (held) {
-    action("Rotate (R)", rotateArmed);
+    // A hanging item has no facing — the wall it lands on decides which way it looks.
+    if (!onWall) action("Rotate (R)", rotateArmed);
+    // Donating is irreversible, so it asks — and only floor furni goes on a plinth.
+    if (!onWall && !held.bound) {
+      action("Donate to Museum", () => {
+        const name = defName(held.defId);
+        if (!confirm(`Donate ${name} to the Museum?\n\nIt goes on permanent public exhibition with your name on the plaque. You cannot take it back.`)) return;
+        net.send({ t: "donate", itemId: held.id });
+        disarm();
+      });
+    }
     action("Cancel", disarm);
-  } else if (item) {
-    action("Rotate", () => {
-      net.send({ t: "rotate", itemId: item.id });
-    });
-    action("Pick up", () => {
-      net.send({ t: "pickup", itemId: item.id });
-      closeMenu();
-    });
+  } else if (item ?? hung) {
+    const placed = (item ?? hung)!;
+    // A museum exhibit is arranged by the house: the server refuses both, so offering them would
+    // only hand the player two buttons that error (#210).
+    if (!placed.locked) {
+      if (item) {
+        action("Rotate", () => {
+          net.send({ t: "rotate", itemId: placed.id });
+        });
+      }
+      action("Pick up", () => {
+        net.send({ t: "pickup", itemId: placed.id });
+        closeMenu();
+      });
+    }
     action("Close", closeMenu);
   }
   bar.hidden = false;
 }
 
-function openMenu(item: FurniItem): void {
-  menuItem = item.id;
+function openMenu(itemId: number): void {
+  menuItem = itemId;
   renderFurniBar();
 }
 
@@ -475,6 +642,7 @@ function buildRoom(msg: RoomState): void {
   model = parseHeightmap(msg.heightmap, msg.door);
   doorTile = { x: msg.door.x, y: msg.door.y };
   furni = msg.furni;
+  wallFurni = msg.wallFurni;
   inventory = msg.inventory;
   armed = null;
   placeDir = 0;
@@ -489,6 +657,9 @@ function buildRoom(msg: RoomState): void {
   renderTrade();
   renderArcade();
   el("arcade").hidden = true;
+  el("lever").hidden = true;
+  el("lever-result").textContent = "";
+  el("sets").hidden = true;
 
   depth = new DepthIndex();   // the old room's views are gone with it
   hereRoomId = msg.roomId;
@@ -508,9 +679,31 @@ function buildRoom(msg: RoomState): void {
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);
+  // No explicit teardown: scene.destroy() above took the old world and every layer's children
+  // with it, the same way furniLayer is simply replaced.
+  wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
+    { click: onWallClick, hover: onWallHover }, depth);
+  for (const item of wallFurni) wallLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
   renderInventory();
+}
+
+/** Only my own items are ever in my inventory, so an id leaving it means my placement landed —
+ *  true on either surface. */
+function claimPlaced(itemId: number): void {
+  if (inventory.some((inv) => inv.id === itemId)) {
+    inventory = inventory.filter((inv) => inv.id !== itemId);
+    if (armed === itemId) {
+      armed = null;
+      releaseKeyboard();
+    }
+    scene?.clearHighlight();
+    furniLayer?.clearGhost();
+    wallLayer?.clearGhost();
+    renderInventory();
+  }
+  renderFurniBar();
 }
 
 /** A placement or a move: replace the item if it is already in the room, add it otherwise. */
@@ -519,19 +712,7 @@ function upsertFurni(item: FurniItem): void {
   if (i < 0) furni.push(item);
   else furni[i] = item;
   furniLayer?.apply(item);
-
-  // Only my own items are ever in my inventory, so an id leaving it means my placement landed.
-  if (inventory.some((inv) => inv.id === item.id)) {
-    inventory = inventory.filter((inv) => inv.id !== item.id);
-    if (armed === item.id) {
-      armed = null;
-      releaseKeyboard();
-    }
-    scene?.clearHighlight();
-    furniLayer?.clearGhost();
-    renderInventory();
-  }
-  renderFurniBar();
+  claimPlaced(item.id);
 }
 
 function handle(msg: ServerMsg): void {
@@ -572,9 +753,16 @@ function handle(msg: ServerMsg): void {
     case "furni_moved":
       upsertFurni(msg.item);
       break;
+    case "wall_placed":
+      wallFurni = wallFurni.filter((f) => f.id !== msg.item.id).concat(msg.item);
+      wallLayer?.apply(msg.item);
+      claimPlaced(msg.item.id);
+      break;
     case "furni_removed":
       furni = furni.filter((f) => f.id !== msg.itemId);
+      wallFurni = wallFurni.filter((f) => f.id !== msg.itemId);
       furniLayer?.remove(msg.itemId);
+      wallLayer?.remove(msg.itemId);
       if (menuItem === msg.itemId) closeMenu();
       break;
     case "inventory_add":
@@ -608,6 +796,25 @@ function handle(msg: ServerMsg): void {
       arcade = msg;
       el("arcade").hidden = false;
       renderArcade();
+      break;
+    case "lever_result":
+      el("lever-result").textContent = msg.defId
+        ? `${msg.label} — won!`
+        : "No win. Pull again?";
+      renderLever();
+      break;
+    case "donated":
+      inventory = inventory.filter((i) => i.id !== msg.itemId);
+      renderInventory();
+      renderFurniBar();
+      toast(`Donated — “${msg.inscription}”`, "notice");
+      break;
+    case "sets":
+      sets = msg.sets;
+      renderSets();
+      break;
+    case "set_complete":
+      toast(`${msg.name} complete — ${defName(msg.item.defId)} is yours`, "notice");
       break;
     case "nav_rooms":
       renderNav(msg.rooms);
@@ -667,6 +874,8 @@ async function start(token: string): Promise<void> {
   el("hud").style.display = "flex";
   el("nav-open").style.display = "block";
   el("arcade-open").style.display = "block";
+  el("lever-open").style.display = "block";
+  el("sets-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
 
@@ -711,6 +920,19 @@ el("arcade-open").addEventListener("click", () => {
 });
 el("arcade-deal").addEventListener("click", () => net.send({ t: "arcade_start" }));
 el("arcade-close").addEventListener("click", () => (el("arcade").hidden = true));
+el("lever-open").addEventListener("click", () => {
+  const panel = el("lever");
+  panel.hidden = !panel.hidden;
+  if (!panel.hidden) renderLever();
+});
+el("lever-close").addEventListener("click", () => (el("lever").hidden = true));
+el("lever-pull").addEventListener("click", () => net.send({ t: "lever_pull" }));
+el("sets-open").addEventListener("click", () => {
+  const panel = el("sets");
+  panel.hidden = !panel.hidden;
+  if (!panel.hidden) renderSets();
+});
+el("sets-close").addEventListener("click", () => (el("sets").hidden = true));
 for (const [id, move] of [
   ["arcade-higher", "higher"],
   ["arcade-lower", "lower"],

@@ -1,5 +1,6 @@
 import { Container } from "pixi.js";
 import { expect, test } from "vitest";
+import { wallBox, wallItemBox } from "@grand/shared";
 import { DepthIndex, LAYER, tileDepth } from "../src/scene/sort.ts";
 
 const box = (x: number, y: number, layer: number = LAYER.furni) =>
@@ -83,3 +84,46 @@ test("a sitter draws over the seat it shares a tile with, and under furni one ti
   expect(sitter.zIndex).toBeGreaterThan(chair.zIndex);
   expect(sitter.zIndex).toBeLessThan(nearer.zIndex);
 });
+// A wall stands half a tile behind the tiles it closes (#203). That is box geometry now, not a
+// band and not a key offset, so an interior wall — the notch of an L-shaped room — sorts against
+// the furni around it instead of always winning or always losing.
+test("a wall draws under everything standing on the tile it borders", () => {
+  const depth = new DepthIndex();
+  const views = { wall: new Container(), rug: new Container(), body: new Container(), tall: new Container() };
+  depth.set("wall", wallBox("left", 3, 3, LAYER.wall), views.wall);
+  depth.set("rug", box(3, 3, LAYER.floor_furni), views.rug);
+  depth.set("body", box(3, 3, LAYER.avatar), views.body);
+  depth.set("tall", { x0: 3, y0: 3, z0: 0, x1: 4, y1: 4, z1: 2, layer: LAYER.furni }, views.tall);
+  depth.flush();
+  for (const over of [views.rug, views.body, views.tall]) {
+    expect(views.wall.zIndex).toBeLessThan(over.zIndex);
+  }
+});
+
+test("a left wall and a right wall each sit behind their own tile, on their own axis", () => {
+  expect(wallBox("left", 3, 3, LAYER.wall)).toMatchObject({ x0: 2.5, x1: 3, y0: 3, y1: 4 });
+  expect(wallBox("right", 3, 3, LAYER.wall)).toMatchObject({ x0: 3, x1: 4, y0: 2.5, y1: 3 });
+});
+
+test("a hung item draws over its own wall but under furni on the tile in front", () => {
+  const depth = new DepthIndex();
+  const wall = new Container();
+  const hung = new Container();
+  const front = new Container();
+  const poster = { id: "wall_art", span: 1 } as unknown as Parameters<typeof wallItemBox>[0];
+  depth.set("wall", wallBox("left", 3, 3, LAYER.wall), wall);
+  depth.set("hung", wallItemBox(poster, "left", 3, 3, LAYER.wall_furni), hung);
+  depth.set("front", box(3, 3), front);
+  depth.flush();
+  expect(hung.zIndex).toBeGreaterThan(wall.zIndex);
+  expect(hung.zIndex).toBeLessThan(front.zIndex);
+});
+
+test("a hung item spans every segment it covers", () =>
+  expect(wallItemBox(
+    { id: "wall_shelf", span: 3 } as unknown as Parameters<typeof wallItemBox>[0],
+    "left", 3, 3, LAYER.wall_furni,
+  )).toMatchObject({ y0: 3, y1: 6 }));
+
+test("walls stay above the tile band", () =>
+  expect(tileDepth(99, 99)).toBeLessThan(0));

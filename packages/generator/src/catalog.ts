@@ -18,19 +18,24 @@ export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer; nearPng
     const bundle = render(def, recipe);
     return { bundle, png: encodePng(bundle.sheet.w, bundle.sheet.h, bundle.sheet.px) };
   }
-  const metaPath = join(FROZEN_DIR, `${def.id}.json`);
+  return frozenBundle(def.id);
+}
+
+/** Wall items are always 3D-assisted — there is no box path for a hanging sprite. */
+export function frozenBundle(id: string): { bundle: Bundle; png: Buffer; nearPng?: Buffer } {
+  const metaPath = join(FROZEN_DIR, `${id}.json`);
   if (!existsSync(metaPath)) {
-    throw new Error(`${def.id}: no starter recipe and no frozen artgen bundle at ${metaPath}`);
+    throw new Error(`${id}: no starter recipe and no frozen artgen bundle at ${metaPath}`);
   }
   const meta = JSON.parse(readFileSync(metaPath, "utf8")) as Bundle["meta"];
   if (!("seatZ" in meta)) {
-    throw new Error(`${def.id}: frozen bundle has no seatZ — re-freeze it through tools/artgen/postpass.ts`);
+    throw new Error(`${id}: frozen bundle has no seatZ — re-freeze it through tools/artgen/postpass.ts`);
   }
-  const png = readFileSync(join(FROZEN_DIR, `${def.id}.png`));
+  const png = readFileSync(join(FROZEN_DIR, `${id}.png`));
   const { width, height, rgba } = decodePng(png);
   const pixelHash = createHash("sha256").update(rgba).digest("hex");
   if (pixelHash !== meta.pixelHash) {
-    throw new Error(`${def.id}: frozen png pixels do not match meta.pixelHash — bundle is corrupt`);
+    throw new Error(`${id}: frozen png pixels do not match meta.pixelHash — bundle is corrupt`);
   }
   // #227: the companion near-sheet is checked the same way. It is additive, so an older bundle
   // without one is not an error — only a declared-but-wrong one is.
@@ -39,7 +44,7 @@ export function bundleFor(def: FurniDef): { bundle: Bundle; png: Buffer; nearPng
     nearPng = readFileSync(join(FROZEN_DIR, meta.nearSheet));
     const nearHash = createHash("sha256").update(decodePng(nearPng).rgba).digest("hex");
     if (nearHash !== meta.nearHash) {
-      throw new Error(`${def.id}: frozen near-sheet pixels do not match meta.nearHash`);
+      throw new Error(`${id}: frozen near-sheet pixels do not match meta.nearHash`);
     }
   }
   return {

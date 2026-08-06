@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_gilded",
+  "archetype": "artgen",
+  "sheet": "wall_art_gilded.png",
+  "frameW": 64,
+  "frameH": 127,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 111,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.96875,
+  "seatZ": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 23,
+    "mountU": 2,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:38382d7045687238",
+  "recipeHash": "38382d7045687238d644bef693e8d811d6e95c1bb3dbfeb180c60f27848aff57",
+  "pixelHash": "58853216323b28ff5ce98aa2e86d1f8ba3ba8b001b6e3fbaf358f354e3e75526"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art",
+  "archetype": "artgen",
+  "sheet": "wall_art.png",
+  "frameW": 64,
+  "frameH": 127,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 111,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.96875,
+  "seatZ": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 23,
+    "mountU": 2,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:2eba31daac08ffe4",
+  "recipeHash": "2eba31daac08ffe4bbe98120656a1a3fd83b6894877c6e934fc855e831530b76",
+  "pixelHash": "130acdbb82c1799c9c30aa11ddc885f81a18b164253aaee4b2c923519fbd5a42"
+}

@@ -10,9 +10,16 @@ const TILE_BAND = -1e6;
  *  The top two are a pair. A sitter shares a tile with the seat, so `seated` puts the body over
  *  it; `seat_front` is the half of that seat which belongs over the body in turn — the near-side
  *  back and arm the generator splits off (PIPELINES §1 Seating occlusion). `seatEdges` is what
- *  actually orders those two, because their boxes cannot. */
+ *  actually orders those two, because their boxes cannot.
+ *
+ *  `wall` and `wall_furni` sit lowest of the real sprites, but that is only a tie-break: a wall
+ *  is a box half a tile behind the tiles it borders (#203, walls.ts `wallBox`), so `behind` puts
+ *  it before anything standing on them by plain geometry. The layer is what orders a poster
+ *  against the wall it hangs on, since the two share that half-tile and neither is west, north,
+ *  or under the other. */
 export const LAYER = {
-  tile: 0, floor_furni: 1, marker: 2, avatar: 3, furni: 4, seated: 5, seat_front: 6,
+  tile: 0, wall: 1, wall_furni: 2, floor_furni: 3, marker: 4, avatar: 5, furni: 6,
+  seated: 7, seat_front: 8,
 } as const;
 
 /** Where a tile sits when it is not in the painter sort: a band of its own below every sprite.

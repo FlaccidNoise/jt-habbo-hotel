@@ -42,6 +42,7 @@ const ROOM_STATE: ServerMsg = {
   chat: { speakRadius: 5, shoutAllowed: false },
   avatars: [],
   furni: [],
+  wallFurni: [],
   inventory: [],
   you: 7,
   stars: 0,

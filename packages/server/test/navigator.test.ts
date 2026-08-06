@@ -61,7 +61,8 @@ describe("navigator listing", () => {
     expect(listing.rooms.find((r) => r.roomId === 2)?.players).toBe(1);
 
     // Both suites are listed; only alice's is hers, and neither is loaded so both read zero.
-    const suites = listing.rooms.filter((r) => r.roomId > 2);
+    // Room 3 is the staff-owned Museum, not a suite.
+    const suites = listing.rooms.filter((r) => r.roomId > 3);
     expect(suites).toHaveLength(2);
     expect(suites.filter((r) => r.yours)).toHaveLength(1);
     expect(suites.every((r) => r.players === 0)).toBe(true);

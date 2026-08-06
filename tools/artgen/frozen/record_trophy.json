@@ -1,0 +1,37 @@
+{
+  "defId": "record_trophy",
+  "archetype": "artgen",
+  "sheet": "record_trophy.png",
+  "frameW": 64,
+  "frameH": 126,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 110,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.9375,
+  "seatZ": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 21,
+    "mountU": 4,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:9714410a531fd182",
+  "recipeHash": "9714410a531fd1824433653b84d9341681b7bac23e175715c7f000e879d49374",
+  "pixelHash": "da70b8927c47aac02f0fab093447c53227cefbadb9b84ff7ebe0d3d7a090f63a"
+}

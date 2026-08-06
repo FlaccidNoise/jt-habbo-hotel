@@ -1,0 +1,32 @@
+{
+  "defId": "arcade_cabinet_plum",
+  "archetype": "artgen",
+  "sheet": "arcade_cabinet_plum.png",
+  "frameW": 64,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 76,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.875,
+  "seatZ": null,
+  "occlusion": [],
+  "styleVersion": 1,
+  "generatorVersion": 1,
+  "partLibraryHash": "artgen:674bdebf1572e228",
+  "recipeHash": "674bdebf1572e228001d530aed2a005e1d65bd448ff17e1b3996591de79be653",
+  "pixelHash": "2e261d6410bf140a259b18848cbb5c7fe2e080994188377472e5f285940955fa"
+}

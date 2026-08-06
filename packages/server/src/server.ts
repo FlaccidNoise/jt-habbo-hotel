@@ -8,12 +8,16 @@ import { extname, join, normalize, resolve, sep } from "node:path";
 import { WebSocket, WebSocketServer } from "ws";
 import type { RawData } from "ws";
 import { z } from "zod";
-import { CATALOG_PRICES, ClientMsgSchema, ROOM_CAPACITY } from "@grand/shared";
+import {
+  CATALOG_PRICES, ClientMsgSchema, LEVER_COST, PRESTIGE_DEFS, ROOM_CAPACITY, leverDraw,
+} from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
-import { COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleTrickle } from "./ledger.ts";
+import {
+  COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleSpend, settleTrickle,
+} from "./ledger.ts";
 import { log } from "./log.ts";
 import { flows, hourly, ledgerStats, startLagSampler, wsStats } from "./metrics.ts";
 import { advanceOnboarding, onboardingHint } from "./onboarding.ts";
@@ -22,6 +26,8 @@ import { NpcService, llmFromEnv } from "./npc.ts";
 import type { NpcGenerate } from "./npc.ts";
 import { Room } from "./room.ts";
 import type { Emit } from "./room.ts";
+import { MUSEUM_ROOM_ID, donate } from "./museum.ts";
+import { claimCompletedSets, progressFor } from "./sets.ts";
 import { TradeService } from "./trade.ts";
 
 const BODY_CAP = 1024;
@@ -70,6 +76,8 @@ export async function startServer(opts: {
   tradeCountdownMs?: number;
   /** Hi-Lo card source, 1..13. Tests inject a scripted deck. */
   arcadeDraw?: () => number;
+  /** Luck Lever roll source in [0, 1). Tests pin it to land on a chosen prize. */
+  leverRoll?: () => number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -146,9 +154,25 @@ export async function startServer(opts: {
       return found ? { accountId: found.accountId, staff: found.staff } : null;
     },
     countdownMs: opts.tradeCountdownMs,
+    onSettled: settleSets,
   });
 
+  /** Collection sets (#210). Called after anything that can add a def to an account — a buy, a
+   *  lever win, a trade — plus on join so the player sees where each set stands. */
+  function settleSets(accountId: number): void {
+    for (const done of claimCompletedSets(db, accountId)) {
+      log("set_complete", { accountId, setId: done.setId, defId: done.defId });
+      const item = { id: done.itemId, defId: done.defId, bound: true };
+      emit(accountId, {
+        t: "set_complete", setId: done.setId, name: done.name, badge: done.badge, item,
+      });
+      emit(accountId, { t: "inventory_add", item });
+    }
+    emit(accountId, { t: "sets", sets: progressFor(db, accountId) });
+  }
+
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
+  const leverRoll = opts.leverRoll ?? Math.random;
 
   const NAV_LIMIT = 60;
 
@@ -272,6 +296,9 @@ export async function startServer(opts: {
         reason: "welcome trickle",
       });
     }
+    // Also claims: an account can complete a set through a path that predates this code, and a
+    // reward owed is a reward paid the next time it joins.
+    settleSets(account.id);
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);
     const hint = onboardingHint(db, account.id);
@@ -304,6 +331,14 @@ export async function startServer(opts: {
       case "place":
         if (room.place(accountId, msg.itemId, msg.x, msg.y, msg.dir)) quest(accountId, "place");
         log("place", { accountId, roomId: conn.roomId, itemId: msg.itemId, x: msg.x, y: msg.y });
+        break;
+      case "place_wall":
+        if (room.placeWall(accountId, msg.itemId, msg.side, msg.x, msg.y, msg.u, msg.v)) {
+          quest(accountId, "place");
+        }
+        log("place_wall", {
+          accountId, roomId: conn.roomId, itemId: msg.itemId, side: msg.side, x: msg.x, y: msg.y,
+        });
         break;
       case "pickup":
         room.pickup(accountId, msg.itemId);
@@ -343,20 +378,77 @@ export async function startServer(opts: {
           fail(conn.ws, "purchase", "that item is not in the catalog");
           break;
         }
-        const result = settlePurchase(db, {
-          opKey: randomUUID(),
-          accountId,
-          defId: msg.defId,
-          price,
-        });
-        log("purchase", { accountId, defId: msg.defId, price, ok: result.ok });
+        // Prestige fixtures mint account-bound under their own ledger op, so /api/metrics can
+        // tell "the catalog absorbed 3,300" from "the deep sink absorbed 3,300" (#210).
+        const prestige = PRESTIGE_DEFS.has(msg.defId);
+        const result = prestige
+          ? settleSpend(db, {
+              opKey: randomUUID(), op: "prestige", accountId, price,
+              mint: { defId: msg.defId, bound: true },
+            })
+          : settlePurchase(db, { opKey: randomUUID(), accountId, defId: msg.defId, price });
+        log("purchase", { accountId, defId: msg.defId, price, prestige, ok: result.ok });
         if (!result.ok) {
           fail(conn.ws, "purchase", result.reason);
           break;
         }
-        emit(accountId, { t: "stars", balance: result.balance, delta: -price, reason: "purchase" });
-        emit(accountId, { t: "inventory_add", item: { id: result.itemId, defId: msg.defId } });
+        emit(accountId, {
+          t: "stars", balance: result.balance, delta: -price,
+          reason: prestige ? "prestige" : "purchase",
+        });
+        emit(accountId, {
+          t: "inventory_add",
+          item: { id: result.itemId ?? 0, defId: msg.defId, ...(prestige ? { bound: true } : {}) },
+        });
+        settleSets(accountId);
         quest(accountId, "purchase");
+        break;
+      }
+      // The Luck Lever (#210): one message, one draw, no session — the only repeatable sink, so
+      // it is the one that keeps absorbing after the catalog has been bought out.
+      case "lever_pull": {
+        const prize = leverDraw(leverRoll());
+        const result = settleSpend(db, {
+          opKey: randomUUID(), op: "lever", accountId, price: LEVER_COST,
+          ...(prize.defId ? { mint: { defId: prize.defId } } : {}),
+        });
+        log("lever", { accountId, prize: prize.defId, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "purchase", result.reason);
+          break;
+        }
+        emit(accountId, {
+          t: "stars", balance: result.balance, delta: -LEVER_COST, reason: "Luck Lever",
+        });
+        const won = prize.defId && result.itemId
+          ? { id: result.itemId, defId: prize.defId }
+          : undefined;
+        emit(accountId, {
+          t: "lever_result", defId: prize.defId, label: prize.label, balance: result.balance,
+          ...(won ? { item: won } : {}),
+        });
+        if (won) {
+          emit(accountId, { t: "inventory_add", item: won });
+          settleSets(accountId);
+        }
+        break;
+      }
+      // The Museum wing (#210): an item sink, not a Stars sink. The piece leaves circulation for
+      // good, which drains Stars because the donor buys another.
+      case "donate": {
+        const result = donate(db, { accountId, donor: conn.username ?? "someone", itemId: msg.itemId });
+        log("donate", { accountId, itemId: msg.itemId, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "not_owner", result.reason);
+          break;
+        }
+        // The museum is a room like any other: if it is loaded, its occupants watch it arrive.
+        const museum = rooms.get(MUSEUM_ROOM_ID);
+        if (museum) museum.room.reload();
+        emit(accountId, {
+          t: "donated", itemId: msg.itemId, roomId: MUSEUM_ROOM_ID,
+          inscription: result.inscription,
+        });
         break;
       }
       case "nav_list":
