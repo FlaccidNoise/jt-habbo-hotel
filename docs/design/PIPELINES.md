@@ -203,6 +203,16 @@ recipe-to-sprite path.
    #256-class one, where the loose part still touches the body — that needs interior structure,
    which is the vision pass, not geometry.
 
+   **The vision-model pass was measured and rejected (#271).** Against a labelled set — the 33
+   shipped bundles plus the pre-fix #252 and #256 sheets recovered with `git show` —
+   `gemini-2.5-flash` caught 1 of 2 and false-flagged 0 of 33; `gemini-3.1-pro-preview` caught 1 of
+   2 and false-flagged 5 of 33, including the *fixed* `chair_basic`. Both catch only #252, which
+   `reviewIslands` already catches for free and deterministically, and both miss #256, which is the
+   whole reason the pass was proposed. Reasoning and numbers are recorded at the top of `review.ts`
+   so it is not rebuilt. The structural reason it could not work is worth keeping: half of #256
+   lives in row 1, the half-sprite drawn in front of a seated occupant, so it is not in the sheet at
+   all — a review that wants it has to look at the reference scene `scene.ts` already builds.
+
    The review covers all three surfaces: `cli.ts` (box path), `postpass.ts` (artgen) and
    `figurepass.ts` (figure layers, #268). **Figures compose before they count.** A garment is
    rendered as a holdout against the body, so wherever the body is nearer it won the depth test

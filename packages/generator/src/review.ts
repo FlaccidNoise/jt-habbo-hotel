@@ -17,7 +17,35 @@ import type { Canvas } from "./raster.ts";
 // every table, lamp, plant and stool, because a leg gap or a stem legitimately splits a column —
 // and it fires on the FIXED chair_basic and cafe_chair with the same 6px and 14px bands as on
 // the broken ones. No threshold separates signal from silhouette, so it is not in this file.
-// Catching #256 needs interior structure, not the alpha channel: the vision pass, not geometry.
+//
+// #271 proposed a vision-model pass over the @3x sheet for the half geometry cannot reach. Built
+// and measured 2026-08-05 against a labelled set — the 33 shipped bundles, plus the pre-fix #252
+// and #256 sheets recovered with `git show`. It does not work, and so it is not in this file
+// either:
+//
+//   gemini-2.5-flash          caught 1/2, false-flagged 0/33
+//   gemini-3.1-pro-preview    caught 1/2, false-flagged 5/33
+//
+// Both catch only #252 — the one reviewIslands already catches for free and deterministically.
+// Both miss #256, which is the whole reason the pass was proposed. The stronger model is the worse
+// of the two: among its five false flags is the FIXED chair_basic ("front-left leg detached"), so
+// it fires on the repaired part exactly as the dead-band check did.
+//
+// Asked a leading question instead — "is there a gap between the back and the seat" — the strong
+// model says gap on the broken sheet 6/6 and on the SHIPPED one 4/6. It is agreeing with the
+// question, not seeing the defect. The same failure as the dead-band check, one abstraction up.
+//
+// A structural finding that outlives whichever model is current, and the reason a sheet-level pass
+// was never going to reach #256: its fix (c1d01f7) moved row 0 in dirs 2 and 4 only. In dirs 0 and
+// 6 the whole-object sprite is byte-identical before and after — what changed there is ROW 1, the
+// half that draws in front of a seated occupant. Half of that defect is not in the sheet at all;
+// it is a property of the item composited with a sitter. A review that wants it has to look at the
+// reference scene scene.ts already builds for gateDrawOrder and gateSeatOcclusion, not at the
+// sprite sheet.
+//
+// Not pursued: an A/B against the previous freeze, which the strong model did get right once.
+// It has no application here — #252 and #256 were both wrong in the first version authored, so
+// there was never a good sheet to diff against.
 
 /** Where the warning was seen — "dir 2" for furni, "sit d3" for a figure cell. */
 export interface Warning { where: string; detail: string }
