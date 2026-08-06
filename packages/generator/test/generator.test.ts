@@ -24,6 +24,7 @@ import {
   runWallGates,
 } from "../src/gates.ts";
 import { makeCanvas, putPixel } from "../src/raster.ts";
+import { reviewIslands } from "../src/review.ts";
 import { recipeHash } from "../src/recipe.ts";
 import type { Recipe } from "../src/recipe.ts";
 import { drawOrderMismatch, referenceScenes, seatedScene } from "../src/scene.ts";
@@ -414,5 +415,29 @@ describe("gates bounce staged known-bad input", () => {
     }
     expect(gateWallBounds({ ...bundle, sheet: shifted }))
       .toMatchObject({ ok: false, gate: "wall_bounds" });
+  });
+});
+
+// Visual review (#258): warnings, not gates, so these assert the warning fires rather than that
+// the build stops. Measured against the real defects — see the note at the top of review.ts.
+describe("visual review warns on staged detached geometry", () => {
+  test("the shipped catalog is quiet", () => {
+    for (const def of PROTOTYPE_CATALOG) {
+      const { bundle } = bundleFor(def);
+      expect(reviewIslands(bundle), `${def.id} warns`).toEqual([]);
+    }
+  });
+
+  test("islands: a part cut loose from the body", () => {
+    const bundle = chairBundle();
+    const { frameW, frameH } = bundle.meta;
+    // Erase a full-width band across dir 0, which is how #252 read: the café chair's back stood
+    // clear of the seat, so the frame arrived in two pieces and every gate still passed.
+    const band = Math.floor(frameH / 2);
+    for (let y = band; y < band + 3; y++) {
+      for (let x = 0; x < frameW; x++) bundle.sheet.px[(y * bundle.sheet.w + x) * 4 + 3] = 0;
+    }
+    expect(runGates(bundle, CHAIR_DEF!)).toEqual({ ok: true });
+    expect(reviewIslands(bundle)).toMatchObject([{ dir: 0, detail: expect.stringContaining("islands") }]);
   });
 });

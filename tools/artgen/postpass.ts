@@ -25,6 +25,7 @@ import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { makeCanvas, putPixel, getPixel, blit } from "../../packages/generator/src/raster.ts";
 import { rampByName, OUTLINE, STYLE_VERSION, GENERATOR_VERSION } from "../../packages/generator/src/style.ts";
 import { runGates, runWallGates } from "../../packages/generator/src/gates.ts";
+import { reviewIslands } from "../../packages/generator/src/review.ts";
 import type { Bundle } from "../../packages/generator/src/compose.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
 
@@ -365,6 +366,11 @@ for (const [id, part] of work) {
       pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
     },
   };
+  // Visual review (#258): warnings, not gates. Printed before the gate line so a detached part
+  // is visible next to the ${id}@3x.png just written, whether or not the gates pass.
+  for (const w of reviewIslands(bundle)) {
+    console.warn(`${id}: WARN dir ${w.dir}: ${w.detail}`);
+  }
   const result = wallDef ? runWallGates(bundle, wallDef) : runGates(bundle, def);
   if (!result.ok) {
     failures++;
