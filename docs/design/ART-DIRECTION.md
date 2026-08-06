@@ -109,6 +109,47 @@ the v1 pins, marked (tune) where authoring may move them.
   resolves them through the worn ramps while compositing. Colour is per player, so a baked-colour
   sheet would need one render per ramp combination.
 
+## Surface detail: trim by prim (#259, decided 2026-08-05)
+
+Every prim carries its own `ramp`, so **a trim band is a thin prim, not a texture**. This is the
+whole surface-detail mechanism on the furni path. `#259` opened asking whether a decal should be
+a post-pass 2D mask or a second ramp on a prim sub-region; the answer is that neither is needed
+for the case that matters. `proof_trim` in `rig.py` demonstrates three idioms and costs 8 prims:
+
+- **Flush band** — split a box in two at the band, give the upper part the accent ramp. The
+  silhouette does not move. The post-pass draws its interior detail line on the prim-group
+  boundary, which reads as the band's own shadow.
+- **Proud band** — the same, 2 footprint-px wider, so it breaks the silhouette and catches the
+  sun band. Use where the trim should read as applied hardware rather than inlay.
+- **Inlay** — a wider accent disc with the field disc standing proud inside it, leaving a ring.
+  Do not make the two coplanar: separate objects sharing a plane z-fight.
+
+Five constraints. The last three were each a failed first attempt in the pass that trimmed
+`cafe_table`, `casino_table`, `divider_basic` and `bar_counter` — none was caught by a gate, and
+all four passed every gate in the state that read wrong.
+
+- **Keep `maxZ` fixed.** An artgen def transcribes `stackHeights` from the mesh and `gateFootprint`
+  checks it in both directions, so trim that raises the top of a part breaks the def.
+- **The budget is prim count, not render time.** `rig.py` caps a part at 26 prims. Trim costs one
+  or two per band, so roughly 8–10 bands fit. A repeating pattern does not.
+- **An accent needs contrast, not a different ramp name.** A flush band takes the same luma bucket
+  as the face around it, so the two ramps must differ in the *base colour*. Gold (`0xdaa520`) on
+  walnut (`0xb5651d`) is invisible — the trap `record_trophy` already records for its engraving
+  plate. `casino_table`'s first gold apron band vanished exactly this way and went ivory.
+  Where the accent must be gold on walnut, make it a **curved** prim: an `hcyl` crests into the
+  `hi` band while the flat face beside it stays in `left`/`right`. That is why `bar_counter`'s
+  brass rails read and its flush gold fascia did not.
+- **Trim only pays on a face the camera can see.** `casino_table`'s apron is overhung 0.08 by the
+  baize slab above it, so a band there is hidden from all four directions. Check the `@3x` preview,
+  not the mesh. The band moved to the baize as a betting line and became the part's best feature.
+- **Reconsider every colorway.** `VARIANTS` remaps by ramp *name* across all prims, so trim is
+  remapped too and gets the multiplication for free — but an accent that collides with the new
+  base disappears. `fountain_gilded` remaps `slate → gold`, so gold trim on `fountain` would sink
+  into its own body. This is the `divider_basic_plum` lesson in `postpass.ts` applied to trim.
+
+What this does **not** reach: marks that are not extrudable — a monogram, a crest, lettering — and
+anything on a curved face. Those need raster, which is what the flat-decor class (#260) is for.
+
 ## Proof gate before build-out
 
 Re-render the three shipped archetype families (chair, sofa, plant) through this path. All three

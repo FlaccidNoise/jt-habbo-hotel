@@ -105,6 +105,14 @@ PARTS = {
              "group": 100},
             {"t": "hcyl", "x": 1.87, "y0": 0.13, "y1": 1.87, "z": 1.32, "r": 0.09, "axis": "x",
              "group": 100},
+            # Betting line (#259): an ivory slab on the baize with a fern slab set inside it,
+            # leaving a ring — the inlay idiom on a horizontal face.
+            # The apron below (z 1.06-1.18) was the first try and is the wrong surface: the baize
+            # slab overhangs it by 0.08, so it is hidden from every direction. Trim only pays on a
+            # face the camera can see.
+            # maxZ stays 1.41 (the rails at 1.32 + r 0.09), so the def's stackHeights holds.
+            {"t": "box", "c0": (0.34, 0.34, 1.32), "c1": (1.66, 1.66, 1.35), "ramp": "ivory"},
+            {"t": "box", "c0": (0.40, 0.40, 1.33), "c1": (1.60, 1.60, 1.36), "ramp": "fern"},
         ],
     },
     "casino_stool": {
@@ -123,7 +131,14 @@ PARTS = {
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.26, "ry": 0.26, "z0": 0.00, "z1": 0.07,
              "ramp": "charcoal"},
             {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.07, "ry": 0.07, "z0": 0.07, "z1": 0.92},
-            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.42, "ry": 0.42, "z0": 0.92, "z1": 1.02,
+            # Gold rim (#259). One extra prim buys both the edge band and the ring around the
+            # top: a wider gold disc with the ivory top standing 2px proud inside it. The two are
+            # not coplanar — a shared top plane z-fights between separate objects.
+            # maxZ stays 1.02; the def transcribes stackHeights from it and the footprint gate
+            # checks that both ways for an artgen part.
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.44, "ry": 0.44, "z0": 0.92, "z1": 0.96,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.38, "ry": 0.38, "z0": 0.92, "z1": 1.02,
              "ramp": "ivory"},
         ],
     },
@@ -144,6 +159,27 @@ PARTS = {
             {"t": "cyl", "cx": 0.68, "cy": 0.76, "rx": 0.06, "ry": 0.06, "z0": 0.50, "z1": 1.00},
             # Flush with the seat's rear edge, and overlapping the posts in z so the joint is solid.
             {"t": "box", "c0": (0.18, 0.70, 0.98), "c1": (0.82, 0.82, 1.22), "bevel": 0.05},
+        ],
+    },
+    # Trim proof (#259): does a second ramp on a thin prim already carry "the fancy version"?
+    # Three idioms at once — a flush band that splits the column and changes no silhouette, a
+    # proud band that does, and an inlaid cap where an ivory disc leaves a gold rim.
+    "proof_trim": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.18, 0.00), "c1": (0.82, 0.82, 0.10), "ramp": "charcoal"},
+            # flush band: same footprint as the column above and below it, 2px of gold
+            {"t": "box", "c0": (0.30, 0.30, 0.10), "c1": (0.70, 0.70, 0.34)},
+            {"t": "box", "c0": (0.30, 0.30, 0.34), "c1": (0.70, 0.70, 0.40), "ramp": "gold"},
+            {"t": "box", "c0": (0.30, 0.30, 0.40), "c1": (0.70, 0.70, 0.62)},
+            # proud band: 2 footprint-px wider, so it breaks the silhouette
+            {"t": "box", "c0": (0.26, 0.26, 0.62), "c1": (0.74, 0.74, 0.68), "ramp": "gold"},
+            {"t": "box", "c0": (0.30, 0.30, 0.68), "c1": (0.70, 0.70, 0.90)},
+            # inlaid cap: the ivory disc sits inside the gold one, leaving a rim
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.40, "ry": 0.40, "z0": 0.90, "z1": 1.00,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.31, "ry": 0.31, "z0": 0.96, "z1": 1.03,
+             "ramp": "ivory"},
         ],
     },
     # ---- remaining floor archetypes ----
@@ -192,7 +228,12 @@ PARTS = {
     "divider_basic": {
         "w": 2, "l": 1, "ramp": "slate",
         "prims": [
-            {"t": "box", "c0": (0.00, 0.30, 0.00), "c1": (2.00, 0.70, 0.92)},
+            # The plainest part in the catalog was two prims. A flush gold rail across the open
+            # field of the panel (#259) costs one more. Mid-height, not under the cap: at 0.74 it
+            # sat in the cap's overhang shadow and read as an outline rather than as metal.
+            {"t": "box", "c0": (0.00, 0.30, 0.00), "c1": (2.00, 0.70, 0.42)},
+            {"t": "box", "c0": (0.00, 0.30, 0.42), "c1": (2.00, 0.70, 0.50), "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 0.30, 0.50), "c1": (2.00, 0.70, 0.92)},
             {"t": "box", "c0": (0.00, 0.26, 0.92), "c1": (2.00, 0.74, 1.04), "bevel": 0.03,
              "ramp": "walnut"},
         ],
@@ -224,7 +265,13 @@ PARTS = {
              "ramp": "charcoal"},
             {"t": "box", "c0": (0.00, 0.18, 1.05), "c1": (2.00, 0.95, 1.16), "bevel": 0.03,
              "ramp": "ivory"},
+            # A second brass rail under the counter top (#259), mirroring the foot rail below.
+            # A curved prim, not a flush band: gold on walnut only reads when the accent catches
+            # the sun band, and a flat band on the body's own vertical face shares walnut's luma
+            # bucket. A first pass as a proud box at z 0.97 was buried by the top's overhang.
             {"t": "hcyl", "x": 0.22, "y0": 0.12, "y1": 1.88, "z": 0.16, "r": 0.05, "axis": "x",
+             "ramp": "gold"},
+            {"t": "hcyl", "x": 0.22, "y0": 0.12, "y1": 1.88, "z": 0.96, "r": 0.05, "axis": "x",
              "ramp": "gold"},
         ],
     },
