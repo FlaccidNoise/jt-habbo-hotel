@@ -27,6 +27,7 @@ import type { LayerType } from "../../packages/shared/src/figuredata.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "../../packages/generator/src/raster.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
+import { reviewFigureIslands } from "../../packages/generator/src/review.ts";
 import { GENERATOR_VERSION, RAMP_SHADES, STYLE_VERSION } from "../../packages/generator/src/style.ts";
 
 const RES = 256;
@@ -347,6 +348,28 @@ for (const [name, gate] of [
   } else {
     console.error(`gate ${name}: FAIL — ${result.detail}`);
     failures++;
+  }
+}
+
+// ---- visual review (#268) ---------------------------------------------------------------------
+// Warnings, never a failure — the same tier postpass.ts runs (PIPELINES §2 stage 4). It measures
+// the layer composed with the body, because a garment alone is legitimately in pieces; see the
+// figure section of review.ts for the 198-of-1024 measurement that settled that.
+{
+  const cellLabel = (cell: number): string => `${FRAMES[(cell / 8) | 0]} d${cell % 8}`;
+  const body = HOLDOUT_IDS.map((id) => layers.get(id)).filter((c): c is Canvas[] => c !== undefined);
+  const warn = (id: string, cells: ReadonlyArray<readonly Canvas[]>): void => {
+    for (const w of reviewFigureIslands(cells, cellLabel)) {
+      console.warn(`${id}: WARN ${w.where}: ${w.detail}`);
+    }
+  };
+  // The canonical body once, as one object — a head floating off the neck is the same defect —
+  // then each garment against it.
+  if (body.length > 0) warn(HOLDOUT_IDS.join("+"), body);
+  for (const id of partIds) {
+    const cells = layers.get(id);
+    if (!cells || HOLDOUT_IDS.includes(id)) continue;
+    warn(id, [...body, cells]);
   }
 }
 

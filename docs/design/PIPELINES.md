@@ -202,6 +202,16 @@ recipe-to-sprite path.
    flags 0 of 33 shipped bundles and catches a #252-class defect. It provably cannot catch a
    #256-class one, where the loose part still touches the body — that needs interior structure,
    which is the vision pass, not geometry.
+
+   The review covers all three surfaces: `cli.ts` (box path), `postpass.ts` (artgen) and
+   `figurepass.ts` (figure layers, #268). **Figures compose before they count.** A garment is
+   rendered as a holdout against the body, so wherever the body is nearer it won the depth test
+   and the garment arrives in pieces by construction — two loafers, a skirt panel a leg cuts in
+   two. Measured over the 16 frozen layers × 8 frames × 8 dirs: the layer alone flags **198 of
+   1024 cells (19 %)** and every one is legitimate; composed with the canonical body it flags
+   **0**. So `reviewFigureIslands` measures the composite, one garment at a time — the same stack
+   `gateHoldout` checks against, for the same reason. What survives is exactly the #252-class
+   defect: a sleeve, brim or shoe authored clear of the body floats free of the composite.
 5. **Mint gate (prototype).** Names and descriptions through the basic word filter. Composed
    furni from the curated part library needs no image screening — the part library is the gate.
    Per-account mint rate limits and rejection economics per GAME.md §Design minting (integrity

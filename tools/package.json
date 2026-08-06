@@ -1,0 +1,11 @@
+{
+  "name": "@grand/tools",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "true" },
+  "dependencies": { "@grand/shared": "workspace:*" },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

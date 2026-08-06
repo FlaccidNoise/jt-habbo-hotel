@@ -1,0 +1,2 @@
+{ "extends": "../tsconfig.base.json", "compilerOptions": { "types": ["node"] },
+  "include": ["artgen", "decor"] }

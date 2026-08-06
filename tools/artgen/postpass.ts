@@ -347,6 +347,9 @@ for (const [id, part] of work) {
   const recipeHash = provenanceHash(id, part);
   const bundle: Bundle = {
     sheet,
+    // A 3D-assisted part ships frozen pixels, not boxes — which is why gateDrawOrder and
+    // gateSeatOcclusion cannot reach it (#233). They read this field to know that.
+    geometry: null,
     meta: {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
       dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
@@ -369,7 +372,7 @@ for (const [id, part] of work) {
   // Visual review (#258): warnings, not gates. Printed before the gate line so a detached part
   // is visible next to the ${id}@3x.png just written, whether or not the gates pass.
   for (const w of reviewIslands(bundle)) {
-    console.warn(`${id}: WARN dir ${w.dir}: ${w.detail}`);
+    console.warn(`${id}: WARN ${w.where}: ${w.detail}`);
   }
   const result = wallDef ? runWallGates(bundle, wallDef) : runGates(bundle, def);
   if (!result.ok) {

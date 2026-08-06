@@ -36,7 +36,7 @@ for (const def of PROTOTYPE_CATALOG) {
       process.exit(1);
     }
   }
-  for (const w of reviewIslands(bundle)) console.warn(`${def.id}: WARN dir ${w.dir}: ${w.detail}`);
+  for (const w of reviewIslands(bundle)) console.warn(`${def.id}: WARN ${w.where}: ${w.detail}`);
   writeFileSync(join(outDir, bundle.meta.sheet), png);
   if (nearPng && bundle.meta.nearSheet) writeFileSync(join(outDir, bundle.meta.nearSheet), nearPng);
   defs[def.id] = bundle.meta;
@@ -59,7 +59,7 @@ for (const def of WALL_CATALOG) {
       process.exit(1);
     }
   }
-  for (const w of reviewIslands(bundle)) console.warn(`${def.id}: WARN dir ${w.dir}: ${w.detail}`);
+  for (const w of reviewIslands(bundle)) console.warn(`${def.id}: WARN ${w.where}: ${w.detail}`);
   writeFileSync(join(outDir, bundle.meta.sheet), png);
   defs[def.id] = bundle.meta;
   console.log(`${def.id}: ${bundle.sheet.w}×${bundle.sheet.h} wall sheet, pixels ${bundle.meta.pixelHash.slice(0, 12)}…`);

@@ -28,8 +28,9 @@ import {
   runGates,
   runWallGates,
 } from "../src/gates.ts";
-import { makeCanvas, putPixel } from "../src/raster.ts";
-import { reviewIslands } from "../src/review.ts";
+import { getPixel, makeCanvas, putPixel } from "../src/raster.ts";
+import type { Canvas } from "../src/raster.ts";
+import { reviewFigureIslands, reviewIslands } from "../src/review.ts";
 import { recipeHash } from "../src/recipe.ts";
 import type { Recipe } from "../src/recipe.ts";
 import { drawOrderMismatch, referenceScenes, seatedScene } from "../src/scene.ts";
@@ -459,7 +460,8 @@ describe("visual review warns on staged detached geometry", () => {
       for (let x = 0; x < frameW; x++) bundle.sheet.px[(y * bundle.sheet.w + x) * 4 + 3] = 0;
     }
     expect(runGates(bundle, CHAIR_DEF!)).toEqual({ ok: true });
-    expect(reviewIslands(bundle)).toMatchObject([{ dir: 0, detail: expect.stringContaining("islands") }]);
+    expect(reviewIslands(bundle))
+      .toMatchObject([{ where: "dir 0", detail: expect.stringContaining("islands") }]);
   });
 });
 
@@ -562,5 +564,81 @@ describe("flat decor", () => {
     expect(PALETTE.has(nearestPaletteColor(0x123456))).toBe(true);
     // Idempotent: a palette colour is already its own nearest.
     for (const color of PALETTE) expect(nearestPaletteColor(color)).toBe(color);
+  });
+});
+
+// Figure-layer visual review (#268). Measured before it was wired, exactly as #258 was: the raw
+// per-layer island count flags 198 of the 1024 frozen cells and every one of them is legitimate,
+// so the check runs on the layer COMPOSED WITH THE BODY. The measurement is recorded in review.ts.
+describe("figure visual review", () => {
+  const FIGURE_DIR = join(FROZEN_DIR, "figure");
+  const doc = JSON.parse(readFileSync(join(FIGURE_DIR, "figures.json"), "utf8")) as {
+    canvas: { w: number; h: number; frames: string[] };
+    layers: Array<{ partId: string; sheet: string }>;
+  };
+  const { w: W, h: H, frames: FRAMES } = doc.canvas;
+  const BODY = ["bd1", "hd2"];
+  const label = (cell: number): string => `${FRAMES[(cell / 8) | 0]} d${cell % 8}`;
+
+  /** One layer's 64 cells, cut out of its frozen sheet the way figurepass holds them. */
+  function cellsOf(partId: string): Canvas[] {
+    const layer = doc.layers.find((l) => l.partId === partId);
+    if (!layer) throw new Error(`${partId} is not a frozen figure layer`);
+    const png = decodePng(readFileSync(join(FIGURE_DIR, layer.sheet)));
+    const sheet: Canvas = { w: png.width, h: png.height, px: png.rgba };
+    const out: Canvas[] = [];
+    for (let row = 0; row < FRAMES.length; row++) {
+      for (let dir = 0; dir < 8; dir++) {
+        const cell = makeCanvas(W, H);
+        for (let y = 0; y < H; y++) {
+          for (let x = 0; x < W; x++) {
+            const p = getPixel(sheet, dir * W + x, row * H + y);
+            if (p.alpha !== 0) putPixel(cell, x, y, p.color);
+          }
+        }
+        out.push(cell);
+      }
+    }
+    return out;
+  }
+
+  const body = BODY.map(cellsOf);
+  const garments = doc.layers.map((l) => l.partId).filter((id) => !BODY.includes(id));
+
+  test("the shipped wardrobe is quiet, composed with the body", () => {
+    expect(reviewFigureIslands(body, label)).toEqual([]);
+    for (const id of garments) {
+      expect(reviewFigureIslands([...body, cellsOf(id)], label), `${id} warns`).toEqual([]);
+    }
+  });
+
+  test("the layer alone is NOT the check — it flags the shipped wardrobe constantly", () => {
+    // The negative result the bug asked to be recorded rather than assumed. A garment rendered as
+    // a holdout against the body arrives in pieces by construction: two loafers, a skirt panel the
+    // near leg cuts in two. If this ever drops to zero the composed check has stopped earning its
+    // keep and this file should say so.
+    const flagged = garments.filter((id) => reviewFigureIslands([cellsOf(id)], label).length > 0);
+    expect(flagged.length).toBeGreaterThan(garments.length / 2);
+    expect(reviewFigureIslands([cellsOf("sh9")], label).length).toBeGreaterThan(20);
+  });
+
+  test("islands: a garment authored clear of the body it is worn on", () => {
+    // #252 on a figure: the loafers cut loose from the legs. Lifting them clear of the ankle is
+    // the defect the composed check exists to catch — and the raw check cannot, because sh9 is
+    // already in two pieces before anything is broken.
+    const lifted = cellsOf("sh9").map((cell) => {
+      const moved = makeCanvas(cell.w, cell.h);
+      for (let y = 8; y < cell.h; y++) {
+        for (let x = 0; x < cell.w; x++) {
+          const p = getPixel(cell, x, y);
+          if (p.alpha !== 0) putPixel(moved, x, y - 8, p.color);
+        }
+      }
+      return moved;
+    });
+    const warnings = reviewFigureIslands([...body, lifted], label);
+    expect(warnings.length).toBeGreaterThan(0);
+    expect(warnings[0]!.detail).toContain("islands");
+    expect(warnings[0]!.where).toMatch(/^\w+ d\d$/);
   });
 });
