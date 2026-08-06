@@ -31,7 +31,7 @@
         {
           "x0": 0.0625,
           "y0": 0.78125,
-          "z0": 0.578125,
+          "z0": 0.45,
           "x1": 0.9375,
           "y1": 0.9375,
           "z1": 1
@@ -41,7 +41,7 @@
         {
           "x0": 0.78125,
           "y0": 0.0625,
-          "z0": 0.578125,
+          "z0": 0.45,
           "x1": 0.9375,
           "y1": 0.9375,
           "z1": 1
@@ -49,9 +49,9 @@
       ],
       "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "47ec00294d45132a",
-      "recipeHash": "b06a055fdc37a950aa51c39beee88384758eef9c4ab23170acc9d16a2982fef3",
-      "pixelHash": "8c95dfdd6f6dc91610d052f6bcd91cf6669d579a4879981b5f49f3f92c69396f"
+      "partLibraryHash": "8d1aca2419945927",
+      "recipeHash": "5cc70e3aceeeb56efa239f66df0c627b4f7a405a1ee607065fadb02a1ed438ec",
+      "pixelHash": "5247f2ca914c1a11373cb2b6db96c3b021faab0eaf4056c0b4a97d076c1124f5"
     },
     "table_basic": {
       "defId": "table_basic",
@@ -81,8 +81,8 @@
       "occlusion": null,
       "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "47ec00294d45132a",
-      "recipeHash": "b0590132f4781c2e183baebc08f3ac3fcae3a561e07af379fb841e73527ee692",
+      "partLibraryHash": "8d1aca2419945927",
+      "recipeHash": "3150bffcb5e4805a7f6ed80b1b598c4593a7a5319056d9f9ee8215c3023d36a0",
       "pixelHash": "5275308563d733b9a60889f3c6589a85c284d9d3243c5e82620ae179bf15f115"
     },
     "sofa_basic": {
@@ -146,8 +146,8 @@
       ],
       "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "47ec00294d45132a",
-      "recipeHash": "d848d9bbcfd8c5688a47924e84e75fa7792d46c05931e01e20989969ca1be0f4",
+      "partLibraryHash": "8d1aca2419945927",
+      "recipeHash": "8bd737c738381e1e569319b886b9a36d1cf85d25bf4db26c6c7345c5485e2c7b",
       "pixelHash": "3b87f066edb2c05889402f262bbe80610b9932ebd2bce570a6085f39dff3a04a"
     },
     "plant_basic": {
@@ -178,8 +178,8 @@
       "occlusion": null,
       "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "47ec00294d45132a",
-      "recipeHash": "cb5b88171e81942e355e2398594d149ef5cbfa6a484a6a71b27bada921c6a535",
+      "partLibraryHash": "8d1aca2419945927",
+      "recipeHash": "75a68fe07f8ad5ece7c0136160d4ce9d195d10b6c714bd8499f2a81d37425fe1",
       "pixelHash": "ec7edd20fb519135337d3249fa5707006b316c1cbfe14cfc91cdfde1fc982453"
     },
     "rug_basic": {
@@ -210,8 +210,8 @@
       "occlusion": null,
       "styleVersion": 2,
       "generatorVersion": 1,
-      "partLibraryHash": "47ec00294d45132a",
-      "recipeHash": "4ad9b8de66ad2a533c731bec184aae566f96b0dc978806e4145ae3c744518d40",
+      "partLibraryHash": "8d1aca2419945927",
+      "recipeHash": "09e2021007f9131f716ca4efaf811d7af5a6b6176ae98fe83323329aeffff569",
       "pixelHash": "a1a9bd977ebe2206a673889f264cd22b8c223166e312bb4582c482e9b51cbc40"
     },
     "casino_table": {

@@ -5,7 +5,8 @@ import type { Ramp } from "./style.ts";
 import { rampByName } from "./style.ts";
 
 // 2: plant.foliage.bush regrown as a non-interpenetrating voxel cluster (gateDrawOrder).
-export const PART_LIBRARY_VERSION = 2;
+// 3: chair.back sits on the leg tops and flush with the seat's rear edge (#256).
+export const PART_LIBRARY_VERSION = 3;
 
 /** Slot variants build geometry in the dir-0 frame: footprint units [0..w]×[0..l], facing -y
  *  (the back of a chair sits on the +y edge). Rotation to the other three dirs is mechanical. */
@@ -60,11 +61,17 @@ const CHAIR: ArchetypeSpec = {
       cushion: (ctx) => [box(ctx.ramp, 0.09375, 0.09375, 0.45, 0.90625, 0.78125, 0.65625)],
     },
     back: {
-      solid: (ctx) => [box(ctx.ramp, 0.0625, 0.78125, 0.578125, 0.9375, 0.9375, ctx.h)],
+      // Down to 0.45, the leg tops, not to 0.578125. The rear legs run to y 0.90625 while the
+      // seat stops at 0.78125, so their back quarter is uncovered — starting the back above them
+      // left a 4px gap with nothing in it, and the leg read as a loose block behind the chair.
+      // Sitting the back on the legs closes it and gives the chair one connected frame.
+      solid: (ctx) => [box(ctx.ramp, 0.0625, 0.78125, 0.45, 0.9375, 0.9375, ctx.h)],
       slats: (ctx) => {
         const rail = box(ctx.ramp, 0.0625, 0.78125, ctx.h - 0.15625, 0.9375, 0.9375, ctx.h);
+        // Flush with the rail in y, and with the seat's rear edge. At y 0.8125 they stood a pixel
+        // proud of both, so only the rail ever touched the chair and the slats floated.
         const slat = (x0: number): Box =>
-          box(ctx.ramp, x0, 0.8125, 0.578125, x0 + 0.15625, 0.90625, ctx.h - 0.15625);
+          box(ctx.ramp, x0, 0.78125, 0.45, x0 + 0.15625, 0.9375, ctx.h - 0.15625);
         return [slat(0.09375), slat(0.421875), slat(0.75), rail];
       },
     },
