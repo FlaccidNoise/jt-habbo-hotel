@@ -71,6 +71,9 @@ function el<T extends HTMLElement>(id: string): T {
 const roomId = Number(new URLSearchParams(location.search).get("room")) || 1;
 const wsUrl = `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
 const net = new Net();
+// sessionStorage, as on the metrics page: a reload keeps the session, closing the tab ends it.
+// That is also why there is no log-out button — the tab is the log-out.
+const TOKEN_KEY = "grand-token";
 let session = "";
 const avatars = new Map<number, AvatarSprite>();
 const chat = new ChatOverlay(el("bubbles"));
@@ -834,7 +837,8 @@ function handle(msg: ServerMsg): void {
   }
 }
 
-async function start(token: string): Promise<void> {
+/** The renderer, the input wiring and the socket handlers — set up once, before the first join. */
+async function boot(): Promise<void> {
   app = new Application();
   furniAssets = await loadFurniAssets();
   decorAssets = await loadDecorAssets();
@@ -872,7 +876,15 @@ async function start(token: string): Promise<void> {
   });
 
   net.onMessage(handle);
-  net.onClose(() => toast("disconnected from the server — reload to rejoin"));
+  net.onClose((code) => {
+    // 4401 is the server refusing the token — the only close a fresh login can fix.
+    if (code === 4401) signedOut("that session is no longer valid — log in again");
+    else toast("disconnected from the server — reload to rejoin");
+  });
+}
+
+async function start(token: string): Promise<void> {
+  if (!app) await boot();
   session = token;
   await net.connect(wsUrl, token, roomId);
   el("login").style.display = "none";
@@ -946,6 +958,18 @@ for (const [id, move] of [
   el(id).addEventListener("click", () => net.send({ t: "arcade_move", move }));
 }
 
+/** Back to the login overlay: the token we held is dead, so drop it. */
+function signedOut(message: string): void {
+  sessionStorage.removeItem(TOKEN_KEY);
+  session = "";
+  el("hud").style.display = "none";
+  for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open"]) {
+    el(id).style.display = "none";
+  }
+  el("login").style.display = "";
+  el("login-error").textContent = message;
+}
+
 async function authenticate(path: string, username: string, password: string): Promise<string> {
   const res = await fetch(path, {
     method: "POST",
@@ -966,6 +990,7 @@ async function submit(path: string): Promise<void> {
       el<HTMLInputElement>("username").value.trim(),
       el<HTMLInputElement>("password").value,
     );
+    sessionStorage.setItem(TOKEN_KEY, token);
     await start(token);
   } catch (e) {
     error.textContent = e instanceof Error ? e.message : String(e);
@@ -977,3 +1002,14 @@ el<HTMLFormElement>("login-form").addEventListener("submit", (e) => {
   void submit("/api/login");
 });
 el("register").addEventListener("click", () => void submit("/api/register"));
+
+// Sessions never expire server-side, so a reload resumes the one we already have. The overlay
+// stays hidden while we try: it comes back only if the join is refused (4401) or never connects.
+const stored = sessionStorage.getItem(TOKEN_KEY);
+if (stored) {
+  el("login").style.display = "none";
+  start(stored).catch((e) => {
+    el("login").style.display = "";
+    el("login-error").textContent = e instanceof Error ? e.message : String(e);
+  });
+}

@@ -7,7 +7,7 @@ export interface SocketLike {
   close(): void;
   onopen: (() => void) | null;
   onmessage: ((ev: { data: unknown }) => void) | null;
-  onclose: (() => void) | null;
+  onclose: ((ev: { code: number }) => void) | null;
   onerror: (() => void) | null;
 }
 
@@ -18,7 +18,7 @@ export class Net {
   private socket: SocketLike | null = null;
   private superseded: SocketLike | null = null;
   private handler: (msg: ServerMsg) => void = () => {};
-  private closeHandler: () => void = () => {};
+  private closeHandler: (code: number) => void = () => {};
   private warned = false;
 
   constructor(open: (url: string) => SocketLike = browserSocket) {
@@ -44,8 +44,8 @@ export class Net {
       socket.onerror = () => {
         if (!opened) reject(new Error(`socket error connecting to ${url}`));
       };
-      socket.onclose = () => {
-        if (opened) this.closeHandler();
+      socket.onclose = (ev) => {
+        if (opened) this.closeHandler(ev.code);
         else reject(new Error(`socket closed before opening: ${url}`));
       };
     });
@@ -74,7 +74,8 @@ export class Net {
     this.handler = handler;
   }
 
-  onClose(handler: () => void): void {
+  /** The handler gets the WebSocket close code: 4401 means the server refused the token. */
+  onClose(handler: (code: number) => void): void {
     this.closeHandler = handler;
   }
 

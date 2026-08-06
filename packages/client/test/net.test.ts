@@ -8,7 +8,7 @@ class FakeSocket implements SocketLike {
   closed = false;
   onopen: (() => void) | null = null;
   onmessage: ((ev: { data: unknown }) => void) | null = null;
-  onclose: (() => void) | null = null;
+  onclose: ((ev: { code: number }) => void) | null = null;
   onerror: (() => void) | null = null;
 
   send(data: string): void {
@@ -120,7 +120,7 @@ test("a confirmed room switch retires the old socket without reporting a disconn
   expect(first.closed).toBe(true);
   expect(seen).toEqual([{ ...ROOM_STATE, roomId: 3 }]);
 
-  first.onclose?.(); // the retired socket's close is not a disconnect
+  first.onclose?.({ code: 1000 }); // the retired socket's close is not a disconnect
   expect(disconnects).not.toHaveBeenCalled();
   first.deliver(JSON.stringify(ROOM_STATE)); // nor does its traffic still reach the handler
   expect(seen).toHaveLength(1);
@@ -141,6 +141,19 @@ test("connect rejects when the socket closes before opening", async () => {
   const socket = new FakeSocket();
   const net = new Net(() => socket);
   const opened = net.connect("ws://localhost/ws", "tok", 1);
-  socket.onclose?.();
+  socket.onclose?.({ code: 1006 });
   await expect(opened).rejects.toThrow();
+});
+
+test("a close after opening reports its code, so a refused token is told apart", async () => {
+  const socket = new FakeSocket();
+  const net = new Net(() => socket);
+  const closes: number[] = [];
+  net.onClose((code) => closes.push(code));
+  const opened = net.connect("ws://localhost/ws", "stale", 1);
+  socket.onopen?.();
+  await opened;
+
+  socket.onclose?.({ code: 4401 }); // the server refusing the token
+  expect(closes).toEqual([4401]);
 });
