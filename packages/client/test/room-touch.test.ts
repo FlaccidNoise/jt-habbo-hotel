@@ -23,11 +23,11 @@ function mouseEvent(button: number): FederatedPointerEvent {
   return { pointerType: "mouse", global: { x: 0, y: 0 }, button } as unknown as FederatedPointerEvent;
 }
 
-/** Tiles are added to the world row-major after the highlight marker, so child 1 + (y*3 + x)
- *  is the tile at (x, y). */
+/** Tiles are added to the world row-major. They are the only interactive children — the marker
+ *  and the boundary slab faces are eventMode "none" — so filtering on that finds tile (x, y). */
 function tile(x: number, y: number): Container {
   const world = stage.children[0] as Container;
-  return world.children[1 + y * 3 + x] as Container;
+  return world.children.filter((c) => c.eventMode === "static")[y * 3 + x] as Container;
 }
 
 function release(x: number, y: number, e: FederatedPointerEvent): void {

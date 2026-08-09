@@ -257,10 +257,15 @@ export class RoomScene {
   }
 
   /** Vertical faces where a tile overhangs its south and east neighbours, so raised platforms
-   *  read as raised. Null when the tile is flush with both. */
+   *  read as raised. A void neighbour gets a face too — the floor is a slab with thickness, not
+   *  a painted sheet, so the room boundary shows a lip below the lowest floor. Null when the
+   *  tile is flush with both neighbours. */
   private sides(x: number, y: number, h: number): Graphics | null {
-    const south = Math.max(0, tileHeight(this.model, x, y + 1));
-    const east = Math.max(0, tileHeight(this.model, x + 1, y));
+    const SLAB = 0.25;
+    const sRaw = tileHeight(this.model, x, y + 1);
+    const eRaw = tileHeight(this.model, x + 1, y);
+    const south = sRaw < 0 ? this.floor - SLAB : sRaw;
+    const east = eRaw < 0 ? this.floor - SLAB : eRaw;
     if (south >= h && east >= h) return null;
 
     const g = new Graphics();

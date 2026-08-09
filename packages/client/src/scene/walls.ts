@@ -201,6 +201,9 @@ export class WallLayer {
         matrix: new Matrix(sign, 0.5, 0, 1, o.sx, o.sy),
         textureSpace: "global",
       });
+      // The bare planes differ in luminance (FACE_LEFT/FACE_RIGHT) but a decor texture is the
+      // same bytes on both, which flattens the corner. Same ~0.87 ratio, applied as a tint.
+      if (side === "left") g.tint = 0xdedede;
     } else {
       g.fill(side === "left" ? FACE_LEFT : FACE_RIGHT)
         .stroke({ width: 1, color: 0x000000, alpha: 0.13 });

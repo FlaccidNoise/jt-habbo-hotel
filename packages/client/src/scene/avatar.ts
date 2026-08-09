@@ -56,6 +56,10 @@ export class AvatarSprite {
     this.view = new Container();
     this.view.eventMode = "none";
 
+    // Grounding shadow at the anchor — the tile-centre ground point standing, the seat surface
+    // sitting. Drawn first so every figure pixel lands over it.
+    this.view.addChild(new Graphics().ellipse(0, 0, 14, 7).fill({ color: 0x000000, alpha: 0.28 }));
+
     this.sprite = new Sprite();
     this.view.addChild(this.sprite);
 
