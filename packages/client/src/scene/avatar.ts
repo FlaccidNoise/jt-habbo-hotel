@@ -16,6 +16,30 @@ const WAVE_MS = 1400;
 const WAVE_FRAME_MS = 350;
 const ZU = SCALE / 2;   // pixels per world height unit, for the occlusion box
 
+// #326. Washing borrows the wave's two frames at twice the rate — scrubbing, not greeting.
+const WASH_MS = 2500;
+const WASH_FRAME_MS = 150;
+const BUBBLES = 6;
+const SIP_MS = 600;
+
+/** Where the held drink sits, per facing. Read off the baked figure by eye: chest height, on the
+ *  screen side the body is turned towards, so the can never lands in the middle of the torso. */
+const HAND: ReadonlyArray<{ x: number; y: number }> = [
+  { x: 8, y: -40 }, { x: 9, y: -38 }, { x: 9, y: -36 }, { x: 7, y: -35 },
+  { x: -7, y: -35 }, { x: -9, y: -36 }, { x: -9, y: -38 }, { x: -8, y: -40 },
+];
+
+/** A cola can at the 80px figure scale: body, lid, and a highlight down the near edge. */
+function drinkCan(): Graphics {
+  return new Graphics()
+    .rect(-3, -10, 6, 10)
+    .fill(0xaa3333)
+    .rect(-3, -10, 6, 2)
+    .fill(0xd9d9d9)
+    .rect(-3, -8, 1, 7)
+    .fill(0xd06868);
+}
+
 /** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
  *  than a plausible box — a silent fallback hides a bad deploy behind an avatar that looks fine. */
 function missingMarker(): Graphics {
@@ -43,6 +67,10 @@ export class AvatarSprite {
   private walkFrame = 0;
   private wavingUntil = 0;
   private waveFrame = 0;
+  private waveFrameMs = WAVE_FRAME_MS;
+  private washUntil = 0;
+  private bubbles: Graphics | null = null;
+  private can: Graphics | null = null;
 
   constructor(state: AvatarState, depth: DepthIndex, private baker: FigureBaker | null) {
     this.id = state.id;
@@ -78,6 +106,7 @@ export class AvatarSprite {
 
     this.redraw();
     this.place();
+    this.setHand(state.hand ?? null);
   }
 
   /** Server-authoritative pose. Sitting also carries the seat's height and facing. */
@@ -97,7 +126,27 @@ export class AvatarSprite {
 
   wave(now: number): void {
     this.wavingUntil = now + WAVE_MS;
+    this.waveFrameMs = WAVE_FRAME_MS;
     this.redraw();
+  }
+
+  /** Scrubbing at the fountain (#326): the two wave frames at twice the rate, with droplets. */
+  washing(now: number): void {
+    this.washUntil = now + WASH_MS;
+    this.wavingUntil = this.washUntil;
+    this.waveFrameMs = WASH_FRAME_MS;
+    this.redraw();
+  }
+
+  setHand(hand: { item: string; until: number } | null): void {
+    if (!hand) {
+      this.can?.destroy();
+      this.can = null;
+      return;
+    }
+    if (this.can) return;
+    this.can = drinkCan();
+    this.view.addChild(this.can);
   }
 
   tile(): Step {
@@ -144,11 +193,13 @@ export class AvatarSprite {
   }
 
   update(now: number): void {
-    const wave = this.wavingUntil > now ? ((now / WAVE_FRAME_MS) | 0) % 2 : -1;
+    const wave = this.wavingUntil > now ? ((now / this.waveFrameMs) | 0) % 2 : -1;
     if (wave !== this.waveFrame) {
       this.waveFrame = wave;
       this.redraw();
     }
+    if (this.can) this.placeCan(now);
+    this.drawBubbles(now);
 
     const walk = this.walking;
     if (!walk) return;
@@ -234,6 +285,32 @@ export class AvatarSprite {
       }
     }
     this.label.y = -this.crown() - 4;
+  }
+
+  /** The can rides the hand, and every 8-12s it swings up to the mouth and back. The period is
+   *  derived from the account id so a room full of drinkers does not sip in unison. */
+  private placeCan(now: number): void {
+    const hand = HAND[this.dir] ?? HAND[3]!;
+    const period = 8000 + (this.id % 5) * 1000;
+    const phase = (now + this.id * 2137) % period;
+    const lift = phase < SIP_MS ? Math.sin((phase / SIP_MS) * Math.PI) : 0;
+    this.can!.x = hand.x * (1 - lift * 0.45);
+    this.can!.y = hand.y - lift * 14;
+  }
+
+  private drawBubbles(now: number): void {
+    if (this.washUntil <= now) {
+      this.bubbles?.destroy();
+      this.bubbles = null;
+      return;
+    }
+    if (!this.bubbles) this.bubbles = this.view.addChild(new Graphics());
+    const g = this.bubbles.clear();
+    for (let i = 0; i < BUBBLES; i++) {
+      const t = (now / 900 + i / BUBBLES) % 1;
+      const x = (i % 2 === 0 ? 1 : -1) * (5 + (i % 3) * 3);
+      g.circle(x, -34 - t * 26, 1.5 + (i % 2)).fill({ color: 0xcfe8f5, alpha: 0.75 * (1 - t) });
+    }
   }
 
   private face(dx: number, dy: number): void {

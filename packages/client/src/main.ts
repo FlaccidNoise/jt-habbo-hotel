@@ -103,6 +103,8 @@ let myRoomId: number | null = null;
 let myFigure: string | null = null;
 let hereRoomId = roomId;
 let sets: SetRows = [];
+/** #326: the one interactable we walked off to reach. Any other click drops it. */
+let pendingUse: { itemId: number; x: number; y: number; timer?: number } | null = null;
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -469,8 +471,61 @@ function topItemOn(x: number, y: number): FurniItem | undefined {
   return itemsOn(x, y).sort((a, b) => a.z - b.z).pop();
 }
 
+function cancelPendingUse(): void {
+  if (pendingUse?.timer !== undefined) clearTimeout(pendingUse.timer);
+  pendingUse = null;
+}
+
+/** Whether my avatar is standing within reach of an item — the same Chebyshev-1 test the server
+ *  applies in Room.useFurni, so the client never sends a `use` it knows will be refused. */
+function withinReach(def: FurniDef, item: FurniItem): boolean {
+  const me = you === null ? undefined : avatars.get(you)?.tile();
+  if (!me) return false;
+  return footprintTiles(def, item.x, item.y, item.dir).some(
+    (t) => Math.max(Math.abs(t.x - me.x), Math.abs(t.y - me.y)) <= 1,
+  );
+}
+
+/** The walkable tile nearest to me that touches the item, or null when it is walled in. */
+function approachTile(def: FurniDef, item: FurniItem): Tile | null {
+  const me = you === null ? undefined : avatars.get(you)?.tile();
+  if (!me || !model) return null;
+  const covered = footprintTiles(def, item.x, item.y, item.dir);
+  const candidates: Tile[] = [];
+  for (const t of covered) {
+    for (const step of [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]) {
+      const at = { x: t.x + (step[0] ?? 0), y: t.y + (step[1] ?? 0) };
+      if (covered.some((c) => c.x === at.x && c.y === at.y)) continue;
+      if (candidates.some((c) => c.x === at.x && c.y === at.y)) continue;
+      if (tileHeight(model, at.x, at.y) < 0) continue;
+      if (!itemsOn(at.x, at.y).every((f) => DEFS.get(f.defId)?.canWalk)) continue;
+      candidates.push(at);
+    }
+  }
+  candidates.sort((a, b) =>
+    Math.max(Math.abs(a.x - me.x), Math.abs(a.y - me.y)) -
+    Math.max(Math.abs(b.x - me.x), Math.abs(b.y - me.y)));
+  return candidates[0] ?? null;
+}
+
+/** Use it if I can reach it; otherwise walk over and use it on arrival. */
+function useFurni(def: FurniDef, item: FurniItem): void {
+  if (withinReach(def, item)) {
+    net.send({ t: "use", itemId: item.id });
+    return;
+  }
+  const approach = approachTile(def, item);
+  if (!approach) {
+    toast("you cannot get to that");
+    return;
+  }
+  pendingUse = { itemId: item.id, x: approach.x, y: approach.y };
+  net.send({ t: "move", x: approach.x, y: approach.y });
+}
+
 function onTileClick(x: number, y: number, button: number): void {
   closeMenu();
+  cancelPendingUse();
   if (button === 2) {
     // Placed items carry no owner in the protocol, so offer the menu on the topmost item here
     // and let the server answer `not_owner` when it is somebody else's.
@@ -483,6 +538,14 @@ function onTileClick(x: number, y: number, button: number): void {
     // A wall item ignores the floor — it only lands when the click reaches a wall segment.
     if (armedWallDef()) return;
     net.send({ t: "place", itemId: armed, x, y, dir: placeDir });
+    return;
+  }
+  // An interactable answers the click itself (#326) — a bar counter is there to be used, and
+  // nothing you can use is also something you can sit on.
+  const top = topItemOn(x, y);
+  const topDef = top && DEFS.get(top.defId);
+  if (top && topDef?.interaction) {
+    useFurni(topDef, top);
     return;
   }
   // Clicking a seat sits on it — the server walks you there first. Clicking the seat you are
@@ -660,6 +723,7 @@ function buildRoom(msg: RoomState): void {
   inventory = msg.inventory;
   armed = null;
   placeDir = 0;
+  cancelPendingUse();
   you = msg.you;
   myFigure = msg.avatars.find((a) => a.id === msg.you)?.figure ?? null;
   closeMenu();
@@ -730,6 +794,23 @@ function upsertFurni(item: FurniItem): void {
   claimPlaced(item.id);
 }
 
+/** My own walk decides the armed use: it fires when the walk lands on the tile it was armed for,
+ *  and is dropped when the server routes me somewhere else or stops me short. There is no arrival
+ *  message, so the walk's own length is the clock. */
+function armPendingUse(msg: Extract<ServerMsg, { t: "walk" }>): void {
+  if (!pendingUse) return;
+  const last = msg.path[msg.path.length - 1];
+  if (!last || last.x !== pendingUse.x || last.y !== pendingUse.y) {
+    cancelPendingUse();
+    return;
+  }
+  const armed = pendingUse;
+  armed.timer = window.setTimeout(() => {
+    pendingUse = null;
+    net.send({ t: "use", itemId: armed.itemId });
+  }, msg.path.length * msg.msPerTile + 60);
+}
+
 function handle(msg: ServerMsg): void {
   switch (msg.t) {
     case "room_state":
@@ -747,6 +828,7 @@ function handle(msg: ServerMsg): void {
       // line the two up for the rest of the session.
       if (clockOffset === null) clockOffset = Date.now() - msg.startedAt;
       avatars.get(msg.id)?.walk(msg, msg.startedAt + clockOffset);
+      if (msg.id === you) armPendingUse(msg);
       break;
     case "chat":
       chat.show(msg.from, msg, avatars.get(msg.from)?.tint());
@@ -764,6 +846,21 @@ function handle(msg: ServerMsg): void {
     case "wave":
       avatars.get(msg.id)?.wave(Date.now());
       break;
+    case "action":
+      avatars.get(msg.accountId)?.washing(Date.now());
+      break;
+    case "handitem":
+      avatars.get(msg.accountId)?.setHand(
+        msg.item === null ? null : { item: msg.item, until: msg.until ?? 0 },
+      );
+      break;
+    case "furni_state": {
+      const item = furni.find((f) => f.id === msg.itemId);
+      if (!item) break;
+      item.state = msg.state;
+      furniLayer?.apply(item);
+      break;
+    }
     case "furni_placed":
     case "furni_moved":
       upsertFurni(msg.item);

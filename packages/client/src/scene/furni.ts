@@ -12,6 +12,8 @@ import type { DepthIndex } from "./sort.ts";
 const TOP = 1.3;
 const RIGHT = 1.0;
 const LEFT = 0.65;
+const GLOW_RINGS = 8;
+const GLOW_RADIUS = 46;
 
 function shade(color: number, factor: number): number {
   const channel = (shift: number): number =>
@@ -131,7 +133,10 @@ export class FurniLayer {
     }
     this.remove(item.id);
 
-    const view = this.backFor(item) ?? this.slabFor(def, item);
+    const base = this.backFor(item) ?? this.slabFor(def, item);
+    const view = def.interaction === "toggle" && item.state === 1
+      ? this.lit(def, item, base)
+      : base;
     view.eventMode = "none";
     this.views.set(item.id, view);
     this.depth.set(`furni:${item.id}`, furniBox(def, item), view);
@@ -216,6 +221,29 @@ export class FurniLayer {
     sprite.x = p.sx + spec.offsetX;
     sprite.y = p.sy + spec.offsetY;
     return sprite;
+  }
+
+  /** A switched-on lamp (#326): the sprite warmed a shade, over an additive pool of light built
+   *  from stacked rings — Graphics has no radial fill, and the falloff is what sells the glow. */
+  private lit(def: FurniDef, item: FurniItem, base: Container): Container {
+    const rotated = item.dir === 2 || item.dir === 6;
+    const height = def.stackHeights[item.state] ?? 0;
+    const p = worldToScreen(
+      item.x + ((rotated ? def.l : def.w) - 1) / 2,
+      item.y + ((rotated ? def.w : def.l) - 1) / 2,
+      item.z + height * 0.8,
+      SCALE,
+    );
+    const glow = new Graphics();
+    for (let ring = GLOW_RINGS; ring > 0; ring--) {
+      const k = ring / GLOW_RINGS;
+      glow.circle(p.sx, p.sy, GLOW_RADIUS * k).fill({ color: 0xffd9a0, alpha: 0.02 + 0.06 * (1 - k) });
+    }
+    glow.blendMode = "add";
+    base.tint = 0xffe6c2;
+    const group = new Container();
+    group.addChild(glow, base);
+    return group;
   }
 
   private slabFor(def: FurniDef, item: FurniItem): Graphics {

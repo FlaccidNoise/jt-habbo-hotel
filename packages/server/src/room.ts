@@ -31,10 +31,11 @@ import type {
   WallPlacementCtx,
   WallSide,
 } from "@grand/shared";
+import { randomUUID } from "node:crypto";
 import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
 import { figureOf, saveFigure, staffFigure } from "./figure.ts";
-import { balanceOf } from "./ledger.ts";
+import { balanceOf, settleSpend } from "./ledger.ts";
 import { findPath } from "./pathfind.ts";
 import {
   getItem,
@@ -45,10 +46,18 @@ import {
   placeItem,
   placeWallItem,
   suiteOf,
+  updateItemState,
   updateItemZ,
 } from "./items.ts";
 
 export const MS_PER_TILE = 500;
+
+// The bar (#326). A Star is the smallest price there is, which is the point: a drink is a prop,
+// not a purchase, and it evaporates rather than entering the item economy.
+export const DRINK_COST = 1;
+export const DRINK_MS = 120_000;
+export const DRINK_ITEM = "drink_cola";
+const USE_COOLDOWN_MS = 700;
 
 export interface Occupant {
   accountId: number;
@@ -60,6 +69,8 @@ export interface Occupant {
   posture: Posture;
   figure: string;
   staff?: boolean;
+  /** In memory only: a drink dies with the session, which is what a 1-Star consumable is for. */
+  hand?: { item: string; until: number };
 }
 export type Emit = (accountId: number, msg: ServerMsg) => void;
 
@@ -86,6 +97,7 @@ function toAvatar(o: Occupant): AvatarState {
     id: o.accountId, username: o.username, x: o.x, y: o.y, z: o.z, dir: o.dir, posture: o.posture,
     figure: o.figure,
     ...(o.staff ? { staff: true } : {}),
+    ...(o.hand ? { hand: { ...o.hand } } : {}),
   };
 }
 
@@ -104,6 +116,8 @@ export class Room {
   private index: Map<string, FurniItem[]>;   // occupancy: tile → items covering it
   private occ: Map<number, Occupant>;
   private walks: Map<number, Walk>;
+  private lastUse = new Map<number, number>();
+  private drinks = new Map<number, ReturnType<typeof setTimeout>>();
 
   constructor(db: Database.Database, roomId: number, emit: Emit) {
     const row = db.prepare("SELECT name, doc FROM rooms WHERE id = ?").get(roomId) as
@@ -213,12 +227,15 @@ export class Room {
 
   leave(accountId: number): void {
     this.cancelWalk(accountId);
+    this.cancelDrink(accountId);
+    this.lastUse.delete(accountId);
     if (!this.occ.delete(accountId)) return;
     this.broadcast({ t: "avatar_leave", id: accountId });
   }
 
   dispose(): void {
     for (const id of [...this.walks.keys()]) this.cancelWalk(id);
+    for (const id of [...this.drinks.keys()]) this.cancelDrink(id);
     this.occ.clear();
   }
 
@@ -340,6 +357,81 @@ export class Room {
   wave(accountId: number): void {
     if (!this.occ.has(accountId)) return;
     this.broadcast({ t: "wave", id: accountId });
+  }
+
+  /** The "use" verb (#326). Three hand-written behaviours, chosen by the def — not owner-gated,
+   *  because a bar nobody but its owner can buy from is not a bar. Reach is Chebyshev 1 from any
+   *  footprint tile, so a 2x1 counter is usable from either end. */
+  useFurni(accountId: number, itemId: number): void {
+    const occupant = this.occ.get(accountId);
+    const item = this.furni.find((f) => f.id === itemId);
+    if (!occupant || !item) return;
+    const def = this.defOf(item);
+    if (!def.interaction) return;
+
+    const reachable = footprintTiles(def, item.x, item.y, item.dir).some(
+      (t) => Math.max(Math.abs(t.x - occupant.x), Math.abs(t.y - occupant.y)) <= 1,
+    );
+    if (!reachable) {
+      this.fail(accountId, "bad_position", "you are too far away to use that");
+      return;
+    }
+    const now = Date.now();
+    if (now - (this.lastUse.get(accountId) ?? 0) < USE_COOLDOWN_MS) return;
+    this.lastUse.set(accountId, now);
+
+    if (def.interaction === "vend") this.vend(occupant);
+    else if (def.interaction === "wash") this.broadcast({ t: "action", accountId, action: "wash" });
+    else this.toggle(item);
+  }
+
+  private toggle(item: FurniItem): void {
+    item.state = item.state === 0 ? 1 : 0;
+    updateItemState(this.db, item.id, item.state);
+    this.broadcast({ t: "furni_state", itemId: item.id, state: item.state });
+  }
+
+  /** One Star for a drink that lasts two minutes and then evaporates. No mint: nothing enters the
+   *  item economy, so the Star is simply absorbed — the smallest repeatable sink there is. */
+  private vend(occupant: Occupant): void {
+    const accountId = occupant.accountId;
+    if (occupant.hand) {
+      this.emit(accountId, { t: "notice", text: "you are already holding a drink" });
+      return;
+    }
+    const result = settleSpend(this.db, {
+      opKey: randomUUID(), op: "vend", accountId, price: DRINK_COST,
+    });
+    if (!result.ok) {
+      this.fail(accountId, "purchase", result.reason);
+      return;
+    }
+    const until = Date.now() + DRINK_MS;
+    occupant.hand = { item: DRINK_ITEM, until };
+    this.emit(accountId, {
+      t: "stars", balance: result.balance, delta: -DRINK_COST, reason: "drink",
+    });
+    this.broadcast({ t: "handitem", accountId, item: DRINK_ITEM, until });
+    this.emit(accountId, {
+      t: "notice", text: `The bartender slides you a cola. −${DRINK_COST} Star.`,
+    });
+    this.cancelDrink(accountId);
+    this.drinks.set(accountId, setTimeout(() => this.finishDrink(accountId), DRINK_MS));
+  }
+
+  private finishDrink(accountId: number): void {
+    this.drinks.delete(accountId);
+    const occupant = this.occ.get(accountId);
+    if (!occupant?.hand) return;
+    occupant.hand = undefined;
+    this.broadcast({ t: "handitem", accountId, item: null });
+  }
+
+  private cancelDrink(accountId: number): void {
+    const timer = this.drinks.get(accountId);
+    if (timer === undefined) return;
+    clearTimeout(timer);
+    this.drinks.delete(accountId);
   }
 
   chat(accountId: number, mode: "say" | "shout", text: string): void {
