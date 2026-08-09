@@ -41,76 +41,151 @@ interface Layout {
   walls: Hanging[];
 }
 
-// 10x10, flat, door at (0,5). Maya works the counter run at y=3 with the back shelf behind her —
-// the welcome quest promises a first coffee at the café counter, so there has to be one. The door
-// aisle (y=5) and the middle of the floor stay clear: that is the hangout floor.
+// 16x16, flat, door at (0,5), with a void alcove cut out of the north-east corner and two void
+// columns at y=9. Zoned the way a Habbo public room is, so the floor reads as places rather than
+// one field of furniture: the counter run and its back bar take the whole north wall with Maya
+// working the lane at y=2 between them — the welcome quest promises a first coffee at the café
+// counter, so there has to be one — the alcove holds a quiet marble table, four table clusters
+// fill the middle in two rows, and the lounge takes the south-west corner. Aisles are two tiles
+// everywhere: y 5-6 in from the door, x 7-8 between the cluster columns, y 8-10 between their
+// rows.
 const CAFE: Layout = {
   floor: [
     { defId: "lamp_basic", x: 0, y: 0 },
-    { defId: "shelf_basic", x: 7, y: 1, dir: 4 },              // back bar, behind Maya
+    { defId: "shelf_basic", x: 5, y: 1, dir: 4 },              // back bar, behind Maya
+    { defId: "shelf_basic", x: 7, y: 1, dir: 4 },
+    { defId: "shelf_basic", x: 9, y: 1, dir: 4 },
+    { defId: "bar_counter", x: 4, y: 3, dir: 4 },
     { defId: "bar_counter", x: 6, y: 3, dir: 4 },
     { defId: "bar_counter", x: 8, y: 3, dir: 4 },
-    { defId: "cafe_chair", x: 6, y: 4 },                       // counter seats, facing the bar
-    { defId: "cafe_chair_navy", x: 7, y: 4 },
+    { defId: "bar_counter", x: 10, y: 3, dir: 4 },
+    { defId: "cafe_chair", x: 4, y: 4 },                       // counter seats, facing the bar
+    { defId: "cafe_chair_navy", x: 6, y: 4 },
     { defId: "cafe_chair_crimson", x: 8, y: 4 },
-    { defId: "cafe_table", x: 2, y: 3 },
-    { defId: "cafe_chair_crimson", x: 1, y: 3, dir: 2 },
-    { defId: "cafe_chair_navy", x: 3, y: 3, dir: 6 },
-    { defId: "cafe_table", x: 2, y: 7 },
-    { defId: "cafe_chair_crimson", x: 1, y: 7, dir: 2 },
-    { defId: "cafe_chair_navy", x: 3, y: 7, dir: 6 },
-    { defId: "cafe_table_marble", x: 6, y: 7 },
-    { defId: "cafe_chair_navy", x: 5, y: 7, dir: 2 },
-    { defId: "cafe_chair_crimson", x: 7, y: 7, dir: 6 },
-    { defId: "stereo_basic", x: 9, y: 6, dir: 6 },
-    { defId: "plant_basic", x: 0, y: 9 },
-    { defId: "plant_basic", x: 9, y: 9 },
+    { defId: "cafe_chair", x: 10, y: 4 },
+    { defId: "plant_fern", x: 12, y: 3 },                      // the alcove, under its own wall
+    { defId: "stereo_basic", x: 15, y: 4, dir: 6 },
+    { defId: "cafe_table_marble", x: 13, y: 5 },
+    { defId: "cafe_chair_navy", x: 12, y: 5, dir: 2 },
+    { defId: "cafe_chair_crimson", x: 14, y: 5, dir: 6 },
+    { defId: "cafe_table", x: 5, y: 7 },                       // table clusters, two by two
+    { defId: "cafe_chair_crimson", x: 4, y: 7, dir: 2 },
+    { defId: "cafe_chair_navy", x: 6, y: 7, dir: 6 },
+    { defId: "cafe_table", x: 10, y: 7 },
+    { defId: "cafe_chair_navy", x: 9, y: 7, dir: 2 },
+    { defId: "cafe_chair_crimson", x: 11, y: 7, dir: 6 },
+    { defId: "cafe_table", x: 5, y: 11 },
+    { defId: "cafe_chair_navy", x: 4, y: 11, dir: 2 },
+    { defId: "cafe_chair_crimson", x: 6, y: 11, dir: 6 },
+    { defId: "cafe_table", x: 10, y: 11 },
+    { defId: "cafe_chair_crimson", x: 9, y: 11, dir: 2 },
+    { defId: "cafe_chair_navy", x: 11, y: 11, dir: 6 },
+    { defId: "cafe_table", x: 13, y: 12 },
+    { defId: "cafe_chair_crimson", x: 12, y: 12, dir: 2 },
+    { defId: "cafe_chair_navy", x: 14, y: 12, dir: 6 },
+    { defId: "fireplace", x: 1, y: 11 },                       // the lounge, around its hearth
+    { defId: "rug_basic", x: 1, y: 12 },                       // covers x 1-3, y 12-13
+    { defId: "table_round", x: 2, y: 12 },                     // stands on the rug
+    { defId: "armchair_lounge", x: 4, y: 12, dir: 6 },
+    { defId: "armchair_lounge_navy", x: 4, y: 13, dir: 6 },
+    { defId: "sofa_lodge", x: 1, y: 14 },                      // facing the fire across the rug
+    { defId: "plant_fern", x: 0, y: 15 },
   ],
   walls: [
     { defId: "wall_art", side: "right", x: 2, y: 0, u: 2, v: 35 },
     { defId: "poster", side: "right", x: 4, y: 0, u: 4, v: 34 },
-    { defId: "wall_art", side: "right", x: 6, y: 0, u: 2, v: 35 },
-    { defId: "wall_shelf", side: "right", x: 8, y: 0, u: 0, v: 46 },
+    { defId: "wall_art", side: "right", x: 7, y: 0, u: 2, v: 35 },
+    { defId: "wall_shelf", side: "right", x: 10, y: 0, u: 0, v: 46 },
+    // The alcove's own back wall, three tiles further south than the rest of the north run.
+    { defId: "wall_art_gilded", side: "right", x: 13, y: 3, u: 2, v: 35 },
+    { defId: "poster", side: "right", x: 15, y: 3, u: 4, v: 34 },
     { defId: "wall_art", side: "left", x: 0, y: 2, u: 2, v: 35 },
-    { defId: "poster", side: "left", x: 0, y: 7, u: 4, v: 34 },
+    { defId: "poster", side: "left", x: 0, y: 8, u: 4, v: 34 },
+    { defId: "wall_art", side: "left", x: 0, y: 13, u: 2, v: 35 },
   ],
 };
 
-// 12x12, door at (0,6), with the stage platform at x 4-7, y 2-5 — a ring at height 1 around a 2x2
-// core at height 2, where Lola Vale sings. Furniture cannot straddle a height change, so the two
-// candelabras take single ring tiles beside her and the fountain stays on the flat floor. The
-// north wall carries the billiards nook and the slot row, split by the dividers; y=6 is the aisle
-// in from the door, and x 5-6 is the two-tile lane between the south card tables.
+// 20x20, door at (0,6). The stage platform at x 8-13, y 2-7 is a ring at height 1 around a 2x2
+// core at height 2, where Lola Vale sings; the bar stands on the raised terrace at x 16-19,
+// y 12-19. Furniture cannot straddle a height change, so every piece sits wholly on the floor,
+// wholly on the stage ring, or wholly on the terrace. The north wall carries the two slot banks
+// split by dividers, the card pit fills the south in a two-by-two of tables with a two-tile lane
+// at x 9-10 and y 15-16, and the billiards nook and arcades take the south-west corner. The
+// concourse in from the door — x 0-7, y 3-11 — stays open: that is where a crowd stands.
 const CASINO: Layout = {
   floor: [
-    { defId: "billiards_table", x: 2, y: 0, dir: 4 },          // covers x 2-4, y 0-1
-    { defId: "divider_basic", x: 5, y: 0 },
-    { defId: "divider_basic_plum", x: 5, y: 1 },
-    { defId: "slot_machine", x: 7, y: 0, dir: 4 },
-    { defId: "slot_machine", x: 8, y: 0, dir: 4 },
-    { defId: "slot_machine", x: 9, y: 0, dir: 4 },
-    { defId: "slot_machine", x: 10, y: 0, dir: 4 },
-    { defId: "penthouse_candelabra", x: 4, y: 3 },             // stage ring, either side of Lola
-    { defId: "penthouse_candelabra", x: 7, y: 3 },
-    { defId: "fountain_gilded", x: 10, y: 2 },
-    { defId: "casino_table", x: 2, y: 7 },
-    { defId: "casino_stool", x: 1, y: 7, dir: 2 },
-    { defId: "casino_stool", x: 1, y: 8, dir: 2 },
-    { defId: "casino_stool", x: 4, y: 7, dir: 6 },
-    { defId: "casino_stool", x: 4, y: 8, dir: 6 },
-    { defId: "casino_table_onyx", x: 8, y: 7 },
-    { defId: "casino_stool_fern", x: 7, y: 7, dir: 2 },
-    { defId: "casino_stool_fern", x: 7, y: 8, dir: 2 },
-    { defId: "casino_stool_fern", x: 10, y: 7, dir: 6 },
-    { defId: "casino_stool_fern", x: 10, y: 8, dir: 6 },
-    { defId: "bar_counter", x: 2, y: 10, dir: 4 },
-    { defId: "bar_counter", x: 8, y: 10, dir: 4 },
+    { defId: "slot_machine", x: 3, y: 0, dir: 4 },             // west slot bank
+    { defId: "slot_machine", x: 4, y: 0, dir: 4 },
+    { defId: "slot_machine", x: 5, y: 0, dir: 4 },
+    { defId: "slot_machine", x: 6, y: 0, dir: 4 },
+    { defId: "divider_basic", x: 7, y: 0 },
+    { defId: "divider_basic_plum", x: 13, y: 0 },
+    { defId: "slot_machine", x: 15, y: 0, dir: 4 },            // east slot bank
+    { defId: "slot_machine", x: 16, y: 0, dir: 4 },
+    { defId: "slot_machine", x: 17, y: 0, dir: 4 },
+    { defId: "slot_machine", x: 18, y: 0, dir: 4 },
+    { defId: "stereo_basic", x: 8, y: 2, dir: 4 },             // the stage, all on the ring
+    { defId: "penthouse_candelabra", x: 9, y: 4 },             // either side of Lola
+    { defId: "penthouse_candelabra", x: 12, y: 4 },
+    { defId: "rug_basic", x: 8, y: 6 },                        // covers x 8-10, y 6-7
+    { defId: "railing", x: 9, y: 9 },                          // apron rail, either side of the
+    { defId: "railing_iron", x: 12, y: 9 },                    // centrepiece below the stage
+    { defId: "fountain_gilded", x: 10, y: 9 },
+    { defId: "casino_table_onyx", x: 16, y: 4 },               // high-roller table, north-east
+    { defId: "casino_stool_fern", x: 15, y: 4, dir: 2 },
+    { defId: "casino_stool_fern", x: 15, y: 5, dir: 2 },
+    { defId: "casino_stool_fern", x: 18, y: 4, dir: 6 },
+    { defId: "casino_stool_fern", x: 18, y: 5, dir: 6 },
+    { defId: "railing_iron", x: 4, y: 13 },                    // the card pit's west rail
+    { defId: "railing_iron", x: 4, y: 14 },
+    { defId: "railing_iron", x: 4, y: 17 },
+    { defId: "railing_iron", x: 4, y: 18 },
+    { defId: "casino_table", x: 6, y: 13 },
+    { defId: "casino_stool", x: 5, y: 13, dir: 2 },
+    { defId: "casino_stool", x: 5, y: 14, dir: 2 },
+    { defId: "casino_stool", x: 8, y: 13, dir: 6 },
+    { defId: "casino_stool", x: 8, y: 14, dir: 6 },
+    { defId: "casino_table_onyx", x: 12, y: 13 },
+    { defId: "casino_stool_fern", x: 11, y: 13, dir: 2 },
+    { defId: "casino_stool_fern", x: 11, y: 14, dir: 2 },
+    { defId: "casino_stool_fern", x: 14, y: 13, dir: 6 },
+    { defId: "casino_stool_fern", x: 14, y: 14, dir: 6 },
+    { defId: "casino_table", x: 6, y: 17 },
+    { defId: "casino_stool", x: 5, y: 17, dir: 2 },
+    { defId: "casino_stool", x: 5, y: 18, dir: 2 },
+    { defId: "casino_stool", x: 8, y: 17, dir: 6 },
+    { defId: "casino_stool", x: 8, y: 18, dir: 6 },
+    { defId: "casino_table_onyx", x: 12, y: 17 },
+    { defId: "casino_stool_fern", x: 11, y: 17, dir: 2 },
+    { defId: "casino_stool_fern", x: 11, y: 18, dir: 2 },
+    { defId: "casino_stool_fern", x: 14, y: 17, dir: 6 },
+    { defId: "casino_stool_fern", x: 14, y: 18, dir: 6 },
+    { defId: "arcade_cabinet", x: 1, y: 15, dir: 4 },          // south-west nook
+    { defId: "arcade_cabinet_plum", x: 2, y: 15, dir: 4 },
+    { defId: "billiards_table", x: 1, y: 17 },                 // covers x 1-3, y 17-18
+    { defId: "shelf_basic", x: 16, y: 12, dir: 4 },            // the terrace bar, y=13 its lane
+    { defId: "shelf_basic", x: 18, y: 12, dir: 4 },
+    { defId: "bar_counter", x: 16, y: 14, dir: 4 },
+    { defId: "bar_counter", x: 18, y: 14, dir: 4 },
+    { defId: "casino_stool", x: 16, y: 15 },
+    { defId: "casino_stool", x: 17, y: 15 },
+    { defId: "casino_stool", x: 18, y: 15 },
+    { defId: "casino_stool", x: 19, y: 15 },
+    { defId: "sofa_lodge", x: 16, y: 17, dir: 4 },             // terrace lounge, around its hearth
+    { defId: "fireplace_stone", x: 18, y: 17 },
+    { defId: "rug_basic", x: 17, y: 18 },                      // covers x 17-19, y 18-19
+    { defId: "lamp_basic", x: 1, y: 3 },
+    { defId: "plant_fern", x: 1, y: 10 },
+    { defId: "plant_fern_exotic", x: 19, y: 8 },
   ],
   walls: [
     // High enough to clear a 2-height slot machine standing under it.
-    { defId: "wall_art_gilded", side: "right", x: 3, y: 0, u: 2, v: 30 },
-    { defId: "wall_art_gilded", side: "right", x: 8, y: 0, u: 2, v: 30 },
-    { defId: "wall_art_gilded", side: "left", x: 0, y: 3, u: 2, v: 35 },
+    { defId: "wall_art_gilded", side: "right", x: 4, y: 0, u: 2, v: 30 },
+    { defId: "wall_art", side: "right", x: 10, y: 0, u: 2, v: 35 },
+    { defId: "wall_art_gilded", side: "right", x: 16, y: 0, u: 2, v: 30 },
+    { defId: "poster", side: "left", x: 0, y: 4, u: 4, v: 34 },
+    { defId: "wall_art", side: "left", x: 0, y: 10, u: 2, v: 35 },
+    { defId: "wall_art_gilded", side: "left", x: 0, y: 16, u: 2, v: 30 },
   ],
 };
 
@@ -251,13 +326,24 @@ function furnish(db: Database.Database, roomId: number, layout: Layout): void {
   })();
 }
 
+/** Takes the house's own layout back out of a public room, for a room whose floor has been redrawn
+ *  under it (#315). House furni is locked and house-owned; a player's item in a public room is
+ *  neither, so it stays exactly where the player put it. */
+export function clearHouseLayout(db: Database.Database, roomId: number): void {
+  db.prepare(
+    "DELETE FROM furni_items WHERE room_id = ? AND locked = 1 AND owner_id =" +
+      " (SELECT id FROM accounts WHERE username = ?)",
+  ).run(roomId, HOUSE_USERNAME);
+}
+
 /** Furnishes any public room that is still bare. A room with anything in it is left exactly as it
  *  is — the layout is a starting point, not a nightly reset, so a room somebody has rearranged is
- *  never stomped. */
-export function seedPublicFurni(db: Database.Database): void {
+ *  never stomped. `relaid` names the rooms whose heightmap just changed: their house layout has
+ *  already been cleared, and the new floor gets laid out over whatever the players left behind. */
+export function seedPublicFurni(db: Database.Database, relaid: ReadonlySet<number>): void {
   for (const [roomId, layout] of LAYOUTS) {
     const taken = db.prepare("SELECT 1 FROM furni_items WHERE room_id = ? LIMIT 1").get(roomId);
-    if (taken) continue;
+    if (taken && !relaid.has(roomId)) continue;
     furnish(db, roomId, layout);
   }
 }

@@ -1,0 +1,32 @@
+{
+  "defId": "table_round_onyx",
+  "archetype": "artgen",
+  "sheet": "table_round_onyx.png",
+  "frameW": 64,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 64,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4f0af5123aa0dc76",
+  "recipeHash": "4f0af5123aa0dc762d7cea9d2ecf39abd4ac1732499cdb528375ef068255b241",
+  "pixelHash": "f66359e67feead5d399093a3057be8a1fc28c7964476d2e9cca59d31f0ae9dbb"
+}

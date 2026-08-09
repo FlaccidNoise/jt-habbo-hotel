@@ -69,7 +69,7 @@ export const NPC_ROSTER: NpcDef[] = [
     id: -3,
     roomId: 2,
     name: "Lola Vale",
-    post: { x: 5, y: 3 },
+    post: { x: 10, y: 4 },              // the stage core, height 2 (#315)
     dir: 3,
     persona:
       "the resident lounge singer on the casino stage. Glamorous, theatrical, speaks like every sentence is a song intro.",

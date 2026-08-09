@@ -25,10 +25,10 @@
   "seatZ": 0.58,
   "occlusion": null,
   "nearSheet": "cafe_chair_crimson.near.png",
-  "nearHash": "7bfbcbfa21992a84b8d8bc6d3f62937616ef229474c5a7dfe158208441c9f552",
+  "nearHash": "d2960dcad11b37168d865d4204aa01e9c446e1b7a657e87fd70dca394ed35223",
   "styleVersion": 2,
-  "generatorVersion": 1,
-  "partLibraryHash": "artgen:a5cfdc02778e49c1",
-  "recipeHash": "a5cfdc02778e49c1618557eee54c86994ff18365c83fd7a04a0a35abf6b35796",
-  "pixelHash": "fb71f02abca6121cbe6f192238d19f14e420fa565d2c8952db35191011844752"
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4b66308019a14f29",
+  "recipeHash": "4b66308019a14f295c532e1b9ceec7bdc1ac44a384e600c5097c2de907ab0210",
+  "pixelHash": "3c5cdddab90b3cd1587e307dce0778805aabddf9e5f93e89d1fb30f55dfbd5eb"
 }

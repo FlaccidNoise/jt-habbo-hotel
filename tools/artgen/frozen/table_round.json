@@ -1,0 +1,32 @@
+{
+  "defId": "table_round",
+  "archetype": "artgen",
+  "sheet": "table_round.png",
+  "frameW": 64,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 64,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c6b4eeb61ed529e2",
+  "recipeHash": "c6b4eeb61ed529e2907b8896d587111e912799ac06c4a7d17e5656f29bc6f278",
+  "pixelHash": "235df65a10a406a11a6d5bb954e16ecc92018ff2c7f55fa99e25493381f958da"
+}

@@ -104,8 +104,18 @@ export const DECOR_CATALOG: DecorDef[] = [
     sides: { left: 0x8b4513, right: 0xb55a19 },
   },
   {
+    kind: "floor", id: "floor_planks", name: "Lodge Planks",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x8b4513, right: 0xb55a19 },
+  },
+  {
     kind: "wall", id: "wall_wainscot", name: "Wainscot Panelling",
     tile: { w: 16, h: 128 },
+    cap: 0xcbc0ac,
+  },
+  {
+    kind: "wall", id: "wall_logcabin", name: "Log Cabin",
+    tile: { w: 32, h: 32 },
     cap: 0xcbc0ac,
   },
   {

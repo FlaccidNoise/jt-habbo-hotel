@@ -26,6 +26,18 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d, interaction: "vend" },
   { id: "arcade_cabinet", name: "Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
   { id: "fountain",       name: "Fountain",       w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "wash" },
+  // Lodge set (#314): soft furniture, a hearth, greenery and a divider that is not a wall.
+  { id: "armchair_lounge", name: "Lodge Armchair", w: 1, l: 1, stackHeights: [1.75],    canWalk: false, canStackOn: false, seatHeight: 1,    color: 0xaa3333 },
+  { id: "sofa_lodge",      name: "Lodge Sofa",     w: 2, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x2e8b57 },
+  { id: "table_round",     name: "Round Table",    w: 1, l: 1, stackHeights: [1.5],     canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
+  { id: "plant_fern",      name: "Potted Fern",    w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "fireplace",       name: "Fireplace",      w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
+  { id: "railing",         name: "Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  // Lodge round 2 (#323): the floor half of the wall-clutter pass. rug_lodge is the only walkable
+  // 3D-assisted part — canWalk puts it on the client's floor_furni layer, under every avatar.
+  { id: "rug_lodge",   name: "Lodge Rug",   w: 2, l: 2, stackHeights: [0.0625],  canWalk: true,  canStackOn: true,  seatHeight: null, color: 0xaa3333 },
+  { id: "stool_lodge", name: "Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0xb5651d },
+  { id: "side_table",  name: "Side Table",  w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
   // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
   { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -36,6 +48,15 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "cafe_chair_navy",     name: "Navy Café Chair",    w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0x3f5e9e },
   { id: "casino_stool_fern",   name: "Baize Stool",        w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x2e8b57 },
   { id: "divider_basic_plum",  name: "Plum Divider",       w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x7a3e9d },
+  { id: "armchair_lounge_navy", name: "Navy Lodge Armchair", w: 1, l: 1, stackHeights: [1.75],    canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x3f5e9e },
+  { id: "armchair_lounge_fern", name: "Fern Lodge Armchair", w: 1, l: 1, stackHeights: [1.75],    canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x2e8b57 },
+  { id: "sofa_lodge_plum",      name: "Plum Lodge Sofa",     w: 2, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x7a3e9d },
+  { id: "table_round_onyx",     name: "Onyx Round Table",    w: 1, l: 1, stackHeights: [1.5],     canWalk: false, canStackOn: true,  seatHeight: null, color: 0x4a4d55 },
+  { id: "plant_fern_exotic",    name: "Exotic Fern",         w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
+  { id: "fireplace_stone",      name: "Sandstone Hearth",    w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "railing_iron",         name: "Iron Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
+  { id: "side_table_slate",     name: "Slate Side Table",     w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wash" },
@@ -53,6 +74,9 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "record_trophy", name: "Record Trophy", span: 1, plane: { w: 22, h: 21 }, mount: { u: 4, v: 35 }, color: 0x3f5e9e },
   { id: "wall_shelf",    name: "Wall Shelf",    span: 1, plane: { w: 26, h: 13 }, mount: { u: 0, v: 46 }, color: 0xb5651d },
   { id: "wall_art_gilded", name: "Gallery Piece", span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0x9c9484 },
+  // Lodge round 2 (#323).
+  { id: "wall_clock",    name: "Lodge Clock",   span: 1, plane: { w: 24, h: 28 }, mount: { u: 2, v: 36 }, color: 0xb5651d },
+  { id: "antlers",       name: "Antler Mount",  span: 1, plane: { w: 28, h: 37 }, mount: { u: 0, v: 24 }, color: 0xc2a36b },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -89,6 +113,28 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["wall_art", 150],
   ["wall_shelf", 150],
   ["record_trophy", 300],
+  // Lodge set (#314) and its colorways, on the existing rungs.
+  ["railing", 50],
+  ["railing_iron", 50],
+  ["plant_fern", 75],
+  ["plant_fern_exotic", 75],
+  ["armchair_lounge", 150],
+  ["armchair_lounge_navy", 150],
+  ["armchair_lounge_fern", 150],
+  ["table_round", 150],
+  ["table_round_onyx", 150],
+  ["sofa_lodge", 300],
+  ["sofa_lodge_plum", 300],
+  ["fireplace", 300],
+  ["fireplace_stone", 300],
+  // Lodge round 2 (#323): wall clutter and the props that go under it.
+  ["stool_lodge", 25],
+  ["stool_lodge_charcoal", 25],
+  ["rug_lodge", 75],
+  ["side_table", 75],
+  ["side_table_slate", 75],
+  ["wall_clock", 150],
+  ["antlers", 300],
   // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],

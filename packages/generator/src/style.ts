@@ -1,5 +1,5 @@
 export const STYLE_VERSION = 2;
-export const GENERATOR_VERSION = 1;
+export const GENERATOR_VERSION = 2;
 
 /** Above-front light: top face lightest, right face base, left face darker, outline darkest —
  *  the same shading rule the placeholder slabs used, so sprites sit naturally in the room.

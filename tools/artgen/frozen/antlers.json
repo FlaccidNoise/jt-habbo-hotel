@@ -1,0 +1,37 @@
+{
+  "defId": "antlers",
+  "archetype": "artgen",
+  "sheet": "antlers.png",
+  "frameW": 64,
+  "frameH": 137,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 121,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3.28125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 28,
+    "planeH": 37,
+    "mountU": 0,
+    "mountV": 24,
+    "gap": 0,
+    "depth": 0.115
+  },
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5e895cb75074ba76",
+  "recipeHash": "5e895cb75074ba760fb2c4596ffc2fddab96f0176356d9a6d1831ec7753cd5b4",
+  "pixelHash": "41adc3ef18c096bf0c208444775b8259f5507aa199159a5fb04e3bed042fc51f"
+}

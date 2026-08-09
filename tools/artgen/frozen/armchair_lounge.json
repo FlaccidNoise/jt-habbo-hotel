@@ -1,0 +1,34 @@
+{
+  "defId": "armchair_lounge",
+  "archetype": "artgen",
+  "sheet": "armchair_lounge.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 1,
+  "occlusion": null,
+  "nearSheet": "armchair_lounge.near.png",
+  "nearHash": "c849e7ef0b6241dd0d8932ec3e055610faf1e0b9ac2eb2911716274c45f9c38c",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bee27ceab85973e4",
+  "recipeHash": "bee27ceab85973e47ff753600b116c43bf4e876c05bcb2359999075342cb0e52",
+  "pixelHash": "0829acb2219c12fe65b985e6e1bcce852782a3944d69918673a87bf352e5c6aa"
+}

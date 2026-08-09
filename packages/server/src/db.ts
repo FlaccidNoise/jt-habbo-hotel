@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import { parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
-import { seedPublicFurni } from "./furnish.ts";
+import { clearHouseLayout, seedPublicFurni } from "./furnish.ts";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
 
 const DDL = `
@@ -66,24 +66,58 @@ interface ChatConfig {
   shoutAllowed: boolean;
 }
 
-const CAFE_HEIGHTMAP = Array.from({ length: 10 }, () => "0".repeat(10)).join("\n");
+// Public rooms are sized for a crowd, not for a viewport (#315): the client's camera follows the
+// player through a room that overflows the screen (#311), so these read like Habbo's big public
+// spaces — long walls to line with furniture, and structure to walk around rather than one open
+// rectangle. A void tile is a wall the room builds itself: the two faces of it that point at the
+// camera are drawn, so the north-east notch is an alcove and the two lone voids are columns.
+const CAFE_HEIGHTMAP = [
+  "000000000000xxxx",
+  "000000000000xxxx",
+  "000000000000xxxx",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000x000000x0000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+  "0000000000000000",
+].join("\n");
 const CAFE_DOOR: Door = { x: 0, y: 5, dir: 2 };
 const CAFE_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: false };
-const CAFE_DECOR: RoomDecor = { floor: "floor_parquet", wall: "wall_wainscot" };
+// Lodge look (#311): the reference café is a log cabin, and the decor class has the tiles now.
+const CAFE_DECOR: RoomDecor = { floor: "floor_planks", wall: "wall_logcabin" };
 
+// The stage keeps its ring-around-a-core motif at six times the floor area: heights 1 and 2 at
+// x 8-13, y 2-7, with the raised bar terrace along the east edge from y 12. The stepped void in
+// the north-west corner is the old room's chamfer, cut deeper.
 const CASINO_HEIGHTMAP = [
-  "xx0000000000",
-  "x00000000000",
-  "000011110000",
-  "000012210000",
-  "000012210000",
-  "000011110000",
-  "000000000000",
-  "000000000000",
-  "000000000000",
-  "000000000000",
-  "000000000000",
-  "000000000000",
+  "xxx00000000000000000",
+  "xx000000000000000000",
+  "x0000000111111000000",
+  "00000000111111000000",
+  "00000000112211000000",
+  "00000000112211000000",
+  "00000000111111000000",
+  "00000000111111000000",
+  "00000000000000000000",
+  "00000000000000000000",
+  "00000000000000000000",
+  "00000000000000000000",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
+  "00000000000000001111",
 ].join("\n");
 const CASINO_DOOR: Door = { x: 0, y: 6, dir: 2 };
 const CASINO_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: true };
@@ -95,6 +129,12 @@ const MUSEUM_HEIGHTMAP = Array.from({ length: 8 }, () => "0".repeat(12)).join("\
 const MUSEUM_DOOR: Door = { x: 0, y: 7, dir: 2 };
 const MUSEUM_CHAT: ChatConfig = { speakRadius: 6, shoutAllowed: false };
 
+/** Seeds a house room, and re-seeds one whose floor has since been redrawn (#315). `INSERT OR
+ *  IGNORE` alone would leave every existing hotel on the shape it first booted with, so a house
+ *  room whose stored heightmap has drifted from the constant takes the new doc in place and gives
+ *  up its house layout, which the caller lays out again on the new floor. The room the house owns
+ *  is house property end to end; a room with an `owner_id` belongs to a player and is never
+ *  touched. Returns true when the doc was replaced. */
 function seedRoom(
   db: Database.Database,
   id: number,
@@ -103,14 +143,27 @@ function seedRoom(
   door: Door,
   chat: ChatConfig,
   decor: RoomDecor = {},
-): void {
+): boolean {
   parseHeightmap(heightmap, door); // never skip: an unwalkable seed must fail loudly at boot
   const doc = JSON.stringify({ v: 1, heightmap, door, chat, decor });
-  db.prepare("INSERT OR IGNORE INTO rooms (id, owner_id, name, doc) VALUES (?, NULL, ?, ?)").run(
-    id,
-    name,
-    doc,
-  );
+  const inserted =
+    db
+      .prepare("INSERT OR IGNORE INTO rooms (id, owner_id, name, doc) VALUES (?, NULL, ?, ?)")
+      .run(id, name, doc).changes > 0;
+  if (inserted) return false;
+
+  const row = db.prepare("SELECT owner_id AS ownerId, doc FROM rooms WHERE id = ?").get(id) as
+    | { ownerId: number | null; doc: string }
+    | undefined;
+  if (!row || row.ownerId !== null) return false;
+  const stored = JSON.parse(row.doc) as { heightmap?: string; decor?: RoomDecor };
+  const sameFloor = stored.heightmap === heightmap;
+  if (sameFloor && JSON.stringify(stored.decor ?? {}) === JSON.stringify(decor)) return false;
+  db.prepare("UPDATE rooms SET doc = ? WHERE id = ?").run(doc, id);
+  // Redecorated but not redrawn: every placement is still on the same floor, so the layout stays.
+  if (sameFloor) return false;
+  clearHouseLayout(db, id);
+  return true;
 }
 
 /** `CREATE TABLE IF NOT EXISTS` never adds a column to a table that already exists, so a dev
@@ -145,12 +198,17 @@ export function openDb(path: string): Database.Database {
   ]) {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }
-  seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR);
-  seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR);
+  const relaid = new Set<number>();
+  if (seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR)) {
+    relaid.add(1);
+  }
+  if (seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR)) {
+    relaid.add(2);
+  }
   seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
-  // After the rooms exist and only into the bare ones (#312). The museum furnishes itself, one
-  // donation at a time.
-  seedPublicFurni(db);
+  // After the rooms exist and only into the bare ones (#312) plus the ones whose floor just
+  // changed under them (#315). The museum furnishes itself, one donation at a time.
+  seedPublicFurni(db, relaid);
   return db;
 }
 

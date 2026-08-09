@@ -1,0 +1,32 @@
+{
+  "defId": "plant_fern",
+  "archetype": "artgen",
+  "sheet": "plant_fern.png",
+  "frameW": 64,
+  "frameH": 81,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:79556083f5051dc0",
+  "recipeHash": "79556083f5051dc06133087f957c60ee92a1904342f51122b82ad2365266b0a8",
+  "pixelHash": "9991a80177276258eb43ec8571f0447e1fd44fda4e02796baa154c8693fb8f8b"
+}

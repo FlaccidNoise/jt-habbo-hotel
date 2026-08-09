@@ -1,0 +1,34 @@
+{
+  "defId": "stool_lodge",
+  "archetype": "artgen",
+  "sheet": "stool_lodge.png",
+  "frameW": 64,
+  "frameH": 59,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.82,
+  "occlusion": null,
+  "nearSheet": "stool_lodge.near.png",
+  "nearHash": "b3b63e5d7c48ccc5e1cf9bc1708a7339683847fadb61585136c8d161555f23ff",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0d2f315d124db975",
+  "recipeHash": "0d2f315d124db975070938fe2824e97a95ce5d938397ee0365a247dc100403df",
+  "pixelHash": "c1abc291ebf9b24147f42eb71fae0ea9e87585d22e5750856f44e00db08a62f2"
+}

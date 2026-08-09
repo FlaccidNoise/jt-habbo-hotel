@@ -2,7 +2,7 @@ import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { parseFigure, resolveLayers, worldToScreen } from "@grand/shared";
 import type { AvatarState, Figure, Posture, ServerMsg } from "@grand/shared";
 import type { FigureBaker } from "./figure.ts";
-import { SCALE } from "./room.ts";
+import { SCALE, ZOOM } from "./room.ts";
 import { LAYER } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 import { dirFromStep, lerpScreen, stepAt } from "./walk.ts";
@@ -102,6 +102,8 @@ export class AvatarSprite {
       },
     });
     this.label.anchor.set(0.5, 1);
+    // Names are UI, not room art: counter-scaled so the zoomed world leaves them at 12px.
+    this.label.scale.set(1 / ZOOM);
     this.view.addChild(this.label);
 
     this.redraw();

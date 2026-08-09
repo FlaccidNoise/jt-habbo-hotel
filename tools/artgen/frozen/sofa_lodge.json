@@ -1,0 +1,34 @@
+{
+  "defId": "sofa_lodge",
+  "archetype": "artgen",
+  "sheet": "sofa_lodge.png",
+  "frameW": 96,
+  "frameH": 112,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 80,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2,
+  "seatZ": 1,
+  "occlusion": null,
+  "nearSheet": "sofa_lodge.near.png",
+  "nearHash": "04e08b35e722d0a74470f6d84e29c7f834732c84b8493014ec3033b60048bf13",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0af332d390e1cb43",
+  "recipeHash": "0af332d390e1cb43d6672d5e14004ae5c4d9f7ccf7fce46c048a7cb7c9e0b2db",
+  "pixelHash": "2301aeaaa0ff0a43003f8e1730496531fd7148881c5dccc379213503bb8e8380"
+}

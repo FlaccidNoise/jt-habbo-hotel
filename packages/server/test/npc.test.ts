@@ -17,7 +17,7 @@ type Opts = Parameters<typeof startServer>[0];
 
 const PIERRE = -1;
 const LOLA = -3;
-const LOLA_LINES = NPC_ROSTER.find((n) => n.id === LOLA)?.lines ?? [];
+const PIERRE_LINES = NPC_ROSTER.find((n) => n.id === PIERRE)?.lines ?? [];
 
 let dir: string;
 let dbPath: string;
@@ -117,23 +117,31 @@ describe("rituals", () => {
   });
 });
 
+// A reply is spoken, so it carries the speak radius like anyone else's: these two read the words
+// back, which means asking from inside earshot. The bellhop's post is two tiles off the café door
+// — the greeter stands where arrivals stand. Shouting at the lounge act from the far side of the
+// casino is covered below, where only the fact of a reply matters.
 describe("LLM replies", () => {
-  test("the lounge act replies when named in a shout, from its transcript", async () => {
+  test("staff reply when named, from their transcript", async () => {
     // Snapshot the transcript at call time — the live memory array gains the reply afterwards.
     const seen: { npc: string; transcript: string[] }[] = [];
     const generate: NpcGenerate = async (npc, transcript) => {
       seen.push({ npc: npc.name, transcript: [...transcript] });
-      return "Every night is opening night, darling.";
+      return "Every bag has a story, and I have heard them all.";
     };
     const { port } = await start({ npcGenerate: generate });
-    const alice = await joinAs(port, await signUp(port, "alice"), 2);
+    const alice = await joinAs(port, await signUp(port, "alice"), 1);
+    const greeting = await chatFrom(alice.bus, PIERRE);
 
-    alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "sing us something, Lola!" }));
-    const reply = await chatFrom(alice.bus, LOLA);
-    expect(reply.text).toBe("Every night is opening night, darling.");
+    alice.ws.send(JSON.stringify({ t: "chat", mode: "say", text: "which way to the bar, Pierre?" }));
+    const reply = await chatFrom(alice.bus, PIERRE);
+    expect(reply.text).toBe("Every bag has a story, and I have heard them all.");
 
     expect(seen).toEqual([
-      { npc: "Lola Vale", transcript: ["alice: sing us something, Lola!"] },
+      {
+        npc: "Pierre",
+        transcript: [`Pierre: ${greeting.text}`, "alice: which way to the bar, Pierre?"],
+      },
     ]);
   });
 
@@ -141,11 +149,12 @@ describe("LLM replies", () => {
     const { port } = await start({
       npcGenerate: async () => "Check out https://totally-legit.example for free chips!",
     });
-    const alice = await joinAs(port, await signUp(port, "alice"), 2);
+    const alice = await joinAs(port, await signUp(port, "alice"), 1);
+    await chatFrom(alice.bus, PIERRE);
 
-    alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "hey Lola" }));
-    const reply = await chatFrom(alice.bus, LOLA);
-    expect(reply.text).toBe(LOLA_LINES[0]);
+    alice.ws.send(JSON.stringify({ t: "chat", mode: "say", text: "hey Pierre" }));
+    const reply = await chatFrom(alice.bus, PIERRE);
+    expect(reply.text).toBe(PIERRE_LINES[0]);
   });
 
   test("replies are rate limited to one per gap", async () => {

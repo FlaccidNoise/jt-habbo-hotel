@@ -1,12 +1,15 @@
 import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
-import { screenToTile, tileHeight, worldToScreen } from "@grand/shared";
+import { WALL_TOP_PX, screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
 import type { DecorAsset, FloorDecor } from "./decor.ts";
 import { LAYER, tileDepth } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
 export const SCALE = 64;
+/** View magnification. Sprites are authored at 64 and shown at 128 — the chunky read is the
+ *  style, so this is nearest-sampled, never smoothed. */
+export const ZOOM = 2;
 
 const LONG_PRESS_MS = 500;
 const LONG_PRESS_SLOP = 10;
@@ -83,6 +86,7 @@ export class RoomScene {
     this.floor = floorHeight(model);
     this.world = new Container();
     this.world.sortableChildren = true;
+    this.world.scale.set(ZOOM);
     stage.addChild(this.world);
 
     this.marker = new Graphics();
@@ -124,8 +128,31 @@ export class RoomScene {
   }
 
   center(width: number, height: number): void {
-    this.world.x = Math.round(width / 2 - (this.model.width - this.model.height) * (SCALE / 4));
-    this.world.y = Math.round(height / 2 - (this.model.width + this.model.height - 2) * (SCALE / 8));
+    this.world.x = Math.round(width / 2 - ZOOM * (this.model.width - this.model.height) * (SCALE / 4));
+    this.world.y = Math.round(height / 2 - ZOOM * (this.model.width + this.model.height - 2) * (SCALE / 8));
+  }
+
+  /** The camera. A room that fits the viewport sits centred and never moves — the Habbo read.
+   *  One that overflows follows `target` (the player's own view position, world px) on the
+   *  overflowing axis, clamped so the room edge never pulls inside the viewport. */
+  follow(target: { sx: number; sy: number } | null, width: number, height: number): void {
+    if (!target) return;
+    const h = SCALE / 2, v = SCALE / 4;
+    const m = this.model;
+    // Floor extremes in world px, padded up for the walls and down for the slab lip.
+    const minSx = -m.height * h, maxSx = m.width * h;
+    const minSy = -v - WALL_TOP_PX - 8, maxSy = (m.width + m.height - 1) * v + 12;
+    const clamp = (n: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, n));
+    this.world.x = Math.round(
+      ZOOM * (maxSx - minSx) <= width
+        ? width / 2 - ZOOM * ((minSx + maxSx) / 2)
+        : clamp(width / 2 - ZOOM * target.sx, width - ZOOM * maxSx, -ZOOM * minSx),
+    );
+    this.world.y = Math.round(
+      ZOOM * (maxSy - minSy) <= height
+        ? height / 2 - ZOOM * ((minSy + maxSy) / 2)
+        : clamp(height / 2 - ZOOM * (target.sy - 40), height - ZOOM * maxSy, -ZOOM * minSy),
+    );
   }
 
   /** Placement preview at the height the item would rest at: green when the shared

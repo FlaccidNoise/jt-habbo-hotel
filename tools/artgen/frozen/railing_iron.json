@@ -1,0 +1,32 @@
+{
+  "defId": "railing_iron",
+  "archetype": "artgen",
+  "sheet": "railing_iron.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:06263955c8bc7829",
+  "recipeHash": "06263955c8bc7829ed6a8b4645210d6e5f3e91591ea0ce81269e6728349c6236",
+  "pixelHash": "c31849e96bd3d4336b39bfbd88bc5a537f0f62005cfb9c13c76723e7662f521b"
+}

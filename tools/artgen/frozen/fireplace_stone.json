@@ -1,0 +1,32 @@
+{
+  "defId": "fireplace_stone",
+  "archetype": "artgen",
+  "sheet": "fireplace_stone.png",
+  "frameW": 96,
+  "frameH": 128,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0dcea6cdb04b47c0",
+  "recipeHash": "0dcea6cdb04b47c03a9651a3e40f63852a383656b060f5cc61d9bdf07741367d",
+  "pixelHash": "a1299cc9f2c9b2dc9a52eb2e18122f8cd4d6e9af75931d91705fa6cd926426d4"
+}

@@ -30,8 +30,8 @@
     "depth": 0.08
   },
   "styleVersion": 2,
-  "generatorVersion": 1,
-  "partLibraryHash": "artgen:9f6037ffd140bba9",
-  "recipeHash": "9f6037ffd140bba97cc0f2978799c7e0cdc63bf48c8fe843645752a893c5e9cc",
-  "pixelHash": "130acdbb82c1799c9c30aa11ddc885f81a18b164253aaee4b2c923519fbd5a42"
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d371e126dd415cbc",
+  "recipeHash": "d371e126dd415cbc9c1e5a4e4ff2fb8b9958c85d22a22b91228e617f40909cb0",
+  "pixelHash": "12f2c5d72793313177984f4778358a87d54a2c59cd121209c85e1dcd9102e615"
 }

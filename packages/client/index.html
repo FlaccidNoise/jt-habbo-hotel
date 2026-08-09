@@ -146,6 +146,14 @@
       #sets-list .set.done .bar { color: #7fd48c; }
       #sets-list .set .need { font-size: 12px; color: #c9b27a; }
       #furni-menu .engraved { font-style: italic; color: #c9b27a; }
+      /* #321: the strips covered the lower half of an oversized room. Collapsed behind tabs,
+         one open at a time; chat, hint and the furni menu stay. */
+      #hud-tabs { display: flex; gap: 6px; }
+      #hud-tabs button { padding: 5px 10px; border-radius: 8px; border: 1px solid #444c63;
+        background: #1c1f2be6; color: #eef; cursor: pointer; font-size: 13px; }
+      #hud-tabs button.open { border-color: #7fb2d9; background: #24405c; }
+      #catalog, #wardrobe, #inventory { display: none; }
+      #catalog.open, #wardrobe.open, #inventory.open { display: flex; }
       #sets-close { padding: 6px 9px; border-radius: 6px; border: 1px solid #444c63;
         background: #2c3346; color: #eef; cursor: pointer; }
     </style>
@@ -209,6 +217,11 @@
       </div>
     </div>
     <div id="hud">
+      <div id="hud-tabs">
+        <button type="button" id="tab-catalog">🛍️ Catalog</button>
+        <button type="button" id="tab-wardrobe">👕 Wardrobe</button>
+        <button type="button" id="tab-inventory">🎒 Inventory</button>
+      </div>
       <div id="catalog"></div>
       <div id="wardrobe"></div>
       <div id="inventory"></div>

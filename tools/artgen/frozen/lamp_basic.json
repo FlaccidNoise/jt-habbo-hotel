@@ -25,8 +25,8 @@
   "seatZ": null,
   "occlusion": null,
   "styleVersion": 2,
-  "generatorVersion": 1,
-  "partLibraryHash": "artgen:dbf86873a63fa2ba",
-  "recipeHash": "dbf86873a63fa2ba26bad0a59a77d8200d7254531808d36ea6e3dfd60e11496d",
-  "pixelHash": "e154936bca623f1583d9566ae4f252741fc9303e8796ca57b0e55ead2b4726f5"
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4089c31f7835f86d",
+  "recipeHash": "4089c31f7835f86d45eaf78b8612bb3c5134099b5fb189a9d54857ec5d67ded4",
+  "pixelHash": "7f9183361c9eb59ea09709ab3ce35b3136cdc1f7f9f09b28917c4a856a1c428a"
 }

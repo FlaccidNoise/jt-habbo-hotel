@@ -312,6 +312,252 @@ PARTS = {
             {"t": "sphere", "c": (1.00, 1.00, 1.52), "r": 0.16, "ramp": "ivory"},
         ],
     },
+    # ---- lodge set (#314) ----
+    # The catalog had one seat archetype per room and no soft furniture at all. These six are the
+    # lodge: upholstery, a hearth, greenery and a divider that is not a wall.
+    # Wood is walnut throughout so the set reads as one room, and every upholstery ramp carries its
+    # colorways — walnut against crimson, navy or fern differs in hue, not only in luma, which is
+    # the gold-on-walnut trap the other way round.
+    "armchair_lounge": {
+        "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.00), "c1": (0.28, 0.28, 0.15), "ramp": "walnut"},
+            {"t": "box", "c0": (0.72, 0.14, 0.00), "c1": (0.86, 0.28, 0.15), "ramp": "walnut"},
+            {"t": "box", "c0": (0.14, 0.72, 0.00), "c1": (0.28, 0.86, 0.15), "ramp": "walnut"},
+            {"t": "box", "c0": (0.72, 0.72, 0.00), "c1": (0.86, 0.86, 0.15), "ramp": "walnut"},
+            {"t": "box", "c0": (0.10, 0.10, 0.15), "c1": (0.90, 0.90, 0.84), "bevel": 0.04},
+            {"t": "box", "c0": (0.16, 0.12, 0.80), "c1": (0.84, 0.78, 1.00), "bevel": 0.06,
+             "seat": True},
+            {"t": "box", "c0": (0.06, 0.08, 0.84), "c1": (0.24, 0.76, 1.28), "bevel": 0.05},
+            {"t": "box", "c0": (0.76, 0.08, 0.84), "c1": (0.94, 0.76, 1.28), "bevel": 0.05},
+            # Rolled arms in wood, curved on purpose: a flush walnut band on a crimson face shares
+            # its luma bucket, but an hcyl crests into `hi` (the bar_counter rail lesson).
+            {"t": "hcyl", "x": 0.15, "y0": 0.12, "y1": 0.74, "z": 1.28, "r": 0.09,
+             "ramp": "walnut"},
+            {"t": "hcyl", "x": 0.85, "y0": 0.12, "y1": 0.74, "z": 1.28, "r": 0.09,
+             "ramp": "walnut"},
+            {"t": "box", "c0": (0.08, 0.72, 0.84), "c1": (0.92, 0.94, 1.66), "bevel": 0.06},
+            {"t": "box", "c0": (0.05, 0.69, 1.66), "c1": (0.95, 0.97, 1.75), "bevel": 0.03,
+             "ramp": "walnut"},
+        ],
+    },
+    "sofa_lodge": {
+        "w": 2, "l": 1, "ramp": "fern",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.12, 0.00), "c1": (0.24, 0.26, 0.16), "ramp": "walnut"},
+            {"t": "box", "c0": (1.76, 0.12, 0.00), "c1": (1.90, 0.26, 0.16), "ramp": "walnut"},
+            {"t": "box", "c0": (0.10, 0.72, 0.00), "c1": (0.24, 0.86, 0.16), "ramp": "walnut"},
+            {"t": "box", "c0": (1.76, 0.72, 0.00), "c1": (1.90, 0.86, 0.16), "ramp": "walnut"},
+            {"t": "box", "c0": (0.08, 0.10, 0.16), "c1": (1.92, 0.90, 0.84), "bevel": 0.04},
+            # One seat slab across both tiles, like bed_basic. Two tagged cushions would put the
+            # near/far split at the LEFT cushion's centroid and cut the sofa in half off-centre.
+            {"t": "box", "c0": (0.20, 0.12, 0.80), "c1": (1.80, 0.78, 1.00), "bevel": 0.06,
+             "seat": True},
+            {"t": "box", "c0": (0.02, 0.08, 0.84), "c1": (0.20, 0.76, 1.30), "bevel": 0.05},
+            {"t": "box", "c0": (1.80, 0.08, 0.84), "c1": (1.98, 0.76, 1.30), "bevel": 0.05},
+            {"t": "hcyl", "x": 0.11, "y0": 0.12, "y1": 0.72, "z": 1.30, "r": 0.09,
+             "ramp": "walnut"},
+            {"t": "hcyl", "x": 1.89, "y0": 0.12, "y1": 0.72, "z": 1.30, "r": 0.09,
+             "ramp": "walnut"},
+            {"t": "box", "c0": (0.06, 0.72, 0.84), "c1": (1.94, 0.94, 1.90), "bevel": 0.06},
+            # Two back cushions carry the two-seat read the seat slab gave up.
+            {"t": "box", "c0": (0.22, 0.66, 1.02), "c1": (0.96, 0.76, 1.72), "bevel": 0.05,
+             "ramp": "sand"},
+            {"t": "box", "c0": (1.04, 0.66, 1.02), "c1": (1.78, 0.76, 1.72), "bevel": 0.05,
+             "ramp": "sand"},
+            {"t": "box", "c0": (0.03, 0.69, 1.90), "c1": (1.97, 0.97, 2.00), "bevel": 0.03,
+             "ramp": "walnut"},
+        ],
+    },
+    "table_round": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.36, "ry": 0.36, "z0": 0.00, "z1": 0.08},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.28, "ry": 0.28, "z0": 0.08, "z1": 0.18,
+             "taper": 0.55},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.08, "ry": 0.08, "z0": 0.18, "z1": 1.30},
+            {"t": "sphere", "c": (0.50, 0.50, 0.72), "r": 0.13},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.22, "ry": 0.22, "z0": 1.24, "z1": 1.38,
+             "taper": 1.60},
+            # Inlaid top: the walnut disc is wider, the ivory one stands proud inside it, and the
+            # two are not coplanar — separate objects sharing a plane z-fight.
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.46, "ry": 0.46, "z0": 1.38, "z1": 1.44},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.40, "ry": 0.40, "z0": 1.42, "z1": 1.50,
+             "ramp": "ivory"},
+        ],
+    },
+    "plant_fern": {
+        "w": 1, "l": 1, "ramp": "fern",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.26, "ry": 0.26, "z0": 0.00, "z1": 0.40,
+             "taper": 1.30, "ramp": "sand"},
+            # Proud band, not flush: the rim is wider than the pot's lip so it breaks the
+            # silhouette, and charcoal on sand differs in base colour, not only in shade.
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.33, "ry": 0.33, "z0": 0.40, "z1": 0.46,
+             "ramp": "charcoal"},
+            # Tapered blades, not spheres. A sphere cluster is a shrub — it was one, and it read as
+            # one. The fern is in the silhouette: five spires of different heights over a low leaf
+            # mass, which also covers the rim's top face so the pot reads as a band, not a lid.
+            {"t": "sphere", "c": (0.50, 0.50, 0.60), "r": 0.26},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.13, "ry": 0.13, "z0": 0.52, "z1": 1.52,
+             "taper": 0.16},
+            {"t": "cyl", "cx": 0.30, "cy": 0.42, "rx": 0.11, "ry": 0.11, "z0": 0.52, "z1": 1.22,
+             "taper": 0.18},
+            {"t": "cyl", "cx": 0.70, "cy": 0.58, "rx": 0.11, "ry": 0.11, "z0": 0.52, "z1": 1.30,
+             "taper": 0.18},
+            {"t": "cyl", "cx": 0.42, "cy": 0.70, "rx": 0.10, "ry": 0.10, "z0": 0.52, "z1": 1.12,
+             "taper": 0.18},
+            {"t": "cyl", "cx": 0.61, "cy": 0.31, "rx": 0.10, "ry": 0.10, "z0": 0.52, "z1": 1.06,
+             "taper": 0.18},
+            # Two fronds arching clear of the spires. hcyl runs along one footprint axis only, so a
+            # fern's real arc is out of reach; what these buy is a silhouette that breaks sideways.
+            {"t": "hcyl", "x": 0.50, "y0": 0.08, "y1": 0.92, "z": 0.82, "r": 0.05},
+            {"t": "hcyl", "x": 0.50, "y0": 0.08, "y1": 0.92, "z": 0.96, "r": 0.05, "axis": "x"},
+        ],
+    },
+    # The lodge centrepiece. No animation — the fire is trim prims, so it is one frozen sheet like
+    # everything else. The firebox opens toward low fy with the rest of the catalog, which puts it
+    # camera-facing at dirs 2 and 4 and behind its own masonry at 0 and 6.
+    "fireplace": {
+        "w": 2, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.04, 0.00), "c1": (2.00, 0.94, 0.16), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.00, 0.30, 0.16), "c1": (0.48, 0.92, 2.36)},
+            {"t": "box", "c0": (1.52, 0.30, 0.16), "c1": (2.00, 0.92, 2.36)},
+            {"t": "box", "c0": (0.48, 0.68, 0.16), "c1": (1.52, 0.92, 2.36)},
+            {"t": "box", "c0": (0.48, 0.62, 0.16), "c1": (1.52, 0.70, 1.44), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.00, 0.26, 1.44), "c1": (2.00, 0.82, 1.62), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.48, 0.32, 1.62), "c1": (1.52, 0.72, 2.36)},
+            {"t": "box", "c0": (0.86, 0.22, 1.62), "c1": (1.14, 0.84, 1.96), "ramp": "sand"},
+            {"t": "box", "c0": (0.00, 0.20, 2.36), "c1": (2.00, 0.98, 2.50), "bevel": 0.03,
+             "ramp": "walnut"},
+            {"t": "hcyl", "x": 0.46, "y0": 0.62, "y1": 1.38, "z": 0.25, "r": 0.075, "axis": "x",
+             "ramp": "walnut"},
+            {"t": "hcyl", "x": 0.52, "y0": 0.66, "y1": 1.34, "z": 0.37, "r": 0.065, "axis": "x",
+             "ramp": "walnut"},
+            {"t": "cyl", "cx": 0.82, "cy": 0.46, "rx": 0.13, "ry": 0.09, "z0": 0.30, "z1": 0.80,
+             "taper": 0.18, "ramp": "crimson"},
+            {"t": "cyl", "cx": 1.18, "cy": 0.48, "rx": 0.12, "ry": 0.085, "z0": 0.30, "z1": 0.72,
+             "taper": 0.18, "ramp": "crimson"},
+            {"t": "cyl", "cx": 1.00, "cy": 0.44, "rx": 0.15, "ry": 0.10, "z0": 0.30, "z1": 0.96,
+             "taper": 0.14, "ramp": "gold"},
+        ],
+    },
+    # A straight segment only: players rotate for corners, and a corner mesh would be a second
+    # archetype rather than a slot variant. The rails run edge to edge with `caps` off so two
+    # segments meet without a bulge at the join.
+    "railing": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.02, 0.40, 0.00), "c1": (0.18, 0.60, 0.92), "bevel": 0.02},
+            {"t": "box", "c0": (0.82, 0.40, 0.00), "c1": (0.98, 0.60, 0.92), "bevel": 0.02},
+            {"t": "box", "c0": (0.00, 0.37, 0.92), "c1": (0.20, 0.63, 1.00), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.80, 0.37, 0.92), "c1": (1.00, 0.63, 1.00), "bevel": 0.02,
+             "ramp": "charcoal"},
+            # The rails have to stand PROUD of the balusters in fy, both ways. At r 0.055 against
+            # 0.43-0.57 balusters they sat inside the pickets and showed only as specks in the
+            # gaps — the same occlusion trap as casino_table's overhung apron, one axis over.
+            # Proud symmetrically, or two quarter turns bury them again.
+            {"t": "hcyl", "x": 0.50, "y0": 0.00, "y1": 1.00, "z": 0.80, "r": 0.08, "axis": "x",
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.00, "y1": 1.00, "z": 0.44, "r": 0.07, "axis": "x",
+             "caps": False},
+            {"t": "box", "c0": (0.34, 0.46, 0.04), "c1": (0.43, 0.54, 0.86)},
+            {"t": "box", "c0": (0.57, 0.46, 0.04), "c1": (0.66, 0.54, 0.86)},
+        ],
+    },
+    # ---- lodge round 2 (#323) ----
+    # The floor half of the wall-clutter pass: a rug to stand the set on, a stool that is not the
+    # casino pedestal, and a side table short enough to put beside the armchair.
+    #
+    # A rug is the only walkable part in the 3D-assisted catalog, so it is authored as three
+    # stacked slabs rather than one — trim by prim on a horizontal face, which is the surface a
+    # rug is entirely made of. Each slab stands proud of the one under it; coplanar slabs z-fight.
+    # 0.0625 is two whole z-pixels, so drawnHeight lands exactly on the declared stackHeights.
+    "rug_lodge": {
+        "w": 2, "l": 2, "ramp": "crimson",
+        "prims": [
+            # Fringe field and its ticks share a seam group: they are one piece of wool, and a
+            # detail line around every tick would eat a 4 px nub.
+            {"t": "box", "c0": (0.00, 0.00, 0.000), "c1": (2.00, 2.00, 0.030),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.16, 0.16, 0.030), "c1": (1.84, 1.84, 0.048), "ramp": "sand"},
+            {"t": "box", "c0": (0.34, 0.34, 0.048), "c1": (1.66, 1.66, 0.0625)},
+            # Fringe ticks: walnut nubs run inward across the sand border on two ends. They stand
+            # 0.008 proud of the border rather than flush with it — the slabs are 0.6 px apart and
+            # a shared plane between separate objects z-fights.
+            {"t": "box", "c0": (0.24, 0.16, 0.030), "c1": (0.36, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.52, 0.16, 0.030), "c1": (0.64, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.80, 0.16, 0.030), "c1": (0.92, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.08, 0.16, 0.030), "c1": (1.20, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.36, 0.16, 0.030), "c1": (1.48, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.64, 0.16, 0.030), "c1": (1.76, 0.30, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.24, 1.70, 0.030), "c1": (0.36, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.52, 1.70, 0.030), "c1": (0.64, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (0.80, 1.70, 0.030), "c1": (0.92, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.08, 1.70, 0.030), "c1": (1.20, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.36, 1.70, 0.030), "c1": (1.48, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+            {"t": "box", "c0": (1.64, 1.70, 0.030), "c1": (1.76, 1.84, 0.056),
+             "ramp": "walnut", "group": 100},
+        ],
+    },
+    # Seat 0.82 like casino_stool, and deliberately nothing else like it: four posts and rungs
+    # instead of a pedestal disc, so the two differ in silhouette rather than only in palette.
+    "stool_lodge": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.27, 0.27, 0.72)},
+            {"t": "box", "c0": (0.73, 0.16, 0.00), "c1": (0.84, 0.27, 0.72)},
+            {"t": "box", "c0": (0.16, 0.73, 0.00), "c1": (0.27, 0.84, 0.72)},
+            {"t": "box", "c0": (0.73, 0.73, 0.00), "c1": (0.84, 0.84, 0.72)},
+            # Foot rungs on all four sides, proud of the posts. Two rungs would be buried by the
+            # posts after a quarter turn — the railing lesson.
+            {"t": "hcyl", "x": 0.215, "y0": 0.16, "y1": 0.84, "z": 0.26, "r": 0.035,
+             "caps": False},
+            {"t": "hcyl", "x": 0.785, "y0": 0.16, "y1": 0.84, "z": 0.26, "r": 0.035,
+             "caps": False},
+            {"t": "hcyl", "x": 0.215, "y0": 0.16, "y1": 0.84, "z": 0.26, "r": 0.035,
+             "axis": "x", "caps": False},
+            {"t": "hcyl", "x": 0.785, "y0": 0.16, "y1": 0.84, "z": 0.26, "r": 0.035,
+             "axis": "x", "caps": False},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.36, "ry": 0.36, "z0": 0.72, "z1": 0.78},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.31, "ry": 0.31, "z0": 0.76, "z1": 0.82,
+             "ramp": "sand", "seat": True},
+        ],
+    },
+    # Square and low, where cafe_table and table_round are both round pedestals.
+    "side_table": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.26, 0.26, 0.68)},
+            {"t": "box", "c0": (0.74, 0.16, 0.00), "c1": (0.84, 0.26, 0.68)},
+            {"t": "box", "c0": (0.16, 0.74, 0.00), "c1": (0.26, 0.84, 0.68)},
+            {"t": "box", "c0": (0.74, 0.74, 0.00), "c1": (0.84, 0.84, 0.68)},
+            {"t": "box", "c0": (0.20, 0.20, 0.26), "c1": (0.80, 0.80, 0.32), "ramp": "sand"},
+            # Inlaid top: the charcoal band is wider and the walnut top stands proud inside it,
+            # leaving a rim. Charcoal, not ivory — an ivory rim above a sand shelf gave the part
+            # two pale accents of nearly the same value and no hierarchy, and the dark band frames
+            # the top's clamped orange instead of competing with it. The colorway has to move it
+            # (charcoal -> walnut): charcoal and slate are both desaturated blue-greys 23 luma
+            # apart, which is the gold-on-walnut trap in the other corner of the palette.
+            {"t": "box", "c0": (0.03, 0.03, 0.68), "c1": (0.97, 0.97, 0.71), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.11, 0.11, 0.69), "c1": (0.89, 0.89, 0.75), "bevel": 0.02},
+        ],
+    },
     # ---- prestige fixtures (#210) ----
     # The deep end of the sink: account-bound, flagship-priced, and deliberately not a recolour of
     # anything else — a 3,300-Star fixture has to read as its own object across the room.
@@ -425,6 +671,96 @@ PARTS = {
             {"t": "box", "c0": (0.38, 0.04, 2.47), "c1": (0.45, 0.17, 2.68), "ramp": "crimson"},
             {"t": "cyl", "cx": 0.63, "cy": 0.11, "rx": 0.08, "ry": 0.08, "z0": 2.47, "z1": 2.70,
              "taper": 0.70, "ramp": "teal"},
+        ],
+    },
+    # ---- wall clutter (#323) ----
+    # Neither uses the full segment: a wall part must start at least its own depth along the wall,
+    # and both of these have real depth where a poster has none — a clock case is a box and an
+    # antler rack stands off its plaque. The clock spans fx 0.20..0.80 against a depth of 0.155,
+    # the antlers fx 0.14..0.86 against 0.115.
+    "wall_clock": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.24, 0.00, 2.20), "c1": (0.76, 0.11, 2.84), "bevel": 0.02},
+            # Overhanging eave and one gable block, sharing a seam group. There is no tapered box,
+            # so a pitch is stacked courses — but every course shows its own flat top, and three
+            # of them stacked three dithered orange diamonds into a haystack. Two courses and a
+            # line only where the roof meets the case.
+            {"t": "box", "c0": (0.20, 0.00, 2.84), "c1": (0.80, 0.13, 2.92), "group": 101},
+            {"t": "box", "c0": (0.36, 0.00, 2.92), "c1": (0.64, 0.10, 3.02), "group": 101},
+            # Dial: a drum, the record_trophy idiom. An hcyl along fy crests into `hi` around its
+            # rim, so the dial reads round instead of as a square ivory patch.
+            #
+            # Centred at cx 0.5125, not 0.50. The dial stands 0.0125 deeper than the case front,
+            # and depth projects into screen x — at 0.50 it sat 2 px left of the case's visible
+            # face and ran off its left edge while 4 px of walnut side face piled up on the right.
+            # A wall part's contents centre in SCREEN x, which is not the same as centring in fx.
+            {"t": "hcyl", "x": 0.5125, "y0": 0.11, "y1": 0.135, "z": 2.54, "r": 0.185,
+             "caps": False, "ramp": "ivory"},
+            # Hands, 1.3 px of charcoal proud of the dial. Prims are axis-aligned, so the only
+            # readable time is 12 and 3 — a diagonal hand is not a shape this rig can hold. Thin
+            # rather than thick: at 1.6 px the two met at the boss and read as one dark blob.
+            {"t": "box", "c0": (0.4915, 0.135, 2.54), "c1": (0.5335, 0.155, 2.74),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.5125, 0.135, 2.519), "c1": (0.635, 0.155, 2.561),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.4945, 0.035, 2.04), "c1": (0.5305, 0.065, 2.20)},
+            {"t": "hcyl", "x": 0.5125, "y0": 0.035, "y1": 0.065, "z": 1.98, "r": 0.085,
+             "caps": False, "ramp": "gold"},
+        ],
+    },
+    # The lodge's deer head, cut back to what prims hold. A real rack sweeps in three dimensions;
+    # hcyl runs along one footprint axis and cyl only stands upright, so the rack is a beam that
+    # steps UP and out from the skull with tines rising off each step.
+    #
+    # The first pass stepped the beam DOWN and hung eight even tines off it starting inside the
+    # plaque, and it rendered as a pipe organ: a comb of identical verticals with the plaque and
+    # skull buried behind them. Three things fixed it, and all three are silhouette, not palette —
+    # the beam rises outward so the rack opens into a V, three tines a side leave a pixel of air
+    # between them where eight left none, and the whole rack starts above the plaque top so the
+    # skull reads against wood instead of against its own antlers.
+    #
+    # Tines are sand on a walnut plaque: the two differ by 62 in green and 78 in blue, where gold
+    # on walnut differs mostly in luma and vanishes.
+    "antlers": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.26, 0.00, 2.06), "c1": (0.74, 0.045, 2.74), "bevel": 0.03},
+            # Skull plate and snout. No engraved nameplate: the first pass put one four z-pixels
+            # under the snout and the two ivory prims merged into a single grey slab that read as
+            # an inlaid stone panel, not a skull. The skull earns its read from having plaque
+            # around it, so it is small and everything else on the plaque is gone.
+            {"t": "hcyl", "x": 0.50, "y0": 0.035, "y1": 0.095, "z": 2.52, "r": 0.085,
+             "caps": False, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.065, "rx": 0.042, "ry": 0.028, "z0": 2.34,
+             "z1": 2.48, "taper": 1.5, "ramp": "ivory"},
+            # Beam steps, each overlapping its neighbour by ~1.3 px along fx and ~1.0 px in z. A
+            # rack that breaks into islands is one the review pass flags and the eye reads as
+            # debris, and at r 0.05 the z step cannot exceed 0.09 without opening a gap.
+            {"t": "hcyl", "x": 0.065, "y0": 0.42, "y1": 0.58, "z": 2.60, "r": 0.05,
+             "axis": "x", "caps": False, "ramp": "sand"},
+            {"t": "hcyl", "x": 0.065, "y0": 0.26, "y1": 0.44, "z": 2.69, "r": 0.05,
+             "axis": "x", "caps": False, "ramp": "sand"},
+            {"t": "hcyl", "x": 0.065, "y0": 0.56, "y1": 0.74, "z": 2.69, "r": 0.05,
+             "axis": "x", "caps": False, "ramp": "sand"},
+            {"t": "hcyl", "x": 0.065, "y0": 0.14, "y1": 0.30, "z": 2.78, "r": 0.05,
+             "axis": "x", "caps": False, "ramp": "sand"},
+            {"t": "hcyl", "x": 0.065, "y0": 0.70, "y1": 0.86, "z": 2.78, "r": 0.05,
+             "axis": "x", "caps": False, "ramp": "sand"},
+            # Brow, inner and outer tines. The heights are deliberately uneven — a rack whose
+            # tips line up is a fence.
+            {"t": "cyl", "cx": 0.42, "cy": 0.07, "rx": 0.032, "ry": 0.032, "z0": 2.58,
+             "z1": 2.86, "taper": 0.30, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.58, "cy": 0.07, "rx": 0.032, "ry": 0.032, "z0": 2.58,
+             "z1": 2.86, "taper": 0.30, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.31, "cy": 0.07, "rx": 0.036, "ry": 0.036, "z0": 2.68,
+             "z1": 3.26, "taper": 0.22, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.69, "cy": 0.07, "rx": 0.036, "ry": 0.036, "z0": 2.68,
+             "z1": 3.26, "taper": 0.22, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.19, "cy": 0.07, "rx": 0.032, "ry": 0.032, "z0": 2.77,
+             "z1": 3.04, "taper": 0.30, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.81, "cy": 0.07, "rx": 0.032, "ry": 0.032, "z0": 2.77,
+             "z1": 3.04, "taper": 0.30, "ramp": "sand"},
         ],
     },
     "stereo_basic": {
