@@ -28,7 +28,9 @@ import { encodePng } from "../../packages/generator/src/png.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "../../packages/generator/src/raster.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { reviewFigureIslands } from "../../packages/generator/src/review.ts";
-import { GENERATOR_VERSION, RAMP_SHADES, STYLE_VERSION } from "../../packages/generator/src/style.ts";
+import {
+  FLOOR_TONES, GENERATOR_VERSION, RAMP_SHADES, STYLE_VERSION,
+} from "../../packages/generator/src/style.ts";
 
 const RES = 256;
 const ALPHA_MIN = 128;
@@ -50,11 +52,23 @@ function maskDigit(v: number): number {
 }
 
 interface FigurePrim { slot: number; bone: string; part: string }
-interface FigureFrame { frame: string; dir: number; anchorY: number; rgba: string; mask: string }
+/** Where the face goes in this frame, or null with the face turned away. rig.py projects it: a
+ *  feature this small cannot be mesh — an eye is one pixel, and a one-pixel prim quantizes to
+ *  whatever its own shading lands on — so the head carries the brow and nose and the eyes and
+ *  mouth are stamped here (#311). `in` is the screen-x step from the eye toward the nose. */
+interface FaceAnchor {
+  eyes: Array<{ x: number; y: number; in: number }>;
+  mouth: { x: number; y: number } | null;
+}
+interface FigureFrame {
+  frame: string; dir: number; anchorY: number; face: FaceAnchor | null;
+  rgba: string; mask: string;
+}
 interface FigurePart {
   frames: FigureFrame[];
   prims: FigurePrim[];
   ownFrom: number;
+  skullPrim: number;   // mask index of the skull, the only prim a face pixel is painted on
   src: unknown;
 }
 
@@ -69,13 +83,19 @@ const ANCHOR_X = CANVAS.w >> 1;
 
 /** The canonical body every garment is cut against, in draw order. Mirrors rig.py HOLDOUT_PARTS. */
 const HOLDOUT_IDS = ["bd1", "hd2"];
+const HEAD_ID = "hd2";
 
 const pack = (slot: number, shade: number): number => (slot << 16) | (shade << 8);
 const unpackSlot = (color: number): number => (color >> 16) & 0xff;
 const unpackShade = (color: number): number => (color >> 8) & 0xff;
 
+/** Face stamps, by cell label. gateFace holds both: a stamp that missed the head means rig.py's
+ *  projection is wrong and every avatar wears it, so it fails the build rather than painting. */
+const faceMissed: string[] = [];
+const faceStamped = new Map<string, number>();
+
 /** One 64x112 frame of one layer, in (slot, shade) indices. `keepFrom` drops the holdout body. */
-function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number): Canvas {
+function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number, label: string): Canvas {
   const raw = readFileSync(join(renderDir, f.rgba));
   const mask = readFileSync(join(renderDir, f.mask));
   const frame = makeCanvas(CANVAS.w, CANVAS.h);
@@ -128,6 +148,40 @@ function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number): Canvas
       if (open) putPixel(frame, x, y, pack(unpackSlot(here.color), SHADE_OUTLINE));
     }
   }
+
+  // The face (#311), last so neither line pass can draw over an eye. A garment layer starts above
+  // ownFrom and so has no skull left to stamp on: the face belongs to the head layer, once.
+  const face = part.skullPrim > keepFrom ? f.face : null;
+  if (face) {
+    const stamp = (x: number, y: number, shade: number): void => {
+      if (x < 0 || y < 0 || x >= CANVAS.w || y >= CANVAS.h) {
+        faceMissed.push(`${label} at ${x},${y}: outside the frame`);
+        return;
+      }
+      const p = primAt[y * CANVAS.w + x]!;
+      const owner = p < 0 ? null : part.prims[p]!.part;
+      if (p + 1 === part.skullPrim) {
+        putPixel(frame, x, y, pack(part.prims[p]!.slot, shade));
+        faceStamped.set(label, (faceStamped.get(label) ?? 0) + 1);
+      } else if (owner === null || (HOLDOUT_IDS.includes(owner) && owner !== HEAD_ID)) {
+        faceMissed.push(`${label} at ${x},${y}: ${owner ?? "nothing"} there`);
+      }
+      // Anything else in front of the skull — the nose, the brow, glasses, a mask — hides the
+      // feature, so it is not drawn. That is how a profile loses its far eye with no
+      // per-direction table, and it is also what keeps the layer and the composite identical:
+      // the stack paints that same layer over the stamped head.
+    };
+    for (const eye of face.eyes) {
+      const x = Math.floor(eye.x), y = Math.floor(eye.y);
+      stamp(x, y, SHADE_OUTLINE);
+      stamp(x + eye.in, y, SHADE_HI);   // the white catch, always toward the nose
+    }
+    if (face.mouth) {
+      const x = Math.round(face.mouth.x) - 1, y = Math.floor(face.mouth.y);
+      stamp(x, y, SHADE_OUTLINE);
+      stamp(x + 1, y, SHADE_OUTLINE);
+    }
+  }
   return frame;
 }
 
@@ -164,7 +218,8 @@ for (const id of partIds) {
   for (const [row, frame] of FRAMES.entries()) {
     anchorY.push(frameOf(part, frame, 0).anchorY);
     for (let dir = 0; dir < 8; dir++) {
-      const cell = renderFrame(part, frameOf(part, frame, dir), part.ownFrom);
+      const cell = renderFrame(part, frameOf(part, frame, dir), part.ownFrom,
+        `${id} ${frame} d${dir}`);
       cells.push(cell);
       blit(sheet, cell, dir * CANVAS.w, row * CANVAS.h);
     }
@@ -300,7 +355,8 @@ function gateHoldout(): GateResult {
     let interiorBad = 0, worst = "";
     for (const frame of FRAMES) {
       for (let dir = 0; dir < 8; dir++) {
-        const combined = renderFrame(part, frameOf(part, frame, dir), 0);
+        const combined = renderFrame(part, frameOf(part, frame, dir), 0,
+          `${id}+body ${frame} d${dir}`);
         const stack = makeCanvas(CANVAS.w, CANVAS.h);
         const owner = new Int32Array(CANVAS.w * CANVAS.h).fill(-1);
         for (const [n, layerId] of stackIds.entries()) {
@@ -338,9 +394,41 @@ function gateHoldout(): GateResult {
   return pass;
 }
 
+// dir 3 looks straight at the camera and dir 7 straight away. The two profiles (1, 5) keep one
+// eye and lose the other, so they are the rig's per-eye surface test to decide, not the gate's.
+const FACE_DIRS = [2, 3, 4], BLIND_DIRS = [0, 6, 7];
+
+/** The face is the one feature no other gate can see: it is stamped from a projection rather than
+ *  rendered, so a projection that is wrong paints eyes on a shoulder, or on nothing, and every
+ *  avatar wears it. Two claims — every stamped pixel landed on the head, and the face is on the
+ *  side of the head that faces the camera.
+ *
+ *  Runs last: the holdout gate re-renders every garment with the head kept, and the stamps in
+ *  those renders are checked here too. */
+function gateFace(): GateResult {
+  if (faceMissed.length > 0) {
+    return fail("face", `${faceMissed.length} face pixel(s) landed off the head — rig.py's ` +
+      `projected anchor is wrong (first: ${faceMissed[0]})`);
+  }
+  if (!layers.has(HEAD_ID)) return pass;   // partial render, no head to check
+  for (const frame of FRAMES) {
+    for (const dir of FACE_DIRS) {
+      if (!faceStamped.get(`${HEAD_ID} ${frame} d${dir}`)) {
+        return fail("face", `${HEAD_ID} ${frame} d${dir} faces the camera with no face stamped`);
+      }
+    }
+    for (const dir of BLIND_DIRS) {
+      if (faceStamped.get(`${HEAD_ID} ${frame} d${dir}`)) {
+        return fail("face", `${HEAD_ID} ${frame} d${dir} faces away but has a face stamped`);
+      }
+    }
+  }
+  return pass;
+}
+
 for (const [name, gate] of [
   ["registration", gateRegistration], ["bounds", gateBounds],
-  ["figureHeight", gateFigureHeight], ["holdout", gateHoldout],
+  ["figureHeight", gateFigureHeight], ["holdout", gateHoldout], ["face", gateFace],
 ] as const) {
   const result = gate();
   if (result.ok) {
@@ -371,6 +459,45 @@ for (const [name, gate] of [
     if (!cells || HOLDOUT_IDS.includes(id)) continue;
     warn(id, [...body, cells]);
   }
+}
+
+// ---- face preview (#311) ----------------------------------------------------------------------
+// The render dir only, never frozen: an eye is one pixel and the only way to know it reads is to
+// look at it, magnified, on the tone the room actually draws behind it. One skin ramp is enough —
+// the sheet is indexed, so every other ramp is the same pixels through different colours.
+{
+  const SCALE = 3;
+  const rows = ["stand", "sit"].filter((f) => FRAMES.includes(f));
+  const skin: number[] = [];
+  const order = ["outline", "left", "right", "top", "hi"];
+  for (const { ramp, shade, color } of RAMP_SHADES) {
+    if (ramp === "skin_3") skin[order.indexOf(shade)] = color;
+  }
+  const preview = makeCanvas(CANVAS.w * 8 * SCALE, CANVAS.h * rows.length * SCALE);
+  for (let y = 0; y < preview.h; y++) {
+    for (let x = 0; x < preview.w; x++) putPixel(preview, x, y, FLOOR_TONES[0]!);
+  }
+  for (const [row, frame] of rows.entries()) {
+    for (let dir = 0; dir < 8; dir++) {
+      for (const id of HOLDOUT_IDS) {
+        const cell = layers.get(id)?.[cellIndex(frame, dir)];
+        if (!cell) continue;
+        for (let y = 0; y < cell.h; y++) {
+          for (let x = 0; x < cell.w; x++) {
+            const p = getPixel(cell, x, y);
+            if (p.alpha === 0) continue;
+            const color = skin[unpackShade(p.color)];
+            if (color === undefined) continue;
+            const ox = (dir * CANVAS.w + x) * SCALE, oy = (row * CANVAS.h + y) * SCALE;
+            for (let sy = 0; sy < SCALE; sy++) {
+              for (let sx = 0; sx < SCALE; sx++) putPixel(preview, ox + sx, oy + sy, color);
+            }
+          }
+        }
+      }
+    }
+  }
+  writeFileSync(join(renderDir, "figure_face.png"), encodePng(preview.w, preview.h, preview.px));
 }
 
 if (freeze && failures === 0) {

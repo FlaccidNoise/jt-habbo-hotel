@@ -24,6 +24,8 @@ from mathutils import Euler, Matrix, Vector
 RES = 256
 ZSCALE = 32.0 / (32.0 * math.sqrt(2.0) * math.cos(math.radians(30.0)))   # 0.8164966
 ORTHO_SCALE = RES * math.sqrt(2.0) / 64.0
+CAM_LOC = (12.2474, 12.2474, 10.0)
+CAM_ROT = (60.0, 0.0, 135.0)
 
 argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
 OUT = os.path.abspath(argv[argv.index("--out") + 1]) if "--out" in argv else "/tmp/artgen"
@@ -749,6 +751,105 @@ def figure_yaw(direction):
     dx, dy = steps[direction]
     return math.atan2(-float(dy), float(dx))
 
+# ---- face (#311) ----------------------------------------------------------------------------
+# The head models a brow and a nose and stops there. An eye at this scale is one pixel, and a
+# one-pixel prim carries no shading of its own — it quantizes to whichever band its neighbours
+# fall in — so the eyes and the mouth are stamped by figurepass instead. Where they go is a
+# projection, and the camera is in this file, so the projection is too.
+#
+# The eye sits in a socket, EYE_DEPTH behind the skull surface rather than on it. That is what
+# makes the other seven directions work. On the surface, a profile's eye projects inside the
+# nose's own screen box and is swallowed by its outline; two px back it clears the nose onto open
+# cheek. The same two px decide the far eye of a three-quarter view honestly: recessed, it falls
+# BEHIND the nose, the mask says so, and figurepass draws nothing.
+#
+# EYE_Z is pinned by the projection rather than by anatomy. It puts the eye line one clear row
+# below the interior line the brow box draws across the face; one row up and the eyes merge into
+# that line and read as a notch in it. MOUTH_Z clears the nose's bottom line the same way.
+EYE_X, EYE_Z, EYE_DEPTH = 4.2, 10.0, 2.0
+MOUTH_Z = 5.6
+
+# Toward the viewer. An ortho camera looks down its own -Z everywhere, so this one direction is
+# the whole of it.
+CAM_TOWARD = (Euler(tuple(math.radians(a) for a in CAM_ROT), "XYZ").to_matrix()
+              @ Vector((0.0, 0.0, 1.0)))
+
+SKULL = next(p for p in FIGURE_PARTS["hd2"]["prims"] if p["t"] == "ball")
+SKULL_R = tuple(SKULL["r"] * s for s in SKULL.get("squash", (1.0, 1.0, 1.0)))
+# The nose is the prim that reaches furthest forward — that is what a nose is.
+NOSE = max((p for p in FIGURE_PARTS["hd2"]["prims"] if p["t"] == "box"), key=lambda p: p["c1"][1])
+NOSE_TIP = ((NOSE["c0"][0] + NOSE["c1"][0]) / 2.0, NOSE["c1"][1],
+            (NOSE["c0"][2] + NOSE["c1"][2]) / 2.0)
+
+def skull_surface(x, z):
+    """The +y point of the skull ellipsoid above (x, z), in head-bone px."""
+    cx, cy, cz = SKULL["c"]
+    t = 1.0 - ((x - cx) / SKULL_R[0]) ** 2 - ((z - cz) / SKULL_R[2]) ** 2
+    assert t > 0.0, f"face landmark ({x}, {z}) is off the skull"
+    return cy + SKULL_R[1] * math.sqrt(t)
+
+def skull_normal(x, z):
+    """Outward normal there. Length is never used, only its sign against the camera."""
+    cx, cy, cz = SKULL["c"]
+    return ((x - cx) / SKULL_R[0] ** 2, (skull_surface(x, z) - cy) / SKULL_R[1] ** 2,
+            (z - cz) / SKULL_R[2] ** 2)
+
+def figure_project(pose, direction, bone, local):
+    """A bone-local point -> px in the part's CANVAS_W x CANVAS_H frame. The camera is
+    orthographic, so world to screen is linear: one world unit spans 32*sqrt(2) px across the
+    screen and half that down it. FIGURE_PX and FIGURE_PZ are the inverse of exactly that, which
+    is why the height term comes out 1:1 and the frame is anchored where the pose says."""
+    p = fk(pose, bone, local)
+    c, s = math.cos(figure_yaw(direction)), math.sin(figure_yaw(direction))
+    return (CANVAS_W / 2.0 + (p.x * (s - c) + p.y * (s + c)) / math.sqrt(2.0),
+            pose["anchor_y"] + (p.x * (c + s) + p.y * (c - s)) / (2.0 * math.sqrt(2.0)) - p.z)
+
+def faces_camera(pose, direction, bone, local, normal):
+    """Is a surface point turned toward the camera? Bone rotations are rigid, so fk carries a
+    normal as the difference of two points. The root's squash is not rigid: it scales z by
+    FIGURE_PZ against FIGURE_PX for x and y, and a normal takes the inverse of that."""
+    n = fk(pose, bone, tuple(local[i] + normal[i] for i in range(3))) - fk(pose, bone, local)
+    c, s = math.cos(figure_yaw(direction)), math.sin(figure_yaw(direction))
+    world = Vector((n.x * c - n.y * s, n.x * s + n.y * c, n.z * FIGURE_PX / FIGURE_PZ))
+    return world.dot(CAM_TOWARD) > 0.0
+
+def face_anchor(pose, direction):
+    """Where figurepass stamps the face in this frame, or None with the face turned away.
+
+    Per eye, not per face: a profile keeps one and loses the other, and only the surface normal
+    knows which. "in" is the screen-x step from the eye toward the nose, the side the catch light
+    goes on."""
+    nose_x = figure_project(pose, direction, "head", NOSE_TIP)[0]
+    eyes = []
+    for side in (1.0, -1.0):
+        x = side * EYE_X
+        surface = (x, skull_surface(x, EYE_Z), EYE_Z)
+        if not faces_camera(pose, direction, "head", surface, skull_normal(x, EYE_Z)):
+            continue
+        px, py = figure_project(pose, direction, "head", (x, surface[1] - EYE_DEPTH, EYE_Z))
+        eyes.append({"x": px, "y": py, "in": 1 if nose_x > px else -1})
+    if not eyes:
+        return None
+    # A 2 px mouth only reads square-on. Turned away it is noise on the jaw, so it goes with the
+    # second eye.
+    mouth = None
+    if len(eyes) == 2:
+        mx, my = figure_project(pose, direction, "head",
+                                (0.0, skull_surface(0.0, MOUTH_Z), MOUTH_Z))
+        mouth = {"x": mx, "y": my}
+    return {"eyes": eyes, "mouth": mouth}
+
+def skull_prim_index(build_parts):
+    """Mask index of the skull in this render's prim order — the one prim figurepass may paint a
+    face onto. 0 when the head is not in the render at all."""
+    n = 0
+    for part_id in build_parts:
+        for prim in FIGURE_PARTS[part_id]["prims"]:
+            n += 1
+            if prim is SKULL:
+                return n
+    return 0
+
 def add_figure_prim(prim):
     """Build one figure prim in bone-local px. Caller parents the results to the bone."""
     made = []
@@ -1087,8 +1188,8 @@ def setup_scene():
     cam.ortho_scale = ORTHO_SCALE
     cam.clip_end = 200.0
     cam_obj = bpy.data.objects.new("artgen_cam", cam)
-    cam_obj.location = (12.2474, 12.2474, 10.0)
-    cam_obj.rotation_euler = (math.radians(60.0), 0.0, math.radians(135.0))
+    cam_obj.location = CAM_LOC
+    cam_obj.rotation_euler = tuple(math.radians(a) for a in CAM_ROT)
     scene.collection.objects.link(cam_obj)
     scene.camera = cam_obj
 
@@ -1256,6 +1357,7 @@ for part_id, part in FIGURE_PARTS.items():
             dump_rgba(base + "_mask.png", base + ".mask.rgba")
             frames.append({
                 "frame": frame, "dir": direction, "anchorY": pose["anchor_y"],
+                "face": face_anchor(pose, direction),
                 "rgba": os.path.basename(base) + ".rgba",
                 "mask": os.path.basename(base) + ".mask.rgba",
             })
@@ -1268,6 +1370,7 @@ for part_id, part in FIGURE_PARTS.items():
         "prims": [{"slot": q.get("slot", 0), "bone": q["bone"], "part": p}
                   for p in build_parts for q in FIGURE_PARTS[p]["prims"]],
         "ownFrom": own_from,
+        "skullPrim": skull_prim_index(build_parts),
         "holdout": build_parts[:-1] if part_id not in HOLDOUT_PARTS or own_from else [],
         "src": part["prims"],
     }

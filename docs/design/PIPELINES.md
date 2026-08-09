@@ -332,6 +332,12 @@ Built 2026-08-05 (#127). Revisions below are what the build actually produced.
 - **Figure sheets are indexed.** A pixel stores (colour slot, shade index) and the client resolves
   it through the worn ramps while it composites. Colour is per player; baking colour into the
   sheet would move the combinatorics into colour space.
+- **The face is stamped, not modelled** (#311). The head meshes a brow and a nose and stops there:
+  an eye is one pixel at this scale, and a prim that small carries no shading of its own — it
+  quantizes to whichever band its neighbours fall in. `rig.py` projects where the eyes and mouth
+  land, because the camera is its own, and `figurepass` paints them onto the skull. Which of them
+  are drawn is read off the mask, never a per-direction table: the nose covers the far eye of a
+  three-quarter view, and the skull covers the whole face from behind.
 - **Shadows must stay off for figures** (`scene.eevee.use_shadows`, a master switch that overrides
   the per-light flag). With them on, a shirt casts onto the torso and the bare body renders
   differently depending on what is worn over it — 1374 pixels of the same primitive differing by a
