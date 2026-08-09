@@ -81,4 +81,4 @@ token and returns 403 to a non-staff session.
 
 ## License
 
-No license file yet — all rights reserved by default. Add one before reusing.
+MIT — see [LICENSE](LICENSE).
