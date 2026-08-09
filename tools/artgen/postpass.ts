@@ -36,6 +36,14 @@ const ALPHA_MIN = 128;
 // sun over a black world, so faces sit at fixed levels: unlit/left ≈ .00-.15, right ≈ .54,
 // flat top ≈ .70, sun-facing band ≈ .90. `hi` is that band: bevel strips and curve crests.
 const THRESH_LEFT = 0.30, THRESH_RIGHT = 0.62, THRESH_TOP = 0.80;
+// The style bible's 2x2 checker (ART-DIRECTION), finally applied where it belongs: within
+// DITHER_BAND of a threshold AND on a curve whose transition is WIDE — flat faces sit at the
+// fixed levels above (no gradient), and a thin cylinder crosses a whole band in a pixel or two,
+// which needs no softening and reads as noise when checkered. The window is per-pixel luma
+// slope: above CURVE_MIN it is a curve, below CURVE_MAX the banding line it leaves is wide
+// enough to be worth breaking.
+const DITHER_BAND = 0.05, CURVE_MIN = 0.004, CURVE_MAX = 0.03;
+const THRESHOLDS = [THRESH_LEFT, THRESH_RIGHT, THRESH_TOP];
 
 /** sRGB byte → linear [0,1]. */
 function toLinear(v: number): number {
@@ -277,16 +285,33 @@ for (const [id, part] of work) {
         // lit-pass AA can cover a pixel the maskless pass misses — fall back to prim 0
         const prim = n > 0 && n <= part.prims.length ? n - 1 : 0;
         const ramp = ramps[prim]!;
-        const t = 0.299 * toLinear(raw[i] ?? 0) + 0.587 * toLinear(raw[i + 1] ?? 0)
-          + 0.114 * toLinear(raw[i + 2] ?? 0);
-        const shade = t < THRESH_LEFT ? ramp.left : t < THRESH_RIGHT ? ramp.right
-          : t < THRESH_TOP ? ramp.top : ramp.hi;
+        const luma = (j: number): number => 0.299 * toLinear(raw[j] ?? 0)
+          + 0.587 * toLinear(raw[j + 1] ?? 0) + 0.114 * toLinear(raw[j + 2] ?? 0);
+        const t = luma(i);
+        let band = t < THRESH_LEFT ? 1 : t < THRESH_RIGHT ? 2 : t < THRESH_TOP ? 3 : 4;
+        // Within DITHER_BAND of the threshold above (still under it) or below (just over it)?
+        const above = band < 4 && THRESHOLDS[band - 1]! - t < DITHER_BAND;
+        const below = band > 1 && t - THRESHOLDS[band - 2]! < DITHER_BAND;
+        if ((above || below) && ((fx >> 1) + (fy >> 1)) % 2 === 1) {
+          const g = Math.max(
+            Math.abs(luma(i + 4) - luma(i - 4)),
+            Math.abs(luma(i + RES * 4) - luma(i - RES * 4)),
+          );
+          // The bible's size rule, measured on the mask: a table leg is a curve too, but at
+          // 7 px wide its whole transition is a pixel or two and checker there is only noise.
+          let run = 1;
+          for (let d = 1; d <= 6 && maskDigit(mask[i - 4 * d] ?? 0) + 3 * maskDigit(mask[i - 4 * d + 1] ?? 0) + 9 * maskDigit(mask[i - 4 * d + 2] ?? 0) === n; d++) run++;
+          for (let d = 1; d <= 6 && maskDigit(mask[i + 4 * d] ?? 0) + 3 * maskDigit(mask[i + 4 * d + 1] ?? 0) + 9 * maskDigit(mask[i + 4 * d + 2] ?? 0) === n; d++) run++;
+          if (run >= 10 && g > CURVE_MIN && g < CURVE_MAX) band += above ? 1 : -1;
+        }
+        const shade = [ramp.left, ramp.right, ramp.top, ramp.hi][band - 1]!;
         putPixel(frame, fx, fy, shade);
         groupAt[fy * frameW + fx] = part.prims[prim]!.group;
         rampAt[fy * frameW + fx] = prim;
       }
     }
     // interior detail lines: 1px in the local ramp's darkest shade along prim-group boundaries
+    const lined = new Uint8Array(frameW * frameH);
     for (let fy = 0; fy < frameH; fy++) {
       for (let fx = 0; fx < frameW; fx++) {
         const g = groupAt[fy * frameW + fx]!;
@@ -295,7 +320,22 @@ for (const [id, part] of work) {
         const down = fy + 1 < frameH ? groupAt[(fy + 1) * frameW + fx]! : -1;
         if ((right >= 0 && right !== g) || (down >= 0 && down !== g)) {
           putPixel(frame, fx, fy, ramps[rampAt[fy * frameW + fx]!]!.outline);
+          lined[fy * frameW + fx] = 1;
         }
+      }
+    }
+    // Crease shade: the pixel under a detail line drops one shade — the dirt in the seam that
+    // grounds a leg against an apron or a lid against a body. One pixel, never on a line.
+    for (let fy = 1; fy < frameH; fy++) {
+      for (let fx = 0; fx < frameW; fx++) {
+        if (!lined[(fy - 1) * frameW + fx] || lined[fy * frameW + fx]) continue;
+        const prim = rampAt[fy * frameW + fx]!;
+        if (prim < 0) continue;
+        const ramp = ramps[prim]!;
+        const here = getPixel(frame, fx, fy).color;
+        const darker = here === ramp.hi ? ramp.top : here === ramp.top ? ramp.right
+          : here === ramp.right ? ramp.left : null;
+        if (darker !== null) putPixel(frame, fx, fy, darker);
       }
     }
     outlineSilhouette(frame);

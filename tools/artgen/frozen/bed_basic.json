@@ -25,10 +25,10 @@
   "seatZ": 0.55,
   "occlusion": null,
   "nearSheet": "bed_basic.near.png",
-  "nearHash": "de3124d5e5707229227b7c6f1b8bb61d081716a4267a7c74d03c323d47aaab59",
+  "nearHash": "57143a5609882d85cb06778cb53a27a157f94a872842a1dba598cc0298356373",
   "styleVersion": 2,
-  "generatorVersion": 1,
-  "partLibraryHash": "artgen:dea0fd0d6a0f6a80",
-  "recipeHash": "dea0fd0d6a0f6a801182fce22a3ac97d7230f8db646abe0f8e226857d5b4c170",
-  "pixelHash": "30a7e99c8f258b955965e51e7305c1d2e3e677bf46b31e7bdb84f95aed4b1b59"
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f0b53c02107f1fe1",
+  "recipeHash": "f0b53c02107f1fe1210a146b43aa5c8e6613f843b2d5685be31c40a46be99ca2",
+  "pixelHash": "a46deebe68a7fe82514bdee7aa2b96e8a972a8c87c0ad603c28975bda2443382"
 }
