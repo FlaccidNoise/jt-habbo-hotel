@@ -931,6 +931,20 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
   sendChat(el<HTMLInputElement>("chat-input"), e.shiftKey);
 });
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
+// #321: the strips hid the lower half of a big room, so they collapse behind tabs — an
+// accordion, at most one open, and the toggles work before and after login alike.
+const HUD_TABS = [
+  ["tab-catalog", "catalog"], ["tab-wardrobe", "wardrobe"], ["tab-inventory", "inventory"],
+] as const;
+for (const [tab, strip] of HUD_TABS) {
+  el(tab).addEventListener("click", () => {
+    const opening = !el(strip).classList.contains("open");
+    for (const [t, s] of HUD_TABS) {
+      el(s).classList.toggle("open", opening && s === strip);
+      el(t).classList.toggle("open", opening && s === strip);
+    }
+  });
+}
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
 el("nav-open").addEventListener("click", () => {
