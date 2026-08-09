@@ -10,4 +10,4 @@ Work is tracked in jtbug, group `habbo`. The MCP server `jtbug` is registered vi
 
 Branch policy: one branch, `main`. Runner workers merge to it (tests-gated), interactive sessions commit to it directly. The old `dev` buffer was dropped (#273) — it went 58 commits stale in three days because nothing merged it forward, and every runner worker started from that stale tree.
 
-CLI fallback: `BUG_URL=https://${BUG_HOST} BUG_ACTOR=claude-habbo node <repos>/jtBugTracking/packages/cli/bin/bug.js <cmd>`
+CLI fallback: `BUG_URL=${BUG_URL} BUG_ACTOR=claude-habbo node <repos>/jtBugTracking/packages/cli/bin/bug.js <cmd>`
