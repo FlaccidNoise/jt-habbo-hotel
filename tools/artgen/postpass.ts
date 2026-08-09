@@ -139,6 +139,13 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   fireplace_stone:      { base: "fireplace",       ramps: { slate: "sand", sand: "charcoal" } },
   // Same for the finials — charcoal caps on a charcoal railing would vanish.
   railing_iron:         { base: "railing",         ramps: { walnut: "charcoal", charcoal: "gold" } },
+  // Lodge round 2 (#323). Neither moves the wood alone. The stool's sand cushion would still read
+  // on charcoal, but a charcoal frame under a sand cushion is a beige stool, so the cushion goes
+  // crimson to keep the colorway a different object. The side table has no choice: its rim is
+  // charcoal, and charcoal against slate is two desaturated blue-greys 23 luma apart — the same
+  // shape of failure as gold on walnut, one corner of the palette over.
+  stool_lodge_charcoal: { base: "stool_lodge",     ramps: { walnut: "charcoal", sand: "crimson" } },
+  side_table_slate:     { base: "side_table",      ramps: { walnut: "slate", charcoal: "walnut" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

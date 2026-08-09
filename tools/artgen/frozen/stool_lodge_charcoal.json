@@ -1,0 +1,34 @@
+{
+  "defId": "stool_lodge_charcoal",
+  "archetype": "artgen",
+  "sheet": "stool_lodge_charcoal.png",
+  "frameW": 64,
+  "frameH": 59,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.82,
+  "occlusion": null,
+  "nearSheet": "stool_lodge_charcoal.near.png",
+  "nearHash": "b29f2e853d9f0b6e32540ec9b9cc93dcd9b96ffc3c10c1bc0d03687b59d193ee",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f6494075ddd3dfdd",
+  "recipeHash": "f6494075ddd3dfdd9afc6988ae1f2393d3ea4575129dbe4fe9a602cf51915aab",
+  "pixelHash": "e6244bb1524f2f8f62f635f070b7449136a2af57b145b4026993f3040a03580d"
+}

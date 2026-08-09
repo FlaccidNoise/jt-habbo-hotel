@@ -31,6 +31,11 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "plant_fern",      name: "Potted Fern",    w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
   { id: "fireplace",       name: "Fireplace",      w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
   { id: "railing",         name: "Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  // Lodge round 2 (#323): the floor half of the wall-clutter pass. rug_lodge is the only walkable
+  // 3D-assisted part — canWalk puts it on the client's floor_furni layer, under every avatar.
+  { id: "rug_lodge",   name: "Lodge Rug",   w: 2, l: 2, stackHeights: [0.0625],  canWalk: true,  canStackOn: true,  seatHeight: null, color: 0xaa3333 },
+  { id: "stool_lodge", name: "Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0xb5651d },
+  { id: "side_table",  name: "Side Table",  w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
   // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
   { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -48,6 +53,8 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "plant_fern_exotic",    name: "Exotic Fern",         w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fireplace_stone",      name: "Sandstone Hearth",    w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
   { id: "railing_iron",         name: "Iron Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
+  { id: "side_table_slate",     name: "Slate Side Table",     w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
@@ -65,6 +72,9 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "record_trophy", name: "Record Trophy", span: 1, plane: { w: 22, h: 21 }, mount: { u: 4, v: 35 }, color: 0x3f5e9e },
   { id: "wall_shelf",    name: "Wall Shelf",    span: 1, plane: { w: 26, h: 13 }, mount: { u: 0, v: 46 }, color: 0xb5651d },
   { id: "wall_art_gilded", name: "Gallery Piece", span: 1, plane: { w: 26, h: 23 }, mount: { u: 2, v: 35 }, color: 0x9c9484 },
+  // Lodge round 2 (#323).
+  { id: "wall_clock",    name: "Lodge Clock",   span: 1, plane: { w: 24, h: 28 }, mount: { u: 2, v: 36 }, color: 0xb5651d },
+  { id: "antlers",       name: "Antler Mount",  span: 1, plane: { w: 28, h: 37 }, mount: { u: 0, v: 24 }, color: 0xc2a36b },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -115,6 +125,14 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["sofa_lodge_plum", 300],
   ["fireplace", 300],
   ["fireplace_stone", 300],
+  // Lodge round 2 (#323): wall clutter and the props that go under it.
+  ["stool_lodge", 25],
+  ["stool_lodge_charcoal", 25],
+  ["rug_lodge", 75],
+  ["side_table", 75],
+  ["side_table_slate", 75],
+  ["wall_clock", 150],
+  ["antlers", 300],
   // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],

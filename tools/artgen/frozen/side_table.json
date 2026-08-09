@@ -1,0 +1,32 @@
+{
+  "defId": "side_table",
+  "archetype": "artgen",
+  "sheet": "side_table.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4f66982aae853a71",
+  "recipeHash": "4f66982aae853a71b76f404b2327a70864476e2cf197984b16c6e3bba2c62d8d",
+  "pixelHash": "5309a4d996741d63e34b3c940e726485b4aaf028de16b15bd6f9496abe9eb4d5"
+}

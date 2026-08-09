@@ -1,0 +1,37 @@
+{
+  "defId": "wall_clock",
+  "archetype": "artgen",
+  "sheet": "wall_clock.png",
+  "frameW": 64,
+  "frameH": 129,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 113,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 28,
+    "mountU": 2,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.155
+  },
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:60a226641a2c771b",
+  "recipeHash": "60a226641a2c771b4f9fc32c683601690754ecf3cbadc660bf8c9de5dea7b404",
+  "pixelHash": "4727cef73444c7522d5190894785d32291059a0e6f203c8316820e946814e7aa"
+}

@@ -830,6 +830,104 @@
       "recipeHash": "be80103cde8489a8da4a2fa8651bf57634a6f26899c7fe7aeafd2ce87be16d68",
       "pixelHash": "be71c1669ebab765afea0412d358678f127cd76f1a552f04f958df14beff8a79"
     },
+    "rug_lodge": {
+      "defId": "rug_lodge",
+      "archetype": "artgen",
+      "sheet": "rug_lodge.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:68a4e8743d08ea3f",
+      "recipeHash": "68a4e8743d08ea3f064b8dbb7a94e185738e9f0a7b1dcc86098dd006abb528cd",
+      "pixelHash": "3250f76d60e35db6149b1985e0c89462956c23ddebaf00e5c773ce6a49287db1"
+    },
+    "stool_lodge": {
+      "defId": "stool_lodge",
+      "archetype": "artgen",
+      "sheet": "stool_lodge.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.82,
+      "occlusion": null,
+      "nearSheet": "stool_lodge.near.png",
+      "nearHash": "b3b63e5d7c48ccc5e1cf9bc1708a7339683847fadb61585136c8d161555f23ff",
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0d2f315d124db975",
+      "recipeHash": "0d2f315d124db975070938fe2824e97a95ce5d938397ee0365a247dc100403df",
+      "pixelHash": "c1abc291ebf9b24147f42eb71fae0ea9e87585d22e5750856f44e00db08a62f2"
+    },
+    "side_table": {
+      "defId": "side_table",
+      "archetype": "artgen",
+      "sheet": "side_table.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4f66982aae853a71",
+      "recipeHash": "4f66982aae853a71b76f404b2327a70864476e2cf197984b16c6e3bba2c62d8d",
+      "pixelHash": "5309a4d996741d63e34b3c940e726485b4aaf028de16b15bd6f9496abe9eb4d5"
+    },
     "billiards_table": {
       "defId": "billiards_table",
       "archetype": "artgen",
@@ -1256,6 +1354,72 @@
       "recipeHash": "06263955c8bc7829ed6a8b4645210d6e5f3e91591ea0ce81269e6728349c6236",
       "pixelHash": "c31849e96bd3d4336b39bfbd88bc5a537f0f62005cfb9c13c76723e7662f521b"
     },
+    "stool_lodge_charcoal": {
+      "defId": "stool_lodge_charcoal",
+      "archetype": "artgen",
+      "sheet": "stool_lodge_charcoal.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.82,
+      "occlusion": null,
+      "nearSheet": "stool_lodge_charcoal.near.png",
+      "nearHash": "b29f2e853d9f0b6e32540ec9b9cc93dcd9b96ffc3c10c1bc0d03687b59d193ee",
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f6494075ddd3dfdd",
+      "recipeHash": "f6494075ddd3dfdd9afc6988ae1f2393d3ea4575129dbe4fe9a602cf51915aab",
+      "pixelHash": "e6244bb1524f2f8f62f635f070b7449136a2af57b145b4026993f3040a03580d"
+    },
+    "side_table_slate": {
+      "defId": "side_table_slate",
+      "archetype": "artgen",
+      "sheet": "side_table_slate.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:40283b53fcca5e05",
+      "recipeHash": "40283b53fcca5e05a847b8ffd6d6dc51784cc404cd82358baf396d7b05964708",
+      "pixelHash": "46e3cb5e84417249c2c4e3520a6c629c61f07b30112c867f16f69b7c369b541d"
+    },
     "arcade_cabinet_plum": {
       "defId": "arcade_cabinet_plum",
       "archetype": "artgen",
@@ -1568,6 +1732,80 @@
       "partLibraryHash": "artgen:29c7c7762e6d3777",
       "recipeHash": "29c7c7762e6d3777d9d276ceae0e66175ecd1b25c4476ef3a2ad41cc8f9f0c22",
       "pixelHash": "7d627b647cd2405eb28bf5491c267ed412c8ea92c131dfc3d79c875c29cdee3e"
+    },
+    "wall_clock": {
+      "defId": "wall_clock",
+      "archetype": "artgen",
+      "sheet": "wall_clock.png",
+      "frameW": 64,
+      "frameH": 129,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 113,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 28,
+        "mountU": 2,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.155
+      },
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:60a226641a2c771b",
+      "recipeHash": "60a226641a2c771b4f9fc32c683601690754ecf3cbadc660bf8c9de5dea7b404",
+      "pixelHash": "4727cef73444c7522d5190894785d32291059a0e6f203c8316820e946814e7aa"
+    },
+    "antlers": {
+      "defId": "antlers",
+      "archetype": "artgen",
+      "sheet": "antlers.png",
+      "frameW": 64,
+      "frameH": 137,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 121,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 37,
+        "mountU": 0,
+        "mountV": 24,
+        "gap": 0,
+        "depth": 0.115
+      },
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5e895cb75074ba76",
+      "recipeHash": "5e895cb75074ba760fb2c4596ffc2fddab96f0176356d9a6d1831ec7753cd5b4",
+      "pixelHash": "41adc3ef18c096bf0c208444775b8259f5507aa199159a5fb04e3bed042fc51f"
     }
   }
 }

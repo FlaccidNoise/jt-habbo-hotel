@@ -1,0 +1,32 @@
+{
+  "defId": "rug_lodge",
+  "archetype": "artgen",
+  "sheet": "rug_lodge.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:68a4e8743d08ea3f",
+  "recipeHash": "68a4e8743d08ea3f064b8dbb7a94e185738e9f0a7b1dcc86098dd006abb528cd",
+  "pixelHash": "3250f76d60e35db6149b1985e0c89462956c23ddebaf00e5c773ce6a49287db1"
+}
