@@ -1,4 +1,4 @@
-import { Application } from "pixi.js";
+import { Application, TextureSource } from "pixi.js";
 import {
   CATALOG_PRICES,
   MAX_TRADE_ITEMS,
@@ -45,7 +45,7 @@ import { AvatarSprite } from "./scene/avatar.ts";
 import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
 import { FurniLayer } from "./scene/furni.ts";
-import { RoomScene, SCALE } from "./scene/room.ts";
+import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
 import { ChatOverlay } from "./ui/chat.ts";
@@ -847,12 +847,14 @@ function handle(msg: ServerMsg): void {
 
 /** The renderer, the input wiring and the socket handlers — set up once, before the first join. */
 async function boot(): Promise<void> {
+  // Pixel art at 2x: every texture samples nearest, before the first one loads.
+  TextureSource.defaultOptions.scaleMode = "nearest";
   app = new Application();
   furniAssets = await loadFurniAssets();
   decorAssets = await loadDecorAssets();
   const atlas = await loadFigureAtlas();
   figureBaker = atlas ? new FigureBaker(atlas) : null;
-  await app.init({ background: 0x11131a, resizeTo: window, antialias: true });
+  await app.init({ background: 0x11131a, resizeTo: window, antialias: false });
   el("stage").appendChild(app.canvas);
   app.stage.eventMode = "static";
   app.stage.hitArea = app.screen;
@@ -860,12 +862,17 @@ async function boot(): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    // The camera tracks my avatar through its walk lerp, so it runs after updates, before layout.
+    const me = you === null ? undefined : avatars.get(you);
+    if (me && scene && app) {
+      scene.follow({ sx: me.view.x, sy: me.view.y }, app.screen.width, app.screen.height);
+    }
     depth.flush();
     chat.layout((id) => {
       const sprite = avatars.get(id);
       if (!sprite || !scene) return null;
       const head = sprite.head();
-      return { sx: head.sx + scene.world.x, sy: head.sy + scene.world.y };
+      return { sx: head.sx * ZOOM + scene.world.x, sy: head.sy * ZOOM + scene.world.y };
     });
   });
   window.addEventListener("resize", () => {
