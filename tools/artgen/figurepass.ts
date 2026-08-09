@@ -125,14 +125,20 @@ function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number, label: 
   }
 
   // Interior detail lines along prim boundaries, then the silhouette outline — the same two rules
-  // postpass applies, so a sleeve seam reads like a chair seam.
+  // postpass applies, so a sleeve seam reads like a chair seam. Except within the head: outlining
+  // the nose and brow boxes framed the whole face in near-black and drowned the one-pixel eyes
+  // (#311), so the face carries shading and stamps only, and the nose keeps its silhouette edge
+  // in profile from the outline pass below.
+  const facial = (a: number, b: number): boolean =>
+    part.prims[a]!.part === HEAD_ID && part.prims[b]!.part === HEAD_ID;
   for (let y = 0; y < CANVAS.h; y++) {
     for (let x = 0; x < CANVAS.w; x++) {
       const p = primAt[y * CANVAS.w + x]!;
       if (p < 0) continue;
       const right = x + 1 < CANVAS.w ? primAt[y * CANVAS.w + x + 1]! : -1;
       const down = y + 1 < CANVAS.h ? primAt[(y + 1) * CANVAS.w + x]! : -1;
-      if ((right >= 0 && right !== p) || (down >= 0 && down !== p)) {
+      if ((right >= 0 && right !== p && !facial(p, right))
+        || (down >= 0 && down !== p && !facial(p, down))) {
         putPixel(frame, x, y, pack(part.prims[p]!.slot, SHADE_OUTLINE));
       }
     }
@@ -173,8 +179,11 @@ function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number, label: 
     };
     for (const eye of face.eyes) {
       const x = Math.floor(eye.x), y = Math.floor(eye.y);
+      // Two rows tall, the classic emphatic eye — one row read as a stray fleck at 64.
       stamp(x, y, SHADE_OUTLINE);
+      stamp(x, y + 1, SHADE_OUTLINE);
       stamp(x + eye.in, y, SHADE_HI);   // the white catch, always toward the nose
+      stamp(x + eye.in, y + 1, SHADE_HI);
     }
     if (face.mouth) {
       const x = Math.round(face.mouth.x) - 1, y = Math.floor(face.mouth.y);
