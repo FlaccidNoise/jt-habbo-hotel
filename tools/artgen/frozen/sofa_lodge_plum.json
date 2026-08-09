@@ -1,0 +1,34 @@
+{
+  "defId": "sofa_lodge_plum",
+  "archetype": "artgen",
+  "sheet": "sofa_lodge_plum.png",
+  "frameW": 96,
+  "frameH": 112,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 80,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2,
+  "seatZ": 1,
+  "occlusion": null,
+  "nearSheet": "sofa_lodge_plum.near.png",
+  "nearHash": "67da3ffbbd649d682da279a7077a0c5ba56f9a618d7aaa8bac5580ce09b8dc82",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:40373517eb6bb447",
+  "recipeHash": "40373517eb6bb447f2cabe71ded01ac9f59bdd0a1de0e324ce8d1f8991827430",
+  "pixelHash": "62bfea13adbe9f06a1a1fec4a02783161e65f343949100f2810be3c9beb5b0f4"
+}

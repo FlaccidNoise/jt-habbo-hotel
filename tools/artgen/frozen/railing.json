@@ -1,0 +1,32 @@
+{
+  "defId": "railing",
+  "archetype": "artgen",
+  "sheet": "railing.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:be80103cde8489a8",
+  "recipeHash": "be80103cde8489a8da4a2fa8651bf57634a6f26899c7fe7aeafd2ce87be16d68",
+  "pixelHash": "be71c1669ebab765afea0412d358678f127cd76f1a552f04f958df14beff8a79"
+}

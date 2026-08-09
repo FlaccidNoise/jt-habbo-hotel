@@ -126,6 +126,19 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   cafe_table_marble:    { base: "cafe_table",     ramps: { walnut: "slate", ivory: "ivory" } },
   casino_table_onyx:    { base: "casino_table",   ramps: { walnut: "charcoal", fern: "plum" } },
   wall_art_gilded:      { base: "wall_art",       ramps: { gold: "ivory", teal: "plum" } },
+  // Lodge set (#314). The upholstery ramp is the only one that moves on the seats — walnut wood
+  // and sand cushions read against crimson, navy, fern and plum alike, because they differ from
+  // all four in hue rather than only in luma.
+  armchair_lounge_navy: { base: "armchair_lounge", ramps: { crimson: "navy" } },
+  armchair_lounge_fern: { base: "armchair_lounge", ramps: { crimson: "fern" } },
+  sofa_lodge_plum:      { base: "sofa_lodge",      ramps: { fern: "plum" } },
+  table_round_onyx:     { base: "table_round",     ramps: { walnut: "charcoal" } },
+  plant_fern_exotic:    { base: "plant_fern",      ramps: { fern: "plum" } },
+  // The keystone has to move with the body: slate → sand alone would sink a sand keystone into
+  // its own masonry, which is the divider_basic_plum lesson.
+  fireplace_stone:      { base: "fireplace",       ramps: { slate: "sand", sand: "charcoal" } },
+  // Same for the finials — charcoal caps on a charcoal railing would vanish.
+  railing_iron:         { base: "railing",         ramps: { walnut: "charcoal", charcoal: "gold" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

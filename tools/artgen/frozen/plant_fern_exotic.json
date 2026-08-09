@@ -1,0 +1,32 @@
+{
+  "defId": "plant_fern_exotic",
+  "archetype": "artgen",
+  "sheet": "plant_fern_exotic.png",
+  "frameW": 64,
+  "frameH": 81,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:90621018234e9cd9",
+  "recipeHash": "90621018234e9cd97435f29ea92c0616b08bad4d78a14b3f7d9bcbdbde656504",
+  "pixelHash": "7cdbdd9ee2d1764fa8cda283b506378fda007b013b7fd1c8b274e18c355ecb68"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "armchair_lounge_fern",
+  "archetype": "artgen",
+  "sheet": "armchair_lounge_fern.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 1,
+  "occlusion": null,
+  "nearSheet": "armchair_lounge_fern.near.png",
+  "nearHash": "f15bbf091f8108a2b97b78c267d5b614b0e36e1e0bf1cf9282ee87a987f27b2c",
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5858035876be6b54",
+  "recipeHash": "5858035876be6b5447cf873a3a123be2af38100bac0ffe43fa4f44b8cb0e6895",
+  "pixelHash": "489a2a1082f74aaf85d857c372da5215d5af08558eef1b310d3fada771c47037"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "fireplace",
+  "archetype": "artgen",
+  "sheet": "fireplace.png",
+  "frameW": 96,
+  "frameH": 128,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 2,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dd1c25ee4721f60f",
+  "recipeHash": "dd1c25ee4721f60f4c63acf56dd703e37e2191c52c0bb1b7c11cc94783fc40cb",
+  "pixelHash": "f3fefc9e126440bad444ab8a2fa707dd3fb2814812b365af61e11897938c7608"
+}
