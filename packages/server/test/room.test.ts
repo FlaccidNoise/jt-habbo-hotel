@@ -21,6 +21,9 @@ beforeEach(() => {
   vi.useFakeTimers(); // BEFORE constructing the Room
   dir = mkdtempSync(join(tmpdir(), "grand-room-"));
   db = openDb(join(dir, "test.db"));
+  // These tests exercise the room's mechanics on a bare floor. The house layout the public rooms
+  // are seeded with (#312) is covered in furnish.test.ts.
+  db.prepare("DELETE FROM furni_items WHERE room_id IN (1, 2)").run();
   emitted = [];
   emit = (id, msg) => {
     ServerMsgSchema.parse(msg); // pins outbound conformance

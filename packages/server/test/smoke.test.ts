@@ -231,7 +231,8 @@ describe("smoke suite", () => {
     expect(srv.port).toBe(port);
 
     aliceAgain = await joinAs(tokens.alice, 2);
-    expect(aliceAgain.state.furni).toEqual([
+    // The casino comes furnished (#312); alice's two items are what survived the restart.
+    expect(aliceAgain.state.furni.filter((f) => f.id === plantId || f.id === tableId)).toEqual([
       { id: plantId, defId: "plant_basic", x: 6, y: 10, z: 0, dir: 0, state: 0 },
     ]);
     expect(aliceAgain.state.inventory).toContainEqual({ id: tableId, defId: "table_basic" });

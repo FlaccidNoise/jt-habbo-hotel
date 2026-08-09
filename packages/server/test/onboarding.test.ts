@@ -90,14 +90,14 @@ describe("quest over the wire", () => {
 
     const [ws, bus] = await connect(port);
     ws.send(JSON.stringify({ t: "join", token, roomId: 1 }));
-    await bus.waitFor("room_state");
+    const alice = (await bus.waitFor("room_state")).you;
     expect((await bus.waitFor("notice")).text).toContain("Welcome quest");
 
     // Skip the coffee step from outside (the ritual itself is covered in npc-ritual tests)
     // and fund the purchase.
     const side = openDb(dbPath);
-    side.prepare("UPDATE onboarding SET step = 'purchase' WHERE account_id = 1").run();
-    settleEarn(side, { opKey: "fund", op: "test", accountId: 1, amount: 100, opCap: 100 });
+    side.prepare("UPDATE onboarding SET step = 'purchase' WHERE account_id = ?").run(alice);
+    settleEarn(side, { opKey: "fund", op: "test", accountId: alice, amount: 100, opCap: 100 });
     closeDb(side);
 
     ws.send(JSON.stringify({ t: "buy", defId: "chair_basic" }));

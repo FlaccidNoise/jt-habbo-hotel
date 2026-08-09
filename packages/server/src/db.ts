@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
+import { seedPublicFurni } from "./furnish.ts";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
 
 const DDL = `
@@ -147,6 +148,9 @@ export function openDb(path: string): Database.Database {
   seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR);
   seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR);
   seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
+  // After the rooms exist and only into the bare ones (#312). The museum furnishes itself, one
+  // donation at a time.
+  seedPublicFurni(db);
   return db;
 }
 

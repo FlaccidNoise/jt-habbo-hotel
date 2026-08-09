@@ -303,8 +303,9 @@ describe("server lifecycle", () => {
     const second = await start({ port });
     expect(second.port).toBe(port);
 
+    // The café comes furnished (#312), so the chair is what this looks for, not the whole floor.
     const rejoined = await joinAs(port, token);
-    expect(rejoined.state.furni).toEqual([
+    expect(rejoined.state.furni.filter((f) => f.id === chair.id)).toEqual([
       { id: chair.id, defId: "chair_basic", x: 2, y: 2, z: 0, dir: 0, state: 0 },
     ]);
   });
