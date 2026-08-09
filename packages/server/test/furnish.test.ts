@@ -198,10 +198,10 @@ function houseLayout(db: Database.Database, roomId: number): unknown[] {
     .all(roomId);
 }
 
-function docOf(db: Database.Database, roomId: number): { heightmap: string } {
+function docOf(db: Database.Database, roomId: number): { heightmap: string; decor?: unknown } {
   return JSON.parse(
     (db.prepare("SELECT doc FROM rooms WHERE id = ?").get(roomId) as { doc: string }).doc,
-  ) as { heightmap: string };
+  ) as { heightmap: string; decor?: unknown };
 }
 
 /** A database as it stood before the rooms grew: the old docs, a house layout placed on the old
@@ -291,6 +291,26 @@ describe("growing a public room", () => {
     expect(houseLayout(db, 1)).toEqual(after.cafe);
     expect(houseLayout(db, 2)).toEqual(after.casino);
     expect(countIn(db, 1)).toBe(after.n);
+    closeDb(db);
+  });
+
+  test("a redecorated room keeps its layout and takes the new decor", () => {
+    let db = openDb(dbPath);
+    const before = houseLayout(db, 1);
+    // Rewind only the decor, as a database from before the lodge tiles would hold it.
+    const doc = docOf(db, 1);
+    db.prepare("UPDATE rooms SET doc = ? WHERE id = 1").run(
+      JSON.stringify({
+        v: 1, heightmap: doc.heightmap, door: { x: 0, y: 5, dir: 2 },
+        chat: { speakRadius: 5, shoutAllowed: false },
+        decor: { floor: "floor_parquet", wall: "wall_wainscot" },
+      }),
+    );
+    closeDb(db);
+
+    db = openDb(dbPath);
+    expect(docOf(db, 1).decor).toEqual({ floor: "floor_planks", wall: "wall_logcabin" });
+    expect(houseLayout(db, 1)).toEqual(before);
     closeDb(db);
   });
 

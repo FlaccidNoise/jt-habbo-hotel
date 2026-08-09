@@ -91,7 +91,8 @@ const CAFE_HEIGHTMAP = [
 ].join("\n");
 const CAFE_DOOR: Door = { x: 0, y: 5, dir: 2 };
 const CAFE_CHAT: ChatConfig = { speakRadius: 5, shoutAllowed: false };
-const CAFE_DECOR: RoomDecor = { floor: "floor_parquet", wall: "wall_wainscot" };
+// Lodge look (#311): the reference café is a log cabin, and the decor class has the tiles now.
+const CAFE_DECOR: RoomDecor = { floor: "floor_planks", wall: "wall_logcabin" };
 
 // The stage keeps its ring-around-a-core motif at six times the floor area: heights 1 and 2 at
 // x 8-13, y 2-7, with the raised bar terrace along the east edge from y 12. The stepped void in
@@ -155,8 +156,12 @@ function seedRoom(
     | { ownerId: number | null; doc: string }
     | undefined;
   if (!row || row.ownerId !== null) return false;
-  if ((JSON.parse(row.doc) as { heightmap?: string }).heightmap === heightmap) return false;
+  const stored = JSON.parse(row.doc) as { heightmap?: string; decor?: RoomDecor };
+  const sameFloor = stored.heightmap === heightmap;
+  if (sameFloor && JSON.stringify(stored.decor ?? {}) === JSON.stringify(decor)) return false;
   db.prepare("UPDATE rooms SET doc = ? WHERE id = ?").run(doc, id);
+  // Redecorated but not redrawn: every placement is still on the same floor, so the layout stays.
+  if (sameFloor) return false;
   clearHouseLayout(db, id);
   return true;
 }

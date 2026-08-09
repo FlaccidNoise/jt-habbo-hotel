@@ -27,6 +27,19 @@
       "pixelHash": "e705565812f6d08894b50e0fe12fa0df9d809d72adaf2620feac169f25685738"
     },
     {
+      "id": "floor_planks",
+      "kind": "floor",
+      "sheet": "floor_planks.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 2,
+      "pixelHash": "c405cbab8535bae902305415c5df672e5df383fb108e247e60017f1a332e4b2c"
+    },
+    {
       "id": "wall_wainscot",
       "kind": "wall",
       "sheet": "wall_wainscot.png",
@@ -38,6 +51,19 @@
       },
       "styleVersion": 2,
       "pixelHash": "b114044284e267d53465ae227651b5fbf93f08116878a60d475c2832da83f4e0"
+    },
+    {
+      "id": "wall_logcabin",
+      "kind": "wall",
+      "sheet": "wall_logcabin.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 2,
+      "pixelHash": "69f1aad8d3980dcb10e773d797058237985c71b968fa765183e4be7dec604ca3"
     },
     {
       "id": "wall_pinstripe",
