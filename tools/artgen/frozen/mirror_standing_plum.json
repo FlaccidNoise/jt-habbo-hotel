@@ -1,0 +1,32 @@
+{
+  "defId": "mirror_standing_plum",
+  "archetype": "artgen",
+  "sheet": "mirror_standing_plum.png",
+  "frameW": 64,
+  "frameH": 90,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 74,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:652c015148c648a5",
+  "recipeHash": "652c015148c648a5a3a3b314857e20dd420d4133cffa464a6f4ddfa8b74c3449",
+  "pixelHash": "616eebb3030c7d83d5bfe65be5a62df57a8b34d26699e57d27ec15bc1989b06b"
+}

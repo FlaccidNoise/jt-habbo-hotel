@@ -1,0 +1,32 @@
+{
+  "defId": "armoire_deco",
+  "archetype": "artgen",
+  "sheet": "armoire_deco.png",
+  "frameW": 96,
+  "frameH": 130,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 98,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2ab75b904b0ed29d",
+  "recipeHash": "2ab75b904b0ed29d6b79f04679d761e509976a15220d573414eeff08df73e243",
+  "pixelHash": "b8ea738421d9a95f33cac2a5f21a1bfbf862ba5565d77bce1f92cfaa391c39ef"
+}

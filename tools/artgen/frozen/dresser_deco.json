@@ -1,0 +1,32 @@
+{
+  "defId": "dresser_deco",
+  "archetype": "artgen",
+  "sheet": "dresser_deco.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8693b8549d0d2ee6",
+  "recipeHash": "8693b8549d0d2ee6c2be57fcba29fff69641efb7b29cd155dcf3c2e47da78c90",
+  "pixelHash": "1e94b1b3cfe0baeefe041575ea715e516f5497d3d653bc3ba67891b9e8c1354a"
+}

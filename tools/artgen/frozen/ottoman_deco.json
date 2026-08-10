@@ -1,0 +1,34 @@
+{
+  "defId": "ottoman_deco",
+  "archetype": "artgen",
+  "sheet": "ottoman_deco.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": 0.74,
+  "occlusion": null,
+  "nearSheet": "ottoman_deco.near.png",
+  "nearHash": "83ba20bccc6e2b709161db01939d7484ad8b5353cb521531b52332255c619acc",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d863a80e2157e719",
+  "recipeHash": "d863a80e2157e7195e4a9805d33296a28ce6508c6adde6e8ff3988d29eabc3d5",
+  "pixelHash": "8b622c2e7e875d877b6b2e45624be20c3da95ad8659e5fc94a1d54874c7d4e78"
+}

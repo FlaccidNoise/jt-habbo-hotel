@@ -123,4 +123,17 @@ export const DECOR_CATALOG: DecorDef[] = [
     tile: { w: 16, h: 32 },
     cap: 0x8d9eb1,
   },
+  // Penthouse suites (#356).
+  {
+    kind: "floor", id: "floor_fandeco", name: "Fan Parquet",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x656056, right: 0x9c9484 },
+  },
+  // The one tile in the set that is a whole wall rather than a repeat up it: the cornice, chair
+  // rail and skirting only sit where they belong if the motif is 128 tall.
+  {
+    kind: "wall", id: "wall_decopanel", name: "Deco Panelling",
+    tile: { w: 16, h: 128 },
+    cap: 0xcbc0ac,
+  },
 ];

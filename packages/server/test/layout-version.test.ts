@@ -13,8 +13,8 @@ function layoutsHash(): string {
 }
 
 const RECORDED = {
-  version: 1,
-  hash: "fbfb0b309ba97bb5cdecf722479a2f52d362417b336edb1221b66566f96183c6",
+  version: 2,
+  hash: "290a4e149df276b8ea39a70af65a48c383ee15b0eec8d367e1cb29a385bf2082",
 };
 
 test("a LAYOUTS edit is accompanied by a LAYOUT_VERSION bump", () => {

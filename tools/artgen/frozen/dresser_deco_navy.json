@@ -1,0 +1,32 @@
+{
+  "defId": "dresser_deco_navy",
+  "archetype": "artgen",
+  "sheet": "dresser_deco_navy.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6040a2af01701afe",
+  "recipeHash": "6040a2af01701afe95b2f93b41f587dff5c730d6bf7c3ddf2ae09193c7ad2809",
+  "pixelHash": "a060fdc6845a9e1292b2dede158512c609d4cf300d89385d4531ca00e82b3f57"
+}

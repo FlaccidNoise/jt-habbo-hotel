@@ -821,6 +821,297 @@ PARTS = {
              "z1": 3.04, "taper": 0.30, "ramp": "sand"},
         ],
     },
+    # ---- penthouse suites (#356) ----
+    # Art deco for The Grand's suites: navy lacquer and charcoal carcases, gold trim, ivory
+    # upholstery and stone. The four read against each other in hue as well as luma, which is what
+    # lets gold sit on navy and charcoal alike where it disappears into walnut.
+    #
+    # Every carcase in the set is stepped rather than slabbed — plinth, body, band, top — because a
+    # step is the one deco move this rig holds exactly: a proud prim breaks the silhouette, and the
+    # silhouette is the only place a 1-tile part has room to say anything.
+    "bed_grand": {
+        "w": 2, "l": 2, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.00, 0.00), "c1": (2.00, 2.00, 0.18),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.04, 0.04, 0.18), "c1": (1.96, 1.96, 0.46), "bevel": 0.03},
+            # Proud gold band round the whole frame — wider than the body above and below it, so
+            # it is a step in the silhouette rather than a stripe on a face.
+            {"t": "box", "c0": (0.00, 0.00, 0.46), "c1": (2.00, 2.00, 0.52), "ramp": "gold"},
+            {"t": "box", "c0": (0.10, 0.10, 0.52), "c1": (1.90, 1.74, 0.70), "ramp": "ivory"},
+            # One coverlet slab across both tiles, like bed_basic: two tagged cushions would put
+            # the near/far split at one cushion's centroid and cut the bed off-centre.
+            {"t": "box", "c0": (0.06, 0.06, 0.68), "c1": (1.94, 1.42, 0.82), "bevel": 0.05,
+             "seat": True},
+            {"t": "box", "c0": (0.18, 1.46, 0.70), "c1": (0.96, 1.72, 0.88), "bevel": 0.06,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (1.04, 1.46, 0.70), "c1": (1.82, 1.72, 0.88), "bevel": 0.06,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (0.02, 1.78, 0.18), "c1": (1.98, 2.00, 1.46), "bevel": 0.03},
+            # Fan of gold pilasters, standing 0.04 proud of the headboard face at low fy — the
+            # headboard's own high-fy side is the one the camera sees, so the fan is read through
+            # the silhouette break at its top, not through the face it is glued to.
+            {"t": "box", "c0": (0.30, 1.74, 0.90), "c1": (0.42, 1.78, 1.40), "ramp": "gold"},
+            {"t": "box", "c0": (0.94, 1.74, 0.86), "c1": (1.06, 1.78, 1.44), "ramp": "gold"},
+            {"t": "box", "c0": (1.58, 1.74, 0.90), "c1": (1.70, 1.78, 1.40), "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 1.76, 1.46), "c1": (2.00, 2.00, 1.54), "bevel": 0.02,
+             "ramp": "gold"},
+        ],
+    },
+    # The mirror is at LOW fy, the far side: high fy is nearest the camera, so a mirror mounted at
+    # the back of the table would stand in front of it on screen. Low fy puts the table in front
+    # and the glass rising behind it, which is what a vanity looks like.
+    "vanity_deco": {
+        "w": 2, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.16, 0.00), "c1": (0.24, 0.30, 0.62), "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.16, 0.00), "c1": (1.90, 0.30, 0.62), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.10, 0.70, 0.00), "c1": (0.24, 0.84, 0.62), "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.70, 0.00), "c1": (1.90, 0.84, 0.62), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.06, 0.12, 0.62), "c1": (1.94, 0.88, 0.92), "bevel": 0.03},
+            {"t": "box", "c0": (0.20, 0.06, 0.70), "c1": (0.80, 0.12, 0.76), "ramp": "gold"},
+            {"t": "box", "c0": (1.20, 0.06, 0.70), "c1": (1.80, 0.12, 0.76), "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 0.04, 0.88), "c1": (2.00, 0.96, 0.93), "ramp": "gold"},
+            # Black marble, not ivory. The furni pass renders with cast shadows on, so the mirror
+            # standing over this slab drops a hard half-moon across it — two bands darker, aligned
+            # to nothing, and invisible to every gate. On ivory that is a stain (top 0xcbc0ac to
+            # left 0x656056, 97 luma apart); on charcoal the same drop is 50 and reads as the
+            # shading a lacquered top would have anyway.
+            {"t": "box", "c0": (0.00, 0.06, 0.92), "c1": (2.00, 0.94, 0.98), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.50, 0.15, 0.98), "c1": (0.56, 0.21, 1.46), "ramp": "gold"},
+            {"t": "box", "c0": (1.44, 0.15, 0.98), "c1": (1.50, 0.21, 1.46), "ramp": "gold"},
+            # An oval glass is an hcyl run along fy with its caps off: the disc faces ±fy, so the
+            # +fy face is the one the camera sees. The slate disc sits 0.03 proud of the gold one
+            # at a smaller radius, which leaves the rim.
+            {"t": "hcyl", "x": 1.00, "y0": 0.14, "y1": 0.20, "z": 1.44, "r": 0.42,
+             "caps": False, "ramp": "gold"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.20, "y1": 0.23, "z": 1.44, "r": 0.34,
+             "caps": False, "ramp": "slate"},
+        ],
+    },
+    "chaise_deco": {
+        "w": 2, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.14, 0.00), "c1": (0.24, 0.28, 0.18), "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.14, 0.00), "c1": (1.90, 0.28, 0.18), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.10, 0.72, 0.00), "c1": (0.24, 0.86, 0.18), "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.72, 0.00), "c1": (1.90, 0.86, 0.18), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.06, 0.10, 0.18), "c1": (1.94, 0.90, 0.52), "bevel": 0.04},
+            {"t": "box", "c0": (0.20, 0.06, 0.28), "c1": (1.80, 0.10, 0.34), "ramp": "gold"},
+            {"t": "box", "c0": (0.02, 0.06, 0.52), "c1": (1.98, 0.94, 0.58), "ramp": "gold"},
+            {"t": "box", "c0": (0.10, 0.14, 0.58), "c1": (1.90, 0.86, 0.76), "bevel": 0.06,
+             "ramp": "ivory", "seat": True},
+            # The bolster is what makes this a chaise and not a bench: one end only, and curved so
+            # its crest reaches `hi` where a flush navy block would share the frame's luma bucket.
+            {"t": "hcyl", "x": 0.22, "y0": 0.16, "y1": 0.84, "z": 0.86, "r": 0.16},
+            {"t": "box", "c0": (0.30, 0.72, 0.72), "c1": (1.90, 0.92, 1.10), "bevel": 0.06},
+            {"t": "box", "c0": (0.28, 0.70, 1.10), "c1": (1.92, 0.94, 1.16), "bevel": 0.02,
+             "ramp": "gold"},
+        ],
+    },
+    "armoire_deco": {
+        "w": 2, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.16, 0.00), "c1": (1.96, 0.86, 0.16), "bevel": 0.02},
+            {"t": "box", "c0": (0.08, 0.18, 0.16), "c1": (1.92, 0.84, 2.30), "bevel": 0.03},
+            {"t": "box", "c0": (0.18, 0.12, 0.42), "c1": (0.94, 0.18, 1.96), "ramp": "ivory"},
+            {"t": "box", "c0": (1.06, 0.12, 0.42), "c1": (1.82, 0.18, 1.96), "ramp": "ivory"},
+            {"t": "box", "c0": (0.96, 0.10, 0.30), "c1": (1.04, 0.18, 2.08), "ramp": "gold"},
+            {"t": "box", "c0": (0.16, 0.10, 0.30), "c1": (1.84, 0.16, 0.38), "ramp": "gold"},
+            {"t": "box", "c0": (0.16, 0.10, 2.00), "c1": (1.84, 0.16, 2.08), "ramp": "gold"},
+            {"t": "cyl", "cx": 0.88, "cy": 0.09, "rx": 0.03, "ry": 0.03, "z0": 1.10, "z1": 1.32,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 1.12, "cy": 0.09, "rx": 0.03, "ry": 0.03, "z0": 1.10, "z1": 1.32,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 0.12, 2.30), "c1": (2.00, 0.90, 2.44), "bevel": 0.03,
+             "ramp": "gold"},
+            # Stepped crown, the deco skyline move: one narrower course on top of the cornice, in
+            # the body colour so the gold band reads as the line between them.
+            {"t": "box", "c0": (0.14, 0.20, 2.44), "c1": (1.86, 0.84, 2.54), "bevel": 0.02,
+             "ramp": "navy"},
+        ],
+    },
+    "barcart_deco": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.18, "cy": 0.18, "rx": 0.07, "ry": 0.07, "z0": 0.00, "z1": 0.10,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.82, "cy": 0.18, "rx": 0.07, "ry": 0.07, "z0": 0.00, "z1": 0.10,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.18, "cy": 0.82, "rx": 0.07, "ry": 0.07, "z0": 0.00, "z1": 0.10,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.82, "cy": 0.82, "rx": 0.07, "ry": 0.07, "z0": 0.00, "z1": 0.10,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.14, 0.14, 0.10), "c1": (0.22, 0.22, 1.06)},
+            {"t": "box", "c0": (0.78, 0.14, 0.10), "c1": (0.86, 0.22, 1.06)},
+            {"t": "box", "c0": (0.14, 0.78, 0.10), "c1": (0.22, 0.86, 1.06)},
+            {"t": "box", "c0": (0.78, 0.78, 0.10), "c1": (0.86, 0.86, 1.06)},
+            {"t": "box", "c0": (0.08, 0.08, 0.32), "c1": (0.92, 0.92, 0.36)},
+            # Both trays are charcoal for the shadow reason the vanity documents, and the lower one
+            # is the worst case in the pack: the upper tray covers all but an L of it, so an ivory
+            # shelf came back as a grey rectangle with a hard diagonal edge through the middle.
+            # Raising the tray until the shadow clears it needs 1.1 units of headroom, which is a
+            # different object; darkening the surface costs nothing and a black-lacquer trolley is
+            # the more deco cart anyway.
+            {"t": "box", "c0": (0.10, 0.10, 0.36), "c1": (0.90, 0.90, 0.42), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.04, 0.04, 0.96), "c1": (0.96, 0.96, 1.00)},
+            {"t": "box", "c0": (0.06, 0.06, 1.00), "c1": (0.94, 0.94, 1.06), "ramp": "charcoal"},
+            # Push handle, capless so it runs post to post without a bulge at either end.
+            {"t": "hcyl", "x": 0.18, "y0": 0.10, "y1": 0.90, "z": 1.18, "r": 0.05, "axis": "x",
+             "caps": False},
+            {"t": "cyl", "cx": 0.36, "cy": 0.44, "rx": 0.07, "ry": 0.07, "z0": 1.06, "z1": 1.34,
+             "taper": 0.45, "ramp": "plum"},
+            {"t": "cyl", "cx": 0.58, "cy": 0.62, "rx": 0.07, "ry": 0.07, "z0": 1.06, "z1": 1.40,
+             "taper": 0.45, "ramp": "fern"},
+            {"t": "cyl", "cx": 0.68, "cy": 0.34, "rx": 0.06, "ry": 0.06, "z0": 1.06, "z1": 1.20,
+             "taper": 1.40, "ramp": "ivory"},
+        ],
+    },
+    # Three panels stepped across the tile in plan, not one slab: the fold is the whole object, and
+    # it is the only thing that distinguishes a screen from divider_basic. The insets are on the
+    # HIGH-fy face — a screen is double-sided, so the decorated face may as well be the one the
+    # camera sees at dir 0, where the catalog's machines all hide their fronts.
+    "screen_deco": {
+        "w": 2, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.10, 0.00), "c1": (0.68, 0.26, 1.86), "bevel": 0.02},
+            {"t": "box", "c0": (0.66, 0.42, 0.00), "c1": (1.34, 0.58, 1.98), "bevel": 0.02},
+            {"t": "box", "c0": (1.32, 0.74, 0.00), "c1": (2.00, 0.90, 1.86), "bevel": 0.02},
+            # Hinge stiles, and they are not decoration. Without them the three panels only
+            # OVERLAP on screen at dir 0 and separate into three loose boards at dirs 2 and 6 —
+            # reviewIslands called it, and it was right. Each stile bridges the fy step between
+            # two panels and overlaps both in fx, so the screen is one solid piece at every angle.
+            {"t": "box", "c0": (0.64, 0.10, 0.00), "c1": (0.70, 0.58, 1.86), "bevel": 0.02},
+            {"t": "box", "c0": (1.30, 0.42, 0.00), "c1": (1.36, 0.90, 1.86), "bevel": 0.02},
+            {"t": "box", "c0": (0.00, 0.07, 1.86), "c1": (0.68, 0.29, 1.94), "ramp": "gold"},
+            {"t": "box", "c0": (0.66, 0.39, 1.98), "c1": (1.34, 0.61, 2.06), "ramp": "gold"},
+            {"t": "box", "c0": (1.32, 0.71, 1.86), "c1": (2.00, 0.93, 1.94), "ramp": "gold"},
+            {"t": "box", "c0": (0.08, 0.26, 0.30), "c1": (0.60, 0.32, 1.60), "ramp": "ivory"},
+            {"t": "box", "c0": (0.74, 0.58, 0.30), "c1": (1.26, 0.64, 1.72), "ramp": "ivory"},
+            {"t": "box", "c0": (1.40, 0.90, 0.30), "c1": (1.92, 0.96, 1.60), "ramp": "ivory"},
+            {"t": "box", "c0": (0.26, 0.32, 1.62), "c1": (0.42, 0.36, 1.80), "ramp": "gold"},
+            {"t": "box", "c0": (0.92, 0.64, 1.74), "c1": (1.08, 0.68, 1.92), "ramp": "gold"},
+            {"t": "box", "c0": (1.58, 0.96, 1.62), "c1": (1.74, 1.00, 1.80), "ramp": "gold"},
+        ],
+    },
+    "mirror_standing": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.28, 0.00), "c1": (0.24, 0.72, 0.10), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.76, 0.28, 0.00), "c1": (0.90, 0.72, 0.10), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.14, 0.46, 0.10), "c1": (0.20, 0.54, 1.62)},
+            {"t": "box", "c0": (0.80, 0.46, 0.10), "c1": (0.86, 0.54, 1.62)},
+            {"t": "hcyl", "x": 0.50, "y0": 0.14, "y1": 0.86, "z": 0.26, "r": 0.05, "axis": "x",
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.14, "y1": 0.86, "z": 1.62, "r": 0.05, "axis": "x",
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.44, "y1": 0.50, "z": 0.92, "r": 0.40,
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.50, "y1": 0.56, "z": 0.92, "r": 0.33,
+             "caps": False, "ramp": "slate"},
+            {"t": "box", "c0": (0.13, 0.44, 0.72), "c1": (0.21, 0.56, 0.88), "ramp": "navy"},
+            {"t": "box", "c0": (0.79, 0.44, 0.72), "c1": (0.87, 0.56, 0.88), "ramp": "navy"},
+            {"t": "sphere", "c": (0.17, 0.50, 1.72), "r": 0.075},
+            {"t": "sphere", "c": (0.83, 0.50, 1.72), "r": 0.075},
+        ],
+    },
+    "ottoman_deco": {
+        "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "cyl", "cx": 0.20, "cy": 0.20, "rx": 0.05, "ry": 0.05, "z0": 0.00, "z1": 0.16,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.80, "cy": 0.20, "rx": 0.05, "ry": 0.05, "z0": 0.00, "z1": 0.16,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.20, "cy": 0.80, "rx": 0.05, "ry": 0.05, "z0": 0.00, "z1": 0.16,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.80, "cy": 0.80, "rx": 0.05, "ry": 0.05, "z0": 0.00, "z1": 0.16,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.10, 0.10, 0.16), "c1": (0.90, 0.90, 0.52), "bevel": 0.05},
+            {"t": "box", "c0": (0.06, 0.06, 0.52), "c1": (0.94, 0.94, 0.58), "ramp": "gold"},
+            {"t": "box", "c0": (0.08, 0.08, 0.58), "c1": (0.92, 0.92, 0.74), "bevel": 0.08,
+             "ramp": "ivory", "seat": True},
+        ],
+    },
+    "dresser_deco": {
+        "w": 2, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.16, 0.00), "c1": (1.94, 0.86, 0.14), "bevel": 0.02},
+            {"t": "box", "c0": (0.10, 0.18, 0.14), "c1": (1.90, 0.84, 1.02), "bevel": 0.03},
+            {"t": "box", "c0": (0.18, 0.12, 0.24), "c1": (1.82, 0.18, 0.48), "ramp": "ivory"},
+            {"t": "box", "c0": (0.18, 0.12, 0.56), "c1": (1.82, 0.18, 0.80), "ramp": "ivory"},
+            {"t": "box", "c0": (0.60, 0.08, 0.32), "c1": (1.40, 0.12, 0.38), "ramp": "gold"},
+            {"t": "box", "c0": (0.60, 0.08, 0.64), "c1": (1.40, 0.12, 0.70), "ramp": "gold"},
+            # Fluting on the high-fy side, standing proud of the top slab above it so the eave
+            # cannot bury it — the casino_table apron lesson, one axis over.
+            {"t": "box", "c0": (0.30, 0.84, 0.20), "c1": (0.38, 0.94, 0.96), "ramp": "gold"},
+            {"t": "box", "c0": (0.96, 0.84, 0.20), "c1": (1.04, 0.94, 0.96), "ramp": "gold"},
+            {"t": "box", "c0": (1.62, 0.84, 0.20), "c1": (1.70, 0.94, 0.96), "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 0.08, 0.98), "c1": (2.00, 0.92, 1.02), "ramp": "gold"},
+            {"t": "box", "c0": (0.00, 0.10, 1.02), "c1": (2.00, 0.90, 1.10), "bevel": 0.02,
+             "ramp": "ivory"},
+        ],
+    },
+    "lamp_deco": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.34, "ry": 0.34, "z0": 0.00, "z1": 0.06,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.26, "ry": 0.26, "z0": 0.06, "z1": 0.14,
+             "taper": 0.70},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.05, "ry": 0.05, "z0": 0.14, "z1": 1.62},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.14, "ry": 0.14, "z0": 0.74, "z1": 0.82},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.10, "ry": 0.10, "z0": 0.82, "z1": 0.98,
+             "ramp": "navy"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.14, "ry": 0.14, "z0": 0.98, "z1": 1.06},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.36, "ry": 0.36, "z0": 1.56, "z1": 1.64},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.34, "ry": 0.34, "z0": 1.62, "z1": 2.14,
+             "taper": 0.62, "ramp": "ivory"},
+            {"t": "sphere", "c": (0.50, 0.50, 2.18), "r": 0.05},
+        ],
+    },
+    # ---- penthouse wall parts (#356) ----
+    # Both are centred on their segment (fx_min + fx_max == 1) and start at least their own depth
+    # along the wall, because depth projects into screen width.
+    "sconce_deco": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.42, 0.00, 2.20), "c1": (0.58, 0.04, 2.86), "bevel": 0.02},
+            {"t": "box", "c0": (0.40, 0.04, 2.42), "c1": (0.60, 0.12, 2.62), "ramp": "navy"},
+            # Stepped fan, widening upward — the deco shell, as the only pitch this rig can cut.
+            {"t": "box", "c0": (0.30, 0.04, 2.62), "c1": (0.70, 0.14, 2.70), "ramp": "ivory"},
+            {"t": "box", "c0": (0.24, 0.04, 2.70), "c1": (0.76, 0.16, 2.78), "ramp": "ivory"},
+            {"t": "box", "c0": (0.18, 0.04, 2.78), "c1": (0.82, 0.16, 2.86), "ramp": "ivory"},
+            {"t": "box", "c0": (0.34, 0.14, 2.70), "c1": (0.38, 0.16, 2.88)},
+            {"t": "box", "c0": (0.48, 0.14, 2.66), "c1": (0.52, 0.16, 2.88)},
+            {"t": "box", "c0": (0.62, 0.14, 2.70), "c1": (0.66, 0.16, 2.88)},
+            {"t": "sphere", "c": (0.50, 0.08, 2.38), "r": 0.06},
+        ],
+    },
+    "wallmirror_deco": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "hcyl", "x": 0.50, "y0": 0.00, "y1": 0.030, "z": 2.56, "r": 0.26,
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.030, "y1": 0.045, "z": 2.56, "r": 0.225,
+             "caps": False, "ramp": "navy"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.045, "y1": 0.070, "z": 2.56, "r": 0.20,
+             "caps": False, "ramp": "slate"},
+            # Rays. Four on the axes and four stubs between, all flush at fy 0-0.03 so the disc
+            # stands proud of them: prims are axis-aligned, so a true sunburst is out of reach and
+            # what sells it is the tips breaking the disc's circle at eight places.
+            {"t": "box", "c0": (0.47, 0.00, 2.84), "c1": (0.53, 0.03, 3.00)},
+            {"t": "box", "c0": (0.47, 0.00, 2.04), "c1": (0.53, 0.03, 2.30)},
+            {"t": "box", "c0": (0.14, 0.00, 2.53), "c1": (0.28, 0.03, 2.59)},
+            {"t": "box", "c0": (0.72, 0.00, 2.53), "c1": (0.86, 0.03, 2.59)},
+            {"t": "box", "c0": (0.32, 0.00, 2.72), "c1": (0.38, 0.03, 2.88)},
+            {"t": "box", "c0": (0.62, 0.00, 2.72), "c1": (0.68, 0.03, 2.88)},
+            {"t": "box", "c0": (0.32, 0.00, 2.24), "c1": (0.38, 0.03, 2.40)},
+            {"t": "box", "c0": (0.62, 0.00, 2.24), "c1": (0.68, 0.03, 2.40)},
+        ],
+    },
     "stereo_basic": {
         "w": 1, "l": 1, "ramp": "charcoal",
         "prims": [

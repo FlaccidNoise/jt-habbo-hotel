@@ -69,6 +69,30 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", theme: "lodge", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
   { id: "side_table_slate",     name: "Slate Side Table",     theme: "lodge", w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "cafe_counter",         name: "Café Counter",         theme: "cafe", w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x2f8f8f, interaction: "vend", vend: { item: "drink_coffee", price: 1 } },
+  // Penthouse suites (#356): the art-deco set for The Grand's suites. Navy and charcoal carcases,
+  // gold trim, ivory upholstery — four ramps that differ in hue, so the trim reads on every body
+  // the colorways below reach for.
+  { id: "bed_grand",       name: "Grand Bed",       theme: "penthouse", w: 2, l: 2, stackHeights: [1.5625],  canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x3f5e9e },
+  // Not stackable, unlike the dresser: stacking lands at stackHeights[0], which on a vanity is the
+  // top of the mirror rather than the top of the table.
+  { id: "vanity_deco",     name: "Deco Vanity",     theme: "penthouse", w: 2, l: 1, stackHeights: [1.96875], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "chaise_deco",     name: "Deco Chaise",     theme: "penthouse", w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: false, seatHeight: 0.76, color: 0x3f5e9e },
+  { id: "armoire_deco",    name: "Deco Armoire",    theme: "penthouse", w: 2, l: 1, stackHeights: [2.5625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "barcart_deco",    name: "Bar Cart",        theme: "penthouse", w: 1, l: 1, stackHeights: [1.40625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "screen_deco",     name: "Folding Screen",  theme: "penthouse", w: 2, l: 1, stackHeights: [2.0625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "mirror_standing", name: "Cheval Mirror",   theme: "penthouse", w: 1, l: 1, stackHeights: [1.8125],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "ottoman_deco",    name: "Deco Ottoman",    theme: "penthouse", w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: false, seatHeight: 0.74, color: 0x3f5e9e },
+  { id: "dresser_deco",    name: "Deco Dresser",    theme: "penthouse", w: 2, l: 1, stackHeights: [1.125],   canWalk: false, canStackOn: true,  seatHeight: null, color: 0x4a4d55 },
+  // A bulb on a stand, so the client's default Glow already describes it — the toggle costs the
+  // second stackHeights entry (#326) and nothing else.
+  { id: "lamp_deco",       name: "Deco Floor Lamp", theme: "penthouse", w: 1, l: 1, stackHeights: [2.25, 2.25], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
+  { id: "bed_grand_plum",       name: "Plum Grand Bed",     theme: "penthouse", w: 2, l: 2, stackHeights: [1.5625],  canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x7a3e9d },
+  { id: "chaise_deco_crimson",  name: "Crimson Chaise",     theme: "penthouse", w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: false, seatHeight: 0.76, color: 0xaa3333 },
+  { id: "screen_deco_jade",     name: "Jade Screen",        theme: "penthouse", w: 2, l: 1, stackHeights: [2.0625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "dresser_deco_navy",    name: "Navy Deco Dresser",  theme: "penthouse", w: 2, l: 1, stackHeights: [1.125],   canWalk: false, canStackOn: true,  seatHeight: null, color: 0x3f5e9e },
+  { id: "ottoman_deco_ivory",   name: "Ivory Deco Ottoman", theme: "penthouse", w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: false, seatHeight: 0.74, color: 0x9c9484 },
+  { id: "armoire_deco_ivory",   name: "Ivory Deco Armoire", theme: "penthouse", w: 2, l: 1, stackHeights: [2.5625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "mirror_standing_plum", name: "Plum Cheval Mirror", theme: "penthouse", w: 1, l: 1, stackHeights: [1.8125],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", theme: "casino", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     theme: "casino", w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wish" },
@@ -89,6 +113,10 @@ export const WALL_CATALOG: WallDef[] = [
   // Lodge round 2 (#323).
   { id: "wall_clock",    name: "Lodge Clock",   theme: "lodge", span: 1, plane: { w: 24, h: 28 }, mount: { u: 2, v: 36 }, color: 0xb5651d },
   { id: "antlers",       name: "Antler Mount",  theme: "lodge", span: 1, plane: { w: 28, h: 37 }, mount: { u: 0, v: 24 }, color: 0xc2a36b },
+  // Penthouse suites (#356).
+  { id: "sconce_deco",      name: "Deco Sconce",      theme: "penthouse", span: 1, plane: { w: 26, h: 16 }, mount: { u: 0, v: 39 }, color: 0xdaa520 },
+  { id: "wallmirror_deco",  name: "Sunburst Mirror",  theme: "penthouse", span: 1, plane: { w: 24, h: 19 }, mount: { u: 4, v: 38 }, color: 0xdaa520 },
+  { id: "sconce_deco_onyx", name: "Onyx Deco Sconce", theme: "penthouse", span: 1, plane: { w: 26, h: 16 }, mount: { u: 0, v: 39 }, color: 0x4a4d55 },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -151,6 +179,29 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["sink_basic", 150],
   ["vending_machine", 250],
   ["cafe_counter", 300],
+  // Penthouse suites (#356), on the existing rungs and no higher: the set is luxury by palette,
+  // not by price, so its ceiling is the 300 the bar counter and the hearth already sit on. A
+  // colorway costs what its base costs — they share a mesh, so they share a rung.
+  ["ottoman_deco", 25],
+  ["ottoman_deco_ivory", 25],
+  ["lamp_deco", 75],
+  ["mirror_standing", 75],
+  ["mirror_standing_plum", 75],
+  ["barcart_deco", 150],
+  ["vanity_deco", 150],
+  ["dresser_deco", 150],
+  ["dresser_deco_navy", 150],
+  ["screen_deco", 150],
+  ["screen_deco_jade", 150],
+  ["sconce_deco", 150],
+  ["sconce_deco_onyx", 150],
+  ["bed_grand", 300],
+  ["bed_grand_plum", 300],
+  ["chaise_deco", 300],
+  ["chaise_deco_crimson", 300],
+  ["armoire_deco", 300],
+  ["armoire_deco_ivory", 300],
+  ["wallmirror_deco", 300],
   // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],

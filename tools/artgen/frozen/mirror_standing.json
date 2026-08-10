@@ -1,0 +1,32 @@
+{
+  "defId": "mirror_standing",
+  "archetype": "artgen",
+  "sheet": "mirror_standing.png",
+  "frameW": 64,
+  "frameH": 90,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 74,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:036fde6bd7892653",
+  "recipeHash": "036fde6bd78926531fbad845037111289ae0a0381cd706cd5bbc3496c070b695",
+  "pixelHash": "3b78bcab0729beb868458846c8db73bf2063768cd08fd535d0d9307e753b562a"
+}

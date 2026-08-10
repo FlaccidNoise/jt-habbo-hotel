@@ -1,0 +1,34 @@
+{
+  "defId": "chaise_deco_crimson",
+  "archetype": "artgen",
+  "sheet": "chaise_deco_crimson.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": 0.76,
+  "occlusion": null,
+  "nearSheet": "chaise_deco_crimson.near.png",
+  "nearHash": "44dd852283d7aecd572d9ea781d075656a46881676532926ff160a812b90e0fc",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dca6d9926ce46a01",
+  "recipeHash": "dca6d9926ce46a01fcce42c0cf946cf55c72d1dfe0bf98b82e1914bc3ba5d510",
+  "pixelHash": "fc45146183dfb12fa8b8a8905385c93fbed8faaaf808fbd44ff4bb0b3f43819e"
+}

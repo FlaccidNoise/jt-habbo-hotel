@@ -1,0 +1,37 @@
+{
+  "defId": "wallmirror_deco",
+  "archetype": "artgen",
+  "sheet": "wallmirror_deco.png",
+  "frameW": 64,
+  "frameH": 128,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 112,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 19,
+    "mountU": 4,
+    "mountV": 38,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:419e54da8e05d8fa",
+  "recipeHash": "419e54da8e05d8fa2c0465ad3f4fe1c4b7db33d0bfaa202e6579e788f0972813",
+  "pixelHash": "78f3955d02d7eac200c7826aad0bda4916e8a048e9b2bdec3702ff51fb84c1d0"
+}

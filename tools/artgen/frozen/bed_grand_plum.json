@@ -1,0 +1,34 @@
+{
+  "defId": "bed_grand_plum",
+  "archetype": "artgen",
+  "sheet": "bed_grand_plum.png",
+  "frameW": 128,
+  "frameH": 114,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": 0.82,
+  "occlusion": null,
+  "nearSheet": "bed_grand_plum.near.png",
+  "nearHash": "70fdb3e69775d28e41b2ed2f37984197a64de331f6e6cd743802d44155cf9e71",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:829dd6800358a7a0",
+  "recipeHash": "829dd6800358a7a000fe3bf6ca0efa6185393f3ffcf45fb41f6db54240923669",
+  "pixelHash": "431cd9ce3cc09ff82d8b3af3569a206025bb80e3e36dc1f11310cafa4b765579"
+}

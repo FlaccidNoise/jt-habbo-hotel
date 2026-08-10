@@ -1,0 +1,34 @@
+{
+  "defId": "ottoman_deco_ivory",
+  "archetype": "artgen",
+  "sheet": "ottoman_deco_ivory.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": 0.74,
+  "occlusion": null,
+  "nearSheet": "ottoman_deco_ivory.near.png",
+  "nearHash": "83ba20bccc6e2b709161db01939d7484ad8b5353cb521531b52332255c619acc",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:70878080ce8c19f7",
+  "recipeHash": "70878080ce8c19f7e848f8dadc8b681de575ff3f498bac919979eea76317db5f",
+  "pixelHash": "575d8c274d795127520c6c963322b24b885aae0b25d5a0e759addd352088c1b4"
+}

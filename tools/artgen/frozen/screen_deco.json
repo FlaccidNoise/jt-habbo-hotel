@@ -1,0 +1,32 @@
+{
+  "defId": "screen_deco",
+  "archetype": "artgen",
+  "sheet": "screen_deco.png",
+  "frameW": 96,
+  "frameH": 114,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 82,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e43e34701c0cebdd",
+  "recipeHash": "e43e34701c0cebdd975877e8b47e96e63da90a7abeaf9d62eba2286f8039026b",
+  "pixelHash": "32c660e7e81c05bef4f705ab76ad9948f5428184a117e30465578c45233e7f46"
+}

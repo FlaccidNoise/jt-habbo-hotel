@@ -1,0 +1,34 @@
+{
+  "defId": "chaise_deco",
+  "archetype": "artgen",
+  "sheet": "chaise_deco.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": 0.76,
+  "occlusion": null,
+  "nearSheet": "chaise_deco.near.png",
+  "nearHash": "c4e76d37891d0d93d8c58cd970b36f8b40b2ed82b9ebedd6516528aad8034f4f",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f8710f83f7a8e84e",
+  "recipeHash": "f8710f83f7a8e84eb66ef5a3b86d4a644e766c462ab69abe2cb02b2c8d1f87aa",
+  "pixelHash": "f5548e0e5b851c3c6f4c20a44135d488be3f23be1c6251ead192630643b417fb"
+}
