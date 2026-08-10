@@ -1,0 +1,32 @@
+{
+  "defId": "sink_basic",
+  "archetype": "artgen",
+  "sheet": "sink_basic.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b8628bd7454062f7",
+  "recipeHash": "b8628bd7454062f77afc97939023bf463800a649231905084716c2deb9c9e8ea",
+  "pixelHash": "a4e9aab7dc842689d77debeee22d3acbaefb4c94be94b99c753b76b68690e7e9"
+}

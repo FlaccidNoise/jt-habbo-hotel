@@ -38,6 +38,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "rug_lodge",   name: "Lodge Rug",   w: 2, l: 2, stackHeights: [0.0625],  canWalk: true,  canStackOn: true,  seatHeight: null, color: 0xaa3333 },
   { id: "stool_lodge", name: "Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0xb5651d },
   { id: "side_table",  name: "Side Table",  w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
+  // Amenities (#327): the two fixtures a café and a washroom need that no archetype covered.
+  { id: "vending_machine", name: "Vending Machine", w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "sink_basic",      name: "Wash Basin",      w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
   // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
   // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
   { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -57,6 +60,7 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "railing_iron",         name: "Iron Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
   { id: "side_table_slate",     name: "Slate Side Table",     w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
+  { id: "cafe_counter",         name: "Café Counter",         w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x2f8f8f },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wash" },
@@ -135,6 +139,10 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["side_table_slate", 75],
   ["wall_clock", 150],
   ["antlers", 300],
+  // Amenities (#327). The counter is the bar counter's price, since it is the same object recoloured.
+  ["sink_basic", 150],
+  ["vending_machine", 250],
+  ["cafe_counter", 300],
   // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],
