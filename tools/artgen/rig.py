@@ -1052,6 +1052,20 @@ FIGURE_PARTS = {
              "squash": (1.04, 0.86, 0.87)},
         ],
     },
+    # Braids (set 36). The two tails hang at different depths — one forward of the ear, one behind
+    # it — so dirs 2 and 4 are not mirror images of each other the way a symmetric part's are.
+    # Each tail's top is well inside the cap: they are the part's silhouette, but a tail that only
+    # touched the cap would come apart into its own island somewhere in the 64 cells.
+    "hr36": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.6, 12.6), "r": 11.1,
+             "squash": (1.00, 0.93, 0.91)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (9.0, 1.0, 6.2), "r": 4.6,
+             "squash": (0.64, 0.86, 1.52)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-9.0, -6.0, 6.2), "r": 4.6,
+             "squash": (0.64, 0.86, 1.52)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {

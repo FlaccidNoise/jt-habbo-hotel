@@ -1318,6 +1318,54 @@
       "pixelHash": "abea8958c418e1ebc64ade216c57a3378d518974c32168fa58e468ffe0f3a015"
     },
     {
+      "partId": "hr36",
+      "setId": 36,
+      "type": "hr",
+      "name": "Braids",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr36.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "1d1c88f6452eb5b0e5405136543b38c11dd95809065f1b51e7f3ca1b389cdbb6",
+      "pixelHash": "2f79ab0f4855228be764a11f9a85a61f1a2fd197b9e303463005d8261f3c16d8"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",
