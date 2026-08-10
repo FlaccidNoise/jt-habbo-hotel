@@ -966,6 +966,17 @@ FIGURE_PARTS = {
              "c1": (11.0, 5.6, 12.6)},
         ],
     },
+    # Ponytail (set 29). The tail is a narrow ellipsoid clear of the skull's back, so the crown
+    # alone carries dirs 2-4 and the tail is what dirs 0, 6 and 7 see. Its front end sits inside
+    # the crown: a tail that only touched would break into its own island on some frame.
+    "hr29": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.6, 12.8), "r": 11.2,
+             "squash": (0.945, 0.90, 0.90)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -11.6, 10.5), "r": 5.6,
+             "squash": (0.62, 1.22, 0.95)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {

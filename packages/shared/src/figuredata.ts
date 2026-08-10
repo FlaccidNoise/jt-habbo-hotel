@@ -95,6 +95,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // Hair expansion (#345). One mesh each in rig.py FIGURE_PARTS, all one colour slot, none hiding
   // anything — hair is the layer hats hide, never the layer that hides.
   { id: 28, type: "hr", name: "Bob",        slots: 1, family: "material", hides: [], retired: false },
+  { id: 29, type: "hr", name: "Ponytail",   slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));

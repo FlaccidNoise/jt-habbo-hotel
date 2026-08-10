@@ -982,6 +982,54 @@
       "pixelHash": "0cff29882a768681190a82cb4ae97e7a937c39ff7f811d0cb4fa99a8d5b43716"
     },
     {
+      "partId": "hr29",
+      "setId": 29,
+      "type": "hr",
+      "name": "Ponytail",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr29.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6d3d5b862c691aefb117772291b2ab43303650ba14210c853c881eff0ee3f0de",
+      "pixelHash": "69bbbe241b0780caefd59ddd2e2a68af8144def9868b04fe45b6c0027fe46185"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",
