@@ -11,12 +11,13 @@ import {
   wallSign,
   worldToScreen,
 } from "@grand/shared";
-import type { RoomModel, WallDef, WallItem, WallPos } from "@grand/shared";
+import type { RoomModel, WallDef, WallItem, WallPos, WallSegment } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture } from "./assets.ts";
 import type { DecorAsset, WallDecor } from "./decor.ts";
 import { frameFor } from "./frames.ts";
 import { SCALE } from "./room.ts";
+import type { TileWindow } from "./room.ts";
 import { LAYER } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
@@ -49,7 +50,11 @@ export class WallLayer {
   private handlers: WallHandlers;
   private depth: DepthIndex;
   private decor: DecorAsset<WallDecor> | null;
-  private faces: Graphics[] = [];
+  /** Every segment the heightmap calls for, and the ones currently drawn. A room's perimeter grows
+   *  with its side, so a 300-tile room asks for hundreds of faces — each an interactive Graphics
+   *  and a node in the painter sort. Only the ones on screen are built (#359). */
+  private segments: WallSegment[];
+  private faces = new Map<string, Graphics>();
   private items = new Map<number, { item: WallItem; view: Sprite | Graphics }>();
   private ghostView: Sprite | Graphics | null = null;
 
@@ -61,6 +66,9 @@ export class WallLayer {
     handlers: WallHandlers,
     depth: DepthIndex,
     decor: DecorAsset<WallDecor> | null = null,
+    /** The floor's visible window. Omitting it draws every wall, which is what a scene with no
+     *  camera wants. */
+    window: TileWindow | null = null,
   ) {
     this.world = world;
     this.defs = defs;
@@ -68,7 +76,28 @@ export class WallLayer {
     this.handlers = handlers;
     this.depth = depth;
     this.decor = decor;
-    for (const seg of wallSegments(model)) this.addFace(seg.side, seg.x, seg.y);
+    this.segments = wallSegments(model);
+    this.cull(window ?? { x0: 0, y0: 0, x1: model.width, y1: model.height });
+  }
+
+  /** Build the faces inside `window` and drop the ones outside. A wall stands on the far side of
+   *  the tile it borders, so a segment is kept while its own tile is in the window — the same
+   *  rectangle the floor uses, one tile of slack already built into it. */
+  cull(window: TileWindow): void {
+    const inside = (x: number, y: number): boolean =>
+      x >= window.x0 && x < window.x1 && y >= window.y0 && y < window.y1;
+    for (const [key, view] of [...this.faces]) {
+      const [, , sx, sy] = key.split(":");
+      if (inside(Number(sx), Number(sy))) continue;
+      view.destroy();
+      this.faces.delete(key);
+      this.depth.delete(key);
+    }
+    for (const seg of this.segments) {
+      if (!inside(seg.x, seg.y)) continue;
+      if (this.faces.has(`wall:${seg.side}:${seg.x}:${seg.y}`)) continue;
+      this.addFace(seg.side, seg.x, seg.y);
+    }
   }
 
   apply(item: WallItem): void {
@@ -121,8 +150,11 @@ export class WallLayer {
   destroy(): void {
     this.clearGhost();
     for (const id of [...this.items.keys()]) this.remove(id);
-    for (const face of this.faces) face.destroy();
-    this.faces = [];
+    for (const [key, face] of this.faces) {
+      face.destroy();
+      this.depth.delete(key);
+    }
+    this.faces.clear();
   }
 
   private viewFor(def: WallDef, item: WallItem): Sprite | Graphics {
@@ -227,7 +259,7 @@ export class WallLayer {
     });
     g.on("pointermove", (e) => this.handlers.hover(at(e).pos));
     g.on("pointerout", () => this.handlers.hover(null));
-    this.faces.push(g);
+    this.faces.set(`wall:${side}:${x}:${y}`, g);
     this.world.addChild(g);
   }
 }
