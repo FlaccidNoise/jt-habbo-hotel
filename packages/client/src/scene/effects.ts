@@ -22,6 +22,33 @@ const CLINK_SPREAD = 15;
 const CLINK_ARM = 3;           // half-length of each sparkle's arms
 const CLINK_COLOR = 0xfff3c4;
 
+/** A rising column of vapour, tuned per emitter (#331). */
+export interface Wisp {
+  count: number;
+  ms: number;
+  from: number;    // y the wisps leave, in the caller's own coordinates
+  rise: number;
+  drift: number;
+  size: number;
+  color: number;
+  alpha: number;   // at the source, thinning to nothing at the top of the rise
+}
+
+/** Steam off a cup or smoke off a hearth: `count` wisps sharing one loop, each swelling as it
+ *  climbs and thinning as it swells. Densest where it leaves the source and gone by the top, which
+ *  is the way round that keeps the column attached to what is making it — fading in as well would
+ *  leave a dead gap between the coffee and its steam. Odd wisps sway the opposite way, so the
+ *  column braids instead of retracing one path. Drawn in the caller's coordinates, so the cup can
+ *  carry its steam through the sip swing while the hearth stands still. */
+export function wisps(g: Graphics, now: number, w: Wisp): void {
+  for (let i = 0; i < w.count; i++) {
+    const t = (now / w.ms + i / w.count) % 1;
+    const sway = Math.sin(t * Math.PI * 2) * w.drift * (i % 2 === 0 ? 1 : -1);
+    g.circle(sway, w.from - t * w.rise, w.size * (1 + t))
+      .fill({ color: w.color, alpha: w.alpha * (1 - t) });
+  }
+}
+
 interface Point { sx: number; sy: number }
 interface Live {
   view: Graphics;

@@ -23,7 +23,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // every other counter — walk up, use it, carry the thing for two minutes.
   { id: "shelf_basic",   name: "Shelf",        w: 2, l: 1, stackHeights: [1.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d, interaction: "read", vend: { item: "book", price: 0 } },
   { id: "divider_basic", name: "Divider",      w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
-  { id: "stereo_basic",  name: "Stereo",       w: 1, l: 1, stackHeights: [1.375],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  // Switched on and off like the lamp (#331), and like the lamp the state is all client-side — the
+  // frozen bundle has one frame per facing, so nothing here needs re-rendering.
+  { id: "stereo_basic",  name: "Stereo",       w: 1, l: 1, stackHeights: [1.375, 1.375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55, interaction: "toggle" },
   { id: "slot_machine",   name: "Slot Machine",   w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
   // The casino-side drink (#347): the bar shakes cocktails at 2 Stars, the café pours coffee at 1.
   { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d, interaction: "vend", vend: { item: "drink_cocktail", price: 2 } },
@@ -35,7 +37,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "sofa_lodge",      name: "Lodge Sofa",     w: 2, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x2e8b57 },
   { id: "table_round",     name: "Round Table",    w: 1, l: 1, stackHeights: [1.5],     canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   { id: "plant_fern",      name: "Potted Fern",    w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
-  { id: "fireplace",       name: "Fireplace",      w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
+  // Lit and unlit (#331). The mesh already carries flames in the firebox, so the switch is the
+  // firelight and the smoke off them rather than a second set of frames.
+  { id: "fireplace",       name: "Fireplace",      w: 2, l: 1, stackHeights: [2.5, 2.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672, interaction: "toggle" },
   { id: "railing",         name: "Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
   // Lodge round 2 (#323): the floor half of the wall-clutter pass. rug_lodge is the only walkable
   // 3D-assisted part — canWalk puts it on the client's floor_furni layer, under every avatar.
@@ -60,7 +64,7 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "sofa_lodge_plum",      name: "Plum Lodge Sofa",     w: 2, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x7a3e9d },
   { id: "table_round_onyx",     name: "Onyx Round Table",    w: 1, l: 1, stackHeights: [1.5],     canWalk: false, canStackOn: true,  seatHeight: null, color: 0x4a4d55 },
   { id: "plant_fern_exotic",    name: "Exotic Fern",         w: 1, l: 1, stackHeights: [1.53125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
-  { id: "fireplace_stone",      name: "Sandstone Hearth",    w: 2, l: 1, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "fireplace_stone",      name: "Sandstone Hearth",    w: 2, l: 1, stackHeights: [2.5, 2.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b, interaction: "toggle" },
   { id: "railing_iron",         name: "Iron Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
   { id: "side_table_slate",     name: "Slate Side Table",     w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },

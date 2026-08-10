@@ -1,6 +1,8 @@
 import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { parseFigure, resolveLayers, worldToScreen } from "@grand/shared";
 import type { AvatarState, Figure, Posture, ServerMsg } from "@grand/shared";
+import { wisps } from "./effects.ts";
+import type { Wisp } from "./effects.ts";
 import type { FigureBaker } from "./figure.ts";
 import { SCALE, ZOOM } from "./room.ts";
 import { LAYER } from "./sort.ts";
@@ -26,16 +28,26 @@ const SIP_INSET = 0.45;  // and how far of the way in towards the body it comes 
 
 // #347. A book is read at waist height, and it never swings up — the sip is a drink gesture.
 const BOOK_DROP = 6;
-const STEAM_WISPS = 3;
-const STEAM_MS = 1500;
-const STEAM_RISE = 12;
-const STEAM_DRIFT = 2;
+
+/** Off a fresh coffee (#331). It rises further and swells as it goes, where #347 shipped three
+ *  same-size dots at half alpha — at an 8px cup that read as specks rather than as steam. */
+const STEAM: Wisp = {
+  count: 3, ms: 1400, from: -9, rise: 15, drift: 2.5, size: 1, color: 0xe8e8e8, alpha: 0.75,
+};
+
+/** Facings that show the avatar's back, so the body is between the camera and what it holds. Read
+ *  off the baked parts, not off the compass: the camera sits to the south-east, so dir 3 is the
+ *  full-face view and dir 7 the full-back one. These are exactly the three facings where the
+ *  chest-front pendant part draws no pixels at all. */
+const BACK_DIRS: ReadonlySet<number> = new Set([0, 6, 7]);
 
 /** Where the held item sits, per facing. Read off the baked figure by eye: chest height, on the
- *  screen side the body is turned towards, so it never lands in the middle of the torso. */
+ *  screen side the body is turned towards, so it never lands in the middle of the torso. The three
+ *  back facings sit further out than the rest — the item is behind the body there, so it has to
+ *  clear the silhouette edge (11px at dirs 0 and 6, 14px at dir 7) or it is not seen at all. */
 const HAND: ReadonlyArray<{ x: number; y: number }> = [
-  { x: 8, y: -40 }, { x: 9, y: -38 }, { x: 9, y: -36 }, { x: 7, y: -35 },
-  { x: -7, y: -35 }, { x: -9, y: -36 }, { x: -9, y: -38 }, { x: -8, y: -40 },
+  { x: 13, y: -40 }, { x: 9, y: -38 }, { x: 9, y: -36 }, { x: 7, y: -35 },
+  { x: -7, y: -35 }, { x: -9, y: -36 }, { x: -13, y: -38 }, { x: -16, y: -40 },
 ];
 
 /** A cola can at the 80px figure scale: body, lid, and a highlight down the near edge. */
@@ -389,18 +401,20 @@ export class AvatarSprite {
     const lift = book || phase >= SIP_MS ? 0 : Math.sin((phase / SIP_MS) * Math.PI);
     this.held!.x = hand.x * (1 - lift * SIP_INSET);
     this.held!.y = hand.y + (book ? BOOK_DROP : 0) - lift * SIP_RISE;
+
+    // Facing away, the item is on the far side of the body from the camera, so the body has to
+    // occlude it (#331). Derived from the display list rather than remembered, because the facing
+    // changes mid-walk and a cached flag would go stale against a rebuilt figure.
+    const body = this.view.getChildIndex(this.sprite);
+    const behind = this.view.getChildIndex(this.held!) < body;
+    const wanted = BACK_DIRS.has(this.dir);
+    if (behind !== wanted) this.view.setChildIndex(this.held!, wanted ? body : body + 1);
   }
 
   /** Curls off the coffee, in the cup's own coordinates — the cup is the parent, so the steam
    *  follows it through the sip rather than hanging over where the cup used to be. */
   private drawSteam(now: number): void {
-    const g = this.steam!.clear();
-    for (let i = 0; i < STEAM_WISPS; i++) {
-      const t = (now / STEAM_MS + i / STEAM_WISPS) % 1;
-      const x = Math.sin((t + i) * Math.PI * 2) * STEAM_DRIFT;
-      g.circle(x, -9 - t * STEAM_RISE, 1 + (i % 2) * 0.5)
-        .fill({ color: 0xe8e8e8, alpha: 0.5 * (1 - t) });
-    }
+    wisps(this.steam!.clear(), now, STEAM);
   }
 
   private drawBubbles(now: number): void {

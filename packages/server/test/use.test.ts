@@ -345,6 +345,33 @@ describe("use: the light switch", () => {
     expect(to(alice, "room_state").at(-1)?.furni.find((f) => f.id === lamp)?.state).toBe(1);
     reloaded.dispose();
   });
+
+  // The hearth and the stereo joined the rail in #331. The hearth is the first 2-wide toggle —
+  // reach over a footprint and a state flip are each covered alone (the counter, the lamp), so what
+  // this adds is the pair: alice stands beside the far tile only, out of range of the origin tile.
+  test("a two-tile hearth lights from either end of it", () => {
+    const alice = account("alice");
+    room.join(alice, "alice");
+    const hearth = install(alice, "fireplace", 0, 3);   // covers (0,3) and (1,3)
+    stand(alice, 2, 4);
+
+    room.useFurni(alice, hearth);
+    expect(stateOf(hearth)).toBe(1);
+    expect(to(alice, "furni_state").at(-1)).toEqual({ t: "furni_state", itemId: hearth, state: 1 });
+  });
+
+  test("the stereo switches on and off like the lamp", () => {
+    const alice = account("alice");
+    room.join(alice, "alice");
+    const stereo = install(alice, "stereo_basic", 0, 4);
+
+    room.useFurni(alice, stereo);
+    expect(stateOf(stereo)).toBe(1);
+
+    vi.advanceTimersByTime(1000);
+    room.useFurni(alice, stereo);
+    expect(stateOf(stereo)).toBe(0);
+  });
 });
 
 describe("use: the wash basin", () => {

@@ -977,6 +977,7 @@ async function boot(): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    furniLayer?.update(now);
     effects?.update(now);
     // The camera tracks my avatar through its walk lerp, so it runs after updates, before layout.
     const me = you === null ? undefined : avatars.get(you);
