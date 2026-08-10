@@ -46,16 +46,37 @@
       #chat-form { display: flex; }
       #chat-input { flex: 1; padding: 8px 10px; border-radius: 8px; border: 1px solid #444c63;
         background: #10121ae6; color: #eef; }
-      #inventory { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-      #inventory button { padding: 5px 10px; border-radius: 8px; border: 1px solid #444c63;
-        background: #1c1f2be6; color: #eef; cursor: pointer; }
-      #inventory button.armed { border-color: #7fd98a; background: #24422a; }
-      #inventory .empty { color: #7d8496; font-size: 13px; }
-      #catalog { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-      #catalog .label { color: #ffd76a; font-size: 13px; font-weight: 600; }
-      #catalog button { padding: 5px 10px; border-radius: 8px; border: 1px solid #6a5a2e;
-        background: #2b2517e6; color: #eee0b0; cursor: pointer; }
-      #catalog button:disabled { opacity: .45; cursor: default; }
+      /* #364: the shop and the bag show the item, not its name — one cropped cell of the shipped
+         sheet per card. The shop's shelves come from the defs' theme field, so a content pack
+         arrives as its own sub-tab; only one shelf is on screen, which is what keeps ~110 items
+         off the room. .thumb is 72x64 because main.ts crops against those numbers. */
+      #catalog, #inventory { flex-direction: column; align-items: stretch; gap: 6px; }
+      #catalog .themes { display: flex; flex-wrap: wrap; gap: 6px; }
+      #catalog .themes button { padding: 4px 9px; border-radius: 8px; border: 1px solid #6a5a2e;
+        background: #221d12e6; color: #c9b27a; cursor: pointer; font-size: 13px; }
+      #catalog .themes button.on { border-color: #ffd76a; background: #3a3016; color: #ffe9a8; }
+      #catalog .grid, #inventory .grid { display: grid; gap: 6px; max-height: 32vh;
+        overflow-y: auto; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); }
+      #catalog .grid button, #inventory .grid button { display: grid; justify-items: center;
+        gap: 2px; padding: 5px 4px; border-radius: 8px; cursor: pointer; }
+      #catalog .grid button { border: 1px solid #6a5a2e; background: #2b2517e6; color: #eee0b0; }
+      /* Too dear to buy, not too dear to look at: the card stays opaque so the name and the price
+         still read over the room, and only the art dims. */
+      #catalog .grid button:disabled { cursor: default; border-color: #4a4133;
+        background: #1b1710f2; color: #8d8574; }
+      #catalog .grid button:disabled .thumb { opacity: .45; }
+      #inventory .grid button { border: 1px solid #444c63; background: #1c1f2be6; color: #eef; }
+      #inventory .grid button.armed { border-color: #7fd98a; background: #24422a; }
+      #catalog .name, #inventory .name { font-size: 11px; line-height: 1.2; text-align: center;
+        max-width: 100%; overflow-wrap: anywhere; }
+      #catalog .price { font-size: 12px; font-weight: 600; color: #ffd76a; }
+      #catalog .grid button:disabled .price { color: #b3a476; }
+      #catalog .empty, #inventory .empty { color: #7d8496; font-size: 13px; }
+      .thumb { position: relative; display: block; overflow: hidden; width: 72px; height: 64px; }
+      .thumb img { position: absolute; image-rendering: pixelated; }
+      .thumb.blank { display: flex; align-items: center; justify-content: center; font-size: 10px;
+        color: #8a8172; border: 1px dashed #8a5a3a; box-sizing: border-box; background:
+        repeating-linear-gradient(45deg, #2a2119, #2a2119 5px, #191410 5px, #191410 10px); }
       #furni-menu { display: flex; gap: 6px; align-items: center; }
       #furni-menu[hidden] { display: none; }
       #furni-menu .label { color: #9aa3b8; font-size: 13px; font-weight: 600; }

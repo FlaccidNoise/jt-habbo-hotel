@@ -44,6 +44,7 @@ import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
+import { catalogGroups, thumbCrop } from "./ui/catalog.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { Creator } from "./ui/creator.ts";
 import { parseChatInput } from "./ui/parse.ts";
@@ -57,6 +58,9 @@ type SetRows = Extract<ServerMsg, { t: "sets" }>["sets"];
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
+/** Thumbnail box, in CSS px. The .thumb rule in index.html is the same size — the crop is
+ *  computed against these numbers, so the two have to agree. */
+const THUMB_BOX = { w: 72, h: 64 };
 const defName = (id: string): string => DEFS.get(id)?.name ?? WALL_DEFS.get(id)?.name ?? id;
 
 function el<T extends HTMLElement>(id: string): T {
@@ -95,6 +99,7 @@ let menuItem: number | null = null;   // placed item whose edit menu is open
 let you: number | null = null;
 let clockOffset: number | null = null;
 let stars = 0;
+let catalogTheme: string | null = null;   // which theme's shelf the shop is showing
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
 let myRoomId: number | null = null;
@@ -245,10 +250,16 @@ function renderInventory(): void {
     strip.appendChild(empty);
     return;
   }
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  strip.appendChild(grid);
   for (const item of inventory) {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = defName(item.defId);
+    const name = document.createElement("span");
+    name.className = "name";
+    name.textContent = defName(item.defId);
+    button.append(furniThumb(item.defId), name);
     const offered = trade?.yours.some((i) => i.id === item.id) ?? false;
     if (item.id === armed || offered) button.classList.add("armed");
     button.addEventListener("click", () => {
@@ -276,7 +287,7 @@ function renderInventory(): void {
       renderInventory();
       renderFurniBar();
     });
-    strip.appendChild(button);
+    grid.appendChild(button);
   }
 }
 
@@ -286,23 +297,80 @@ function renderStars(): void {
   renderLever();
 }
 
+/** One shipped sheet, cropped to the facing the shop shows, at nearest-neighbour. A hatched tile
+ *  stands in when the bundle is missing or the file will not load — never a plausible stand-in. */
+function furniThumb(defId: string): HTMLElement {
+  const box = document.createElement("span");
+  box.className = "thumb";
+  const meta = furniAssets?.get(defId)?.meta;
+  const crop = thumbCrop(meta, THUMB_BOX, WALL_DEFS.get(defId)?.plane);
+  if (!meta || !crop) {
+    box.classList.add("blank");
+    box.textContent = "no art";
+    return box;
+  }
+  const img = document.createElement("img");
+  img.src = `/furni/${meta.sheet}`;
+  img.alt = "";
+  img.style.width = `${crop.sheetWidth}px`;
+  img.style.left = `${crop.left}px`;
+  img.style.top = `${crop.top}px`;
+  img.addEventListener("error", () => {
+    box.classList.add("blank");
+    box.replaceChildren(document.createTextNode("no art"));
+  });
+  box.appendChild(img);
+  return box;
+}
+
 function renderCatalog(): void {
   const strip = el("catalog");
   strip.replaceChildren();
-  const label = document.createElement("span");
-  label.className = "label";
-  label.textContent = "Catalog:";
-  strip.appendChild(label);
-  for (const def of [...PROTOTYPE_CATALOG, ...WALL_CATALOG]) {
-    const price = CATALOG_PRICES.get(def.id);
-    if (price === undefined) continue;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = `${def.name} · ${price}★`;
-    button.disabled = price > stars;
-    button.addEventListener("click", () => net.send({ t: "buy", defId: def.id }));
-    strip.appendChild(button);
+  const groups = catalogGroups([...PROTOTYPE_CATALOG, ...WALL_CATALOG], CATALOG_PRICES, stars);
+  if (groups.length === 0) {
+    const empty = document.createElement("span");
+    empty.className = "empty";
+    empty.textContent = "The shop has nothing for sale right now.";
+    strip.appendChild(empty);
+    return;
   }
+  // One theme at a time, so 110 items never become 110 thumbnails over the room. The pick
+  // survives a re-render, and a theme that leaves the data hands the tab back to the first one.
+  if (!groups.some((g) => g.theme === catalogTheme)) catalogTheme = groups[0]!.theme;
+  const tabs = document.createElement("div");
+  tabs.className = "themes";
+  for (const group of groups) {
+    const tab = document.createElement("button");
+    tab.type = "button";
+    tab.textContent = `${group.label} · ${group.entries.length}`;
+    tab.classList.toggle("on", group.theme === catalogTheme);
+    tab.addEventListener("click", () => {
+      catalogTheme = group.theme;
+      renderCatalog();
+    });
+    tabs.appendChild(tab);
+  }
+  strip.appendChild(tabs);
+  const grid = document.createElement("div");
+  grid.className = "grid";
+  for (const entry of groups.find((g) => g.theme === catalogTheme)?.entries ?? []) {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.disabled = !entry.affordable;
+    card.title = entry.affordable
+      ? `Buy ${entry.name} for ${entry.price} ★`
+      : `${entry.name} costs ${entry.price} ★ — you have ${stars}`;
+    const name = document.createElement("span");
+    name.className = "name";
+    name.textContent = entry.name;
+    const price = document.createElement("span");
+    price.className = "price";
+    price.textContent = `${entry.price}★`;
+    card.append(furniThumb(entry.id), name, price);
+    card.addEventListener("click", () => net.send({ t: "buy", defId: entry.id }));
+    grid.appendChild(card);
+  }
+  strip.appendChild(grid);
 }
 
 function renderTrade(): void {
