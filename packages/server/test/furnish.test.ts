@@ -314,6 +314,23 @@ describe("growing a public room", () => {
     closeDb(db);
   });
 
+  test("a layout bump alone re-lays the room on the same floor", () => {
+    let db = openDb(dbPath);
+    // Rewind only the layout stamp, as a database from before the bump would hold it. The old
+    // house furniture stays in place — the re-lay must drop it, not stack a second layout on top.
+    db.prepare("UPDATE rooms SET doc = ? WHERE id = 1").run(
+      JSON.stringify({ ...docOf(db, 1), layout: 0 }),
+    );
+    closeDb(db);
+
+    db = openDb(dbPath);
+    const fresh = openDb(join(dir, "fresh-layout.db"));
+    expect(docOf(db, 1)).toEqual(docOf(fresh, 1));
+    expect(houseLayout(db, 1)).toEqual(houseLayout(fresh, 1));
+    closeDb(db);
+    closeDb(fresh);
+  });
+
   test("a room a player owns keeps its floor and its furniture", () => {
     bootOnOldRooms(dbPath);
     let db = openDb(dbPath);

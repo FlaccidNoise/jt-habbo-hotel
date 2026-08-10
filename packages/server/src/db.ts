@@ -1,7 +1,7 @@
 import Database from "better-sqlite3";
 import { parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
-import { clearHouseLayout, seedPublicFurni } from "./furnish.ts";
+import { LAYOUT_VERSION, clearHouseLayout, seedPublicFurni } from "./furnish.ts";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
 
 const DDL = `
@@ -129,12 +129,13 @@ const MUSEUM_HEIGHTMAP = Array.from({ length: 8 }, () => "0".repeat(12)).join("\
 const MUSEUM_DOOR: Door = { x: 0, y: 7, dir: 2 };
 const MUSEUM_CHAT: ChatConfig = { speakRadius: 6, shoutAllowed: false };
 
-/** Seeds a house room, and re-seeds one whose floor has since been redrawn (#315). `INSERT OR
- *  IGNORE` alone would leave every existing hotel on the shape it first booted with, so a house
- *  room whose stored heightmap has drifted from the constant takes the new doc in place and gives
- *  up its house layout, which the caller lays out again on the new floor. The room the house owns
- *  is house property end to end; a room with an `owner_id` belongs to a player and is never
- *  touched. Returns true when the doc was replaced. */
+/** Seeds a house room, and re-seeds one whose floor has since been redrawn (#315) or whose layout
+ *  constant has since changed shape (#330, LAYOUT_VERSION). `INSERT OR IGNORE` alone would leave
+ *  every existing hotel on the shape and layout it first booted with, so a house room whose stored
+ *  heightmap or layout version has drifted from the constants takes the new doc in place and gives
+ *  up its house layout, which the caller lays out again. The room the house owns is house property
+ *  end to end; a room with an `owner_id` belongs to a player and is never touched. Returns true
+ *  when the doc was replaced. */
 function seedRoom(
   db: Database.Database,
   id: number,
@@ -143,9 +144,10 @@ function seedRoom(
   door: Door,
   chat: ChatConfig,
   decor: RoomDecor = {},
+  layout = 0,
 ): boolean {
   parseHeightmap(heightmap, door); // never skip: an unwalkable seed must fail loudly at boot
-  const doc = JSON.stringify({ v: 1, heightmap, door, chat, decor });
+  const doc = JSON.stringify({ v: 1, heightmap, door, chat, decor, layout });
   const inserted =
     db
       .prepare("INSERT OR IGNORE INTO rooms (id, owner_id, name, doc) VALUES (?, NULL, ?, ?)")
@@ -156,12 +158,14 @@ function seedRoom(
     | { ownerId: number | null; doc: string }
     | undefined;
   if (!row || row.ownerId !== null) return false;
-  const stored = JSON.parse(row.doc) as { heightmap?: string; decor?: RoomDecor };
-  const sameFloor = stored.heightmap === heightmap;
-  if (sameFloor && JSON.stringify(stored.decor ?? {}) === JSON.stringify(decor)) return false;
+  const stored = JSON.parse(row.doc) as { heightmap?: string; decor?: RoomDecor; layout?: number };
+  // Same placement surface: the heightmap the layout was checked against, and the layout constant
+  // itself. Either one drifting invalidates every placement the room is currently holding.
+  const samePlacement = stored.heightmap === heightmap && (stored.layout ?? 0) === layout;
+  if (samePlacement && JSON.stringify(stored.decor ?? {}) === JSON.stringify(decor)) return false;
   db.prepare("UPDATE rooms SET doc = ? WHERE id = ?").run(doc, id);
-  // Redecorated but not redrawn: every placement is still on the same floor, so the layout stays.
-  if (sameFloor) return false;
+  // Redecorated but not redrawn: every placement is still valid, so the layout stays.
+  if (samePlacement) return false;
   clearHouseLayout(db, id);
   return true;
 }
@@ -199,10 +203,17 @@ export function openDb(path: string): Database.Database {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }
   const relaid = new Set<number>();
-  if (seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR)) {
+  if (
+    seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR, LAYOUT_VERSION)
+  ) {
     relaid.add(1);
   }
-  if (seedRoom(db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR)) {
+  if (
+    seedRoom(
+      db, 2, "The Casino Floor", CASINO_HEIGHTMAP, CASINO_DOOR, CASINO_CHAT, CASINO_DECOR,
+      LAYOUT_VERSION,
+    )
+  ) {
     relaid.add(2);
   }
   seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
