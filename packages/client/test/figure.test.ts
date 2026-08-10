@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { parseFigure, resolvedKey } from "@grand/shared";
-import { cellOrigin, frameRow } from "../src/scene/figure.ts";
+import { cellOrigin, frameRow, resolveRamp } from "../src/scene/figure.ts";
 
 const FRAMES = ["stand", "walk0", "walk1", "walk2", "walk3", "sit", "wave0", "wave1"];
 const META = { frameW: 64, frameH: 112 };
@@ -22,6 +22,33 @@ describe("figure sheet layout", () => {
   test("every authored frame has its own row", () => {
     const rows = FRAMES.map((f) => frameRow(FRAMES, f));
     expect(new Set(rows).size).toBe(FRAMES.length);
+  });
+});
+
+describe("resolving a colour slot to a ramp", () => {
+  // hd19 as frozen (#343): slots: 2, fixedColors: ["paper", "crimson"] — slot 2 is the eye
+  // white/teeth ramp, slot 3 the blush ramp, neither ever worn so they never enter the figure
+  // string.
+  const hd19 = { slots: 2, fixedColors: ["paper", "crimson"] };
+
+  test("a worn slot uses the worn colour", () => {
+    const layer = { colors: ["skin_3", "teal"] };
+    expect(resolveRamp(layer, hd19, 0)).toBe("skin_3");
+    expect(resolveRamp(layer, hd19, 1)).toBe("teal");
+  });
+
+  test("a slot past the worn colours falls through to the part's fixed ramps", () => {
+    const layer = { colors: ["skin_3", "teal"] };
+    expect(resolveRamp(layer, hd19, 2)).toBe("paper");
+    expect(resolveRamp(layer, hd19, 3)).toBe("crimson");
+  });
+
+  test("a part with no fixedColors resolves exactly as before", () => {
+    // hd2 as frozen: slots: 1, no fixedColors field.
+    const hd2 = { slots: 1 };
+    const layer = { colors: ["skin_3"] };
+    expect(resolveRamp(layer, hd2, 0)).toBe("skin_3");
+    expect(resolveRamp(layer, hd2, 1)).toBe("skin_3"); // out of range falls back to colors[0]
   });
 });
 
