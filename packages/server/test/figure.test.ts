@@ -7,7 +7,8 @@ import type { ServerMsg } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { closeDb, openDb } from "../src/db.ts";
 import { register } from "../src/auth.ts";
-import { defaultFigure, figureOf, grantFigure, ownsSet, saveFigure } from "../src/figure.ts";
+import { defaultFigure, figureOf, grantFigure, ownsSet, saveFigure, staffFigure } from "../src/figure.ts";
+import { NPC_ROSTER } from "../src/npc.ts";
 import { Room } from "../src/room.ts";
 import type { Emit } from "../src/room.ts";
 
@@ -172,6 +173,17 @@ describe("staff", () => {
     expect(npc?.staff).toBe(true);
     const parsed = parseFigure(npc!.figure);
     expect(parsed.parts.some((p) => p.set === 16)).toBe(true);
+  });
+
+  test("have eyes — every one of them, at every id on the roster", () => {
+    // #410: the figure is derived from the id on every addNpc, never stored, so this is also what
+    // says a booted hotel shows the new faces without a migration. A bare head here means the
+    // staff grant lost its face sets again.
+    for (const def of NPC_ROSTER) {
+      const head = parseFigure(staffFigure(def.id)).parts.find((p) => p.type === "hd")!;
+      expect(setById(head.set)?.slotFamilies?.[1], `${def.name} wears head ${head.set}`)
+        .toBe("iris");
+    }
   });
 });
 

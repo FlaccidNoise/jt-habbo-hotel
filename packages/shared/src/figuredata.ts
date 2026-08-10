@@ -125,5 +125,14 @@ export const STARTER_GRANT_SETS: readonly number[] = [
   17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 ];
 
-/** The staff uniform, granted to NPC accounts only. */
-export const STAFF_GRANT_SETS: readonly number[] = [2, 3, 9, 7, 16];
+/** The staff uniform, granted to NPC accounts only.
+ *
+ *  The faces are in for the reason the starter grant has them: dress() prefers an eyed head, and
+ *  a grant holding no face set has nothing to prefer, so every NPC came out in the eyeless head 2
+ *  even after #346 fixed it for players (#410). Only the blazer 16 is staff-only — the creator
+ *  hides this grant's non-starter sets, and 17-24 are starter sets, so widening it here does not
+ *  widen what a player is offered. */
+export const STAFF_GRANT_SETS: readonly number[] = [
+  2, 3, 9, 7, 16,
+  17, 18, 19, 20, 21, 22, 23, 24,
+];
