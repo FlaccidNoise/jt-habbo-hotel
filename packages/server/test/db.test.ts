@@ -18,20 +18,21 @@ afterEach(() => {
 });
 
 describe("db", () => {
-  test("seeds exactly the three public rooms, and reopening is idempotent", () => {
+  test("seeds exactly the four public rooms, and reopening is idempotent", () => {
     let db: Database.Database = openDb(dbPath);
     const rooms = db.prepare("SELECT id, name FROM rooms ORDER BY id").all() as {
       id: number;
       name: string;
     }[];
-    expect(rooms).toHaveLength(3);
+    expect(rooms).toHaveLength(4);
     expect(rooms[0]?.name).toBe("The Lobby Café");
     expect(rooms[1]?.name).toBe("The Casino Floor");
     expect(rooms[2]?.name).toBe("The Museum");
+    expect(rooms[3]?.name).toBe("Resort Grounds");   // #406
     closeDb(db);
 
     db = openDb(dbPath);
-    expect(db.prepare("SELECT id FROM rooms").all()).toHaveLength(3);
+    expect(db.prepare("SELECT id FROM rooms").all()).toHaveLength(4);
     closeDb(db);
   });
 

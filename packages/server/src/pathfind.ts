@@ -14,6 +14,44 @@ const UNSEEN = 0, OPEN = 1, CLOSED = 2;
  *  replaces it with static reachability regions, which answer the common case without searching. */
 const EXPANSION_CAP = 20_000;
 
+/** Every tile reachable from `from`, as a flag per tile indexed `y * width + x`.
+ *
+ *  The movement rules are the pathfinder's — climbable step, no corner cutting, the same dynamic
+ *  blockers — swept once instead of once per destination. Asking A* "is there a route to this
+ *  tile?" for every tile in the room costs a full drain of the open set for each unreachable one,
+ *  which at 300x300 is ~90,000 searches over 90,000 tiles and hangs boot (#406). This is one
+ *  sweep, and unlike A* it has no expansion cap to run into. */
+export function reachable(
+  model: RoomModel,
+  blocked: (x: number, y: number) => boolean,
+  from: Tile,
+): Uint8Array {
+  const width = model.width;
+  const seen = new Uint8Array(width * model.height);
+  if (tileHeight(model, from.x, from.y) < 0) return seen;
+
+  const start = from.y * width + from.x;
+  seen[start] = 1;
+  const queue: number[] = [start];
+  for (let head = 0; head < queue.length; head++) {
+    const cur = queue[head] ?? 0;
+    const cx = cur % width, cy = (cur / width) | 0;
+    const hFrom = tileHeight(model, cx, cy);
+    const stepOk = (x: number, y: number): boolean =>
+      climbOk(hFrom, tileHeight(model, x, y)) && !blocked(x, y);
+    for (const s of DIR_STEPS) {
+      const nx = cx + s.dx, ny = cy + s.dy;
+      if (!stepOk(nx, ny)) continue;
+      if (s.dx !== 0 && s.dy !== 0 && (!stepOk(nx, cy) || !stepOk(cx, ny))) continue;
+      const next = ny * width + nx;
+      if (seen[next] === 1) continue;
+      seen[next] = 1;
+      queue.push(next);
+    }
+  }
+  return seen;
+}
+
 /** A*: orthogonal cost 1, diagonal √2, octile heuristic with D=1, so a straight line is strictly
  *  cheaper than any zig-zag. Pop order is total — lowest f, then lowest h, then lowest insertion
  *  sequence — which makes every path reproducible. Excludes `from`, includes `to`. */

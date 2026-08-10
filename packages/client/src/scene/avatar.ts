@@ -193,13 +193,18 @@ export class AvatarSprite {
       },
     });
     this.label.anchor.set(0.5, 1);
-    // Names are UI, not room art: counter-scaled so the zoomed world leaves them at 12px.
-    this.label.scale.set(1 / ZOOM);
+    this.applyZoom();
     this.view.addChild(this.label);
 
     this.redraw();
     this.place();
     this.setHand(state.hand ?? null);
+  }
+
+  /** Names are UI, not room art: counter-scaled so the magnified world still leaves them at 12px.
+   *  The player can change the zoom under a standing avatar, so it is re-applied, not set once. */
+  applyZoom(): void {
+    this.label.scale.set(1 / ZOOM);
   }
 
   /** Server-authoritative pose. Sitting also carries the seat's height and facing. */

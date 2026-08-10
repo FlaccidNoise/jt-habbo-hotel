@@ -1,7 +1,6 @@
 import { randomBytes } from "node:crypto";
 import {
   PROTOTYPE_CATALOG,
-  ROOM_FURNI_CAP,
   WALL_CATALOG,
   checkPlacement,
   checkWallPlacement,
@@ -13,8 +12,9 @@ import type {
   Door, FurniDef, FurniItem, RoomModel, WallDef, WallItem, WallSide,
 } from "@grand/shared";
 import type Database from "better-sqlite3";
+import { GROUNDS, GROUNDS_ROOM_ID } from "./grounds.ts";
 import { NPC_ROSTER } from "./npc.ts";
-import { findPath } from "./pathfind.ts";
+import { reachable } from "./pathfind.ts";
 
 // House-placed layouts for the public rooms (#312). The Lobby Café and The Casino Floor shipped
 // with heightmaps, decor and staff but a bare floor, so neither read as a place anyone works or
@@ -22,13 +22,13 @@ import { findPath } from "./pathfind.ts";
 // every one of them run through the same placement checker the live server uses, so a layout that
 // disagrees with the rules fails at boot rather than arriving as a broken room.
 
-interface Spot {
+export interface Spot {
   defId: string;
   x: number;
   y: number;
   dir?: 0 | 2 | 4 | 6;              // 0=N, 2=E, 4=S, 6=W; a seat faces the way it faces
 }
-interface Hanging {
+export interface Hanging {
   defId: string;
   side: WallSide;
   x: number;
@@ -36,10 +36,17 @@ interface Hanging {
   u: number;
   v: number;
 }
-interface Layout {
+export interface Layout {
   floor: Spot[];
   walls: Hanging[];
 }
+
+/** What the house may put in a room it laid out itself. ROOM_FURNI_CAP stays 100 and is untouched
+ *  (#404): that is the bound on what a *player* may add, and lowering the ceiling on a flagship is
+ *  not a reason to raise the ceiling on every bedroom. The Resort Grounds is 90,000 tiles and 285
+ *  pieces, so it also means players cannot add furni there while it sits over the player cap —
+ *  deliberate, and the reason the room is house-laid rather than left for a crowd to fill. */
+const HOUSE_FURNI_CAP = 300;
 
 // 16x16, flat, door at (0,5), with a void alcove cut out of the north-east corner and two void
 // columns at y=9. Zoned the way a Habbo public room is, so the floor reads as places rather than
@@ -200,6 +207,7 @@ const CASINO: Layout = {
 export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
   [1, CAFE],
   [2, CASINO],
+  [GROUNDS_ROOM_ID, GROUNDS],
 ]);
 
 /** Bumped whenever a Layout constant above changes shape. seedRoom (db.ts) stamps this into the
@@ -208,8 +216,10 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  stool_lodge, side_table) landed in the catalog after #315's resize had already run the layouts,
  *  so nothing short of a version bump would have put them in a live room. This bump is the first.
  *  2 is #347: the café's counters became café counters, the fixtures the use verb needs went in,
- *  and a live room would otherwise keep serving cocktails at a coffee bar. */
-export const LAYOUT_VERSION = 2;
+ *  and a live room would otherwise keep serving cocktails at a coffee bar.
+ *  3 is #406: the Resort Grounds joined LAYOUTS. Nothing in the café or the casino moved, but the
+ *  stamp is per room and a room seeded at version 2 would never be handed the new one's layout. */
+export const LAYOUT_VERSION = 3;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
@@ -250,10 +260,13 @@ function solidTiles(roomId: number, placed: FurniItem[]): (x: number, y: number)
   return (x, y) => solid.has(`${x},${y}`);
 }
 
-/** Every tile the layout leaves open has to still be walkable to from the door, asked of the
- *  pathfinder the players use rather than a second opinion. A layout that seals off a corner —
- *  or buries a staff NPC where nobody can order from them — fails the seed the way an unwalkable
- *  heightmap fails the parse. */
+/** Every tile the layout leaves open has to still be walkable to from the door, under the same
+ *  movement rules the players walk by rather than a second opinion. A layout that seals off a
+ *  corner — or buries a staff NPC where nobody can order from them — fails the seed the way an
+ *  unwalkable heightmap fails the parse.
+ *
+ *  One flood-fill answers the whole room. This used to run A* per tile, which is fine at 16x16 and
+ *  hangs boot at 300x300 (#406). */
 function assertOpen(model: RoomModel, roomId: number, placed: FurniItem[]): void {
   const blocked = solidTiles(roomId, placed);
   for (const npc of NPC_ROSTER) {
@@ -264,14 +277,12 @@ function assertOpen(model: RoomModel, roomId: number, placed: FurniItem[]): void
       );
     }
   }
-  const door = { x: model.door.x, y: model.door.y };
+  const open = reachable(model, blocked, { x: model.door.x, y: model.door.y });
   for (let y = 0; y < model.height; y++) {
     for (let x = 0; x < model.width; x++) {
       if (tileHeight(model, x, y) < 0 || blocked(x, y)) continue;
-      if (x === door.x && y === door.y) continue;
-      if (!findPath(model, blocked, door, { x, y })) {
-        throw new Error(`room ${roomId}: tile ${x},${y} is walled off from the door`);
-      }
+      if (open[y * model.width + x] === 1) continue;
+      throw new Error(`room ${roomId}: tile ${x},${y} is walled off from the door`);
     }
   }
 }
@@ -303,7 +314,7 @@ function furnish(db: Database.Database, roomId: number, layout: Layout): void {
       const dir = spot.dir ?? 0;
       const ctx = {
         model, furni: placed, defs: DEFS, avatars: [],
-        doorTile: { x: model.door.x, y: model.door.y }, roomFurniCap: ROOM_FURNI_CAP,
+        doorTile: { x: model.door.x, y: model.door.y }, roomFurniCap: HOUSE_FURNI_CAP,
       };
       const result = checkPlacement(ctx, def, spot.x, spot.y, dir);
       if (!result.ok) {
@@ -322,7 +333,7 @@ function furnish(db: Database.Database, roomId: number, layout: Layout): void {
       const result = checkWallPlacement(
         {
           model, wallFurni: hung, defs: WALL_DEFS,
-          furniCount: placed.length + hung.length, roomFurniCap: ROOM_FURNI_CAP,
+          furniCount: placed.length + hung.length, roomFurniCap: HOUSE_FURNI_CAP,
         },
         def, item.side, item.x, item.y, item.u, item.v,
       );

@@ -7,9 +7,24 @@ import { LAYER, tileDepth } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
 export const SCALE = 64;
-/** View magnification. Sprites are authored at 64 and shown at 128 — the chunky read is the
- *  style, so this is nearest-sampled, never smoothed. */
-export const ZOOM = 2;
+/** View magnification, 1 or 2 and nothing between: sprites are nearest-sampled, so a fractional
+ *  scale gives some rows of a sheet two screen pixels and their neighbours one. 1 shows four times
+ *  the floor, 2 is the chunky Habbo read. Mutable, because the player switches it at runtime —
+ *  every importer reads the live binding, so nobody caches a copy. */
+export let ZOOM: 1 | 2 = 1;
+
+/** Namespaced alongside the client's other browser-stored keys (`grand-token`). */
+const ZOOM_KEY = "grand-zoom";
+
+export function setZoom(n: number): void {
+  ZOOM = n === 2 ? 2 : 1;
+  globalThis.localStorage?.setItem(ZOOM_KEY, String(ZOOM));
+}
+
+/** The player's stored choice. Anything unreadable — never set, or garbage — is 1. */
+export function loadZoom(): void {
+  setZoom(Number(globalThis.localStorage?.getItem(ZOOM_KEY)));
+}
 
 const LONG_PRESS_MS = 500;
 const LONG_PRESS_SLOP = 10;
@@ -166,6 +181,16 @@ export class RoomScene {
     this.world.x = Math.round(width / 2 - ZOOM * (this.model.width - this.model.height) * (SCALE / 4));
     this.world.y = Math.round(height / 2 - ZOOM * (this.model.width + this.model.height - 2) * (SCALE / 8));
     this.reconcile();
+  }
+
+  /** Take up the current ZOOM. The culling window is read off the scale, so the new magnification
+   *  has to go back through the re-centre the resize handler uses: setting the scale alone would
+   *  leave the floor built to the old window — at 1 that is a quarter of the tiles the screen now
+   *  reaches. A scene with no camera has no window to re-derive, so it only reconciles. */
+  applyZoom(): void {
+    this.world.scale.set(ZOOM);
+    if (this.view) this.center(this.view.width, this.view.height);
+    else this.reconcile();
   }
 
   /** The window the floor is built to, for the layers that cull alongside it. */

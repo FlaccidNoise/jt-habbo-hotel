@@ -5,7 +5,11 @@ export interface RoomModel { width: number; height: number; tiles: Int16Array; d
 
 export class HeightmapError extends Error {}
 
-const MAX_DIM = 64;
+/** #406: raised from 64 for the giant public rooms. The client's cost follows the viewport rather
+ *  than the room (#359/#360) and the pathfinder is bounded by EXPANSION_CAP, so the ceiling here is
+ *  the room_state payload — 300x300 measures ~103 KB (#362), and 512 leaves headroom above the
+ *  flagship without inviting a room nothing can serialise. */
+const MAX_DIM = 512;
 
 /** 'x'→-1 (void), '0'-'9'→0-9, 'a'-'z'→10-35, case-insensitive. Known Habbo quirk: 'x' shadows
  *  height 33, so 33 is unrepresentable. */

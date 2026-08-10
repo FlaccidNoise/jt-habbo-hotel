@@ -41,7 +41,7 @@ import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
 import { Effects } from "./scene/effects.ts";
 import { FurniLayer } from "./scene/furni.ts";
-import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
+import { RoomScene, SCALE, ZOOM, loadZoom, setZoom } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
 import { catalogGroups, thumbCrop } from "./ui/catalog.ts";
@@ -1081,6 +1081,9 @@ async function boot(): Promise<void> {
     if (e.key === "r" || e.key === "R") {
       rotateArmed();
       e.preventDefault();
+    } else if (e.key === "z" || e.key === "Z") {
+      toggleZoom();
+      e.preventDefault();
     } else if (e.key === "Escape") {
       if (armed !== null) disarm();
       closeMenu();
@@ -1105,6 +1108,7 @@ async function start(token: string): Promise<void> {
   el("arcade-open").style.display = "block";
   el("lever-open").style.display = "block";
   el("sets-open").style.display = "block";
+  el("zoom-open").style.display = "block";
   el<HTMLInputElement>("chat-input").focus();
 }
 
@@ -1149,6 +1153,24 @@ el("tab-wardrobe").addEventListener("click", () => {
     el("tab-wardrobe").classList.add("open");
   }
 });
+/** The one path both the button and the Z key take: the scene rebuilds its floor to the new
+ *  window, and every name already on screen is counter-scaled again. */
+function toggleZoom(): void {
+  setZoom(ZOOM === 2 ? 1 : 2);
+  showZoom();
+}
+
+function showZoom(): void {
+  el("zoom-open").textContent = `🔍 Zoom ${ZOOM}×`;
+  scene?.applyZoom();
+  for (const sprite of avatars.values()) sprite.applyZoom();
+}
+
+// The stored choice is taken up before the first room arrives, so a player who zoomed out never
+// sees a frame of the other magnification.
+loadZoom();
+showZoom();
+el("zoom-open").addEventListener("click", toggleZoom);
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
 el("nav-open").addEventListener("click", () => {
@@ -1196,7 +1218,7 @@ function signedOut(message: string): void {
   sessionStorage.removeItem(TOKEN_KEY);
   session = "";
   el("hud").style.display = "none";
-  for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open"]) {
+  for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open", "zoom-open"]) {
     el(id).style.display = "none";
   }
   el("login").style.display = "";

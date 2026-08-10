@@ -24,9 +24,13 @@ test("rejects invalid characters", () =>
   expect(() => parseHeightmap("00\n0!", DOOR)).toThrow(HeightmapError));
 test("rejects a door on a void tile", () =>
   expect(() => parseHeightmap("x0\n00", { x: 0, y: 0, dir: 2 })).toThrow(HeightmapError));
-test("rejects over 64x64", () => {
-  const row = "0".repeat(65);
+test("rejects over 512x512", () => {
+  const row = "0".repeat(513);
   expect(() => parseHeightmap(Array(3).fill(row).join("\n"), DOOR)).toThrow(HeightmapError);
+});
+test("accepts the flagship's 300x300", () => {
+  const row = "0".repeat(300);
+  expect(parseHeightmap(Array(300).fill(row).join("\n"), DOOR).width).toBe(300);
 });
 test("rejects tiles walled off by void", () =>
   expect(() => parseHeightmap("0x0\n0x0", DOOR)).toThrow(HeightmapError));

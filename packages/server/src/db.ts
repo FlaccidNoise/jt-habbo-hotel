@@ -2,7 +2,17 @@ import Database from "better-sqlite3";
 import { STARTER_GRANT_SETS, parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
 import { LAYOUT_VERSION, clearHouseLayout, seedPublicFurni } from "./furnish.ts";
+import {
+  GROUNDS_CHAT, GROUNDS_DECOR, GROUNDS_DOOR, GROUNDS_HEIGHTMAP, GROUNDS_ROOM_ID,
+} from "./grounds.ts";
+import { log } from "./log.ts";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
+
+/** Ids below this belong to the house. A suite is allocated above it (items.ts) so that reserving
+ *  an id for a new public room can never collide with a room a player already owns — which is
+ *  exactly what happened when Resort Grounds wanted 4 and the first suite on every existing
+ *  database already had it (#406). */
+export const RESERVED_ROOM_IDS = 100;
 
 const DDL = `
 CREATE TABLE IF NOT EXISTS accounts(
@@ -61,7 +71,7 @@ CREATE TRIGGER IF NOT EXISTS ledger_append_only_delete BEFORE DELETE ON ledger_e
   BEGIN SELECT RAISE(ABORT, 'ledger is append-only'); END;
 `;
 
-interface ChatConfig {
+export interface ChatConfig {
   speakRadius: number;
   shoutAllowed: boolean;
 }
@@ -157,7 +167,15 @@ function seedRoom(
   const row = db.prepare("SELECT owner_id AS ownerId, doc FROM rooms WHERE id = ?").get(id) as
     | { ownerId: number | null; doc: string }
     | undefined;
-  if (!row || row.ownerId !== null) return false;
+  if (!row) return false;
+  // Never stomp player property: a room somebody owns keeps its floor and its furniture. It can
+  // only happen on a database made before this id was reserved — a suite is inserted without an id
+  // (items.ts), so SQLite used to hand out max(id) + 1 from the same range. Say so rather than
+  // booting a hotel with a public room quietly missing from the navigator (#406).
+  if (row.ownerId !== null) {
+    log("public_room_id_taken", { roomId: id, name, fix: "make db-reset" });
+    return false;
+  }
   const stored = JSON.parse(row.doc) as { heightmap?: string; decor?: RoomDecor; layout?: number };
   // Same placement surface: the heightmap the layout was checked against, and the layout constant
   // itself. Either one drifting invalidates every placement the room is currently holding.
@@ -233,6 +251,14 @@ export function openDb(path: string): Database.Database {
     relaid.add(2);
   }
   seedRoom(db, MUSEUM_ROOM_ID, "The Museum", MUSEUM_HEIGHTMAP, MUSEUM_DOOR, MUSEUM_CHAT);
+  if (
+    seedRoom(
+      db, GROUNDS_ROOM_ID, "Resort Grounds", GROUNDS_HEIGHTMAP, GROUNDS_DOOR, GROUNDS_CHAT,
+      GROUNDS_DECOR, LAYOUT_VERSION,
+    )
+  ) {
+    relaid.add(GROUNDS_ROOM_ID);
+  }
   // After the rooms exist and only into the bare ones (#312) plus the ones whose floor just
   // changed under them (#315). The museum furnishes itself, one donation at a time.
   seedPublicFurni(db, relaid);

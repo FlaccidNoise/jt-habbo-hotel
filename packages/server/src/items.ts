@@ -7,6 +7,7 @@ import {
 } from "@grand/shared";
 import type { InventoryItem, FurniItem, WallItem, WallSide } from "@grand/shared";
 import type Database from "better-sqlite3";
+import { RESERVED_ROOM_IDS } from "./db.ts";
 import { logItemGrants } from "./ledger.ts";
 
 // GAME.md §First session 0:00: registration creates the suite with the starter furni already
@@ -65,11 +66,13 @@ export function provisionSuite(db: Database.Database, accountId: number, usernam
   const defs = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
   return db.transaction((): number => {
     const doc = JSON.stringify({ v: 1, heightmap: SUITE_HEIGHTMAP, door: SUITE_DOOR, chat: SUITE_CHAT });
-    const roomId = Number(
-      db
-        .prepare("INSERT INTO rooms (owner_id, name, doc) VALUES (?, ?, ?)")
-        .run(accountId, `${username}'s Suite`, doc).lastInsertRowid,
-    );
+    // Explicit id, above the house's reserved band: letting SQLite pick max(id) + 1 put the first
+    // suite of every hotel on id 4, which a later public room then could not reserve (#406).
+    const highest = db.prepare("SELECT COALESCE(MAX(id), 0) AS top FROM rooms").get() as
+      { top: number };
+    const roomId = Math.max(RESERVED_ROOM_IDS, highest.top) + 1;
+    db.prepare("INSERT INTO rooms (id, owner_id, name, doc) VALUES (?, ?, ?, ?)")
+      .run(roomId, accountId, `${username}'s Suite`, doc);
     const placed: FurniItem[] = [];
     for (const item of listInventory(db, accountId)) {
       const spot = SUITE_SPOTS.get(item.defId);
