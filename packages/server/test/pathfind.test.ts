@@ -50,3 +50,33 @@ test("a wall with one gap forces the long way round", () => {
   // the blocked (2,3) corner); each free segment has max(dx,dy)=4 ⇒ 4 steps: 4+1+1+4 = 10.
   expect(path).toHaveLength(10);
 });
+
+/** A tile can be reached the long way first and a short way later, which drops its score while it
+ *  is still in the open set. Re-scanning the whole set on every pop could not miss that; a heap
+ *  has to be told the tile moved. This layout is the smallest one where forgetting costs a step —
+ *  it returns 7 instead of 6, a path that is legal but not the shortest. */
+test("a tile re-reached more cheaply still yields the shortest path", () => {
+  const m = parseHeightmap("00000\n00000\n00000\n00000\n00000", { x: 0, y: 0, dir: 2 });
+  const blocked = (x: number, y: number): boolean =>
+    (x === 1 && y === 1) || (y === 2 && (x === 3 || x === 4));
+  const path = findPath(m, blocked, { x: 0, y: 0 }, { x: 4, y: 4 })!;
+  expect(path.some((t) => blocked(t.x, t.y))).toBe(false);
+  expect(path.at(-1)).toEqual({ x: 4, y: 4 });
+  expect(path).toHaveLength(6);
+});
+
+/** The expansion cap only exists for rooms far larger than the heightmap admits (MAX_DIM = 64).
+ *  A search that drains a full 64x64 has to finish under it, or the cap would start answering
+ *  "no route" for tiles that merely take a while to rule out. */
+test("draining the largest allowed room stays under the expansion cap", () => {
+  const side = 64;
+  const m = parseHeightmap(Array.from({ length: side }, () => "0".repeat(side)).join("\n"),
+    { x: 0, y: 0, dir: 2 });
+  // Seal the goal in: every other tile has to be expanded before the search can give up.
+  const goal = { x: side - 1, y: side - 1 };
+  const sealed = (x: number, y: number): boolean =>
+    (x === side - 2 && y >= side - 2) || (y === side - 2 && x >= side - 2);
+  expect(findPath(m, sealed, { x: 0, y: 0 }, goal)).toBeNull();
+  // Reachable tiles in the same room still resolve, so the null above is the seal, not the cap.
+  expect(findPath(m, sealed, { x: 0, y: 0 }, { x: side - 1, y: 0 })).not.toBeNull();
+});

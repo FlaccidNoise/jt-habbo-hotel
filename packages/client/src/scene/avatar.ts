@@ -16,6 +16,15 @@ const WAVE_MS = 1400;
 const WAVE_FRAME_MS = 350;
 const ZU = SCALE / 2;   // pixels per world height unit, for the occlusion box
 
+/** Sprites are nearest-sampled and the world is drawn at ZOOM, so a figure standing at a fraction
+ *  of a world pixel lands between device pixels: the sampler then gives some rows of the sheet two
+ *  screen pixels and their neighbours one, and the split moves as the figure slides. The figure
+ *  boils rather than walks, at any frame rate. Snapping the lerp to the device grid — the camera
+ *  is already rounded, room.ts `follow` — is what makes a walk read as smooth. */
+function snap(n: number): number {
+  return Math.round(n * ZOOM) / ZOOM;
+}
+
 /** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
  *  than a plausible box — a silent fallback hides a bad deploy behind an avatar that looks fine. */
 function missingMarker(): Graphics {
@@ -43,6 +52,8 @@ export class AvatarSprite {
   private walkFrame = 0;
   private wavingUntil = 0;
   private waveFrame = 0;
+  /** The pose the sprite is already showing — see `redraw`. */
+  private shown = "";
 
   constructor(state: AvatarState, depth: DepthIndex, private baker: FigureBaker | null) {
     this.id = state.id;
@@ -94,6 +105,7 @@ export class AvatarSprite {
 
   setFigure(figure: string): void {
     this.figure = this.read(figure);
+    this.shown = "";   // same pose, different outfit — a different baked cell
     this.redraw();
   }
 
@@ -173,18 +185,15 @@ export class AvatarSprite {
     // Depth follows whole tiles, so it is restacked on the step, not on every frame of the slide.
     const stepped = to.x !== this.at.x || to.y !== this.at.y || to.z !== this.at.z;
     this.at = { ...to };
-    const phase = Math.min(WALK_FRAMES - 1, (t * WALK_FRAMES) | 0);
-    if (phase !== this.walkFrame) {
-      this.walkFrame = phase;
-    }
+    this.walkFrame = Math.min(WALK_FRAMES - 1, (t * WALK_FRAMES) | 0);
     this.redraw();
     const point = lerpScreen(
       worldToScreen(from.x, from.y, from.z, SCALE),
       worldToScreen(to.x, to.y, to.z, SCALE),
       t,
     );
-    this.view.x = point.sx;
-    this.view.y = point.sy;
+    this.view.x = snap(point.sx);
+    this.view.y = snap(point.sy);
     if (stepped) this.placeDepth();
   }
 
@@ -214,17 +223,25 @@ export class AvatarSprite {
     return this.baker?.crown(this.frame()) ?? 80;
   }
 
+  /** `update` runs this every frame of a walk, but the sheet row only changes WALK_FRAMES times a
+   *  tile — eight times a second. Reaching the baked cell costs a `resolveLayers` and a key build
+   *  per call, so an ungated redraw spends most of its work proving the texture did not change.
+   *  `shown` is the pose already on screen; `setFigure` clears it, because the same pose on a new
+   *  outfit is a different cell. */
   private redraw(): void {
-    const texture = this.figure && this.baker
-      ? this.baker.texture(this.figure, this.frame(), this.dir)
-      : null;
+    const frame = this.frame();
+    const key = `${frame}|${this.dir}`;
+    if (key === this.shown) return;
+    this.shown = key;
+
+    const texture = this.figure && this.baker ? this.baker.texture(this.figure, frame, this.dir) : null;
     if (texture) {
       if (this.marker) {
         this.marker.destroy();
         this.marker = null;
       }
       this.sprite.texture = texture;
-      const offset = this.baker!.anchor(this.frame());
+      const offset = this.baker!.anchor(frame);
       this.sprite.x = offset.x;
       this.sprite.y = offset.y;
       this.sprite.visible = true;
@@ -245,8 +262,8 @@ export class AvatarSprite {
 
   private place(): void {
     const point = worldToScreen(this.at.x, this.at.y, this.at.z, SCALE);
-    this.view.x = point.sx;
-    this.view.y = point.sy;
+    this.view.x = snap(point.sx);
+    this.view.y = snap(point.sy);
     this.placeDepth();
   }
 

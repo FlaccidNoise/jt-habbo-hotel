@@ -3,6 +3,17 @@ import type { RoomModel, Tile } from "@grand/shared";
 
 const UNSEEN = 0, OPEN = 1, CLOSED = 2;
 
+/** Nodes expanded before a search gives up and reports no route.
+ *
+ *  A target with no route — a tile ringed by furni, or a walled-off nook — cannot be answered more
+ *  cheaply than by draining the open set, so it costs the whole reachable region. That is ordinary
+ *  play, not abuse: a third of the clicks in a crowded room find no route. The cap sits well above
+ *  a full sweep of the largest room the heightmap admits (MAX_DIM caps a room at 64x64 = 4096
+ *  tiles), so it cannot change an answer any room can produce today. It is here so that raising
+ *  MAX_DIM for the big public rooms cannot turn one such click into a whole-server stall. #363
+ *  replaces it with static reachability regions, which answer the common case without searching. */
+const EXPANSION_CAP = 20_000;
+
 /** A*: orthogonal cost 1, diagonal √2, octile heuristic with D=1, so a straight line is strictly
  *  cheaper than any zig-zag. Pop order is total — lowest f, then lowest h, then lowest insertion
  *  sequence — which makes every path reproducible. Excludes `from`, includes `to`. */
@@ -43,21 +54,72 @@ export function findPath(
     return (order[a] ?? 0) < (order[b] ?? 0);
   };
 
+  // The open set as an indexed binary heap: `heap` holds node ids ordered by `better`, `heapAt`
+  // maps a node back to its slot so a node whose g improves while it is still open can be sifted
+  // back into place. `better` reads the live scores, so the node this pops is the same one a scan
+  // of the whole set would have picked — the order stays total, and so every path stays
+  // reproducible. Scanning cost the frontier on every pop, which is what made a search that has
+  // to drain the set quadratic in the room's area.
+  const heap = new Int32Array(size);
+  const heapAt = new Int32Array(size).fill(-1);
+  let heapLen = 0;
+
+  const swap = (i: number, j: number): void => {
+    const a = heap[i] ?? 0, b = heap[j] ?? 0;
+    heap[i] = b; heapAt[b] = i;
+    heap[j] = a; heapAt[a] = j;
+  };
+  const siftUp = (from0: number): void => {
+    let i = from0;
+    while (i > 0) {
+      const parentAt = (i - 1) >> 1;
+      if (!better(heap[i] ?? 0, heap[parentAt] ?? 0)) break;
+      swap(i, parentAt);
+      i = parentAt;
+    }
+  };
+  const siftDown = (from0: number): void => {
+    let i = from0;
+    for (;;) {
+      const left = i * 2 + 1, right = left + 1;
+      let best = i;
+      if (left < heapLen && better(heap[left] ?? 0, heap[best] ?? 0)) best = left;
+      if (right < heapLen && better(heap[right] ?? 0, heap[best] ?? 0)) best = right;
+      if (best === i) break;
+      swap(i, best);
+      i = best;
+    }
+  };
+  const push = (node: number): void => {
+    heap[heapLen] = node;
+    heapAt[node] = heapLen;
+    heapLen++;
+    siftUp(heapLen - 1);
+  };
+  const pop = (): number => {
+    const top = heap[0] ?? 0;
+    heapAt[top] = -1;
+    heapLen--;
+    if (heapLen > 0) {
+      const last = heap[heapLen] ?? 0;
+      heap[0] = last;
+      heapAt[last] = 0;
+      siftDown(0);
+    }
+    return top;
+  };
+
   let inserted = 0;
   gScore[start] = 0;
   hScore[start] = octile(from.x, from.y);
   order[start] = inserted++;
   state[start] = OPEN;
-  const openSet = [start];
+  push(start);
 
-  while (openSet.length > 0) {
-    let at = 0;
-    for (let i = 1; i < openSet.length; i++) {
-      if (better(openSet[i] ?? 0, openSet[at] ?? 0)) at = i;
-    }
-    const cur = openSet[at] ?? 0;
-    openSet[at] = openSet[openSet.length - 1] ?? 0;
-    openSet.pop();
+  let expanded = 0;
+  while (heapLen > 0) {
+    if (expanded++ >= EXPANSION_CAP) return null;
+    const cur = pop();
 
     if (cur === goal) {
       const path: Tile[] = [];
@@ -87,7 +149,10 @@ export function findPath(
         state[next] = OPEN;
         hScore[next] = octile(nx, ny);
         order[next] = inserted++;
-        openSet.push(next);
+        push(next);
+      } else {
+        // Still open, and now cheaper to reach: its key fell, so it has to climb.
+        siftUp(heapAt[next] ?? 0);
       }
     }
   }

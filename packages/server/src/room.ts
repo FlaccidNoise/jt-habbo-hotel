@@ -594,15 +594,20 @@ export class Room {
    *  seat tile this mover is allowed to finish on — its furni stops blocking, its occupants and
    *  reservations do not. */
   private blockedFor(accountId: number, exempt?: Tile): (x: number, y: number) => boolean {
+    // The pathfinder probes this up to eight times per tile it expands, so the two scans this
+    // used to do per probe were the search's own cost multiplied by the room's population. Both
+    // sets are read-only for the life of the closure — a walk is planned in one synchronous pass,
+    // and nothing moves inside it.
+    const taken = new Set<string>();
+    for (const o of this.occ.values()) {
+      if (o.accountId !== accountId) taken.add(key(o.x, o.y));
+    }
+    for (const [id, walk] of this.walks) {
+      if (id !== accountId) taken.add(key(walk.dest.x, walk.dest.y));
+    }
     return (x, y) => {
       if (!(exempt && exempt.x === x && exempt.y === y) && this.furniBlocks(x, y)) return true;
-      for (const o of this.occ.values()) {
-        if (o.accountId !== accountId && o.x === x && o.y === y) return true;
-      }
-      for (const [id, walk] of this.walks) {
-        if (id !== accountId && walk.dest.x === x && walk.dest.y === y) return true;
-      }
-      return false;
+      return taken.has(key(x, y));
     };
   }
 
