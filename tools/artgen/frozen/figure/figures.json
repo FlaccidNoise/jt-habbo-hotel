@@ -1222,6 +1222,54 @@
       "pixelHash": "317c18731cadeaf6c3fb9a164a6fa32efd18213e028904fc82c11b430728a257"
     },
     {
+      "partId": "hr34",
+      "setId": 34,
+      "type": "hr",
+      "name": "Fringe",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr34.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "f5de7c8ffb6e2b70f0f6cee2f7b65a98c4f7bd7920f86bbe3e2f6c2d90731863",
+      "pixelHash": "f5ce22d96c49249fabfe0a44310e766ff15e5db0cc6dd91424840580e8468c5b"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",

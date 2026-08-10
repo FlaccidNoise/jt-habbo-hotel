@@ -1027,6 +1027,22 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.95, 0.85)},
         ],
     },
+    # Fringe (set 34). The cut lands on the brow line by arithmetic, not taste: at dir 3 a head-bone
+    # point draws at row 44 + y/2 - z, so the disc's lower front edge at y 4.4, z 14.0 puts it on
+    # row 31. Any deeper and the edge slides onto the eyes at rows 34-35.
+    #
+    # A flattened ball, not a slab. A box front proud enough to read as a fringe has its top corner
+    # outside the cap at every three-quarter view, and that corner reads as a spur off the temple.
+    # A disc has no corner to stick out, and its lower edge is flat across the middle fourteen
+    # columns, which is all "straight cut" has to mean at this scale.
+    "hr34": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.6, 12.6), "r": 11.1,
+             "squash": (1.00, 0.93, 0.91)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 4.4, 17.4), "r": 10.0,
+             "squash": (0.94, 0.40, 0.34)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
