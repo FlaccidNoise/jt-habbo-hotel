@@ -68,7 +68,13 @@ the v1 pins, marked (tune) where authoring may move them.
 - **Light:** above-front, vertically symmetric shading (audit B4).
 - **Outline:** 1 px, the part ramp's darkest shade. Pure black reserved for ground-contact
   edges (tune).
-- **Dither:** 2×2 checker only, on surfaces 4×4 px or larger, never across an outline.
+- **Dither:** 2×2 checker only, never across an outline. Implemented in the post-pass
+  (generator v2): the checker fires within 0.05 linear luma of a quantize threshold, only where
+  the per-pixel luma slope says curve (0.004–0.03 — flat faces hold their level, and a thin
+  cylinder crosses its whole band in a pixel or two, which reads as noise when checkered), and
+  only on mask runs 10 px or wider — the measured form of the old "4×4 px or larger" rule.
+  Under every prim-group seam the next pixel drops one shade: the crease that grounds a leg
+  against an apron.
 - **Proportions** (height units of 32 px at scale 64, all tune):
 
   | Archetype | Parameter | Value |
@@ -172,10 +178,16 @@ the style, and one finding that carries straight over from trim:
   stroke, so `floor_marble` draws its grout and `floor_parquet` does not — a fixed grid over a
   parquet weave would cut the weave into squares.
 - **Style so far.** `floor_marble` (ivory/slate chequer, grouted, one vein a slab),
-  `floor_parquet` (sand/walnut basket weave, quarter-turned every slab), `wall_wainscot` (plaster
-  over a walnut dado with a sand rail and a skirting), `wall_pinstripe` (gold pinstripe on
-  charcoal, 16 px repeat). Café takes the parquet and wainscot, the Casino Floor the marble and
-  pinstripe.
+  `floor_parquet` (sand/walnut basket weave, quarter-turned every slab), `floor_planks` (oak
+  planks along the diamond edge, cross seams on the (x+2y) measure — its lattice period is 64,
+  where the (2x+y) measure caps at 32 and read as brick paving), `wall_wainscot` (plaster over a
+  walnut dado with a sand rail and a skirting), `wall_pinstripe` (gold pinstripe on charcoal,
+  16 px repeat), `wall_logcabin` (one fat wall-length walnut log per 32 px course, marked only
+  by its knots — 16 px courses with staggered end seams read as brickwork). The café takes the
+  planks and log cabin (the lodge reference), the Casino Floor the marble and pinstripe. Two
+  authoring rules from the pair: a log or plank is seamless along its run, and the darkest legal
+  wood is oak `right` — luma 84.2 against `BACKDROP_LUMA_MIN` 82, so walnut `left` (76.2) is
+  under the bound everywhere, not only in the wainscot groove that first proved it.
 
 ## Proof gate before build-out
 
