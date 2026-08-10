@@ -1078,6 +1078,54 @@
       "pixelHash": "1eb6598ed232263972d35d9dae0ed268b8dcf9695924320467561526f4e16ebd"
     },
     {
+      "partId": "hr31",
+      "setId": 31,
+      "type": "hr",
+      "name": "Slick Back",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr31.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "071c122a69b16444e8eca74b1a992def40dc8e4e9a604de44877b81aff2a0a6f",
+      "pixelHash": "893149340b3c4710e855b702f21953393870659425011cf191533dbe42488f40"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",

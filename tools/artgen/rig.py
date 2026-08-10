@@ -994,6 +994,18 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "head", "slot": 0, "c": (-5.89, 2.91, 17.19), "r": 3.2},
         ],
     },
+    # Slick Back (set 31). The REAR ball carries the crown, so the highest point of the hair sits
+    # behind the highest point of the skull and the profile peaks at the back. The front ball is a
+    # low tight cap, shallow in y: swept-back hair has a high hairline and bare temples, which is
+    # what separates this from the Short Crop it would otherwise be.
+    "hr31": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.0, 11.8), "r": 11.0,
+             "squash": (0.955, 0.84, 0.85)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -5.0, 13.6), "r": 11.0,
+             "squash": (0.90, 0.94, 0.964)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
