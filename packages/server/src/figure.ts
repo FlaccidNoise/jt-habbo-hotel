@@ -29,11 +29,16 @@ function dress(accountId: number, grant: readonly number[]): string {
   const parts: WornPart[] = [];
   for (const [i, type] of DRESSED.entries()) {
     const options = grant.map(setById).filter((s) => s?.type === type);
-    const set = pick(options, accountId, i);
+    // A default face has eyes (#346). The bare head stays in the grant so the creator can offer
+    // it, but any grant holding an eyed face dresses one of those instead — the staff grant has
+    // none, so it keeps the plain head.
+    const eyed = options.filter((s) => s?.slotFamilies?.includes("iris"));
+    const set = pick(eyed.length > 0 ? eyed : options, accountId, i);
     if (!set) continue;
-    const palette = paletteFor(set.family);
+    // Per slot, not per set: a face's slot 0 is the skin ramp and its slot 1 is the curated iris,
+    // and picking both from the head's own family produces a string parseFigure refuses.
     const colors = Array.from({ length: set.slots }, (_, slot) =>
-      pick(palette, accountId, i * 8 + slot + 1),
+      pick(paletteFor(set.slotFamilies?.[slot] ?? set.family), accountId, i * 8 + slot + 1),
     );
     parts.push({ type, set: set.id, colors });
   }

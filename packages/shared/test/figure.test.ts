@@ -169,6 +169,8 @@ describe("the wardrobe registry", () => {
   test("the starter grant dresses a legal figure and the staff blazer is not in it", () => {
     expect(STARTER_GRANT_SETS).toContain(2);          // head, required by the parser
     expect(STARTER_GRANT_SETS).toContain(10);         // the cap, so hides is exercised in play
+    expect(STARTER_GRANT_SETS).toContain(17);         // an eyed face: a new player is not blank
     expect(STARTER_GRANT_SETS).not.toContain(16);     // staff blazer is never player-grantable
+    expect(STARTER_GRANT_SETS).not.toContain(28);     // the hair expansion is earned (#352)
   });
 });
