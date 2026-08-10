@@ -28,7 +28,7 @@ test("rejects over 512x512", () => {
   const row = "0".repeat(513);
   expect(() => parseHeightmap(Array(3).fill(row).join("\n"), DOOR)).toThrow(HeightmapError);
 });
-test("accepts the flagship's 300x300", () => {
+test("accepts a 300x300 — well above the flagship, well under MAX_DIM", () => {
   const row = "0".repeat(300);
   expect(parseHeightmap(Array(300).fill(row).join("\n"), DOOR).width).toBe(300);
 });

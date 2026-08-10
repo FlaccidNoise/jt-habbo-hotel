@@ -8,7 +8,8 @@ export class HeightmapError extends Error {}
 /** #406: raised from 64 for the giant public rooms. The client's cost follows the viewport rather
  *  than the room (#359/#360) and the pathfinder is bounded by EXPANSION_CAP, so the ceiling here is
  *  the room_state payload — 300x300 measures ~103 KB (#362), and 512 leaves headroom above the
- *  flagship without inviting a room nothing can serialise. */
+ *  flagship without inviting a room nothing can serialise. The flagship itself is 200x200 since
+ *  #409; the ceiling is sized for what a room may grow to, not for what the largest one is. */
 const MAX_DIM = 512;
 
 /** 'x'→-1 (void), '0'-'9'→0-9, 'a'-'z'→10-35, case-insensitive. Known Habbo quirk: 'x' shadows

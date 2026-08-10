@@ -64,9 +64,9 @@ function walkable(db: Database.Database): {
 }
 
 describe("the Resort Grounds floor", () => {
-  test("parses at 300x300 with a walkable door", () => {
+  test("parses at 200x200 with a walkable door", () => {
     const model = parseHeightmap(GROUNDS_HEIGHTMAP, GROUNDS_DOOR);
-    expect([model.width, model.height]).toEqual([300, 300]);
+    expect([model.width, model.height]).toEqual([200, 200]);
     expect(tileHeight(model, GROUNDS_DOOR.x, GROUNDS_DOOR.y)).toBe(0);
   });
 
@@ -93,7 +93,8 @@ describe("the Resort Grounds floor", () => {
 
 describe("the seeded Resort Grounds", () => {
   test("seeds and furnishes without throwing, well inside the boot budget", () => {
-    // #406 itself: assertOpen used to run A* once per tile, which at 90,000 tiles never returns.
+    // #406 itself: assertOpen used to run A* once per tile, which never returns at this room's
+    // tile count — 90,000 when the bug was found, 40,000 since #409 took the side to 200.
     const started = Date.now();
     const db = openDb(dbPath);
     const elapsed = Date.now() - started;
@@ -123,11 +124,11 @@ describe("the seeded Resort Grounds", () => {
     expect(reached).toBe(expected);
 
     for (const [zone, x, y] of [
-      ["plaza", 16, 152],
-      ["pool", 65, 125],
-      ["stage", 64, 165],
-      ["gallery", 110, 134],
-      ["café", 108, 168],
+      ["plaza", 16, 102],
+      ["pool", 65, 75],
+      ["stage", 64, 115],
+      ["gallery", 110, 84],
+      ["café", 108, 118],
     ] as const) {
       expect(tileHeight(model, x, y), `${zone} at ${x},${y} is void`).toBeGreaterThanOrEqual(0);
       expect(blocked(x, y), `${zone} at ${x},${y} is under furniture`).toBe(false);

@@ -218,8 +218,11 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  2 is #347: the café's counters became café counters, the fixtures the use verb needs went in,
  *  and a live room would otherwise keep serving cocktails at a coffee bar.
  *  3 is #406: the Resort Grounds joined LAYOUTS. Nothing in the café or the casino moved, but the
- *  stamp is per room and a room seeded at version 2 would never be handed the new one's layout. */
-export const LAYOUT_VERSION = 3;
+ *  stamp is per room and a room seeded at version 2 would never be handed the new one's layout.
+ *  4 is #409: the Resort Grounds went 300x300 to 200x200 and its whole layout moved 50 rows north
+ *  with it. The heightmap changed too, so seedRoom would re-lay the room on that alone — the bump
+ *  is what makes the two agree instead of leaving the layout stamp claiming the old plan. */
+export const LAYOUT_VERSION = 4;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
