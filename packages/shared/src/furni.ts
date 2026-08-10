@@ -49,6 +49,20 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // Amenities (#327): the two fixtures a café and a washroom need that no archetype covered.
   { id: "vending_machine", name: "Vending Machine", theme: "cafe", w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "vend", vend: { item: "drink_cola", price: 1 } },
   { id: "sink_basic",      name: "Wash Basin",      theme: "cafe", w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484, interaction: "wash" },
+  // Pool & spa deck (#357): the resort half of a casino resort, which the catalog had none of.
+  // Nothing here stacks. The parasol's stack top is the canopy at 2.5 and the trolley's is a hand
+  // above its own bottles — canStackOn would put a lamp on top of an umbrella.
+  { id: "sun_lounger",   name: "Sun Lounger",   theme: "pool", w: 1, l: 2, stackHeights: [1.1875],  canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0x2f8f8f },
+  { id: "deck_chair",    name: "Deck Chair",    theme: "pool", w: 1, l: 1, stackHeights: [1.5625],  canWalk: false, canStackOn: false, seatHeight: 0.62, color: 0x2f8f8f },
+  { id: "parasol_table", name: "Parasol Table", theme: "pool", w: 2, l: 2, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "cabana",        name: "Cabana",        theme: "pool", w: 2, l: 2, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  // `wash` off the def (#347): the rail broadcasts the action and the client plays the splash, so
+  // a tub reuses the basin's verb and needs no server code of its own.
+  { id: "hot_tub",       name: "Hot Tub",       theme: "pool", w: 2, l: 2, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "wash" },
+  { id: "towel_rack",    name: "Towel Rack",    theme: "pool", w: 1, l: 1, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "potted_palm",   name: "Potted Palm",   theme: "pool", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "drinks_trolley", name: "Drinks Trolley", theme: "pool", w: 1, l: 1, stackHeights: [1.375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "pool_ladder",   name: "Pool Ladder",   theme: "pool", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
   // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
   // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
   { id: "billiards_table",      name: "Billiards Table", theme: "prestige", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -69,6 +83,17 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", theme: "lodge", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
   { id: "side_table_slate",     name: "Slate Side Table",     theme: "lodge", w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "cafe_counter",         name: "Café Counter",         theme: "cafe", w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x2f8f8f, interaction: "vend", vend: { item: "drink_coffee", price: 1 } },
+  // Pool & spa deck colorways (#357).
+  { id: "sun_lounger_crimson",   name: "Crimson Sun Lounger",   theme: "pool", w: 1, l: 2, stackHeights: [1.1875],  canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
+  { id: "deck_chair_crimson",    name: "Crimson Deck Chair",    theme: "pool", w: 1, l: 1, stackHeights: [1.5625],  canWalk: false, canStackOn: false, seatHeight: 0.62, color: 0xaa3333 },
+  { id: "deck_chair_navy",       name: "Navy Deck Chair",       theme: "pool", w: 1, l: 1, stackHeights: [1.5625],  canWalk: false, canStackOn: false, seatHeight: 0.62, color: 0x3f5e9e },
+  { id: "parasol_table_teal",    name: "Teal Parasol Table",    theme: "pool", w: 2, l: 2, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "cabana_crimson",        name: "Crimson Cabana",        theme: "pool", w: 2, l: 2, stackHeights: [2.5],     canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "hot_tub_cedar",         name: "Cedar Hot Tub",         theme: "pool", w: 2, l: 2, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b, interaction: "wash" },
+  { id: "towel_rack_linen",      name: "Linen Towel Rack",      theme: "pool", w: 1, l: 1, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "potted_palm_teal",      name: "Teal Potted Palm",      theme: "pool", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "drinks_trolley_sunset", name: "Sunset Drinks Trolley", theme: "pool", w: 1, l: 1, stackHeights: [1.375],   canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "bar_counter_pool",      name: "Pool Bar",              theme: "pool", w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xc2a36b, interaction: "vend", vend: { item: "drink_cocktail", price: 2 } },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", theme: "casino", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
   { id: "fountain_gilded",     name: "Gilded Fountain",     theme: "casino", w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wish" },
@@ -151,6 +176,27 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["sink_basic", 150],
   ["vending_machine", 250],
   ["cafe_counter", 300],
+  // Pool & spa deck (#357), on the same rungs the lodge uses: a seat is entry, a 1x1 prop is 75,
+  // a 1x1 with contents or a 1x2 is median, and a 2x2 centrepiece is 300 like the fountain.
+  ["deck_chair", 25],
+  ["deck_chair_crimson", 25],
+  ["deck_chair_navy", 25],
+  ["pool_ladder", 50],
+  ["towel_rack", 75],
+  ["towel_rack_linen", 75],
+  ["potted_palm", 75],
+  ["potted_palm_teal", 75],
+  ["sun_lounger", 150],
+  ["sun_lounger_crimson", 150],
+  ["drinks_trolley", 150],
+  ["drinks_trolley_sunset", 150],
+  ["parasol_table", 300],
+  ["parasol_table_teal", 300],
+  ["cabana", 300],
+  ["cabana_crimson", 300],
+  ["hot_tub", 300],
+  ["hot_tub_cedar", 300],
+  ["bar_counter_pool", 300],
   // Prestige (#210). GAME.md §Price ladder puts the flagship at 3,300 — 5.5× the daily earn
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],

@@ -123,4 +123,22 @@ export const DECOR_CATALOG: DecorDef[] = [
     tile: { w: 16, h: 32 },
     cap: 0x8d9eb1,
   },
+  // Pool & spa deck (#357). The water is two shades of one ramp because teal's shadow shade is
+  // luma 74.5, under the 82 gateDecorContrast holds a backdrop to — a floor that dark stops an
+  // avatar's outline reading against it.
+  {
+    kind: "floor", id: "floor_deck", name: "Pool Deck",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x7e6a46, right: 0xc2a36b },
+  },
+  {
+    kind: "floor", id: "floor_pool", name: "Pool Water",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x2f8f8f, right: 0x3dbaba },
+  },
+  {
+    kind: "wall", id: "wall_spa", name: "Spa Tile",
+    tile: { w: 16, h: 32 },
+    cap: 0xcbc0ac,
+  },
 ];

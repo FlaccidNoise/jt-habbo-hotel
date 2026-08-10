@@ -616,6 +616,282 @@ PARTS = {
             {"t": "box", "c0": (0.66, 0.68, 0.80), "c1": (0.78, 0.76, 0.90), "ramp": "gold"},
         ],
     },
+    # ---- pool & spa deck (#357) ----
+    # The resort half of a casino resort, which the catalog had none of. Teal water and canvas,
+    # sand timber, ivory paint, crimson for the one hot accent per part — the same discipline the
+    # lodge uses with walnut, read for a poolside instead of a fireside.
+    #
+    # Every part here is authored front-to-low-fy like the rest of the catalog, so a lounger's
+    # headrest and a cabana's open side both face the camera after two quarter turns.
+    "sun_lounger": {
+        "w": 1, "l": 2, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.14, 0.00), "c1": (0.32, 0.30, 0.32), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.68, 0.14, 0.00), "c1": (0.84, 0.30, 0.32), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.16, 1.70, 0.00), "c1": (0.32, 1.86, 0.32), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.68, 1.70, 0.00), "c1": (0.84, 1.86, 0.32), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.10, 0.06, 0.32), "c1": (0.90, 1.94, 0.44), "bevel": 0.03,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (0.14, 0.12, 0.44), "c1": (0.86, 1.24, 0.58), "bevel": 0.05,
+             "seat": True},
+            # The back is two courses, not one: a single tall slab reads as a wall behind the
+            # cushion, and there is no tapered box to lay one back with. Two steps of different
+            # height put a stair in the silhouette, which is what says "reclined" at this size.
+            {"t": "box", "c0": (0.14, 1.24, 0.44), "c1": (0.86, 1.52, 0.78), "bevel": 0.05},
+            {"t": "box", "c0": (0.14, 1.52, 0.44), "c1": (0.86, 1.80, 1.06), "bevel": 0.05},
+            {"t": "box", "c0": (0.26, 1.56, 1.06), "c1": (0.74, 1.78, 1.16), "bevel": 0.04,
+             "ramp": "crimson"},
+            # Side rails proud of the frame slab in fy, both sides — the railing lesson. At fx 0.08
+            # against a 0.10..0.90 slab they break the silhouette instead of hiding inside it.
+            {"t": "hcyl", "x": 0.08, "y0": 0.06, "y1": 1.94, "z": 0.46, "r": 0.06,
+             "caps": False, "ramp": "ivory"},
+            {"t": "hcyl", "x": 0.92, "y0": 0.06, "y1": 1.94, "z": 0.46, "r": 0.06,
+             "caps": False, "ramp": "ivory"},
+        ],
+    },
+    # Two gates shape this part and they pull opposite ways.
+    #
+    # gateBounds wants the lowest pixel within half a tile of the ground line in all four
+    # directions, and the canopy is the widest thing here but sits 2 units up, so it contributes
+    # nothing low. A centre pedestal reaches fx+fy 2.6 against a 2.94 requirement and floats. A
+    # cross base spanning the footprint reaches 3.12 and does not.
+    #
+    # The other one is not a gate at all, and cost the first version of this part: the furni loop
+    # renders with shadows ON (rig.py only turns them off further down, for figures), and a canopy
+    # over a wide table casts onto it. At an 0.86 top the shadow covered most of the disc and left
+    # a lit crescent, which quantizes to a hard grey half-moon and reads as a mistake. Nothing in
+    # the catalog had ever overhung anything, so nothing had ever shown it. The fix is geometric:
+    # the top is small enough (0.56 against a 0.93 hem) to sit ENTIRELY in the shadow, so it reads
+    # as a table in the shade, and the base is charcoal, whose lit and shaded shades are close
+    # enough that the shadow line crossing it does not register.
+    "parasol_table": {
+        "w": 2, "l": 2, "ramp": "sand",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.82, 0.00), "c1": (1.94, 1.18, 0.10), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.82, 0.06, 0.00), "c1": (1.18, 1.94, 0.10), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.24, "ry": 0.24, "z0": 0.10, "z1": 0.20,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.07, "ry": 0.07, "z0": 0.20, "z1": 0.86,
+             "ramp": "charcoal"},
+            # Inlaid top, the cafe_table idiom: the teal rim disc is wider and the sand top stands
+            # proud inside it. Not coplanar — separate objects sharing a plane z-fight.
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.60, "ry": 0.60, "z0": 0.84, "z1": 0.89,
+             "ramp": "teal"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.56, "ry": 0.56, "z0": 0.86, "z1": 0.94},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.05, "ry": 0.05, "z0": 0.94, "z1": 2.00},
+            # Three cone courses, not one: an umbrella's profile breaks on the way down and a
+            # single taper reads as a funnel. rx is the MID radius and the taper factor swings
+            # +/- half of it, so tier one measures 0.93 at its hem — just inside the 2x2 frame,
+            # which crops rather than draws.
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.82, "ry": 0.82, "z0": 2.00, "z1": 2.12,
+             "taper": 0.72, "ramp": "crimson"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.58, "ry": 0.58, "z0": 2.12, "z1": 2.24,
+             "taper": 0.62, "ramp": "crimson"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.36, "ry": 0.36, "z0": 2.24, "z1": 2.36,
+             "taper": 0.45, "ramp": "crimson"},
+            {"t": "sphere", "c": (1.00, 1.00, 2.43), "r": 0.07, "ramp": "gold"},
+        ],
+    },
+    # Posts outside the curtains and curtains inset off the roof line, or this is a shed. The first
+    # pass ran three full-height panels flush to the footprint under a flush lid and rendered as
+    # exactly that — a teal cube. What separates a cabana from a hut is that you can see the frame
+    # holding the cloth: corner poles standing proud, a pelmet band the cloth hangs from, and the
+    # roof overhanging both.
+    "cabana": {
+        "w": 2, "l": 2, "ramp": "ivory",
+        "prims": [
+            {"t": "cyl", "cx": 0.11, "cy": 0.11, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 2.30,
+             "ramp": "sand"},
+            {"t": "cyl", "cx": 1.89, "cy": 0.11, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 2.30,
+             "ramp": "sand"},
+            {"t": "cyl", "cx": 0.11, "cy": 1.89, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 2.30,
+             "ramp": "sand"},
+            {"t": "cyl", "cx": 1.89, "cy": 1.89, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 2.30,
+             "ramp": "sand"},
+            {"t": "box", "c0": (0.22, 0.22, 0.00), "c1": (1.78, 1.78, 0.05), "ramp": "sand"},
+            {"t": "box", "c0": (0.20, 1.66, 0.06), "c1": (1.80, 1.80, 2.10), "ramp": "teal"},
+            {"t": "box", "c0": (0.20, 0.20, 0.06), "c1": (0.34, 1.70, 2.10), "ramp": "teal"},
+            {"t": "box", "c0": (1.66, 0.20, 0.06), "c1": (1.80, 1.70, 2.10), "ramp": "teal"},
+            # Gathered curtains at the open corners, tied back with a gold band. Three flat panels
+            # and a lid is a tent; the two drums are what make it a cabana in silhouette.
+            {"t": "cyl", "cx": 0.34, "cy": 0.32, "rx": 0.15, "ry": 0.15, "z0": 0.20, "z1": 1.96,
+             "taper": 0.88, "ramp": "teal"},
+            {"t": "cyl", "cx": 1.66, "cy": 0.32, "rx": 0.15, "ry": 0.15, "z0": 0.20, "z1": 1.96,
+             "taper": 0.88, "ramp": "teal"},
+            {"t": "cyl", "cx": 0.34, "cy": 0.32, "rx": 0.18, "ry": 0.18, "z0": 1.02, "z1": 1.10,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 1.66, "cy": 0.32, "rx": 0.18, "ry": 0.18, "z0": 1.02, "z1": 1.10,
+             "ramp": "gold"},
+            # Pelmet all the way round, not a valance on the open side only: the first pass hung
+            # one at the front and the roof's own overhang hid it from every direction.
+            {"t": "box", "c0": (0.06, 0.06, 2.10), "c1": (1.94, 1.94, 2.22), "ramp": "crimson"},
+            # Roof flush to the footprint at exactly 2.00: an overhang projects outside the frame,
+            # which the post-pass crops rather than draws. It overhangs the CURTAINS instead.
+            {"t": "box", "c0": (0.00, 0.00, 2.22), "c1": (2.00, 2.00, 2.36), "bevel": 0.03},
+            {"t": "box", "c0": (0.06, 0.06, 2.36), "c1": (1.94, 1.94, 2.50), "bevel": 0.03,
+             "ramp": "crimson"},
+        ],
+    },
+    # `wash` off the def (#347) and no new server code: the rail broadcasts an action and the
+    # client plays the splash, which is the same thing a tub wants that a basin does.
+    "hot_tub": {
+        "w": 2, "l": 2, "ramp": "teal",
+        "prims": [
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.94, "ry": 0.94, "z0": 0.00, "z1": 0.56,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.98, "ry": 0.98, "z0": 0.50, "z1": 0.60,
+             "ramp": "sand"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.00, "rx": 0.84, "ry": 0.84, "z0": 0.56, "z1": 0.62},
+            # Domes on the water, two teal and two ivory. Same ramp as the water on the teal pair,
+            # which is fine: every prim is its own seam group, so each dome still gets a detail
+            # line in teal's own outline shade and reads as a swell rather than as flat water.
+            {"t": "sphere", "c": (0.72, 0.86, 0.66), "r": 0.13},
+            {"t": "sphere", "c": (1.06, 0.70, 0.64), "r": 0.10},
+            {"t": "sphere", "c": (1.24, 1.10, 0.68), "r": 0.16, "ramp": "ivory"},
+            {"t": "sphere", "c": (0.88, 1.28, 0.66), "r": 0.11, "ramp": "ivory"},
+            {"t": "box", "c0": (0.62, 0.00, 0.00), "c1": (1.38, 0.24, 0.26), "ramp": "sand"},
+            {"t": "box", "c0": (0.58, 0.00, 0.26), "c1": (1.42, 0.28, 0.32), "bevel": 0.02,
+             "ramp": "ivory"},
+            {"t": "box", "c0": (0.06, 0.86, 0.50), "c1": (0.24, 1.14, 0.74), "bevel": 0.03,
+             "ramp": "crimson"},
+        ],
+    },
+    "towel_rack": {
+        "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.08, 0.30, 0.00), "c1": (0.30, 0.70, 0.07), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.70, 0.30, 0.00), "c1": (0.92, 0.70, 0.07), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.19, "cy": 0.50, "rx": 0.06, "ry": 0.06, "z0": 0.07, "z1": 1.36,
+             "ramp": "slate"},
+            {"t": "cyl", "cx": 0.81, "cy": 0.50, "rx": 0.06, "ry": 0.06, "z0": 0.07, "z1": 1.36,
+             "ramp": "slate"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.13, "y1": 0.87, "z": 1.36, "r": 0.055, "axis": "x",
+             "caps": False, "ramp": "slate"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.13, "y1": 0.87, "z": 0.66, "r": 0.05, "axis": "x",
+             "caps": False, "ramp": "slate"},
+            # Small towels, deliberately. The first pass hung two 0.28 x 0.34 x 0.78 slabs and they
+            # read as a pair of suitcases: they filled the tile, buried the frame, and hid the
+            # rolls entirely. A towel is 12 screen px wide, and the rack has to show around it.
+            {"t": "box", "c0": (0.24, 0.41, 0.94), "c1": (0.44, 0.59, 1.42), "bevel": 0.02},
+            {"t": "box", "c0": (0.56, 0.41, 0.94), "c1": (0.76, 0.59, 1.42), "bevel": 0.02,
+             "ramp": "crimson"},
+            # Rolls on the lower bar, in the band the hanging pair leaves clear.
+            {"t": "hcyl", "x": 0.50, "y0": 0.20, "y1": 0.46, "z": 0.74, "r": 0.115, "axis": "x",
+             "ramp": "ivory"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.54, "y1": 0.80, "z": 0.74, "r": 0.115, "axis": "x",
+             "ramp": "sand"},
+        ],
+    },
+    # A palm, not a second fern: bare trunk, one crown. plant_fern's read comes from five spires
+    # over a low leaf mass, so this one deliberately clears its trunk and puts everything at 1.3.
+    "potted_palm": {
+        "w": 1, "l": 1, "ramp": "fern",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.24, "ry": 0.24, "z0": 0.00, "z1": 0.44,
+             "taper": 1.28, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.34, "ry": 0.34, "z0": 0.42, "z1": 0.50,
+             "ramp": "teal"},
+            {"t": "sphere", "c": (0.50, 0.50, 0.54), "r": 0.20, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.10, "ry": 0.10, "z0": 0.48, "z1": 1.30,
+             "taper": 0.62, "ramp": "sand"},
+            {"t": "sphere", "c": (0.50, 0.50, 1.34), "r": 0.13},
+            {"t": "hcyl", "x": 0.50, "y0": 0.06, "y1": 0.94, "z": 1.34, "r": 0.06},
+            {"t": "hcyl", "x": 0.50, "y0": 0.06, "y1": 0.94, "z": 1.42, "r": 0.06, "axis": "x"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.09, "ry": 0.09, "z0": 1.30, "z1": 1.86,
+             "taper": 0.14},
+            {"t": "cyl", "cx": 0.30, "cy": 0.40, "rx": 0.09, "ry": 0.09, "z0": 1.24, "z1": 1.60,
+             "taper": 0.16},
+            {"t": "cyl", "cx": 0.70, "cy": 0.58, "rx": 0.09, "ry": 0.09, "z0": 1.24, "z1": 1.56,
+             "taper": 0.16},
+            {"t": "cyl", "cx": 0.40, "cy": 0.70, "rx": 0.08, "ry": 0.08, "z0": 1.24, "z1": 1.50,
+             "taper": 0.18},
+            {"t": "cyl", "cx": 0.62, "cy": 0.32, "rx": 0.08, "ry": 0.08, "z0": 1.24, "z1": 1.48,
+             "taper": 0.18},
+            {"t": "sphere", "c": (0.63, 0.42, 1.26), "r": 0.08, "ramp": "sand"},
+        ],
+    },
+    "drinks_trolley": {
+        "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "cyl", "cx": 0.20, "cy": 0.20, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 0.12,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.80, "cy": 0.20, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 0.12,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.20, "cy": 0.80, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 0.12,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.80, "cy": 0.80, "rx": 0.09, "ry": 0.09, "z0": 0.00, "z1": 0.12,
+             "ramp": "charcoal"},
+            # The two low-fy posts run past the deck to carry the push handle.
+            {"t": "box", "c0": (0.16, 0.16, 0.12), "c1": (0.24, 0.24, 1.16), "ramp": "slate"},
+            {"t": "box", "c0": (0.76, 0.16, 0.12), "c1": (0.84, 0.24, 1.16), "ramp": "slate"},
+            {"t": "box", "c0": (0.16, 0.76, 0.12), "c1": (0.24, 0.84, 0.94), "ramp": "slate"},
+            {"t": "box", "c0": (0.76, 0.76, 0.12), "c1": (0.84, 0.84, 0.94), "ramp": "slate"},
+            {"t": "box", "c0": (0.12, 0.12, 0.40), "c1": (0.88, 0.88, 0.47)},
+            {"t": "box", "c0": (0.05, 0.05, 0.94), "c1": (0.95, 0.95, 0.98), "ramp": "teal"},
+            {"t": "box", "c0": (0.08, 0.08, 0.96), "c1": (0.92, 0.92, 1.01), "bevel": 0.02},
+            {"t": "hcyl", "x": 0.20, "y0": 0.16, "y1": 0.84, "z": 1.16, "r": 0.045, "axis": "x",
+             "caps": False, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.34, "cy": 0.42, "rx": 0.07, "ry": 0.07, "z0": 1.01, "z1": 1.26,
+             "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.34, "cy": 0.42, "rx": 0.03, "ry": 0.03, "z0": 1.26, "z1": 1.36,
+             "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.30, "cy": 0.70, "rx": 0.10, "ry": 0.10, "z0": 1.01, "z1": 1.17,
+             "taper": 1.10, "ramp": "sand"},
+            # Tinted glassware, deliberately on the rim's ramp rather than the shelf's: an ivory
+            # glass on an ivory deck is a shape with no edge but its own detail line.
+            {"t": "cyl", "cx": 0.66, "cy": 0.46, "rx": 0.05, "ry": 0.05, "z0": 1.01, "z1": 1.15,
+             "taper": 1.25, "ramp": "teal"},
+        ],
+    },
+    "deck_chair": {
+        "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.12, 0.00), "c1": (0.24, 0.24, 0.56), "ramp": "sand"},
+            {"t": "box", "c0": (0.76, 0.12, 0.00), "c1": (0.86, 0.24, 0.56), "ramp": "sand"},
+            {"t": "box", "c0": (0.14, 0.74, 0.00), "c1": (0.24, 0.86, 0.96), "ramp": "sand"},
+            {"t": "box", "c0": (0.76, 0.74, 0.00), "c1": (0.86, 0.86, 0.96), "ramp": "sand"},
+            {"t": "hcyl", "x": 0.19, "y0": 0.12, "y1": 0.86, "z": 0.56, "r": 0.055,
+             "caps": False, "ramp": "sand"},
+            {"t": "hcyl", "x": 0.81, "y0": 0.12, "y1": 0.86, "z": 0.56, "r": 0.055,
+             "caps": False, "ramp": "sand"},
+            {"t": "box", "c0": (0.16, 0.14, 0.52), "c1": (0.84, 0.84, 0.62), "bevel": 0.04,
+             "seat": True},
+            # Deckchair canvas is striped, and a stripe on the same plane as the sling z-fights.
+            # One z-pixel proud instead — the casino_table betting-line idiom on a soft surface.
+            {"t": "box", "c0": (0.16, 0.30, 0.60), "c1": (0.84, 0.44, 0.65), "ramp": "ivory"},
+            {"t": "box", "c0": (0.16, 0.56, 0.60), "c1": (0.84, 0.70, 0.65), "ramp": "ivory"},
+            {"t": "box", "c0": (0.16, 0.76, 0.62), "c1": (0.84, 0.88, 1.46), "bevel": 0.04},
+            {"t": "box", "c0": (0.16, 0.72, 0.86), "c1": (0.84, 0.77, 1.14), "ramp": "ivory"},
+            {"t": "hcyl", "x": 0.82, "y0": 0.12, "y1": 0.88, "z": 1.46, "r": 0.06, "axis": "x",
+             "caps": False, "ramp": "sand"},
+        ],
+    },
+    # Poolside grab rails. Straight like `railing`, and for the same reason: players rotate, and a
+    # corner mesh would be a second archetype. The rungs stand proud of the stiles in fy both ways,
+    # or two quarter turns bury them inside the posts.
+    "pool_ladder": {
+        "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "box", "c0": (0.08, 0.34, 0.00), "c1": (0.32, 0.66, 0.07), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.68, 0.34, 0.00), "c1": (0.92, 0.66, 0.07), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.20, "cy": 0.50, "rx": 0.065, "ry": 0.065, "z0": 0.07, "z1": 1.14},
+            {"t": "cyl", "cx": 0.80, "cy": 0.50, "rx": 0.065, "ry": 0.065, "z0": 0.07, "z1": 1.14},
+            {"t": "sphere", "c": (0.20, 0.50, 1.14), "r": 0.075},
+            {"t": "sphere", "c": (0.80, 0.50, 1.14), "r": 0.075},
+            {"t": "hcyl", "x": 0.50, "y0": 0.20, "y1": 0.80, "z": 1.14, "r": 0.085, "axis": "x",
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.20, "y1": 0.80, "z": 0.74, "r": 0.075, "axis": "x",
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.20, "y1": 0.80, "z": 0.40, "r": 0.075, "axis": "x",
+             "caps": False},
+            # Grip sleeves, proud of the stiles so the accent is in the silhouette rather than a
+            # band sharing ivory's luma bucket on a flat face.
+            {"t": "cyl", "cx": 0.20, "cy": 0.50, "rx": 0.095, "ry": 0.095, "z0": 0.46, "z1": 0.68,
+             "ramp": "teal"},
+            {"t": "cyl", "cx": 0.80, "cy": 0.50, "rx": 0.095, "ry": 0.095, "z0": 0.46, "z1": 0.68,
+             "ramp": "teal"},
+        ],
+    },
     # ---- prestige fixtures (#210) ----
     # The deep end of the sink: account-bound, flagship-priced, and deliberately not a recolour of
     # anything else — a 3,300-Star fixture has to read as its own object across the room.

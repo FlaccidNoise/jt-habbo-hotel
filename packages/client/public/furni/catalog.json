@@ -992,6 +992,298 @@
       "recipeHash": "b8628bd7454062f77afc97939023bf463800a649231905084716c2deb9c9e8ea",
       "pixelHash": "a4e9aab7dc842689d77debeee22d3acbaefb4c94be94b99c753b76b68690e7e9"
     },
+    "sun_lounger": {
+      "defId": "sun_lounger",
+      "archetype": "artgen",
+      "sheet": "sun_lounger.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": 0.58,
+      "occlusion": null,
+      "nearSheet": "sun_lounger.near.png",
+      "nearHash": "29a044e053c3fda63a8117da833913258d3b408220c40d1e6642f732aa5662ec",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ebfbb9d47db9d771",
+      "recipeHash": "ebfbb9d47db9d771df3acf1f32500ca8a5090eba5452f61c8da32ac59a51484b",
+      "pixelHash": "514ffed5aab44c287d230d0e5c23c0f5c10ab335bbcdd64d8397c2580e7a9bb2"
+    },
+    "deck_chair": {
+      "defId": "deck_chair",
+      "archetype": "artgen",
+      "sheet": "deck_chair.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": 0.62,
+      "occlusion": null,
+      "nearSheet": "deck_chair.near.png",
+      "nearHash": "7c36c6e7e7653cc10e502548c32d6420243409e9f445cd9b00697d493c4871eb",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3bef54ca510ff460",
+      "recipeHash": "3bef54ca510ff460c5f7c20048f5944c7c31997ebf95632d62dc8b6e6be41985",
+      "pixelHash": "66594b1d3ae8ddf2c51bdb157b791fb04d4b6790b8f0af33566d67041efb0045"
+    },
+    "parasol_table": {
+      "defId": "parasol_table",
+      "archetype": "artgen",
+      "sheet": "parasol_table.png",
+      "frameW": 128,
+      "frameH": 144,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2771cb1c355b3979",
+      "recipeHash": "2771cb1c355b3979887835e4c46ba0cbe1b120f6a0133328a38e3e3eb2c3ca9e",
+      "pixelHash": "ca52d952eba5ce8d029256c56048325d64a9843581caf6e285f33d21e618de75"
+    },
+    "cabana": {
+      "defId": "cabana",
+      "archetype": "artgen",
+      "sheet": "cabana.png",
+      "frameW": 128,
+      "frameH": 144,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2d53ef3159e5621e",
+      "recipeHash": "2d53ef3159e5621e69bdfa4d385730ec49ebf0b7410501d706d0f0b049c883f1",
+      "pixelHash": "a334f0208968a2a8a0446cd84bc179e456e723be1fd8b611ecc6877ac32da060"
+    },
+    "hot_tub": {
+      "defId": "hot_tub",
+      "archetype": "artgen",
+      "sheet": "hot_tub.png",
+      "frameW": 128,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5b258bfeb03cc3c4",
+      "recipeHash": "5b258bfeb03cc3c4a430d767c68e7ac799eee06246f62c91176501f8f25beb13",
+      "pixelHash": "4bfa62a40a2f4a0d898baa141c2218171c9e191682cd8bfbea737859ea63f605"
+    },
+    "towel_rack": {
+      "defId": "towel_rack",
+      "archetype": "artgen",
+      "sheet": "towel_rack.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:32a25071dfee485e",
+      "recipeHash": "32a25071dfee485ec7f5c500a91d736227f83bbc5eb4f9a6d26dc60f9fcc84a1",
+      "pixelHash": "4609793794fb0d422bbb4e71349f4a4aeab6debc05d41c214ae4a1dedd931fc7"
+    },
+    "potted_palm": {
+      "defId": "potted_palm",
+      "archetype": "artgen",
+      "sheet": "potted_palm.png",
+      "frameW": 64,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 76,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3698750de601f22e",
+      "recipeHash": "3698750de601f22e0f6434544a7305aa7acdab679766046559aea57e17e9101d",
+      "pixelHash": "a77f3525c23660ae453a0143c00c90df15fd12a98bdbf1cb38b8b5d7032214da"
+    },
+    "drinks_trolley": {
+      "defId": "drinks_trolley",
+      "archetype": "artgen",
+      "sheet": "drinks_trolley.png",
+      "frameW": 64,
+      "frameH": 76,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:74816df6d3d62a06",
+      "recipeHash": "74816df6d3d62a0646fa18f5a4b92fbcf1c1ed9e685a4390fe63b6faba323575",
+      "pixelHash": "0ad79e8a68e0c9e603f6dd7d81f1d027fa4ea3b71924e16f4b35d156aa064783"
+    },
+    "pool_ladder": {
+      "defId": "pool_ladder",
+      "archetype": "artgen",
+      "sheet": "pool_ladder.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:01b6e3b95d731479",
+      "recipeHash": "01b6e3b95d731479ced9b1f1edac4524c41c67134d5943e2daeb16abb0c34698",
+      "pixelHash": "afa1f9954faad4a3e2ec4e307b748cad9f40ffb50b13cd580bc63bea0c4a0759"
+    },
     "billiards_table": {
       "defId": "billiards_table",
       "archetype": "artgen",
@@ -1515,6 +1807,332 @@
       "partLibraryHash": "artgen:82f70fa9b51f96dd",
       "recipeHash": "82f70fa9b51f96ddae110bde72ca19122c65141e85bec2b367a388f6026b4a80",
       "pixelHash": "1caa69464eee03e7cfc16cdffb7c347676cae07fdbed07b85a1f88419afea13a"
+    },
+    "sun_lounger_crimson": {
+      "defId": "sun_lounger_crimson",
+      "archetype": "artgen",
+      "sheet": "sun_lounger_crimson.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": 0.58,
+      "occlusion": null,
+      "nearSheet": "sun_lounger_crimson.near.png",
+      "nearHash": "d3b58dd4b6ad3576aa11336d90838408fff2cbe6a7279a698293e7aaedd47389",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4d1d6be843a30f01",
+      "recipeHash": "4d1d6be843a30f017a2aa9f79122b481791680c6487586bbaac52add06eecb2d",
+      "pixelHash": "a18e2b266a1d4ddc70a617b1748e45e7a77079304f58f458ecd06348c49c304b"
+    },
+    "deck_chair_crimson": {
+      "defId": "deck_chair_crimson",
+      "archetype": "artgen",
+      "sheet": "deck_chair_crimson.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": 0.62,
+      "occlusion": null,
+      "nearSheet": "deck_chair_crimson.near.png",
+      "nearHash": "d891e845b04909653044fb194f3bfbc6b3b5fe6c40d18e8f9ae78e43e5d3e527",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d8156dc60494ad39",
+      "recipeHash": "d8156dc60494ad398c274e35b69701a5b9aa7067854234b0b7329cfcf41d1ba2",
+      "pixelHash": "fa89d91a3e5e15173f34a7bf47b229f14fd44799ae0320e905a61089029fcbb3"
+    },
+    "deck_chair_navy": {
+      "defId": "deck_chair_navy",
+      "archetype": "artgen",
+      "sheet": "deck_chair_navy.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": 0.62,
+      "occlusion": null,
+      "nearSheet": "deck_chair_navy.near.png",
+      "nearHash": "38cada14722f8f04a78e91e29ce7a5efcbf3abb347fd99c8dcd6593cadc44db6",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7431373aff96c08f",
+      "recipeHash": "7431373aff96c08ff65b92b7adc47b581d813b69e1a3af606dded7f5ce14a9c6",
+      "pixelHash": "eeca337c96351520dea6e25df86a3efef44728b1b916e127764eb95726184416"
+    },
+    "parasol_table_teal": {
+      "defId": "parasol_table_teal",
+      "archetype": "artgen",
+      "sheet": "parasol_table_teal.png",
+      "frameW": 128,
+      "frameH": 144,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:04ae557ac53151b0",
+      "recipeHash": "04ae557ac53151b08b3ba1e08a1b48c97d29ccdfeed28d7cc9570f7f7471b96b",
+      "pixelHash": "b45b88bd5db557f7924ab760f980b91a4784763ca641100d314b10e860427616"
+    },
+    "cabana_crimson": {
+      "defId": "cabana_crimson",
+      "archetype": "artgen",
+      "sheet": "cabana_crimson.png",
+      "frameW": 128,
+      "frameH": 144,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dd98a78e8863d549",
+      "recipeHash": "dd98a78e8863d549fb087f6050f7c25dbe45d7610f69753552490f0f6a51905b",
+      "pixelHash": "31aae350d40aabf092959caca1fe09a10e1364b92035a0485d59a55c72a4a1ac"
+    },
+    "hot_tub_cedar": {
+      "defId": "hot_tub_cedar",
+      "archetype": "artgen",
+      "sheet": "hot_tub_cedar.png",
+      "frameW": 128,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e9d6fe747aa97d3f",
+      "recipeHash": "e9d6fe747aa97d3ff9169ca912e3006a9336eef5cd5d1f2669111fc3f465b697",
+      "pixelHash": "8c531b7f01156b2bed49846f819269b83eda0c2f1ee09ffc67bd1b6e8f3812c5"
+    },
+    "towel_rack_linen": {
+      "defId": "towel_rack_linen",
+      "archetype": "artgen",
+      "sheet": "towel_rack_linen.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1b7edb2e19d6ed38",
+      "recipeHash": "1b7edb2e19d6ed38851237ff51c35afdc183b0243fd6c2a6c26560daf62653e6",
+      "pixelHash": "c2c9d16fc5b7737de32ba9ab52e1df8342a0f7ba90a76f31405b6835fe778f24"
+    },
+    "potted_palm_teal": {
+      "defId": "potted_palm_teal",
+      "archetype": "artgen",
+      "sheet": "potted_palm_teal.png",
+      "frameW": 64,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 76,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:659b960fdf0f3e7e",
+      "recipeHash": "659b960fdf0f3e7e701378f105909c9aadcdbcd9ed9106962f46ffbb7633d6b3",
+      "pixelHash": "2d89943c92234386c085333718c3c0f034bee9b20a9653b46dcb63d55b8d9f7e"
+    },
+    "drinks_trolley_sunset": {
+      "defId": "drinks_trolley_sunset",
+      "archetype": "artgen",
+      "sheet": "drinks_trolley_sunset.png",
+      "frameW": 64,
+      "frameH": 76,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2b1a617e6231bda4",
+      "recipeHash": "2b1a617e6231bda4863d604ba092d0ab883ecccc8c6e0173f98fb2d8b545a262",
+      "pixelHash": "9b2c54f2f4f5097d2a7d37464b2f8078d433b966b28078daaef53d7d0cb9c650"
+    },
+    "bar_counter_pool": {
+      "defId": "bar_counter_pool",
+      "archetype": "artgen",
+      "sheet": "bar_counter_pool.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bc3363ef7ee0e485",
+      "recipeHash": "bc3363ef7ee0e485b872a5affaddf97ffc56cc6ea7d1281eb75063902adab118",
+      "pixelHash": "34d1e88145d6a374b64a40346801382824c82fc05434a1205af5927cc85a526c"
     },
     "arcade_cabinet_plum": {
       "defId": "arcade_cabinet_plum",

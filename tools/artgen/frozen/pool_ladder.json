@@ -1,0 +1,32 @@
+{
+  "defId": "pool_ladder",
+  "archetype": "artgen",
+  "sheet": "pool_ladder.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:01b6e3b95d731479",
+  "recipeHash": "01b6e3b95d731479ced9b1f1edac4524c41c67134d5943e2daeb16abb0c34698",
+  "pixelHash": "afa1f9954faad4a3e2ec4e307b748cad9f40ffb50b13cd580bc63bea0c4a0759"
+}

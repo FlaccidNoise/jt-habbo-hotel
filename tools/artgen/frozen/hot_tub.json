@@ -1,0 +1,32 @@
+{
+  "defId": "hot_tub",
+  "archetype": "artgen",
+  "sheet": "hot_tub.png",
+  "frameW": 128,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5b258bfeb03cc3c4",
+  "recipeHash": "5b258bfeb03cc3c4a430d767c68e7ac799eee06246f62c91176501f8f25beb13",
+  "pixelHash": "4bfa62a40a2f4a0d898baa141c2218171c9e191682cd8bfbea737859ea63f605"
+}

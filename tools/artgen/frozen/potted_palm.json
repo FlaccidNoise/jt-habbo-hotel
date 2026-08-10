@@ -1,0 +1,32 @@
+{
+  "defId": "potted_palm",
+  "archetype": "artgen",
+  "sheet": "potted_palm.png",
+  "frameW": 64,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 76,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3698750de601f22e",
+  "recipeHash": "3698750de601f22e0f6434544a7305aa7acdab679766046559aea57e17e9101d",
+  "pixelHash": "a77f3525c23660ae453a0143c00c90df15fd12a98bdbf1cb38b8b5d7032214da"
+}

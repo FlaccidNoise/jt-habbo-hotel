@@ -1,0 +1,32 @@
+{
+  "defId": "drinks_trolley",
+  "archetype": "artgen",
+  "sheet": "drinks_trolley.png",
+  "frameW": 64,
+  "frameH": 76,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:74816df6d3d62a06",
+  "recipeHash": "74816df6d3d62a0646fa18f5a4b92fbcf1c1ed9e685a4390fe63b6faba323575",
+  "pixelHash": "0ad79e8a68e0c9e603f6dd7d81f1d027fa4ea3b71924e16f4b35d156aa064783"
+}

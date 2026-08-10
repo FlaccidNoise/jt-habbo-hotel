@@ -1,0 +1,34 @@
+{
+  "defId": "deck_chair",
+  "archetype": "artgen",
+  "sheet": "deck_chair.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": 0.62,
+  "occlusion": null,
+  "nearSheet": "deck_chair.near.png",
+  "nearHash": "7c36c6e7e7653cc10e502548c32d6420243409e9f445cd9b00697d493c4871eb",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3bef54ca510ff460",
+  "recipeHash": "3bef54ca510ff460c5f7c20048f5944c7c31997ebf95632d62dc8b6e6be41985",
+  "pixelHash": "66594b1d3ae8ddf2c51bdb157b791fb04d4b6790b8f0af33566d67041efb0045"
+}

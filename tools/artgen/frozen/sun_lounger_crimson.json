@@ -1,0 +1,34 @@
+{
+  "defId": "sun_lounger_crimson",
+  "archetype": "artgen",
+  "sheet": "sun_lounger_crimson.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": 0.58,
+  "occlusion": null,
+  "nearSheet": "sun_lounger_crimson.near.png",
+  "nearHash": "d3b58dd4b6ad3576aa11336d90838408fff2cbe6a7279a698293e7aaedd47389",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4d1d6be843a30f01",
+  "recipeHash": "4d1d6be843a30f017a2aa9f79122b481791680c6487586bbaac52add06eecb2d",
+  "pixelHash": "a18e2b266a1d4ddc70a617b1748e45e7a77079304f58f458ecd06348c49c304b"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "hot_tub_cedar",
+  "archetype": "artgen",
+  "sheet": "hot_tub_cedar.png",
+  "frameW": 128,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e9d6fe747aa97d3f",
+  "recipeHash": "e9d6fe747aa97d3ff9169ca912e3006a9336eef5cd5d1f2669111fc3f465b697",
+  "pixelHash": "8c531b7f01156b2bed49846f819269b83eda0c2f1ee09ffc67bd1b6e8f3812c5"
+}

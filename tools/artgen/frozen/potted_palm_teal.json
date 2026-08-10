@@ -1,0 +1,32 @@
+{
+  "defId": "potted_palm_teal",
+  "archetype": "artgen",
+  "sheet": "potted_palm_teal.png",
+  "frameW": 64,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 76,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:659b960fdf0f3e7e",
+  "recipeHash": "659b960fdf0f3e7e701378f105909c9aadcdbcd9ed9106962f46ffbb7633d6b3",
+  "pixelHash": "2d89943c92234386c085333718c3c0f034bee9b20a9653b46dcb63d55b8d9f7e"
+}

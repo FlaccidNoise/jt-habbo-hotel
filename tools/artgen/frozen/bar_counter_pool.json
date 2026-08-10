@@ -1,0 +1,32 @@
+{
+  "defId": "bar_counter_pool",
+  "archetype": "artgen",
+  "sheet": "bar_counter_pool.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bc3363ef7ee0e485",
+  "recipeHash": "bc3363ef7ee0e485b872a5affaddf97ffc56cc6ea7d1281eb75063902adab118",
+  "pixelHash": "34d1e88145d6a374b64a40346801382824c82fc05434a1205af5927cc85a526c"
+}
