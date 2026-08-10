@@ -151,6 +151,13 @@
       4073760,
       5322026,
       6307890
+    ],
+    "paper": [
+      3750198,
+      7039332,
+      10789530,
+      14013384,
+      16710639
     ]
   },
   "layers": [
@@ -196,10 +203,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "10791f02354a8df55f32a0320c08ed1c793955436900a59241aa4a1c39e13afd",
+      "recipeHash": "41c6a9b7e5abbff2112bf8325db90bcf0605cf21d2d22efaef1e56d29ce39fa8",
       "pixelHash": "9132aee00ed9ac896de51a6e1b64d5ac2769a4fb70e3898cbb73d851b4280a47"
     },
     {
@@ -244,11 +251,11 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "e3d9db56e26b6b97563204c0e0896e2394672d771ec4d66991d6cb78a431aa71",
-      "pixelHash": "d4f6478a76003f648b72a4ac921e320464e8cc09ca1fbe0cbf30209fa06edc21"
+      "recipeHash": "ed42c345fbfdb4dc3d36c57622c227a463ed912ccd103c55212c6d811e746e71",
+      "pixelHash": "4e54616f2ed4961e16aa1cfc01c5d443331980478ab60c3cb8a7aa2fca9e5389"
     },
     {
       "partId": "ch5",
@@ -292,10 +299,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "81964da025504f9cfeb87b65c3ae9ab706539aac324020520a6d1309fe1c6332",
+      "recipeHash": "9ce7c0c72ae7e7e1646d7607d00e8b227ca539168f3f59dc9b88393d00627681",
       "pixelHash": "ec5c83ab5f485d6a9d4778b675e63226cb6e0ca7e16489d28bc03b079d619e08"
     },
     {
@@ -340,10 +347,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "3e778a1697a23b02c5dd1b97889c72f8a3f7030e3e7aee763bcd2dad017210e0",
+      "recipeHash": "f48e9cc60fa046f8dee831bdf074e7af3a4b25a279699c7c26fd6d619874f8c7",
       "pixelHash": "17635a06b577aea7ad0930708b7b97e3a5e7c87349d6d4b79d69f9e9eb5cc013"
     },
     {
@@ -388,10 +395,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "a0edddfd957aa7c0ab9cf33f3a78888cf3e2b49fcd2c75db2cd6d909ec63678f",
+      "recipeHash": "b8c6049498cd74c2fc7add957be9d63f9e98812968c2bdca676ee78b987b5ac6",
       "pixelHash": "0d2ca96481bae0f0446d8a7b5fc592e7fd441313d235c1f66513f4eb0952ed12"
     },
     {
@@ -438,10 +445,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "5b3032d8dfa8d358d573d191ff51ec0bddf03fe6454cdc58da29fad816c7b1f1",
+      "recipeHash": "b42aac83008830994bce026157ca602dd938d328c77b34830eef80f642856aca",
       "pixelHash": "adbca16a861911aad945322c4febec5cb252394c845d8fdd858d0710505966e7"
     },
     {
@@ -486,10 +493,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "9740fcc388fdfb0a3fbdb1c2cd54d93436c50eba2bd45a111186e505dee42a83",
+      "recipeHash": "f37a4d265f6b844cdd90a59351f6bf657c0cec7ea568ea660f569f982837cceb",
       "pixelHash": "cbaa3431ac302011eff79302c43c246290d3cfa2535d518b9b5546dba0708256"
     },
     {
@@ -534,10 +541,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "b834178d13bfa070bbbe7061ce4ba5f40b2b6f75e0847396570dfbe91235647f",
+      "recipeHash": "0c714a6336492cd7ce2963de782b32f5b815e237803022d63fa24f9e9b77f7ba",
       "pixelHash": "b7fa6e1c29063fe2c1be653e672892e0cab02ce6f649efb8183f5300e9bfdea9"
     },
     {
@@ -582,10 +589,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "d85f97c7748eec710af49dd42398b87a92df313e32b1c956d03c6d22e43c6633",
+      "recipeHash": "50c3905d4cf5b6c27677a41fd34dbf71219ecaccc71a11de9fcfeecc0cddcfd5",
       "pixelHash": "b7d9b9d72d68d6d4fc3b07b1f08dfbce2513b8b5525fe62bbde7f44e4845f278"
     },
     {
@@ -630,10 +637,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "b0b4b1ab9bd57cd12f92c8679b06683ab3b5231af6788a5e931f17089aafea0e",
+      "recipeHash": "f2d2a1e0612713220d8fbeb2c7051a38703a6b599e7e6f17bc913219d0dc2023",
       "pixelHash": "996d539b07a2263be11f4e8b3a4907b4dac38a2ccf96446ef702e61c0fae48c8"
     },
     {
@@ -678,10 +685,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "b92f4c85f190998ad01ad6f72f8ffa5333166f72b66a01317a3a92edb8c3bdc5",
+      "recipeHash": "6093ccc8470312196033307f73e91473161a32ca0dc6b30bc1487a8becb68960",
       "pixelHash": "2743ade342fe4fae2c8fba13a5d4aea37a74acf1cfa69ec550060bde066bab24"
     },
     {
@@ -728,10 +735,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "07b12a00fbd5ba5f9de0d40ced6a8b13653064064db4cf7f86f0813ea70fb9c3",
+      "recipeHash": "be1d8a34a9bcf5622b5027a730081818973335719e226d93e027f1a348185ccf",
       "pixelHash": "f7634143fc088cc1b1c94b804582cb85f6edb0fe60f33763bd316ab0c03f3f98"
     },
     {
@@ -776,10 +783,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "90c817f680ad0fda3f3d8184d784d8bc4bfdbe22ec5a50eb7e0005e061d685ca",
+      "recipeHash": "f40446521e402f5acff3d3e8d354f49619703c2fe8c463d59c5f07517f0bc960",
       "pixelHash": "81a6f52cc12d9573fc175dda70cb1553a80871f9ceff3bb7a608aba39783d7da"
     },
     {
@@ -824,10 +831,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "6e8a68bfac1b933241a2b11f190a1a9b4f9a4411e9999b2943e5303320943855",
+      "recipeHash": "f7a258aee5a700796fff10ce1b2ab40b017028baa3f8845d97b8b5a7ec64eba8",
       "pixelHash": "11437c24b49398b8e90850f220948ba80abee91888dee516067ef3c9639f5b1f"
     },
     {
@@ -872,10 +879,10 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "668547cdb5494609519777263ab1fcdb4f658ba7f5845b673e2b53570ccefcd4",
+      "recipeHash": "21fa9324535a60ba7ed48a2c80b882569b476057227bae59809ad6d6b97190c9",
       "pixelHash": "1d3fad68e74bf594ac1e41e3101baeaa47e8ca7d163582e5daf8f7752aec14a5"
     },
     {
@@ -920,11 +927,564 @@
         102
       ],
       "figureHeight": 80,
-      "styleVersion": 2,
-      "generatorVersion": 1,
+      "styleVersion": 3,
+      "generatorVersion": 2,
       "figuredataVersion": 1,
-      "recipeHash": "977752cd705b956f379656ec1fb3e8ebb0e5a8bcf3ad423b85b8da10fd86e2d8",
+      "recipeHash": "89c282b19094ec06ad19da535384060413266e95cddc755849664da10c0d9886",
       "pixelHash": "ddd38172e0c1eec47a382fce667e40bc420d853722f124e95f61c7c941dd95a8"
+    },
+    {
+      "partId": "hd17",
+      "setId": 17,
+      "type": "hd",
+      "name": "Bright",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd17.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d15c0271b8655ceed20912923ebaeda61dc076daa18de050621c86ac33f8346a",
+      "pixelHash": "d4f969f2f33da01ff8bc2799a0569d5a3490819aea9a046a7ebdfcfdcda49440"
+    },
+    {
+      "partId": "hd18",
+      "setId": 18,
+      "type": "hd",
+      "name": "Calm",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd18.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "738c2e7ead984b7147408624a542920beee46be008637b31d86ffb5047c08e94",
+      "pixelHash": "c71c20e85d695889f4ce0d8f96097f49e4c02f073a447757448a7e0c7e77cf55"
+    },
+    {
+      "partId": "hd19",
+      "setId": 19,
+      "type": "hd",
+      "name": "Spark",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper",
+        "crimson"
+      ],
+      "sheet": "hd19.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e0b794e799c3519feaba564f720c8b26c6330ec33b935cc263c31e23d292ca03",
+      "pixelHash": "3eb80a419f66410089092ba67e9a2fdef9691e6aa6ebd87dc2de630ae982fc0d"
+    },
+    {
+      "partId": "hd20",
+      "setId": 20,
+      "type": "hd",
+      "name": "Wink",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd20.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "4591c090d0481cf25949ef0a9e65e220479a87ea0b4589a497406daa74e6ed17",
+      "pixelHash": "7b167ec1c5c3debb572916f1365414df795643af5a8da068aa4ec7961b9d66dd"
+    },
+    {
+      "partId": "hd21",
+      "setId": 21,
+      "type": "hd",
+      "name": "Sunny",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd21.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "60b86262b57693019262c1697025d9155e02b41e06a5b5ed7fb566baaf945420",
+      "pixelHash": "7914476c2af5290a40861cde3f2e2db9378b92fdca9a1c1cf4b9f19a1858bfb3"
+    },
+    {
+      "partId": "hd22",
+      "setId": 22,
+      "type": "hd",
+      "name": "Stern",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd22.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "75112d9f83438c6380fcf7df77e151c091dd50befb59e20f43a40e4fdb6332f3",
+      "pixelHash": "af03197d22c792fc51497c91bd9828745adbef929d53a95f30826e5dcd7e08aa"
+    },
+    {
+      "partId": "hd23",
+      "setId": 23,
+      "type": "hd",
+      "name": "Worry",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd23.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "87436ded17358fbdfce4c02c201abec216b56380e75cd31566a1d32b1dcf4306",
+      "pixelHash": "ac813f540ecc38aee614a8e0add8df22bd9d01e7c110b1d61ac256d3564743e2"
+    },
+    {
+      "partId": "hd24",
+      "setId": 24,
+      "type": "hd",
+      "name": "Freckle",
+      "slots": 2,
+      "hides": [],
+      "fixedColors": [
+        "paper"
+      ],
+      "sheet": "hd24.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "aa9eb56a45591185a73097221cb781acf01ade2a5b1be606e147b6b4e026e5eb",
+      "pixelHash": "016904d6aeb8d11f421beb025ad3522deb62e9461b28e216a0cedb9025408ff7"
+    },
+    {
+      "partId": "fa25",
+      "setId": 25,
+      "type": "fa",
+      "name": "Stubble",
+      "slots": 1,
+      "hides": [],
+      "sheet": "fa25.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "4a78a61d60fbe89ef72c54ceb74d240ef0c75528b8642ed6008835b9c051fefb",
+      "pixelHash": "1a0225d176a3cfe93c831941a1918af98b3cc16b61c71df8c1925c647ce78034"
+    },
+    {
+      "partId": "fa26",
+      "setId": 26,
+      "type": "fa",
+      "name": "Moustache",
+      "slots": 1,
+      "hides": [],
+      "sheet": "fa26.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b20b144e2e229e46f9f208872bfa4cd2c59c65abddea934c69e3a822472d776e",
+      "pixelHash": "bc5395fbea600f06c6260f6cdf71cba28a59e0821440bdd246f0544aeaeed079"
+    },
+    {
+      "partId": "fa27",
+      "setId": 27,
+      "type": "fa",
+      "name": "Full Beard",
+      "slots": 1,
+      "hides": [],
+      "sheet": "fa27.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2b23d08901e67d708644b0191c99371e41900fe2e05cb3de37efb92d80007c1e",
+      "pixelHash": "74f8d51e1bc496a1a103f701aab169ee89a70f95708234b0b35100f12f9860f1"
     }
   ]
 }
