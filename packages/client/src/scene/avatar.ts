@@ -195,7 +195,9 @@ export class AvatarSprite {
   }
 
   update(now: number): void {
-    const wave = this.wavingUntil > now ? ((now / this.waveFrameMs) | 0) % 2 : -1;
+    // Math.floor, not |0: now is epoch ms, and epoch/150 overflows a 32-bit int — the wrapped
+    // value can be negative, whose %2 is -1, which is the not-animating sentinel.
+    const wave = this.wavingUntil > now ? Math.floor(now / this.waveFrameMs) % 2 : -1;
     if (wave !== this.waveFrame) {
       this.waveFrame = wave;
       this.redraw();
