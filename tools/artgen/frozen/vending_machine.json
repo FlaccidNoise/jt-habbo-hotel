@@ -1,0 +1,32 @@
+{
+  "defId": "vending_machine",
+  "archetype": "artgen",
+  "sheet": "vending_machine.png",
+  "frameW": 64,
+  "frameH": 96,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 80,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:134050587d72fc9f",
+  "recipeHash": "134050587d72fc9f736eaf6996838bdd20ce16363df08ae866ead99c6c6a416f",
+  "pixelHash": "9cbd3ec234aa0bdd87ea8a595d3e5786940a46ae36246e22d2f69a3c0a237f3b"
+}

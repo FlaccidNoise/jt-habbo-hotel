@@ -27,6 +27,13 @@ export const FurniDefSchema = z.object({
    *  silhouette top (a chair back is taller than its seat). */
   seatHeight: z.number().min(0).nullable(),
   color: z.number().int(),
+  /** #326: what the "use" verb does to this item. Absent on furni you can only stand on or sit in.
+   *  A "toggle" def must declare a height per state — placement reads stackHeights[state]. */
+  interaction: z.enum(["vend", "wash", "toggle", "wish", "read"]).optional(),
+  /** #347: what a "vend" or "read" puts in the hand, and what it costs. Every def with one of
+   *  those two interactions carries it (furni.test.ts) and nothing else does. A price of 0 is a
+   *  prop rather than a sink — a book off a shelf moves no Stars and writes no ledger row. */
+  vend: z.object({ item: z.string(), price: z.number().int().min(0) }).optional(),
 });
 export type FurniDef = z.infer<typeof FurniDefSchema>;
 
@@ -63,6 +70,10 @@ export const AvatarStateSchema = z.object({
    *  and it is what the chat bubble colour derives from. */
   figure: z.string(),
   staff: z.boolean().optional(),   // NPC hotel staff — negative ids, visibly badged, never players
+  /** What this avatar is carrying — a drink off a counter or a book off a shelf (#326, #347) —
+   *  with the epoch ms it is finished. In the snapshot so a late joiner sees what everyone already
+   *  holding one is holding. */
+  hand: z.object({ item: z.string(), until: z.number().int() }).optional(),
 });
 export type AvatarState = z.infer<typeof AvatarStateSchema>;
 
@@ -121,6 +132,9 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   // Seat, not item: a 2-tile sofa has a seat per tile, and the tile is what the player clicked.
   z.object({ t: z.literal("sit"), x: z.number().int(), y: z.number().int() }),
   z.object({ t: z.literal("stand") }),
+  // One verb for every interactable (#326): the def says what using it does, so the client never
+  // has to know which behaviour it is asking for.
+  z.object({ t: z.literal("use"), itemId: z.number().int() }),
   // Wearing is one path, not two: the change has to reach everyone in the room anyway, and the
   // socket is already open and already authenticated.
   z.object({ t: z.literal("set_figure"), figure: z.string().max(400) }),
@@ -168,6 +182,17 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("figure_changed"), id: z.number().int(), figure: z.string() }),
   // Transient: no posture, no server-held state. The client plays the two frames and drops back.
   z.object({ t: z.literal("wave"), id: z.number().int() }),
+  // #326. `state` is the only thing that changes, so it travels alone rather than as a whole item.
+  z.object({ t: z.literal("furni_state"), itemId: z.number().int(), state: z.number().int() }),
+  // `item` null is the drink finishing. The timer is the server's; `until` only lets the client
+  // draw a drink that started before it joined.
+  z.object({ t: z.literal("handitem"), accountId: z.number().int(),
+             item: z.string().nullable(), until: z.number().int().optional() }),
+  // Transient like `wave`: no server-held state, the client plays it and drops back. `itemId` is
+  // the fountain a wish was thrown into (#347), so the splash lands on the water rather than on
+  // the avatar. A wash sends none — you scrub where you stand.
+  z.object({ t: z.literal("action"), accountId: z.number().int(),
+             action: z.enum(["wash", "wish"]), itemId: z.number().int().optional() }),
   z.object({ t: z.literal("furni_placed"), item: FurniItemSchema }),
   z.object({ t: z.literal("furni_moved"), item: FurniItemSchema }),   // z recomputed after a pickup
   z.object({ t: z.literal("wall_placed"), item: WallItemSchema }),

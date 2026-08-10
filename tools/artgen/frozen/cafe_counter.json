@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_counter",
+  "archetype": "artgen",
+  "sheet": "cafe_counter.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:82f70fa9b51f96dd",
+  "recipeHash": "82f70fa9b51f96ddae110bde72ca19122c65141e85bec2b367a388f6026b4a80",
+  "pixelHash": "1caa69464eee03e7cfc16cdffb7c347676cae07fdbed07b85a1f88419afea13a"
+}

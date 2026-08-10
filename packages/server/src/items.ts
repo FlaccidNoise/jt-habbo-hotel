@@ -191,6 +191,10 @@ export function updateItemZ(db: Database.Database, itemId: number, z: number): v
   db.prepare("UPDATE furni_items SET z = ? WHERE id = ?").run(z, itemId);
 }
 
+export function updateItemState(db: Database.Database, itemId: number, state: number): void {
+  db.prepare("UPDATE furni_items SET state = ? WHERE id = ?").run(state, itemId);
+}
+
 /** `side` is what tells the two surfaces apart: non-null means the item is hanging, and its z and
  *  dir are meaningless. `locked` is a museum donation — placed by the house, never taken down. */
 export function getItem(

@@ -64,6 +64,11 @@ const SERVER_CASES: Array<[string, unknown, unknown]> = [
    { t: "arcade_state", card: 7, score: 20, scored: true, over: true, outcome: "stopped", paid: 10 },
    { t: "arcade_state", card: 7, score: 20, scored: true, over: true, outcome: "folded" }],
   ["error", { t: "error", code: "bad_position", message: "no" }, { t: "error", code: "badposition", message: "no" }],
+  // A wash carries no itemId — you scrub where you stand — and a wish names the fountain (#347).
+  ["action wash", { t: "action", accountId: 1, action: "wash" },
+                  { t: "action", accountId: 1, action: "rinse" }],
+  ["action wish", { t: "action", accountId: 1, action: "wish", itemId: 5 },
+                  { t: "action", accountId: 1, action: "wish", itemId: 5.5 }],
 ];
 
 for (const [name, ok, bad] of CLIENT_CASES) {

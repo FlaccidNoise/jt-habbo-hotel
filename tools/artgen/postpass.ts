@@ -146,6 +146,10 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // shape of failure as gold on walnut, one corner of the palette over.
   stool_lodge_charcoal: { base: "stool_lodge",     ramps: { walnut: "charcoal", sand: "crimson" } },
   side_table_slate:     { base: "side_table",      ramps: { walnut: "slate", charcoal: "walnut" } },
+  // Amenities (#327). The body is the only ramp that moves, because the counter's other three all
+  // hold against teal: the charcoal kick is 45 luma below it, the ivory top 27 above it, and gold
+  // is a warm accent on a cyan body rather than the gold-on-walnut collision.
+  cafe_counter:         { base: "bar_counter",     ramps: { walnut: "teal" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

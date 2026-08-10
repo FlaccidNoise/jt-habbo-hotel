@@ -355,6 +355,9 @@ export async function startServer(opts: {
       case "stand":
         room.requestStand(accountId);
         break;
+      case "use":
+        room.useFurni(accountId, msg.itemId);
+        break;
       case "set_figure":
         room.setFigure(accountId, msg.figure);
         break;
