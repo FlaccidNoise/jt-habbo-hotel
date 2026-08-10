@@ -143,8 +143,12 @@ creations are free to manufacture, so the cap must sit on the **relationship**. 
   (#210): billiards table 3,300, candelabra 1,800, both minted account-bound.
 - **The Luck Lever** — 100/pull, tiny odds of exclusives, **odds published** (Decibel's practice).
   Shipped (#210). The published odds and the draw are one table (`shared/lever.ts`), so they cannot
-  drift. ~28% expected return, 38% win rate, two lever-only prizes. **The only repeatable sink**:
+  drift. ~28% expected return, 38% win rate, two lever-only prizes. The first repeatable sink:
   everything else in the economy is bought out once, so this is what keeps absorbing afterwards.
+- **Drinks at the bar** — 1 Star each, no mint (Coke Music's virtual Cokes). Shipped (#326): the
+  `use` verb on a bar counter debits the Star, the avatar carries the drink two minutes and it
+  evaporates — nothing enters the item economy. The second repeatable sink, priced as a prop so
+  ordering one is a social gesture, not a spend decision.
 
 ### Transfer limits (the actual wall)
 
