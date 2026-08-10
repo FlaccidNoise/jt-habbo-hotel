@@ -51,11 +51,6 @@
         background: #1c1f2be6; color: #eef; cursor: pointer; }
       #inventory button.armed { border-color: #7fd98a; background: #24422a; }
       #inventory .empty { color: #7d8496; font-size: 13px; }
-      #wardrobe { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-      #wardrobe .label { color: #9fd0ff; font-size: 13px; font-weight: 600; }
-      #wardrobe button { padding: 5px 10px; border-radius: 8px; border: 1px solid #3c5670;
-        background: #1b2836; color: #dbe6f2; cursor: pointer; font-size: 13px; }
-      #wardrobe button.worn { border-color: #7fb2d9; background: #24405c; }
       #catalog { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
       #catalog .label { color: #ffd76a; font-size: 13px; font-weight: 600; }
       #catalog button { padding: 5px 10px; border-radius: 8px; border: 1px solid #6a5a2e;
@@ -152,10 +147,80 @@
       #hud-tabs button { padding: 5px 10px; border-radius: 8px; border: 1px solid #444c63;
         background: #1c1f2be6; color: #eef; cursor: pointer; font-size: 13px; }
       #hud-tabs button.open { border-color: #7fb2d9; background: #24405c; }
-      #catalog, #wardrobe, #inventory { display: none; }
-      #catalog.open, #wardrobe.open, #inventory.open { display: flex; }
+      #catalog, #inventory { display: none; }
+      #catalog.open, #inventory.open { display: flex; }
       #sets-close { padding: 6px 9px; border-radius: 6px; border: 1px solid #444c63;
         background: #2c3346; color: #eef; cursor: pointer; }
+      /* #344: create-your-look and the wardrobe are one full-screen panel. Layout is specified at
+         1440x900; every colour here is already in this file or a style.ts ramp. */
+      #creator { position: fixed; inset: 0; background: #11131a; display: none;
+        flex-direction: column; }
+      #creator.open { display: flex; }
+      #creator button { font: inherit; }
+      #creator header { display: flex; align-items: baseline; gap: 14px; padding: 16px 24px 12px; }
+      #creator header .brand { font-size: 18px; font-weight: 700; }
+      #creator header .sub { font-size: 14px; color: #9aa3b8; }
+      #creator header .grant { margin-left: auto; font-size: 12px; color: #7d8496; }
+      #creator main { flex: 1; display: flex; gap: 16px; padding: 0 24px; min-height: 0; }
+      #creator .preview { width: 400px; flex: none; background: #1c1f2b; border: 1px solid #333a4d;
+        border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 12px;
+        align-items: center; }
+      #creator .stage { width: 100%; flex: 1; min-height: 0; border-radius: 8px;
+        background: linear-gradient(180deg, #5d8a3f 0 52px, #6f9e4c 52px);
+        border: 1px solid #23262f; display: grid; place-items: center; overflow: hidden; }
+      #creator .stage canvas { image-rendering: pixelated; max-width: 100%; max-height: 100%; }
+      #creator .turn { display: flex; gap: 8px; align-items: center; }
+      #creator .turn button { padding: 6px 12px; border-radius: 6px; border: 1px solid #444c63;
+        background: #2c3346; color: #eef; cursor: pointer; }
+      #creator .turn .dir { font-family: ui-monospace, monospace; font-size: 12px; color: #9aa3b8;
+        min-width: 38px; text-align: center; }
+      #creator .turn .dice { border-color: #6a5a2e; background: #2b2517; color: #eee0b0; }
+      #creator .figure { font-family: ui-monospace, monospace; font-size: 11px; color: #7d8496;
+        word-break: break-all; text-align: center; }
+      #creator .picker { flex: 1; min-width: 0; display: flex; gap: 12px; }
+      #creator .tabs { width: 132px; flex: none; display: flex; flex-direction: column; gap: 6px; }
+      #creator .tabs button { text-align: left; padding: 9px 12px; border-radius: 8px;
+        cursor: pointer; border: 1px solid #3c5670; background: #1b2836; color: #dbe6f2;
+        font-size: 13px; font-weight: 600; }
+      #creator .tabs button.on { border-color: #7fb2d9; background: #24405c; color: #eef; }
+      #creator .content { flex: 1; min-width: 0; background: #1c1f2b; border: 1px solid #333a4d;
+        border-radius: 10px; padding: 16px; overflow-y: auto; display: flex;
+        flex-direction: column; gap: 16px; }
+      #creator .group { display: flex; flex-direction: column; gap: 8px; }
+      #creator .group h3 { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .06em;
+        text-transform: uppercase; color: #9fd0ff; }
+      #creator .note { font-size: 12px; color: #7d8496; }
+      #creator .swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+      #creator .swatches button { width: 40px; height: 40px; border-radius: 8px; cursor: pointer;
+        border: 2px solid #333a4d; }
+      #creator .swatches button.on { border-color: #7fb2d9; box-shadow: 0 0 0 3px #24405c; }
+      #creator .cards { display: flex; gap: 10px; flex-wrap: wrap; }
+      #creator .cards button { display: flex; flex-direction: column; align-items: center;
+        gap: 6px; padding: 10px; border-radius: 8px; cursor: pointer; border: 1px solid #333a4d;
+        background: #10121a; color: #dbe6f2; font-size: 12px; }
+      #creator .cards button.on { border-color: #7fb2d9; background: #24405c; }
+      #creator .cards canvas { border-radius: 4px; background: #6f9e4c;
+        image-rendering: pixelated; }
+      #creator .cards .locked { color: #c9b27a; }
+      #creator .blank { display: grid; place-items: center; border-radius: 4px;
+        border: 1px dashed #444c63; color: #7d8496; font-size: 11px; }
+      /* the same tile on the floor-green stage, where slate grey would vanish */
+      #creator .stage .blank { border-color: #4d7434; color: #2f4a20; }
+      #creator .problem { margin: 12px 24px 0; background: #2a1a1f; border: 1px solid #c25555;
+        border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px;
+        font-size: 13px; }
+      #creator .problem b { color: #ffb3b3; font-size: 14px; }
+      #creator .problem .why { font-family: ui-monospace, monospace; font-size: 11px;
+        color: #d79a9a; }
+      #creator .problem button { align-self: flex-start; padding: 6px 12px; border-radius: 8px;
+        border: 1px solid #c25555; background: #3a2126; color: #ffd9d9; cursor: pointer; }
+      #creator footer { display: flex; align-items: center; gap: 10px; padding: 14px 24px 18px; }
+      #creator footer .hint { font-size: 12px; color: #7d8496; margin-right: auto; }
+      #creator footer button { padding: 9px 18px; border-radius: 8px; border: 1px solid #444c63;
+        background: #2c3346; color: #eef; cursor: pointer; }
+      #creator footer .go { padding: 9px 22px; border-color: #7fd98a; background: #24422a;
+        color: #d9f2dd; font-weight: 600; }
+      #creator footer .go:disabled { opacity: .55; cursor: default; }
     </style>
   </head>
   <body>
@@ -223,7 +288,6 @@
         <button type="button" id="tab-inventory">🎒 Inventory</button>
       </div>
       <div id="catalog"></div>
-      <div id="wardrobe"></div>
       <div id="inventory"></div>
       <div id="furni-menu" hidden></div>
       <div id="hint">Click a chair to sit · click it again to stand · R turns the item you are
@@ -233,6 +297,9 @@
                placeholder="Enter to say · Shift+Enter to shout · /w name message to whisper" />
       </form>
     </div>
+    <!-- The creator sits between the HUD it replaces and the login overlay, so DOM order alone
+         decides the stack: login covers everything, the creator covers the room. -->
+    <div id="creator"></div>
     <div id="login">
       <form id="login-form">
         <h1>The Grand</h1>
