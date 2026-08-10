@@ -558,6 +558,64 @@ PARTS = {
             {"t": "box", "c0": (0.11, 0.11, 0.69), "c1": (0.89, 0.89, 0.75), "bevel": 0.02},
         ],
     },
+    # ---- amenities (#327) ----
+    # A drinks machine and a hand basin. Both are 1x1 and both keep the catalog's front-at-low-fy
+    # convention, so they read camera-facing at dirs 2 and 4 with the rest of the set.
+    "vending_machine": {
+        "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.08, 0.10, 0.00), "c1": (0.92, 0.92, 0.16), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.12, 0.14, 0.16), "c1": (0.88, 0.88, 1.84), "bevel": 0.04},
+            # Dispense tray on a gold lip. A box cannot be subtracted from another, so the opening
+            # is a charcoal panel standing proud — the slot_machine screen idiom. It sits at 0.40
+            # rather than on the plinth: charcoal on charcoal left the two as one dark mass with a
+            # seam line through it, and the slot stopped reading as a slot.
+            {"t": "box", "c0": (0.18, 0.02, 0.36), "c1": (0.82, 0.18, 0.44), "ramp": "gold"},
+            {"t": "box", "c0": (0.20, 0.04, 0.40), "c1": (0.80, 0.18, 0.68), "ramp": "charcoal"},
+            # Display window: a charcoal frame proud of the body, an ivory pane proud of that, four
+            # cans proud of the pane. Every step is 0.03-0.04 — about a pixel, and enough that no
+            # two separate objects share a plane.
+            {"t": "box", "c0": (0.14, 0.07, 0.78), "c1": (0.60, 0.18, 1.72), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.18, 0.04, 0.84), "c1": (0.56, 0.10, 1.66), "ramp": "ivory"},
+            {"t": "box", "c0": (0.20, 0.00, 1.30), "c1": (0.33, 0.06, 1.60), "ramp": "crimson"},
+            {"t": "box", "c0": (0.40, 0.00, 1.30), "c1": (0.53, 0.06, 1.60), "ramp": "gold"},
+            {"t": "box", "c0": (0.20, 0.00, 0.94), "c1": (0.33, 0.06, 1.24), "ramp": "fern"},
+            {"t": "box", "c0": (0.40, 0.00, 0.94), "c1": (0.53, 0.06, 1.24), "ramp": "plum"},
+            # Selection panel beside the window, not under it: the front face is ~24 px wide at 64,
+            # so a keypad stacked below the glass would have nothing left to stand in.
+            {"t": "box", "c0": (0.64, 0.06, 1.02), "c1": (0.86, 0.18, 1.64), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.68, 0.02, 1.42), "c1": (0.82, 0.08, 1.52), "ramp": "gold"},
+            {"t": "box", "c0": (0.68, 0.02, 1.22), "c1": (0.82, 0.08, 1.32), "ramp": "gold"},
+            {"t": "box", "c0": (0.09, 0.11, 1.84), "c1": (0.91, 0.91, 2.00), "bevel": 0.04,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.16, 0.07, 1.87), "c1": (0.84, 0.14, 1.97), "ramp": "crimson"},
+        ],
+    },
+    "sink_basic": {
+        "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            # A rectangular basin, not a round bowl. Two rounds of cylinders — a wide dish, then a
+            # slim stem under a narrower one — both read as a birdbath, because at 64 px a circular
+            # bowl on a stalk IS a birdbath. What separates the two objects is the upstand at the
+            # back and a squared-off slab, so the geometry went where the difference is.
+            {"t": "box", "c0": (0.28, 0.30, 0.00), "c1": (0.72, 0.72, 0.07), "bevel": 0.02,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.34, 0.36, 0.07), "c1": (0.66, 0.68, 0.58), "bevel": 0.04},
+            {"t": "box", "c0": (0.08, 0.14, 0.54), "c1": (0.92, 0.88, 0.76), "bevel": 0.07},
+            # Water inside the rim, the fountain's idiom: a smaller slab standing proud of the
+            # porcelain, because separate objects sharing a plane z-fight.
+            {"t": "box", "c0": (0.21, 0.27, 0.72), "c1": (0.79, 0.76, 0.79), "bevel": 0.05,
+             "ramp": "teal"},
+            {"t": "box", "c0": (0.14, 0.74, 0.72), "c1": (0.86, 0.90, 0.98), "bevel": 0.03},
+            # The spout comes out of the upstand rather than standing on a stem. A stem tall enough
+            # to read is 4 px the height budget does not have, and level with the levers it was
+            # three gold blobs in a row.
+            {"t": "hcyl", "x": 0.50, "y0": 0.56, "y1": 0.78, "z": 0.90, "r": 0.05, "ramp": "gold"},
+            {"t": "box", "c0": (0.22, 0.68, 0.80), "c1": (0.34, 0.76, 0.90), "ramp": "gold"},
+            {"t": "box", "c0": (0.66, 0.68, 0.80), "c1": (0.78, 0.76, 0.90), "ramp": "gold"},
+        ],
+    },
     # ---- prestige fixtures (#210) ----
     # The deep end of the sink: account-bound, flagship-priced, and deliberately not a recolour of
     # anything else — a 3,300-Star fixture has to read as its own object across the room.

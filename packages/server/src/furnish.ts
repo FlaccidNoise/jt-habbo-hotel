@@ -45,25 +45,26 @@ interface Layout {
 // columns at y=9. Zoned the way a Habbo public room is, so the floor reads as places rather than
 // one field of furniture: the counter run and its back bar take the whole north wall with Maya
 // working the lane at y=2 between them — the welcome quest promises a first coffee at the café
-// counter, so there has to be one — the alcove holds a quiet marble table, four table clusters
-// fill the middle in two rows, and the lounge takes the south-west corner. Aisles are two tiles
-// everywhere: y 5-6 in from the door, x 7-8 between the cluster columns, y 8-10 between their
-// rows.
+// counter, so there has to be one — the run ends at the wash basin by the alcove mouth, the alcove
+// holds a quiet marble table, four table clusters fill the middle in two rows, and the lounge takes
+// the south-west corner. Aisles are two tiles everywhere: y 5-6 in from the door, x 7-8 between the
+// cluster columns, y 8-10 between their rows, with the vending machine on the west wall in the last
+// of them.
 const CAFE: Layout = {
   floor: [
     { defId: "lamp_basic", x: 0, y: 0 },
     { defId: "shelf_basic", x: 5, y: 1, dir: 4 },              // back bar, behind Maya
     { defId: "shelf_basic", x: 7, y: 1, dir: 4 },
     { defId: "shelf_basic", x: 9, y: 1, dir: 4 },
-    { defId: "bar_counter", x: 4, y: 3, dir: 4 },
-    { defId: "bar_counter", x: 6, y: 3, dir: 4 },
-    { defId: "bar_counter", x: 8, y: 3, dir: 4 },
-    { defId: "bar_counter", x: 10, y: 3, dir: 4 },
+    { defId: "cafe_counter", x: 4, y: 3, dir: 4 },             // coffee, 1 Star, off the def (#347)
+    { defId: "cafe_counter", x: 6, y: 3, dir: 4 },
+    { defId: "cafe_counter", x: 8, y: 3, dir: 4 },
+    { defId: "cafe_counter", x: 10, y: 3, dir: 4 },
+    { defId: "sink_basic", x: 12, y: 3 },                      // the wash basin ends the run
     { defId: "stool_lodge", x: 4, y: 4 },                      // counter seats, facing the bar
     { defId: "stool_lodge_charcoal", x: 6, y: 4 },
     { defId: "stool_lodge", x: 8, y: 4 },
     { defId: "stool_lodge_charcoal", x: 10, y: 4 },
-    { defId: "plant_fern", x: 12, y: 3 },                      // the alcove, under its own wall
     { defId: "stereo_basic", x: 15, y: 4, dir: 6 },
     { defId: "cafe_table_marble", x: 13, y: 5 },
     { defId: "cafe_chair_navy", x: 12, y: 5, dir: 2 },
@@ -74,6 +75,7 @@ const CAFE: Layout = {
     { defId: "cafe_table", x: 10, y: 7 },
     { defId: "cafe_chair_navy", x: 9, y: 7, dir: 2 },
     { defId: "cafe_chair_crimson", x: 11, y: 7, dir: 6 },
+    { defId: "vending_machine", x: 0, y: 9 },                  // cola, on the aisle wall (#347)
     { defId: "cafe_table", x: 5, y: 11 },
     { defId: "cafe_chair_navy", x: 4, y: 11, dir: 2 },
     { defId: "cafe_chair_crimson", x: 6, y: 11, dir: 6 },
@@ -111,7 +113,8 @@ const CAFE: Layout = {
 // core at height 2, where Lola Vale sings; the bar stands on the raised terrace at x 16-19,
 // y 12-19. Furniture cannot straddle a height change, so every piece sits wholly on the floor,
 // wholly on the stage ring, or wholly on the terrace. The north wall carries the two slot banks
-// split by dividers, the card pit fills the south in a two-by-two of tables with a two-tile lane
+// split by dividers, with the vending machine standing in the gap between them at the same height
+// as the slots, the card pit fills the south in a two-by-two of tables with a two-tile lane
 // at x 9-10 and y 15-16, and the billiards nook and arcades take the south-west corner. The
 // concourse in from the door — x 0-7, y 3-11 — stays open: that is where a crowd stands.
 const CASINO: Layout = {
@@ -121,6 +124,7 @@ const CASINO: Layout = {
     { defId: "slot_machine", x: 5, y: 0, dir: 4 },
     { defId: "slot_machine", x: 6, y: 0, dir: 4 },
     { defId: "divider_basic", x: 7, y: 0 },
+    { defId: "vending_machine", x: 12, y: 0 },                 // cola, the gap between the banks
     { defId: "divider_basic_plum", x: 13, y: 0 },
     { defId: "slot_machine", x: 15, y: 0, dir: 4 },            // east slot bank
     { defId: "slot_machine", x: 16, y: 0, dir: 4 },
@@ -139,7 +143,6 @@ const CASINO: Layout = {
     { defId: "side_table", x: 14, y: 5 },                      // beside the west-side stools
     { defId: "casino_stool_fern", x: 18, y: 4, dir: 6 },
     { defId: "casino_stool_fern", x: 18, y: 5, dir: 6 },
-    { defId: "side_table", x: 19, y: 4 },                      // beside the east-side stools
     { defId: "railing_iron", x: 4, y: 13 },                    // the card pit's west rail
     { defId: "railing_iron", x: 4, y: 14 },
     { defId: "railing_iron", x: 4, y: 17 },
@@ -203,8 +206,10 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  room doc and compares it like the heightmap, so a layout-only edit re-lays the room even though
  *  the floor and decor never moved — #330: #323's items (wall_clock, antlers, rug_lodge,
  *  stool_lodge, side_table) landed in the catalog after #315's resize had already run the layouts,
- *  so nothing short of a version bump would have put them in a live room. This bump is the first. */
-export const LAYOUT_VERSION = 1;
+ *  so nothing short of a version bump would have put them in a live room. This bump is the first.
+ *  2 is #347: the café's counters became café counters, the fixtures the use verb needs went in,
+ *  and a live room would otherwise keep serving cocktails at a coffee bar. */
+export const LAYOUT_VERSION = 2;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));

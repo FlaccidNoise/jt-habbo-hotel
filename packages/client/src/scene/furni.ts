@@ -3,6 +3,8 @@ import { worldToScreen } from "@grand/shared";
 import type { DepthBox, FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture, nearFrameTexture } from "./assets.ts";
+import { wisps } from "./effects.ts";
+import type { Wisp } from "./effects.ts";
 import { frameFor, occluderFor } from "./frames.ts";
 import type { FrameSpec, Occluder } from "./frames.ts";
 import { SCALE } from "./room.ts";
@@ -12,6 +14,37 @@ import type { DepthIndex } from "./sort.ts";
 const TOP = 1.3;
 const RIGHT = 1.0;
 const LEFT = 0.65;
+const GLOW_RINGS = 8;
+
+/** What a switched-on item gives off: the colour and reach of its light pool, the warmth its own
+ *  sprite takes on, and how far up the item the light comes from. */
+interface Glow {
+  color: number;
+  radius: number;
+  tint: number;
+  at: number;      // of the item's height
+  smoke: boolean;
+}
+
+/** A bulb at the top of a stand — the lamp and the candelabra, and the default for any toggle
+ *  added later. */
+const GLOW: Glow = { color: 0xffd9a0, radius: 46, tint: 0xffe6c2, at: 0.8, smoke: false };
+
+/** The items whose "on" is not a bulb (#331). A hearth burns low, hot and wide, at the grate
+ *  rather than at the chimney, and it is the one that smokes; a stereo lights its own display
+ *  panel and nothing else in the room, so its pool is small and cool and leaves the cabinet
+ *  its own colour. */
+const GLOWS: ReadonlyMap<string, Glow> = new Map([
+  ["fireplace", { color: 0xffa347, radius: 58, tint: 0xffd9b0, at: 0.3, smoke: true }],
+  ["fireplace_stone", { color: 0xffa347, radius: 58, tint: 0xffe0be, at: 0.3, smoke: true }],
+  ["stereo_basic", { color: 0x8fd4ff, radius: 16, tint: 0xdfeaff, at: 0.55, smoke: false }],
+]);
+
+/** Off a lit hearth (#331): slower, wider and heavier than the coffee's steam, and grey-brown
+ *  rather than white, because it is smoke coming off a fire and not water off a drink. */
+const SMOKE: Wisp = {
+  count: 5, ms: 2600, from: 0, rise: 18, drift: 3, size: 1.6, color: 0xcfc6bb, alpha: 0.45,
+};
 
 function shade(color: number, factor: number): number {
   const channel = (shift: number): number =>
@@ -84,6 +117,9 @@ export class FurniLayer {
   private views = new Map<number, Container>();
   /** #227: the half of a seating item that draws again above every avatar. */
   private fronts = new Map<number, Container>();
+  /** The wisps off each lit hearth (#331), redrawn every frame. The Graphics is a child of the
+   *  item's own view, so `remove` destroys it with the view and only has to forget the key. */
+  private smoking = new Map<number, Graphics>();
   private ghostView: Container | null = null;
 
   constructor(
@@ -131,7 +167,10 @@ export class FurniLayer {
     }
     this.remove(item.id);
 
-    const view = this.backFor(item) ?? this.slabFor(def, item);
+    const base = this.backFor(item) ?? this.slabFor(def, item);
+    const view = def.interaction === "toggle" && item.state === 1
+      ? this.lit(def, item, base)
+      : base;
     view.eventMode = "none";
     this.views.set(item.id, view);
     this.depth.set(`furni:${item.id}`, furniBox(def, item), view);
@@ -145,7 +184,14 @@ export class FurniLayer {
     this.world.addChild(front.view);
   }
 
+  /** Only the continuous animations. The one-shot flourishes live in `Effects`, which owns its own
+   *  clock; a hearth burns for as long as it is switched on, so it has nothing to expire. */
+  update(now: number): void {
+    for (const smoke of this.smoking.values()) wisps(smoke.clear(), now, SMOKE);
+  }
+
   remove(id: number): void {
+    this.smoking.delete(id);
     for (const [views, key] of [[this.views, `furni:${id}`], [this.fronts, `furni:${id}:front`]] as const) {
       const view = views.get(id);
       if (!view) continue;
@@ -216,6 +262,40 @@ export class FurniLayer {
     sprite.x = p.sx + spec.offsetX;
     sprite.y = p.sy + spec.offsetY;
     return sprite;
+  }
+
+  /** A switched-on item (#326): the sprite warmed a shade, over an additive pool of light built
+   *  from stacked rings — Graphics has no radial fill, and the falloff is what sells the glow. A
+   *  hearth also smokes (#331), from the same point its light comes from, since the fire is both.
+   *  The wisps go on last so they draw over the sprite: they rise inside the open firebox, which
+   *  the mesh leaves clear to the mantel, so nothing stands in front of them. */
+  private lit(def: FurniDef, item: FurniItem, base: Container): Container {
+    const tune = GLOWS.get(def.id) ?? GLOW;
+    const rotated = item.dir === 2 || item.dir === 6;
+    const height = def.stackHeights[item.state] ?? 0;
+    const p = worldToScreen(
+      item.x + ((rotated ? def.l : def.w) - 1) / 2,
+      item.y + ((rotated ? def.w : def.l) - 1) / 2,
+      item.z + height * tune.at,
+      SCALE,
+    );
+    const glow = new Graphics();
+    for (let ring = GLOW_RINGS; ring > 0; ring--) {
+      const k = ring / GLOW_RINGS;
+      glow.circle(p.sx, p.sy, tune.radius * k)
+        .fill({ color: tune.color, alpha: 0.02 + 0.06 * (1 - k) });
+    }
+    glow.blendMode = "add";
+    base.tint = tune.tint;
+    const group = new Container();
+    group.addChild(glow, base);
+    if (tune.smoke) {
+      const smoke = group.addChild(new Graphics());
+      smoke.x = p.sx;
+      smoke.y = p.sy;
+      this.smoking.set(item.id, smoke);
+    }
+    return group;
   }
 
   private slabFor(def: FurniDef, item: FurniItem): Graphics {
