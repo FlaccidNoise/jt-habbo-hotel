@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #11131a; color: #eef; font: 14px/1.4 system-ui, sans-serif; overflow: hidden; }
+    a { color: #9fd0ff; } a:hover { color: #c9e4ff; }
+    img { image-rendering: pixelated; display: block; }
+    button { font: inherit; }
+  </style>
+</helmet>
+<div style="height:100vh; display:flex; flex-direction:column; background:#11131a;">
+  <header style="display:flex; align-items:baseline; gap:14px; padding:16px 24px 12px;">
+    <span style="font-size:18px; font-weight:700;">The Grand</span>
+    <span style="font-size:14px; color:#9aa3b8;">Create your look</span>
+    <span style="margin-left:auto; font-size:12px; color:#7d8496;">everything here is the starter grant — earn the rest inside</span>
+  </header>
+  <main style="flex:1; display:flex; gap:16px; padding:0 24px; min-height:0;">
+    <section style="width:400px; flex:none; background:#1c1f2b; border:1px solid #333a4d; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px; align-items:center;">
+      <div style="width:100%; flex:1; min-height:0; border-radius:8px; background:linear-gradient(180deg,#5d8a3f 0 52px,#6f9e4c 52px); border:1px solid #23262f; display:grid; place-items:center; overflow:hidden;">
+        <img src="{{ previewUrl }}" width="320" height="510" alt="your avatar">
+      </div>
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button type="button" onClick="{{ turnLeft }}" style="padding:6px 12px; border-radius:6px; border:1px solid #444c63; background:#2c3346; color:#eef; cursor:pointer;">&#8634; turn</button>
+        <span style="font-family:ui-monospace,monospace; font-size:12px; color:#9aa3b8; min-width:38px; text-align:center;">dir {{ dir }}</span>
+        <button type="button" onClick="{{ turnRight }}" style="padding:6px 12px; border-radius:6px; border:1px solid #444c63; background:#2c3346; color:#eef; cursor:pointer;">turn &#8635;</button>
+        <button type="button" onClick="{{ randomize }}" style="padding:6px 12px; border-radius:6px; border:1px solid #6a5a2e; background:#2b2517; color:#eee0b0; cursor:pointer;">&#127922; Randomize</button>
+      </div>
+      <code style="font-family:ui-monospace,monospace; font-size:11px; color:#7d8496; word-break:break-all; text-align:center;">{{ figureString }}</code>
+    </section>
+    <section style="flex:1; min-width:0; display:flex; gap:12px;">
+      <nav style="width:132px; flex:none; display:flex; flex-direction:column; gap:6px;">
+        <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="7">
+          <button type="button" onClick="{{ tab.open }}" style="text-align:left; padding:9px 12px; border-radius:8px; cursor:pointer; border:1px solid {{ tab.border }}; background: {{ tab.bg }}; color: {{ tab.fg }}; font-size:13px; font-weight:600;">{{ tab.name }}</button>
+        </sc-for>
+      </nav>
+      <div style="flex:1; min-width:0; background:#1c1f2b; border:1px solid #333a4d; border-radius:10px; padding:16px; overflow-y:auto; display:flex; flex-direction:column; gap:16px;">
+        <sc-for list="{{ groups }}" as="group" hint-placeholder-count="2">
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#9fd0ff;">{{ group.name }}</span>
+            <sc-if value="{{ group.isSwatch }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="6">
+                  <button type="button" onClick="{{ item.pick }}" title="{{ item.label }}" style="width:40px; height:40px; border-radius:8px; cursor:pointer; background: {{ item.swatch }}; border:2px solid {{ item.border }}; box-shadow: {{ item.glow }};"></button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ group.isCards }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <sc-for list="{{ group.items }}" as="item" hint-placeholder-count="4">
+                  <button type="button" onClick="{{ item.pick }}" style="display:flex; flex-direction:column; align-items:center; gap:6px; padding:10px; border-radius:8px; cursor:pointer; border:1px solid {{ item.border }}; background: {{ item.bg }};">
+                    <img src="{{ item.url }}" width="{{ group.w }}" height="{{ group.h }}" alt="" style="border-radius:4px; background:#6f9e4c;">
+                    <span style="font-size:12px; color:#dbe6f2;">{{ item.label }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ group.note }}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:12px; color:#7d8496;">{{ group.note }}</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+  <footer style="display:flex; align-items:center; gap:10px; padding:14px 24px 18px;">
+    <span style="font-size:12px; color:#7d8496;">This same panel reopens in-room as the wardrobe — worn state loads in, "Enter" becomes "Wear it".</span>
+    <button type="button" style="margin-left:auto; padding:9px 18px; border-radius:8px; border:1px solid #444c63; background:#2c3346; color:#eef; cursor:pointer;">Not now</button>
+    <button type="button" style="padding:9px 22px; border-radius:8px; border:1px solid #7fd98a; background:#24422a; color:#d9f2dd; font-weight:600; cursor:pointer;">Enter The Grand &rarr;</button>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1440, &quot;height&quot;: 900}, &quot;faceMode&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;paper&quot;, &quot;tonal&quot;], &quot;default&quot;: &quot;paper&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Face rendering&quot;}}">
+const MAT = ["walnut", "oak", "plum", "fern", "crimson", "slate", "sand", "teal", "gold", "ivory", "navy", "charcoal"];
+const SKINS = ["skin_1", "skin_2", "skin_3", "skin_4", "skin_5", "skin_6"];
+const IRIS = ["charcoal", "walnut", "oak", "teal", "fern", "navy"];
+// Curated face sets — new hd sets, ids append after 16 (see Face Directions 1a).
+const FACES = [
+  { id: 17, name: "Bright", picks: { eyes: "bright", brows: "neutral", mouth: "smile" } },
+  { id: 18, name: "Calm", picks: { eyes: "calm", brows: "neutral", mouth: "neutral" } },
+  { id: 19, name: "Spark", picks: { eyes: "lashes", brows: "arched", mouth: "smile", extra: "blush" } },
+  { id: 20, name: "Wink", picks: { eyes: "wink", brows: "arched", mouth: "smirk" } },
+  { id: 21, name: "Sunny", picks: { eyes: "happy", brows: "neutral", mouth: "grin" } },
+  { id: 22, name: "Stern", picks: { eyes: "calm", brows: "heavy", mouth: "neutral" } },
+  { id: 23, name: "Worry", picks: { eyes: "bright", brows: "worried", mouth: "frown" } },
+  { id: 24, name: "Freckle", picks: { eyes: "bright", brows: "neutral", mouth: "smile", extra: "freckles" } },
+];
+// Facial hair — fa sets in hair colours, layered over any face.
+const BEARDS = [
+  { id: 0, name: "None", beard: "none" },
+  { id: 25, name: "Stubble", beard: "stubble" },
+  { id: 26, name: "Moustache", beard: "moustache" },
+  { id: 27, name: "Full Beard", beard: "full" },
+];
+const HAIRS = [
+  { part: null, setId: 0, name: "Bare" },
+  { part: "hr3", setId: 3, name: "Short Crop" },
+  { part: "hr4", setId: 4, name: "Long Waves" },
+];
+const TOPS = [
+  { part: "ch5", setId: 5, name: "Tee", slots: 1 },
+  { part: "ch6", setId: 6, name: "Trim Shirt", slots: 2 },
+];
+const LEGS = [
+  { part: "lg7", setId: 7, name: "Trousers" },
+  { part: "lg8", setId: 8, name: "Pleated Skirt" },
+];
+const HATS = [
+  { part: null, setId: 0, name: "No hat" },
+  { part: "ha10", setId: 10, name: "Bellhop Cap" },
+];
+
+class Component extends DCLogic {
+  state = {
+    ready: false, dir: 3, tab: "Face",
+    skin: "skin_3", face: 17, iris: "charcoal", beard: 0,
+    hair: "hr3", hairC: "charcoal",
+    top: "ch5", topC: ["crimson", "ivory"],
+    legs: "lg7", legsC: "navy",
+    shoesC: "charcoal",
+    hat: null, hatC: "navy",
+  };
+  cache = new Map();
+
+  async componentDidMount() {
+    const [B, F] = await Promise.all([import("./baker.js"), import("./faces.js")]);
+    this.B = B; this.F = F;
+    this.atlas = await B.loadAtlas("figure/");
+    this.setState({ ready: true });
+  }
+
+  bakeUrl(spec, dir, crop, scale) {
+    const key = JSON.stringify([spec, dir, crop, scale, this.props.faceMode]);
+    const hit = this.cache.get(key);
+    if (hit) return hit;
+    const { B, F, atlas } = this;
+    const s = this.state;
+    const mode = this.props.faceMode ?? "paper";
+    const im = B.bake(atlas, [
+      { partId: "bd1", colors: [spec.skin] }, { partId: "hd2", colors: [spec.skin] },
+    ], "stand", dir);
+    if (spec.face !== undefined) {
+      const face = FACES.find((f) => f.id === spec.face) ?? FACES[0];
+      const beard = BEARDS.find((b) => b.id === spec.beard)?.beard ?? "none";
+      const { pixels, mirror } = F.facePixels(
+        { ...F.STYLES.classic, mode }, { nose: "std", beard, extra: "none", ...face.picks }, dir);
+      B.stampFace(im, pixels,
+        B.faceInks(atlas.doc, { skin: spec.skin, iris: spec.iris, hairRamp: spec.hairC ?? "charcoal", mode }), mirror);
+    }
+    for (const l of spec.layers ?? []) B.bake(atlas, [l], "stand", dir, im);
+    const url = B.toCanvas(im, scale, crop, null).toDataURL();
+    this.cache.set(key, url);
+    if (this.cache.size > 400) this.cache.clear();
+    return url;
+  }
+
+  garmentLayers(s, worn) {
+    const L = [];
+    if (worn.legs) L.push({ partId: s.legs, colors: [s.legsC] });
+    if (worn.shoes) L.push({ partId: "sh9", colors: [s.shoesC] });
+    if (worn.top) L.push({ partId: s.top, colors: s.topC });
+    if (worn.hair && s.hair && !s.hat) L.push({ partId: s.hair, colors: [s.hairC] });
+    if (worn.hat && s.hat) L.push({ partId: s.hat, colors: [s.hatC] });
+    return L;
+  }
+
+  renderVals() {
+    const s = this.state;
+    const set = (patch) => () => this.setState(patch);
+    if (!s.ready) {
+      return { previewUrl: "", dir: s.dir, figureString: "loading figure bundles\u2026",
+        tabs: [], groups: [], turnLeft: () => {}, turnRight: () => {}, randomize: () => {} };
+    }
+    const all = { legs: true, shoes: true, top: true, hair: true, hat: true };
+    const previewUrl = this.bakeUrl({
+      skin: s.skin, face: s.face, iris: s.iris, beard: s.beard, hairC: s.hairC,
+      layers: this.garmentLayers(s, all),
+    }, s.dir, [0, 8, 64, 102], 5);
+
+    const parts = [`hd-${s.face}-${s.skin}-${s.iris}`];
+    if (s.legs) parts.push(`lg-${s.legs === "lg7" ? 7 : 8}-${s.legsC}`);
+    parts.push(`sh-9-${s.shoesC}`);
+    parts.push(`ch-${s.top === "ch5" ? 5 : 6}-${s.topC.slice(0, s.top === "ch6" ? 2 : 1).join("-")}`);
+    if (s.hair) parts.push(`hr-${s.hair === "hr3" ? 3 : 4}-${s.hairC}`);
+    if (s.beard) parts.push(`fa-${s.beard}-${s.hairC}`);
+    if (s.hat) parts.push(`ha-10-${s.hatC}`);
+    const figureString = "v1|" + parts.join(".");
+
+    const TABS = ["Skin", "Face", "Hair", "Top", "Legs", "Shoes", "Hat"];
+    const tabs = TABS.map((name) => ({
+      name, open: set({ tab: name }),
+      border: s.tab === name ? "#7fb2d9" : "#3c5670",
+      bg: s.tab === name ? "#24405c" : "#1b2836",
+      fg: s.tab === name ? "#eef" : "#dbe6f2",
+    }));
+
+    const mid = (ramp) => {
+      const c = ramp === "paper" ? 0xa4a29a : this.atlas.doc.palette[ramp][2];
+      return "#" + c.toString(16).padStart(6, "0");
+    };
+    const swatch = (ramps, current, apply) => ramps.map((r) => ({
+      label: r, swatch: mid(r), pick: set(apply(r)),
+      border: current === r ? "#7fb2d9" : "#333a4d",
+      glow: current === r ? "0 0 0 3px #24405c" : "none",
+    }));
+    const card = (items, current, w, h) => items.map((it) => ({
+      ...it, border: current === it.key ? "#7fb2d9" : "#333a4d",
+      bg: current === it.key ? "#24405c" : "#10121a",
+    }));
+
+    let groups = [];
+    if (s.tab === "Skin") {
+      groups = [
+        { name: "Skin ramp \u2014 head and body inherit together", isSwatch: true,
+          items: swatch(SKINS, s.skin, (r) => ({ skin: r })) },
+        { name: "", isSwatch: false, isCards: false,
+          note: "bd is implicit: it always wears hd's skin \u2014 a separate body colour is a neck-mismatch bug with no upside (figuredata.ts)." },
+      ];
+    } else if (s.tab === "Face") {
+      groups = [
+        { name: "Face \u2014 curated hd sets 17\u201324", isCards: true, w: 132, h: 120,
+          items: card(FACES.map((f) => ({
+            key: f.id, label: f.name, pick: set({ face: f.id }),
+            url: this.bakeUrl({ skin: s.skin, face: f.id, iris: s.iris, beard: 0 }, 3, [21, 26, 22, 20], 6),
+          })), s.face) },
+        { name: "Iris \u2014 slot 1", isSwatch: true,
+          items: swatch(IRIS, s.iris, (r) => ({ iris: r })) },
+        { name: "Facial hair \u2014 fa sets, wears your hair colour", isCards: true, w: 132, h: 120,
+          items: card(BEARDS.map((b) => ({
+            key: b.id, label: b.name, pick: set({ beard: b.id }),
+            url: this.bakeUrl({ skin: s.skin, face: s.face, iris: s.iris, beard: b.id, hairC: s.hairC }, 3, [21, 26, 22, 20], 6),
+          })), s.beard) },
+      ];
+    } else if (s.tab === "Hair") {
+      groups = [
+        { name: "Hair", isCards: true, w: 144, h: 120,
+          items: card(HAIRS.map((h) => ({
+            key: h.part, label: h.name, pick: set({ hair: h.part }),
+            url: this.bakeUrl({ skin: s.skin, face: s.face, iris: s.iris, beard: 0,
+              layers: h.part ? [{ partId: h.part, colors: [s.hairC] }] : [] }, 3, [14, 16, 36, 30], 4),
+          })), s.hair) },
+        { name: "Hair colour", isSwatch: true, items: swatch(MAT, s.hairC, (r) => ({ hairC: r })) },
+        { name: "", note: "hr3 + hr4 are the whole shipped library \u2014 the expansion track adds bob, ponytail, curls, slick (each one mesh, 8 dirs free)." },
+      ];
+    } else if (s.tab === "Top") {
+      groups = [
+        { name: "Top", isCards: true, w: 144, h: 136,
+          items: card(TOPS.map((t) => ({
+            key: t.part, label: t.name, pick: set({ top: t.part }),
+            url: this.bakeUrl({ skin: s.skin,
+              layers: [{ partId: t.part, colors: s.topC }] }, 3, [14, 38, 36, 34], 4),
+          })), s.top) },
+        { name: "Colour \u2014 slot 0", isSwatch: true,
+          items: swatch(MAT, s.topC[0], (r) => ({ topC: [r, s.topC[1]] })) },
+        ...(s.top === "ch6" ? [{ name: "Trim \u2014 slot 1", isSwatch: true,
+          items: swatch(MAT, s.topC[1], (r) => ({ topC: [s.topC[0], r] })) }] : []),
+      ];
+    } else if (s.tab === "Legs") {
+      groups = [
+        { name: "Legs", isCards: true, w: 128, h: 160,
+          items: card(LEGS.map((l) => ({
+            key: l.part, label: l.name, pick: set({ legs: l.part }),
+            url: this.bakeUrl({ skin: s.skin,
+              layers: [{ partId: l.part, colors: [s.legsC] }] }, 3, [16, 60, 32, 40], 4),
+          })), s.legs) },
+        { name: "Colour", isSwatch: true, items: swatch(MAT, s.legsC, (r) => ({ legsC: r })) },
+      ];
+    } else if (s.tab === "Shoes") {
+      groups = [
+        { name: "Shoes \u2014 Loafers", isCards: true, w: 160, h: 110,
+          items: card([{
+            key: "sh9", label: "Loafers", pick: () => {},
+            url: this.bakeUrl({ skin: s.skin,
+              layers: [{ partId: "sh9", colors: [s.shoesC] }] }, 3, [16, 84, 32, 22], 5),
+          }], "sh9") },
+        { name: "Colour", isSwatch: true, items: swatch(MAT, s.shoesC, (r) => ({ shoesC: r })) },
+      ];
+    } else if (s.tab === "Hat") {
+      groups = [
+        { name: "Hat \u2014 hides hair (the hides rule, not a holdout)", isCards: true, w: 144, h: 120,
+          items: card(HATS.map((h) => ({
+            key: h.part, label: h.name, pick: set({ hat: h.part }),
+            url: this.bakeUrl({ skin: s.skin, face: s.face, iris: s.iris, beard: 0,
+              layers: h.part ? [{ partId: h.part, colors: [s.hatC] }]
+                : (s.hair ? [{ partId: s.hair, colors: [s.hairC] }] : []) }, 3, [14, 14, 36, 28], 4),
+          })), s.hat) },
+        { name: "Hat colour", isSwatch: true, items: swatch(MAT, s.hatC, (r) => ({ hatC: r })) },
+      ];
+    }
+
+    const rnd = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    return {
+      previewUrl, figureString, dir: s.dir, tabs, groups,
+      turnLeft: () => this.setState((p) => ({ dir: (p.dir + 7) % 8 })),
+      turnRight: () => this.setState((p) => ({ dir: (p.dir + 1) % 8 })),
+      randomize: () => this.setState({
+        skin: rnd(SKINS), face: rnd(FACES).id, iris: rnd(IRIS),
+        beard: Math.random() < 0.25 ? rnd(BEARDS).id : 0,
+        hair: rnd(HAIRS).part ?? rnd(HAIRS).part, hairC: rnd(MAT),
+        top: rnd(TOPS).part, topC: [rnd(MAT), rnd(MAT)],
+        legs: rnd(LEGS).part, legsC: rnd(MAT), shoesC: rnd(MAT),
+        hat: Math.random() < 0.2 ? "ha10" : null, hatC: rnd(MAT),
+      }),
+    };
+  }
+}
+</script>
+</body>
+</html>

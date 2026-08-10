@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <style>
+    body { margin: 0; background: #11131a; color: #eef; font: 14px/1.4 system-ui, sans-serif; }
+    a { color: #9fd0ff; } a:hover { color: #c9e4ff; }
+    img { image-rendering: pixelated; display: block; }
+  </style>
+</helmet>
+<section style="padding:36px 40px 60px; display:flex; flex-direction:column; gap:24px;">
+  <div style="display:flex; align-items:baseline; gap:14px;">
+    <span style="font-family:ui-monospace,monospace; font-size:12px; color:#7d8496; border:1px solid #333a4d; border-radius:6px; padding:2px 8px;">turn 1</span>
+    <h1 style="margin:0; font-size:22px; font-weight:700;">Face art directions — hand-authored on the real hd2 skull</h1>
+    <span style="font-size:13px; color:#7d8496;">frozen sheets, indexed resolve, skin_3, floor green behind — the procedural #311 stamps are stripped first</span>
+  </div>
+  <div style="display:flex; gap:28px; align-items:flex-start;">
+    <sc-for list="{{ boards }}" as="board" hint-placeholder-count="3">
+      <article id="{{ board.id }}" style="background:#1c1f2b; border:1px solid #333a4d; border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:16px; width:1010px; flex:none;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <a href="#{{ board.id }}" style="font-family:ui-monospace,monospace; font-size:13px; font-weight:700; color:#9fd0ff; text-decoration:none; border:1px solid #3c5670; background:#1b2836; border-radius:6px; padding:3px 9px;">{{ board.id }}</a>
+          <h2 style="margin:0; font-size:18px;">{{ board.name }}</h2>
+          <span style="margin-left:auto; font-size:12px; color: {{ board.costColor }}; border:1px solid #333a4d; border-radius:99px; padding:3px 10px;">{{ board.cost }}</span>
+        </div>
+        <p style="margin:0; font-size:13px; color:#9aa3b8; max-width:70ch;">{{ board.blurb }}</p>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#7d8496;">Turnaround — dirs 1–5 (profiles keep one eye, back dirs stay blank)</span>
+          <div style="display:flex; gap:8px;">
+            <sc-for list="{{ board.turn }}" as="cell" hint-placeholder-count="5">
+              <figure style="margin:0; display:flex; flex-direction:column; gap:4px; align-items:center;">
+                <img src="{{ cell.url }}" width="180" height="180" alt="" style="border-radius:6px; border:1px solid #23262f;">
+                <figcaption style="font-family:ui-monospace,monospace; font-size:11px; color:#7d8496;">{{ cell.label }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#7d8496;">All six skin ramps — front</span>
+          <div style="display:flex; gap:8px;">
+            <sc-for list="{{ board.skins }}" as="cell" hint-placeholder-count="6">
+              <figure style="margin:0; display:flex; flex-direction:column; gap:4px; align-items:center;">
+                <img src="{{ cell.url }}" width="120" height="130" alt="" style="border-radius:6px; border:1px solid #23262f;">
+                <figcaption style="font-family:ui-monospace,monospace; font-size:11px; color:#7d8496;">{{ cell.label }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+        </div>
+        <sc-for list="{{ board.axes }}" as="axis" hint-placeholder-count="5">
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#7d8496;">{{ axis.name }}</span>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-for list="{{ axis.cells }}" as="cell" hint-placeholder-count="5">
+                <figure style="margin:0; display:flex; flex-direction:column; gap:4px; align-items:center;">
+                  <img src="{{ cell.url }}" width="{{ axis.w }}" height="{{ axis.h }}" alt="" style="border-radius:6px; border:1px solid #23262f;">
+                  <figcaption style="font-family:ui-monospace,monospace; font-size:11px; color:#7d8496;">{{ cell.label }}</figcaption>
+                </figure>
+              </sc-for>
+            </div>
+          </div>
+        </sc-for>
+      </article>
+    </sc-for>
+  </div>
+  <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:28px; max-width:3086px;">
+    <article style="background:#1c1f2b; border:1px solid #333a4d; border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:12px;">
+      <h2 style="margin:0; font-size:16px;">Palette decision — the eye white is a dedicated <code style="font-family:ui-monospace,monospace; color:#ffd76a;">paper</code> ramp</h2>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <span style="width:34px; height:34px; border-radius:6px; background:#39382f; border:1px solid #333a4d;"></span>
+        <span style="width:34px; height:34px; border-radius:6px; background:#6a6964; border:1px solid #333a4d;"></span>
+        <span style="width:34px; height:34px; border-radius:6px; background:#a4a29a; border:1px solid #333a4d;"></span>
+        <span style="width:34px; height:34px; border-radius:6px; background:#d5d3c8; border:1px solid #333a4d;"></span>
+        <span style="width:34px; height:34px; border-radius:6px; background:#fefcf0; border:1px solid #fff3;"></span>
+        <span style="font-family:ui-monospace,monospace; font-size:11px; color:#7d8496; margin-left:8px;">base 0xa4a29a &times; bible factors — hi = 0xfefcf0 is the white</span>
+      </div>
+      <p style="margin:0; font-size:13px; color:#c6cddd;">One new ramp, additive, bumps style_version 2&rarr;3 (the v1&rarr;v2 bump moved 0 pixel hashes — precedent is safe). Base keeps every channel &le; 164 so <em>hi</em> lands &le; 254: the skin no-clamp gate extends to it unchanged. It lives outside both families — figuredata never offers it as a wearable colour; only face-set sheets index it, so "there is no white" stays true for garments.</p>
+      <p style="margin:0; font-size:13px; color:#9aa3b8;"><b style="color:#c6cddd;">Rejected:</b> a 6th shade index ("paper" semantics per slot) breaks the invariant that a pixel resolves through its slot's worn ramp, and touches every palette array and the baker; reusing <code style="font-family:ui-monospace,monospace;">ivory.hi</code> (luma 193, yellow-grey) reads as dirty next to skin hi; no-whites-at-all is option <a href="#1b">1b</a> — judge its ceiling directly.</p>
+    </article>
+    <article style="background:#1c1f2b; border:1px solid #333a4d; border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:12px;">
+      <h2 style="margin:0; font-size:16px;">Mechanism — faces are figuredata SETS, not stamps</h2>
+      <p style="margin:0; font-size:13px; color:#c6cddd;">Faces are new <code style="font-family:ui-monospace,monospace; color:#9fd0ff;">hd</code> SETS — the model Habbo itself uses. hd stays one mesh forever (decision log 2026-08-05): every face set shares the identical skull render and differs only in its authored feature map, so hats stay non-combinatorial. New sets append (ids 17+), each declaring <b>2 slots</b>: slot 0 skin (family "skin", as today), slot 1 iris, from a curated iris list (charcoal, walnut, oak, teal, fern, navy). The whites index the fixed <code style="font-family:ui-monospace,monospace;">paper</code> ramp directly — never a slot, never player-facing. A shipped face is a CURATED combo of the axes on these boards (eyes + brows + mouth + extras), not free mix-and-match — that keeps the set count a catalogue, not a cross-product. Beards/moustaches/stubble ship as <code style="font-family:ui-monospace,monospace;">fa</code> sets in hair colours, so they layer over any face.</p>
+      <p style="margin:0; font-size:13px; color:#c6cddd;">Art is authored per-direction as pixel maps <b>relative to FaceAnchor</b> — the #311 registration machinery is exactly the reusable part. Three views drawn (front d3, three-quarter d2, profile d1); dirs 4/5 mirror about the anchor, shading-safe under B4. figurepass translates the map by the projected anchor per (frame, dir), so walk and sit cost nothing.</p>
+      <p style="margin:0; font-size:13px; color:#9aa3b8;">hd stays one mesh; the brow/nose interior prim lines and the old 4-px stamp are retired from hd2 (one intentional re-freeze — pixels are identity, this is the sanctioned path).</p>
+    </article>
+    <article style="background:#1c1f2b; border:1px solid #333a4d; border-radius:12px; padding:20px; display:flex; flex-direction:column; gap:12px;">
+      <h2 style="margin:0; font-size:16px;">gateFace evolves — invariants kept</h2>
+      <p style="margin:0; font-size:13px; color:#c6cddd;">Every authored pixel must land on the skull prim (unchanged, via the same stamp check); front dirs 2/3/4 must stamp &ge; 1 white and &ge; 1 pupil pixel; back dirs 0/6/7 must stamp none; profiles 1/5 exactly one eye (new — today the rig decides, now it is asserted). A new <b>feature-bounds</b> check holds the whole block inside the skull's lower half so no future set can creep onto the cranium hats occupy.</p>
+      <p style="margin:0; font-size:13px; color:#c6cddd;">Anchor registration measured off these boards (stand, dir 3): brow row y31, lid y33, eye rows y34–35, nose y36, mouth y39, chin y42 — i.e. the eye block sits 2 rows higher than the #311 stamp (y37), which is most of why the old face read low and sad.</p>
+      <p style="margin:0; font-size:13px; color:#9aa3b8;">Holdout consistency is untouched: faces paint only on hd2's own pixels, so gateHoldout's composite-equals-combined claim still holds bit-exact.</p>
+    </article>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { boards: [] };
+  async componentDidMount() {
+    const [B, F] = await Promise.all([import("./baker.js"), import("./faces.js")]);
+    const atlas = await B.loadAtlas("figure/");
+    const doc = atlas.doc;
+    const GREEN = "#6f9e4c";
+    const mk = (styleKey, picks, dir, skin, iris, crop, scale) => {
+      const style = F.STYLES[styleKey];
+      const im = B.bake(atlas, [
+        { partId: "bd1", colors: [skin] }, { partId: "hd2", colors: [skin] },
+      ], "stand", dir);
+      const { pixels, mirror } = F.facePixels(style, picks, dir);
+      B.stampFace(im, pixels, B.faceInks(doc, { skin, iris, hairRamp: "charcoal", mode: style.mode }), mirror);
+      return B.toCanvas(im, scale, crop, GREEN).toDataURL();
+    };
+    const defaults = { eyes: "bright", brows: "neutral", nose: "std", mouth: "smile", beard: "none", extra: "none" };
+    const meta = {
+      classic: { id: "1a", cost: "adds paper ramp \u00b7 style_version 3", costColor: "#ffd76a" },
+      soft: { id: "1b", cost: "zero palette change", costColor: "#7fd98a" },
+      expressive: { id: "1c", cost: "adds paper ramp \u00b7 style_version 3", costColor: "#ffd76a" },
+    };
+    const boards = [];
+    for (const key of ["classic", "soft", "expressive"]) {
+      const style = F.STYLES[key];
+      const turn = [1, 2, 3, 4, 5].map((dir) => ({
+        label: "dir " + dir + (dir === 3 ? " \u00b7 front" : ""),
+        url: mk(key, defaults, dir, "skin_3", "charcoal", [14, 16, 36, 36], 5),
+      }));
+      const skins = ["skin_1", "skin_2", "skin_3", "skin_4", "skin_5", "skin_6"].map((s) => ({
+        label: s, url: mk(key, defaults, 3, s, "charcoal", [20, 20, 24, 26], 5),
+      }));
+      const face = [21, 26, 22, 20], W = 176, H = 160;
+      const cellsOf = (axis, ids) => ids.map((id) => ({
+        label: id, url: mk(key, { ...defaults, [axis]: id }, 3, "skin_3", "charcoal", face, 8),
+      }));
+      const axes = [
+        { name: "Eyes", w: W, h: H, cells: cellsOf("eyes", ["bright", "calm", "lashes", "wink", "happy"]) },
+        { name: "Brows", w: W, h: H, cells: cellsOf("brows", ["neutral", "arched", "heavy", "worried"]) },
+        { name: "Mouth", w: W, h: H, cells: cellsOf("mouth", ["smile", "neutral", "grin", "frown", "smirk"]) },
+        { name: "Beards (worn hair colour \u2014 charcoal here)", w: W, h: H, cells: cellsOf("beard", ["stubble", "moustache", "full"]) },
+        { name: "Extras", w: W, h: H, cells: cellsOf("extra", ["blush", "freckles"]) },
+        {
+          name: "Iris colours (slot 1)", w: 160, h: 100,
+          cells: ["charcoal", "walnut", "oak", "teal", "fern", "navy"].map((iris) => ({
+            label: iris,
+            url: mk(key, { ...defaults, eyes: "bright" }, 3, "skin_3", iris, [23, 30, 16, 10], 10),
+          })),
+        },
+      ];
+      boards.push({ ...meta[key], key, name: style.name, blurb: style.blurb, turn, skins, axes });
+    }
+    this.setState({ boards });
+  }
+  renderVals() {
+    return { boards: this.state.boards };
+  }
+}
+</script>
+</body>
+</html>

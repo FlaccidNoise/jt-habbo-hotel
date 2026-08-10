@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; height: 100%; overflow: hidden; background: #11131a; color: #eef; font: 14px/1.4 system-ui, sans-serif; }
+    a { color: #9fd0ff; } a:hover { color: #c9e4ff; }
+    img { image-rendering: pixelated; }
+  </style>
+</helmet>
+<div style="position:fixed; inset:0; background:#11131a; overflow:hidden;">
+  <div style="position:absolute; inset:0; display:grid; place-items:center;">
+    <div style="position:relative;">
+      <img src="{{ floorUrl }}" width="768" height="384" alt="">
+      <img src="{{ avatarUrl }}" width="128" height="224" alt="" style="position:absolute; left:320px; top:-14px;">
+    </div>
+  </div>
+  <div style="position:fixed; top:10px; left:12px; font-weight:600; text-shadow:0 1px 3px #000; pointer-events:none;">Café (#1)</div>
+  <div style="position:fixed; top:32px; left:12px; color:#ffd76a; font-weight:600; text-shadow:0 1px 3px #000; pointer-events:none;">★ 120</div>
+  <button type="button" style="position:fixed; top:56px; left:12px; padding:5px 10px; border-radius:8px; border:1px solid #444c63; background:#1c1f2be6; color:#eef; cursor:pointer; font:inherit;">🧭 Rooms</button>
+  <button type="button" style="position:fixed; top:88px; left:12px; padding:5px 10px; border-radius:8px; border:1px solid #444c63; background:#1c1f2be6; color:#eef; cursor:pointer; font:inherit;">🏠 My suite</button>
+  <button type="button" style="position:fixed; top:120px; left:12px; padding:5px 10px; border-radius:8px; border:1px solid #6a5a2e; background:#2b2517e6; color:#eee0b0; cursor:pointer; font:inherit;">🎰 Hi-Lo</button>
+  <button type="button" style="position:fixed; top:152px; left:12px; padding:5px 10px; border-radius:8px; border:1px solid #6a5a2e; background:#2b2517e6; color:#eee0b0; cursor:pointer; font:inherit;">🎟️ Luck Lever</button>
+  <button type="button" style="position:fixed; top:184px; left:12px; padding:5px 10px; border-radius:8px; border:1px solid #444c63; background:#1c1f2be6; color:#eef; cursor:pointer; font:inherit;">🏅 Collections</button>
+  <div style="position:fixed; left:0; right:0; bottom:0; display:flex; flex-direction:column; gap:8px; padding:10px 12px;">
+    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+      <span style="color:#ffd76a; font-size:13px; font-weight:600;">Catalog:</span>
+      <sc-for list="{{ catalog }}" as="item" hint-placeholder-count="10">
+        <button type="button" style="padding:5px 10px; border-radius:8px; border:1px solid #6a5a2e; background:#2b2517e6; color:#eee0b0; cursor:pointer; font:inherit; opacity: {{ item.opacity }};">{{ item.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+      <span style="color:#9fd0ff; font-size:13px; font-weight:600;">Wardrobe:</span>
+      <sc-for list="{{ wardrobe }}" as="item" hint-placeholder-count="9">
+        <button type="button" style="padding:5px 10px; border-radius:8px; border:1px solid {{ item.border }}; background: {{ item.bg }}; color:#dbe6f2; cursor:pointer; font:inherit; font-size:13px;">{{ item.label }}</button>
+      </sc-for>
+    </div>
+    <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+      <span style="color:#7d8496; font-size:13px;">Inventory empty — right-click (or long-press) furni in the room to rotate or pick it up.</span>
+    </div>
+    <div style="color:#7d8496; font-size:12px;">Click a chair to sit · click it again to stand · R turns the item you are
+      holding · right-click furni to rotate or pick it up</div>
+    <form autocomplete="off" style="display:flex;">
+      <input maxlength="200" placeholder="Enter to say · Shift+Enter to shout · /w name message to whisper" style="flex:1; padding:8px 10px; border-radius:8px; border:1px solid #444c63; background:#10121ae6; color:#eef; font:inherit;">
+    </form>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+// Faithful recreation of packages/client/index.html + main.ts (renderCatalog, renderWardrobe,
+// renderInventory, hint, chat) at the current 2x nearest-sampled scale. The avatar is the real
+// frozen sheets baked through the real ramps; stars = 120 so the disabled-price states show.
+const CATALOG = [
+  ["Chair", 25], ["Table", 150], ["Sofa", 150], ["Plant", 25], ["Rug", 50],
+  ["Casino Table", 300], ["Casino Stool", 25], ["Café Table", 150], ["Café Chair", 25],
+  ["Bed", 150], ["Lamp", 75], ["Shelf", 150], ["Divider", 75], ["Stereo", 150],
+  ["Slot Machine", 300], ["Bar Counter", 300], ["Arcade Cabinet", 150], ["Fountain", 300],
+  ["Billiards Table", 3300], ["Candelabra", 1800],
+  ["Crimson Café Chair", 25], ["Navy Café Chair", 25], ["Baize Stool", 25], ["Plum Divider", 75],
+  ["Wall Art", 150], ["Poster", 50], ["Record Trophy", 300], ["Wall Shelf", 150],
+];
+const STARS = 120;
+const WARDROBE = [
+  { label: "Short Crop", worn: true }, { label: "Long Waves", worn: false },
+  { label: "Tee", worn: true }, { label: "Trim Shirt", worn: false },
+  { label: "Trousers", worn: true }, { label: "Pleated Skirt", worn: false },
+  { label: "Loafers", worn: true }, { label: "Bellhop Cap", worn: false },
+  { label: "Recolour shirt", worn: false },
+];
+
+class Component extends DCLogic {
+  state = { avatarUrl: "", floorUrl: "" };
+  async componentDidMount() {
+    const B = await import("./baker.js");
+    const atlas = await B.loadAtlas("figure/");
+    const im = B.bake(atlas, [
+      { partId: "bd1", colors: ["skin_3"] }, { partId: "hd2", colors: ["skin_3"] },
+      { partId: "lg7", colors: ["navy"] }, { partId: "sh9", colors: ["charcoal"] },
+      { partId: "ch5", colors: ["crimson"] }, { partId: "hr3", colors: ["charcoal"] },
+    ], "stand", 3);
+    const avatarUrl = B.toCanvas(im, 2, null, null).toDataURL();
+    // FLOOR_A/FLOOR_B checker (scene/room.ts via style.ts FLOOR_TONES), 2:1 diamonds at 2x.
+    const TW = 128, TH = 64, N = 6;
+    const c = document.createElement("canvas");
+    c.width = TW * N; c.height = TH * N;
+    const x = c.getContext("2d");
+    for (let ty = 0; ty < N; ty++) for (let tx = 0; tx < N; tx++) {
+      const sx = (tx - ty + N - 1) * TW / 2, sy = (tx + ty) * TH / 2;
+      x.fillStyle = (tx + ty) % 2 === 0 ? "#6f9e4c" : "#5d8a3f";
+      x.beginPath();
+      x.moveTo(sx + TW / 2, sy); x.lineTo(sx + TW, sy + TH / 2);
+      x.lineTo(sx + TW / 2, sy + TH); x.lineTo(sx, sy + TH / 2);
+      x.closePath(); x.fill();
+      x.strokeStyle = "#00000022"; x.stroke();
+    }
+    this.setState({ avatarUrl, floorUrl: c.toDataURL() });
+  }
+  renderVals() {
+    return {
+      avatarUrl: this.state.avatarUrl,
+      floorUrl: this.state.floorUrl,
+      catalog: CATALOG.map(([name, price]) => ({
+        label: `${name} · ${price}★`, opacity: price > STARS ? 0.45 : 1,
+      })),
+      wardrobe: WARDROBE.map((w) => ({
+        label: w.label,
+        border: w.worn ? "#7fb2d9" : "#3c5670",
+        bg: w.worn ? "#24405c" : "#1b2836",
+      })),
+    };
+  }
+}
+</script>
+</body>
+</html>
