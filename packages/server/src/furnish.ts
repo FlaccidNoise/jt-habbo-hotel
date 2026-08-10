@@ -59,10 +59,10 @@ const CAFE: Layout = {
     { defId: "bar_counter", x: 6, y: 3, dir: 4 },
     { defId: "bar_counter", x: 8, y: 3, dir: 4 },
     { defId: "bar_counter", x: 10, y: 3, dir: 4 },
-    { defId: "cafe_chair", x: 4, y: 4 },                       // counter seats, facing the bar
-    { defId: "cafe_chair_navy", x: 6, y: 4 },
-    { defId: "cafe_chair_crimson", x: 8, y: 4 },
-    { defId: "cafe_chair", x: 10, y: 4 },
+    { defId: "stool_lodge", x: 4, y: 4 },                      // counter seats, facing the bar
+    { defId: "stool_lodge_charcoal", x: 6, y: 4 },
+    { defId: "stool_lodge", x: 8, y: 4 },
+    { defId: "stool_lodge_charcoal", x: 10, y: 4 },
     { defId: "plant_fern", x: 12, y: 3 },                      // the alcove, under its own wall
     { defId: "stereo_basic", x: 15, y: 4, dir: 6 },
     { defId: "cafe_table_marble", x: 13, y: 5 },
@@ -80,11 +80,11 @@ const CAFE: Layout = {
     { defId: "cafe_table", x: 10, y: 11 },
     { defId: "cafe_chair_crimson", x: 9, y: 11, dir: 2 },
     { defId: "cafe_chair_navy", x: 11, y: 11, dir: 6 },
-    { defId: "cafe_table", x: 13, y: 12 },
+    { defId: "table_round", x: 13, y: 12 },
     { defId: "cafe_chair_crimson", x: 12, y: 12, dir: 2 },
     { defId: "cafe_chair_navy", x: 14, y: 12, dir: 6 },
     { defId: "fireplace", x: 1, y: 11 },                       // the lounge, around its hearth
-    { defId: "rug_basic", x: 1, y: 12 },                       // covers x 1-3, y 12-13
+    { defId: "rug_lodge", x: 1, y: 12 },                       // covers x 1-2, y 12-13
     { defId: "table_round", x: 2, y: 12 },                     // stands on the rug
     { defId: "armchair_lounge", x: 4, y: 12, dir: 6 },
     { defId: "armchair_lounge_navy", x: 4, y: 13, dir: 6 },
@@ -96,8 +96,10 @@ const CAFE: Layout = {
     { defId: "poster", side: "right", x: 4, y: 0, u: 4, v: 34 },
     { defId: "wall_art", side: "right", x: 7, y: 0, u: 2, v: 35 },
     { defId: "wall_shelf", side: "right", x: 10, y: 0, u: 0, v: 46 },
+    { defId: "wall_clock", side: "right", x: 11, y: 0, u: 2, v: 36 },
     // The alcove's own back wall, three tiles further south than the rest of the north run.
     { defId: "wall_art_gilded", side: "right", x: 13, y: 3, u: 2, v: 35 },
+    { defId: "antlers", side: "right", x: 14, y: 3, u: 0, v: 24 },
     { defId: "poster", side: "right", x: 15, y: 3, u: 4, v: 34 },
     { defId: "wall_art", side: "left", x: 0, y: 2, u: 2, v: 35 },
     { defId: "poster", side: "left", x: 0, y: 8, u: 4, v: 34 },
@@ -134,8 +136,10 @@ const CASINO: Layout = {
     { defId: "casino_table_onyx", x: 16, y: 4 },               // high-roller table, north-east
     { defId: "casino_stool_fern", x: 15, y: 4, dir: 2 },
     { defId: "casino_stool_fern", x: 15, y: 5, dir: 2 },
+    { defId: "side_table", x: 14, y: 5 },                      // beside the west-side stools
     { defId: "casino_stool_fern", x: 18, y: 4, dir: 6 },
     { defId: "casino_stool_fern", x: 18, y: 5, dir: 6 },
+    { defId: "side_table", x: 19, y: 4 },                      // beside the east-side stools
     { defId: "railing_iron", x: 4, y: 13 },                    // the card pit's west rail
     { defId: "railing_iron", x: 4, y: 14 },
     { defId: "railing_iron", x: 4, y: 17 },
@@ -167,10 +171,10 @@ const CASINO: Layout = {
     { defId: "shelf_basic", x: 18, y: 12, dir: 4 },
     { defId: "bar_counter", x: 16, y: 14, dir: 4 },
     { defId: "bar_counter", x: 18, y: 14, dir: 4 },
-    { defId: "casino_stool", x: 16, y: 15 },
-    { defId: "casino_stool", x: 17, y: 15 },
-    { defId: "casino_stool", x: 18, y: 15 },
-    { defId: "casino_stool", x: 19, y: 15 },
+    { defId: "stool_lodge", x: 16, y: 15 },
+    { defId: "stool_lodge_charcoal", x: 17, y: 15 },
+    { defId: "stool_lodge", x: 18, y: 15 },
+    { defId: "stool_lodge_charcoal", x: 19, y: 15 },
     { defId: "sofa_lodge", x: 16, y: 17, dir: 4 },             // terrace lounge, around its hearth
     { defId: "fireplace_stone", x: 18, y: 17 },
     { defId: "rug_basic", x: 17, y: 18 },                      // covers x 17-19, y 18-19
@@ -183,6 +187,7 @@ const CASINO: Layout = {
     { defId: "wall_art_gilded", side: "right", x: 4, y: 0, u: 2, v: 30 },
     { defId: "wall_art", side: "right", x: 10, y: 0, u: 2, v: 35 },
     { defId: "wall_art_gilded", side: "right", x: 16, y: 0, u: 2, v: 30 },
+    { defId: "wall_clock", side: "right", x: 18, y: 0, u: 2, v: 36 },  // nearest wall to the bar
     { defId: "poster", side: "left", x: 0, y: 4, u: 4, v: 34 },
     { defId: "wall_art", side: "left", x: 0, y: 10, u: 2, v: 35 },
     { defId: "wall_art_gilded", side: "left", x: 0, y: 16, u: 2, v: 30 },
@@ -193,6 +198,13 @@ const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
   [1, CAFE],
   [2, CASINO],
 ]);
+
+/** Bumped whenever a Layout constant above changes shape. seedRoom (db.ts) stamps this into the
+ *  room doc and compares it like the heightmap, so a layout-only edit re-lays the room even though
+ *  the floor and decor never moved — #330: #323's items (wall_clock, antlers, rug_lodge,
+ *  stool_lodge, side_table) landed in the catalog after #315's resize had already run the layouts,
+ *  so nothing short of a version bump would have put them in a live room. This bump is the first. */
+export const LAYOUT_VERSION = 1;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
