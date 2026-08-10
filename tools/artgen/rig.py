@@ -977,6 +977,23 @@ FIGURE_PARTS = {
              "squash": (0.62, 1.22, 0.95)},
         ],
     },
+    # Curls (set 30). Seven balls sat on the crown's own surface, each proud enough to break the
+    # silhouette — the bumpy outline is the whole part, and the interior lines the post-pass draws
+    # between them are what separate one curl from the next. 8 prims against the 13 a figure layer
+    # has left once the holdout body has taken its 13.
+    "hr30": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.4, 12.6), "r": 11.1,
+             "squash": (0.965, 0.925, 0.919)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (9.42, -2.43, 16.17), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-9.42, -2.43, 16.17), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (5.36, -8.79, 16.88), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-5.36, -8.79, 16.88), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -5.51, 21.58), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (5.89, 2.91, 17.19), "r": 3.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-5.89, 2.91, 17.19), "r": 3.2},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
