@@ -27,6 +27,14 @@ describe("figure string", () => {
     const f = parseFigure(DRESSED);
     expect(f.parts.find((p) => p.type === "ch")?.colors).toEqual(["crimson", "ivory"]);
   });
+
+  test("a per-slot family set round-trips each slot through its own palette", () => {
+    // Face set 17 (Bright): slot 0 is skin, slot 1 is the curated iris family.
+    const withFace = "v1|hd-17-skin_3-charcoal.lg-7-navy.sh-9-charcoal.hr-3-walnut";
+    const f = parseFigure(withFace);
+    expect(f.parts.find((p) => p.type === "hd")?.colors).toEqual(["skin_3", "charcoal"]);
+    expect(serializeFigure(f)).toBe(withFace);
+  });
 });
 
 describe("figure string rejections", () => {
@@ -48,6 +56,9 @@ describe("figure string rejections", () => {
     ["unknown ramp", "v1|hd-2-skin_3.hr-3-vantablack", /set 3 cannot wear ramp vantablack/],
     ["skin ramp on a garment", "v1|hd-2-skin_3.hr-3-skin_1", /set 3 cannot wear ramp skin_1/],
     ["material ramp on the head", "v1|hd-2-walnut", /set 2 cannot wear ramp walnut/],
+    // Set 17 (Bright) is skin+iris per-slot: crimson is a real material ramp, just not one of the
+    // curated iris six, so it must fail on the iris slot even though slot 0 (skin) is fine.
+    ["off-curated ramp on a per-slot iris slot", "v1|hd-17-skin_3-crimson", /set 17 cannot wear ramp crimson/],
     ["no head", "v1|hr-3-walnut", /hd is required/],
   ];
 

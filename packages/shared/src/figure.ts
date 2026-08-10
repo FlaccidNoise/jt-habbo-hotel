@@ -73,10 +73,12 @@ export function parseFigure(input: string, lookup: SetLookup = setById): Figure 
     if (colors.length !== set.slots) {
       throw new FigureError(`set ${set.id} takes ${set.slots} colour(s), got ${colors.length}`);
     }
-    const allowed = paletteFor(set.family);
-    for (const c of colors) {
-      if (!allowed.includes(c)) throw new FigureError(`set ${set.id} cannot wear ramp ${c}`);
-    }
+    colors.forEach((c, i) => {
+      const family = set.slotFamilies?.[i] ?? set.family;
+      if (!paletteFor(family).includes(c)) {
+        throw new FigureError(`set ${set.id} cannot wear ramp ${c}`);
+      }
+    });
     parts.push({ type, set: set.id, colors });
   }
 

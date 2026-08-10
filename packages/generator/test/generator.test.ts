@@ -36,8 +36,8 @@ import type { Recipe } from "../src/recipe.ts";
 import { drawOrderMismatch, referenceScenes, seatedScene } from "../src/scene.ts";
 import { STARTER_RECIPES } from "../src/starter.ts";
 import {
-  BACKDROP_LUMA_MIN, FLOOR_TONES, MIN_CONTRAST, PALETTE, RAMP_NAMES, RAMP_SHADES,
-  SKIN_RAMP_NAMES, luminance, rampByName,
+  BACKDROP_LUMA_MIN, CLAMP_GATED_RAMP_NAMES, FLOOR_TONES, MIN_CONTRAST, PALETTE, RAMP_NAMES,
+  RAMP_SHADES, SKIN_RAMP_NAMES, luminance, rampByName,
 } from "../src/style.ts";
 
 const CHAIR_DEF = PROTOTYPE_CATALOG.find((d) => d.id === "chair_basic");
@@ -133,11 +133,11 @@ describe("rendering", () => {
 });
 
 describe("style bible v1", () => {
-  test("the palette is 12 material ramps + 6 skin ramps × 5 shades", () => {
+  test("the palette is 12 material ramps + 6 skin ramps + paper × 5 shades", () => {
     expect(RAMP_NAMES).toHaveLength(12);
     expect(SKIN_RAMP_NAMES).toHaveLength(6);
-    expect(RAMP_SHADES).toHaveLength(90);
-    expect(PALETTE.size).toBe(91);   // + the global outline
+    expect(RAMP_SHADES).toHaveLength(95);
+    expect(PALETTE.size).toBe(96);   // + the global outline
   });
 
   test("figuredata ramp names match the style bible", () => {
@@ -149,12 +149,22 @@ describe("style bible v1", () => {
     for (const set of FIGURE_SETS) expect(() => rampByName(paletteFor(set.family)[0]!)).not.toThrow();
   });
 
-  test("no skin shade clamps a channel", () => {
-    // Skin is the one family where clamping is a correctness bug, not a highlight: it drags the
-    // light band toward white, hue-shifting the tone and flattening the deep end of the family
-    // into the light end. Four material ramps (walnut, crimson, sand, gold) do clamp — their
-    // pixels are frozen and cannot move, which is why this is scoped to skin.
-    for (const name of SKIN_RAMP_NAMES) {
+  test("paper is never offered as a wearable colour", () => {
+    // paper (#340) is a fixed reference for face art (eye whites, teeth) — it must not surface
+    // in either family figuredata offers, only through a direct rampByName("paper") lookup.
+    expect(paletteFor("material")).not.toContain("paper");
+    expect(paletteFor("skin")).not.toContain("paper");
+    expect(RAMP_NAMES).not.toContain("paper");
+    expect(SKIN_RAMP_NAMES).not.toContain("paper");
+    expect(() => rampByName("paper")).not.toThrow();
+  });
+
+  test("no skin or paper shade clamps a channel", () => {
+    // Skin and paper are the families where clamping is a correctness bug, not a highlight: it
+    // drags the light band toward white, hue-shifting the tone and flattening the deep end of the
+    // family into the light end. Four material ramps (walnut, crimson, sand, gold) do clamp —
+    // their pixels are frozen and cannot move, which is why this stays scoped off the materials.
+    for (const name of CLAMP_GATED_RAMP_NAMES) {
       const r = rampByName(name);
       for (const shade of ["outline", "left", "right", "top", "hi"] as const) {
         const c = r[shade];
