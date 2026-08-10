@@ -2,7 +2,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
-import { FigureError, ServerMsgSchema, parseFigure } from "@grand/shared";
+import { FigureError, STARTER_GRANT_SETS, ServerMsgSchema, parseFigure, setById } from "@grand/shared";
 import type { ServerMsg } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { closeDb, openDb } from "../src/db.ts";
@@ -56,18 +56,38 @@ describe("the registration grant", () => {
   test("gives every granted set a row, and nothing more", () => {
     const a = account("alice");
     // Held back deliberately: the coat and the accessories are the first cosmetics that have to
-    // be earned, and the staff blazer is never player-grantable at all.
-    for (const set of [11, 12, 13, 14, 15, 16]) expect(ownsSet(db, a, set)).toBe(false);
-    for (const set of [2, 3, 4, 5, 6, 7, 8, 9, 10]) expect(ownsSet(db, a, set)).toBe(true);
+    // be earned, the hair expansion is earned too (#352), and the staff blazer is never
+    // player-grantable at all.
+    for (const set of [11, 12, 13, 14, 15, 16, 28, 33, 37]) expect(ownsSet(db, a, set)).toBe(false);
+    for (const set of STARTER_GRANT_SETS) expect(ownsSet(db, a, set)).toBe(true);
   });
 
   test("only ever names sets the account owns", () => {
     for (let id = 1; id <= 30; id++) {
       for (const part of parseFigure(defaultFigure(id)).parts) {
-        expect([2, 3, 4, 5, 6, 7, 8, 9, 10], `account ${id} wears set ${part.set}`)
-          .toContain(part.set);
+        expect(STARTER_GRANT_SETS, `account ${id} wears set ${part.set}`).toContain(part.set);
       }
     }
+  });
+
+  test("dresses every new account in a face that has eyes", () => {
+    for (let id = 1; id <= 30; id++) {
+      const head = parseFigure(defaultFigure(id)).parts.find((p) => p.type === "hd");
+      expect(setById(head!.set)?.slotFamilies?.[1], `account ${id} wears set ${head!.set}`)
+        .toBe("iris");
+    }
+  });
+
+  test("catches up an account made before the grant widened", () => {
+    const a = account("alice");
+    db.prepare("DELETE FROM owned_sets WHERE account_id = ? AND set_id >= 17").run(a);
+    expect(ownsSet(db, a, 17)).toBe(false);
+
+    closeDb(openDb(join(dir, "test.db")));   // boot again over the same file
+
+    expect(ownsSet(db, a, 17)).toBe(true);
+    for (const set of STARTER_GRANT_SETS) expect(ownsSet(db, a, set)).toBe(true);
+    expect(ownsSet(db, a, 28)).toBe(false);  // earned hair is not handed out by the catch-up
   });
 
   test("two accounts do not look the same", () => {
@@ -164,5 +184,18 @@ describe("registration wires the grant in", () => {
     const avatar = room.occupants().find((o) => o.accountId === id);
     expect(avatar?.figure).toBe(figureOf(db, id));
     expect(() => parseFigure(avatar!.figure)).not.toThrow();
+  });
+
+  test("a registered account owns every piece it was dressed in, eyes included", async () => {
+    // The whole registration transaction is the proof: dress() colours the iris slot from the
+    // curated ramp, so parseFigure accepts the string, and the grant covers every set it names.
+    await register(db, "dave", "password123");
+    const id = (db.prepare("SELECT id FROM accounts WHERE username = ?").get("dave") as
+      { id: number }).id;
+    const worn = parseFigure(figureOf(db, id)).parts;
+    for (const part of worn) expect(ownsSet(db, id, part.set), `set ${part.set}`).toBe(true);
+    const head = worn.find((p) => p.type === "hd")!;
+    expect(setById(head.set)?.slotFamilies?.[1]).toBe("iris");
+    expect(() => saveFigure(db, id, figureOf(db, id))).not.toThrow();
   });
 });

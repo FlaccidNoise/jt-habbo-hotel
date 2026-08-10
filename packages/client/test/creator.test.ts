@@ -53,9 +53,13 @@ describe("what the account may wear", () => {
     expect(lockedPicks(figureToLook(STARTER), OWNED)).toEqual([]);
   });
 
-  test("a face set is named as locked, by name, before the server has to say so", () => {
-    const locked = lockedPicks({ ...figureToLook(STARTER), faceSetId: 19 }, OWNED);
-    expect(locked.map((s) => s.name)).toEqual(["Spark"]);
+  test("every face is wearable: they are in the starter grant (#346)", () => {
+    expect(lockedPicks({ ...figureToLook(STARTER), faceSetId: 19 }, OWNED)).toEqual([]);
+  });
+
+  test("an earned set is named as locked, by name, before the server has to say so", () => {
+    const locked = lockedPicks({ ...figureToLook(STARTER), hair: 30 }, OWNED);
+    expect(locked.map((s) => s.name)).toEqual(["Curls"]);
   });
 
   test("the staff uniform is not offered at all", () => {

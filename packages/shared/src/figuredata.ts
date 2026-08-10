@@ -115,8 +115,15 @@ export function setById(id: number): FigureSet | undefined {
 /** What a new account is given, and nothing else. Head, both hairs, both shirts, both legs,
  *  shoes, and the cap — the cap is in so the hides rule is exercised by a real player outfit.
  *  Coat and the accessories are deliberately held back: they are the first cosmetics that have
- *  to be earned (GAME.md — cosmetics are economy goods). */
-export const STARTER_GRANT_SETS: readonly number[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+ *  to be earned (GAME.md — cosmetics are economy goods).
+ *
+ *  Faces 17-24 and facial hair 25-27 are in because a face is identity, not a cosmetic prize:
+ *  the plain head 2 has no eyes, so holding the eyed sets back shipped every new player a blank
+ *  skull (#346). The hair expansion 28-37 stays earned (#352). */
+export const STARTER_GRANT_SETS: readonly number[] = [
+  2, 3, 4, 5, 6, 7, 8, 9, 10,
+  17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+];
 
 /** The staff uniform, granted to NPC accounts only. */
 export const STAFF_GRANT_SETS: readonly number[] = [2, 3, 9, 7, 16];

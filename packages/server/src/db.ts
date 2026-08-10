@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import { parseHeightmap } from "@grand/shared";
+import { STARTER_GRANT_SETS, parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
 import { LAYOUT_VERSION, clearHouseLayout, seedPublicFurni } from "./furnish.ts";
 import { MUSEUM_ROOM_ID } from "./museum.ts";
@@ -179,6 +179,21 @@ function addColumn(db: Database.Database, table: string, column: string, decl: s
   db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${decl}`);
 }
 
+/** Registration is the only writer of owned_sets, so widening the starter grant (#346 put the
+ *  eyed faces in it) would leave every account made before the change unable to wear what the
+ *  wardrobe now offers them. Boot hands the missing rows out. Idempotent — the (account, set)
+ *  primary key absorbs the repeat — and stored figure strings are never rewritten, so a player
+ *  keeps the head they have until they re-dress. */
+function backfillStarterSets(db: Database.Database): void {
+  const insert = db.prepare(
+    "INSERT OR IGNORE INTO owned_sets (account_id, set_id, granted_at) SELECT id, ?, ? FROM accounts",
+  );
+  const now = Date.now();
+  db.transaction(() => {
+    for (const id of STARTER_GRANT_SETS) insert.run(id, now);
+  })();
+}
+
 export function openDb(path: string): Database.Database {
   const db = new Database(path);
   db.pragma("journal_mode = WAL");
@@ -202,6 +217,7 @@ export function openDb(path: string): Database.Database {
   ]) {
     addColumn(db, "furni_items", col ?? "", decl ?? "");
   }
+  backfillStarterSets(db);
   const relaid = new Set<number>();
   if (
     seedRoom(db, 1, "The Lobby Café", CAFE_HEIGHTMAP, CAFE_DOOR, CAFE_CHAT, CAFE_DECOR, LAYOUT_VERSION)
