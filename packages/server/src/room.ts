@@ -460,7 +460,6 @@ export class Room {
       const tail = vend.price > 0 ? ` −${vend.price} Star${vend.price === 1 ? "" : "s"}.` : "";
       this.emit(accountId, { t: "notice", text: `${flavour.line}${tail}` });
     }
-    this.cancelHand(accountId);
     this.hands.set(accountId, setTimeout(() => this.dropHand(accountId), HAND_MS));
   }
 

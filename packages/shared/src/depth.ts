@@ -1,3 +1,5 @@
+import { IndexedHeap } from "./heap.ts";
+
 /** An axis-aligned box in world units, half-open on every axis. Used both for whole items in a
  *  room and for the part boxes inside one generated sprite. */
 export interface DepthBox {
@@ -107,50 +109,17 @@ export function painterOrder(
 
   // The ready set as a binary min-heap on (key, index) — the same box the old scan of every
   // unplaced node picked, since that took the lowest key and left ties with the lower index.
-  const ready: number[] = [];
   const before = (p: number, q: number): boolean => {
     const kp = keys[p] ?? 0, kq = keys[q] ?? 0;
     return kp !== kq ? kp < kq : p < q;
   };
-  const siftUp = (start: number): void => {
-    let i = start;
-    while (i > 0) {
-      const up = (i - 1) >> 1;
-      if (!before(ready[i] ?? 0, ready[up] ?? 0)) break;
-      const t = ready[i] ?? 0;
-      ready[i] = ready[up] ?? 0;
-      ready[up] = t;
-      i = up;
-    }
-  };
-  const siftDown = (start: number): void => {
-    let i = start;
-    for (;;) {
-      const left = i * 2 + 1, right = left + 1;
-      let best = i;
-      if (left < ready.length && before(ready[left] ?? 0, ready[best] ?? 0)) best = left;
-      if (right < ready.length && before(ready[right] ?? 0, ready[best] ?? 0)) best = right;
-      if (best === i) break;
-      const t = ready[i] ?? 0;
-      ready[i] = ready[best] ?? 0;
-      ready[best] = t;
-      i = best;
-    }
-  };
-  const offer = (i: number): void => {
-    ready.push(i);
-    siftUp(ready.length - 1);
-  };
+  const ready = new IndexedHeap(boxes.length, before);
+  const offer = (i: number): void => ready.push(i);
   const take = (): number => {
     // A box force-picked out of a cycle can be offered later, when the last of its blockers
     // clears; it is already drawn, so skip it.
     while (ready.length > 0) {
-      const top = ready[0] ?? 0;
-      const last = ready.pop() ?? 0;
-      if (ready.length > 0) {
-        ready[0] = last;
-        siftDown(0);
-      }
+      const top = ready.pop();
       if (placed[top] !== true) return top;
     }
     return -1;

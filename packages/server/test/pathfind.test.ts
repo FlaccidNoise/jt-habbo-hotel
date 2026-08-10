@@ -65,9 +65,9 @@ test("a tile re-reached more cheaply still yields the shortest path", () => {
   expect(path).toHaveLength(6);
 });
 
-/** The expansion cap only exists for rooms far larger than the heightmap admits (MAX_DIM = 64).
- *  A search that drains a full 64x64 has to finish under it, or the cap would start answering
- *  "no route" for tiles that merely take a while to rule out. */
+/** The expansion cap is `width * height` (pathfind.ts) — every tile the room has — so a search
+ *  that drains a room in full has to finish at exactly that many expansions, not the fixed number
+ *  a bigger room could outgrow. */
 test("draining the largest allowed room stays under the expansion cap", () => {
   const side = 64;
   const m = parseHeightmap(Array.from({ length: side }, () => "0".repeat(side)).join("\n"),
@@ -79,4 +79,20 @@ test("draining the largest allowed room stays under the expansion cap", () => {
   expect(findPath(m, sealed, { x: 0, y: 0 }, goal)).toBeNull();
   // Reachable tiles in the same room still resolve, so the null above is the seal, not the cap.
   expect(findPath(m, sealed, { x: 0, y: 0 }, { x: side - 1, y: 0 })).not.toBeNull();
+});
+
+/** jtbug (Resort Grounds, 200x200): the fixed 20,000-expansion cap answered "no route" for a
+ *  target `reachable()` says is reachable, because a room this size can legitimately need more
+ *  expansions than that to find its way around a long wall to a single gap. This wall makes the
+ *  search detour the width of the room before it finds the gap — 29,321 expansions, comfortably
+ *  past the old fixed cap — and the target must still resolve to a real path. */
+test("a reachable target past the old fixed cap still returns a path", () => {
+  const side = 200;
+  const m = parseHeightmap(Array.from({ length: side }, () => "0".repeat(side)).join("\n"),
+    { x: 0, y: 0, dir: 2 });
+  const wallY = 40, gapX = side - 1;
+  const blocked = (x: number, y: number): boolean => y === wallY && x !== gapX;
+  const path = findPath(m, blocked, { x: 100, y: 150 }, { x: 100, y: 5 });
+  expect(path).not.toBeNull();
+  expect(path?.at(-1)).toEqual({ x: 100, y: 5 });
 });

@@ -894,6 +894,7 @@ function armPendingUse(msg: Extract<ServerMsg, { t: "walk" }>): void {
     return;
   }
   const armed = pendingUse;
+  if (armed.timer !== undefined) clearTimeout(armed.timer);
   armed.timer = window.setTimeout(() => {
     pendingUse = null;
     net.send({ t: "use", itemId: armed.itemId });

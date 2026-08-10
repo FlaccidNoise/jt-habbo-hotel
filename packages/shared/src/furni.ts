@@ -127,9 +127,6 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "ottoman_deco_ivory",   name: "Ivory Deco Ottoman", theme: "penthouse", w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: false, seatHeight: 0.74, color: 0x9c9484 },
   { id: "armoire_deco_ivory",   name: "Ivory Deco Armoire", theme: "penthouse", w: 2, l: 1, stackHeights: [2.5625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
   { id: "mirror_standing_plum", name: "Plum Cheval Mirror", theme: "penthouse", w: 1, l: 1, stackHeights: [1.8125],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
-  // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
-  { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", theme: "casino", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
-  { id: "fountain_gilded",     name: "Gilded Fountain",     theme: "casino", w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wish" },
   { id: "stage_platform_parquet", name: "Parquet Stage", theme: "lounge", w: 2, l: 2, stackHeights: [0.25], canWalk: true, canStackOn: true, seatHeight: null, color: 0xc2a36b },
   { id: "grand_piano_oak", name: "Oak Grand", theme: "lounge", w: 2, l: 2, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
   { id: "double_bass_ebony", name: "Ebony Double Bass", theme: "lounge", w: 1, l: 1, stackHeights: [2.375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
@@ -138,6 +135,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "velvet_booth_charcoal", name: "Charcoal Velvet Booth", theme: "lounge", w: 2, l: 1, stackHeights: [2.1875], canWalk: false, canStackOn: false, seatHeight: 0.96, color: 0x4a4d55 },
   { id: "cocktail_table_walnut", name: "Walnut Cocktail Table", theme: "lounge", w: 1, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: true, seatHeight: null, color: 0xb5651d },
   { id: "stage_light_plum", name: "Plum Stage Light", theme: "lounge", w: 1, l: 1, stackHeights: [1.75, 1.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d, interaction: "toggle" },
+  // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
+  { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", theme: "casino", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
+  { id: "fountain_gilded",     name: "Gilded Fountain",     theme: "casino", w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wish" },
   // Collection-set rewards (#210): minted account-bound on completion, obtainable no other way.
   { id: "cafe_table_marble",   name: "Marble Café Table",   theme: "cafe", w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "casino_table_onyx",   name: "Onyx Casino Table",   theme: "casino", w: 2, l: 2, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
