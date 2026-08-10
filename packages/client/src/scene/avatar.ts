@@ -1,6 +1,8 @@
 import { Container, Graphics, Sprite, Text } from "pixi.js";
 import { parseFigure, resolveLayers, worldToScreen } from "@grand/shared";
 import type { AvatarState, Figure, Posture, ServerMsg } from "@grand/shared";
+import { wisps } from "./effects.ts";
+import type { Wisp } from "./effects.ts";
 import type { FigureBaker } from "./figure.ts";
 import { SCALE, ZOOM } from "./room.ts";
 import { LAYER } from "./sort.ts";
@@ -23,6 +25,104 @@ const ZU = SCALE / 2;   // pixels per world height unit, for the occlusion box
  *  is already rounded, room.ts `follow` — is what makes a walk read as smooth. */
 function snap(n: number): number {
   return Math.round(n * ZOOM) / ZOOM;
+}
+
+// #326. Washing borrows the wave's two frames at twice the rate — scrubbing, not greeting.
+const WASH_MS = 2500;
+const WASH_FRAME_MS = 150;
+const BUBBLES = 6;
+const SIP_MS = 600;
+const SIP_RISE = 14;     // px the drink lifts towards the mouth at the top of the swing
+const SIP_INSET = 0.45;  // and how far of the way in towards the body it comes with it
+
+// #347. A book is read at waist height, and it never swings up — the sip is a drink gesture.
+const BOOK_DROP = 6;
+
+/** Off a fresh coffee (#331). It rises further and swells as it goes, where #347 shipped three
+ *  same-size dots at half alpha — at an 8px cup that read as specks rather than as steam. */
+const STEAM: Wisp = {
+  count: 3, ms: 1400, from: -9, rise: 15, drift: 2.5, size: 1, color: 0xe8e8e8, alpha: 0.75,
+};
+
+/** Facings that show the avatar's back, so the body is between the camera and what it holds. Read
+ *  off the baked parts, not off the compass: the camera sits to the south-east, so dir 3 is the
+ *  full-face view and dir 7 the full-back one. These are exactly the three facings where the
+ *  chest-front pendant part draws no pixels at all. */
+const BACK_DIRS: ReadonlySet<number> = new Set([0, 6, 7]);
+
+/** Where the held item sits, per facing. Read off the baked figure by eye: chest height, on the
+ *  screen side the body is turned towards, so it never lands in the middle of the torso. The three
+ *  back facings sit further out than the rest — the item is behind the body there, so it has to
+ *  clear the silhouette edge (11px at dirs 0 and 6, 14px at dir 7) or it is not seen at all. */
+const HAND: ReadonlyArray<{ x: number; y: number }> = [
+  { x: 13, y: -40 }, { x: 9, y: -38 }, { x: 9, y: -36 }, { x: 7, y: -35 },
+  { x: -7, y: -35 }, { x: -9, y: -36 }, { x: -13, y: -38 }, { x: -16, y: -40 },
+];
+
+/** A cola can at the 80px figure scale: body, lid, and a highlight down the near edge. */
+function drinkCan(): Graphics {
+  return new Graphics()
+    .rect(-3, -10, 6, 10)
+    .fill(0xaa3333)
+    .rect(-3, -10, 6, 2)
+    .fill(0xd9d9d9)
+    .rect(-3, -8, 1, 7)
+    .fill(0xd06868);
+}
+
+/** An ivory cup with a handle nub and the coffee showing at the rim. The steam is drawn
+ *  separately, in `drawSteam`, because it moves. */
+function coffeeCup(): Graphics {
+  return new Graphics()
+    .rect(-3, -8, 6, 8)
+    .fill(0xf2ede1)
+    .rect(-3, -8, 6, 1)
+    .fill(0x5a3a22)
+    .rect(3, -6, 2, 3)
+    .fill(0xf2ede1)
+    .rect(-3, -7, 1, 6)
+    .fill(0xd8d2c4);
+}
+
+/** A martini: at 8px across, the inverted-triangle bowl over a stem is the whole read, and the
+ *  olive is what makes it a casino drink rather than a funnel. */
+function cocktailGlass(): Graphics {
+  return new Graphics()
+    .poly([-4, -11, 4, -11, 0, -5])
+    .fill(0xbfe4ef)
+    .rect(-1, -5, 2, 4)
+    .fill(0xdfe9ee)
+    .rect(-3, -1, 6, 1)
+    .fill(0xdfe9ee)
+    .circle(1.5, -9.5, 1)
+    .fill(0x8fbf4a);
+}
+
+/** An open book: two pages either side of a dark spine, with a ruled line on each so the pages
+ *  do not read as one blank slab. */
+function openBook(): Graphics {
+  return new Graphics()
+    .rect(-6, -6, 5, 6)
+    .fill(0xf2ede1)
+    .rect(1, -6, 5, 6)
+    .fill(0xf2ede1)
+    .rect(-1, -7, 2, 7)
+    .fill(0x5c3a2e)
+    .rect(-5, -4, 3, 1)
+    .fill(0xd8d2c4)
+    .rect(2, -4, 3, 1)
+    .fill(0xd8d2c4);
+}
+
+/** What a hand item looks like (#347). An id with no drawing of its own gets the can: every one
+ *  the server vends is a drink but one, and a can in the hand beats an empty fist. */
+function handSprite(item: string): Graphics {
+  switch (item) {
+    case "drink_coffee": return coffeeCup();
+    case "drink_cocktail": return cocktailGlass();
+    case "book": return openBook();
+    default: return drinkCan();
+  }
 }
 
 /** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
@@ -54,6 +154,14 @@ export class AvatarSprite {
   private waveFrame = 0;
   /** The pose the sprite is already showing — see `redraw`. */
   private shown = "";
+  private waveFrameMs = WAVE_FRAME_MS;
+  private washUntil = 0;
+  private bubbles: Graphics | null = null;
+  private held: Graphics | null = null;
+  private heldItem: string | null = null;
+  private steam: Graphics | null = null;
+  /** Called when the avatar lands on a new tile (#347), so the room can see who it is beside. */
+  onStep: (() => void) | null = null;
 
   constructor(state: AvatarState, depth: DepthIndex, private baker: FigureBaker | null) {
     this.id = state.id;
@@ -91,6 +199,7 @@ export class AvatarSprite {
 
     this.redraw();
     this.place();
+    this.setHand(state.hand ?? null);
   }
 
   /** Server-authoritative pose. Sitting also carries the seat's height and facing. */
@@ -111,7 +220,36 @@ export class AvatarSprite {
 
   wave(now: number): void {
     this.wavingUntil = now + WAVE_MS;
+    this.waveFrameMs = WAVE_FRAME_MS;
     this.redraw();
+  }
+
+  /** Scrubbing at the fountain (#326): the two wave frames at twice the rate, with droplets. */
+  washing(now: number): void {
+    this.washUntil = now + WASH_MS;
+    this.wavingUntil = this.washUntil;
+    this.waveFrameMs = WASH_FRAME_MS;
+    this.redraw();
+  }
+
+  /** Swapping one item for another rebuilds the sprite: the drawing is keyed on the id, so a
+   *  coffee handed to someone already holding a can has to become a cup. */
+  setHand(hand: { item: string; until: number } | null): void {
+    const item = hand?.item ?? null;
+    if (item === this.heldItem) return;
+    this.steam?.destroy();
+    this.steam = null;
+    this.held?.destroy();
+    this.held = null;
+    this.heldItem = item;
+    if (item === null) return;
+    this.held = this.view.addChild(handSprite(item));
+    // A child of the cup, so it rides the sip swing without being placed twice.
+    if (item === "drink_coffee") this.steam = this.held.addChild(new Graphics());
+  }
+
+  holding(): boolean {
+    return this.heldItem !== null;
   }
 
   tile(): Step {
@@ -137,6 +275,12 @@ export class AvatarSprite {
     return { sx: this.view.x, sy: this.view.y - this.crown() - 8 };
   }
 
+  /** Local screen point of the held item, for the wish arc and the cheers clink (#347). */
+  hand(): { sx: number; sy: number } {
+    const anchor = HAND[this.dir] ?? HAND[3]!;
+    return { sx: this.view.x + anchor.x, sy: this.view.y + anchor.y };
+  }
+
   walk(msg: WalkMsg, startedAtLocal: number): void {
     // A walk always means standing: the server stands you up before it moves you.
     if (this.posture !== "stand") {
@@ -158,11 +302,16 @@ export class AvatarSprite {
   }
 
   update(now: number): void {
-    const wave = this.wavingUntil > now ? ((now / WAVE_FRAME_MS) | 0) % 2 : -1;
+    // Math.floor, not |0: now is epoch ms, and epoch/150 overflows a 32-bit int — the wrapped
+    // value can be negative, whose %2 is -1, which is the not-animating sentinel.
+    const wave = this.wavingUntil > now ? Math.floor(now / this.waveFrameMs) % 2 : -1;
     if (wave !== this.waveFrame) {
       this.waveFrame = wave;
       this.redraw();
     }
+    if (this.held) this.placeHeld(now);
+    if (this.steam) this.drawSteam(now);
+    this.drawBubbles(now);
 
     const walk = this.walking;
     if (!walk) return;
@@ -194,7 +343,10 @@ export class AvatarSprite {
     );
     this.view.x = snap(point.sx);
     this.view.y = snap(point.sy);
-    if (stepped) this.placeDepth();
+    if (stepped) {
+      this.placeDepth();
+      this.onStep?.();
+    }
   }
 
   destroy(): void {
@@ -253,6 +405,48 @@ export class AvatarSprite {
       }
     }
     this.label.y = -this.crown() - 4;
+  }
+
+  /** The item rides the hand, and every 8-12s a drink swings up to the mouth and back. The period
+   *  is derived from the account id so a room full of drinkers does not sip in unison. A book
+   *  never swings: it is held lower and still, because reading is not drinking. */
+  private placeHeld(now: number): void {
+    const hand = HAND[this.dir] ?? HAND[3]!;
+    const book = this.heldItem === "book";
+    const period = 8000 + (this.id % 5) * 1000;
+    const phase = (now + this.id * 2137) % period;
+    const lift = book || phase >= SIP_MS ? 0 : Math.sin((phase / SIP_MS) * Math.PI);
+    this.held!.x = hand.x * (1 - lift * SIP_INSET);
+    this.held!.y = hand.y + (book ? BOOK_DROP : 0) - lift * SIP_RISE;
+
+    // Facing away, the item is on the far side of the body from the camera, so the body has to
+    // occlude it (#331). Derived from the display list rather than remembered, because the facing
+    // changes mid-walk and a cached flag would go stale against a rebuilt figure.
+    const body = this.view.getChildIndex(this.sprite);
+    const behind = this.view.getChildIndex(this.held!) < body;
+    const wanted = BACK_DIRS.has(this.dir);
+    if (behind !== wanted) this.view.setChildIndex(this.held!, wanted ? body : body + 1);
+  }
+
+  /** Curls off the coffee, in the cup's own coordinates — the cup is the parent, so the steam
+   *  follows it through the sip rather than hanging over where the cup used to be. */
+  private drawSteam(now: number): void {
+    wisps(this.steam!.clear(), now, STEAM);
+  }
+
+  private drawBubbles(now: number): void {
+    if (this.washUntil <= now) {
+      this.bubbles?.destroy();
+      this.bubbles = null;
+      return;
+    }
+    if (!this.bubbles) this.bubbles = this.view.addChild(new Graphics());
+    const g = this.bubbles.clear();
+    for (let i = 0; i < BUBBLES; i++) {
+      const t = (now / 900 + i / BUBBLES) % 1;
+      const x = (i % 2 === 0 ? 1 : -1) * (5 + (i % 3) * 3);
+      g.circle(x, -34 - t * 26, 1.5 + (i % 2)).fill({ color: 0xcfe8f5, alpha: 0.75 * (1 - t) });
+    }
   }
 
   private face(dx: number, dy: number): void {

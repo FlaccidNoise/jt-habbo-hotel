@@ -16,6 +16,7 @@ import {
   seatAt,
   tileHeight,
   wallOffsetLimits,
+  worldToScreen,
 } from "@grand/shared";
 import type {
   AvatarState,
@@ -38,6 +39,7 @@ import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
+import { Effects } from "./scene/effects.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
@@ -77,6 +79,7 @@ let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
 let wallLayer: WallLayer | null = null;
+let effects: Effects | null = null;
 let furniAssets: FurniAssets | null = null;
 let decorAssets: DecorAssets | null = null;
 let figureBaker: FigureBaker | null = null;
@@ -98,6 +101,15 @@ let myRoomId: number | null = null;
 let myFigure: string | null = null;
 let hereRoomId = roomId;
 let sets: SetRows = [];
+/** #326: the one interactable we walked off to reach. Any other click drops it. */
+let pendingUse: { itemId: number; x: number; y: number; timer?: number } | null = null;
+/** #347: when each pair of drinkers last toasted, so a crowded bar chimes once rather than on
+ *  every step. Keyed by the two account ids in order, since a clink belongs to the pair. */
+const clinkAt = new Map<string, number>();
+const CLINK_DEBOUNCE_MS = 10000;
+/** Where a fountain's water sits, as a fraction of the item's height — the basin, not the spout
+ *  the def's stack height measures. */
+const WATER_LEVEL = 0.55;
 /** Set by registering, spent by the first room_state: a new account meets the creator before it
  *  sees the room. Returning players go straight in and open the same panel from the HUD. */
 let pendingCreator = false;
@@ -125,8 +137,51 @@ function addAvatar(state: AvatarState): void {
   if (!scene) return;
   avatars.get(state.id)?.destroy();
   const sprite = new AvatarSprite(state, depth, figureBaker);
+  sprite.onStep = () => checkClink(state.id);
   avatars.set(state.id, sprite);
   scene.world.addChild(sprite.view);
+}
+
+/** #347: two avatars who both have a drink and end up side by side toast each other. Entirely
+ *  client-side — nothing is sent, and nothing but the sparkle happens. It runs off the two things
+ *  that can make a pair adjacent, a hand filling and a step landing, rather than off the ticker. */
+function checkClink(id: number): void {
+  const one = avatars.get(id);
+  if (!one?.holding()) return;
+  const here = one.tile();
+  const now = Date.now();
+  for (const [otherId, two] of avatars) {
+    if (otherId === id || !two.holding()) continue;
+    const there = two.tile();
+    if (Math.max(Math.abs(here.x - there.x), Math.abs(here.y - there.y)) > 1) continue;
+    const key = id < otherId ? `${id}:${otherId}` : `${otherId}:${id}`;
+    if (now - (clinkAt.get(key) ?? -Infinity) < CLINK_DEBOUNCE_MS) continue;
+    clinkAt.set(key, now);
+    const a = one.hand();
+    const b = two.hand();
+    effects?.clink((a.sx + b.sx) / 2, (a.sy + b.sy) / 2, now);
+  }
+}
+
+/** #347: the splash where the Star went in. The fountain's water when the client knows which
+ *  fountain it was, and the wisher's own feet when the item is not in the room it can see. */
+function wishSplash(accountId: number, itemId: number | undefined): void {
+  const who = avatars.get(accountId);
+  const item = itemId === undefined ? undefined : furni.find((f) => f.id === itemId);
+  const def = item && DEFS.get(item.defId);
+  const now = Date.now();
+  if (!item || !def) {
+    if (who) effects?.wish(null, { sx: who.view.x, sy: who.view.y }, now);
+    return;
+  }
+  const rotated = item.dir === 2 || item.dir === 6;
+  const water = worldToScreen(
+    item.x + ((rotated ? def.l : def.w) - 1) / 2,
+    item.y + ((rotated ? def.w : def.l) - 1) / 2,
+    item.z + (def.stackHeights[item.state] ?? 0) * WATER_LEVEL,
+    SCALE,
+  );
+  effects?.wish(who?.hand() ?? null, water, now);
 }
 
 function armedDef(): FurniDef | null {
@@ -425,8 +480,61 @@ function topItemOn(x: number, y: number): FurniItem | undefined {
   return itemsOn(x, y).sort((a, b) => a.z - b.z).pop();
 }
 
+function cancelPendingUse(): void {
+  if (pendingUse?.timer !== undefined) clearTimeout(pendingUse.timer);
+  pendingUse = null;
+}
+
+/** Whether my avatar is standing within reach of an item — the same Chebyshev-1 test the server
+ *  applies in Room.useFurni, so the client never sends a `use` it knows will be refused. */
+function withinReach(def: FurniDef, item: FurniItem): boolean {
+  const me = you === null ? undefined : avatars.get(you)?.tile();
+  if (!me) return false;
+  return footprintTiles(def, item.x, item.y, item.dir).some(
+    (t) => Math.max(Math.abs(t.x - me.x), Math.abs(t.y - me.y)) <= 1,
+  );
+}
+
+/** The walkable tile nearest to me that touches the item, or null when it is walled in. */
+function approachTile(def: FurniDef, item: FurniItem): Tile | null {
+  const me = you === null ? undefined : avatars.get(you)?.tile();
+  if (!me || !model) return null;
+  const covered = footprintTiles(def, item.x, item.y, item.dir);
+  const candidates: Tile[] = [];
+  for (const t of covered) {
+    for (const step of [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]]) {
+      const at = { x: t.x + (step[0] ?? 0), y: t.y + (step[1] ?? 0) };
+      if (covered.some((c) => c.x === at.x && c.y === at.y)) continue;
+      if (candidates.some((c) => c.x === at.x && c.y === at.y)) continue;
+      if (tileHeight(model, at.x, at.y) < 0) continue;
+      if (!itemsOn(at.x, at.y).every((f) => DEFS.get(f.defId)?.canWalk)) continue;
+      candidates.push(at);
+    }
+  }
+  candidates.sort((a, b) =>
+    Math.max(Math.abs(a.x - me.x), Math.abs(a.y - me.y)) -
+    Math.max(Math.abs(b.x - me.x), Math.abs(b.y - me.y)));
+  return candidates[0] ?? null;
+}
+
+/** Use it if I can reach it; otherwise walk over and use it on arrival. */
+function useFurni(def: FurniDef, item: FurniItem): void {
+  if (withinReach(def, item)) {
+    net.send({ t: "use", itemId: item.id });
+    return;
+  }
+  const approach = approachTile(def, item);
+  if (!approach) {
+    toast("you cannot get to that");
+    return;
+  }
+  pendingUse = { itemId: item.id, x: approach.x, y: approach.y };
+  net.send({ t: "move", x: approach.x, y: approach.y });
+}
+
 function onTileClick(x: number, y: number, button: number): void {
   closeMenu();
+  cancelPendingUse();
   if (button === 2) {
     // Placed items carry no owner in the protocol, so offer the menu on the topmost item here
     // and let the server answer `not_owner` when it is somebody else's.
@@ -439,6 +547,14 @@ function onTileClick(x: number, y: number, button: number): void {
     // A wall item ignores the floor — it only lands when the click reaches a wall segment.
     if (armedWallDef()) return;
     net.send({ t: "place", itemId: armed, x, y, dir: placeDir });
+    return;
+  }
+  // An interactable answers the click itself (#326) — a bar counter is there to be used, and
+  // nothing you can use is also something you can sit on.
+  const top = topItemOn(x, y);
+  const topDef = top && DEFS.get(top.defId);
+  if (top && topDef?.interaction) {
+    useFurni(topDef, top);
     return;
   }
   // Clicking a seat sits on it — the server walks you there first. Clicking the seat you are
@@ -616,6 +732,7 @@ function buildRoom(msg: RoomState): void {
   inventory = msg.inventory;
   armed = null;
   placeDir = 0;
+  cancelPendingUse();
   you = msg.you;
   myFigure = msg.avatars.find((a) => a.id === msg.you)?.figure ?? null;
   closeMenu();
@@ -649,6 +766,8 @@ function buildRoom(msg: RoomState): void {
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);
+  effects = new Effects(scene.world);
+  clinkAt.clear();   // the pairs in the old room are gone with it
   // No explicit teardown: scene.destroy() above took the old world and every layer's children
   // with it, the same way furniLayer is simply replaced.
   wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
@@ -692,6 +811,23 @@ function upsertFurni(item: FurniItem): void {
   claimPlaced(item.id);
 }
 
+/** My own walk decides the armed use: it fires when the walk lands on the tile it was armed for,
+ *  and is dropped when the server routes me somewhere else or stops me short. There is no arrival
+ *  message, so the walk's own length is the clock. */
+function armPendingUse(msg: Extract<ServerMsg, { t: "walk" }>): void {
+  if (!pendingUse) return;
+  const last = msg.path[msg.path.length - 1];
+  if (!last || last.x !== pendingUse.x || last.y !== pendingUse.y) {
+    cancelPendingUse();
+    return;
+  }
+  const armed = pendingUse;
+  armed.timer = window.setTimeout(() => {
+    pendingUse = null;
+    net.send({ t: "use", itemId: armed.itemId });
+  }, msg.path.length * msg.msPerTile + 60);
+}
+
 function handle(msg: ServerMsg): void {
   switch (msg.t) {
     case "room_state":
@@ -709,6 +845,7 @@ function handle(msg: ServerMsg): void {
       // line the two up for the rest of the session.
       if (clockOffset === null) clockOffset = Date.now() - msg.startedAt;
       avatars.get(msg.id)?.walk(msg, msg.startedAt + clockOffset);
+      if (msg.id === you) armPendingUse(msg);
       break;
     case "chat":
       chat.show(msg.from, msg, avatars.get(msg.from)?.tint());
@@ -726,6 +863,23 @@ function handle(msg: ServerMsg): void {
     case "wave":
       avatars.get(msg.id)?.wave(Date.now());
       break;
+    case "action":
+      if (msg.action === "wash") avatars.get(msg.accountId)?.washing(Date.now());
+      else wishSplash(msg.accountId, msg.itemId);
+      break;
+    case "handitem":
+      avatars.get(msg.accountId)?.setHand(
+        msg.item === null ? null : { item: msg.item, until: msg.until ?? 0 },
+      );
+      if (msg.item !== null) checkClink(msg.accountId);
+      break;
+    case "furni_state": {
+      const item = furni.find((f) => f.id === msg.itemId);
+      if (!item) break;
+      item.state = msg.state;
+      furniLayer?.apply(item);
+      break;
+    }
     case "furni_placed":
     case "furni_moved":
       upsertFurni(msg.item);
@@ -826,6 +980,8 @@ async function boot(): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    furniLayer?.update(now);
+    effects?.update(now);
     // The camera tracks my avatar through its walk lerp, so it runs after updates, before layout.
     const me = you === null ? undefined : avatars.get(you);
     if (me && scene && app) {
