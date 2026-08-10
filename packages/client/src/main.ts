@@ -115,7 +115,10 @@ function toast(text: string, kind?: "notice"): void {
 const creator = new Creator(el("creator"), {
   baker: () => figureBaker,
   send: (figure) => net.send({ t: "set_figure", figure }),
-  onClose: () => releaseKeyboard(),
+  onClose: () => {
+    releaseKeyboard();
+    el("tab-wardrobe").classList.remove("open");
+  },
 });
 
 function addAvatar(state: AvatarState): void {
@@ -913,7 +916,10 @@ for (const [tab, strip] of HUD_TABS) {
 el("tab-wardrobe").addEventListener("click", () => {
   if (myFigure === null) return;
   if (creator.isOpen) creator.close();
-  else creator.open(myFigure, "wardrobe");
+  else {
+    creator.open(myFigure, "wardrobe");
+    el("tab-wardrobe").classList.add("open");
+  }
 });
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));

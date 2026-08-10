@@ -127,6 +127,16 @@ describe("the wardrobe registry", () => {
     }
   });
 
+  test("slotFamilies, when declared, names a family for every slot", () => {
+    // A short array silently falls back to `family`, so hd-17-skin_3-skin_1 would validate and
+    // paint the iris with a skin ramp.
+    for (const s of FIGURE_SETS) {
+      if (s.slotFamilies) {
+        expect(s.slotFamilies.length, `set ${s.id} (${s.name})`).toBe(s.slots);
+      }
+    }
+  });
+
   test("hides only ever points backwards, and never at the body", () => {
     expect(checkHideDirection()).toEqual([]);
   });

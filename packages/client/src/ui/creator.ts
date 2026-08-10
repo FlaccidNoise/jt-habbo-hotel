@@ -68,20 +68,21 @@ export interface Look {
   topColors: [string, string];
   legs: number;
   legsColor: string;
+  shoes: number;
   shoesColor: string;
   hat: number;          // 0 = bare-headed
   hatColor: string;
   extras: WornPart[];
 }
 
-export function figureToLook(input: string, tab: Tab = "Face", dir = 3): Look {
+export function figureToLook(input: string): Look {
   const worn = new Map(parseFigure(input).parts.map((p) => [p.type, p]));
   const head = worn.get("hd");
   const of = (type: LayerType, slot: number, fallback: string): string =>
     worn.get(type)?.colors[slot] ?? fallback;
   return {
-    dir,
-    tab,
+    dir: 3,
+    tab: "Face",
     skin: head?.colors[0] ?? "skin_3",
     faceSetId: head?.set ?? 2,
     iris: head?.colors[1] ?? "charcoal",
@@ -92,6 +93,7 @@ export function figureToLook(input: string, tab: Tab = "Face", dir = 3): Look {
     topColors: [of("ch", 0, "crimson"), of("ch", 1, "ivory")],
     legs: worn.get("lg")?.set ?? 0,
     legsColor: of("lg", 0, "navy"),
+    shoes: worn.get("sh")?.set ?? SHOES_SET,
     shoesColor: of("sh", 0, "charcoal"),
     hat: worn.get("ha")?.set ?? 0,
     hatColor: of("ha", 0, "navy"),
@@ -115,7 +117,7 @@ export function lookToFigure(look: Look): Figure {
   wear("fa", look.beardSetId, [look.hairColor]);
   wear("ch", look.top, look.topColors);
   wear("lg", look.legs, [look.legsColor]);
-  wear("sh", SHOES_SET, [look.shoesColor]);
+  wear("sh", look.shoes, [look.shoesColor]);
   wear("ha", look.hat, [look.hatColor]);
   return { version: FIGUREDATA_VERSION, parts };
 }
@@ -159,6 +161,7 @@ export function randomLook(
     topColors: [ramp("material"), ramp("material")],
     legs: ownedOf("lg") || look.legs,
     legsColor: ramp("material"),
+    shoes: ownedOf("sh") || look.shoes,
     shoesColor: ramp("material"),
     hat: rand() < 0.2 ? ownedOf("ha") : 0,
     hatColor: ramp("material"),
@@ -214,6 +217,11 @@ export class Creator {
       this.error = "We could not read your saved look, so this starts from the house default.";
     }
     this.render();
+    // Take the keyboard: chat holds focus otherwise, which makes the window handler treat every
+    // key as typing — Escape dead, keystrokes landing in the room behind the panel.
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    this.root.tabIndex = -1;
+    this.root.focus();
   }
 
   close(): void {
@@ -447,11 +455,11 @@ export class Creator {
       }
 
       case "Shoes": {
-        // One shoe in the library, so the tab is a colour picker with the pair drawn above it.
-        const shoes = { id: SHOES_SET, name: setById(SHOES_SET)?.name ?? "Shoes",
-          figure: figureOf(look, ["sh"]) };
+        const shoes = setsOfType("sh").map((s) => ({
+          id: s.id, name: s.name, figure: figureOf({ ...look, shoes: s.id }, ["sh"]),
+        }));
         return [
-          group("Shoes", this.cards([shoes], SHOES_SET, CROP.shoes, () => {})),
+          group("Shoes", this.cards(shoes, look.shoes, CROP.shoes, (id) => this.update({ shoes: id }))),
           group("Colour",
             this.swatches("material", look.shoesColor, (shoesColor) => this.update({ shoesColor }))),
         ];
