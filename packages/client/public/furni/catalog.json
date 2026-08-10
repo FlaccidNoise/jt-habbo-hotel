@@ -928,6 +928,70 @@
       "recipeHash": "4f66982aae853a71b76f404b2327a70864476e2cf197984b16c6e3bba2c62d8d",
       "pixelHash": "5309a4d996741d63e34b3c940e726485b4aaf028de16b15bd6f9496abe9eb4d5"
     },
+    "vending_machine": {
+      "defId": "vending_machine",
+      "archetype": "artgen",
+      "sheet": "vending_machine.png",
+      "frameW": 64,
+      "frameH": 96,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 80,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:134050587d72fc9f",
+      "recipeHash": "134050587d72fc9f736eaf6996838bdd20ce16363df08ae866ead99c6c6a416f",
+      "pixelHash": "9cbd3ec234aa0bdd87ea8a595d3e5786940a46ae36246e22d2f69a3c0a237f3b"
+    },
+    "sink_basic": {
+      "defId": "sink_basic",
+      "archetype": "artgen",
+      "sheet": "sink_basic.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b8628bd7454062f7",
+      "recipeHash": "b8628bd7454062f77afc97939023bf463800a649231905084716c2deb9c9e8ea",
+      "pixelHash": "a4e9aab7dc842689d77debeee22d3acbaefb4c94be94b99c753b76b68690e7e9"
+    },
     "billiards_table": {
       "defId": "billiards_table",
       "archetype": "artgen",
@@ -1419,6 +1483,38 @@
       "partLibraryHash": "artgen:40283b53fcca5e05",
       "recipeHash": "40283b53fcca5e05a847b8ffd6d6dc51784cc404cd82358baf396d7b05964708",
       "pixelHash": "46e3cb5e84417249c2c4e3520a6c629c61f07b30112c867f16f69b7c369b541d"
+    },
+    "cafe_counter": {
+      "defId": "cafe_counter",
+      "archetype": "artgen",
+      "sheet": "cafe_counter.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:82f70fa9b51f96dd",
+      "recipeHash": "82f70fa9b51f96ddae110bde72ca19122c65141e85bec2b367a388f6026b4a80",
+      "pixelHash": "1caa69464eee03e7cfc16cdffb7c347676cae07fdbed07b85a1f88419afea13a"
     },
     "arcade_cabinet_plum": {
       "defId": "arcade_cabinet_plum",

@@ -19,6 +19,18 @@ test("the wall catalog validates against the wire schema", () =>
 test("catalog ids are unique across both surfaces", () =>
   expect(new Set(ALL_IDS).size).toBe(ALL_IDS.length));
 
+// The use verb reads its parameters off the def (#347), so a def whose interaction and parameters
+// disagree fails silently in the room: a "vend" with no `vend` block hands over nothing, a "toggle"
+// missing its second height throws the moment anyone flips it, and a `vend` block on furni nobody
+// can vend from is a price that never applies.
+test("every interaction def carries exactly what its rail reads", () => {
+  for (const def of PROTOTYPE_CATALOG) {
+    const vends = def.interaction === "vend" || def.interaction === "read";
+    expect(def.vend !== undefined, def.id).toBe(vends);
+    if (def.interaction === "toggle") expect(def.stackHeights.length, def.id).toBeGreaterThan(1);
+  }
+});
+
 // A wall item that overhangs its own span could never be hung anywhere — wallOffsetLimits would
 // hand back a negative range and every position would fail bad_position.
 test("every wall def fits the wall it hangs on", () =>
