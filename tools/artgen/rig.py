@@ -1043,6 +1043,15 @@ FIGURE_PARTS = {
              "squash": (0.94, 0.40, 0.34)},
         ],
     },
+    # Afro (set 35). One ball, four px of radius past the Short Crop, sat back off the face so the
+    # brow and nose still win the depth test and punch the face out of it. The widest hair in the
+    # set at 34 px across — still 15 clear of the frame edge the bounds gate watches.
+    "hr35": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -4.6, 14.0), "r": 14.0,
+             "squash": (1.04, 0.86, 0.87)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {

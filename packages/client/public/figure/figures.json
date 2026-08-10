@@ -1270,6 +1270,54 @@
       "pixelHash": "f5ce22d96c49249fabfe0a44310e766ff15e5db0cc6dd91424840580e8468c5b"
     },
     {
+      "partId": "hr35",
+      "setId": 35,
+      "type": "hr",
+      "name": "Afro",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr35.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b27dc15c86bdba5a75a876ef8cd3bdeb2b858b7cb6e7aab7a52e4c473acaeba4",
+      "pixelHash": "abea8958c418e1ebc64ade216c57a3378d518974c32168fa58e468ffe0f3a015"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",
