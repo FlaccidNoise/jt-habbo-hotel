@@ -379,15 +379,10 @@ export class Creator {
   }
 
   private groups(look: Look): HTMLElement[] {
-    const cards = (items: Card[], current: number, crop: Crop, pick: (id: number) => void) =>
-      this.cards(items, current, crop, pick);
-    const swatches = (family: ColorFamily, current: string, pick: (ramp: string) => void) =>
-      this.swatches(family, current, pick);
-
     switch (look.tab) {
       case "Skin":
         return [group("Skin ramp — head and body inherit together",
-          swatches("skin", look.skin, (skin) => this.update({ skin })),
+          this.swatches("skin", look.skin, (skin) => this.update({ skin })),
           "bd is implicit: it always wears hd's skin ramp, so the neck can never mismatch.")];
 
       case "Face": {
@@ -401,13 +396,13 @@ export class Creator {
         }));
         return [
           group("Face — curated hd sets",
-            cards(faces, look.faceSetId, CROP.face, (faceSetId) => this.update({ faceSetId }))),
+            this.cards(faces, look.faceSetId, CROP.face, (faceSetId) => this.update({ faceSetId }))),
           ...(hasIris(look.faceSetId)
-            ? [group("Iris — slot 1", swatches("iris", look.iris, (iris) => this.update({ iris })))]
+            ? [group("Iris — slot 1", this.swatches("iris", look.iris, (iris) => this.update({ iris })))]
             : []),
           // Every fa set shares the chin slot, so the mask is in this row too — one at a time.
           group("Facial hair — the fa slot, in your hair colour",
-            cards(beards, look.beardSetId, CROP.face, (beardSetId) =>
+            this.cards(beards, look.beardSetId, CROP.face, (beardSetId) =>
               this.update({ beardSetId }))),
         ];
       }
@@ -418,9 +413,9 @@ export class Creator {
           figure: figureOf({ ...look, hair: s.id, hat: 0 }, ["hr"]),
         }));
         return [
-          group("Hair", cards(hairs, look.hair, CROP.hair, (hair) => this.update({ hair }))),
+          group("Hair", this.cards(hairs, look.hair, CROP.hair, (hair) => this.update({ hair }))),
           group("Hair colour",
-            swatches("material", look.hairColor, (hairColor) => this.update({ hairColor }))),
+            this.swatches("material", look.hairColor, (hairColor) => this.update({ hairColor }))),
         ];
       }
 
@@ -430,11 +425,11 @@ export class Creator {
         }));
         const trim = setById(look.top)?.slots === 2;
         return [
-          group("Top", cards(tops, look.top, CROP.top, (top) => this.update({ top }))),
-          group("Colour — slot 0", swatches("material", look.topColors[0], (c) =>
+          group("Top", this.cards(tops, look.top, CROP.top, (top) => this.update({ top }))),
+          group("Colour — slot 0", this.swatches("material", look.topColors[0], (c) =>
             this.update({ topColors: [c, look.topColors[1]] }))),
           ...(trim
-            ? [group("Trim — slot 1", swatches("material", look.topColors[1], (c) =>
+            ? [group("Trim — slot 1", this.swatches("material", look.topColors[1], (c) =>
               this.update({ topColors: [look.topColors[0], c] })))]
             : []),
         ];
@@ -445,9 +440,9 @@ export class Creator {
           id: s.id, name: s.name, figure: figureOf({ ...look, legs: s.id }, ["lg"]),
         }));
         return [
-          group("Legs", cards(legs, look.legs, CROP.legs, (id) => this.update({ legs: id }))),
+          group("Legs", this.cards(legs, look.legs, CROP.legs, (id) => this.update({ legs: id }))),
           group("Colour",
-            swatches("material", look.legsColor, (legsColor) => this.update({ legsColor }))),
+            this.swatches("material", look.legsColor, (legsColor) => this.update({ legsColor }))),
         ];
       }
 
@@ -456,9 +451,9 @@ export class Creator {
         const shoes = { id: SHOES_SET, name: setById(SHOES_SET)?.name ?? "Shoes",
           figure: figureOf(look, ["sh"]) };
         return [
-          group("Shoes", cards([shoes], SHOES_SET, CROP.shoes, () => {})),
+          group("Shoes", this.cards([shoes], SHOES_SET, CROP.shoes, () => {})),
           group("Colour",
-            swatches("material", look.shoesColor, (shoesColor) => this.update({ shoesColor }))),
+            this.swatches("material", look.shoesColor, (shoesColor) => this.update({ shoesColor }))),
         ];
       }
 
@@ -468,9 +463,9 @@ export class Creator {
         }));
         return [
           group("Hat — hides hair while it is on",
-            cards(hats, look.hat, CROP.hat, (hat) => this.update({ hat }))),
+            this.cards(hats, look.hat, CROP.hat, (hat) => this.update({ hat }))),
           group("Hat colour",
-            swatches("material", look.hatColor, (hatColor) => this.update({ hatColor }))),
+            this.swatches("material", look.hatColor, (hatColor) => this.update({ hatColor }))),
         ];
       }
     }
