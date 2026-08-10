@@ -955,6 +955,17 @@ FIGURE_PARTS = {
              "squash": (1.05, 0.62, 1.35)},
         ],
     },
+    # Bob (set 28). The dome is wider than the skull and the bell hangs straight off it to a flat
+    # bottom at the jaw — the box is narrower than the dome's equator so the two meet without a
+    # ledge, and the hard edge comes from the box's own bottom face.
+    "hr28": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.6, 12.6), "r": 11.6,
+             "squash": (0.974, 0.885, 0.879)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-11.0, -10.8, 4.6),
+             "c1": (11.0, 5.6, 12.6)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {

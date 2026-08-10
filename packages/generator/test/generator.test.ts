@@ -627,8 +627,13 @@ describe("figure visual review", () => {
     // a holdout against the body arrives in pieces by construction: two loafers, a skirt panel the
     // near leg cuts in two. If this ever drops to zero the composed check has stopped earning its
     // keep and this file should say so.
+    //
+    // A count, not a share of the wardrobe. A layer that covers one region — a face set, a cap, a
+    // hair set (#345) — is a single blob however it is authored, so every one added moves the
+    // share without saying anything about the check. The share was already down to 13 of 25 when
+    // the face sets landed and the first hair set took it under half.
     const flagged = garments.filter((id) => reviewFigureIslands([cellsOf(id)], label).length > 0);
-    expect(flagged.length).toBeGreaterThan(garments.length / 2);
+    expect(flagged.length).toBeGreaterThan(10);
     expect(reviewFigureIslands([cellsOf("sh9")], label).length).toBeGreaterThan(20);
   });
 
