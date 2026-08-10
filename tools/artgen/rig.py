@@ -1015,6 +1015,18 @@ FIGURE_PARTS = {
              "squash": (0.985, 0.86, 0.83)},
         ],
     },
+    # Bun (set 33). The knot clears the crown by five px and is the only thing that reads at any
+    # distance, so it sits behind the crown line rather than on top of it — a knot centred over the
+    # skull would look like a growth. Its lower half is inside the cap, which is what keeps the
+    # layer one island in every frame.
+    "hr33": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.6, 12.6), "r": 11.1,
+             "squash": (1.00, 0.90, 0.91)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -3.0, 23.8), "r": 4.6,
+             "squash": (1.0, 0.95, 0.85)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
