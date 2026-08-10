@@ -1126,6 +1126,54 @@
       "pixelHash": "893149340b3c4710e855b702f21953393870659425011cf191533dbe42488f40"
     },
     {
+      "partId": "hr32",
+      "setId": 32,
+      "type": "hr",
+      "name": "Buzz",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr32.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "de7b8f3ec987f3108b875d9f8eb339f187ccc20905acdaa4ba53cb2030927e19",
+      "pixelHash": "5d302ab7cc565aa56c14997e2d3fec9715173d88fc773357d1b80fe76d8bba23"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",

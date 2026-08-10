@@ -1006,6 +1006,15 @@ FIGURE_PARTS = {
              "squash": (0.90, 0.94, 0.964)},
         ],
     },
+    # Buzz (set 32). The smallest hair in the set and the point of it: one ball a shade over a
+    # pixel proud of the skull, centred a full 1.4 above the Short Crop's so the hairline sits
+    # higher all round. Silhouette, not palette, is what separates the two.
+    "hr32": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.8, 13.8), "r": 11.0,
+             "squash": (0.985, 0.86, 0.83)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
