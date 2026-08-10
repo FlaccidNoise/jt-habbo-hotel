@@ -1,0 +1,32 @@
+{
+  "defId": "mic_stand",
+  "archetype": "artgen",
+  "sheet": "mic_stand.png",
+  "frameW": 64,
+  "frameH": 100,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 84,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:68894fa9152681ce",
+  "recipeHash": "68894fa9152681cef7bc1331d75dba36b1cdf3745b090c8f3f3b83cf30e0a352",
+  "pixelHash": "57bafe5492ec747886cb75f057853f2ec2966c89d5d570950ce79dba423becd4"
+}

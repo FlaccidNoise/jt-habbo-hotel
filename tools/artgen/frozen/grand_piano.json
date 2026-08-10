@@ -1,0 +1,32 @@
+{
+  "defId": "grand_piano",
+  "archetype": "artgen",
+  "sheet": "grand_piano.png",
+  "frameW": 128,
+  "frameH": 120,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4b9248c5b029f3d6",
+  "recipeHash": "4b9248c5b029f3d63f4ef76bb41e6a241cc1b4620c1fca801004090ec2394040",
+  "pixelHash": "4a6dec771fbe66f4e69ea43ae12cb7593a2dd77686b1a2f16a2fe3da5404b2d4"
+}

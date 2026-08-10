@@ -1,0 +1,32 @@
+{
+  "defId": "stage_light_plum",
+  "archetype": "artgen",
+  "sheet": "stage_light_plum.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:928ab7ac4074a9d1",
+  "recipeHash": "928ab7ac4074a9d10d8c501943b8c4754ab0363e5678f324506c5d8f8541ca03",
+  "pixelHash": "2700213091d4b33d61471641ed4b6a65c5409c17bbda7993fb49c71226fa278a"
+}

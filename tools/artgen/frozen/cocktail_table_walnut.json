@@ -1,0 +1,32 @@
+{
+  "defId": "cocktail_table_walnut",
+  "archetype": "artgen",
+  "sheet": "cocktail_table_walnut.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a4775570f706b025",
+  "recipeHash": "a4775570f706b02587fda33fa2e14eb9d32bbd983017f26126dc423b6d0ef4e7",
+  "pixelHash": "c16b82429a435b1e233fa0e25c283516f54138bfa8055b3a4ffe0caa6f568586"
+}

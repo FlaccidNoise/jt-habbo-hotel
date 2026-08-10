@@ -1,0 +1,34 @@
+{
+  "defId": "velvet_booth",
+  "archetype": "artgen",
+  "sheet": "velvet_booth.png",
+  "frameW": 96,
+  "frameH": 118,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 86,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.1875,
+  "seatZ": 0.96,
+  "occlusion": null,
+  "nearSheet": "velvet_booth.near.png",
+  "nearHash": "9742e2af975e95b6cbebc1af9787723bfca96d112f733f02c1c708793a136432",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2e2140d27acd58a0",
+  "recipeHash": "2e2140d27acd58a06e53aaf1c4bc577530cb5e2d560738b395a5b4eb20b138ac",
+  "pixelHash": "37ceed6f4b39115a6d13e98b74f7b53bd7d8472008196875829d2a12485559e0"
+}

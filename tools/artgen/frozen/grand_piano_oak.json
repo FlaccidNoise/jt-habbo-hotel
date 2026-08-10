@@ -1,0 +1,32 @@
+{
+  "defId": "grand_piano_oak",
+  "archetype": "artgen",
+  "sheet": "grand_piano_oak.png",
+  "frameW": 128,
+  "frameH": 120,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9ffe0c655f090a73",
+  "recipeHash": "9ffe0c655f090a731c3449408c0356f441c2c043729addad5dec6e8e8c6c9f9f",
+  "pixelHash": "15866487307f7a635217a6396aea6ffdddbb5ba6e87be26b4f27a166c89017a4"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "neon_sign",
+  "archetype": "artgen",
+  "sheet": "neon_sign.png",
+  "frameW": 64,
+  "frameH": 128,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 112,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 28,
+    "mountU": 2,
+    "mountV": 34,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:07ec2e086f4d0c82",
+  "recipeHash": "07ec2e086f4d0c82f5c514fcc92c34328755f410dfbcc50e12eed2e95c823b19",
+  "pixelHash": "eb4a9304c89c34b98b3633798b7000688dbe36d256a62f0903318168c5c7d2a0"
+}

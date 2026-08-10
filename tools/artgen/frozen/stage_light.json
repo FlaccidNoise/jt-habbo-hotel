@@ -1,0 +1,32 @@
+{
+  "defId": "stage_light",
+  "archetype": "artgen",
+  "sheet": "stage_light.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9b4a1f85b1c6474a",
+  "recipeHash": "9b4a1f85b1c6474a2796f341f149e24f0d0a32dff30f0bc77c35dd13e19bb297",
+  "pixelHash": "0abe2d04e381c09476e2277134faac5b4a0aad73d52200aa3cca3fddd6eec57a"
+}

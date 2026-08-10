@@ -1,0 +1,32 @@
+{
+  "defId": "cocktail_table",
+  "archetype": "artgen",
+  "sheet": "cocktail_table.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ae226cb12a2eb931",
+  "recipeHash": "ae226cb12a2eb931c907af03ce906bbb22d8c1e90d012bdecdaf48ed19df78eb",
+  "pixelHash": "26332eeffe79cc5d349f45807fe177ee8006f14dafe3dcc875f6170bc6e7c335"
+}

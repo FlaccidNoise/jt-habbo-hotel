@@ -154,4 +154,15 @@ export const DECOR_CATALOG: DecorDef[] = [
     tile: { w: 16, h: 128 },
     cap: 0xcbc0ac,
   },
+  // Jazz Lounge pack (#358): crimson/gold/charcoal/plum.
+  {
+    kind: "floor", id: "floor_lounge", name: "Lounge Carpet",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0xaa3333, right: 0xdd4242 },
+  },
+  {
+    kind: "wall", id: "wall_velvet", name: "Velvet Panelling",
+    tile: { w: 16, h: 32 },
+    cap: 0xc2a36b,
+  },
 ];

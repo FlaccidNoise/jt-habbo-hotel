@@ -38,6 +38,14 @@ const GLOWS: ReadonlyMap<string, Glow> = new Map([
   ["fireplace", { color: 0xffa347, radius: 58, tint: 0xffd9b0, at: 0.3, smoke: true }],
   ["fireplace_stone", { color: 0xffa347, radius: 58, tint: 0xffe0be, at: 0.3, smoke: true }],
   ["stereo_basic", { color: 0x8fd4ff, radius: 16, tint: 0xdfeaff, at: 0.55, smoke: false }],
+  // Jazz Lounge (#358). The stage light is the widest pool in the catalog and the warmest — it is
+  // the only item whose whole purpose is to throw light, so it out-reaches even the hearth, from
+  // the lens rather than from the base. The speakers only light their own drivers: a small amber
+  // pool low on the cabinet, tinted warm because the cones are gold and a cool one would grey them.
+  ["stage_light", { color: 0xffcf70, radius: 74, tint: 0xfff0d2, at: 0.82, smoke: false }],
+  ["stage_light_plum", { color: 0xffcf70, radius: 74, tint: 0xf6e2ea, at: 0.82, smoke: false }],
+  ["speaker_column", { color: 0xffb861, radius: 20, tint: 0xffe4c4, at: 0.24, smoke: false }],
+  ["speaker_column_vintage", { color: 0xffb861, radius: 20, tint: 0xffeed8, at: 0.24, smoke: false }],
 ]);
 
 /** Off a lit hearth (#331): slower, wider and heavier than the coffee's steam, and grey-brown

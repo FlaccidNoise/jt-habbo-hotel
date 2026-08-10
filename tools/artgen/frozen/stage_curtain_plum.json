@@ -1,0 +1,37 @@
+{
+  "defId": "stage_curtain_plum",
+  "archetype": "artgen",
+  "sheet": "stage_curtain_plum.png",
+  "frameW": 64,
+  "frameH": 130,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 114,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 32,
+    "mountU": 2,
+    "mountV": 33,
+    "gap": 0,
+    "depth": 0.115
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7466572f768804d2",
+  "recipeHash": "7466572f768804d2f62f4654631cf08f5b8428fb8f9065b1ddaf473ca8b8f6ee",
+  "pixelHash": "cd5901d195b9db120c6801e2e017996b0c11b86d6788774e2fba517d9bf5b5f2"
+}

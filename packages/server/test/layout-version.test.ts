@@ -13,6 +13,9 @@ function layoutsHash(): string {
 }
 
 const RECORDED = {
+  // #327/#331: the use-verbs wave put a vending machine and a wash basin in the café and a
+  // cafe_counter where the bar counter stood, so LAYOUT_VERSION went 1 -> 2 and every live room
+  // re-lays on next boot.
   version: 2,
   hash: "290a4e149df276b8ea39a70af65a48c383ee15b0eec8d367e1cb29a385bf2082",
 };

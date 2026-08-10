@@ -1,0 +1,34 @@
+{
+  "defId": "velvet_booth_plum",
+  "archetype": "artgen",
+  "sheet": "velvet_booth_plum.png",
+  "frameW": 96,
+  "frameH": 118,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 86,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.1875,
+  "seatZ": 0.96,
+  "occlusion": null,
+  "nearSheet": "velvet_booth_plum.near.png",
+  "nearHash": "01f2cd53a81836a4744486237abfe2ad23d908f9ac5c5004e88fd37521abedc8",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6be8b0cf63969376",
+  "recipeHash": "6be8b0cf63969376a99e6359f3b6768eee40438d07c4971fabb098dbeff76542",
+  "pixelHash": "77ca43b75e93b29b3d52de8f1a8046abe9f1049639f8f71ad987caf4c2c7d2e8"
+}

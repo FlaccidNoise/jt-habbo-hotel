@@ -192,6 +192,29 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   armoire_deco_ivory:   { base: "armoire_deco",    ramps: { charcoal: "ivory", ivory: "navy", navy: "charcoal" } },
   mirror_standing_plum: { base: "mirror_standing", ramps: { gold: "plum", navy: "gold", slate: "ivory" } },
   sconce_deco_onyx:     { base: "sconce_deco",     ramps: { gold: "charcoal", navy: "crimson" } },
+  // Jazz Lounge (#358). Every lounge base is charcoal hardware under one warm accent, so no
+  // colorway here moves a single ramp: swap the body and the accent it was chosen against has to
+  // move with it, or the part keeps wearing the old scheme's highlight.
+  // Dark skirt, mid deck, and the gold nosing stays gold. sand over walnut with a charcoal nosing
+  // was the first try and read as a pale sandbox: on a part that is 90% one flat deck, the deck
+  // ramp has to carry the whole object, so it takes the wood and the skirt goes darker under it.
+  stage_platform_parquet: { base: "stage_platform",
+    ramps: { charcoal: "oak", plum: "walnut" } },
+  // oak, not walnut, and the gold stays gold. walnut's hi clamps, which turned the case a garish
+  // orange, and a charcoal band on it was two desaturated darks 7 luma apart — the gold-on-walnut
+  // trap in both corners at once. oak sits 82 luma under gold and 65 under the ivory keys.
+  grand_piano_oak:      { base: "grand_piano",     ramps: { charcoal: "oak" } },
+  double_bass_ebony:    { base: "double_bass",     ramps: { oak: "charcoal", charcoal: "slate" } },
+  speaker_column_vintage: { base: "speaker_column",
+    ramps: { charcoal: "walnut", slate: "charcoal", gold: "ivory" } },
+  velvet_booth_plum:    { base: "velvet_booth",    ramps: { crimson: "plum" } },
+  // Charcoal upholstery would swallow the charcoal feet, so they go slate.
+  velvet_booth_charcoal: { base: "velvet_booth",   ramps: { crimson: "charcoal", charcoal: "slate" } },
+  cocktail_table_walnut: { base: "cocktail_table", ramps: { charcoal: "walnut", plum: "crimson" } },
+  // The lens rim is crimson against a charcoal can; on a plum can it would be two neighbouring
+  // hues, so the rim goes ivory and keeps framing the gold lens.
+  stage_light_plum:     { base: "stage_light",     ramps: { charcoal: "plum", crimson: "ivory" } },
+  stage_curtain_plum:   { base: "stage_curtain",   ramps: { crimson: "plum" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

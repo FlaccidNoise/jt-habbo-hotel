@@ -1397,6 +1397,339 @@ PARTS = {
             {"t": "box", "c0": (0.14, 0.28, 1.30), "c1": (0.86, 0.72, 1.36), "ramp": "slate"},
         ],
     },
+    # ---- jazz lounge (#358) --------------------------------------------------------------
+    # Stage and venue furni. Charcoal hardware, crimson upholstery, gold fittings and plum
+    # surfaces — four ramps that differ in hue, so every colorway swap moves a base colour
+    # rather than a luma step (the gold-on-walnut trap).
+
+    # The only walkable part authored above rug height. canWalk puts it on the client's
+    # floor_furni layer and server/room.ts tileZ raises anyone standing on it by stackHeights[0],
+    # so the riser is a real step rather than a painted one. Three slabs, each proud of the one
+    # under it — coplanar slabs z-fight, which is the rug_lodge lesson on a horizontal face.
+    "stage_platform": {
+        "w": 2, "l": 2, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.00, 0.00, 0.000), "c1": (2.00, 2.00, 0.190)},
+            {"t": "box", "c0": (0.00, 0.00, 0.190), "c1": (2.00, 2.00, 0.220), "ramp": "gold"},
+            {"t": "box", "c0": (0.07, 0.07, 0.220), "c1": (1.93, 1.93, 0.250), "ramp": "plum"},
+        ],
+    },
+    # gateBounds wants ground contact within half a tile of the ground line in all four
+    # directions. On a 2x2 that means the ground prims must reach fx+fy >= 2.9375 and <= 1.0625
+    # AND spread >= 0.9375 both ways in fx-fy — four corners, not three. A real grand piano has
+    # three legs, so the bass corner gets a fourth pulled in to (1.44..1.56) where the case still
+    # covers it: the leg is invisible under the lid and the gate is satisfied by geometry rather
+    # than by relaxing it (the billiards_table lesson, one rotation further on).
+    #
+    # The lid stays CLOSED. The first pass opened it as two stepped courses and the piano read as
+    # a grey table with a crate on it: an open lid is a tilted plane, prims are axis-aligned, and
+    # the staircase that approximates it has no piano in it. What carries the read instead is the
+    # plan — a three-step wing with a cut bass corner, outlined in gold — plus a keyboard wide
+    # enough to see and a music desk for silhouette. Shape first, then the accent on its edge.
+    "grand_piano": {
+        "w": 2, "l": 2, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.28, 0.28, 0.90)},
+            {"t": "box", "c0": (1.72, 0.16, 0.00), "c1": (1.84, 0.28, 0.90)},
+            {"t": "box", "c0": (0.16, 1.66, 0.00), "c1": (0.28, 1.78, 0.90)},
+            {"t": "box", "c0": (1.44, 1.44, 0.00), "c1": (1.56, 1.56, 0.90)},
+            # Pedal lyre, hung under the keyboard end.
+            {"t": "box", "c0": (0.88, 0.30, 0.16), "c1": (1.02, 0.42, 0.90)},
+            {"t": "box", "c0": (0.82, 0.24, 0.16), "c1": (1.08, 0.34, 0.22), "ramp": "gold"},
+            # Case, three courses in one seam group — the steps are a curve, and a detail line at
+            # each one would draw the staircase the shape is trying not to be.
+            {"t": "box", "c0": (0.06, 0.06, 0.90), "c1": (1.90, 1.10, 1.06), "group": 100},
+            {"t": "box", "c0": (0.06, 1.10, 0.90), "c1": (1.70, 1.55, 1.06), "group": 100},
+            {"t": "box", "c0": (0.06, 1.55, 0.90), "c1": (1.30, 1.92, 1.06), "group": 100},
+            # Gold rim: wider than the case in plan and 1 z-px proud, so it breaks the silhouette
+            # instead of hiding under the lid (the side_table inlay idiom, wing-shaped).
+            {"t": "box", "c0": (0.02, 0.02, 1.06), "c1": (1.94, 1.12, 1.10), "ramp": "gold",
+             "group": 101},
+            {"t": "box", "c0": (0.02, 1.12, 1.06), "c1": (1.74, 1.57, 1.10), "ramp": "gold",
+             "group": 101},
+            {"t": "box", "c0": (0.02, 1.57, 1.06), "c1": (1.34, 1.96, 1.10), "ramp": "gold",
+             "group": 101},
+            # Lid, proud inside the gold and set back in fy to leave the band clear for the keys.
+            {"t": "box", "c0": (0.10, 0.34, 1.10), "c1": (1.86, 1.08, 1.17), "group": 102},
+            {"t": "box", "c0": (0.10, 1.08, 1.10), "c1": (1.66, 1.53, 1.17), "group": 102},
+            {"t": "box", "c0": (0.10, 1.53, 1.10), "c1": (1.26, 1.88, 1.17), "group": 102},
+            # Keyboard along low fy with the rest of the catalog's fronts. 0.28 deep, which is
+            # 9 px — the first pass gave it 0.11 and the lid edge ate all of it.
+            {"t": "box", "c0": (0.14, 0.06, 1.10), "c1": (1.82, 0.34, 1.16), "ramp": "ivory"},
+            {"t": "box", "c0": (0.22, 0.22, 1.16), "c1": (1.74, 0.32, 1.185)},
+            # The lid, propped. Three courses rising across fy in ONE seam group: a tilted plane
+            # is out of reach for axis-aligned prims, and what stands in for it is a staircase
+            # with no lines drawn on it. A centred music desk stood here first and read as a
+            # fence — the lid has to run the full width of the case or it is a different object.
+            {"t": "box", "c0": (0.14, 1.00, 1.17), "c1": (1.62, 1.20, 1.32), "group": 103},
+            {"t": "box", "c0": (0.14, 1.20, 1.17), "c1": (1.62, 1.36, 1.50), "group": 103},
+            {"t": "box", "c0": (0.14, 1.36, 1.17), "c1": (1.60, 1.52, 1.68), "group": 103},
+            {"t": "box", "c0": (0.12, 1.34, 1.68), "c1": (1.62, 1.54, 1.72), "ramp": "gold"},
+        ],
+    },
+    # A cyl's ellipse is its FOOTPRINT cross-section, so a wide-and-shallow one is exactly a bass
+    # body seen face on: 0.34 across, 0.145 deep. Three courses tapered against each other give
+    # the waist a single extrusion cannot — and they share ONE seam group, because the detail
+    # line the post-pass draws at each course boundary is what made the first pass read as
+    # stacked cylinders, which is to say as a bottle.
+    # oak, not walnut: walnut's hi clamps to a bright orange that made the first pass read as a
+    # varnished bottle. oak is the same family two steps darker and never clamps.
+    "double_bass": {
+        "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.12, "ry": 0.12, "z0": 0.00, "z1": 0.045,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.04, "ry": 0.04, "z0": 0.00, "z1": 0.28,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.34, "ry": 0.145, "z0": 0.26, "z1": 0.80,
+             "taper": 0.66, "group": 100},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.22, "ry": 0.135, "z0": 0.76, "z1": 0.98,
+             "taper": 1.30, "group": 100},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.29, "ry": 0.14, "z0": 0.94, "z1": 1.46,
+             "taper": 0.62, "group": 100},
+            # Everything below stands proud of the belly (front face at fy 0.355): flush charcoal
+            # on walnut shares a luma bucket and disappears.
+            {"t": "box", "c0": (0.30, 0.30, 0.82), "c1": (0.345, 0.37, 1.06), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.655, 0.30, 0.82), "c1": (0.70, 0.37, 1.06), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.44, 0.30, 0.44), "c1": (0.56, 0.37, 0.80), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.37, 0.30, 0.80), "c1": (0.63, 0.36, 0.90), "ramp": "sand"},
+            # One pale strip for four strings: at 32 px per tile a bass's string spacing is under
+            # a pixel, so what reads is that something light runs the whole neck.
+            {"t": "box", "c0": (0.465, 0.29, 0.84), "c1": (0.535, 0.315, 2.00), "ramp": "sand"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.46, "rx": 0.065, "ry": 0.065, "z0": 1.50,
+             "z1": 2.06},
+            {"t": "box", "c0": (0.44, 0.30, 1.44), "c1": (0.56, 0.38, 2.02), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.43, 0.36, 2.02), "c1": (0.57, 0.50, 2.24)},
+            {"t": "hcyl", "x": 0.50, "y0": 0.30, "y1": 0.60, "z": 2.14, "r": 0.03,
+             "axis": "x", "caps": False, "ramp": "gold"},
+            {"t": "sphere", "c": (0.50, 0.44, 2.28), "r": 0.085},
+        ],
+    },
+    # gateBounds again, and the reason the kit is a 2x2: a bass drum alone reaches fx+fy 2.10
+    # against a 2.9375 floor. The hardware carries it — hi-hat at the near corner, two cymbal
+    # stands on the side corners, floor tom at the far one. Four stands, four rotations.
+    "drum_kit": {
+        "w": 2, "l": 2, "ramp": "crimson",
+        "prims": [
+            {"t": "hcyl", "x": 1.00, "y0": 0.60, "y1": 1.08, "z": 0.50, "r": 0.50,
+             "caps": False},
+            # Head in FRONT of the hoop, not behind it. Low fy is the camera-facing side at two
+            # of the four dirs, so the first pass's gold hoop — a solid disc the shell's own
+            # radius — stood in front of the head and hid it completely. The hoop only ever shows
+            # as the ring the narrower head leaves uncovered.
+            {"t": "hcyl", "x": 1.00, "y0": 0.56, "y1": 0.60, "z": 0.50, "r": 0.50,
+             "caps": False, "ramp": "gold"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.50, "y1": 0.56, "z": 0.50, "r": 0.455,
+             "caps": False, "ramp": "ivory"},
+            # Kick pedal, tucked under the shell rather than parked in front of it, plus two
+            # ground-level hardware bars. reviewIslands is a hard test on the shipped catalog
+            # (generator.test.ts "the shipped catalog is quiet"), not a warning, and the two
+            # cymbal stands have to stand at the far corners for gateBounds — they are the only
+            # ground contact with fx-fy spread. So the stands stay and the rack reaches them.
+            {"t": "box", "c0": (0.88, 0.26, 0.00), "c1": (1.12, 0.64, 0.10),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.30, 0.26, 0.00), "c1": (1.64, 0.42, 0.08),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.26, 0.34, 0.00), "c1": (0.42, 1.64, 0.08),
+             "ramp": "charcoal"},
+            # Snare on its stand, in front of the kick and off-centre so it does not stack into
+            # one column with the rack tom.
+            {"t": "cyl", "cx": 0.56, "cy": 1.30, "rx": 0.05, "ry": 0.05, "z0": 0.00, "z1": 0.62,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.56, "cy": 1.30, "rx": 0.26, "ry": 0.26, "z0": 0.62, "z1": 0.80,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.56, "cy": 1.30, "rx": 0.24, "ry": 0.24, "z0": 0.80, "z1": 0.85,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.00, "cy": 0.84, "rx": 0.04, "ry": 0.04, "z0": 0.94, "z1": 1.10,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.86, "cy": 0.94, "rx": 0.22, "ry": 0.22, "z0": 1.06, "z1": 1.32},
+            {"t": "cyl", "cx": 0.86, "cy": 0.94, "rx": 0.20, "ry": 0.20, "z0": 1.32, "z1": 1.37,
+             "ramp": "ivory"},
+            # Floor tom pulled in against the kick: at (1.58, 1.58) it stood clear of everything
+            # and the review pass read it as debris rather than as part of the kit.
+            {"t": "cyl", "cx": 1.48, "cy": 1.42, "rx": 0.34, "ry": 0.34, "z0": 0.00, "z1": 0.14,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 1.48, "cy": 1.42, "rx": 0.30, "ry": 0.30, "z0": 0.14, "z1": 0.86},
+            {"t": "cyl", "cx": 1.48, "cy": 1.42, "rx": 0.28, "ry": 0.28, "z0": 0.86, "z1": 0.91,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.30, "cy": 0.30, "rx": 0.15, "ry": 0.15, "z0": 0.00, "z1": 0.06,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.30, "cy": 0.30, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.10,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.30, "cy": 0.30, "rx": 0.28, "ry": 0.28, "z0": 1.04, "z1": 1.10,
+             "taper": 0.55, "ramp": "gold"},
+            {"t": "cyl", "cx": 1.72, "cy": 0.32, "rx": 0.15, "ry": 0.15, "z0": 0.00, "z1": 0.06,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 1.72, "cy": 0.32, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.46,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 1.72, "cy": 0.32, "rx": 0.34, "ry": 0.34, "z0": 1.40, "z1": 1.46,
+             "taper": 0.55, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.32, "cy": 1.72, "rx": 0.15, "ry": 0.15, "z0": 0.00, "z1": 0.06,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.32, "cy": 1.72, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.28,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.32, "cy": 1.72, "rx": 0.30, "ry": 0.30, "z0": 1.22, "z1": 1.28,
+             "taper": 0.55, "ramp": "gold"},
+        ],
+    },
+    # A straight stand, not a boom: a boom arm puts the mic out over the tile edge and the head
+    # then reads as a detached island in two of the four directions.
+    "mic_stand": {
+        "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.30, "ry": 0.30, "z0": 0.00, "z1": 0.06,
+             "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.22, "ry": 0.22, "z0": 0.06, "z1": 0.13,
+             "taper": 0.50, "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.045, "ry": 0.045, "z0": 0.13,
+             "z1": 1.62},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.08, "ry": 0.08, "z0": 0.88, "z1": 0.97,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.075, "ry": 0.075, "z0": 1.62,
+             "z1": 1.72, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.085, "ry": 0.085, "z0": 1.72,
+             "z1": 1.96, "ramp": "charcoal"},
+            {"t": "sphere", "c": (0.50, 0.50, 2.00), "r": 0.115, "ramp": "gold"},
+        ],
+    },
+    # stereo_basic's cabinet, stood up: cones as hcyls proud of the front face, because an hcyl
+    # crests into `hi` around its rim and a flush disc would share the cabinet's luma bucket.
+    "speaker_column": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.24, 0.00), "c1": (0.84, 0.78, 0.10)},
+            {"t": "box", "c0": (0.12, 0.20, 0.10), "c1": (0.88, 0.80, 2.28), "bevel": 0.03},
+            {"t": "hcyl", "x": 0.50, "y0": 0.12, "y1": 0.22, "z": 0.58, "r": 0.26,
+             "ramp": "gold"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.14, "y1": 0.22, "z": 1.26, "r": 0.18,
+             "ramp": "gold"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.15, "y1": 0.22, "z": 1.78, "r": 0.11,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.34, 0.14, 2.02), "c1": (0.66, 0.19, 2.14), "ramp": "crimson"},
+            {"t": "box", "c0": (0.09, 0.17, 2.28), "c1": (0.91, 0.83, 2.38), "bevel": 0.02,
+             "ramp": "slate"},
+        ],
+    },
+    # A booth, not a sofa: the back runs the full 2 tiles and stands a third taller than
+    # sofa_lodge's, and the gold kick rail is proud of the base so it survives a quarter turn.
+    "velvet_booth": {
+        "w": 2, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.12, 0.00), "c1": (0.24, 0.26, 0.14),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.12, 0.00), "c1": (1.90, 0.26, 0.14),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.10, 0.72, 0.00), "c1": (0.24, 0.86, 0.14),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (1.76, 0.72, 0.00), "c1": (1.90, 0.86, 0.14),
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (0.06, 0.10, 0.14), "c1": (1.94, 0.92, 0.80), "bevel": 0.04},
+            {"t": "box", "c0": (0.02, 0.06, 0.58), "c1": (1.98, 0.12, 0.66), "ramp": "gold"},
+            # One seat slab across both tiles: two tagged cushions would put the near/far split
+            # at the left cushion's centroid and cut the booth off-centre (the sofa_lodge note).
+            {"t": "box", "c0": (0.18, 0.14, 0.76), "c1": (1.82, 0.80, 0.96), "bevel": 0.06,
+             "seat": True},
+            {"t": "box", "c0": (0.00, 0.10, 0.80), "c1": (0.14, 0.90, 1.34), "bevel": 0.05},
+            {"t": "box", "c0": (1.86, 0.10, 0.80), "c1": (2.00, 0.90, 1.34), "bevel": 0.05},
+            {"t": "box", "c0": (0.06, 0.74, 0.80), "c1": (1.94, 0.94, 2.08), "bevel": 0.05},
+            # Buttons, gold on crimson: the two differ in hue as well as luma, where a crimson
+            # tuft on crimson would only be a shade step and read as dirt.
+            {"t": "box", "c0": (0.34, 0.68, 1.24), "c1": (0.46, 0.76, 1.34), "ramp": "gold"},
+            {"t": "box", "c0": (0.94, 0.68, 1.24), "c1": (1.06, 0.76, 1.34), "ramp": "gold"},
+            {"t": "box", "c0": (1.54, 0.68, 1.24), "c1": (1.66, 0.76, 1.34), "ramp": "gold"},
+            {"t": "box", "c0": (0.64, 0.68, 1.62), "c1": (0.76, 0.76, 1.72), "ramp": "gold"},
+            {"t": "box", "c0": (1.24, 0.68, 1.62), "c1": (1.36, 0.76, 1.72), "ramp": "gold"},
+            {"t": "box", "c0": (0.03, 0.71, 2.08), "c1": (1.97, 0.97, 2.18), "bevel": 0.03,
+             "ramp": "gold"},
+        ],
+    },
+    # Bar height, so it stands beside the booth rather than in front of it. Plum top inside a
+    # gold rim: table_round's inlay, with the accent moved to the wider disc.
+    "cocktail_table": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.32, "ry": 0.32, "z0": 0.00, "z1": 0.07},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.26, "ry": 0.26, "z0": 0.07, "z1": 0.14,
+             "taper": 0.55},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.075, "ry": 0.075, "z0": 0.14,
+             "z1": 1.14, "ramp": "gold"},
+            {"t": "sphere", "c": (0.50, 0.50, 0.62), "r": 0.115, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.20, "ry": 0.20, "z0": 1.08, "z1": 1.22,
+             "taper": 1.70},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.42, "ry": 0.42, "z0": 1.22, "z1": 1.28,
+             "ramp": "gold"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.36, "ry": 0.36, "z0": 1.26, "z1": 1.34,
+             "ramp": "plum"},
+        ],
+    },
+    # A floor par-can on a yoke. The lens is a gold hcyl inside a crimson rim, both proud of the
+    # housing — the light is the only warm thing on a charcoal object, which is what makes it
+    # read as a lamp rather than as a bollard.
+    "stage_light": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.30, "ry": 0.30, "z0": 0.00, "z1": 0.06},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.15, "ry": 0.15, "z0": 0.06, "z1": 0.17,
+             "taper": 0.70},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.055, "ry": 0.055, "z0": 0.17,
+             "z1": 1.12, "ramp": "slate"},
+            {"t": "box", "c0": (0.20, 0.42, 1.06), "c1": (0.80, 0.58, 1.20)},
+            {"t": "box", "c0": (0.20, 0.40, 1.20), "c1": (0.28, 0.60, 1.62)},
+            {"t": "box", "c0": (0.72, 0.40, 1.20), "c1": (0.80, 0.60, 1.62)},
+            {"t": "hcyl", "x": 0.50, "y0": 0.24, "y1": 0.74, "z": 1.42, "r": 0.23,
+             "caps": False},
+            {"t": "hcyl", "x": 0.50, "y0": 0.19, "y1": 0.24, "z": 1.42, "r": 0.245,
+             "caps": False, "ramp": "crimson"},
+            {"t": "hcyl", "x": 0.50, "y0": 0.14, "y1": 0.19, "z": 1.42, "r": 0.20,
+             "caps": False, "ramp": "gold"},
+            {"t": "box", "c0": (0.26, 0.10, 1.58), "c1": (0.74, 0.17, 1.72)},
+        ],
+    },
+    # ---- jazz lounge wall parts (#358) ----
+    # Both obey the wall rule: min fx >= max fy, or the mesh renders before its own segment.
+    # The sign's glyph is an eighth note — a drum head disc, a stem and two flags. Prims are
+    # axis-aligned, so the flags step rather than sweep, and that is as much curve as this rig
+    # holds (the antlers lesson).
+    "neon_sign": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.00, 2.14), "c1": (0.86, 0.05, 2.92), "bevel": 0.02},
+            {"t": "box", "c0": (0.13, 0.00, 2.08), "c1": (0.87, 0.06, 2.14), "ramp": "gold"},
+            {"t": "box", "c0": (0.13, 0.00, 2.92), "c1": (0.87, 0.06, 2.98), "ramp": "gold"},
+            # Plum field proud of the charcoal backing: charcoal and plum differ in hue, so the
+            # gold tube on top has something to sit against in both directions.
+            {"t": "box", "c0": (0.19, 0.05, 2.19), "c1": (0.81, 0.062, 2.87), "ramp": "plum"},
+            {"t": "hcyl", "x": 0.36, "y0": 0.062, "y1": 0.10, "z": 2.38, "r": 0.135,
+             "caps": False, "ramp": "gold"},
+            {"t": "box", "c0": (0.46, 0.062, 2.38), "c1": (0.52, 0.095, 2.80), "ramp": "gold"},
+            {"t": "box", "c0": (0.52, 0.062, 2.70), "c1": (0.68, 0.095, 2.78), "ramp": "gold"},
+            {"t": "box", "c0": (0.52, 0.062, 2.54), "c1": (0.64, 0.095, 2.62), "ramp": "gold"},
+        ],
+    },
+    # Folds are vertical cyls, not depth-stepped boxes. Depth projects into screen x, so boxes
+    # at different fy would shift sideways and read as a broken edge; a cyl crests into `hi`
+    # down its whole length, which is what a drape actually does to light.
+    "stage_curtain": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.00, 2.00), "c1": (0.82, 0.05, 2.90)},
+            {"t": "cyl", "cx": 0.24, "cy": 0.065, "rx": 0.06, "ry": 0.05, "z0": 2.00,
+             "z1": 2.90},
+            {"t": "cyl", "cx": 0.36, "cy": 0.065, "rx": 0.06, "ry": 0.05, "z0": 2.00,
+             "z1": 2.90},
+            {"t": "cyl", "cx": 0.48, "cy": 0.065, "rx": 0.06, "ry": 0.05, "z0": 2.00,
+             "z1": 2.90},
+            {"t": "cyl", "cx": 0.60, "cy": 0.065, "rx": 0.06, "ry": 0.05, "z0": 2.00,
+             "z1": 2.90},
+            {"t": "cyl", "cx": 0.72, "cy": 0.065, "rx": 0.06, "ry": 0.05, "z0": 2.00,
+             "z1": 2.90},
+            {"t": "box", "c0": (0.18, 0.02, 2.30), "c1": (0.56, 0.115, 2.40), "ramp": "gold"},
+            {"t": "cyl", "cx": 0.56, "cy": 0.07, "rx": 0.05, "ry": 0.045, "z0": 2.14,
+             "z1": 2.32, "taper": 0.45, "ramp": "gold"},
+            {"t": "box", "c0": (0.16, 0.00, 2.90), "c1": (0.84, 0.115, 3.04), "bevel": 0.02,
+             "ramp": "gold"},
+        ],
+    },
 }
 
 # ---- figure rig (#127) ---------------------------------------------------------------------

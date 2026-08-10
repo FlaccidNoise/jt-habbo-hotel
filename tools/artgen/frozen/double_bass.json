@@ -1,0 +1,32 @@
+{
+  "defId": "double_bass",
+  "archetype": "artgen",
+  "sheet": "double_bass.png",
+  "frameW": 64,
+  "frameH": 108,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 92,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:50c95b6c68263311",
+  "recipeHash": "50c95b6c6826331188c998074baa0cf7839a9f15a7afcf5a5f28e34cb34ecca3",
+  "pixelHash": "c754eada2c32b416284bd64861dbb2d16c7e834d6af485614b0b0655a31463e0"
+}
