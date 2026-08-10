@@ -158,9 +158,10 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // navy alike in hue, not only in luma, which is what armchair_lounge's colorways rest on too.
   deck_chair_crimson:   { base: "deck_chair",      ramps: { teal: "crimson" } },
   deck_chair_navy:      { base: "deck_chair",      ramps: { teal: "navy" } },
-  // Canopy and rim trade places rather than both landing on teal — a teal rim under a teal canopy
-  // is one object in two shades of one ramp, which is not a second item.
-  parasol_table_teal:   { base: "parasol_table",   ramps: { crimson: "teal", teal: "sand" } },
+  // A straight swap of the two accents. teal -> sand was the first try and it is the exact trap
+  // the note above describes: the top is sand, so a sand rim on it disappeared and the table lost
+  // its inlay. Crimson keeps the rim in the silhouette and keeps the pair a real exchange.
+  parasol_table_teal:   { base: "parasol_table",   ramps: { crimson: "teal", teal: "crimson" } },
   cabana_crimson:       { base: "cabana",          ramps: { teal: "crimson", crimson: "navy" } },
   // The water stays teal — it is water. What moves is the shell, and the rim has to move with it
   // or an ivory rim sinks into a sand shell (the fireplace_stone keystone lesson).
