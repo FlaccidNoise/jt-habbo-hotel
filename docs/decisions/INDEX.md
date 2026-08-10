@@ -1,5 +1,25 @@
 # Decision Log
 
+- 2026-08-10 — **Flagship room is 200², not the asked-for 300–400² (#406/#409).** Josh resized on
+  measured evidence: at 500 ms/tile a 300² diagonal walks 2.5 minutes, and 25 occupants over
+  90,000 tiles is 3,600 tiles/player. Render cost stopped mattering — culling + the near-linear
+  painter sort (#359/#360) make scene cost follow the viewport, not the room. The side is W/H in
+  server/grounds.ts; the resize dropped only lawn, the content band moved intact. Public rooms own
+  ids 1–100 (RESERVED_ROOM_IDS); suites allocate above, fixing a real id-4 collision. House
+  layouts get HOUSE_FURNI_CAP (300) separate from the player ROOM_FURNI_CAP (100) — players
+  cannot place furni in a room already over the player cap. Furni culling (#404) gates any density
+  increase.
+- 2026-08-10 — **Zoom belongs to the player (#406).** ZOOM is a live 1×/2× binding (Z key + HUD),
+  persisted, defaulting 1× — Josh prefers the zoomed-out read. It is also a perf lever: 1× covers
+  4× the floor and roughly triples scene cost, which the per-zoom big-room budgets pin.
+- 2026-08-10 — **Faces are identity, not cosmetics (#346/#352/#410).** hd17–24 + fa25–27 joined
+  STARTER_GRANT_SETS (with the dress() slotFamilies fix, atomically — either alone breaks
+  registration), new accounts default to an eyed head, boot backfills older accounts, and the
+  staff grant carries the faces so NPCs derive eyed figures. Hair 28–37 stays earned — it is the
+  cosmetics economy's stock.
+- 2026-08-10 — **theme on every FurniDef/WallDef is the catalog's organizing unit (#355/#364).**
+  Shelves derive from data, so a content pack ships with zero catalog-UI edits. Enforced by the
+  price test (explicit UNPRICED set) and the LAYOUT_VERSION drift test.
 - 2026-08-10 — **Face art mechanism (#339/#342).** Faces are hd sets sharing hd2's skull; fixed
   ramps (paper eye white, crimson blush) ship as `fixedColors` past the set's declared slot count,
   resolved by the client after the worn colours — no bake-cache key change, because fixedColors is
