@@ -46,25 +46,40 @@ A versioned artifact — `style_version` in every recipe pins it (PIPELINES §2)
 the v1 pins, marked (tune) where authoring may move them.
 
 - **Palette:** 12 material ramps + 6 skin ramps × 5 shades, in `packages/generator/src/style.ts`
-  (`style_version` 2). Material ramps: walnut, oak, plum, fern, crimson, slate, sand, teal, gold,
+  (`style_version` 3). Material ramps: walnut, oak, plum, fern, crimson, slate, sand, teal, gold,
   ivory, navy, charcoal. Skin ramps: `skin_1` … `skin_6`, added 2026-08-05 with the figure
   pipeline (#127) — the material ramps hold no skin tone, and `sand`-or-`ivory` is not a palette
   a hotel can ship. Skin is a separate family so figuredata can offer it for the head and nothing
   else. Shades per ramp are one base color × fixed light factors — outline 0.35, left 0.65,
   right 1.0, top 1.3, hi 1.55. `hi` is the sun-facing band: bevel strips and curve crests.
   Ramp-indexed color only — recolor is palette swap, never hue rotation.
+- **`paper`, base `0xa4a29a`** (#340, added `style_version` 3 with the avatar face-art work):
+  outline `0x393936`, left `0x6b6964`, right `0xa4a29a`, top `0xd5d3c8`, hi `0xfefbef` — the same
+  `ramp()` formula as every other ramp, computed, not hand-picked. The face-art handoff spec'd
+  outline `0x39382f`, left `0x6a6964`, hi `0xfefcf0`; three of the five shades come out a few
+  levels off that spec (outline's blue channel by 7, the largest gap) because the spec's swatches
+  were not run through the formula. The formula wins — `paper` gets no hand-carved exception, or
+  the palette stops being "one base × fixed factors" for every ramp but this one. `hi` is the eye
+  white, `top` is teeth; the authored face pixel maps index both directly by name
+  (`rampByName("paper")`), not through a slot. `paper` joins neither the material ramps nor the
+  skin ramps — figuredata's `paletteFor("material" | "skin")` never lists it, so it can never be
+  offered as a wearable colour on any other part.
 - **Channel clamping:** a base bright enough that `top` or `hi` clamps a channel flattens the top
-  of the ramp. **The skin family is gated against it** (`no skin shade clamps a channel`) because
-  there a clamp drags the light band toward white, hue-shifting the tone and collapsing the deep
-  end of the family into the light end. Four material ramps — walnut, crimson, sand, gold — do
-  clamp their red channel; their pixels are frozen and cannot move, so the rule is scoped to skin
-  rather than global. The older claim that "the palette test bounces it" was not true of the
-  material ramps and is not made here.
+  of the ramp. **The skin family is gated against it** (`no skin or paper shade clamps a channel`,
+  extended to `paper` in #340) because there a clamp drags the light band toward white, hue-shifting
+  the tone and collapsing the deep end of the family into the light end. Four material ramps —
+  walnut, crimson, sand, gold — do clamp their red channel; their pixels are frozen and cannot
+  move, so the rule is scoped to skin (and now paper) rather than global. `paper`'s base has
+  brightest channel 164, so `hi` at ×1.55 lands at 254 — under the gate. The older claim that
+  "the palette test bounces it" was not true of the material ramps and is not made here.
 - **Adding a ramp bumps `style_version`.** It is additive — no existing pixel changes — but a
   recipe naming `skin_3` while tagged `style_version 1` would fail to render under v1, so the
   version is load-bearing. Evidence from the v1→v2 bump: 22 bundles, **0 pixel hashes moved,
   5 recipe hashes moved** (the box-path recipes that embed the version; recipe hash is provenance
-  per PIPELINES §2). Regenerate `catalog.json` with `make gen` after any ramp change.
+  per PIPELINES §2). The v2→v3 bump (#340, adding `paper`) measured the same shape: 53 bundles,
+  **0 pixel hashes moved, 5 recipe hashes moved** (`chair_basic`, `table_basic`, `sofa_basic`,
+  `plant_basic`, `rug_basic` — the same box-path recipes as last time). Regenerate `catalog.json`
+  with `make gen` after any ramp change.
 - **Light:** above-front, vertically symmetric shading (audit B4).
 - **Outline:** 1 px, the part ramp's darkest shade. Pure black reserved for ground-contact
   edges (tune).

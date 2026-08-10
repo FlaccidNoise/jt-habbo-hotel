@@ -1,4 +1,4 @@
-export const STYLE_VERSION = 2;
+export const STYLE_VERSION = 3;
 export const GENERATOR_VERSION = 2;
 
 /** Above-front light: top face lightest, right face base, left face darker, outline darkest —
@@ -66,7 +66,14 @@ const SKIN_RAMPS: readonly Ramp[] = [
   ramp("skin_6", 0x3e2920),
 ];
 
-const ALL_RAMPS: readonly Ramp[] = [...RAMPS, ...SKIN_RAMPS];
+/** `paper` (#340): a fixed reference ramp for hand-authored face art — eye whites (`hi`) and
+ *  teeth (`top`). It joins neither RAMPS nor SKIN_RAMPS, so it never appears in a wearable-colour
+ *  list: figuredata's `paletteFor` only ever mirrors those two. Face art indexes it directly by
+ *  name via `rampByName("paper")`, not through a slot. Base brightest channel is 164, so `hi` at
+ *  1.55 lands under 255 like the skin family — the no-clamp gate below covers it too. */
+export const PAPER_RAMP: Ramp = ramp("paper", 0xa4a29a);
+
+const ALL_RAMPS: readonly Ramp[] = [...RAMPS, ...SKIN_RAMPS, PAPER_RAMP];
 
 export function rampByName(name: string): Ramp {
   const found = ALL_RAMPS.find((r) => r.name === name);
@@ -79,6 +86,11 @@ export const RAMP_NAMES: readonly string[] = RAMPS.map((r) => r.name);
 
 /** Head-only ramps. */
 export const SKIN_RAMP_NAMES: readonly string[] = SKIN_RAMPS.map((r) => r.name);
+
+/** Ramps gated against channel clamping: a clamp drags the light band toward white, hue-shifting
+ *  the tone and collapsing the deep end of the family into the light end. Skin and paper are both
+ *  gated; the material ramps are not (walnut, crimson, sand, gold clamp and are frozen). */
+export const CLAMP_GATED_RAMP_NAMES: readonly string[] = [...SKIN_RAMP_NAMES, PAPER_RAMP.name];
 
 /** Every shade of every ramp, for the distinctness test. */
 export const RAMP_SHADES: ReadonlyArray<{ ramp: string; shade: string; color: number }> =
