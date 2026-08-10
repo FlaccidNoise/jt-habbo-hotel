@@ -1,0 +1,32 @@
+{
+  "defId": "drum_kit",
+  "archetype": "artgen",
+  "sheet": "drum_kit.png",
+  "frameW": 128,
+  "frameH": 111,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 63,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.46875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cbf33ef15f32af76",
+  "recipeHash": "cbf33ef15f32af764fb27d138fe285d59c30dd2564088e12cc793d7682ff50e6",
+  "pixelHash": "65d9c7f411fe598f908815ad04f86e06ac7be72eedf1aa5d5f698fc5a131616f"
+}

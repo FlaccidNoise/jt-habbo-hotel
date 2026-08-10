@@ -1,0 +1,37 @@
+{
+  "defId": "stage_curtain",
+  "archetype": "artgen",
+  "sheet": "stage_curtain.png",
+  "frameW": 64,
+  "frameH": 130,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 114,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 3.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 32,
+    "mountU": 2,
+    "mountV": 33,
+    "gap": 0,
+    "depth": 0.115
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3f4488893c94639c",
+  "recipeHash": "3f4488893c94639c938967ee0449a1ee20a491fe6e25604e1f640a01878e7c21",
+  "pixelHash": "32e6e00d7ca1187b5413dc363675073bb502162f6c5dbcde82b407e6ae23a1e0"
+}

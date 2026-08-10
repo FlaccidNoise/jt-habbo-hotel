@@ -1,0 +1,32 @@
+{
+  "defId": "speaker_column",
+  "archetype": "artgen",
+  "sheet": "speaker_column.png",
+  "frameW": 64,
+  "frameH": 109,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 93,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5cd5a7afab61e6c4",
+  "recipeHash": "5cd5a7afab61e6c4e7fc8a16b619aa078ca7172dbbcef5ae9153af85dcc6f023",
+  "pixelHash": "874dd2838a6311a249717dd505975e9fa989648e453ef53b2fb51c9629be5f98"
+}

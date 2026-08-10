@@ -1,0 +1,32 @@
+{
+  "defId": "double_bass_ebony",
+  "archetype": "artgen",
+  "sheet": "double_bass_ebony.png",
+  "frameW": 64,
+  "frameH": 108,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 92,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9db73d5f3b75bf99",
+  "recipeHash": "9db73d5f3b75bf99db4b5f0117f8de066f2a36abcb80b3dff1a6f21a75ae547f",
+  "pixelHash": "84db3b3d346be1169e9e9cde60419d1a0d252f6d9017a6a6d12136095b10eba4"
+}

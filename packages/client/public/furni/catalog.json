@@ -992,6 +992,296 @@
       "recipeHash": "b8628bd7454062f77afc97939023bf463800a649231905084716c2deb9c9e8ea",
       "pixelHash": "a4e9aab7dc842689d77debeee22d3acbaefb4c94be94b99c753b76b68690e7e9"
     },
+    "stage_platform": {
+      "defId": "stage_platform",
+      "archetype": "artgen",
+      "sheet": "stage_platform.png",
+      "frameW": 128,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 24,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:29aa47cfcc762a3d",
+      "recipeHash": "29aa47cfcc762a3d026aba30188fef2263b9dbbca1619aa25ec3696f874f271c",
+      "pixelHash": "db4d70a04017e163f6913f17b27e247e033d57fb2db91c924275bac1e7d4cd6a"
+    },
+    "grand_piano": {
+      "defId": "grand_piano",
+      "archetype": "artgen",
+      "sheet": "grand_piano.png",
+      "frameW": 128,
+      "frameH": 120,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4b9248c5b029f3d6",
+      "recipeHash": "4b9248c5b029f3d63f4ef76bb41e6a241cc1b4620c1fca801004090ec2394040",
+      "pixelHash": "4a6dec771fbe66f4e69ea43ae12cb7593a2dd77686b1a2f16a2fe3da5404b2d4"
+    },
+    "double_bass": {
+      "defId": "double_bass",
+      "archetype": "artgen",
+      "sheet": "double_bass.png",
+      "frameW": 64,
+      "frameH": 108,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 92,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:50c95b6c68263311",
+      "recipeHash": "50c95b6c6826331188c998074baa0cf7839a9f15a7afcf5a5f28e34cb34ecca3",
+      "pixelHash": "c754eada2c32b416284bd64861dbb2d16c7e834d6af485614b0b0655a31463e0"
+    },
+    "drum_kit": {
+      "defId": "drum_kit",
+      "archetype": "artgen",
+      "sheet": "drum_kit.png",
+      "frameW": 128,
+      "frameH": 111,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 63,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cbf33ef15f32af76",
+      "recipeHash": "cbf33ef15f32af764fb27d138fe285d59c30dd2564088e12cc793d7682ff50e6",
+      "pixelHash": "65d9c7f411fe598f908815ad04f86e06ac7be72eedf1aa5d5f698fc5a131616f"
+    },
+    "mic_stand": {
+      "defId": "mic_stand",
+      "archetype": "artgen",
+      "sheet": "mic_stand.png",
+      "frameW": 64,
+      "frameH": 100,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 84,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:68894fa9152681ce",
+      "recipeHash": "68894fa9152681cef7bc1331d75dba36b1cdf3745b090c8f3f3b83cf30e0a352",
+      "pixelHash": "57bafe5492ec747886cb75f057853f2ec2966c89d5d570950ce79dba423becd4"
+    },
+    "speaker_column": {
+      "defId": "speaker_column",
+      "archetype": "artgen",
+      "sheet": "speaker_column.png",
+      "frameW": 64,
+      "frameH": 109,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 93,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5cd5a7afab61e6c4",
+      "recipeHash": "5cd5a7afab61e6c4e7fc8a16b619aa078ca7172dbbcef5ae9153af85dcc6f023",
+      "pixelHash": "874dd2838a6311a249717dd505975e9fa989648e453ef53b2fb51c9629be5f98"
+    },
+    "velvet_booth": {
+      "defId": "velvet_booth",
+      "archetype": "artgen",
+      "sheet": "velvet_booth.png",
+      "frameW": 96,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 86,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.1875,
+      "seatZ": 0.96,
+      "occlusion": null,
+      "nearSheet": "velvet_booth.near.png",
+      "nearHash": "9742e2af975e95b6cbebc1af9787723bfca96d112f733f02c1c708793a136432",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2e2140d27acd58a0",
+      "recipeHash": "2e2140d27acd58a06e53aaf1c4bc577530cb5e2d560738b395a5b4eb20b138ac",
+      "pixelHash": "37ceed6f4b39115a6d13e98b74f7b53bd7d8472008196875829d2a12485559e0"
+    },
+    "cocktail_table": {
+      "defId": "cocktail_table",
+      "archetype": "artgen",
+      "sheet": "cocktail_table.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ae226cb12a2eb931",
+      "recipeHash": "ae226cb12a2eb931c907af03ce906bbb22d8c1e90d012bdecdaf48ed19df78eb",
+      "pixelHash": "26332eeffe79cc5d349f45807fe177ee8006f14dafe3dcc875f6170bc6e7c335"
+    },
+    "stage_light": {
+      "defId": "stage_light",
+      "archetype": "artgen",
+      "sheet": "stage_light.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9b4a1f85b1c6474a",
+      "recipeHash": "9b4a1f85b1c6474a2796f341f149e24f0d0a32dff30f0bc77c35dd13e19bb297",
+      "pixelHash": "0abe2d04e381c09476e2277134faac5b4a0aad73d52200aa3cca3fddd6eec57a"
+    },
     "billiards_table": {
       "defId": "billiards_table",
       "archetype": "artgen",
@@ -1516,6 +1806,266 @@
       "recipeHash": "82f70fa9b51f96ddae110bde72ca19122c65141e85bec2b367a388f6026b4a80",
       "pixelHash": "1caa69464eee03e7cfc16cdffb7c347676cae07fdbed07b85a1f88419afea13a"
     },
+    "stage_platform_parquet": {
+      "defId": "stage_platform_parquet",
+      "archetype": "artgen",
+      "sheet": "stage_platform_parquet.png",
+      "frameW": 128,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 24,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ca61c647fab1117c",
+      "recipeHash": "ca61c647fab1117c64ae62b95e0cfcc5addc6838b8b380d846cdff73e0c5cb91",
+      "pixelHash": "64b5bfb6ab64eceb9b6736401861e3325602dc18f670ce2e58a1f93127187a42"
+    },
+    "grand_piano_oak": {
+      "defId": "grand_piano_oak",
+      "archetype": "artgen",
+      "sheet": "grand_piano_oak.png",
+      "frameW": 128,
+      "frameH": 120,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9ffe0c655f090a73",
+      "recipeHash": "9ffe0c655f090a731c3449408c0356f441c2c043729addad5dec6e8e8c6c9f9f",
+      "pixelHash": "15866487307f7a635217a6396aea6ffdddbb5ba6e87be26b4f27a166c89017a4"
+    },
+    "double_bass_ebony": {
+      "defId": "double_bass_ebony",
+      "archetype": "artgen",
+      "sheet": "double_bass_ebony.png",
+      "frameW": 64,
+      "frameH": 108,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 92,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9db73d5f3b75bf99",
+      "recipeHash": "9db73d5f3b75bf99db4b5f0117f8de066f2a36abcb80b3dff1a6f21a75ae547f",
+      "pixelHash": "84db3b3d346be1169e9e9cde60419d1a0d252f6d9017a6a6d12136095b10eba4"
+    },
+    "speaker_column_vintage": {
+      "defId": "speaker_column_vintage",
+      "archetype": "artgen",
+      "sheet": "speaker_column_vintage.png",
+      "frameW": 64,
+      "frameH": 109,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 93,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0f8490d187a7fd04",
+      "recipeHash": "0f8490d187a7fd043fa7cc008e383df34e5c548ef26bc9d10c1cf6c80524448e",
+      "pixelHash": "7b4e8af89ba43d126117b14231c6355658eb1cf357ac7bd566edfbc8fc2020e5"
+    },
+    "velvet_booth_plum": {
+      "defId": "velvet_booth_plum",
+      "archetype": "artgen",
+      "sheet": "velvet_booth_plum.png",
+      "frameW": 96,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 86,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.1875,
+      "seatZ": 0.96,
+      "occlusion": null,
+      "nearSheet": "velvet_booth_plum.near.png",
+      "nearHash": "01f2cd53a81836a4744486237abfe2ad23d908f9ac5c5004e88fd37521abedc8",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6be8b0cf63969376",
+      "recipeHash": "6be8b0cf63969376a99e6359f3b6768eee40438d07c4971fabb098dbeff76542",
+      "pixelHash": "77ca43b75e93b29b3d52de8f1a8046abe9f1049639f8f71ad987caf4c2c7d2e8"
+    },
+    "velvet_booth_charcoal": {
+      "defId": "velvet_booth_charcoal",
+      "archetype": "artgen",
+      "sheet": "velvet_booth_charcoal.png",
+      "frameW": 96,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 86,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.1875,
+      "seatZ": 0.96,
+      "occlusion": null,
+      "nearSheet": "velvet_booth_charcoal.near.png",
+      "nearHash": "52faa70aca844b487ac4503acff0f6a0118eddb561cc891e38c2e47086288a30",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a9481e5cf8432f7d",
+      "recipeHash": "a9481e5cf8432f7da675c3c7ccf2888efb419dc906af23ed76ccec0744a4badb",
+      "pixelHash": "d7b834ff950c41f7266a6f4087a71b611da20567fc4014c91a953960727f9db2"
+    },
+    "cocktail_table_walnut": {
+      "defId": "cocktail_table_walnut",
+      "archetype": "artgen",
+      "sheet": "cocktail_table_walnut.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a4775570f706b025",
+      "recipeHash": "a4775570f706b02587fda33fa2e14eb9d32bbd983017f26126dc423b6d0ef4e7",
+      "pixelHash": "c16b82429a435b1e233fa0e25c283516f54138bfa8055b3a4ffe0caa6f568586"
+    },
+    "stage_light_plum": {
+      "defId": "stage_light_plum",
+      "archetype": "artgen",
+      "sheet": "stage_light_plum.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:928ab7ac4074a9d1",
+      "recipeHash": "928ab7ac4074a9d10d8c501943b8c4754ab0363e5678f324506c5d8f8541ca03",
+      "pixelHash": "2700213091d4b33d61471641ed4b6a65c5409c17bbda7993fb49c71226fa278a"
+    },
     "arcade_cabinet_plum": {
       "defId": "arcade_cabinet_plum",
       "archetype": "artgen",
@@ -1902,6 +2452,117 @@
       "partLibraryHash": "artgen:5e895cb75074ba76",
       "recipeHash": "5e895cb75074ba760fb2c4596ffc2fddab96f0176356d9a6d1831ec7753cd5b4",
       "pixelHash": "41adc3ef18c096bf0c208444775b8259f5507aa199159a5fb04e3bed042fc51f"
+    },
+    "neon_sign": {
+      "defId": "neon_sign",
+      "archetype": "artgen",
+      "sheet": "neon_sign.png",
+      "frameW": 64,
+      "frameH": 128,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 112,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 28,
+        "mountU": 2,
+        "mountV": 34,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:07ec2e086f4d0c82",
+      "recipeHash": "07ec2e086f4d0c82f5c514fcc92c34328755f410dfbcc50e12eed2e95c823b19",
+      "pixelHash": "eb4a9304c89c34b98b3633798b7000688dbe36d256a62f0903318168c5c7d2a0"
+    },
+    "stage_curtain": {
+      "defId": "stage_curtain",
+      "archetype": "artgen",
+      "sheet": "stage_curtain.png",
+      "frameW": 64,
+      "frameH": 130,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 114,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 32,
+        "mountU": 2,
+        "mountV": 33,
+        "gap": 0,
+        "depth": 0.115
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3f4488893c94639c",
+      "recipeHash": "3f4488893c94639c938967ee0449a1ee20a491fe6e25604e1f640a01878e7c21",
+      "pixelHash": "32e6e00d7ca1187b5413dc363675073bb502162f6c5dbcde82b407e6ae23a1e0"
+    },
+    "stage_curtain_plum": {
+      "defId": "stage_curtain_plum",
+      "archetype": "artgen",
+      "sheet": "stage_curtain_plum.png",
+      "frameW": 64,
+      "frameH": 130,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 114,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 32,
+        "mountU": 2,
+        "mountV": 33,
+        "gap": 0,
+        "depth": 0.115
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7466572f768804d2",
+      "recipeHash": "7466572f768804d2f62f4654631cf08f5b8428fb8f9065b1ddaf473ca8b8f6ee",
+      "pixelHash": "cd5901d195b9db120c6801e2e017996b0c11b86d6788774e2fba517d9bf5b5f2"
     }
   }
 }

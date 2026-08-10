@@ -1,0 +1,32 @@
+{
+  "defId": "stage_platform",
+  "archetype": "artgen",
+  "sheet": "stage_platform.png",
+  "frameW": 128,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 24,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:29aa47cfcc762a3d",
+  "recipeHash": "29aa47cfcc762a3d026aba30188fef2263b9dbbca1619aa25ec3696f874f271c",
+  "pixelHash": "db4d70a04017e163f6913f17b27e247e033d57fb2db91c924275bac1e7d4cd6a"
+}

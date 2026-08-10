@@ -10,7 +10,7 @@
         "w": 128,
         "h": 64
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "12453d2a3fd5e6445815b1a4075fff75d887daee305cedc8b62aadd7cf76e67d"
     },
     {
@@ -23,7 +23,7 @@
         "w": 128,
         "h": 64
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "e705565812f6d08894b50e0fe12fa0df9d809d72adaf2620feac169f25685738"
     },
     {
@@ -36,7 +36,7 @@
         "w": 128,
         "h": 64
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "c405cbab8535bae902305415c5df672e5df383fb108e247e60017f1a332e4b2c"
     },
     {
@@ -49,7 +49,7 @@
         "w": 32,
         "h": 128
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "b114044284e267d53465ae227651b5fbf93f08116878a60d475c2832da83f4e0"
     },
     {
@@ -62,7 +62,7 @@
         "w": 64,
         "h": 64
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "69f1aad8d3980dcb10e773d797058237985c71b968fa765183e4be7dec604ca3"
     },
     {
@@ -75,8 +75,34 @@
         "w": 32,
         "h": 128
       },
-      "styleVersion": 2,
+      "styleVersion": 3,
       "pixelHash": "2b4a038d2889508aedda97622cf3f478e4d372f7158fa11764c8d2d478f4f61a"
+    },
+    {
+      "id": "floor_lounge",
+      "kind": "floor",
+      "sheet": "floor_lounge.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "358db1fd09e551e2aa35794315181bb376220a8ac5a3d37e777c120e680a54aa"
+    },
+    {
+      "id": "wall_velvet",
+      "kind": "wall",
+      "sheet": "wall_velvet.png",
+      "tileW": 16,
+      "tileH": 32,
+      "source": {
+        "w": 32,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "c9db51ecccade31d0f74bd23d7f8715d5f0bef01259224f5f34d4138cb30f0a2"
     }
   ]
 }

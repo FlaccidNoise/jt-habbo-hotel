@@ -1,0 +1,32 @@
+{
+  "defId": "stage_platform_parquet",
+  "archetype": "artgen",
+  "sheet": "stage_platform_parquet.png",
+  "frameW": 128,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 24,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ca61c647fab1117c",
+  "recipeHash": "ca61c647fab1117c64ae62b95e0cfcc5addc6838b8b380d846cdff73e0c5cb91",
+  "pixelHash": "64b5bfb6ab64eceb9b6736401861e3325602dc18f670ce2e58a1f93127187a42"
+}
