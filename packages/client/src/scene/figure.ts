@@ -21,6 +21,8 @@ export interface FigureLayerMeta {
   frames: string[];
   anchorX: number;
   anchorY: number[];
+  slots: number;
+  fixedColors?: string[];
 }
 
 export interface FigureAtlas {
@@ -50,6 +52,17 @@ export function cellOrigin(
   dir: number,
 ): { x: number; y: number } {
   return { x: dir * meta.frameW, y: frameRow(frames, frame) * meta.frameH };
+}
+
+/** Which ramp paints a sheet pixel carrying this colour slot: the worn colour at that slot if the
+ *  outfit reaches it, else a fixed ramp the part declares past its own slot count (an inked line
+ *  or eye white that never changes with the outfit), else the base colour. */
+export function resolveRamp(
+  layer: Pick<Layer, "colors">,
+  meta: Pick<FigureLayerMeta, "slots" | "fixedColors">,
+  slot: number,
+): string | undefined {
+  return layer.colors[slot] ?? meta.fixedColors?.[slot - meta.slots] ?? layer.colors[0];
 }
 
 function readSheet(image: HTMLImageElement | ImageBitmap): Uint8ClampedArray {
@@ -154,7 +167,7 @@ export class FigureBaker {
           if ((sheet[s + 3] ?? 0) < 128) continue;
           const slot: number = sheet[s] ?? 0;
           const shade: number = sheet[s + 1] ?? 0;
-          const ramp = layer.colors[slot] ?? layer.colors[0];
+          const ramp = resolveRamp(layer, meta, slot);
           if (ramp === undefined) continue;
           const color = this.atlas.palette[ramp]?.[shade];
           if (color === undefined) continue;

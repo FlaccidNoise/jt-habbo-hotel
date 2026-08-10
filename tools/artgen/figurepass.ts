@@ -4,13 +4,13 @@
 //
 //   node --experimental-strip-types tools/artgen/figurepass.ts <renderDir> [--freeze]
 //
-// Two things differ from the furni pass.
+// Three things differ from the furni pass.
 //
 // 1. The sheet is INDEXED, not RGB. Colour is per player — a shirt is worn in any of 12 ramps and
 //    a two-slot shirt in any pair — so baking colour here would put the combinatorics back into
 //    colour space. Each pixel stores (slot, shade) and the client resolves them through the worn
 //    ramps when it bakes the outfit, which it is already doing to composite the layers.
-//      R = colour slot (0-based, < the set's slot count)
+//      R = colour slot: 0-based into the worn colours, then `fixedColors` past the set's own count
 //      G = shade index: 0 outline, 1 left, 2 right, 3 top, 4 hi
 //      B = 0, reserved
 //
@@ -18,12 +18,21 @@
 //    `ownFrom` in mask-index order is discarded. Where the body is nearer it won the depth test,
 //    so those pixels were never the garment's — which is what lets the client composite with
 //    plain alpha-over and no runtime depth.
+//
+// 3. Some layers are never rendered at all. The face sets (#342) are hd2's own cells with a
+//    hand-authored pixel map laid on them, placed by the projection rig.py emits — see facedata.ts
+//    for the art and the "face sets" section below for the machinery.
 
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { FIGUREDATA_VERSION, LAYER_ORDER, setById } from "../../packages/shared/src/figuredata.ts";
-import type { LayerType } from "../../packages/shared/src/figuredata.ts";
+import {
+  BEARD_AXES, BEARD_SETS, FACE_AXES, FACE_SETS, FIXED_RAMPS, GEOMETRY, INKS, REFERENCE_DIR,
+  REFERENCE_FRAME, facePixels,
+} from "./facedata.ts";
+import type { AxisName, FacePicks, FaceView, FixedRamp, InkCode, InkSlot } from "./facedata.ts";
+import { FIGUREDATA_VERSION, setById } from "../../packages/shared/src/figuredata.ts";
+import type { FigureSet, LayerType } from "../../packages/shared/src/figuredata.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "../../packages/generator/src/raster.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
@@ -54,8 +63,10 @@ function maskDigit(v: number): number {
 interface FigurePrim { slot: number; bone: string; part: string }
 /** Where the face goes in this frame, or null with the face turned away. rig.py projects it: a
  *  feature this small cannot be mesh — an eye is one pixel, and a one-pixel prim quantizes to
- *  whatever its own shading lands on — so the head carries the brow and nose and the eyes and
- *  mouth are stamped here (#311). `in` is the screen-x step from the eye toward the nose. */
+ *  whatever its own shading lands on — so the head carries the brow and nose and the face is
+ *  drawn here (#311). #342 keeps the projection and throws away the four-pixel stamp it used to
+ *  drive: the anchor now places a hand-authored pixel map (facedata.ts) instead. `in` is unused
+ *  since the map is drawn per view, and is left because rig.py emits it. */
 interface FaceAnchor {
   eyes: Array<{ x: number; y: number; in: number }>;
   mouth: { x: number; y: number } | null;
@@ -89,13 +100,83 @@ const pack = (slot: number, shade: number): number => (slot << 16) | (shade << 8
 const unpackSlot = (color: number): number => (color >> 16) & 0xff;
 const unpackShade = (color: number): number => (color >> 8) & 0xff;
 
-/** Face stamps, by cell label. gateFace holds both: a stamp that missed the head means rig.py's
- *  projection is wrong and every avatar wears it, so it fails the build rather than painting. */
-const faceMissed: string[] = [];
-const faceStamped = new Map<string, number>();
+const ORTHO = [[1, 0], [-1, 0], [0, 1], [0, -1]] as const;
+const NEIGHBOURS8 = [...ORTHO, [1, 1], [-1, -1], [1, -1], [-1, 1]] as const;
 
-/** One 64x112 frame of one layer, in (slot, shade) indices. `keepFrom` drops the holdout body. */
-function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number, label: string): Canvas {
+/** The design's stand-frame sheet rows for the head cleanup: interior lines come off above the
+ *  chin, lone catchlights come off across the cheek band, and the neck row at 44 stays. */
+const CLEAN_LINE_TO = 43, CLEAN_HI_FROM = 34, CLEAN_HI_TO = 43;
+
+/** hd2 ships faceless (#342), so the pixels that were drawing a face by accident come off and the
+ *  hand-authored art lands on a clean skull. Two rules, ported from the handoff's baker.js
+ *  patchHead: an interior shade-0 pixel above the chin line is a prim boundary the head should not
+ *  show, and a lone `hi` in the cheek band is a specular the skull ball threw onto one pixel.
+ *  Both are repainted with the modal shade of their neighbours. The silhouette ring is kept —
+ *  that edge is the head's outline, not a line across its face.
+ *
+ *  Membership is the HEAD's own prims, not the frame's alpha, so a garment render that also
+ *  contains the body cleans exactly the same pixels the head layer does and gateHoldout still
+ *  compares like with like. `shift` carries the design's rows onto this frame: the head sits 9 px
+ *  lower sitting and 2 lower on a walk down-step.
+ *
+ *  Measured over the whole sheet: the interior-line rule fires 0 times and the catchlight rule 12.
+ *  The line rule finds nothing because the boundary pass above already exempts head-to-head prim
+ *  pairs — it is the guard that keeps that exemption honest, not the rule doing the work here. */
+function patchHead(cell: Canvas, primAt: Int32Array, part: FigurePart, shift: number): void {
+  const isHead = (x: number, y: number): boolean => {
+    if (x < 0 || y < 0 || x >= CANVAS.w || y >= CANVAS.h) return false;
+    const p = primAt[y * CANVAS.w + x]!;
+    return p >= 0 && part.prims[p]!.part === HEAD_ID;
+  };
+  const shadeAt = (x: number, y: number): number => unpackShade(getPixel(cell, x, y).color);
+  const fixes: Array<[number, number, number]> = [];
+  for (let y = 0; y < CANVAS.h - 1; y++) {
+    for (let x = 0; x < CANVAS.w; x++) {
+      if (!isHead(x, y)) continue;
+      let edge = false;
+      for (let dy = -1; dy <= 1 && !edge; dy++) {
+        for (let dx = -1; dx <= 1; dx++) {
+          if (!isHead(x + dx, y + dy)) { edge = true; break; }
+        }
+      }
+      if (edge) continue;
+      const s = shadeAt(x, y);
+      const line = s === SHADE_OUTLINE && y < CLEAN_LINE_TO + shift;
+      let hiNeighbours = 0;
+      if (s === SHADE_HI) {
+        for (const [dx, dy] of ORTHO) {
+          if (isHead(x + dx, y + dy) && shadeAt(x + dx, y + dy) === SHADE_HI) hiNeighbours++;
+        }
+      }
+      const stray = s === SHADE_HI && hiNeighbours < 2
+        && y >= CLEAN_HI_FROM + shift && y < CLEAN_HI_TO + shift;
+      if (!line && !stray) continue;
+      const counts = [0, 0, 0, 0, 0];
+      for (const [dx, dy] of NEIGHBOURS8) {
+        if (!isHead(x + dx, y + dy)) continue;
+        const ns = shadeAt(x + dx, y + dy);
+        if (ns !== SHADE_OUTLINE && !(ns === SHADE_HI && stray)) counts[ns]!++;
+      }
+      let best = SHADE_RIGHT, most = -1;
+      for (let i = 1; i < 5; i++) if (counts[i]! > most) { most = counts[i]!; best = i; }
+      fixes.push([x, y, best]);
+    }
+  }
+  for (const [x, y, s] of fixes) {
+    putPixel(cell, x, y, pack(unpackSlot(getPixel(cell, x, y).color), s));
+  }
+  headCleaned += fixes.length;
+}
+
+/** Pixels the cleanup repainted, reported with the layers: hd2 moving is intentional exactly once
+ *  and this is the number that says by how much. */
+let headCleaned = 0;
+
+/** One 64x112 frame of one layer, in (slot, shade) indices. `keepFrom` drops the holdout body.
+ *  `primAt` comes back with the pixels: the face pass has to know which prim won where. */
+function renderFrame(
+  part: FigurePart, f: FigureFrame, keepFrom: number, shift: number,
+): { cell: Canvas; primAt: Int32Array } {
   const raw = readFileSync(join(renderDir, f.rgba));
   const mask = readFileSync(join(renderDir, f.mask));
   const frame = makeCanvas(CANVAS.w, CANVAS.h);
@@ -155,43 +236,10 @@ function renderFrame(part: FigurePart, f: FigureFrame, keepFrom: number, label: 
     }
   }
 
-  // The face (#311), last so neither line pass can draw over an eye. A garment layer starts above
-  // ownFrom and so has no skull left to stamp on: the face belongs to the head layer, once.
-  const face = part.skullPrim > keepFrom ? f.face : null;
-  if (face) {
-    const stamp = (x: number, y: number, shade: number): void => {
-      if (x < 0 || y < 0 || x >= CANVAS.w || y >= CANVAS.h) {
-        faceMissed.push(`${label} at ${x},${y}: outside the frame`);
-        return;
-      }
-      const p = primAt[y * CANVAS.w + x]!;
-      const owner = p < 0 ? null : part.prims[p]!.part;
-      if (p + 1 === part.skullPrim) {
-        putPixel(frame, x, y, pack(part.prims[p]!.slot, shade));
-        faceStamped.set(label, (faceStamped.get(label) ?? 0) + 1);
-      } else if (owner === null || (HOLDOUT_IDS.includes(owner) && owner !== HEAD_ID)) {
-        faceMissed.push(`${label} at ${x},${y}: ${owner ?? "nothing"} there`);
-      }
-      // Anything else in front of the skull — the nose, the brow, glasses, a mask — hides the
-      // feature, so it is not drawn. That is how a profile loses its far eye with no
-      // per-direction table, and it is also what keeps the layer and the composite identical:
-      // the stack paints that same layer over the stamped head.
-    };
-    for (const eye of face.eyes) {
-      const x = Math.floor(eye.x), y = Math.floor(eye.y);
-      // Two rows tall, the classic emphatic eye — one row read as a stray fleck at 64.
-      stamp(x, y, SHADE_OUTLINE);
-      stamp(x, y + 1, SHADE_OUTLINE);
-      stamp(x + eye.in, y, SHADE_HI);   // the white catch, always toward the nose
-      stamp(x + eye.in, y + 1, SHADE_HI);
-    }
-    if (face.mouth) {
-      const x = Math.round(face.mouth.x) - 1, y = Math.floor(face.mouth.y);
-      stamp(x, y, SHADE_OUTLINE);
-      stamp(x + 1, y, SHADE_OUTLINE);
-    }
-  }
-  return frame;
+  // No face here any more. hd2 is one bare skull and the faces are their own sets (#342), which
+  // is also what keeps this pass and gateHoldout's combined re-render identical: neither draws one.
+  patchHead(frame, primAt, part, shift);
+  return { cell: frame, primAt };
 }
 
 function frameOf(part: FigurePart, frame: string, dir: number): FigureFrame {
@@ -204,6 +252,64 @@ const partIds = Object.keys(meta.figures);
 const layers = new Map<string, Canvas[]>();   // partId -> frames in (row, col) order
 const bundles: Array<Record<string, unknown>> = [];
 let failures = 0;
+
+/** The head's vertical position in a frame, read off the projection rig.py already emits. It is
+ *  the same for all eight directions — yaw turns the head, it does not raise it — so dir 3, the
+ *  one direction that always has a face, speaks for the frame. */
+function headRow(frame: string): number {
+  const head = meta.figures[HEAD_ID];
+  if (!head) return 0;
+  const face = frameOf(head, frame, 3).face;
+  return face ? Math.floor(faceOrigin(face).y) : 0;
+}
+
+/** The point the authored art is registered against: the mean of the eyes rig.py placed. One
+ *  point, not one per eye — the drawing is rigid and the eyes are what it is drawn around. */
+function faceOrigin(face: FaceAnchor): { x: number; y: number } {
+  let x = 0, y = 0;
+  for (const eye of face.eyes) { x += eye.x; y += eye.y; }
+  return { x: x / face.eyes.length, y: y / face.eyes.length };
+}
+
+const headShift = new Map(FRAMES.map((f) => [f, headRow(f) - headRow(REFERENCE_FRAME)]));
+
+/** Freeze one layer: sheet, bundle, png. `recipe` is hashed as provenance for the pixels, so it
+ *  carries whatever decides them — the mesh for a rendered layer, the authored map for a face. */
+function emit(
+  id: string, set: FigureSet, cells: Canvas[], anchorY: number[],
+  recipe: Record<string, unknown>, fixedColors?: readonly string[],
+): void {
+  const sheet = makeCanvas(CANVAS.w * 8, CANVAS.h * FRAMES.length);
+  for (const [i, cell] of cells.entries()) {
+    blit(sheet, cell, (i % 8) * CANVAS.w, ((i / 8) | 0) * CANVAS.h);
+  }
+  layers.set(id, cells);
+  bundles.push({
+    partId: id, setId: set.id, type: set.type, name: set.name, slots: set.slots, hides: set.hides,
+    ...(fixedColors ? { fixedColors } : {}),
+    sheet: `${id}.png`,
+    frameW: CANVAS.w, frameH: CANVAS.h, frames: FRAMES, dirs: [0, 1, 2, 3, 4, 5, 6, 7],
+    anchorX: ANCHOR_X, anchorY,
+    figureHeight: CANVAS.height,
+    styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
+    figuredataVersion: FIGUREDATA_VERSION,
+    recipeHash: createHash("sha256").update(JSON.stringify(recipe)).digest("hex"),
+    pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
+  });
+
+  const png = encodePng(sheet.w, sheet.h, sheet.px);
+  writeFileSync(join(renderDir, `${id}.png`), png);
+  if (freeze) {
+    mkdirSync(frozenDir, { recursive: true });
+    writeFileSync(join(frozenDir, `${id}.png`), png);
+  }
+}
+
+/** hd2's own cells, kept whole. Every face set is this skull with a different map laid on it, so
+ *  it is rendered once — and the prim map comes with it, because a face pixel is only allowed to
+ *  land on the head. */
+const headCells: Array<{ cell: Canvas; primAt: Int32Array }> = [];
+let headRepaint = 0;
 
 for (const id of partIds) {
   const part = meta.figures[id]!;
@@ -221,19 +327,17 @@ for (const id of partIds) {
     continue;
   }
 
-  const sheet = makeCanvas(CANVAS.w * 8, CANVAS.h * FRAMES.length);
   const cells: Canvas[] = [];
   const anchorY: number[] = [];
-  for (const [row, frame] of FRAMES.entries()) {
+  for (const frame of FRAMES) {
     anchorY.push(frameOf(part, frame, 0).anchorY);
     for (let dir = 0; dir < 8; dir++) {
-      const cell = renderFrame(part, frameOf(part, frame, dir), part.ownFrom,
-        `${id} ${frame} d${dir}`);
-      cells.push(cell);
-      blit(sheet, cell, dir * CANVAS.w, row * CANVAS.h);
+      const out = renderFrame(part, frameOf(part, frame, dir), part.ownFrom,
+        headShift.get(frame) ?? 0);
+      cells.push(out.cell);
+      if (id === HEAD_ID) headCells.push(out);
     }
   }
-  layers.set(id, cells);
 
   const slotsUsed = new Set(part.prims.slice(part.ownFrom).map((p) => p.slot));
   if (Math.max(...slotsUsed) >= set.slots) {
@@ -244,31 +348,162 @@ for (const id of partIds) {
     failures++;
   }
 
-  const recipeHash = createHash("sha256")
-    .update(JSON.stringify({
-      id, setId, prims: part.prims, src: part.src, canvas: CANVAS,
-      styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
-      figuredataVersion: FIGUREDATA_VERSION,
-    }))
-    .digest("hex");
-
-  bundles.push({
-    partId: id, setId, type, name: set.name, slots: set.slots, hides: set.hides,
-    sheet: `${id}.png`,
-    frameW: CANVAS.w, frameH: CANVAS.h, frames: FRAMES, dirs: [0, 1, 2, 3, 4, 5, 6, 7],
-    anchorX: ANCHOR_X, anchorY,
-    figureHeight: CANVAS.height,
+  emit(id, set, cells, anchorY, {
+    id, setId, prims: part.prims, src: part.src, canvas: CANVAS,
     styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
     figuredataVersion: FIGUREDATA_VERSION,
-    recipeHash, pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
   });
+  if (id === HEAD_ID) headRepaint = headCleaned;
+}
 
-  const png = encodePng(sheet.w, sheet.h, sheet.px);
-  writeFileSync(join(renderDir, `${id}.png`), png);
-  if (freeze) {
-    mkdirSync(frozenDir, { recursive: true });
-    writeFileSync(join(frozenDir, `${id}.png`), png);
+// ---- face sets (#342) -------------------------------------------------------------------------
+// Faces are hd SETS, the model Habbo itself uses: hd stays one mesh forever, and a face set is
+// that same skull plus a hand-authored feature map. So a face set is not rendered — Blender never
+// sees one. It is hd2's own cells with a map laid on them, which is why eight faces cost no render
+// time and why hats stay non-combinatorial. Facial hair is the same machinery on a bare sheet.
+
+/** Where one authored pixel ended up. `head` painted; `clip` fell off the silhouette, which the
+ *  art does on purpose at the profile jaw and the design's own painter did too; `other` landed on
+ *  a part that is not the head, which is the shape a moved projection takes and never allowed. */
+interface FaceStamp { x: number; y: number; code: InkCode; on: "head" | "clip" | "other" }
+interface FaceCell {
+  partId: string; frame: string; dir: number;
+  placed: FaceStamp[];
+  skull: { top: number; bottom: number } | null;
+}
+const faceCells: FaceCell[] = [];
+const faceMissed: string[] = [];
+
+/** The stand-frame anchor each view was drawn against. Subtracting it is what makes the authored
+ *  absolute coordinates FaceAnchor-relative: what facedata stores as x=27 is stored as "3.9 px
+ *  left of the eye line", and this frame's projection says where that is. */
+const viewOrigin = new Map<FaceView, { x: number; y: number }>();
+for (const [view, dir] of Object.entries(REFERENCE_DIR)) {
+  const head = meta.figures[HEAD_ID];
+  const face = head ? frameOf(head, REFERENCE_FRAME, dir).face : null;
+  if (face) viewOrigin.set(view as FaceView, faceOrigin(face));
+}
+
+/** The skull's rows in this cell. The feature-bounds gate holds the whole face inside its lower
+ *  half, which is what stops a future set creeping onto the cranium a hat has to sit on. */
+function skullBox(primAt: Int32Array, part: FigurePart): { top: number; bottom: number } | null {
+  let top = CANVAS.h, bottom = -1;
+  for (let y = 0; y < CANVAS.h; y++) {
+    for (let x = 0; x < CANVAS.w; x++) {
+      if (primAt[y * CANVAS.w + x]! + 1 !== part.skullPrim) continue;
+      if (y < top) top = y;
+      if (y > bottom) bottom = y;
+    }
   }
+  return bottom < 0 ? null : { top, bottom };
+}
+
+function inkSlot(slot: InkSlot, set: FigureSet, label: string): number {
+  if (slot === "own") return 0;
+  if (slot === "iris") {
+    if (set.slots < 2) {
+      console.error(`${label}: iris ink needs a second colour slot, set ${set.id} declares ` +
+        `${set.slots}. Raise slots in figuredata, or drop the iris from the art.`);
+      failures++;
+      return -1;
+    }
+    return 1;
+  }
+  return set.slots + FIXED_RAMPS.indexOf(slot);
+}
+
+function buildFaceLayer(
+  id: string, set: FigureSet, picks: FacePicks, axes: readonly AxisName[], base: "head" | "bare",
+): void {
+  const head = meta.figures[HEAD_ID]!;
+  const cells: Canvas[] = [];
+  const anchorY: number[] = [];
+  const usedFixed = new Set<FixedRamp>();
+  for (const [rowIndex, frame] of FRAMES.entries()) {
+    anchorY.push(frameOf(head, frame, 0).anchorY);
+    for (let dir = 0; dir < 8; dir++) {
+      const source = headCells[rowIndex * 8 + dir]!;
+      const cell = makeCanvas(CANVAS.w, CANVAS.h);
+      if (base === "head") blit(cell, source.cell, 0, 0);
+      cells.push(cell);
+
+      const label = `${id} ${frame} d${dir}`;
+      const record: FaceCell = {
+        partId: id, frame, dir, placed: [], skull: skullBox(source.primAt, head),
+      };
+      faceCells.push(record);
+
+      const drawn = facePixels(GEOMETRY, picks, dir, axes);
+      if (!drawn || drawn.pixels.length === 0) continue;
+      const face = frameOf(head, frame, dir).face;
+      if (!face) {
+        faceMissed.push(`${label}: art is authored for a direction rig.py turns the face away from`);
+        continue;
+      }
+
+      const ref = viewOrigin.get(drawn.view);
+      if (!ref) {
+        faceMissed.push(`${label}: view ${drawn.view} has no ${REFERENCE_FRAME} anchor at dir ` +
+          `${REFERENCE_DIR[drawn.view]} — rig.py stopped projecting the face there`);
+        continue;
+      }
+      const origin = faceOrigin(face);
+      // A mirrored direction is the drawn view reflected in the sheet, x' = 63 - x. Place it in
+      // the view's own unmirrored space against the reflected anchor and then flip, so the result
+      // is the reflection exactly: rig.py puts dir 4's anchor at CANVAS.w minus dir 2's, and the
+      // reflection therefore lands on the pixel grid instead of half a pixel off it.
+      const ox = (drawn.mirror ? CANVAS.w - origin.x : origin.x) - ref.x;
+      const oy = origin.y - ref.y;
+      for (const [ax, ay, code] of drawn.pixels) {
+        const drawnX = Math.floor(ax + ox);
+        const x = drawn.mirror ? CANVAS.w - 1 - drawnX : drawnX;
+        const y = Math.floor(ay + oy);
+        const prim = x < 0 || y < 0 || x >= CANVAS.w || y >= CANVAS.h
+          ? -1 : source.primAt[y * CANVAS.w + x]!;
+        const owner = prim < 0 ? null : head.prims[prim]!.part;
+        if (owner !== HEAD_ID) {
+          record.placed.push({ x, y, code, on: owner === null ? "clip" : "other" });
+          if (owner !== null) faceMissed.push(`${label} ${code} at ${x},${y}: ${owner} there`);
+          continue;
+        }
+        const ink = INKS[code];
+        const slot = inkSlot(ink.slot, set, label);
+        if (slot < 0) continue;
+        if (ink.slot !== "own" && ink.slot !== "iris") usedFixed.add(ink.slot);
+        putPixel(cell, x, y, pack(slot, ink.shade));
+        record.placed.push({ x, y, code, on: "head" });
+      }
+    }
+  }
+
+  const lastFixed = Math.max(-1, ...[...usedFixed].map((n) => FIXED_RAMPS.indexOf(n)));
+  emit(id, set, cells, anchorY, {
+    id, setId: set.id, base, prims: head.prims, src: head.src, picks, axes, geometry: "A",
+    canvas: CANVAS, styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
+    figuredataVersion: FIGUREDATA_VERSION,
+  }, lastFixed < 0 ? undefined : FIXED_RAMPS.slice(0, lastFixed + 1));
+}
+
+if (headCells.length === FRAMES.length * 8) {
+  const authored: Array<[number, FacePicks, readonly AxisName[], "head" | "bare"]> = [
+    ...Object.entries(FACE_SETS).map(([id, picks]) =>
+      [Number(id), picks, FACE_AXES, "head"] as [number, FacePicks, readonly AxisName[], "head"]),
+    ...Object.entries(BEARD_SETS).map(([id, picks]) =>
+      [Number(id), picks, BEARD_AXES, "bare"] as [number, FacePicks, readonly AxisName[], "bare"]),
+  ];
+  for (const [setId, picks, axes, base] of authored) {
+    const set = setById(setId);
+    if (!set) {
+      console.error(`face set ${setId}: no figuredata set — facedata.ts and figuredata.ts disagree`);
+      failures++;
+      continue;
+    }
+    buildFaceLayer(`${set.type}${setId}`, set, picks, axes, base);
+  }
+} else if (layers.has(HEAD_ID)) {
+  console.error(`${HEAD_ID}: ${headCells.length} cells rendered, want ${FRAMES.length * 8} — no ` +
+    `face sets built`);
+  failures++;
 }
 
 // ---- gates ----------------------------------------------------------------------------------
@@ -365,7 +600,7 @@ function gateHoldout(): GateResult {
     for (const frame of FRAMES) {
       for (let dir = 0; dir < 8; dir++) {
         const combined = renderFrame(part, frameOf(part, frame, dir), 0,
-          `${id}+body ${frame} d${dir}`);
+          headShift.get(frame) ?? 0).cell;
         const stack = makeCanvas(CANVAS.w, CANVAS.h);
         const owner = new Int32Array(CANVAS.w * CANVAS.h).fill(-1);
         for (const [n, layerId] of stackIds.entries()) {
@@ -403,33 +638,107 @@ function gateHoldout(): GateResult {
   return pass;
 }
 
-// dir 3 looks straight at the camera and dir 7 straight away. The two profiles (1, 5) keep one
-// eye and lose the other, so they are the rig's per-eye surface test to decide, not the gate's.
-const FACE_DIRS = [2, 3, 4], BLIND_DIRS = [0, 6, 7];
+// dir 3 looks straight at the camera and dir 7 straight away. Dirs 1 and 5 are the profiles: they
+// keep one eye and lose the other, which the authored art now states outright.
+const FACE_DIRS = [2, 3, 4], BLIND_DIRS = [0, 6, 7], PROFILE_DIRS = [1, 5];
+const EYE_CODES: readonly InkCode[] = ["W", "U", "I"];
 
-/** The face is the one feature no other gate can see: it is stamped from a projection rather than
- *  rendered, so a projection that is wrong paints eyes on a shoulder, or on nothing, and every
- *  avatar wears it. Two claims — every stamped pixel landed on the head, and the face is on the
- *  side of the head that faces the camera.
- *
- *  Runs last: the holdout gate re-renders every garment with the head kept, and the stamps in
- *  those renders are checked here too. */
-function gateFace(): GateResult {
-  if (faceMissed.length > 0) {
-    return fail("face", `${faceMissed.length} face pixel(s) landed off the head — rig.py's ` +
-      `projected anchor is wrong (first: ${faceMissed[0]})`);
-  }
-  if (!layers.has(HEAD_ID)) return pass;   // partial render, no head to check
-  for (const frame of FRAMES) {
-    for (const dir of FACE_DIRS) {
-      if (!faceStamped.get(`${HEAD_ID} ${frame} d${dir}`)) {
-        return fail("face", `${HEAD_ID} ${frame} d${dir} faces the camera with no face stamped`);
+/** The brow is allowed this far above the skull's midline and no further. The line comes off the
+ *  art: stand dir 3 measures the skull ball at rows 21-44, midline 32, and the heaviest authored
+ *  brow at row 31. One row of slack over that, so a brow may sit on the ridge and nothing may
+ *  climb the dome. */
+const BROW_HEADROOM = 2;
+
+/** The 8-connected pieces of a set of placed pixels. Two uses: a profile has exactly one eye, and
+ *  a pixel the silhouette clipped has to still hang off a piece that landed. */
+function blobs(of: readonly FaceStamp[]): FaceStamp[][] {
+  const key = (s: FaceStamp): number => s.y * CANVAS.w + s.x;
+  const at = new Map(of.map((s) => [key(s), s]));
+  const seen = new Set<number>();
+  const found: FaceStamp[][] = [];
+  for (const start of of) {
+    if (seen.has(key(start))) continue;
+    seen.add(key(start));
+    const group = [start], queue = [start];
+    while (queue.length > 0) {
+      const s = queue.pop()!;
+      for (const [dx, dy] of NEIGHBOURS8) {
+        const k = (s.y + dy) * CANVAS.w + s.x + dx;
+        const next = at.get(k);
+        if (!next || seen.has(k)) continue;
+        seen.add(k);
+        group.push(next);
+        queue.push(next);
       }
     }
-    for (const dir of BLIND_DIRS) {
-      if (faceStamped.get(`${HEAD_ID} ${frame} d${dir}`)) {
-        return fail("face", `${HEAD_ID} ${frame} d${dir} faces away but has a face stamped`);
+    found.push(group);
+  }
+  return found;
+}
+
+/** The face is the one feature no other gate can see: it is placed from a projection rather than
+ *  rendered, so a projection that has moved paints eyes on a shoulder, or on nothing, and every
+ *  avatar wearing the set wears the mistake.
+ *
+ *  Six claims. No authored pixel lands on a part that is not the head, and one the silhouette
+ *  clips still hangs off a piece of the drawing that did land — the profile mouth overshoots the
+ *  jaw by two pixels as drawn, and the design's own painter clipped it the same way. A face turned
+ *  away has nothing on it. A profile has exactly one eye, which the rig used to decide and the art
+ *  now asserts. A white and a pupil come as a pair, and the three-quarters, which every set draws
+ *  through the same open eye, must have both. The block stays out of hat space. And every ramp the
+ *  art names exists, so the tonal fallback the design rejected is never reachable. */
+function gateFace(): GateResult {
+  for (const ramp of new Set<string>(FIXED_RAMPS)) {
+    if (!RAMP_SHADES.some((s) => s.ramp === ramp)) {
+      return fail("face", `face art names ramp "${ramp}", which the palette does not have — a ` +
+        `face may never fall back to a tonal approximation`);
+    }
+  }
+  if (faceMissed.length > 0) {
+    return fail("face", `${faceMissed.length} face pixel(s) landed off the head — rig.py's ` +
+      `projected anchor has moved under the art (first: ${faceMissed[0]})`);
+  }
+  if (faceCells.length === 0) return pass;   // partial render, no head to build faces on
+  for (const cell of faceCells) {
+    const where = `${cell.partId} ${cell.frame} d${cell.dir}`;
+    const face = cell.placed.filter((s) => s.on === "head");
+    if (BLIND_DIRS.includes(cell.dir) && cell.placed.length > 0) {
+      return fail("face", `${where} faces away but has ${cell.placed.length} face pixel(s)`);
+    }
+    if (cell.placed.length === 0) {
+      if (cell.partId.startsWith("hd") && !BLIND_DIRS.includes(cell.dir)) {
+        return fail("face", `${where} faces the camera with no face on it`);
       }
+      continue;
+    }
+    for (const group of blobs(cell.placed)) {
+      if (group.some((s) => s.on === "head")) continue;
+      const [lost] = group;
+      return fail("face", `${where}: ${group.length} face pixel(s) from ${lost!.code} at ` +
+        `${lost!.x},${lost!.y} landed clear of the head — the drawing is no longer on it`);
+    }
+    const eyes = face.filter((s) => EYE_CODES.includes(s.code));
+    if (face.some((s) => s.code === "W") !== face.some((s) => s.code === "U")) {
+      return fail("face", `${where} draws an eye white without a pupil, or a pupil without one`);
+    }
+    if (cell.partId.startsWith("hd")) {
+      if (PROFILE_DIRS.includes(cell.dir) && blobs(eyes).length !== 1) {
+        return fail("face", `${where} is a profile with ${blobs(eyes).length} eyes, want 1`);
+      }
+      // Dir 3 is the one direction a set draws its own eye in, and a shut eye (set 21's ^_^) has
+      // no white by design. Dirs 2 and 4 every set draws through the same open eye, so there the
+      // design's rule holds outright.
+      if (FACE_DIRS.includes(cell.dir) && cell.dir !== 3 && eyes.length === 0) {
+        return fail("face", `${where} is a three-quarter with no open eye`);
+      }
+    }
+    if (!cell.skull) return fail("face", `${where}: no skull under the face`);
+    const line = cell.skull.top
+      + Math.floor((cell.skull.bottom - cell.skull.top) / 2) - BROW_HEADROOM;
+    const top = Math.min(...face.map((s) => s.y));
+    if (top < line) {
+      return fail("face", `${where}: a face pixel is at row ${top}, above ${line} — the skull ` +
+        `runs ${cell.skull.top}-${cell.skull.bottom} and everything over its midline is hat space`);
     }
   }
   return pass;
@@ -463,50 +772,106 @@ for (const [name, gate] of [
   // The canonical body once, as one object — a head floating off the neck is the same defect —
   // then each garment against it.
   if (body.length > 0) warn(HOLDOUT_IDS.join("+"), body);
-  for (const id of partIds) {
-    const cells = layers.get(id);
-    if (!cells || HOLDOUT_IDS.includes(id)) continue;
+  for (const [id, cells] of layers) {
+    if (HOLDOUT_IDS.includes(id)) continue;
     warn(id, [...body, cells]);
   }
 }
 
-// ---- face preview (#311) ----------------------------------------------------------------------
+// ---- face preview (#311, #342) ------------------------------------------------------------------
 // The render dir only, never frozen: an eye is one pixel and the only way to know it reads is to
 // look at it, magnified, on the tone the room actually draws behind it. One skin ramp is enough —
 // the sheet is indexed, so every other ramp is the same pixels through different colours.
+//
+//   figure_face.png    a worn head, whole turnaround, standing and sitting — where the face lands
+//   figure_faces.png   every face and beard set at 6x, the five directions with art — how it reads
+//
+// The resolve below is the client's, `fixedColors` and all, so these two files are also the proof
+// that a sheet indexing `paper` bakes without the client knowing what a face is.
 {
-  const SCALE = 3;
-  const rows = ["stand", "sit"].filter((f) => FRAMES.includes(f));
-  const skin: number[] = [];
   const order = ["outline", "left", "right", "top", "hi"];
+  const palette = new Map<string, number[]>();
   for (const { ramp, shade, color } of RAMP_SHADES) {
-    if (ramp === "skin_3") skin[order.indexOf(shade)] = color;
+    const shades = palette.get(ramp) ?? [];
+    shades[order.indexOf(shade)] = color;
+    palette.set(ramp, shades);
   }
-  const preview = makeCanvas(CANVAS.w * 8 * SCALE, CANVAS.h * rows.length * SCALE);
-  for (let y = 0; y < preview.h; y++) {
-    for (let x = 0; x < preview.w; x++) putPixel(preview, x, y, FLOOR_TONES[0]!);
-  }
-  for (const [row, frame] of rows.entries()) {
-    for (let dir = 0; dir < 8; dir++) {
-      for (const id of HOLDOUT_IDS) {
-        const cell = layers.get(id)?.[cellIndex(frame, dir)];
-        if (!cell) continue;
-        for (let y = 0; y < cell.h; y++) {
-          for (let x = 0; x < cell.w; x++) {
-            const p = getPixel(cell, x, y);
-            if (p.alpha === 0) continue;
-            const color = skin[unpackShade(p.color)];
-            if (color === undefined) continue;
-            const ox = (dir * CANVAS.w + x) * SCALE, oy = (row * CANVAS.h + y) * SCALE;
-            for (let sy = 0; sy < SCALE; sy++) {
-              for (let sx = 0; sx < SCALE; sx++) putPixel(preview, ox + sx, oy + sy, color);
-            }
+  const metaOf = new Map(bundles.map((b) => [b.partId as string, b]));
+
+  interface Worn { id: string; colors: string[] }
+  interface Crop { x: number; y: number; w: number; h: number }
+  const draw = (
+    into: Canvas, ox: number, oy: number, scale: number, crop: Crop,
+    stack: readonly Worn[], frame: string, dir: number,
+  ): void => {
+    for (const worn of stack) {
+      const cell = layers.get(worn.id)?.[cellIndex(frame, dir)];
+      const bundle = metaOf.get(worn.id);
+      if (!cell || !bundle) continue;
+      const slots = bundle.slots as number;
+      const fixed = (bundle.fixedColors as string[] | undefined) ?? [];
+      for (let y = crop.y; y < Math.min(cell.h, crop.y + crop.h); y++) {
+        for (let x = crop.x; x < Math.min(cell.w, crop.x + crop.w); x++) {
+          const p = getPixel(cell, x, y);
+          if (p.alpha === 0) continue;
+          const slot = unpackSlot(p.color);
+          const ramp = worn.colors[slot] ?? fixed[slot - slots] ?? worn.colors[0] ?? "";
+          const color = palette.get(ramp)?.[unpackShade(p.color)];
+          if (color === undefined) continue;
+          const px0 = ox + (x - crop.x) * scale, py0 = oy + (y - crop.y) * scale;
+          for (let sy = 0; sy < scale; sy++) {
+            for (let sx = 0; sx < scale; sx++) putPixel(into, px0 + sx, py0 + sy, color);
           }
         }
       }
     }
+  };
+  const fill = (c: Canvas): void => {
+    for (let y = 0; y < c.h; y++) for (let x = 0; x < c.w; x++) putPixel(c, x, y, FLOOR_TONES[0]!);
+  };
+  const SKIN = "skin_3", IRIS = "charcoal", HAIR = "charcoal";
+  const faceIds = Object.keys(FACE_SETS).map(Number);
+  const worn = (id: number): Worn[] =>
+    [{ id: "bd1", colors: [SKIN] }, { id: `hd${id}`, colors: [SKIN, IRIS] }];
+
+  if (layers.has("bd1") && faceIds.length > 0) {
+    const SCALE = 3;
+    const rows = ["stand", "sit"].filter((f) => FRAMES.includes(f));
+    const preview = makeCanvas(CANVAS.w * 8 * SCALE, CANVAS.h * rows.length * SCALE);
+    fill(preview);
+    const whole = { x: 0, y: 0, w: CANVAS.w, h: CANVAS.h };
+    for (const [row, frame] of rows.entries()) {
+      for (let dir = 0; dir < 8; dir++) {
+        draw(preview, dir * CANVAS.w * SCALE, row * CANVAS.h * SCALE, SCALE, whole,
+          worn(faceIds[0]!), frame, dir);
+      }
+    }
+    writeFileSync(join(renderDir, "figure_face.png"), encodePng(preview.w, preview.h, preview.px));
   }
-  writeFileSync(join(renderDir, "figure_face.png"), encodePng(preview.w, preview.h, preview.px));
+
+  const skull = faceCells.find((c) => c.frame === REFERENCE_FRAME && c.dir === 3)?.skull;
+  if (skull) {
+    const SCALE = 6;
+    const size = { w: 32, h: skull.bottom - skull.top + 8 };
+    const crop = { x: 16, y: skull.top - 3, ...size };
+    const dirs = [1, 2, 3, 4, 5];
+    const beardIds = Object.keys(BEARD_SETS).map(Number);
+    const rows: Worn[][] = [
+      ...faceIds.map((id) => worn(id)),
+      ...beardIds.map((id) => [...worn(faceIds[0]!), { id: `fa${id}`, colors: [HAIR] }]),
+    ];
+    const preview = makeCanvas(size.w * dirs.length * SCALE, size.h * rows.length * SCALE);
+    fill(preview);
+    for (const [row, stack] of rows.entries()) {
+      for (const [col, dir] of dirs.entries()) {
+        draw(preview, col * size.w * SCALE, row * size.h * SCALE, SCALE, crop,
+          stack, REFERENCE_FRAME, dir);
+      }
+    }
+    writeFileSync(join(renderDir, "figure_faces.png"), encodePng(preview.w, preview.h, preview.px));
+    console.log(`figure_faces.png: rows ${[...faceIds, ...beardIds].join(", ")}, ` +
+      `cols dirs ${dirs.join(" ")}`);
+  }
 }
 
 if (freeze && failures === 0) {
@@ -544,6 +909,7 @@ if (freeze && failures === 0) {
   console.log(`froze ${bundles.length} figure layer(s) to tools/artgen/frozen/figure/`);
 }
 
+console.log(`${HEAD_ID}: cleanup repainted ${headRepaint} pixel(s)`);
 for (const b of bundles) {
   console.log(`${b.partId}: ${b.frameW}x${b.frameH} x ${FRAMES.length}x8  pixels ` +
     `${(b.pixelHash as string).slice(0, 12)}…`);
