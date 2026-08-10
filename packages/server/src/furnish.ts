@@ -194,7 +194,7 @@ const CASINO: Layout = {
   ],
 };
 
-const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
+export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
   [1, CAFE],
   [2, CASINO],
 ]);

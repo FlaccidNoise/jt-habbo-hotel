@@ -417,7 +417,7 @@ for (const [id, part] of work) {
   }
 
   const def: FurniDef = catalogDef ?? {
-    id, name: id, w: part.w, l: part.l, stackHeights: [heightPx / ZU],
+    id, name: id, theme: "unassigned", w: part.w, l: part.l, stackHeights: [heightPx / ZU],
     canWalk: false, canStackOn: false, seatHeight: part.seatZ, color: 0,
   };
   const recipeHash = provenanceHash(id, part);

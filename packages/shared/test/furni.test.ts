@@ -1,7 +1,9 @@
 import { expect, test } from "vitest";
 import { z } from "zod";
 import { FurniDefSchema, WallDefSchema } from "../src/protocol.ts";
-import { CATALOG_PRICES, PRESTIGE_DEFS, PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
+import {
+  CATALOG_PRICES, PRESTIGE_DEFS, PROTOTYPE_CATALOG, UNPRICED, WALL_CATALOG,
+} from "../src/furni.ts";
 import { LEVER_EXCLUSIVE_DEFS, LEVER_PRIZES } from "../src/lever.ts";
 import { COLLECTION_SETS, SET_REWARD_DEFS } from "../src/sets.ts";
 import { WALL_SEG_PX, WALL_TOP_PX } from "../src/walls.ts";
@@ -49,6 +51,14 @@ test("a lever exclusive is never also for sale", () =>
   expect([...LEVER_EXCLUSIVE_DEFS].filter((id) => CATALOG_PRICES.has(id))).toEqual([]));
 test("no price names a def that left the catalog", () =>
   expect([...CATALOG_PRICES.keys()].filter((id) => !ALL_IDS.includes(id))).toEqual([]));
+
+// A price-blitz of new packs must not let a def go silently unpriced: renderCatalog just skips
+// it (invisible in the shop) and itemValue falls back to 0 (a hole in the trade-limits wall).
+test("every catalog id is priced or explicitly unpriced with a reason", () =>
+  expect(
+    ALL_IDS.filter((id) => !CATALOG_PRICES.has(id) && !UNPRICED.has(id)),
+    "add a price to CATALOG_PRICES or add the id to UNPRICED with a reason comment",
+  ).toEqual([]));
 
 // A prize that names a def nobody can render is a silent dead drop: the server would mint an
 // item the client cannot draw and the player would see an empty inventory slot.

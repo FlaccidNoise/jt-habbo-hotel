@@ -16,6 +16,9 @@ export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
 export const FurniDefSchema = z.object({
   id: z.string(), name: z.string(),
+  /** Content-pack grouping the catalog UI sorts/filters by. Plain string, not a union — packs
+   *  add new values as they ship. */
+  theme: z.string(),
   w: z.number().int().min(1), l: z.number().int().min(1),
   stackHeights: z.array(z.number().min(0)).min(1),   // per state; prototype defs have one state
   canWalk: z.boolean(), canStackOn: z.boolean(),
@@ -35,6 +38,8 @@ export type WallSide = z.infer<typeof WallSideSchema>;
 
 export const WallDefSchema = z.object({
   id: z.string(), name: z.string(),
+  /** Content-pack grouping the catalog UI sorts/filters by. Same free-form string as FurniDef. */
+  theme: z.string(),
   /** Wall segments the item covers, measured along the wall. */
   span: z.number().int().min(1),
   /** Drawn size in the wall plane, scale-64 px: w along the wall, h straight down. */
