@@ -5,20 +5,15 @@ import {
   PROTOTYPE_CATALOG,
   ROOM_CAPACITY,
   ROOM_FURNI_CAP,
-  STARTER_GRANT_SETS,
   LEVER_COST,
   WALL_CATALOG,
   checkPlacement,
   checkWallPlacement,
   footprintTiles,
-  paletteFor,
-  parseFigure,
   parseHeightmap,
   screenToTile,
   leverOdds,
   seatAt,
-  serializeFigure,
-  setById,
   tileHeight,
   wallOffsetLimits,
 } from "@grand/shared";
@@ -31,7 +26,6 @@ import type {
   RoomModel,
   ServerMsg,
   Tile,
-  WornPart,
   WallDef,
   WallItem,
   WallPlacementCtx,
@@ -49,6 +43,7 @@ import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
 import { ChatOverlay } from "./ui/chat.ts";
+import { Creator } from "./ui/creator.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
@@ -103,6 +98,9 @@ let myRoomId: number | null = null;
 let myFigure: string | null = null;
 let hereRoomId = roomId;
 let sets: SetRows = [];
+/** Set by registering, spent by the first room_state: a new account meets the creator before it
+ *  sees the room. Returning players go straight in and open the same panel from the HUD. */
+let pendingCreator = false;
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -111,6 +109,14 @@ function toast(text: string, kind?: "notice"): void {
   el("toasts").appendChild(node);
   setTimeout(() => node.remove(), kind === "notice" ? 10000 : 4000);
 }
+
+/** Create-your-look and the wardrobe (#344). The baker is read through a closure because the atlas
+ *  only exists after boot(), while the panel has to be wired before the first login. */
+const creator = new Creator(el("creator"), {
+  baker: () => figureBaker,
+  send: (figure) => net.send({ t: "set_figure", figure }),
+  onClose: () => releaseKeyboard(),
+});
 
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
@@ -220,59 +226,6 @@ function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
   renderCatalog();
   renderLever();
-}
-
-/** Swap one garment. Composition only — the player picks type-set-colour and nothing else, the
- *  same curated-parts rule badges and furni patterns already follow. Ownership is the server's
- *  call: an unowned set comes back as error{code:"figure"} and nothing changes here. */
-function renderWardrobe(): void {
-  const strip = el("wardrobe");
-  strip.replaceChildren();
-  if (myFigure === null) return;
-  const label = document.createElement("span");
-  label.className = "label";
-  label.textContent = "Wardrobe:";
-  strip.appendChild(label);
-
-  const worn = new Map(parseFigure(myFigure).parts.map((part) => [part.type, part]));
-  const wear = (parts: WornPart[]): void => {
-    net.send({ t: "set_figure", figure: serializeFigure({ version: 1, parts }) });
-  };
-
-  for (const setId of STARTER_GRANT_SETS) {
-    const set = setById(setId);
-    if (!set || set.retired || set.type === "hd") continue;
-    const current = worn.get(set.type);
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = current?.set === set.id ? "worn" : "";
-    button.textContent = set.name;
-    button.addEventListener("click", () => {
-      // Keep the colours already worn for this type where the slots line up, so clicking through
-      // hair does not silently repaint it.
-      const palette = paletteFor(set.family);
-      const colors = Array.from({ length: set.slots }, (_, i) =>
-        current?.colors[i] ?? palette[(setId + i) % palette.length]!);
-      const next = [...worn.values()].filter((part) => part.type !== set.type);
-      next.push({ type: set.type, set: set.id, colors });
-      wear(next);
-    });
-    strip.appendChild(button);
-  }
-
-  const recolour = document.createElement("button");
-  recolour.type = "button";
-  recolour.textContent = "Recolour shirt";
-  recolour.addEventListener("click", () => {
-    const shirt = worn.get("ch");
-    if (!shirt) return;
-    const palette = paletteFor(setById(shirt.set)?.family ?? "material");
-    const at = palette.indexOf(shirt.colors[0] ?? "");
-    const colors = [...shirt.colors];
-    colors[0] = palette[(at + 1) % palette.length]!;
-    wear([...worn.values()].filter((part) => part.type !== "ch").concat({ ...shirt, colors }));
-  });
-  strip.appendChild(recolour);
 }
 
 function renderCatalog(): void {
@@ -667,7 +620,6 @@ function buildRoom(msg: RoomState): void {
   trade = null;
   arcade = null;
   renderStars();
-  renderWardrobe();
   renderTrade();
   renderArcade();
   el("arcade").hidden = true;
@@ -702,6 +654,13 @@ function buildRoom(msg: RoomState): void {
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);
   renderInventory();
+
+  // The creator opens over the room it will reveal: set_figure only works for an occupant, so the
+  // join happens first and the panel covers it until the new player presses Enter (or Not now).
+  if (pendingCreator && myFigure !== null) {
+    pendingCreator = false;
+    creator.open(myFigure, "create");
+  }
 }
 
 /** Only my own items are ever in my inventory, so an id leaving it means my placement landed —
@@ -758,7 +717,7 @@ function handle(msg: ServerMsg): void {
       avatars.get(msg.id)?.setFigure(msg.figure);
       if (msg.id === you) {
         myFigure = msg.figure;
-        renderWardrobe();
+        creator.confirmed();
       }
       break;
     case "wave":
@@ -838,7 +797,9 @@ function handle(msg: ServerMsg): void {
       toast(msg.text, "notice");
       break;
     case "error":
-      toast(msg.message);
+      // A refused outfit is answered inside the panel that proposed it, where the picks still are.
+      if (msg.code === "figure" && creator.isOpen) creator.rejected(msg.message);
+      else toast(msg.message);
       break;
     default:
       break;
@@ -881,6 +842,11 @@ async function boot(): Promise<void> {
   // Keyboard belongs to the room only while the chat box does not have it.
   window.addEventListener("keydown", (e) => {
     if (e.target instanceof HTMLInputElement || e.ctrlKey || e.metaKey || e.altKey) return;
+    // The creator covers the room, so the room's keys are not the player's keys while it is up.
+    if (creator.isOpen) {
+      if (e.key === "Escape") creator.close();
+      return;
+    }
     if (e.key === "r" || e.key === "R") {
       rotateArmed();
       e.preventDefault();
@@ -933,9 +899,7 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
 // #321: the strips hid the lower half of a big room, so they collapse behind tabs — an
 // accordion, at most one open, and the toggles work before and after login alike.
-const HUD_TABS = [
-  ["tab-catalog", "catalog"], ["tab-wardrobe", "wardrobe"], ["tab-inventory", "inventory"],
-] as const;
+const HUD_TABS = [["tab-catalog", "catalog"], ["tab-inventory", "inventory"]] as const;
 for (const [tab, strip] of HUD_TABS) {
   el(tab).addEventListener("click", () => {
     const opening = !el(strip).classList.contains("open");
@@ -945,6 +909,12 @@ for (const [tab, strip] of HUD_TABS) {
     }
   });
 }
+// The wardrobe is a panel, not a strip: the tab opens the creator on the look you are wearing.
+el("tab-wardrobe").addEventListener("click", () => {
+  if (myFigure === null) return;
+  if (creator.isOpen) creator.close();
+  else creator.open(myFigure, "wardrobe");
+});
 el("trade-accept").addEventListener("click", () => net.send({ t: "trade_accept" }));
 el("trade-cancel").addEventListener("click", () => net.send({ t: "trade_cancel" }));
 el("nav-open").addEventListener("click", () => {
@@ -1010,7 +980,7 @@ async function authenticate(path: string, username: string, password: string): P
   return body.token;
 }
 
-async function submit(path: string): Promise<void> {
+async function submit(path: string, isRegister = false): Promise<void> {
   const error = el("login-error");
   error.textContent = "";
   try {
@@ -1020,6 +990,8 @@ async function submit(path: string): Promise<void> {
       el<HTMLInputElement>("password").value,
     );
     sessionStorage.setItem(TOKEN_KEY, token);
+    // Only a registration that actually succeeded earns the creator step.
+    pendingCreator = isRegister;
     await start(token);
   } catch (e) {
     error.textContent = e instanceof Error ? e.message : String(e);
@@ -1030,7 +1002,7 @@ el<HTMLFormElement>("login-form").addEventListener("submit", (e) => {
   e.preventDefault();
   void submit("/api/login");
 });
-el("register").addEventListener("click", () => void submit("/api/register"));
+el("register").addEventListener("click", () => void submit("/api/register", true));
 
 // Sessions never expire server-side, so a reload resumes the one we already have. The overlay
 // stays hidden while we try: it comes back only if the join is refused (4401) or never connects.

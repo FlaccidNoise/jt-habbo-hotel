@@ -107,9 +107,11 @@ export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
 }
 
 /** One baked (outfit, frame, dir) cell. Keyed by the RESOLVED stack, so a hat that hides hair
- *  yields one texture no matter which hair is underneath. */
+ *  yields one texture no matter which hair is underneath. The cell holds the canvas the bake drew
+ *  on: the room wants a Texture, the wardrobe panel draws the same pixels into the DOM, and one
+ *  cache serves both. The Texture is made on first use so DOM-only previews never allocate one. */
 export class FigureBaker {
-  private cache = new Map<string, Texture>();
+  private cache = new Map<string, { canvas: HTMLCanvasElement; texture?: Texture }>();
 
   constructor(private atlas: FigureAtlas) {}
 
@@ -132,20 +134,39 @@ export class FigureBaker {
   }
 
   texture(figure: Figure, frame: string, dir: number): Texture | null {
-    const key = `${resolvedKey(figure)}|${frame}|${dir}`;
-    const hit = this.cache.get(key);
-    if (hit) return hit;
-    const baked = this.bake(resolveLayers(figure), frame, dir);
-    if (baked) this.cache.set(key, baked);
-    return baked;
+    const cell = this.cell(figure, frame, dir);
+    if (!cell) return null;
+    if (!cell.texture) {
+      cell.texture = Texture.from(cell.canvas);
+      cell.texture.source.scaleMode = "nearest";   // pixel art: never smooth
+    }
+    return cell.texture;
+  }
+
+  /** The same baked cell as a canvas, for previews the DOM draws rather than pixi. */
+  canvas(figure: Figure, frame: string, dir: number): HTMLCanvasElement | null {
+    return this.cell(figure, frame, dir)?.canvas ?? null;
   }
 
   destroy(): void {
-    for (const texture of this.cache.values()) texture.destroy(true);
+    for (const cell of this.cache.values()) cell.texture?.destroy(true);
     this.cache.clear();
   }
 
-  private bake(layers: Layer[], frame: string, dir: number): Texture | null {
+  private cell(
+    figure: Figure, frame: string, dir: number,
+  ): { canvas: HTMLCanvasElement; texture?: Texture } | null {
+    const key = `${resolvedKey(figure)}|${frame}|${dir}`;
+    const hit = this.cache.get(key);
+    if (hit) return hit;
+    const canvas = this.bake(resolveLayers(figure), frame, dir);
+    if (!canvas) return null;
+    const cell = { canvas };
+    this.cache.set(key, cell);
+    return cell;
+  }
+
+  private bake(layers: Layer[], frame: string, dir: number): HTMLCanvasElement | null {
     const { w, h } = this.atlas.canvas;
     const canvas = document.createElement("canvas");
     canvas.width = w;
@@ -182,8 +203,6 @@ export class FigureBaker {
     }
     if (!drew) return null;
     ctx.putImageData(out, 0, 0);
-    const texture = Texture.from(canvas);
-    texture.source.scaleMode = "nearest";   // pixel art: never smooth
-    return texture;
+    return canvas;
   }
 }
