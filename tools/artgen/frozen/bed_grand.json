@@ -1,0 +1,34 @@
+{
+  "defId": "bed_grand",
+  "archetype": "artgen",
+  "sheet": "bed_grand.png",
+  "frameW": 128,
+  "frameH": 114,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": 0.82,
+  "occlusion": null,
+  "nearSheet": "bed_grand.near.png",
+  "nearHash": "986a9aaf457cae858a5b0a8dc65c8bc30e618319cd3e959f1105abfe44ee7562",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c5b2bf486aa832d5",
+  "recipeHash": "c5b2bf486aa832d511201dc5248392b2f3c495e8cb62b6412390560ba9149e7b",
+  "pixelHash": "309740e081b9083e3a71c4ea8462b4519de6ce5fe6c3d6b84636b10c1515eeb5"
+}

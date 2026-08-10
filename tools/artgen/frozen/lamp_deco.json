@@ -1,0 +1,32 @@
+{
+  "defId": "lamp_deco",
+  "archetype": "artgen",
+  "sheet": "lamp_deco.png",
+  "frameW": 64,
+  "frameH": 104,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 88,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dc1dcfee6473f68b",
+  "recipeHash": "dc1dcfee6473f68b3732ab382b8157f2f92f887b1c15f804b727f6c66fcdb990",
+  "pixelHash": "d5fa56d213f8fe2d6fe7da85ec8f2201d2d78a7cb14416f55c4f1fdb047e5b80"
+}

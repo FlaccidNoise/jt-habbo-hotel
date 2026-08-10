@@ -1,0 +1,32 @@
+{
+  "defId": "barcart_deco",
+  "archetype": "artgen",
+  "sheet": "barcart_deco.png",
+  "frameW": 64,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e3cb1756a7c721cb",
+  "recipeHash": "e3cb1756a7c721cb9d7578fbe8f5dd6252d7712e699fab1ccc41344512c5483f",
+  "pixelHash": "8423b0b83e933bb0c95ad5957b01ea2142236df6d3e911d972eb9a73da40f735"
+}

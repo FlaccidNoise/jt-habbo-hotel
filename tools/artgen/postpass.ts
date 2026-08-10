@@ -179,6 +179,19 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // other order, so the three counters differ in body AND in trim.
   bar_counter_pool:     { base: "bar_counter",     ramps: { walnut: "sand", ivory: "teal",
                                                             gold: "crimson" } },
+  // Penthouse suites (#356). The set's four ramps differ in hue as well as luma, so the body can
+  // move without dragging the trim after it — gold and ivory both read on navy, plum, crimson,
+  // fern and charcoal alike. The two that swap more than one ramp are the two whose accent would
+  // otherwise land on itself: the armoire's ivory doors on an ivory carcase, and the standing
+  // mirror's slate glass, which against a charcoal frame is two blue-greys 23 luma apart.
+  bed_grand_plum:       { base: "bed_grand",       ramps: { navy: "plum" } },
+  chaise_deco_crimson:  { base: "chaise_deco",     ramps: { navy: "crimson" } },
+  screen_deco_jade:     { base: "screen_deco",     ramps: { navy: "fern" } },
+  dresser_deco_navy:    { base: "dresser_deco",    ramps: { charcoal: "navy" } },
+  ottoman_deco_ivory:   { base: "ottoman_deco",    ramps: { navy: "ivory", ivory: "navy" } },
+  armoire_deco_ivory:   { base: "armoire_deco",    ramps: { charcoal: "ivory", ivory: "navy", navy: "charcoal" } },
+  mirror_standing_plum: { base: "mirror_standing", ramps: { gold: "plum", navy: "gold", slate: "ivory" } },
+  sconce_deco_onyx:     { base: "sconce_deco",     ramps: { gold: "charcoal", navy: "crimson" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

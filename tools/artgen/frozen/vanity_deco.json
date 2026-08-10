@@ -1,0 +1,32 @@
+{
+  "defId": "vanity_deco",
+  "archetype": "artgen",
+  "sheet": "vanity_deco.png",
+  "frameW": 96,
+  "frameH": 111,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 79,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.96875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:84a4b75b57c68793",
+  "recipeHash": "84a4b75b57c687937287d17d6b907ac2b91cb9e57e0fd0ca6375ed094f769013",
+  "pixelHash": "5585cdb072ddf7aea1a940e27262de9e2ed784f74feef2c2530651047b30e44b"
+}

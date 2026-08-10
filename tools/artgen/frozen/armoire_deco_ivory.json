@@ -1,0 +1,32 @@
+{
+  "defId": "armoire_deco_ivory",
+  "archetype": "artgen",
+  "sheet": "armoire_deco_ivory.png",
+  "frameW": 96,
+  "frameH": 130,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 98,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ed2df4102ea2ba28",
+  "recipeHash": "ed2df4102ea2ba2893e09d0862692a8d5eef05eb6b79d9af88fbdd397fe82ebf",
+  "pixelHash": "3e727de97539655e64ea93f71e5ba165ae59dbe40ed8da8840750eb0630d7286"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "screen_deco_jade",
+  "archetype": "artgen",
+  "sheet": "screen_deco_jade.png",
+  "frameW": 96,
+  "frameH": 114,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 82,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b5cefcdcf204f652",
+  "recipeHash": "b5cefcdcf204f652670bf90d955f00be3b9402fb374ab68da5a6ab5d6de44bac",
+  "pixelHash": "4b27edc6f343735e84278910d2c79e8ff4729586cb39f340bde970efdfac3a7e"
+}

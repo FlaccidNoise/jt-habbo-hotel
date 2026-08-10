@@ -2134,6 +2134,562 @@
       "recipeHash": "bc3363ef7ee0e485b872a5affaddf97ffc56cc6ea7d1281eb75063902adab118",
       "pixelHash": "34d1e88145d6a374b64a40346801382824c82fc05434a1205af5927cc85a526c"
     },
+    "bed_grand": {
+      "defId": "bed_grand",
+      "archetype": "artgen",
+      "sheet": "bed_grand.png",
+      "frameW": 128,
+      "frameH": 114,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": 0.82,
+      "occlusion": null,
+      "nearSheet": "bed_grand.near.png",
+      "nearHash": "986a9aaf457cae858a5b0a8dc65c8bc30e618319cd3e959f1105abfe44ee7562",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c5b2bf486aa832d5",
+      "recipeHash": "c5b2bf486aa832d511201dc5248392b2f3c495e8cb62b6412390560ba9149e7b",
+      "pixelHash": "309740e081b9083e3a71c4ea8462b4519de6ce5fe6c3d6b84636b10c1515eeb5"
+    },
+    "vanity_deco": {
+      "defId": "vanity_deco",
+      "archetype": "artgen",
+      "sheet": "vanity_deco.png",
+      "frameW": 96,
+      "frameH": 111,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 79,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.96875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:84a4b75b57c68793",
+      "recipeHash": "84a4b75b57c687937287d17d6b907ac2b91cb9e57e0fd0ca6375ed094f769013",
+      "pixelHash": "5585cdb072ddf7aea1a940e27262de9e2ed784f74feef2c2530651047b30e44b"
+    },
+    "chaise_deco": {
+      "defId": "chaise_deco",
+      "archetype": "artgen",
+      "sheet": "chaise_deco.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": 0.76,
+      "occlusion": null,
+      "nearSheet": "chaise_deco.near.png",
+      "nearHash": "c4e76d37891d0d93d8c58cd970b36f8b40b2ed82b9ebedd6516528aad8034f4f",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f8710f83f7a8e84e",
+      "recipeHash": "f8710f83f7a8e84eb66ef5a3b86d4a644e766c462ab69abe2cb02b2c8d1f87aa",
+      "pixelHash": "f5548e0e5b851c3c6f4c20a44135d488be3f23be1c6251ead192630643b417fb"
+    },
+    "armoire_deco": {
+      "defId": "armoire_deco",
+      "archetype": "artgen",
+      "sheet": "armoire_deco.png",
+      "frameW": 96,
+      "frameH": 130,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2ab75b904b0ed29d",
+      "recipeHash": "2ab75b904b0ed29d6b79f04679d761e509976a15220d573414eeff08df73e243",
+      "pixelHash": "b8ea738421d9a95f33cac2a5f21a1bfbf862ba5565d77bce1f92cfaa391c39ef"
+    },
+    "barcart_deco": {
+      "defId": "barcart_deco",
+      "archetype": "artgen",
+      "sheet": "barcart_deco.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e3cb1756a7c721cb",
+      "recipeHash": "e3cb1756a7c721cb9d7578fbe8f5dd6252d7712e699fab1ccc41344512c5483f",
+      "pixelHash": "8423b0b83e933bb0c95ad5957b01ea2142236df6d3e911d972eb9a73da40f735"
+    },
+    "screen_deco": {
+      "defId": "screen_deco",
+      "archetype": "artgen",
+      "sheet": "screen_deco.png",
+      "frameW": 96,
+      "frameH": 114,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 82,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e43e34701c0cebdd",
+      "recipeHash": "e43e34701c0cebdd975877e8b47e96e63da90a7abeaf9d62eba2286f8039026b",
+      "pixelHash": "32c660e7e81c05bef4f705ab76ad9948f5428184a117e30465578c45233e7f46"
+    },
+    "mirror_standing": {
+      "defId": "mirror_standing",
+      "archetype": "artgen",
+      "sheet": "mirror_standing.png",
+      "frameW": 64,
+      "frameH": 90,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 74,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:036fde6bd7892653",
+      "recipeHash": "036fde6bd78926531fbad845037111289ae0a0381cd706cd5bbc3496c070b695",
+      "pixelHash": "3b78bcab0729beb868458846c8db73bf2063768cd08fd535d0d9307e753b562a"
+    },
+    "ottoman_deco": {
+      "defId": "ottoman_deco",
+      "archetype": "artgen",
+      "sheet": "ottoman_deco.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": 0.74,
+      "occlusion": null,
+      "nearSheet": "ottoman_deco.near.png",
+      "nearHash": "83ba20bccc6e2b709161db01939d7484ad8b5353cb521531b52332255c619acc",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d863a80e2157e719",
+      "recipeHash": "d863a80e2157e7195e4a9805d33296a28ce6508c6adde6e8ff3988d29eabc3d5",
+      "pixelHash": "8b622c2e7e875d877b6b2e45624be20c3da95ad8659e5fc94a1d54874c7d4e78"
+    },
+    "dresser_deco": {
+      "defId": "dresser_deco",
+      "archetype": "artgen",
+      "sheet": "dresser_deco.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8693b8549d0d2ee6",
+      "recipeHash": "8693b8549d0d2ee6c2be57fcba29fff69641efb7b29cd155dcf3c2e47da78c90",
+      "pixelHash": "1e94b1b3cfe0baeefe041575ea715e516f5497d3d653bc3ba67891b9e8c1354a"
+    },
+    "lamp_deco": {
+      "defId": "lamp_deco",
+      "archetype": "artgen",
+      "sheet": "lamp_deco.png",
+      "frameW": 64,
+      "frameH": 104,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 88,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dc1dcfee6473f68b",
+      "recipeHash": "dc1dcfee6473f68b3732ab382b8157f2f92f887b1c15f804b727f6c66fcdb990",
+      "pixelHash": "d5fa56d213f8fe2d6fe7da85ec8f2201d2d78a7cb14416f55c4f1fdb047e5b80"
+    },
+    "bed_grand_plum": {
+      "defId": "bed_grand_plum",
+      "archetype": "artgen",
+      "sheet": "bed_grand_plum.png",
+      "frameW": 128,
+      "frameH": 114,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": 0.82,
+      "occlusion": null,
+      "nearSheet": "bed_grand_plum.near.png",
+      "nearHash": "70fdb3e69775d28e41b2ed2f37984197a64de331f6e6cd743802d44155cf9e71",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:829dd6800358a7a0",
+      "recipeHash": "829dd6800358a7a000fe3bf6ca0efa6185393f3ffcf45fb41f6db54240923669",
+      "pixelHash": "431cd9ce3cc09ff82d8b3af3569a206025bb80e3e36dc1f11310cafa4b765579"
+    },
+    "chaise_deco_crimson": {
+      "defId": "chaise_deco_crimson",
+      "archetype": "artgen",
+      "sheet": "chaise_deco_crimson.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": 0.76,
+      "occlusion": null,
+      "nearSheet": "chaise_deco_crimson.near.png",
+      "nearHash": "44dd852283d7aecd572d9ea781d075656a46881676532926ff160a812b90e0fc",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dca6d9926ce46a01",
+      "recipeHash": "dca6d9926ce46a01fcce42c0cf946cf55c72d1dfe0bf98b82e1914bc3ba5d510",
+      "pixelHash": "fc45146183dfb12fa8b8a8905385c93fbed8faaaf808fbd44ff4bb0b3f43819e"
+    },
+    "screen_deco_jade": {
+      "defId": "screen_deco_jade",
+      "archetype": "artgen",
+      "sheet": "screen_deco_jade.png",
+      "frameW": 96,
+      "frameH": 114,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 82,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b5cefcdcf204f652",
+      "recipeHash": "b5cefcdcf204f652670bf90d955f00be3b9402fb374ab68da5a6ab5d6de44bac",
+      "pixelHash": "4b27edc6f343735e84278910d2c79e8ff4729586cb39f340bde970efdfac3a7e"
+    },
+    "dresser_deco_navy": {
+      "defId": "dresser_deco_navy",
+      "archetype": "artgen",
+      "sheet": "dresser_deco_navy.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6040a2af01701afe",
+      "recipeHash": "6040a2af01701afe95b2f93b41f587dff5c730d6bf7c3ddf2ae09193c7ad2809",
+      "pixelHash": "a060fdc6845a9e1292b2dede158512c609d4cf300d89385d4531ca00e82b3f57"
+    },
+    "ottoman_deco_ivory": {
+      "defId": "ottoman_deco_ivory",
+      "archetype": "artgen",
+      "sheet": "ottoman_deco_ivory.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": 0.74,
+      "occlusion": null,
+      "nearSheet": "ottoman_deco_ivory.near.png",
+      "nearHash": "83ba20bccc6e2b709161db01939d7484ad8b5353cb521531b52332255c619acc",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:70878080ce8c19f7",
+      "recipeHash": "70878080ce8c19f7e848f8dadc8b681de575ff3f498bac919979eea76317db5f",
+      "pixelHash": "575d8c274d795127520c6c963322b24b885aae0b25d5a0e759addd352088c1b4"
+    },
+    "armoire_deco_ivory": {
+      "defId": "armoire_deco_ivory",
+      "archetype": "artgen",
+      "sheet": "armoire_deco_ivory.png",
+      "frameW": 96,
+      "frameH": 130,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ed2df4102ea2ba28",
+      "recipeHash": "ed2df4102ea2ba2893e09d0862692a8d5eef05eb6b79d9af88fbdd397fe82ebf",
+      "pixelHash": "3e727de97539655e64ea93f71e5ba165ae59dbe40ed8da8840750eb0630d7286"
+    },
+    "mirror_standing_plum": {
+      "defId": "mirror_standing_plum",
+      "archetype": "artgen",
+      "sheet": "mirror_standing_plum.png",
+      "frameW": 64,
+      "frameH": 90,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 74,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:652c015148c648a5",
+      "recipeHash": "652c015148c648a5a3a3b314857e20dd420d4133cffa464a6f4ddfa8b74c3449",
+      "pixelHash": "616eebb3030c7d83d5bfe65be5a62df57a8b34d26699e57d27ec15bc1989b06b"
+    },
     "arcade_cabinet_plum": {
       "defId": "arcade_cabinet_plum",
       "archetype": "artgen",
@@ -2520,6 +3076,117 @@
       "partLibraryHash": "artgen:5e895cb75074ba76",
       "recipeHash": "5e895cb75074ba760fb2c4596ffc2fddab96f0176356d9a6d1831ec7753cd5b4",
       "pixelHash": "41adc3ef18c096bf0c208444775b8259f5507aa199159a5fb04e3bed042fc51f"
+    },
+    "sconce_deco": {
+      "defId": "sconce_deco",
+      "archetype": "artgen",
+      "sheet": "sconce_deco.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 16,
+        "mountU": 0,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:20d05c06824f3c0c",
+      "recipeHash": "20d05c06824f3c0c19ea39d7576dd2e79adede6259e0b8a720f1d90572929472",
+      "pixelHash": "0e8ac49d0b3cedd0e4c58cb1e08649a663e25ec8c1cfa3b09654f25218e2a352"
+    },
+    "wallmirror_deco": {
+      "defId": "wallmirror_deco",
+      "archetype": "artgen",
+      "sheet": "wallmirror_deco.png",
+      "frameW": 64,
+      "frameH": 128,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 112,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 3,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 19,
+        "mountU": 4,
+        "mountV": 38,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:419e54da8e05d8fa",
+      "recipeHash": "419e54da8e05d8fa2c0465ad3f4fe1c4b7db33d0bfaa202e6579e788f0972813",
+      "pixelHash": "78f3955d02d7eac200c7826aad0bda4916e8a048e9b2bdec3702ff51fb84c1d0"
+    },
+    "sconce_deco_onyx": {
+      "defId": "sconce_deco_onyx",
+      "archetype": "artgen",
+      "sheet": "sconce_deco_onyx.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 16,
+        "mountU": 0,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2e15785f9648ecfa",
+      "recipeHash": "2e15785f9648ecfa63252af05d0659d3e4a7211f148f3766ed004e86716d8820",
+      "pixelHash": "b8c95ac5b6152aafcb94b7c25848cd7a0ca23bd8efd0ab90f7f2dac9489151ef"
     }
   }
 }
