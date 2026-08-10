@@ -21,6 +21,7 @@ import {
   setById,
   tileHeight,
   wallOffsetLimits,
+  worldToScreen,
 } from "@grand/shared";
 import type {
   AvatarState,
@@ -44,6 +45,7 @@ import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
+import { Effects } from "./scene/effects.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE, ZOOM } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
@@ -82,6 +84,7 @@ let app: Application | null = null;
 let scene: RoomScene | null = null;
 let furniLayer: FurniLayer | null = null;
 let wallLayer: WallLayer | null = null;
+let effects: Effects | null = null;
 let furniAssets: FurniAssets | null = null;
 let decorAssets: DecorAssets | null = null;
 let figureBaker: FigureBaker | null = null;
@@ -105,6 +108,13 @@ let hereRoomId = roomId;
 let sets: SetRows = [];
 /** #326: the one interactable we walked off to reach. Any other click drops it. */
 let pendingUse: { itemId: number; x: number; y: number; timer?: number } | null = null;
+/** #347: when each pair of drinkers last toasted, so a crowded bar chimes once rather than on
+ *  every step. Keyed by the two account ids in order, since a clink belongs to the pair. */
+const clinkAt = new Map<string, number>();
+const CLINK_DEBOUNCE_MS = 10000;
+/** Where a fountain's water sits, as a fraction of the item's height — the basin, not the spout
+ *  the def's stack height measures. */
+const WATER_LEVEL = 0.55;
 
 function toast(text: string, kind?: "notice"): void {
   const node = document.createElement("div");
@@ -118,8 +128,51 @@ function addAvatar(state: AvatarState): void {
   if (!scene) return;
   avatars.get(state.id)?.destroy();
   const sprite = new AvatarSprite(state, depth, figureBaker);
+  sprite.onStep = () => checkClink(state.id);
   avatars.set(state.id, sprite);
   scene.world.addChild(sprite.view);
+}
+
+/** #347: two avatars who both have a drink and end up side by side toast each other. Entirely
+ *  client-side — nothing is sent, and nothing but the sparkle happens. It runs off the two things
+ *  that can make a pair adjacent, a hand filling and a step landing, rather than off the ticker. */
+function checkClink(id: number): void {
+  const one = avatars.get(id);
+  if (!one?.holding()) return;
+  const here = one.tile();
+  const now = Date.now();
+  for (const [otherId, two] of avatars) {
+    if (otherId === id || !two.holding()) continue;
+    const there = two.tile();
+    if (Math.max(Math.abs(here.x - there.x), Math.abs(here.y - there.y)) > 1) continue;
+    const key = id < otherId ? `${id}:${otherId}` : `${otherId}:${id}`;
+    if (now - (clinkAt.get(key) ?? -Infinity) < CLINK_DEBOUNCE_MS) continue;
+    clinkAt.set(key, now);
+    const a = one.hand();
+    const b = two.hand();
+    effects?.clink((a.sx + b.sx) / 2, (a.sy + b.sy) / 2, now);
+  }
+}
+
+/** #347: the splash where the Star went in. The fountain's water when the client knows which
+ *  fountain it was, and the wisher's own feet when the item is not in the room it can see. */
+function wishSplash(accountId: number, itemId: number | undefined): void {
+  const who = avatars.get(accountId);
+  const item = itemId === undefined ? undefined : furni.find((f) => f.id === itemId);
+  const def = item && DEFS.get(item.defId);
+  const now = Date.now();
+  if (!item || !def) {
+    if (who) effects?.wish(null, { sx: who.view.x, sy: who.view.y }, now);
+    return;
+  }
+  const rotated = item.dir === 2 || item.dir === 6;
+  const water = worldToScreen(
+    item.x + ((rotated ? def.l : def.w) - 1) / 2,
+    item.y + ((rotated ? def.w : def.l) - 1) / 2,
+    item.z + (def.stackHeights[item.state] ?? 0) * WATER_LEVEL,
+    SCALE,
+  );
+  effects?.wish(who?.hand() ?? null, water, now);
 }
 
 function armedDef(): FurniDef | null {
@@ -758,6 +811,8 @@ function buildRoom(msg: RoomState): void {
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
   for (const item of furni) furniLayer.apply(item);
+  effects = new Effects(scene.world);
+  clinkAt.clear();   // the pairs in the old room are gone with it
   // No explicit teardown: scene.destroy() above took the old world and every layer's children
   // with it, the same way furniLayer is simply replaced.
   wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
@@ -847,13 +902,14 @@ function handle(msg: ServerMsg): void {
       avatars.get(msg.id)?.wave(Date.now());
       break;
     case "action":
-      // #347 phase 3 animates the wish — a splash on msg.itemId, the fountain the Star went into.
       if (msg.action === "wash") avatars.get(msg.accountId)?.washing(Date.now());
+      else wishSplash(msg.accountId, msg.itemId);
       break;
     case "handitem":
       avatars.get(msg.accountId)?.setHand(
         msg.item === null ? null : { item: msg.item, until: msg.until ?? 0 },
       );
+      if (msg.item !== null) checkClink(msg.accountId);
       break;
     case "furni_state": {
       const item = furni.find((f) => f.id === msg.itemId);
@@ -960,6 +1016,7 @@ async function boot(): Promise<void> {
   app.ticker.add(() => {
     const now = Date.now();
     for (const sprite of avatars.values()) sprite.update(now);
+    effects?.update(now);
     // The camera tracks my avatar through its walk lerp, so it runs after updates, before layout.
     const me = you === null ? undefined : avatars.get(you);
     if (me && scene && app) {

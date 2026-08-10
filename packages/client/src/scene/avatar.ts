@@ -21,9 +21,18 @@ const WASH_MS = 2500;
 const WASH_FRAME_MS = 150;
 const BUBBLES = 6;
 const SIP_MS = 600;
+const SIP_RISE = 14;     // px the drink lifts towards the mouth at the top of the swing
+const SIP_INSET = 0.45;  // and how far of the way in towards the body it comes with it
 
-/** Where the held drink sits, per facing. Read off the baked figure by eye: chest height, on the
- *  screen side the body is turned towards, so the can never lands in the middle of the torso. */
+// #347. A book is read at waist height, and it never swings up — the sip is a drink gesture.
+const BOOK_DROP = 6;
+const STEAM_WISPS = 3;
+const STEAM_MS = 1500;
+const STEAM_RISE = 12;
+const STEAM_DRIFT = 2;
+
+/** Where the held item sits, per facing. Read off the baked figure by eye: chest height, on the
+ *  screen side the body is turned towards, so it never lands in the middle of the torso. */
 const HAND: ReadonlyArray<{ x: number; y: number }> = [
   { x: 8, y: -40 }, { x: 9, y: -38 }, { x: 9, y: -36 }, { x: 7, y: -35 },
   { x: -7, y: -35 }, { x: -9, y: -36 }, { x: -9, y: -38 }, { x: -8, y: -40 },
@@ -38,6 +47,61 @@ function drinkCan(): Graphics {
     .fill(0xd9d9d9)
     .rect(-3, -8, 1, 7)
     .fill(0xd06868);
+}
+
+/** An ivory cup with a handle nub and the coffee showing at the rim. The steam is drawn
+ *  separately, in `drawSteam`, because it moves. */
+function coffeeCup(): Graphics {
+  return new Graphics()
+    .rect(-3, -8, 6, 8)
+    .fill(0xf2ede1)
+    .rect(-3, -8, 6, 1)
+    .fill(0x5a3a22)
+    .rect(3, -6, 2, 3)
+    .fill(0xf2ede1)
+    .rect(-3, -7, 1, 6)
+    .fill(0xd8d2c4);
+}
+
+/** A martini: at 8px across, the inverted-triangle bowl over a stem is the whole read, and the
+ *  olive is what makes it a casino drink rather than a funnel. */
+function cocktailGlass(): Graphics {
+  return new Graphics()
+    .poly([-4, -11, 4, -11, 0, -5])
+    .fill(0xbfe4ef)
+    .rect(-1, -5, 2, 4)
+    .fill(0xdfe9ee)
+    .rect(-3, -1, 6, 1)
+    .fill(0xdfe9ee)
+    .circle(1.5, -9.5, 1)
+    .fill(0x8fbf4a);
+}
+
+/** An open book: two pages either side of a dark spine, with a ruled line on each so the pages
+ *  do not read as one blank slab. */
+function openBook(): Graphics {
+  return new Graphics()
+    .rect(-6, -6, 5, 6)
+    .fill(0xf2ede1)
+    .rect(1, -6, 5, 6)
+    .fill(0xf2ede1)
+    .rect(-1, -7, 2, 7)
+    .fill(0x5c3a2e)
+    .rect(-5, -4, 3, 1)
+    .fill(0xd8d2c4)
+    .rect(2, -4, 3, 1)
+    .fill(0xd8d2c4);
+}
+
+/** What a hand item looks like (#347). An id with no drawing of its own gets the can: every one
+ *  the server vends is a drink but one, and a can in the hand beats an empty fist. */
+function handSprite(item: string): Graphics {
+  switch (item) {
+    case "drink_coffee": return coffeeCup();
+    case "drink_cocktail": return cocktailGlass();
+    case "book": return openBook();
+    default: return drinkCan();
+  }
 }
 
 /** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
@@ -70,7 +134,11 @@ export class AvatarSprite {
   private waveFrameMs = WAVE_FRAME_MS;
   private washUntil = 0;
   private bubbles: Graphics | null = null;
-  private can: Graphics | null = null;
+  private held: Graphics | null = null;
+  private heldItem: string | null = null;
+  private steam: Graphics | null = null;
+  /** Called when the avatar lands on a new tile (#347), so the room can see who it is beside. */
+  onStep: (() => void) | null = null;
 
   constructor(state: AvatarState, depth: DepthIndex, private baker: FigureBaker | null) {
     this.id = state.id;
@@ -140,15 +208,24 @@ export class AvatarSprite {
     this.redraw();
   }
 
+  /** Swapping one item for another rebuilds the sprite: the drawing is keyed on the id, so a
+   *  coffee handed to someone already holding a can has to become a cup. */
   setHand(hand: { item: string; until: number } | null): void {
-    if (!hand) {
-      this.can?.destroy();
-      this.can = null;
-      return;
-    }
-    if (this.can) return;
-    this.can = drinkCan();
-    this.view.addChild(this.can);
+    const item = hand?.item ?? null;
+    if (item === this.heldItem) return;
+    this.steam?.destroy();
+    this.steam = null;
+    this.held?.destroy();
+    this.held = null;
+    this.heldItem = item;
+    if (item === null) return;
+    this.held = this.view.addChild(handSprite(item));
+    // A child of the cup, so it rides the sip swing without being placed twice.
+    if (item === "drink_coffee") this.steam = this.held.addChild(new Graphics());
+  }
+
+  holding(): boolean {
+    return this.heldItem !== null;
   }
 
   tile(): Step {
@@ -172,6 +249,12 @@ export class AvatarSprite {
   /** Local screen point of the avatar's head, for anchoring chat bubbles. */
   head(): { sx: number; sy: number } {
     return { sx: this.view.x, sy: this.view.y - this.crown() - 8 };
+  }
+
+  /** Local screen point of the held item, for the wish arc and the cheers clink (#347). */
+  hand(): { sx: number; sy: number } {
+    const anchor = HAND[this.dir] ?? HAND[3]!;
+    return { sx: this.view.x + anchor.x, sy: this.view.y + anchor.y };
   }
 
   walk(msg: WalkMsg, startedAtLocal: number): void {
@@ -202,7 +285,8 @@ export class AvatarSprite {
       this.waveFrame = wave;
       this.redraw();
     }
-    if (this.can) this.placeCan(now);
+    if (this.held) this.placeHeld(now);
+    if (this.steam) this.drawSteam(now);
     this.drawBubbles(now);
 
     const walk = this.walking;
@@ -238,7 +322,10 @@ export class AvatarSprite {
     );
     this.view.x = point.sx;
     this.view.y = point.sy;
-    if (stepped) this.placeDepth();
+    if (stepped) {
+      this.placeDepth();
+      this.onStep?.();
+    }
   }
 
   destroy(): void {
@@ -291,15 +378,29 @@ export class AvatarSprite {
     this.label.y = -this.crown() - 4;
   }
 
-  /** The can rides the hand, and every 8-12s it swings up to the mouth and back. The period is
-   *  derived from the account id so a room full of drinkers does not sip in unison. */
-  private placeCan(now: number): void {
+  /** The item rides the hand, and every 8-12s a drink swings up to the mouth and back. The period
+   *  is derived from the account id so a room full of drinkers does not sip in unison. A book
+   *  never swings: it is held lower and still, because reading is not drinking. */
+  private placeHeld(now: number): void {
     const hand = HAND[this.dir] ?? HAND[3]!;
+    const book = this.heldItem === "book";
     const period = 8000 + (this.id % 5) * 1000;
     const phase = (now + this.id * 2137) % period;
-    const lift = phase < SIP_MS ? Math.sin((phase / SIP_MS) * Math.PI) : 0;
-    this.can!.x = hand.x * (1 - lift * 0.45);
-    this.can!.y = hand.y - lift * 14;
+    const lift = book || phase >= SIP_MS ? 0 : Math.sin((phase / SIP_MS) * Math.PI);
+    this.held!.x = hand.x * (1 - lift * SIP_INSET);
+    this.held!.y = hand.y + (book ? BOOK_DROP : 0) - lift * SIP_RISE;
+  }
+
+  /** Curls off the coffee, in the cup's own coordinates — the cup is the parent, so the steam
+   *  follows it through the sip rather than hanging over where the cup used to be. */
+  private drawSteam(now: number): void {
+    const g = this.steam!.clear();
+    for (let i = 0; i < STEAM_WISPS; i++) {
+      const t = (now / STEAM_MS + i / STEAM_WISPS) % 1;
+      const x = Math.sin((t + i) * Math.PI * 2) * STEAM_DRIFT;
+      g.circle(x, -9 - t * STEAM_RISE, 1 + (i % 2) * 0.5)
+        .fill({ color: 0xe8e8e8, alpha: 0.5 * (1 - t) });
+    }
   }
 
   private drawBubbles(now: number): void {
