@@ -847,7 +847,8 @@ function handle(msg: ServerMsg): void {
       avatars.get(msg.id)?.wave(Date.now());
       break;
     case "action":
-      avatars.get(msg.accountId)?.washing(Date.now());
+      // #347 phase 3 animates the wish — a splash on msg.itemId, the fountain the Star went into.
+      if (msg.action === "wash") avatars.get(msg.accountId)?.washing(Date.now());
       break;
     case "handitem":
       avatars.get(msg.accountId)?.setHand(

@@ -19,13 +19,17 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // A lit lamp is the same size as an unlit one, but placement reads stackHeights[state] and
   // throws on a state it has no height for — so every toggle def declares both (#326).
   { id: "lamp_basic",    name: "Lamp",         w: 1, l: 1, stackHeights: [2.21875, 2.21875], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
-  { id: "shelf_basic",   name: "Shelf",        w: 2, l: 1, stackHeights: [1.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  // Free (#347): a book is a prop, not a sink. It runs the vend rail so the shelf behaves like
+  // every other counter — walk up, use it, carry the thing for two minutes.
+  { id: "shelf_basic",   name: "Shelf",        w: 2, l: 1, stackHeights: [1.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d, interaction: "read", vend: { item: "book", price: 0 } },
   { id: "divider_basic", name: "Divider",      w: 2, l: 1, stackHeights: [1.0625],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "stereo_basic",  name: "Stereo",       w: 1, l: 1, stackHeights: [1.375],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   { id: "slot_machine",   name: "Slot Machine",   w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
-  { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d, interaction: "vend" },
+  // The casino-side drink (#347): the bar shakes cocktails at 2 Stars, the café pours coffee at 1.
+  { id: "bar_counter",    name: "Bar Counter",    w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d, interaction: "vend", vend: { item: "drink_cocktail", price: 2 } },
   { id: "arcade_cabinet", name: "Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
-  { id: "fountain",       name: "Fountain",       w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "wash" },
+  // Wishing, not washing (#347): the basin is where you scrub, the fountain is where the Star goes.
+  { id: "fountain",       name: "Fountain",       w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "wish" },
   // Lodge set (#314): soft furniture, a hearth, greenery and a divider that is not a wall.
   { id: "armchair_lounge", name: "Lodge Armchair", w: 1, l: 1, stackHeights: [1.75],    canWalk: false, canStackOn: false, seatHeight: 1,    color: 0xaa3333 },
   { id: "sofa_lodge",      name: "Lodge Sofa",     w: 2, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: 1,    color: 0x2e8b57 },
@@ -39,8 +43,8 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "stool_lodge", name: "Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0xb5651d },
   { id: "side_table",  name: "Side Table",  w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0xb5651d },
   // Amenities (#327): the two fixtures a café and a washroom need that no archetype covered.
-  { id: "vending_machine", name: "Vending Machine", w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
-  { id: "sink_basic",      name: "Wash Basin",      w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "vending_machine", name: "Vending Machine", w: 1, l: 1, stackHeights: [2],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f, interaction: "vend", vend: { item: "drink_cola", price: 1 } },
+  { id: "sink_basic",      name: "Wash Basin",      w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484, interaction: "wash" },
   // Prestige fixtures (#210): account-bound, flagship-priced, never tradeable. Deliberately their
   // own meshes rather than recolours — a fixture at 5.5× the daily ceiling has to read as one.
   { id: "billiards_table",      name: "Billiards Table", w: 3, l: 2, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -60,10 +64,10 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "railing_iron",         name: "Iron Railing",        w: 1, l: 1, stackHeights: [1],       canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   { id: "stool_lodge_charcoal", name: "Charcoal Lodge Stool", w: 1, l: 1, stackHeights: [0.84375], canWalk: false, canStackOn: false, seatHeight: 0.82, color: 0x4a4d55 },
   { id: "side_table_slate",     name: "Slate Side Table",     w: 1, l: 1, stackHeights: [0.75],    canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
-  { id: "cafe_counter",         name: "Café Counter",         w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x2f8f8f },
+  { id: "cafe_counter",         name: "Café Counter",         w: 2, l: 1, stackHeights: [1.1875],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x2f8f8f, interaction: "vend", vend: { item: "drink_coffee", price: 1 } },
   // Luck Lever exclusives (#210): won, never sold, so they carry no catalog price.
   { id: "arcade_cabinet_plum", name: "Plum Arcade Cabinet", w: 1, l: 1, stackHeights: [1.875],   canWalk: false, canStackOn: false, seatHeight: null, color: 0x7a3e9d },
-  { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wash" },
+  { id: "fountain_gilded",     name: "Gilded Fountain",     w: 2, l: 2, stackHeights: [1.6875],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "wish" },
   // Collection-set rewards (#210): minted account-bound on completion, obtainable no other way.
   { id: "cafe_table_marble",   name: "Marble Café Table",   w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "casino_table_onyx",   name: "Onyx Casino Table",   w: 2, l: 2, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },

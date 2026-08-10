@@ -52,12 +52,33 @@ import {
 
 export const MS_PER_TILE = 500;
 
-// The bar (#326). A Star is the smallest price there is, which is the point: a drink is a prop,
-// not a purchase, and it evaporates rather than entering the item economy.
-export const DRINK_COST = 1;
-export const DRINK_MS = 120_000;
-export const DRINK_ITEM = "drink_cola";
+// The counters (#326, #347). What a counter hands over and what it charges are def parameters, so
+// a new drink is a catalog row; only the two minutes it lasts are shared. A hand item is a prop,
+// not a purchase — it evaporates rather than entering the item economy.
+export const HAND_MS = 120_000;
 const USE_COOLDOWN_MS = 700;
+const WISH_COST = 1;
+
+/** What the counter says as it hands one over, and what the Stars line calls it. Keyed by the
+ *  `vend.item` the def names — use.test.ts checks every vending def is covered. */
+const HAND_ITEMS: ReadonlyMap<string, { line: string; reason: string }> = new Map([
+  ["drink_cola", { line: "The bartender slides you a cola.", reason: "drink" }],
+  ["drink_coffee", { line: "The barista sets a coffee on the counter for you.", reason: "coffee" }],
+  ["drink_cocktail", { line: "The bartender shakes you a cocktail.", reason: "cocktail" }],
+  ["book", { line: "You take a book down off the shelf.", reason: "book" }],
+]);
+
+/** What the water tells you for your Star (#347). Nothing else comes back — that is the sink. */
+export const FORTUNES: readonly string[] = [
+  "The water settles. Tonight, the cards remember your name.",
+  "A coin sinks. Somewhere upstairs, a door is left unlocked for you.",
+  "The fountain says: quit while the room still likes you.",
+  "Ripples, then nothing. The house is thinking it over.",
+  "Your reflection winks first. Take the hint and take the corner table.",
+  "The Grand keeps its promises slowly. Come back on a busier night.",
+  "Luck is on the floor tonight, and it is looking for a partner.",
+  "Spend it warm, the water says. Cold Stars buy nothing worth having.",
+];
 
 export interface Occupant {
   accountId: number;
@@ -69,7 +90,8 @@ export interface Occupant {
   posture: Posture;
   figure: string;
   staff?: boolean;
-  /** In memory only: a drink dies with the session, which is what a 1-Star consumable is for. */
+  /** In memory only: what you are carrying dies with the session, which is what a consumable
+   *  priced at a Star or two is for. */
   hand?: { item: string; until: number };
 }
 export type Emit = (accountId: number, msg: ServerMsg) => void;
@@ -117,7 +139,7 @@ export class Room {
   private occ: Map<number, Occupant>;
   private walks: Map<number, Walk>;
   private lastUse = new Map<number, number>();
-  private drinks = new Map<number, ReturnType<typeof setTimeout>>();
+  private hands = new Map<number, ReturnType<typeof setTimeout>>();
 
   constructor(db: Database.Database, roomId: number, emit: Emit) {
     const row = db.prepare("SELECT name, doc FROM rooms WHERE id = ?").get(roomId) as
@@ -227,7 +249,7 @@ export class Room {
 
   leave(accountId: number): void {
     this.cancelWalk(accountId);
-    this.cancelDrink(accountId);
+    this.cancelHand(accountId);
     this.lastUse.delete(accountId);
     if (!this.occ.delete(accountId)) return;
     this.broadcast({ t: "avatar_leave", id: accountId });
@@ -235,7 +257,7 @@ export class Room {
 
   dispose(): void {
     for (const id of [...this.walks.keys()]) this.cancelWalk(id);
-    for (const id of [...this.drinks.keys()]) this.cancelDrink(id);
+    for (const id of [...this.hands.keys()]) this.cancelHand(id);
     this.occ.clear();
   }
 
@@ -359,9 +381,9 @@ export class Room {
     this.broadcast({ t: "wave", id: accountId });
   }
 
-  /** The "use" verb (#326). Three hand-written behaviours, chosen by the def — not owner-gated,
-   *  because a bar nobody but its owner can buy from is not a bar. Reach is Chebyshev 1 from any
-   *  footprint tile, so a 2x1 counter is usable from either end. */
+  /** The "use" verb (#326, #347). The def chooses the behaviour and carries its parameters — not
+   *  owner-gated, because a bar nobody but its owner can buy from is not a bar. Reach is Chebyshev
+   *  1 from any footprint tile, so a 2x1 counter is usable from either end. */
   useFurni(accountId: number, itemId: number): void {
     const occupant = this.occ.get(accountId);
     const item = this.furni.find((f) => f.id === itemId);
@@ -380,9 +402,23 @@ export class Room {
     if (now - (this.lastUse.get(accountId) ?? 0) < USE_COOLDOWN_MS) return;
     this.lastUse.set(accountId, now);
 
-    if (def.interaction === "vend") this.vend(occupant);
-    else if (def.interaction === "wash") this.broadcast({ t: "action", accountId, action: "wash" });
-    else this.toggle(item);
+    // "read" is vending at price 0 — the same hand, timer and broadcast — kept a separate value so
+    // the client can tell a book from a drink without reading the price.
+    switch (def.interaction) {
+      case "vend":
+      case "read":
+        if (def.vend) this.vend(occupant, def.vend);
+        break;
+      case "wash":
+        this.broadcast({ t: "action", accountId, action: "wash" });
+        break;
+      case "wish":
+        this.wish(occupant, item.id);
+        break;
+      case "toggle":
+        this.toggle(item);
+        break;
+    }
   }
 
   private toggle(item: FurniItem): void {
@@ -391,47 +427,76 @@ export class Room {
     this.broadcast({ t: "furni_state", itemId: item.id, state: item.state });
   }
 
-  /** One Star for a drink that lasts two minutes and then evaporates. No mint: nothing enters the
-   *  item economy, so the Star is simply absorbed — the smallest repeatable sink there is. */
-  private vend(occupant: Occupant): void {
+  /** A hand item off a counter, held two minutes and then gone. No mint: nothing enters the item
+   *  economy, so a priced one absorbs its Stars outright — the smallest repeatable sink there is.
+   *  A free one moves no Stars and writes no ledger row at all. */
+  private vend(occupant: Occupant, vend: { item: string; price: number }): void {
     const accountId = occupant.accountId;
     if (occupant.hand) {
-      this.emit(accountId, { t: "notice", text: "you are already holding a drink" });
+      this.emit(accountId, { t: "notice", text: "you are already holding something" });
       return;
     }
+    const flavour = HAND_ITEMS.get(vend.item);
+    let balance: number | null = null;
+    if (vend.price > 0) {
+      const result = settleSpend(this.db, {
+        opKey: randomUUID(), op: "vend", accountId, price: vend.price,
+      });
+      if (!result.ok) {
+        this.fail(accountId, "purchase", result.reason);
+        return;
+      }
+      balance = result.balance;
+    }
+    const until = Date.now() + HAND_MS;
+    occupant.hand = { item: vend.item, until };
+    if (balance !== null) {
+      this.emit(accountId, {
+        t: "stars", balance, delta: -vend.price, reason: flavour?.reason ?? "vend",
+      });
+    }
+    this.broadcast({ t: "handitem", accountId, item: vend.item, until });
+    if (flavour) {
+      const tail = vend.price > 0 ? ` −${vend.price} Star${vend.price === 1 ? "" : "s"}.` : "";
+      this.emit(accountId, { t: "notice", text: `${flavour.line}${tail}` });
+    }
+    this.cancelHand(accountId);
+    this.hands.set(accountId, setTimeout(() => this.dropHand(accountId), HAND_MS));
+  }
+
+  /** A Star into the water for a fortune and nothing else (#347). The whole point of a wishing
+   *  fountain is that the Star does not come back, so there is no mint and no item. */
+  private wish(occupant: Occupant, itemId: number): void {
+    const accountId = occupant.accountId;
     const result = settleSpend(this.db, {
-      opKey: randomUUID(), op: "vend", accountId, price: DRINK_COST,
+      opKey: randomUUID(), op: "wish", accountId, price: WISH_COST,
     });
     if (!result.ok) {
       this.fail(accountId, "purchase", result.reason);
       return;
     }
-    const until = Date.now() + DRINK_MS;
-    occupant.hand = { item: DRINK_ITEM, until };
     this.emit(accountId, {
-      t: "stars", balance: result.balance, delta: -DRINK_COST, reason: "drink",
+      t: "stars", balance: result.balance, delta: -WISH_COST, reason: "wish",
     });
-    this.broadcast({ t: "handitem", accountId, item: DRINK_ITEM, until });
+    this.broadcast({ t: "action", accountId, action: "wish", itemId });
     this.emit(accountId, {
-      t: "notice", text: `The bartender slides you a cola. −${DRINK_COST} Star.`,
+      t: "notice", text: FORTUNES[Math.floor(Math.random() * FORTUNES.length)]!,
     });
-    this.cancelDrink(accountId);
-    this.drinks.set(accountId, setTimeout(() => this.finishDrink(accountId), DRINK_MS));
   }
 
-  private finishDrink(accountId: number): void {
-    this.drinks.delete(accountId);
+  private dropHand(accountId: number): void {
+    this.hands.delete(accountId);
     const occupant = this.occ.get(accountId);
     if (!occupant?.hand) return;
     occupant.hand = undefined;
     this.broadcast({ t: "handitem", accountId, item: null });
   }
 
-  private cancelDrink(accountId: number): void {
-    const timer = this.drinks.get(accountId);
+  private cancelHand(accountId: number): void {
+    const timer = this.hands.get(accountId);
     if (timer === undefined) return;
     clearTimeout(timer);
-    this.drinks.delete(accountId);
+    this.hands.delete(accountId);
   }
 
   chat(accountId: number, mode: "say" | "shout", text: string): void {
