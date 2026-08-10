@@ -1,0 +1,32 @@
+{
+  "defId": "parasol_table",
+  "archetype": "artgen",
+  "sheet": "parasol_table.png",
+  "frameW": 128,
+  "frameH": 144,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2771cb1c355b3979",
+  "recipeHash": "2771cb1c355b3979887835e4c46ba0cbe1b120f6a0133328a38e3e3eb2c3ca9e",
+  "pixelHash": "ca52d952eba5ce8d029256c56048325d64a9843581caf6e285f33d21e618de75"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "cabana",
+  "archetype": "artgen",
+  "sheet": "cabana.png",
+  "frameW": 128,
+  "frameH": 144,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2d53ef3159e5621e",
+  "recipeHash": "2d53ef3159e5621e69bdfa4d385730ec49ebf0b7410501d706d0f0b049c883f1",
+  "pixelHash": "a334f0208968a2a8a0446cd84bc179e456e723be1fd8b611ecc6877ac32da060"
+}

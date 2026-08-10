@@ -150,6 +150,34 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // hold against teal: the charcoal kick is 45 luma below it, the ivory top 27 above it, and gold
   // is a warm accent on a cyan body rather than the gold-on-walnut collision.
   cafe_counter:         { base: "bar_counter",     ramps: { walnut: "teal" } },
+  // Pool & spa deck (#357). Teal is the set's body ramp, so every colorway moves it and then has
+  // to move whatever the old accent was — crimson trim on a crimson lounger is the
+  // divider_basic_plum failure with the two ramps swapped round.
+  sun_lounger_crimson:  { base: "sun_lounger",     ramps: { teal: "crimson", crimson: "sand" } },
+  // The sling is the only ramp that moves: ivory stripes and a sand frame differ from crimson and
+  // navy alike in hue, not only in luma, which is what armchair_lounge's colorways rest on too.
+  deck_chair_crimson:   { base: "deck_chair",      ramps: { teal: "crimson" } },
+  deck_chair_navy:      { base: "deck_chair",      ramps: { teal: "navy" } },
+  // Canopy and rim trade places rather than both landing on teal — a teal rim under a teal canopy
+  // is one object in two shades of one ramp, which is not a second item.
+  parasol_table_teal:   { base: "parasol_table",   ramps: { crimson: "teal", teal: "sand" } },
+  cabana_crimson:       { base: "cabana",          ramps: { teal: "crimson", crimson: "navy" } },
+  // The water stays teal — it is water. What moves is the shell, and the rim has to move with it
+  // or an ivory rim sinks into a sand shell (the fireplace_stone keystone lesson).
+  hot_tub_cedar:        { base: "hot_tub",         ramps: { ivory: "sand", sand: "walnut",
+                                                            crimson: "navy" } },
+  // Both towels move and they swap corners of the palette: navy against sand on the rail, ivory
+  // against crimson on the rolls, so neither pair is two warm neutrals side by side.
+  towel_rack_linen:     { base: "towel_rack",      ramps: { teal: "navy", crimson: "sand",
+                                                            sand: "crimson" } },
+  potted_palm_teal:     { base: "potted_palm",     ramps: { ivory: "teal", teal: "crimson" } },
+  drinks_trolley_sunset: { base: "drinks_trolley", ramps: { ivory: "sand", teal: "crimson",
+                                                            crimson: "gold", sand: "teal" } },
+  // The resort's bar. NOT walnut -> teal: cafe_counter above already took that, and two teal bar
+  // counters is one item shipped twice. Sand body, teal top, crimson rail — the pool ramps in the
+  // other order, so the three counters differ in body AND in trim.
+  bar_counter_pool:     { base: "bar_counter",     ramps: { walnut: "sand", ivory: "teal",
+                                                            gold: "crimson" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

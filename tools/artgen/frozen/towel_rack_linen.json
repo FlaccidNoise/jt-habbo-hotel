@@ -1,0 +1,32 @@
+{
+  "defId": "towel_rack_linen",
+  "archetype": "artgen",
+  "sheet": "towel_rack_linen.png",
+  "frameW": 64,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1b7edb2e19d6ed38",
+  "recipeHash": "1b7edb2e19d6ed38851237ff51c35afdc183b0243fd6c2a6c26560daf62653e6",
+  "pixelHash": "c2c9d16fc5b7737de32ba9ab52e1df8342a0f7ba90a76f31405b6835fe778f24"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "drinks_trolley_sunset",
+  "archetype": "artgen",
+  "sheet": "drinks_trolley_sunset.png",
+  "frameW": 64,
+  "frameH": 76,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2b1a617e6231bda4",
+  "recipeHash": "2b1a617e6231bda4863d604ba092d0ab883ecccc8c6e0173f98fb2d8b545a262",
+  "pixelHash": "9b2c54f2f4f5097d2a7d37464b2f8078d433b966b28078daaef53d7d0cb9c650"
+}

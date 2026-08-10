@@ -1,0 +1,34 @@
+{
+  "defId": "deck_chair_crimson",
+  "archetype": "artgen",
+  "sheet": "deck_chair_crimson.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": 0.62,
+  "occlusion": null,
+  "nearSheet": "deck_chair_crimson.near.png",
+  "nearHash": "d891e845b04909653044fb194f3bfbc6b3b5fe6c40d18e8f9ae78e43e5d3e527",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d8156dc60494ad39",
+  "recipeHash": "d8156dc60494ad398c274e35b69701a5b9aa7067854234b0b7329cfcf41d1ba2",
+  "pixelHash": "fa89d91a3e5e15173f34a7bf47b229f14fd44799ae0320e905a61089029fcbb3"
+}

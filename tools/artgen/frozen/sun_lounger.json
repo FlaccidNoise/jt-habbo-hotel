@@ -1,0 +1,34 @@
+{
+  "defId": "sun_lounger",
+  "archetype": "artgen",
+  "sheet": "sun_lounger.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": 0.58,
+  "occlusion": null,
+  "nearSheet": "sun_lounger.near.png",
+  "nearHash": "29a044e053c3fda63a8117da833913258d3b408220c40d1e6642f732aa5662ec",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ebfbb9d47db9d771",
+  "recipeHash": "ebfbb9d47db9d771df3acf1f32500ca8a5090eba5452f61c8da32ac59a51484b",
+  "pixelHash": "514ffed5aab44c287d230d0e5c23c0f5c10ab335bbcdd64d8397c2580e7a9bb2"
+}

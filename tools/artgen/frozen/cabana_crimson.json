@@ -1,0 +1,32 @@
+{
+  "defId": "cabana_crimson",
+  "archetype": "artgen",
+  "sheet": "cabana_crimson.png",
+  "frameW": 128,
+  "frameH": 144,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dd98a78e8863d549",
+  "recipeHash": "dd98a78e8863d549fb087f6050f7c25dbe45d7610f69753552490f0f6a51905b",
+  "pixelHash": "31aae350d40aabf092959caca1fe09a10e1364b92035a0485d59a55c72a4a1ac"
+}
