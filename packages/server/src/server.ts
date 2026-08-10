@@ -94,9 +94,24 @@ export async function startServer(opts: {
   // leave nor the re-join.
   let transferring: number | null = null;
 
+  // A broadcast hands the same message object to every occupant in the room, and serialising it
+  // inside the per-socket send meant doing that work once per recipient — 25 passes over one
+  // object in a full room, and a walk message carries its whole path, so a long one is kilobytes
+  // (#362). Keyed on the object, so a message built per recipient — chat, which carries a
+  // per-listener `faded` — still serialises per recipient, which is correct. A message must not be
+  // mutated after its first send; none are, they are all built inline at the point of sending.
+  const wire = new WeakMap<ServerMsg, string>();
+  function payload(msg: ServerMsg): string {
+    const known = wire.get(msg);
+    if (known !== undefined) return known;
+    const text = JSON.stringify(msg);
+    wire.set(msg, text);
+    return text;
+  }
+
   function send(ws: WebSocket, msg: ServerMsg): void {
     if (msg.t === "error") log("error_emitted", { code: msg.code, message: msg.message });
-    if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify(msg));
+    if (ws.readyState === WebSocket.OPEN) ws.send(payload(msg));
   }
 
   function fail(ws: WebSocket, code: ErrorCode, message: string): void {

@@ -74,21 +74,98 @@ export function painterOrder(
     blockers[to] = (blockers[to] ?? 0) + 1;
   };
 
-  for (const [i, a] of boxes.entries()) {
-    for (const [j, b] of boxes.entries()) {
-      if (j <= i) continue;
-      if (behind(a, b)) link(i, j);
-      else if (behind(b, a)) link(j, i);
+  // Only pairs whose screen COLUMNS overlap can constrain each other — that is the first half of
+  // `meet`, and it holds whatever the boxes' heights are. So instead of testing every pair, sweep
+  // the boxes in column order and keep an active set of the ones whose column span is still open:
+  // a box entering the sweep can only meet what is active, because everything already evicted ends
+  // to its left and everything still to come starts to its right. Comparing all pairs made the
+  // sort quadratic in the sprite count, which is what put a big room out of frame budget (#360).
+  const colStart = boxes.map((b) => b.x0 - b.y1);
+  const colEnd = boxes.map((b) => b.x1 - b.y0);
+  const bySweep = [...boxes.keys()].sort(
+    (p, q) => (colStart[p] ?? 0) - (colStart[q] ?? 0) || p - q,
+  );
+
+  const active: number[] = [];
+  for (const i of bySweep) {
+    const from = colStart[i] ?? 0;
+    let kept = 0;
+    for (const j of active) {
+      if ((colEnd[j] ?? 0) <= from) continue;   // its columns close before i's open: cannot meet
+      active[kept++] = j;
+      // Lower index first, so a pair is asked in the order the all-pairs loop asked it.
+      const lo = i < j ? i : j, hi = i < j ? j : i;
+      const a = boxes[lo], b = boxes[hi];
+      if (!a || !b) continue;
+      if (behind(a, b)) link(lo, hi);
+      else if (behind(b, a)) link(hi, lo);
     }
+    active.length = kept;
+    active.push(i);
   }
   for (const [from, to] of forced) link(from, to);
 
-  const lowest = (readyOnly: boolean): number => {
+  // The ready set as a binary min-heap on (key, index) — the same box the old scan of every
+  // unplaced node picked, since that took the lowest key and left ties with the lower index.
+  const ready: number[] = [];
+  const before = (p: number, q: number): boolean => {
+    const kp = keys[p] ?? 0, kq = keys[q] ?? 0;
+    return kp !== kq ? kp < kq : p < q;
+  };
+  const siftUp = (start: number): void => {
+    let i = start;
+    while (i > 0) {
+      const up = (i - 1) >> 1;
+      if (!before(ready[i] ?? 0, ready[up] ?? 0)) break;
+      const t = ready[i] ?? 0;
+      ready[i] = ready[up] ?? 0;
+      ready[up] = t;
+      i = up;
+    }
+  };
+  const siftDown = (start: number): void => {
+    let i = start;
+    for (;;) {
+      const left = i * 2 + 1, right = left + 1;
+      let best = i;
+      if (left < ready.length && before(ready[left] ?? 0, ready[best] ?? 0)) best = left;
+      if (right < ready.length && before(ready[right] ?? 0, ready[best] ?? 0)) best = right;
+      if (best === i) break;
+      const t = ready[i] ?? 0;
+      ready[i] = ready[best] ?? 0;
+      ready[best] = t;
+      i = best;
+    }
+  };
+  const offer = (i: number): void => {
+    ready.push(i);
+    siftUp(ready.length - 1);
+  };
+  const take = (): number => {
+    // A box force-picked out of a cycle can be offered later, when the last of its blockers
+    // clears; it is already drawn, so skip it.
+    while (ready.length > 0) {
+      const top = ready[0] ?? 0;
+      const last = ready.pop() ?? 0;
+      if (ready.length > 0) {
+        ready[0] = last;
+        siftDown(0);
+      }
+      if (placed[top] !== true) return top;
+    }
+    return -1;
+  };
+
+  for (const [i] of boxes.entries()) {
+    if ((blockers[i] ?? 0) === 0) offer(i);
+  }
+
+  /** Lowest key among everything still undrawn, blocked or not — the cycle escape. */
+  const lowestUnplaced = (): number => {
     let pick = -1;
     let best = Infinity;
     for (const [i, key] of keys.entries()) {
       if (placed[i] === true || key >= best) continue;
-      if (readyOnly && (blockers[i] ?? 0) > 0) continue;
       best = key;
       pick = i;
     }
@@ -99,12 +176,16 @@ export function painterOrder(
   while (order.length < boxes.length) {
     // A cycle would leave nothing ready. Rectangles in this projection should not produce one,
     // but degrade to the tie-break key rather than dropping sprites out of the scene.
-    const ready = lowest(true);
-    const pick = ready >= 0 ? ready : lowest(false);
+    const next = take();
+    const pick = next >= 0 ? next : lowestUnplaced();
     if (pick < 0) break;
     placed[pick] = true;
     order.push(pick);
-    for (const s of successors.get(pick) ?? []) blockers[s] = (blockers[s] ?? 0) - 1;
+    for (const s of successors.get(pick) ?? []) {
+      const left = (blockers[s] ?? 0) - 1;
+      blockers[s] = left;
+      if (left === 0) offer(s);
+    }
   }
   return order;
 }

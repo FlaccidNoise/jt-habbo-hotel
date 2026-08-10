@@ -28,18 +28,35 @@ export interface TileHandlers {
   hover(tile: Tile | null): void;
 }
 
-/** The lowest walkable tile. Everything in the room stands at or above it, so a tile at this
- *  height can never rise into anything's sprite — see `tileDepth`. */
-function floorHeight(m: RoomModel): number {
+/** The half-open tile rectangle the camera can currently see. Every layer that draws one object
+ *  per tile culls against this same rectangle, so the floor and the walls never disagree about
+ *  what is on screen. */
+export interface TileWindow {
+  x0: number; y0: number; x1: number; y1: number;
+}
+
+/** The lowest and highest walkable tiles. The low end is what `tileDepth` keys off — everything in
+ *  the room stands at or above it, so a tile there can never rise into anything's sprite. The high
+ *  end is how far up-screen a tile can be pushed by its own lift, which is what the visible window
+ *  has to reach past to find every tile that can appear in it. */
+function heightRange(m: RoomModel): { low: number; high: number } {
   let low = Infinity;
+  let high = 0;
   for (let y = 0; y < m.height; y++) {
     for (let x = 0; x < m.width; x++) {
       const h = tileHeight(m, x, y);
-      if (h >= 0 && h < low) low = h;
+      if (h < 0) continue;
+      if (h < low) low = h;
+      if (h > high) high = h;
     }
   }
-  return low === Infinity ? 0 : low;
+  return { low: low === Infinity ? 0 : low, high };
 }
+
+/** Tiles of slack around the visible rect. Covers the half-tile each diamond reaches past its own
+ *  point, the slab lip below the floor, and the rounding in the camera — cheap insurance against a
+ *  tile popping in at the edge of the screen. */
+const CULL_MARGIN = 4;
 
 /** Screen-space corners of the tile diamond at (x, y) whose floor sits at height z. */
 export function diamond(x: number, y: number, z: number): number[] {
@@ -63,7 +80,18 @@ export class RoomScene {
   private marker: Graphics;
   private depth: DepthIndex;
   private floor: number;
+  private ceiling: number;
   private tiles = new Map<string, Graphics>();
+  /** The overhang faces under a raised tile, kept beside it so culling can take both away. */
+  private skirts = new Map<string, Graphics>();
+  /** Viewport in screen px, once the camera has been given one. Null means "draw the whole room",
+   *  which is what a scene built without a camera — every unit test — gets. */
+  private view: { width: number; height: number } | null = null;
+  /** The tile rectangle currently built, so a camera that has not crossed a tile boundary since
+   *  the last frame costs one comparison. */
+  private window: TileWindow | null = null;
+  /** Told whenever the window changes, so the wall layer culls against the same rectangle. */
+  onWindow: ((window: TileWindow) => void) | null = null;
   private handlers: TileHandlers;
   private decor: DecorAsset<FloorDecor> | null;
   private background: (e: FederatedPointerEvent) => void;
@@ -77,13 +105,21 @@ export class RoomScene {
     handlers: TileHandlers,
     depth: DepthIndex,
     decor: DecorAsset<FloorDecor> | null = null,
+    /** The viewport, when the caller already has one. Omitting it builds the whole floor, which is
+     *  what a scene with no camera — every unit test — wants; the client passes the screen it is
+     *  about to draw on, because building 90,000 tiles only to cull them on the next line is
+     *  slower than never building them. */
+    view: { width: number; height: number } | null = null,
   ) {
     this.model = model;
     this.stage = stage;
     this.handlers = handlers;
     this.depth = depth;
     this.decor = decor;
-    this.floor = floorHeight(model);
+    const range = heightRange(model);
+    this.floor = range.low;
+    this.ceiling = range.high;
+    this.view = view;
     this.world = new Container();
     this.world.sortableChildren = true;
     this.world.scale.set(ZOOM);
@@ -94,13 +130,11 @@ export class RoomScene {
     this.marker.zIndex = -1;   // above every tile in the floor band; `highlight` sorts it properly
     this.world.addChild(this.marker);
 
-    for (let y = 0; y < model.height; y++) {
-      for (let x = 0; x < model.width; x++) {
-        const h = tileHeight(model, x, y);
-        if (h < 0) continue;
-        this.addTile(x, y, h, handlers);
-      }
-    }
+    // Centring first is what makes the initial build the right one: the window is read off the
+    // camera, so reconciling before the camera is placed would build a screenful at the origin
+    // and immediately throw it away.
+    if (view) this.center(view.width, view.height);
+    else this.reconcile();
 
     this.background = (e) => {
       if (e.target !== stage) return;
@@ -128,14 +162,89 @@ export class RoomScene {
   }
 
   center(width: number, height: number): void {
+    this.view = { width, height };
     this.world.x = Math.round(width / 2 - ZOOM * (this.model.width - this.model.height) * (SCALE / 4));
     this.world.y = Math.round(height / 2 - ZOOM * (this.model.width + this.model.height - 2) * (SCALE / 8));
+    this.reconcile();
+  }
+
+  /** The window the floor is built to, for the layers that cull alongside it. */
+  get visible(): TileWindow {
+    return this.window ?? { x0: 0, y0: 0, x1: this.model.width, y1: this.model.height };
+  }
+
+  /** The tiles that can appear in the viewport right now, or the whole room when no camera has
+   *  been set.
+   *
+   *  Inverting the projection is what makes this a rectangle rather than a search. A tile's screen
+   *  point is ((x−y)·h, (x+y−2z)·v), so the visible band of screen columns fixes x−y and the band
+   *  of rows fixes x+y — one interval each, and the tile rectangle is the box those two diagonals
+   *  bound. Lift only ever moves a tile UP the screen, so the row band has to reach 2·ceiling
+   *  further down in x+y to catch a platform whose surface has climbed into view. */
+  private visibleWindow(): TileWindow {
+    const m = this.model;
+    const whole = { x0: 0, y0: 0, x1: m.width, y1: m.height };
+    if (!this.view) return whole;
+    const h = SCALE / 2, v = SCALE / 4;
+    // The viewport in the world's own pixels.
+    const wx0 = -this.world.x / ZOOM, wx1 = (this.view.width - this.world.x) / ZOOM;
+    const wy0 = -this.world.y / ZOOM, wy1 = (this.view.height - this.world.y) / ZOOM;
+    const uMin = wx0 / h, uMax = wx1 / h;                       // x − y
+    const sMin = wy0 / v, sMax = wy1 / v + 2 * this.ceiling;    // x + y
+    const clampX = (n: number): number => Math.max(0, Math.min(m.width, n));
+    const clampY = (n: number): number => Math.max(0, Math.min(m.height, n));
+    return {
+      x0: clampX(Math.floor((uMin + sMin) / 2) - CULL_MARGIN),
+      y0: clampY(Math.floor((sMin - uMax) / 2) - CULL_MARGIN),
+      x1: clampX(Math.ceil((uMax + sMax) / 2) + CULL_MARGIN),
+      y1: clampY(Math.ceil((sMax - uMin) / 2) + CULL_MARGIN),
+    };
+  }
+
+  /** Bring the built tiles in line with the window. A room that fits on screen builds once and
+   *  never runs the body again; a big one pays only for the rows the camera crossed.
+   *
+   *  Culling is what keeps a 300×300 room affordable at all: a tile is a Graphics with four
+   *  listeners, and a raised one is two more nodes in the painter sort, so building the whole
+   *  floor would be six figures of both (#359). Off-screen tiles are dropped rather than hidden —
+   *  a hidden tile still costs its slot in the sort and in every hit test. */
+  private reconcile(): void {
+    const next = this.visibleWindow();
+    const now = this.window;
+    if (now && now.x0 === next.x0 && now.y0 === next.y0 && now.x1 === next.x1 && now.y1 === next.y1) {
+      return;
+    }
+    this.window = next;
+    for (const key of [...this.tiles.keys()]) {
+      const at = key.indexOf(",");
+      const x = Number(key.slice(0, at)), y = Number(key.slice(at + 1));
+      if (x < next.x0 || x >= next.x1 || y < next.y0 || y >= next.y1) this.dropTile(key);
+    }
+    for (let y = next.y0; y < next.y1; y++) {
+      for (let x = next.x0; x < next.x1; x++) {
+        if (this.tiles.has(`${x},${y}`)) continue;
+        const h = tileHeight(this.model, x, y);
+        if (h < 0) continue;
+        this.addTile(x, y, h, this.handlers);
+      }
+    }
+    this.onWindow?.(next);
+  }
+
+  private dropTile(key: string): void {
+    this.tiles.get(key)?.destroy();
+    this.skirts.get(key)?.destroy();
+    this.tiles.delete(key);
+    this.skirts.delete(key);
+    this.depth.delete(`tile:${key}`);
+    this.depth.delete(`tile:${key}:sides`);
   }
 
   /** The camera. A room that fits the viewport sits centred and never moves — the Habbo read.
    *  One that overflows follows `target` (the player's own view position, world px) on the
    *  overflowing axis, clamped so the room edge never pulls inside the viewport. */
   follow(target: { sx: number; sy: number } | null, width: number, height: number): void {
+    this.view = { width, height };
     if (!target) return;
     const h = SCALE / 2, v = SCALE / 4;
     const m = this.model;
@@ -153,6 +262,7 @@ export class RoomScene {
         ? height / 2 - ZOOM * ((minSy + maxSy) / 2)
         : clamp(height / 2 - ZOOM * (target.sy - 40), height - ZOOM * maxSy, -ZOOM * minSy),
     );
+    this.reconcile();
   }
 
   /** Placement preview at the height the item would rest at: green when the shared
@@ -260,6 +370,7 @@ export class RoomScene {
     const sides = this.sides(x, y, h);
     if (sides) {
       sides.eventMode = "none";
+      this.skirts.set(`${x},${y}`, sides);
       this.world.addChild(sides);
     }
 
