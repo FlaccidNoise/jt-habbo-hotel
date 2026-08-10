@@ -1366,6 +1366,54 @@
       "pixelHash": "2f79ab0f4855228be764a11f9a85a61f1a2fd197b9e303463005d8261f3c16d8"
     },
     {
+      "partId": "hr37",
+      "setId": 37,
+      "type": "hr",
+      "name": "Mohawk",
+      "slots": 1,
+      "hides": [],
+      "sheet": "hr37.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "a243d29bad930da1d65e91ea1b897c287b6ba63cb6d420eea437cdb7b05d90de",
+      "pixelHash": "264af8f81db339cbf08da96e3e09a2e38aa99d9b5c3c9f843e699a9cc0bd6f6d"
+    },
+    {
       "partId": "hd17",
       "setId": 17,
       "type": "hd",

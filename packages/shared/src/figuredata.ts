@@ -103,6 +103,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 34, type: "hr", name: "Fringe",     slots: 1, family: "material", hides: [], retired: false },
   { id: 35, type: "hr", name: "Afro",       slots: 1, family: "material", hides: [], retired: false },
   { id: 36, type: "hr", name: "Braids",     slots: 1, family: "material", hides: [], retired: false },
+  { id: 37, type: "hr", name: "Mohawk",     slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));

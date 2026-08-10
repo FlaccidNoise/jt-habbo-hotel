@@ -1066,6 +1066,18 @@ FIGURE_PARTS = {
              "squash": (0.64, 0.86, 1.52)},
         ],
     },
+    # Mohawk (set 37). No cap at all — the shaved sides are the part, and the crest is two balls
+    # squashed to 3 px across running front to back along the midline. It clears the crown by six,
+    # which is what makes a 5-px-wide sliver read at 64. Both balls reach well down into the skull
+    # so the crest never floats off the head it is worn on.
+    "hr37": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 1.5, 20.5), "r": 6.5,
+             "squash": (0.44, 0.66, 1.18)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -5.0, 20.0), "r": 7.0,
+             "squash": (0.42, 0.80, 1.18)},
+        ],
+    },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
     "ha10": {
