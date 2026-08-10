@@ -1,5 +1,13 @@
 # Decision Log
 
+- 2026-08-10 — **Face art mechanism (#339/#342).** Faces are hd sets sharing hd2's skull; fixed
+  ramps (paper eye white, crimson blush) ship as `fixedColors` past the set's declared slot count,
+  resolved by the client after the worn colours — no bake-cache key change, because fixedColors is
+  a pure function of the set id. The `paper` ramp's shades come from the shade() formula, not the
+  design swatch (outline b differs by 7): one base × fixed factors is the bible invariant, so if
+  the eye white ever reads wrong the fix is a new base colour, never a hand-carved shade. New
+  wearables (faces 17-27, hair 28-37) are in no grant and have no purchase path — preview-only
+  until dress() is slotFamilies-aware (#346, server-frozen) and a grant/economy decision is made.
 - 2026-08-05 — **Avatar figure system (#127).** Built, with five decisions that overrule earlier
   spec on measured evidence.
   - **8 directions, all rendered natively; mirroring deleted for avatars.** Mirroring exists to
