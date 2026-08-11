@@ -86,6 +86,18 @@
         <div class="panel"><h2>Sinks (absorbed ★)</h2><div id="sinks"></div></div>
       </div>
       <div class="panel">
+        <h2>NPCs</h2>
+        <div class="legend">
+          <span><span class="swatch" style="background: var(--series-1)"></span>LLM calls today</span>
+          <span><span class="swatch" style="background: var(--series-2)"></span>Cap</span>
+        </div>
+        <div id="npc-bar" style="height: 18px; border-radius: 4px; background: var(--surface-1);
+          border: 1px solid var(--border); overflow: hidden;">
+          <div id="npc-bar-fill" style="height: 100%; background: var(--series-1);"></div>
+        </div>
+        <div class="tiles" id="npc-tiles" style="margin-top: 10px;"></div>
+      </div>
+      <div class="panel">
         <h2>Counterparty watch — last 7 days</h2>
         <p class="empty" style="margin: 0 0 12px; font-size: 12px;">
           Catalog value of goods that changed hands. Nothing here is proof of anything — a pod and a
@@ -226,6 +238,15 @@
 
         flowTable($("faucets"), m.day.faucets, m.week.faucets);
         flowTable($("sinks"), m.day.sinks, m.week.sinks);
+
+        const llmPct = Math.min(100, (m.npc.llm.today / m.npc.llm.globalCap) * 100);
+        $("npc-bar-fill").style.width = `${llmPct}%`;
+        $("npc-tiles").innerHTML =
+          tile(`${m.npc.llm.today} / ${m.npc.llm.globalCap}`, "LLM calls today (global / per-NPC cap " + m.npc.llm.perNpcCap + ")") +
+          tile(m.npc.roaming, "NPCs off-post") +
+          tile(`${m.npc.tick.lastMs.toFixed(1)} / ${m.npc.tick.maxMs.toFixed(1)}`, "tick last / max ms") +
+          tile(`${m.npc.paths.issued} / ${m.npc.paths.deferred}`, "paths issued / deferred") +
+          tile(`${m.npc.proactive.today} / ${m.npc.proactive.suppressed}`, "proactive lines / suppressed");
 
         // GAME.md §Transfer limits, the three standing queries (#237). Each read of this page is
         // the scheduled run.

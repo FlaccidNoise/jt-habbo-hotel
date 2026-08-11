@@ -21,6 +21,10 @@ const APPROACH = 2;                   // a social distance, not an audio one —
                                        // across rooms regardless of speakRadius
 const REPLY_GAP_MS = 8000;            // per-NPC floor between replies
 const DAILY_LLM_CAP = 200;            // per-NPC LLM calls per UTC day; canned lines after
+const GLOBAL_LLM_CAP = 600;           // fleet-wide LLM calls per UTC day, checked alongside the
+                                       // per-NPC cap. 3 NPCs × 200 is the committed $2/month
+                                       // cloud-fallback spend (decision log 2026-08-04) — the
+                                       // roster growing to 11 must not grow the ceiling.
 export const PERFORM_MS = 3 * 60 * 1000;   // lounge set cadence while the room has players
 const NPC_TICK_MS = 1000;             // one decision clock for every NPC in every occupied room.
                                        // Decisions run on 20-180 s scales, so this only has to be
@@ -539,6 +543,16 @@ export class NpcService {
   private lastProactiveAt = new Map<number, number>();   // roomId → epoch ms of its last greeting
   private timer: ReturnType<typeof setInterval>;
 
+  // Metrics (#/api/metrics `npc` block). tickStats and pathStats are lifetime counters, same as
+  // ledgerStats/wsStats — they never reset. globalCalls and proactiveToday are UTC-day counters,
+  // rolled over lazily on next use, same as each NpcState's own `calls`/`day`.
+  private tickStats = { lastMs: 0, maxMs: 0, count: 0 };
+  private pathStats = { issued: 0, deferred: 0 };
+  private globalDay = day();
+  private globalCalls = 0;
+  private proactiveToday = 0;
+  private proactiveSuppressed = 0;
+
   constructor(opts: {
     generate: NpcGenerate | null;
     say: (roomId: number, npcId: number, text: string) => void;
@@ -679,6 +693,8 @@ export class NpcService {
   /** The decision clock. Bounded by design: inactive rooms cost nothing, and every room-level
    *  read is hoisted out of the per-NPC loop. */
   private tick(): void {
+    const t0 = performance.now();
+    this.rollDay();
     const now = Date.now();
     let paths = 0;                              // MAX_PATHS_PER_TICK, counted across every room
     for (const roomId of this.active) {
@@ -740,7 +756,10 @@ export class NpcService {
           continue;
         }
         if (roams(npc) && now >= st.nextMoveAt) {
-          if (paths >= MAX_PATHS_PER_TICK) continue;
+          if (paths >= MAX_PATHS_PER_TICK) {
+            this.pathStats.deferred++;
+            continue;
+          }
           st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
           const seat =
             npc.seats && npc.seats.length > 0 && Math.random() < 1 / SEAT_BIAS
@@ -748,6 +767,7 @@ export class NpcService {
               : null;
           if (seat) {
             paths++;
+            this.pathStats.issued++;
             st.mode = "seated";
             room.requestSit(npc.id, seat.x, seat.y);
             continue;
@@ -755,6 +775,7 @@ export class NpcService {
           const to = waypoint(npc, here, room);
           if (!to) continue;                    // nowhere free this cycle: wait, don't search on
           paths++;
+          this.pathStats.issued++;
           st.mode = to.x === npc.post.x && to.y === npc.post.y ? "post" : "roam";
           // A refused move is silent for an NPC — no socket owns a negative id — so nothing here
           // may assume the request landed. The next tick reads the snapshot to find out.
@@ -765,14 +786,24 @@ export class NpcService {
       // One proactive line per room per gap, nearest pair first. This is the rule that stops
       // every NPC in earshot greeting the same arrival.
       const last = this.lastProactiveAt.get(roomId);
-      if (greeter && (last === undefined || now - last >= PROACTIVE_GAP_MS)) {
-        this.lastProactiveAt.set(roomId, now);
-        const st = this.state(greeter.npc.id);
-        st.noticed.set(greeter.player.username, now);
-        st.lastReplyAt = now;                   // shares the reply mutex: one line per NPC per gap
-        this.speak(greeter.npc, this.nextGreeting(greeter.npc, greeter.player.username));
+      if (greeter) {
+        if (last === undefined || now - last >= PROACTIVE_GAP_MS) {
+          this.lastProactiveAt.set(roomId, now);
+          const st = this.state(greeter.npc.id);
+          st.noticed.set(greeter.player.username, now);
+          st.lastReplyAt = now;                 // shares the reply mutex: one line per NPC per gap
+          this.proactiveToday++;
+          this.speak(greeter.npc, this.nextGreeting(greeter.npc, greeter.player.username));
+        } else {
+          this.proactiveSuppressed++;           // an eligible greeting held back by the gap rule
+        }
       }
     }
+
+    const ms = performance.now() - t0;
+    this.tickStats.lastMs = ms;
+    if (ms > this.tickStats.maxMs) this.tickStats.maxMs = ms;
+    this.tickStats.count++;
   }
 
   private async reply(npc: NpcDef, st: NpcState): Promise<void> {
@@ -782,8 +813,13 @@ export class NpcService {
       st.day = today;
       st.calls = 0;
     }
-    if (this.generate && st.calls < DAILY_LLM_CAP) {
+    this.rollDay();
+    // Two caps, checked together: per-NPC stops one popular NPC eating the whole budget, global
+    // pins total spend at the committed level (decision log 2026-08-04) no matter how large the
+    // roster grows. Either binding falls through to a canned line, same as today.
+    if (this.generate && st.calls < DAILY_LLM_CAP && this.globalCalls < GLOBAL_LLM_CAP) {
       st.calls++;
+      this.globalCalls++;
       try {
         text = await this.generate(npc, st.memory);
       } catch (e) {
@@ -845,5 +881,37 @@ export class NpcService {
       this.states.set(npcId, st);
     }
     return st;
+  }
+
+  /** Rolls the fleet-wide UTC-day counters over, lazily, same pattern as each NpcState's own
+   *  `calls`/`day`. Called from the tick and before an LLM call so both counters are correct
+   *  whether or not anything has happened yet today. */
+  private rollDay(): void {
+    const today = day();
+    if (this.globalDay !== today) {
+      this.globalDay = today;
+      this.globalCalls = 0;
+      this.proactiveToday = 0;
+    }
+  }
+
+  /** GET /api/metrics `npc` block. roaming counts NPCs whose mode is not "post" right now
+   *  (mid-walk to a waypoint or seated) — a live gauge of how much staff is off-station, not a
+   *  static count of roam-eligible NPCs. */
+  metrics(): {
+    tick: { lastMs: number; maxMs: number; count: number };
+    paths: { issued: number; deferred: number };
+    llm: { today: number; perNpcCap: number; globalCap: number };
+    proactive: { today: number; suppressed: number };
+    roaming: number;
+  } {
+    this.rollDay();
+    return {
+      tick: { ...this.tickStats },
+      paths: { ...this.pathStats },
+      llm: { today: this.globalCalls, perNpcCap: DAILY_LLM_CAP, globalCap: GLOBAL_LLM_CAP },
+      proactive: { today: this.proactiveToday, suppressed: this.proactiveSuppressed },
+      roaming: [...this.states.values()].filter((s) => s.mode !== "post").length,
+    };
   }
 }

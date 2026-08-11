@@ -649,6 +649,7 @@ export async function startServer(opts: {
       ledger: { ...ledgerStats },
       ws: { ...wsStats, open: conns.size },
       lag: lagSampler.read(),
+      npc: npcService.metrics(),
       rooms: [...rooms.entries()].map(([roomId, entry]) => ({
         roomId,
         players: entry.room.occupantCount(),

@@ -1,5 +1,10 @@
 # Decision Log
 
+- 2026-08-10 — **GLOBAL_LLM_CAP 600/day fleet-wide joins the per-NPC 200 cap.** The roster
+  scaling to 11 NPCs (WP8) must not scale the committed LLM spend — 3 NPCs × 200 was what the
+  $2/month cloud-fallback figure (decision log 2026-08-04) was sized against, and the per-NPC cap
+  alone would let 11 NPCs authorise ~3.7× that. The per-NPC cap stays: it stops one popular NPC
+  eating the whole budget. Canned lines remain the floor either cap trips. `npc.ts` `reply()`.
 - 2026-08-10 — **Flagship room is 200², not the asked-for 300–400² (#406/#409).** Josh resized on
   measured evidence: at 500 ms/tile a 300² diagonal walks 2.5 minutes, and 25 occupants over
   90,000 tiles is 3,600 tiles/player. Render cost stopped mattering — culling + the near-linear
