@@ -124,6 +124,12 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 50, type: "sh", name: "Boots",      slots: 1, family: "material", hides: [], retired: false },
   { id: 51, type: "sh", name: "Heels",      slots: 1, family: "material", hides: [], retired: false },
   { id: 52, type: "sh", name: "Sandals",    slots: 1, family: "material", hides: [], retired: false },
+  // Hats pack (#440). Five ha sets, one colour slot each, splitting on the hides rule: a beanie, a
+  // top hat and a crown replace the hair the way the Bellhop Cap 10 does, while headphones and a
+  // visor are worn WITH it. That split is free — `hr` is an earlier layer type, so hiding it costs
+  // no extra render, and not hiding it costs none either: the holdout set is still the body alone,
+  // and a hat that keeps the hair simply draws over whichever one is worn.
+  { id: 53, type: "ha", name: "Beanie",     slots: 1, family: "material", hides: ["hr"], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -178,7 +184,11 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  Legs (45-48, #440) run 150-300 on how much of the leg the garment replaces: shorts leave the
  *  shin bare, cargo and flares clothe it, and the long skirt covers the leg to the calf. *
  *  Shoes (49-52, #440) are two rungs, not four: 150 for the flat everyday pair and 250-300 once
- *  the shoe changes the leg's outline — a shaft up the shin, or a heel. */
+ *  the shoe changes the leg's outline — a shaft up the shin, or a heel.
+ *
+ *  Hats (53-57, #440) price on how much of the head the garment takes and how far it stands off
+ *  it: 150 for a brim on its own, 200-300 for the two that cover the head or hang off its sides,
+ *  and 400-450 for the pair that changes the figure's outline from across a room. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -205,6 +215,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 52, price: 150, theme: "shoes" },  // Sandals
   { set: 50, price: 250, theme: "shoes" },  // Boots
   { set: 51, price: 300, theme: "shoes" },  // Heels
+  { set: 53, price: 200, theme: "hats" },   // Beanie
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

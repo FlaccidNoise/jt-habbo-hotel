@@ -2580,6 +2580,45 @@ FIGURE_PARTS = {
              "c1": (8.0, 11.6, 22.6)},
         ],
     },
+    # Hats pack (#440). Five ha garments, one colour slot each, on a layer that works next to the
+    # face — so all five are placed against two measured lines rather than by eye.
+    #
+    # DOWN: the face sets stamp rows 31-39 in the frames that have a face — brow 31, eyes 33-35,
+    # mouth 36-39. Every prim below is shaped so its lowest lit pixel lands at row 30 or above in
+    # all eight directions. That is the line the Bellhop Cap's visor crossed at row 34 (#349), and
+    # a hat crosses it cheaply: at dir 3 a head-bone point draws at row 44 + y/2 - z, so geometry
+    # that reaches FORWARD falls half a row per px toward the eyes.
+    #
+    # UP: anchor_y 102 leaves 21 px over the crown, and gateBounds fails on any lit pixel touching
+    # the frame edge. The skull's own top lands on row 21, so rows 1-20 are the hat room, and the
+    # tallest thing here (the top hat) tops out at row 5.
+    #
+    # SIDEWAYS: figurepass repaints 12 lone catchlights on the bare head — (28,34) at dirs 2 and 6
+    # in the root-0 frames, (30,36) at dir 4 in the two walk down-steps. A garment covering one of
+    # those DIAGONALLY, and covering neither the pixel itself nor an orthogonal neighbour, makes
+    # the head clean differently under the garment than it does alone and fails gateHoldout by one
+    # pixel. Each hat below either covers the pixel outright or stays two clear of it.
+    #
+    # Beanie (set 53, hides hr). The near-dup to clear is the Bellhop Cap 10, the other low round
+    # cap. Two differences, both geometry: no peak, and a cuff. The dome is a ball 0.88 as tall as
+    # it is wide against the cap's 0.62, so the crown is round where the cap's is a flattened
+    # disc; the cuff is a second ball 0.6 px prouder at its equator and 2.8 px thick, and that
+    # ledge is the fold. Its widest ring sits at z 20.2, which puts the fold across the temples
+    # and the dome's own edge above it.
+    #
+    # Both prims carry a +1.2 lift the stand frame does not need. The walk down-steps drop the
+    # root 2.5 px while the face art moves with an INTEGER headShift of 2, so hat and brow close
+    # half a row on those two frames — enough, at a 1-row stand margin, to put the cuff on the far
+    # eyebrow in walk0 and walk2. Measured over all 64 dir-frames against every face set 17-24,
+    # the lift leaves a clear row everywhere.
+    "ha53": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.2, 22.7), "r": 11.0,
+             "squash": (0.96, 0.91, 0.88)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -1.2, 20.2), "r": 11.6,
+             "squash": (0.995, 0.95, 0.24)},
+        ],
+    },
     "ea12": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),

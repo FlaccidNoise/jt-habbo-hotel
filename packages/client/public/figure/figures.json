@@ -2685,6 +2685,56 @@
       "figuredataVersion": 1,
       "recipeHash": "470476f2e9c9ff504ad3559313ccde86920864bfdba4371d997b908790095004",
       "pixelHash": "2de91274261fe6d995911aec1178d172b92eac6720382b0738151c25fd87e616"
+    },
+    {
+      "partId": "ha53",
+      "setId": 53,
+      "type": "ha",
+      "name": "Beanie",
+      "slots": 1,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha53.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "76e54b63977158e1044e8fb6cbeb494fb4a874d120ac3f619ab545c9015a21ba",
+      "pixelHash": "e75678b43dea18d1b6970932124558ff9c5adc7db8ac28284988d5df7f096519"
     }
   ]
 }
