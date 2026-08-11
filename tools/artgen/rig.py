@@ -2089,6 +2089,34 @@ FIGURE_PARTS = {
              "c1": (1.4, 7.3, 13.4)},
         ],
     },
+    # Vest + Shirt (set 40, two slots). Two garments in one mesh, and the seam between them is the
+    # silhouette: the vest body is 0.4 proud of the shirt yoke all round, so the step at z 13.8 is a
+    # real edge rather than a colour change. Slot 1 is the shirt — yoke, sleeves, cuffs — and slot 0
+    # is the vest. The sleeves run 16.0, three-quarter: at set 6's 13.0 the two layers measured 0.885
+    # silhouette overlap, higher than any pair the wardrobe had shipped, and the cuff is what moved
+    # it. The vest hangs to -1.0 for the same reason — every top before this one stops at the waist.
+    # The two front straps stop 3.0 short of the midline, which is the V of shirt that makes it read
+    # as a vest and not a waistcoat-shaped tee.
+    "ch40": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-8.0, -6.4, 13.8),
+             "c1": (8.0, 6.4, 20.4)},
+            {"t": "limb", "bone": "arm_l", "slot": 1, "len": 16.0, "r": 3.7},
+            {"t": "limb", "bone": "arm_r", "slot": 1, "len": 16.0, "r": 3.7},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -16.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -16.5), "r": 3.9,
+             "squash": (1.0, 1.0, 0.45)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -7.0, -1.0),
+             "c1": (8.4, 7.0, 13.8)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, 6.2, 13.8),
+             "c1": (-3.0, 7.2, 19.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (3.0, 6.2, 13.8),
+             "c1": (8.0, 7.2, 19.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, -7.0, 13.8),
+             "c1": (8.0, -6.2, 19.0)},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {

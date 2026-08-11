@@ -2061,6 +2061,54 @@
       "figuredataVersion": 1,
       "recipeHash": "9c0499ef164bfe509c8535c5082ef66d04cce00cb35d211c68f56800dbea773b",
       "pixelHash": "0974c6abb1374184619de8e29792f9ab37c7cccefb8dfa0dc3ea9d8b258bfe62"
+    },
+    {
+      "partId": "ch40",
+      "setId": 40,
+      "type": "ch",
+      "name": "Vest + Shirt",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch40.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "078ed62a1683091601453c2e88bc4c9a5013f8e3b4cbb0b07b38866ed6db39f4",
+      "pixelHash": "cf4959b105984f51b9c26da222dd9332f642ba2009295227882e834d2b35323d"
     }
   ]
 }
