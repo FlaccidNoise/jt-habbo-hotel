@@ -3112,6 +3112,28 @@ FIGURE_PARTS = {
              "c1": (11.6, 7.0, 7.6)},
         ],
     },
+    # Surcoat (set 68, two slots, hides ch). The overcoat 11 is a sleeved body over a closed flare,
+    # so this one is defined by what it leaves out: no sleeves, and open sides. Two flat panels hang
+    # front and back at x +/-5.4 against bd1's own 7.5 torso edge, which leaves 2.1 px of bare body
+    # showing down each side in every direction — the gap IS the garment.
+    #
+    # Each panel stands 0.2 clear of the torso in y and no more. A panel thick enough to read on its
+    # own edge would close the side gap from the front, because depth projects at half a row per px
+    # and the near corner of a deep box swings wide as the figure turns.
+    #
+    # The yoke is the one thing that crosses the shoulders, and it is what stops the pair of panels
+    # reading as two loose flags: squashed to 2.6 px tall it clears the torso all round at x 8.2 and
+    # y 8.4, so the ring closes over the shoulder line and both panels hang off it.
+    "cc68": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.4, 6.2, -9.0),
+             "c1": (5.4, 7.6, 19.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.4, -7.6, -9.0),
+             "c1": (5.4, -6.2, 19.0)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, 0.0, 19.4), "r": 8.2,
+             "squash": (1.0, 1.02, 0.32)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
