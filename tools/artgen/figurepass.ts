@@ -523,8 +523,16 @@ function buildFaceLayer(
   }
 
   const lastFixed = Math.max(-1, ...[...usedFixed].map((n) => FIXED_RAMPS.indexOf(n)));
+  // picks/axes are just variant names — editing GEOMETRY under an unchanged name would leave the
+  // recipe looking unchanged (#424). resolved is the actual authored pixels those names point at,
+  // one view per REFERENCE_DIR entry since dirs 4/5 draw the same content as 2/1, mirrored.
+  const resolved = Object.fromEntries(
+    (Object.entries(REFERENCE_DIR) as Array<[FaceView, number]>).map(
+      ([view, dir]) => [view, facePixels(GEOMETRY, picks, dir, axes)?.pixels ?? []],
+    ),
+  );
   emit(id, set, cells, anchorY, {
-    id, setId: set.id, base, prims: head.prims, src: head.src, picks, axes, geometry: "A",
+    id, setId: set.id, base, prims: head.prims, src: head.src, picks, axes, geometry: "A", resolved,
     canvas: CANVAS, styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
     figuredataVersion: FIGUREDATA_VERSION,
   }, lastFixed < 0 ? undefined : FIXED_RAMPS.slice(0, lastFixed + 1));
