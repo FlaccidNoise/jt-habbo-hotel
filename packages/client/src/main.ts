@@ -1071,8 +1071,12 @@ function handle(msg: ServerMsg): void {
       break;
     case "error":
       // A refused outfit — or a refused wardrobe buy — is answered inside the panel that proposed
-      // it, where the picks still are. A toast behind the panel would go unread.
-      if ((msg.code === "figure" || msg.code === "purchase") && creator.isOpen) {
+      // it, where the picks still are. A toast behind the panel would go unread. `purchase` is
+      // shared with furni buys and the lever, so the panel only claims it mid-buy.
+      if (
+        (msg.code === "figure" || (msg.code === "purchase" && creator.hasPendingBuy)) &&
+        creator.isOpen
+      ) {
         creator.rejected(msg.message);
       } else toast(msg.message);
       break;

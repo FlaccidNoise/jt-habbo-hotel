@@ -284,7 +284,6 @@ describe("the seats the roster lists", () => {
     ];
     const sits: Tile[] = [];
     const harness: NpcRoom = {
-      chatConfig: { speakRadius: GROUNDS_SPEAK_RADIUS },
       occupants: () => occupants,
       occupantCount: () => 1,
       requestMove: () => {},

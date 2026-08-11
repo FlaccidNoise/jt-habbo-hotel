@@ -21,7 +21,6 @@ const act = (id: number, roomId: number): NpcDef => ({
 
 function fakeRoom(players: number) {
   return {
-    chatConfig: { speakRadius: 6 },
     occupants: vi.fn(() => []),
     occupantCount: vi.fn(() => players),
     requestMove: vi.fn(),
@@ -137,6 +136,17 @@ describe("npc tick: cost", () => {
     vi.advanceTimersByTime(TICK_MS * 5);
     expect(lookup).toHaveBeenCalledTimes(5);
     expect(room.occupantCount).toHaveBeenCalledTimes(5);
+  });
+
+  test("a room with players but no NPCs never activates — a suite owes the tick nothing", () => {
+    const suite = fakeRoom(1);
+    const { svc, lookup } = service([act(-3, 2)], new Map([[7, suite]]));
+    svc.onPlayerJoin(7, "alice");
+
+    vi.advanceTimersByTime(TICK_MS * 5);
+    expect(lookup).not.toHaveBeenCalled();
+    expect(suite.occupantCount).not.toHaveBeenCalled();
+    expect(suite.occupants).not.toHaveBeenCalled();
   });
 
   test("stop clears the one timer", () => {

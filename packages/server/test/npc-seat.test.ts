@@ -57,7 +57,6 @@ function fakeRoom(occ: NpcOccupant[], opts: { sitSucceeds?: boolean } = {}) {
   const stands: number[] = [];
   const walking = new Set<number>();
   return {
-    chatConfig: { speakRadius: 6 },
     occupants: vi.fn((): readonly NpcOccupant[] => occ),
     occupantCount: vi.fn(() => occ.filter((o) => o.accountId > 0).length),
     requestMove: vi.fn((id: number, x: number, y: number) => {

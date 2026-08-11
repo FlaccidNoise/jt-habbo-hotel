@@ -46,7 +46,6 @@ const player = (accountId: number, username: string, x: number, y: number): NpcO
 function fakeRoom(occ: NpcOccupant[]) {
   const walking = new Set<number>();
   return {
-    chatConfig: { speakRadius: 6 },
     occupants: vi.fn((): readonly NpcOccupant[] => occ),
     occupantCount: vi.fn(() => occ.filter((o) => o.accountId > 0).length),
     requestMove: vi.fn(),

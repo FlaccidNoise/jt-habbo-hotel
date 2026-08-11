@@ -439,7 +439,6 @@ export interface NpcOccupant extends Speaker {
  *  and server.ts stays the only module that knows both sides. Keep it narrow — every member
  *  added here is a new way for NPC behaviour to reach into room state. */
 export interface NpcRoom {
-  readonly chatConfig: { speakRadius: number };
   occupants(): readonly NpcOccupant[];
   occupantCount(): number;            // players only — staff never count
   requestMove(id: number, x: number, y: number): void;
@@ -544,7 +543,7 @@ export class NpcService {
   private timer: ReturnType<typeof setInterval>;
 
   // Metrics (#/api/metrics `npc` block). tickStats and pathStats are lifetime counters, same as
-  // ledgerStats/wsStats — they never reset. globalCalls and proactiveToday are UTC-day counters,
+  // ledgerStats/wsStats — they never reset. globalCalls, proactiveToday and proactiveSuppressed are UTC-day counters,
   // rolled over lazily on next use, same as each NpcState's own `calls`/`day`.
   private tickStats = { lastMs: 0, maxMs: 0, count: 0 };
   private pathStats = { issued: 0, deferred: 0 };
@@ -577,6 +576,7 @@ export class NpcService {
 
   onPlayerJoin(roomId: number, username: string): void {
     const npcs = this.npcsFor(roomId);
+    if (npcs.length === 0) return;      // a suite never activates — the tick owes it zero work
     for (const npc of npcs) {
       if (!npc.greeting) continue;
       const st = this.state(npc.id);
@@ -686,6 +686,7 @@ export class NpcService {
       const st = this.states.get(npc.id);
       if (!st) continue;
       st.nextMoveAt = 0;
+      st.busyUntil = 0;
       st.mode = "post";
     }
   }
@@ -897,6 +898,14 @@ export class NpcService {
       this.globalDay = today;
       this.globalCalls = 0;
       this.proactiveToday = 0;
+      this.proactiveSuppressed = 0;     // reported beside `today` — both roll on the same clock
+      // The per-pair maps hold nothing useful past their own windows; a daily sweep bounds them
+      // to one day of unique visitors per NPC.
+      const cutoff = Date.now() - NOTICE_COOLDOWN_MS;
+      for (const st of this.states.values()) {
+        for (const [name, at] of st.noticed) if (at < cutoff) st.noticed.delete(name);
+        for (const [name, d] of st.greeted) if (d !== today) st.greeted.delete(name);
+      }
     }
   }
 

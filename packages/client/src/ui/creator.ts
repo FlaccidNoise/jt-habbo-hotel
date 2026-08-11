@@ -265,6 +265,12 @@ export class Creator {
   private owned: ReadonlySet<number> = new Set(STARTER_GRANT_SETS);
   private saving = false;
   private buying: number | null = null;
+
+  /** True while a wardrobe buy is in flight — the only time a `purchase` error belongs here,
+   *  since furni buys and the lever share the same error code. */
+  get hasPendingBuy(): boolean {
+    return this.buying !== null;
+  }
   private error: string | null = null;
   private timer: ReturnType<typeof setTimeout> | null = null;
   private scroll = 0;
