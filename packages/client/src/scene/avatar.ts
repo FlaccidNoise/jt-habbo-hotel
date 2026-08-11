@@ -1,4 +1,4 @@
-import { Container, Graphics, Sprite, Text } from "pixi.js";
+import { Container, Graphics, Rectangle, Sprite, Text, Texture } from "pixi.js";
 import { parseFigure, resolveLayers, worldToScreen } from "@grand/shared";
 import type { AvatarState, Figure, Posture, ServerMsg } from "@grand/shared";
 import { wisps } from "./effects.ts";
@@ -125,6 +125,24 @@ function handSprite(item: string): Graphics {
   }
 }
 
+/** Wading (#427). The waterline belongs to the tile the feet are on, not to the pose: the figure is
+ *  cut `wade` px above them and the water is drawn closing over the cut, so a deeper tile is a
+ *  bigger number rather than a second code path.
+ *
+ *  The wash straddles the cut — its top half laps over the body, its bottom half reads as the
+ *  surface passing behind — because a flat edge at the hem reads as a figure sliced in half. It is
+ *  the pool tile's own light shade, so the disturbance belongs to the water it sits in; the crest
+ *  is a third, lighter shade, and it is a line across the body rather than a ring around it. A
+ *  closed bright ellipse reads as a plate the avatar is standing on. */
+const RIPPLE = { rx: 11, ry: 3, wash: 0x3dbaba, crest: 0x8fd9d9 } as const;
+
+/** Rows of the baked cell that stay above the water: from the cell's top edge (`top`, screen px
+ *  from the feet, negative) down to the waterline `wade` px above them. Never fewer than one, so a
+ *  figure sunk past the top of its own cell is a sliver rather than an empty texture. */
+export function clipRows(top: number, wade: number): number {
+  return Math.max(1, Math.round(-wade - top));
+}
+
 /** The figure has no sprite: the bundles are missing. Draw something unmistakably broken rather
  *  than a plausible box — a silent fallback hides a bad deploy behind an avatar that looks fine. */
 function missingMarker(): Graphics {
@@ -142,10 +160,19 @@ export class AvatarSprite {
   readonly view: Container;
   private depth: DepthIndex;
   private sprite: Sprite;
+  private shadow: Graphics;
   private marker: Graphics | null = null;
   private label: Text;
   private figure: Figure | null;
   private at: Step;
+  /** The tile the waterline is read off. It trails `at` by half a step: `at` becomes the tile being
+   *  walked TO on the first frame of the slide, and reading the water there would sink a figure
+   *  still standing on the deck. Walking in or out of the pool therefore snaps the cut at the
+   *  half-way point of the step that crosses the edge. */
+  private feet: Step;
+  /** The baked cell with everything below the waterline framed off, or null while dry. */
+  private clipped: Texture | null = null;
+  private ripple: Graphics | null = null;
   private dir: number;
   private posture: Posture;
   private walking: { from: Step; path: Step[]; msPerTile: number; startedAt: number } | null = null;
@@ -163,11 +190,18 @@ export class AvatarSprite {
   /** Called when the avatar lands on a new tile (#347), so the room can see who it is beside. */
   onStep: (() => void) | null = null;
 
-  constructor(state: AvatarState, depth: DepthIndex, private baker: FigureBaker | null) {
+  constructor(
+    state: AvatarState,
+    depth: DepthIndex,
+    private baker: FigureBaker | null,
+    /** How deep the water is on a tile (#427), read off the room's floor decor. */
+    private water: (x: number, y: number) => number,
+  ) {
     this.id = state.id;
     this.username = state.username;
     this.depth = depth;
     this.at = { x: state.x, y: state.y, z: state.z };
+    this.feet = this.at;
     this.dir = state.dir;
     this.posture = state.posture;
     this.figure = this.read(state.figure);
@@ -177,7 +211,9 @@ export class AvatarSprite {
 
     // Grounding shadow at the anchor — the tile-centre ground point standing, the seat surface
     // sitting. Drawn first so every figure pixel lands over it.
-    this.view.addChild(new Graphics().ellipse(0, 0, 14, 7).fill({ color: 0x000000, alpha: 0.28 }));
+    this.shadow = this.view.addChild(
+      new Graphics().ellipse(0, 0, 14, 7).fill({ color: 0x000000, alpha: 0.28 }),
+    );
 
     this.sprite = new Sprite();
     this.view.addChild(this.sprite);
@@ -212,6 +248,7 @@ export class AvatarSprite {
     this.walking = null;
     this.posture = posture;
     this.at = { ...at };
+    this.feet = this.at;
     this.dir = dir;
     this.redraw();
     this.place();
@@ -295,6 +332,8 @@ export class AvatarSprite {
     if (msg.path.length === 0) {
       this.walking = null;
       this.at = { ...msg.from };
+      this.feet = this.at;
+      this.redraw();
       this.place();
       return;
     }
@@ -326,6 +365,7 @@ export class AvatarSprite {
     if (index >= walk.path.length) {
       this.walking = null;
       if (last) this.at = { ...last };
+      this.feet = this.at;
       this.walkFrame = 0;
       this.redraw();
       this.place();
@@ -339,6 +379,7 @@ export class AvatarSprite {
     // Depth follows whole tiles, so it is restacked on the step, not on every frame of the slide.
     const stepped = to.x !== this.at.x || to.y !== this.at.y || to.z !== this.at.z;
     this.at = { ...to };
+    this.feet = t < 0.5 ? from : to;
     this.walkFrame = Math.min(WALK_FRAMES - 1, (t * WALK_FRAMES) | 0);
     this.redraw();
     const point = lerpScreen(
@@ -356,6 +397,9 @@ export class AvatarSprite {
 
   destroy(): void {
     this.depth.delete(`avatar:${this.id}`);
+    // The clipped frame is this avatar's own; the cell it borrows belongs to the baker's cache and
+    // outlives the room.
+    this.clipped?.destroy();
     this.view.destroy({ children: true });
   }
 
@@ -387,7 +431,8 @@ export class AvatarSprite {
    *  outfit is a different cell. */
   private redraw(): void {
     const frame = this.frame();
-    const key = `${frame}|${this.dir}`;
+    const wade = this.wade();
+    const key = `${frame}|${this.dir}|${wade}`;
     if (key === this.shown) return;
     this.shown = key;
 
@@ -397,8 +442,8 @@ export class AvatarSprite {
         this.marker.destroy();
         this.marker = null;
       }
-      this.sprite.texture = texture;
       const offset = this.baker!.anchor(frame);
+      this.sprite.texture = wade > 0 ? this.clip(texture, offset.y, wade) : texture;
       this.sprite.x = offset.x;
       this.sprite.y = offset.y;
       this.sprite.visible = true;
@@ -409,7 +454,44 @@ export class AvatarSprite {
         this.view.addChildAt(this.marker, 0);
       }
     }
+    this.drawRipple(wade);
     this.label.y = -this.crown() - 4;
+  }
+
+  /** How deep the water is under the feet. A pool has nothing to sit on, so any pose but standing
+   *  and walking is drawn dry rather than cut at a line measured off a standing figure. */
+  private wade(): number {
+    return this.posture === "sit" ? 0 : this.water(this.feet.x, this.feet.y);
+  }
+
+  /** The baked cell framed off at the waterline. Framing rather than masking keeps the figure one
+   *  quad in the batch, where a mask would cost a stencil pass per wader. The Texture is the
+   *  avatar's own and is re-framed in place — it is `dynamic`, so `update()` is what carries the
+   *  new frame to the sprite — while the cell it borrows stays the baker's, shared and whole. */
+  private clip(base: Texture, top: number, wade: number): Texture {
+    const cut = (this.clipped ??= new Texture({
+      source: base.source, frame: new Rectangle(), dynamic: true,
+    }));
+    if (cut.source !== base.source) cut.source = base.source;
+    cut.frame.copyFrom(base.frame);
+    cut.frame.height = clipRows(top, wade);
+    cut.update();
+    return cut;
+  }
+
+  /** The water closing over the cut, and the grounding shadow taken away with the feet it belongs
+   *  to — a shadow lying on the surface would read as a hole in it. */
+  private drawRipple(wade: number): void {
+    this.shadow.visible = wade === 0;
+    if (wade === 0) {
+      this.ripple?.destroy();
+      this.ripple = null;
+      return;
+    }
+    const g = (this.ripple ??= this.view.addChild(new Graphics())).clear();
+    g.ellipse(0, -wade, RIPPLE.rx, RIPPLE.ry).fill({ color: RIPPLE.wash, alpha: 0.7 });
+    g.rect(2 - RIPPLE.rx, -wade - 1, 2 * (RIPPLE.rx - 2), 1)
+      .fill({ color: RIPPLE.crest, alpha: 0.75 });
   }
 
   /** The item rides the hand, and every 8-12s a drink swings up to the mouth and back. The period

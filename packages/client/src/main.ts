@@ -183,7 +183,7 @@ let wheelReveal: number | undefined;
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
   avatars.get(state.id)?.destroy();
-  const sprite = new AvatarSprite(state, depth, figureBaker);
+  const sprite = new AvatarSprite(state, depth, figureBaker, (x, y) => scene?.waterline(x, y) ?? 0);
   sprite.onStep = () => checkClink(state.id);
   avatars.set(state.id, sprite);
   scene.world.addChild(sprite.view);

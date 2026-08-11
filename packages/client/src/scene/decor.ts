@@ -63,6 +63,17 @@ export function regionAt(
   return null;
 }
 
+/** How far a figure standing on a floor is sunk into it, in figure pixels (#427). A floor that is
+ *  not in the table is dry land, which is every floor but the pool's water. Deep water is another
+ *  tile with a bigger number here, not another mechanism. */
+const WATERLINE: Readonly<Record<string, number>> = { floor_pool: 34 };
+
+/** How deep the water is on (x, y), 0 where the tile is not water. */
+export function waterlineAt(regions: readonly FloorRegion[], x: number, y: number): number {
+  const id = regionAt(regions, x, y)?.asset.def.id;
+  return (id === undefined ? undefined : WATERLINE[id]) ?? 0;
+}
+
 /** Empty when the tiles are missing — every room then draws the colours it always did. A decor
  *  that fails to load must not take the room with it. */
 export async function loadDecorAssets(): Promise<DecorAssets> {

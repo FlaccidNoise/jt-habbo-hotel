@@ -2,7 +2,7 @@ import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { WALL_TOP_PX, screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
-import { regionAt } from "./decor.ts";
+import { regionAt, waterlineAt } from "./decor.ts";
 import type { DecorAsset, FloorDecor, FloorRegion } from "./decor.ts";
 import { LAYER, tileDepth } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
@@ -197,6 +197,13 @@ export class RoomScene {
   /** The floor diamond drawn for (x, y), or null where the heightmap has a void. */
   tileAt(x: number, y: number): Graphics | null {
     return this.tiles.get(`${x},${y}`) ?? null;
+  }
+
+  /** How deep the water is on (x, y), in figure pixels (#427) — 0 anywhere but a pool. The floor is
+   *  what knows: an avatar asks the tile it stands on rather than carrying its own copy of the
+   *  room's decor. */
+  waterline(x: number, y: number): number {
+    return waterlineAt(this.regions, x, y);
   }
 
   center(width: number, height: number): void {
