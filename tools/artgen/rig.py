@@ -1013,6 +1013,31 @@ PARTS = {
              "taper": 0.70, "ramp": "teal"},
         ],
     },
+    # ---- Bannerhold pilots (blitz task 5) ----
+    # A trestle bench: two solid trestle ends, a thick plank, and a low stretcher. Reads as a
+    # bench (long, backless) rather than a sofa or a stool; oak plank over walnut trestles is the
+    # set's wood-on-wood idiom. The plank top is the seat surface.
+    "bannerhold_oak_bench": {
+        "w": 2, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.22, 0.00), "c1": (0.30, 0.78, 0.44), "ramp": "walnut"},
+            {"t": "box", "c0": (1.70, 0.22, 0.00), "c1": (1.86, 0.78, 0.44), "ramp": "walnut"},
+            {"t": "box", "c0": (0.30, 0.44, 0.12), "c1": (1.70, 0.56, 0.20), "ramp": "walnut"},
+            {"t": "box", "c0": (0.06, 0.26, 0.44), "c1": (1.94, 0.74, 0.54), "bevel": 0.02,
+             "ramp": "oak", "seat": True},
+        ],
+    },
+    # A hanging heraldic banner: a walnut rod, a crimson cloth, and a proud gold crest block.
+    # Original mark — a plain charge, no copied coat of arms. Wall part; span/plane/mount are
+    # read off the sheet by postpass.
+    "bannerhold_crest_banner": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.02, 2.90), "c1": (0.84, 0.08, 2.96), "ramp": "walnut"},
+            {"t": "box", "c0": (0.24, 0.02, 2.20), "c1": (0.76, 0.06, 2.90), "ramp": "crimson"},
+            {"t": "box", "c0": (0.42, 0.06, 2.48), "c1": (0.58, 0.09, 2.68), "ramp": "gold"},
+        ],
+    },
     # ---- wall clutter (#323) ----
     # Neither uses the full segment: a wall part must start at least its own depth along the wall,
     # and both of these have real depth where a poster has none — a clock case is a box and an
@@ -2980,6 +3005,45 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.55)},
             {"t": "ball", "bone": "knee_r", "slot": 0, "c": (0.0, 0.0, -2.0), "r": 5.6,
              "squash": (1.0, 1.0, 0.55)},
+        ],
+    },
+    # Sabatons (set 65, one slot). The shoe shelf splits on what the outline DOES, and this one is a
+    # staircase running forward: three lamé plates whose tops step 1.1 px apart from the toe back to
+    # the ankle, each 0.3 proud of the shell in x so the step reads sideways as well as in profile.
+    # Sneakers 49 stack three boxes vertically over a flared midsole, which is one smooth block seen
+    # from the side.
+    #
+    # Each plate CONTAINS the stretch of foot it covers rather than sitting on a shell over it. A
+    # shell tall enough to clothe bd1's foot box tops out at -14.2, and a plate under that line is
+    # buried: same layer, so there is no holdout between them and the shell's own surface takes the
+    # depth test. Drawn that way the first pass showed 0.3 px of each plate and the staircase was
+    # gone. So the plates ARE the shoe, each topping 1.1 px above the one in front of it — -14.4,
+    # -13.3, -12.2 — and each one is the outermost thing over its own part of the foot.
+    #
+    # The floor rule fixes what may overhang. A frame's deepest row is (|x| + |y|) / 2.828 below the
+    # prim's own z and the loafer 9's footprint already lands on row 110 against a bounds gate that
+    # fails at 111, so the toe plate keeps that footprint exactly and the two behind it buy 0.1 and
+    # 0.55 px of overhang for 0.04 and 0.19 of a row. The toe point is the one prim that reaches
+    # properly clear — y 8.6, 1.4 past the plate and 2.3 past bd1's own foot box — and pays for it
+    # with 1.4 px of lift from z -16.6 against 0.49 of a row.
+    "sh65": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, 2.2, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -14.4)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, 2.2, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -14.4)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.3, -1.6, -float(SHIN_LEN)),
+             "c1": (4.3, 2.6, -13.3)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.3, -1.6, -float(SHIN_LEN)),
+             "c1": (4.3, 2.6, -13.3)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.35, -3.9, -float(SHIN_LEN)),
+             "c1": (4.35, -1.2, -12.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.35, -3.9, -float(SHIN_LEN)),
+             "c1": (4.35, -1.2, -12.2)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-2.4, 6.6, -16.6),
+             "c1": (2.4, 8.6, -15.0)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-2.4, 6.6, -16.6),
+             "c1": (2.4, 8.6, -15.0)},
         ],
     },
 }

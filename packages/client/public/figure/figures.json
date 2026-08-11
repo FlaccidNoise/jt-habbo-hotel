@@ -3267,6 +3267,54 @@
       "figuredataVersion": 1,
       "recipeHash": "1528007930053ad5f5c5389483767171de7bff26db799960c8f23009adfa08a6",
       "pixelHash": "d23142440aad960b0914c872cd6c7c236b01339ff89c7ce116a91ddb5dc88f52"
+    },
+    {
+      "partId": "sh65",
+      "setId": 65,
+      "type": "sh",
+      "name": "Sabatons",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh65.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "36025222c45a28c261992952930095a477ddca3fdfe56f3816a3aa60aa4d987f",
+      "pixelHash": "790f09bdbab9e5c346a6927b22a4c17bdbf095cda761329e858a1d9d1afe01ef"
     }
   ]
 }
