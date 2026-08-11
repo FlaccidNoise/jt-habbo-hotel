@@ -2233,6 +2233,22 @@ FIGURE_PARTS = {
              "c1": (8.0, 6.4, 2.6)},
         ],
     },
+    # Legs pack (#440). Four lg garments, each cut to a different length AND a different profile,
+    # because a legs shelf where every row is a tube of a different colour is one garment.
+    #
+    # Shorts (set 45, one slot). The hem is the whole part, and it is a flat cut: "caps": "top",
+    # for the same reason bd1's shins have it — a bottom cap sphere hangs 5 px below the cut and
+    # turns a hem into a bulb. It stops 7.5 px above the knee so bd1's own knee and shin fill the
+    # leg below, and the cut is wide (5.4 against the trousers' 4.7) because a short that is not
+    # wide is a swimming brief.
+    "lg45": {
+        "prims": [
+            {"t": "box",  "bone": "hip",   "slot": 0, "c0": (-8.0, -6.4, -2.4),
+             "c1": (8.0, 6.4, 2.2)},
+            {"t": "limb", "bone": "leg_l", "slot": 0, "len": 11.5, "r": 5.4, "caps": "top"},
+            {"t": "limb", "bone": "leg_r", "slot": 0, "len": 11.5, "r": 5.4, "caps": "top"},
+        ],
+    },
     "sh9": {
         "prims": [
             {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),

@@ -2301,6 +2301,54 @@
       "figuredataVersion": 1,
       "recipeHash": "d07505d8b057cf124de9c6dbbadc6a51a5f6efaed93b7a9e5f015d6091699056",
       "pixelHash": "36db0adf1602a11d4c0326dcb35b3222b55c543a6280f3ab5310fe9de7bfab7d"
+    },
+    {
+      "partId": "lg45",
+      "setId": 45,
+      "type": "lg",
+      "name": "Shorts",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg45.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d58c8eed2ee34952d910d8af9a017fdbad3344ca928c0d15a5bd4dc02cd3b1e6",
+      "pixelHash": "50090a5442231ca4eab08099e340075bafec873a96655d62a0a3ee4b2a5464a9"
     }
   ]
 }

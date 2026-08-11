@@ -114,6 +114,9 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 42, type: "ch", name: "Turtleneck",    slots: 1, family: "material", hides: [], retired: false },
   { id: 43, type: "ch", name: "Tank",          slots: 1, family: "material", hides: [], retired: false },
   { id: 44, type: "ch", name: "Tracksuit Top", slots: 2, family: "material", hides: [], retired: false },
+  // Legs and shoes pack (#440). Four lg and four sh, all one colour slot, none hiding anything —
+  // lg and sh are the two layer types nothing in the wardrobe has ever hidden.
+  { id: 45, type: "lg", name: "Shorts",     slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -163,7 +166,10 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *
  *  Tops (38-44, #440) price on the same idea one shelf over: 150 for the one-slot basics, 200-250
  *  once a garment carries a collar or a second colour slot, and 300-400 for the three that change
- *  the figure's outline — a hood, a shirt under a vest, a jacket that hangs past the hip. */
+ *  the figure's outline — a hood, a shirt under a vest, a jacket that hangs past the hip.
+ *
+ *  Legs (45-48, #440) run 150-300 on how much of the leg the garment replaces: shorts leave the
+ *  shin bare, cargo and flares clothe it, and the long skirt covers the leg to the calf. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -182,6 +188,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 38, price: 300, theme: "tops" },   // Hoodie
   { set: 40, price: 350, theme: "tops" },   // Vest + Shirt
   { set: 39, price: 400, theme: "tops" },   // Blazer
+  { set: 45, price: 150, theme: "legs" },   // Shorts
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
