@@ -1,7 +1,13 @@
 // Hand-authored face art (#342), ported from design_handoff_avatar_customization/faces.js.
-// Coordinates and shade codes are verbatim: they are absolute sheet coords for the STAND frame,
-// drawn for dirs 3 (front), 2 (three-quarter, face on screen right) and 1 (profile right). Dirs 4
-// and 5 are the mirror, x' = 63 - x, which is shading-safe under the B4 rule.
+// Coordinates and shade codes are absolute sheet coords for the STAND frame, drawn for dirs 3
+// (front), 2 (three-quarter, face on screen right) and 1 (profile right). Dirs 4 and 5 are the
+// mirror, x' = 63 - x, which is shading-safe under the B4 rule.
+//
+// The handoff drew d2 and d1 for one variant per axis and left the rest front-only, so seven of
+// the eight sets wore the same three-quarter and the beards vanished off dir 3 (#350). Every
+// variant now draws all three views. The d3 rows are still verbatim; the d2 and d1 rows added for
+// #350 apply that variant's own departure from its axis's drawn variant to that variant's drawn
+// d2/d1 — an arched brow drops the same outer end at three-quarter that it drops at the front.
 //
 // They stay absolute HERE so this file diffs against faces.js line for line. figurepass makes them
 // FaceAnchor-relative at load: it subtracts the STAND anchor of each view's own dir, so a pixel is
@@ -40,9 +46,9 @@ export interface Geometry {
   eyes: Axis; brows: Axis; nose: Axis; mouth: Axis; beard: Axis; extra: Axis;
 }
 
-/** The axes, in paint order. A variant authored front-only falls back to its axis's FIRST entry in
- *  the other views, which is what keeps a turnaround complete — and what makes every face set look
- *  the same from three-quarter and profile. */
+/** The axes, in paint order. A variant with no art for a view falls back to its axis's FIRST entry
+ *  there, so a turnaround is never blank. Nothing shipped reaches that fallback any more (#350):
+ *  it is the guard for a half-drawn variant, not the way a set gets its side views. */
 export const AXES = ["beard", "eyes", "brows", "nose", "mouth", "extra"] as const;
 export type AxisName = (typeof AXES)[number];
 export type FacePicks = Readonly<Record<AxisName, string>>;
@@ -60,20 +66,45 @@ export const GEOMETRY_A: Geometry = {
       d1: [...row("K", 33, 38, 39),
         [38, 34, "W"], [39, 34, "U"], [38, 35, "W"], [39, 35, "U"]],
     },
+    // Half-lidded: bright's lids over a one-row eye.
     calm: {
       d3: [...row("K", 33, 26, 28), ...row("K", 33, 35, 37),
         [27, 34, "W"], [28, 34, "U"], [35, 34, "U"], [36, 34, "W"]],
+      d2: [...row("K", 33, 31, 32), ...row("K", 33, 36, 37),
+        [31, 34, "W"], [32, 34, "U"], [36, 34, "W"], [37, 34, "U"]],
+      d1: [...row("K", 33, 38, 39), [38, 34, "W"], [39, 34, "U"]],
     },
+    // Bright with each lid run one pixel longer at its outer end.
     lashes: {
       d3: [...row("K", 33, 25, 28), ...row("K", 33, 35, 38),
         [27, 34, "W"], [28, 34, "U"], [35, 34, "U"], [36, 34, "W"],
         [27, 35, "W"], [28, 35, "U"], [35, 35, "U"], [36, 35, "W"]],
+      d2: [...row("K", 33, 30, 32), ...row("K", 33, 36, 38),
+        [31, 34, "W"], [32, 34, "U"], [36, 34, "W"], [37, 34, "U"],
+        [31, 35, "W"], [32, 35, "U"], [36, 35, "W"], [37, 35, "U"]],
+      d1: [...row("K", 33, 38, 40),
+        [38, 34, "W"], [39, 34, "U"], [38, 35, "W"], [39, 35, "U"]],
     },
+    // The shut eye is the far one, so the profile keeps the open eye and reads as bright.
     wink: {
       d3: [...row("K", 34, 26, 28), ...row("K", 33, 35, 37),
         [35, 34, "U"], [36, 34, "W"], [35, 35, "U"], [36, 35, "W"]],
+      d2: [...row("K", 34, 31, 32), ...row("K", 33, 36, 37),
+        [36, 34, "W"], [37, 34, "U"], [36, 35, "W"], [37, 35, "U"]],
+      d1: [...row("K", 33, 38, 39),
+        [38, 34, "W"], [39, 34, "U"], [38, 35, "W"], [39, 35, "U"]],
     },
-    happy: { d3: px("K", [26, 34], [27, 33], [28, 34], [35, 34], [36, 33], [37, 34]) },
+    // The front draws a shut ^_^. Dirs 2 and 4 may not — gateFace holds every set to an open eye
+    // at three-quarter — so the turn reads the arc as a squint: a one-row eye pinched between two
+    // lids, which is the same expression with the eyeball the gate demands.
+    happy: {
+      d3: px("K", [26, 34], [27, 33], [28, 34], [35, 34], [36, 33], [37, 34]),
+      d2: [...row("K", 33, 31, 32), ...row("K", 35, 31, 32),
+        ...row("K", 33, 36, 37), ...row("K", 35, 36, 37),
+        [31, 34, "W"], [32, 34, "U"], [36, 34, "W"], [37, 34, "U"]],
+      d1: [...row("K", 33, 38, 39), ...row("K", 35, 38, 39),
+        [38, 34, "W"], [39, 34, "U"]],
+    },
   },
   brows: {
     neutral: {
@@ -81,12 +112,26 @@ export const GEOMETRY_A: Geometry = {
       d2: [...row("B", 31, 30, 32), ...row("B", 31, 35, 37)],
       d1: row("B", 31, 37, 39),
     },
-    arched: { d3: px("B", [26, 32], [27, 31], [28, 31], [35, 31], [36, 31], [37, 32]) },
+    // Outer end down a row, on neutral's runs.
+    arched: {
+      d3: px("B", [26, 32], [27, 31], [28, 31], [35, 31], [36, 31], [37, 32]),
+      d2: px("B", [30, 32], [31, 31], [32, 31], [35, 31], [36, 31], [37, 32]),
+      d1: px("B", [37, 31], [38, 31], [39, 32]),
+    },
+    // Neutral, two rows deep.
     heavy: {
       d3: [...row("B", 31, 26, 28), ...row("B", 32, 26, 28),
         ...row("B", 31, 35, 37), ...row("B", 32, 35, 37)],
+      d2: [...row("B", 31, 30, 32), ...row("B", 32, 30, 32),
+        ...row("B", 31, 35, 37), ...row("B", 32, 35, 37)],
+      d1: [...row("B", 31, 37, 39), ...row("B", 32, 37, 39)],
     },
-    worried: { d3: px("B", [26, 32], [27, 32], [28, 31], [35, 31], [36, 32], [37, 32]) },
+    // Arched the other way: the inner end holds row 31 and the rest drops.
+    worried: {
+      d3: px("B", [26, 32], [27, 32], [28, 31], [35, 31], [36, 32], [37, 32]),
+      d2: px("B", [30, 32], [31, 32], [32, 31], [35, 31], [36, 32], [37, 32]),
+      d1: px("B", [37, 31], [38, 32], [39, 32]),
+    },
   },
   nose: {
     std: { d3: px("S", [31, 36], [32, 36]), d2: [[39, 35, "S"], [39, 36, "K"]], d1: [] },
@@ -98,27 +143,84 @@ export const GEOMETRY_A: Geometry = {
       d2: [[34, 38, "K"], ...row("K", 39, 35, 38)],
       d1: [[38, 38, "K"], ...row("K", 39, 39, 41)],
     },
+    // The profile mouth sits on the jaw silhouette, where an outline pixel is already shade 0 and a
+    // mouth pixel is invisible — which is why smile draws its d1 corner at 38 and not at 39. So the
+    // three expressions that only differ by a corner state that corner one pixel back, on the
+    // cheek: smile at row 38, smirk at 39, frown at 40. The mouth line itself is unchanged.
+    //
+    // Teeth are the one mouth ink that is lighter than the outline, so they may never reach that
+    // edge — a `paper` pixel at the jaw cuts a hole in the head's own silhouette. The profile grin
+    // therefore opens one pixel inboard, at 38, and keeps the line at 39 dark.
     grin: {
       d3: [...row("K", 38, 29, 34), ...row("T", 39, 30, 33),
         [29, 39, "K"], [34, 39, "K"], ...row("K", 40, 30, 33)],
+      d2: [...row("K", 38, 34, 39), ...row("T", 39, 35, 38),
+        [34, 39, "K"], [39, 39, "K"], ...row("K", 40, 35, 38)],
+      d1: [...row("K", 38, 37, 39), [38, 39, "T"], ...row("K", 39, 39, 41),
+        ...row("K", 40, 37, 39)],
     },
-    frown: { d3: [[29, 40, "K"], [34, 40, "K"], ...row("K", 39, 30, 33)] },
-    smirk: { d3: [...row("K", 39, 31, 34), [35, 38, "K"]] },
+    frown: {
+      d3: [[29, 40, "K"], [34, 40, "K"], ...row("K", 39, 30, 33)],
+      d2: [[34, 40, "K"], ...row("K", 39, 35, 38)],
+      d1: [[37, 40, "K"], [38, 40, "K"], ...row("K", 39, 39, 41)],
+    },
+    smirk: {
+      d3: [...row("K", 39, 31, 34), [35, 38, "K"]],
+      d2: [...row("K", 39, 35, 38), [39, 38, "K"]],
+      d1: row("K", 39, 38, 41),
+    },
   },
+  // A beard follows the jaw, not the eye line: its d2 and d1 are laid against the skull's own chin
+  // rows, which narrow to x26-37 by row 42 and x24-38 by row 40. `none` is first, so every one of
+  // these was invisible off dir 3 until #350 drew it.
+  //
+  // The profile art also clears a hole the wave1 hand punches through the jaw at dir 5, x29-34 of
+  // the d1 view over rows 36-43. Every d1 piece keeps a pixel in x25-28 or x35-38, so no run of the
+  // drawing is behind the hand in its entirety — gateFace reads a fully hidden piece as a drawing
+  // that has come off the head and cannot tell the two apart.
   beard: {
     none: {},
-    stubble: { d3: px("F", [27, 40], [30, 41], [33, 40], [36, 40], [29, 42], [34, 42]) },
-    moustache: { d3: px("B", [29, 38], [30, 38], [33, 38], [34, 38]) },
+    stubble: {
+      d3: px("F", [27, 40], [30, 41], [33, 40], [36, 40], [29, 42], [34, 42]),
+      d2: px("F", [31, 40], [34, 41], [36, 40], [38, 40], [33, 42], [36, 42]),
+      d1: px("F", [28, 39], [27, 41], [36, 40], [38, 40], [37, 41], [35, 42]),
+    },
+    // Two blocks split by the philtrum, straddling the mouth line by a pixel at each end. The
+    // profile has one lip to sit on, so there it is a single bar.
+    moustache: {
+      d3: px("B", [29, 38], [30, 38], [33, 38], [34, 38]),
+      d2: px("B", [34, 38], [35, 38], [38, 38], [39, 38]),
+      d1: px("B", [37, 38], [38, 38], [39, 38]),
+    },
+    // Sideburns at the face edges, a cheek run either side of the mouth row, then the mass on the
+    // chin. Row 39 is the mouth's and stays clear, at every view. The mass is narrower than the jaw
+    // it sits on, at every view, because `b` is the fill shade and lighter than the skull's outline
+    // — the design keeps the fill inboard and lets the dark `B` row be the one that reaches an edge.
     full: {
       d3: [[26, 36, "b"], [26, 37, "b"], [37, 36, "b"], [37, 37, "b"],
         [27, 38, "b"], [28, 38, "b"], [35, 38, "b"], [36, 38, "b"],
         ...row("b", 40, 28, 35), ...row("b", 41, 29, 34), ...row("B", 42, 30, 33)],
+      d2: [[30, 36, "b"], [30, 37, "b"], [39, 37, "b"], [39, 38, "b"],
+        [31, 38, "b"], [32, 38, "b"], [37, 38, "b"], [38, 38, "b"],
+        ...row("b", 40, 32, 37), ...row("b", 41, 33, 37), ...row("B", 42, 34, 37)],
+      d1: [[31, 36, "b"], [31, 37, "b"], [38, 37, "b"], [38, 38, "b"],
+        ...row("b", 38, 28, 30),
+        ...row("b", 40, 33, 37), ...row("b", 41, 34, 37), ...row("B", 42, 35, 37)],
     },
   },
+  // Cheek marks, under the eye and clear of the nose. The profile has one cheek to put them on.
   extra: {
     none: {},
-    blush: { d3: px("R", [26, 37], [27, 37], [36, 37], [37, 37]) },
-    freckles: { d3: px("F", [26, 36], [28, 37], [35, 37], [37, 36]) },
+    blush: {
+      d3: px("R", [26, 37], [27, 37], [36, 37], [37, 37]),
+      d2: px("R", [31, 37], [32, 37], [36, 37], [37, 37]),
+      d1: px("R", [37, 37], [38, 37]),
+    },
+    freckles: {
+      d3: px("F", [26, 36], [28, 37], [35, 37], [37, 36]),
+      d2: px("F", [30, 36], [32, 37], [36, 37], [38, 36]),
+      d1: px("F", [37, 37], [39, 36]),
+    },
   },
 };
 
