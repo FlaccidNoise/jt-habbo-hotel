@@ -3461,6 +3461,54 @@
       "figuredataVersion": 1,
       "recipeHash": "904487219e5107cae087b21b3cb4bc04b8128baf8f132984b83d2c9be7266b8a",
       "pixelHash": "a4949f5563121d040ac9dc218dc24ed0411fc31bac1bf7f7b85c3fdf79ac72fb"
+    },
+    {
+      "partId": "ca69",
+      "setId": 69,
+      "type": "ca",
+      "name": "Heraldic Mantle",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ca69.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b84ea6644cc5db903ab84a7ded10dc3d25d16268124bac30081cadd6ad8ed556",
+      "pixelHash": "eee61e5ab10760a28c11815a7feacde1f1a23bbc4b1207c836401d466c4bc723"
     }
   ]
 }

@@ -3134,6 +3134,28 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.02, 0.32)},
         ],
     },
+    # Heraldic Mantle (set 69, two slots). The scarf 60 is two offset lumps and one off-centre tail,
+    # asymmetric on purpose. The mantle is the symmetric answer: one cone off the chest bone, r0 9.0
+    # at the neck opening down to r1 11.4 at spine z 6.0, ending in a single clean hem.
+    #
+    # It hangs from the chest rather than the spine because a mantle is carried on the shoulders.
+    # "z0": 5.0 lifts the wide end to spine z 20, just under the chin plane at 21, so the cone's top
+    # disc is the collar and bd1's neck stands up out of the middle of it. The cone crosses x 9.6 a
+    # little above the shoulder line, so from the shoulders down it is always past the arm bones at
+    # +/-9.5 and the upper arm disappears inside it — below spine z 6 there is no cone and the
+    # forearm hangs free.
+    #
+    # The clasp has to stand OUTSIDE the cone to exist at all: same layer, so there is no holdout
+    # between them and the cone's own surface wins the depth test over anything tucked inside it. At
+    # y 8.6 it is 1.6 proud of the cone at the throat and reaches 3.6 px above its top disc.
+    "ca69": {
+        "prims": [
+            {"t": "cone", "bone": "chest", "slot": 0, "z0": 5.0, "len": 14.0,
+             "r0": 9.0, "r1": 11.4},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, 8.6, 20.4), "r": 3.4,
+             "squash": (1.15, 0.72, 0.95)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
