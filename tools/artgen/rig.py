@@ -2035,6 +2035,29 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.4)},
         ],
     },
+    # Tops pack (#440). Seven garments on the ch layer, each authored as a silhouette rather than a
+    # ramp — a wardrobe reads as a wardrobe only if the outlines differ at 2x.
+    #
+    # Hoodie (set 38, two slots). The hood is the part: a mass sat behind the neck, and the only ch
+    # silhouette here that breaks the shoulder line upward. It is centred 6.4 back so the skull wins
+    # the depth test at the front and the hood shows past the neck at the sides. Slot 1 is the
+    # drawstring and the belly pocket — flat details, because the hood already carries the outline.
+    "ch38": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.1, -6.7, 2.6),
+             "c1": (8.1, 6.7, 20.2)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-9.0, -7.4, 0.0),
+             "c1": (9.0, 7.4, 2.6)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, -6.4, 22.6), "r": 7.4,
+             "squash": (1.05, 1.00, 0.84)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-3.6, 6.3, 16.6),
+             "c1": (3.6, 7.2, 18.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-5.8, 6.3, 4.6),
+             "c1": (5.8, 7.4, 9.4)},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {

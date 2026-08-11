@@ -104,6 +104,10 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 35, type: "hr", name: "Afro",       slots: 1, family: "material", hides: [], retired: false },
   { id: 36, type: "hr", name: "Braids",     slots: 1, family: "material", hides: [], retired: false },
   { id: 37, type: "hr", name: "Mohawk",     slots: 1, family: "material", hides: [], retired: false },
+  // Tops pack (#440). Seven ch garments, each authored to a different outline — the
+  // near-duplicate rule is the whole brief, so 39 differs from the staff blazer 16 by
+  // hem and shoulder width, not by ramp. None hides anything: ch is what a coat hides.
+  { id: 38, type: "ch", name: "Hoodie",        slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -149,7 +153,11 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  is the cosmetics economy's stock — the one garment type with the variety to make a cut say
  *  something — so 28-37 are sold rather than granted, on four rungs inside the furni band
  *  (25-3300) and under the 600 daily earn ceiling: 150 for a plain silhouette, 250 for a shaped
- *  one, 350 for a styled one, and 450 for the three that read across a room. */
+ *  one, 350 for a styled one, and 450 for the three that read across a room.
+ *
+ *  Tops (38-44, #440) price on the same idea one shelf over: 150 for the one-slot basics, 200-250
+ *  once a garment carries a collar or a second colour slot, and 300-400 for the three that change
+ *  the figure's outline — a hood, a shirt under a vest, a jacket that hangs past the hip. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -161,6 +169,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 35, price: 450, theme: "hair" },   // Afro
   { set: 36, price: 450, theme: "hair" },   // Braids
   { set: 37, price: 450, theme: "hair" },   // Mohawk
+  { set: 38, price: 300, theme: "tops" },   // Hoodie
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

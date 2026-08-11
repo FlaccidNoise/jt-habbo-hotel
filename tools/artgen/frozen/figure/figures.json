@@ -1965,6 +1965,54 @@
       "figuredataVersion": 1,
       "recipeHash": "af2af91907b1525f11099662d2de464b9e47de3d5c66d817fa472a9bade39bbd",
       "pixelHash": "e89b7a5a2e4614946f10c844eb93f4e01aadea806896a55f2335d76575d43394"
+    },
+    {
+      "partId": "ch38",
+      "setId": 38,
+      "type": "ch",
+      "name": "Hoodie",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch38.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6fe587e93b4f95444d7f72eb76ee3e8b203d722b661c15ca1f6fcfe3efc82170",
+      "pixelHash": "3e7948e4c8316603270984d29b2ce320f9a9f87334a43b102f32c77d77c43570"
     }
   ]
 }
