@@ -2904,6 +2904,52 @@ FIGURE_PARTS = {
              "c1": (8.1, 6.6, 3.4)},
         ],
     },
+    # Sash (set 63, two slots). The belt 15 is one box wrapped horizontally round the waist, so the
+    # one thing this set must be is diagonal — and a box cannot be rotated, so the diagonal is a
+    # staircase. Six steps, each 2.8 wide and 4.2 tall, overlapping 0.6 in x and 0.8 in z so the
+    # run is continuous rather than six separate tiles.
+    #
+    # The top step wraps the shoulder front to back at y -6.6..7.4 instead of sitting on the chest,
+    # which is what makes the band read as passing OVER the shoulder rather than being painted on
+    # the front of it. Two back steps carry the run down behind, so dirs 6-7 show the diagonal too;
+    # the rest of the back is left off because four more steps buy nothing the first two do not.
+    #
+    # That wrap stops at x -7.4, inside bd1's own 7.5 torso edge. Drawn to -8.0 it cleared the
+    # torso, and a 14-deep box that clears the torso shows its BACK top corner as well as its
+    # front — 3.3 rows higher at dir 3, because depth projects at half a row per px — so the band
+    # grew a one px spike above the shoulder. Kept inside 7.5, the torso hides the back corner and
+    # the wrap still reaches the back where the body no longer covers it.
+    #
+    # Slot 1 is the trim, and it is placed rather than piped. Edging every step costs six more
+    # prims and lands 0.2 px of colour along a 2.8 px band, which at this scale is a fringe of
+    # single pixels. A rosette at the hip, a tab at the shoulder and the tail below the rosette
+    # spend three prims on three places a player can actually see the second ramp.
+    "wa63": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.4, -6.6, 15.0),
+             "c1": (-5.0, 7.4, 19.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.8, 6.3, 11.8),
+             "c1": (-3.0, 7.4, 16.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-3.6, 6.3, 8.6),
+             "c1": (-0.8, 7.4, 12.8)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-1.4, 6.3, 5.4),
+             "c1": (1.4, 7.4, 9.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (0.8, 6.3, 2.2),
+             "c1": (3.6, 7.4, 6.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (3.0, 6.3, -1.0),
+             "c1": (5.8, 7.4, 3.2)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.8, -7.2, 11.8),
+             "c1": (-3.0, -6.2, 16.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-3.6, -7.2, 8.6),
+             "c1": (-0.8, -6.2, 12.8)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (5.2, 7.0, 0.6), "r": 2.6,
+             "squash": (0.95, 0.62, 0.95)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.4, 6.3, 19.0),
+             "c1": (-4.8, 7.6, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (3.8, 6.4, -4.6),
+             "c1": (6.2, 7.6, 0.6)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

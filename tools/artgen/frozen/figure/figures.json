@@ -3171,6 +3171,54 @@
       "figuredataVersion": 1,
       "recipeHash": "925eeae1815a44477f55534dcbabe64fc2fde1824ce0fefb17e8df2ecf3dc726",
       "pixelHash": "e3940f67ad5d2725df69cb53390cf86d9118d899bf4051b439133f950adc85b0"
+    },
+    {
+      "partId": "wa63",
+      "setId": 63,
+      "type": "wa",
+      "name": "Sash",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa63.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "bfb31c948fd9d97e56e7ff18a48bbb960af7924176ea7acb72818bf5c3faa1b0",
+      "pixelHash": "36610f3f9f637c07fc59acb45089ff1d685e4470198db272f0b8df685a824f45"
     }
   ]
 }
