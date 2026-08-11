@@ -2134,6 +2134,24 @@ FIGURE_PARTS = {
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 10.0, "r": 3.8},
         ],
     },
+    # Turtleneck (set 42, one slot). Two stacked ellipsoids at the neck: the lower one is the rolled
+    # fold, 0.4 wider than the upper, so the collar has a step in it instead of being one smooth
+    # tube. The upper reaches z 23.0 — the chin plane is 21.0 and the stamped mouth projects around
+    # z 26.6, so the collar covers the jaw underside and stops 3.6 px short of the mouth. The body
+    # and sleeves are the tightest in the pack (7.7 and r 3.6) because knitwear that is not snug is
+    # a sweatshirt.
+    "ch42": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.7, -6.2, 1.0),
+             "c1": (7.7, 6.2, 19.4)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 0.0, 18.6), "r": 5.4,
+             "squash": (1.00, 0.98, 0.42)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 0.0, 20.2), "r": 5.0,
+             "squash": (0.96, 0.94, 0.56)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 21.0, "r": 3.6},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 3.6},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {

@@ -2157,6 +2157,54 @@
       "figuredataVersion": 1,
       "recipeHash": "ca48f15d2b3daeed9eafb3674023b9caad5b2d284a33b1f09e095d49ee0854d2",
       "pixelHash": "d9fc73d55098259bdca81e40949ecf46990c22a7dc309ab6aae9c3b280eb7cba"
+    },
+    {
+      "partId": "ch42",
+      "setId": 42,
+      "type": "ch",
+      "name": "Turtleneck",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ch42.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "8a5340b161936773c503a5b874a1355607e51b02da13f612660bd60177ee2243",
+      "pixelHash": "b7e5ffedb9af06ef9d99695ca83f4c46334b32db4067861e8e9e48851d2cee19"
     }
   ]
 }
