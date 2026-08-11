@@ -543,6 +543,15 @@ export async function startServer(opts: {
       case "bj_stand":
         blackjackService.stand(accountId);
         break;
+      case "bj_double":
+        blackjackService.double(accountId);
+        break;
+      case "bj_split":
+        blackjackService.split(accountId);
+        break;
+      case "bj_insurance":
+        blackjackService.insurance(accountId, msg.take);
+        break;
     }
   }
 

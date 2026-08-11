@@ -14,6 +14,7 @@ import {
   checkWallPlacement,
   footprintTiles,
   handValue,
+  insuranceBet,
   parseHeightmap,
   screenToTile,
   leverOdds,
@@ -531,12 +532,12 @@ function totalLabel(hand: { total: number; soft: boolean }): string {
   return `Total: ${hand.soft ? "soft " : ""}${hand.total}`;
 }
 
-function outcomeLabel(state: BlackjackState): string {
-  switch (state.outcome) {
+function outcomeLabel(hand: BlackjackState["hands"][number]): string {
+  switch (hand.outcome) {
     case "blackjack":
-      return `Blackjack! +${state.paid ?? 0} ★`;
+      return `Blackjack! +${hand.paid ?? 0} ★`;
     case "win":
-      return `+${state.paid ?? 0} ★`;
+      return `+${hand.paid ?? 0} ★`;
     case "push":
       return "Push — stake returned";
     case "loss":
@@ -546,32 +547,62 @@ function outcomeLabel(state: BlackjackState): string {
   }
 }
 
-/** The card table (jtbug #428). No local memory of the hand — everything here is read straight off
- *  `blackjack`, so a reconnect mid-play renders correctly from whatever the server re-emits. */
+/** The card table (jtbug #428, #431). No local memory of the hand — everything here is read
+ *  straight off `blackjack`, so a reconnect mid-play renders correctly from whatever the server
+ *  re-emits. The buttons come from `actions`: the dealer decides what is legal, and a panel that
+ *  guessed for itself could offer a split the table would refuse. */
 function renderBlackjack(): void {
-  const inHand = blackjack?.phase === "player";
-  const resolved = blackjack?.phase === "resolved";
-  const dealerCards = (blackjack?.dealer ?? []).map(cardGlyph);
-  el("bj-dealer").textContent = inHand
-    ? `Dealer: ${[...dealerCards, "🂠"].join(" ")}`
-    : `Dealer: ${dealerCards.join(" ") || "—"}`;
-  el("bj-dealer-total").textContent = resolved && blackjack ? totalLabel(handValue(blackjack.dealer)) : "";
-  const playerCards = (blackjack?.player ?? []).map(cardGlyph);
-  el("bj-player").textContent = `You: ${playerCards.join(" ") || "—"}`;
-  el("bj-player-total").textContent =
-    blackjack && blackjack.player.length > 0 ? totalLabel(handValue(blackjack.player)) : "";
-  el("bj-status").textContent = resolved && blackjack ? outcomeLabel(blackjack) : "";
-  const stakedToday = blackjack?.stakedToday ?? 0;
+  const state = blackjack;
+  const inHand = state?.phase === "player";
+  const insuring = state?.phase === "insurance";
+  const resolved = state?.phase === "resolved";
+  const dealerCards = (state?.dealer ?? []).map(cardGlyph);
+  el("bj-dealer").textContent = resolved
+    ? `Dealer: ${dealerCards.join(" ") || "—"}`
+    : dealerCards.length > 0
+      ? `Dealer: ${[...dealerCards, "🂠"].join(" ")}`
+      : "Dealer: —";
+  el("bj-dealer-total").textContent = resolved && state ? totalLabel(handValue(state.dealer)) : "";
+
+  // One line per hand, so a split reads as two hands rather than one impossible pile of cards.
+  // The arrow marks the hand the buttons are pointed at.
+  const rows = el("bj-hands");
+  rows.replaceChildren();
+  const hands = state?.hands ?? [];
+  for (const [i, hand] of hands.entries()) {
+    const line = document.createElement("div");
+    line.className = "bj-cards";
+    const mark = hands.length > 1 && inHand && i === state?.active ? "▸ " : "";
+    const name = hands.length > 1 ? `Hand ${i + 1}` : "You";
+    line.textContent = `${mark}${name}: ${hand.cards.map(cardGlyph).join(" ")}`;
+    const total = document.createElement("div");
+    total.className = "bj-total";
+    const stake = hand.stake > (state?.stake ?? 0) ? ` · doubled to ${hand.stake} ★` : "";
+    total.textContent = `${totalLabel(handValue(hand.cards))}${stake}` +
+      (resolved ? ` · ${outcomeLabel(hand)}` : "");
+    rows.append(line, total);
+  }
+  if (hands.length === 0) el("bj-hands").textContent = "You: —";
+
+  el("bj-status").textContent = resolved && state
+    ? `Paid ${state.paid ?? 0} ★${state.insurance ? ` (insurance ${state.insurance} ★)` : ""}`
+    : insuring && state
+      ? `Dealer shows an ace. Insurance costs ${insuranceBet(state.stake)} ★ and pays 2:1.`
+      : "";
+  const stakedToday = state?.stakedToday ?? 0;
   const capReached = stakedToday >= BJ_DAILY_CAP;
   el("bj-headroom").textContent = capReached
     ? `daily stake cap reached — ${BJ_DAILY_CAP} ★ used`
     : `${BJ_DAILY_CAP - stakedToday} ★ of ${BJ_DAILY_CAP} left to stake today`;
-  const stakesOpen = blackjack?.phase !== "player";
+  const stakesOpen = !inHand && !insuring;
   for (const stake of BLACKJACK_STAKES) {
     el<HTMLButtonElement>(`bj-stake-${stake}`).disabled = !stakesOpen || capReached;
   }
-  el<HTMLButtonElement>("bj-hit").disabled = !inHand;
-  el<HTMLButtonElement>("bj-stand").disabled = !inHand;
+  const actions = state?.actions ?? [];
+  for (const action of ["hit", "stand", "double", "split"] as const) {
+    el<HTMLButtonElement>(`bj-${action}`).disabled = !actions.includes(action);
+  }
+  el("bj-insurance").hidden = !insuring;
 }
 
 /** The Luck Lever's odds are the same table the server draws from (shared/lever.ts), rendered
@@ -1368,6 +1399,10 @@ for (const stake of BLACKJACK_STAKES) {
 }
 el("bj-hit").addEventListener("click", () => net.send({ t: "bj_hit" }));
 el("bj-stand").addEventListener("click", () => net.send({ t: "bj_stand" }));
+el("bj-double").addEventListener("click", () => net.send({ t: "bj_double" }));
+el("bj-split").addEventListener("click", () => net.send({ t: "bj_split" }));
+el("bj-insure").addEventListener("click", () => net.send({ t: "bj_insurance", take: true }));
+el("bj-decline").addEventListener("click", () => net.send({ t: "bj_insurance", take: false }));
 el("bj-close").addEventListener("click", () => (el("blackjack").hidden = true));
 el("lever-open").addEventListener("click", () => {
   const panel = el("lever");

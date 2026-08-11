@@ -4,7 +4,10 @@ import {
   cardValue,
   dealerShouldHit,
   handValue,
+  insuranceBet,
   isBlackjack,
+  isPair,
+  legalActions,
   payout,
   resolve,
   type Rank,
@@ -97,6 +100,48 @@ test("a win doubles the stake, a push returns it, a loss returns nothing", () =>
   }
 });
 
+// ── Double, split, insurance (#431) ───────────────────────────────────────────────────────────
+
+test("a pair is two cards of equal value, so the court cards pair with the tens", () => {
+  expect(isPair([8, 8])).toBe(true);
+  expect(isPair([A, A])).toBe(true);
+  expect(isPair([K, Q])).toBe(true);
+  expect(isPair([10, J])).toBe(true);
+  expect(isPair([8, 9])).toBe(false);
+  expect(isPair([A, K])).toBe(false);
+  expect(isPair([8, 8, 8])).toBe(false);   // a third card ends the offer
+  expect(isPair([8])).toBe(false);
+});
+
+test("double and split are first-two-card offers, and a split is offered once", () => {
+  expect(legalActions([8, 8], true)).toEqual(["hit", "stand", "double", "split"]);
+  expect(legalActions([8, 8], false)).toEqual(["hit", "stand", "double"]);   // no resplit
+  expect(legalActions([9, 2], true)).toEqual(["hit", "stand", "double"]);
+  expect(legalActions([9, 2, 3], true)).toEqual(["hit", "stand"]);
+  expect(legalActions([8, 8, 5], true)).toEqual(["hit", "stand"]);
+  // Even a hard 20 may be hit. It is the player's Star.
+  expect(legalActions([K, Q, 5, A], false)).toEqual(["hit", "stand"]);
+});
+
+test("insurance costs half the stake with the odd Star on the player's side", () => {
+  expect(BLACKJACK_STAKES.map(insuranceBet)).toEqual([5, 13, 25, 50]);
+  // 2:1 on 13 returns 39 against a 25 stake lost to the natural: the player ends a Star up.
+  expect(insuranceBet(25) * 3 - 25 - insuranceBet(25)).toBe(1);
+  expect(insuranceBet(50) * 3 - 50 - insuranceBet(50)).toBe(0);
+});
+
+// The rule with money on it: 21 on a split hand is 21. Paid as a natural it would be 3:2 on half
+// the aces in the shoe, and it would push against a dealer natural instead of losing.
+test("a split hand's twenty-one is a plain twenty-one", () => {
+  expect(resolve([A, K], [9, 9], true)).toBe("win");
+  expect(resolve([A, K], [K, Q], true)).toBe("win");
+  expect(resolve([A, K], [A, Q], true)).toBe("loss");
+  expect(resolve([A, K], [7, 7, 7], true)).toBe("push");
+  expect(payout(25, resolve([A, K], [9, 9], true))).toBe(50);
+  // The same cards off a plain deal are still a natural.
+  expect(resolve([A, K], [9, 9])).toBe("blackjack");
+});
+
 // ── House edge ────────────────────────────────────────────────────────────────────────────────
 // The tables are house-banked, so the edge is the only thing that makes them safe to run. It is not
 // written down anywhere in the rules — it falls out of "the player acts first" — so the only honest
@@ -110,7 +155,19 @@ const mulberry32 = (seed: number) => () => {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 };
 
-/** Basic strategy for a hit-or-stand game against S17: the best a player can actually play here. */
+const between = (upcard: number, lo: number, hi: number): boolean => upcard >= lo && upcard <= hi;
+
+// Basic strategy for exactly the rules this module states: infinite deck, S17, double on any first
+// two cards, double after split, split a pair once. Upcards are card *values* here, so 1 is the
+// ace and 10 covers every court card.
+//
+// Insurance is not in the table because basic strategy never takes it: the bet pays 2:1 on a hole
+// card that is a ten less than a third of the time, so it loses money at every count an infinite
+// shoe can have. The sim is never offered it, which is the honest way to measure a side bet a good
+// player declines.
+
+/** Hit-or-stand, for hands past the first decision — three cards in, or a two-card hand that basic
+ *  strategy would neither double nor split. */
 const playerHits = (cards: Rank[], upcard: number): boolean => {
   const { total, soft } = handValue(cards);
   if (soft) {
@@ -124,38 +181,116 @@ const playerHits = (cards: Rank[], upcard: number): boolean => {
   return false;
 };
 
-test("the house edge is about 2.3% — measured, not assumed", () => {
+/** Aces and eights always, tens and fives never, the rest by upcard. */
+const shouldSplit = (card: Rank, upcard: number): boolean => {
+  if (card === A) return true;
+  switch (cardValue(card)) {
+    case 8:
+      return true;
+    case 9:
+      return between(upcard, 2, 6) || upcard === 8 || upcard === 9;
+    case 7:
+    case 3:
+    case 2:
+      return between(upcard, 2, 7);
+    case 6:
+      return between(upcard, 2, 6);
+    case 4:
+      return between(upcard, 5, 6);
+    default:
+      return false;
+  }
+};
+
+/** First two cards only — the caller checks that. Eleven doubles against everything under S17. */
+const shouldDouble = (cards: Rank[], upcard: number): boolean => {
+  const { total, soft } = handValue(cards);
+  if (soft) {
+    if (total === 13 || total === 14) return between(upcard, 5, 6);
+    if (total === 15 || total === 16) return between(upcard, 4, 6);
+    if (total === 17 || total === 18) return between(upcard, 3, 6);
+    return false;
+  }
+  if (total === 9) return between(upcard, 3, 6);
+  if (total === 10) return between(upcard, 2, 9);
+  return total === 11;
+};
+
+interface SimHand { cards: Rank[]; stake: number; split: boolean }
+
+/** One hand played to its end: doubled and closed, or hit until basic strategy stands it. */
+const playHand = (hand: SimHand, upcard: number, draw: () => Rank): SimHand => {
+  if (hand.cards.length === 2 && shouldDouble(hand.cards, upcard)) {
+    hand.stake *= 2;
+    hand.cards.push(draw());
+    return hand;
+  }
+  while (playerHits(hand.cards, upcard)) hand.cards.push(draw());
+  return hand;
+};
+
+/** The seat: one hand, or the two a split makes of it. No resplit, and split aces take one card. */
+const playSeat = (cards: Rank[], upcard: number, stake: number, draw: () => Rank): SimHand[] => {
+  const [first, second] = cards as [Rank, Rank];
+  if (isPair(cards) && shouldSplit(first, upcard)) {
+    const hands = [first, second].map((card) => ({
+      cards: [card, draw()], stake, split: true,
+    }));
+    return first === A ? hands : hands.map((hand) => playHand(hand, upcard, draw));
+  }
+  return [playHand({ cards, stake, split: false }, upcard, draw)];
+};
+
+test("the house edge is about 0.5% — measured, not assumed", () => {
   const random = mulberry32(0x5eed_1234);
   const draw = (): Rank => 1 + Math.floor(random() * 13);
   const HANDS = 1_000_000;
   const STAKE = 25; // The odd tier, so the 3:2 rounding is part of the measurement.
 
-  let staked = 0;
+  let opening = 0;    // one stake per round: the denominator, as it was in v1
+  let wagered = 0;    // every Star that reached the felt, doubles and splits included
   let returned = 0;
-  for (let hand = 0; hand < HANDS; hand++) {
-    const player = [draw(), draw()];
+  for (let round = 0; round < HANDS; round++) {
+    const first = [draw(), draw()];
     const dealer = [draw(), draw()];
     const upcard = cardValue(dealer[0] as Rank);
+    opening += STAKE;
 
-    if (!isBlackjack(player)) {
-      while (playerHits(player, upcard)) player.push(draw());
-      // A dealt blackjack ends the hand, so the dealer only draws against a standing player.
-      if (handValue(player).total <= 21 && !isBlackjack(dealer)) {
-        while (dealerShouldHit(dealer)) dealer.push(draw());
-      }
+    // The peek comes before any decision the player makes, so a natural on either side takes the
+    // opening stake and no more: nothing is ever doubled or split into a hand already over.
+    if (isBlackjack(first) || isBlackjack(dealer)) {
+      wagered += STAKE;
+      returned += payout(STAKE, resolve(first, dealer));
+      continue;
     }
 
-    staked += STAKE;
-    returned += payout(STAKE, resolve(player, dealer));
+    const hands = playSeat(first, upcard, STAKE, draw);
+    // The dealer draws only against a hand still alive — every hand busted is every hand lost.
+    if (hands.some((hand) => handValue(hand.cards).total <= 21)) {
+      while (dealerShouldHit(dealer)) dealer.push(draw());
+    }
+    for (const hand of hands) {
+      wagered += hand.stake;
+      returned += payout(hand.stake, resolve(hand.cards, dealer, hand.split));
+    }
   }
 
-  const edge = (staked - returned) / staked;
-  // Measured 0.02330 over 1,000,000 hands at seed 0x5eed1234. The run is single-seed
-  // deterministic, so the band hugs the measurement: ±0.002 catches S17→H17 (+0.00275), which
-  // ±0.004 let through. A draw-order refactor shifts the seeded number — re-measure, don't widen.
-  expect(edge).toBeGreaterThan(0.0233 - 0.002);
-  expect(edge).toBeLessThan(0.0233 + 0.002);
+  // Measured 0.00503 over 1,000,000 rounds at seed 0x5eed1234 — the house keeps half a Star in
+  // every hundred a player opens with. Doubling and splitting are what took it there from v1's
+  // 0.0233: the money goes on when the player is ahead, which is most of what basic strategy is.
+  //
+  // The denominator is the opening stake, one per round, the way v1 measured it — so the two
+  // numbers are the same measurement of two rule sets. Per Star actually wagered it is 0.00445,
+  // because doubles and splits push about 13% more money onto the felt than the deals do.
+  //
+  // The run is single-seed deterministic, so the band hugs the measurement rather than covering
+  // seed noise: over five seeds the same rules measure 0.0028–0.0050, and a re-seed would need a
+  // re-pin. ±0.0015 catches S17→H17, which measures 0.00784 on this seed. A draw-order refactor
+  // shifts the seeded number too — re-measure, don't widen.
+  const edge = (wagered - returned) / opening;
+  expect(edge).toBeGreaterThan(0.0050 - 0.0015);
+  expect(edge).toBeLessThan(0.0050 + 0.0015);
   // Thin enough to sit at for an hour, wide enough that the tables are never a faucet.
-  expect(edge).toBeGreaterThan(0.005);
-  expect(edge).toBeLessThan(0.04);
-}, 30_000);
+  expect(edge).toBeGreaterThan(0.001);
+  expect(edge).toBeLessThan(0.02);
+}, 60_000);

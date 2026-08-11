@@ -164,6 +164,11 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("bj_deal"), stake: z.number().int() }),
   z.object({ t: z.literal("bj_hit") }),
   z.object({ t: z.literal("bj_stand") }),
+  z.object({ t: z.literal("bj_double") }),
+  z.object({ t: z.literal("bj_split") }),
+  // Declining is a message too (#431): the peek waits on the answer, so silence has to be a
+  // decision the player makes rather than a hand that never resolves.
+  z.object({ t: z.literal("bj_insurance"), take: z.boolean() }),
 ]);
 export type ClientMsg = z.infer<typeof ClientMsgSchema>;
 
@@ -258,15 +263,26 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   // client runs the same shared handValue the dealer does, so an ace can never read 11 on one side
   // and 1 on the other. `dealer` is the upcard alone until the hand resolves; the hole card exists
   // only on the server until then, so a client cannot peek at what it has not been shown.
+  // A split makes two hands out of one seat (#431), so the seat is a list and `active` says which
+  // hand the buttons act on. `actions` is the dealer's answer to "what may I do now" — the client
+  // draws its buttons from it rather than re-deriving the rules and disagreeing with the table.
   z.object({
     t: z.literal("blackjack_state"),
-    phase: z.enum(["idle", "player", "resolved"]),
-    player: z.array(z.number().int()),
+    phase: z.enum(["idle", "insurance", "player", "resolved"]),
+    hands: z.array(z.object({
+      cards: z.array(z.number().int()),
+      stake: z.number().int(),         // doubled hands carry the doubled figure
+      split: z.boolean(),              // 21 here is a plain 21, so the client must not call it one
+      outcome: z.enum(["blackjack", "win", "push", "loss"]).optional(),
+      paid: z.number().int().optional(),
+    })),
+    active: z.number().int(),
+    actions: z.array(z.enum(["hit", "stand", "double", "split"])),
     dealer: z.array(z.number().int()),
-    stake: z.number().int(),
-    stakedToday: z.number().int(),   // rolling 24h, for the headroom line under the table
-    outcome: z.enum(["blackjack", "win", "push", "loss"]).optional(),
-    paid: z.number().int().optional(),
+    stake: z.number().int(),           // the opening stake, before any double or split
+    stakedToday: z.number().int(),     // rolling 24h, for the headroom line under the table
+    insurance: z.number().int().optional(),   // the side bet, once it is taken
+    paid: z.number().int().optional(),        // every Star returned, insurance included
   }),
   z.object({ t: z.literal("notice"), text: z.string() }),   // onboarding and system prompts
   z.object({ t: z.literal("error"), code: ErrorCodeSchema, message: z.string() }),

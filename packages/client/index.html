@@ -318,8 +318,7 @@
       <h2>Blackjack</h2>
       <div id="bj-dealer" class="bj-cards"></div>
       <div id="bj-dealer-total" class="bj-total"></div>
-      <div id="bj-player" class="bj-cards"></div>
-      <div id="bj-player-total" class="bj-total"></div>
+      <div id="bj-hands"></div>
       <div id="bj-status"></div>
       <div id="bj-headroom"></div>
       <div class="row">
@@ -331,6 +330,12 @@
       <div class="row">
         <button type="button" id="bj-hit">Hit</button>
         <button type="button" id="bj-stand">Stand</button>
+        <button type="button" id="bj-double">Double</button>
+        <button type="button" id="bj-split">Split</button>
+      </div>
+      <div class="row" id="bj-insurance" hidden>
+        <button type="button" id="bj-insure">Insure</button>
+        <button type="button" id="bj-decline">No thanks</button>
       </div>
       <button type="button" id="bj-close">Close</button>
     </div>
