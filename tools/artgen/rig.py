@@ -2166,6 +2166,42 @@ FIGURE_PARTS = {
              "c1": (6.8, 6.4, 20.0)},
         ],
     },
+    # Tracksuit Top (set 44, two slots). Blousy body over a pinched waistband — 8.6 down to 7.8 —
+    # which inverts the hoodie 38's flared hem. The band stays at 7.8 rather than pinching further
+    # because bd1's torso is 7.5 and a garment inside that lets skin through.
+    #
+    # The sleeves are 4.6 where every other jacket here is 3.8-4.0. Loose sleeves are the trait that
+    # most says tracksuit, and they are also the only lever big enough to separate this outline from
+    # the staff blazer 16: at r 4.0 the two measured 0.878 silhouette overlap against a 0.854
+    # wardrobe baseline, and the arms are the largest share of the alpha that 16 does not share.
+    #
+    # Slot 1 is the trim and it is deliberately flat: the zip sits 0.1 proud of the chest, which
+    # never shows in the outline but always wins the depth test, so the band is a colour running
+    # down the front rather than a ridge. The stand collar, the waistband and the elastic cuffs
+    # carry the same slot. The sleeve stripes ride the outboard face of each sleeve — +x on arm_l,
+    # -x on arm_r, because the arm bones sit either side of the chest.
+    "ch44": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.6, -7.1, 4.2),
+             "c1": (8.6, 7.1, 19.6)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.6},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.6},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.8, -6.4, 0.6),
+             "c1": (7.8, 6.4, 4.2)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-5.2, -6.9, 19.6),
+             "c1": (5.2, 6.9, 22.2)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-1.1, 6.4, 4.2),
+             "c1": (1.1, 7.2, 19.6)},
+            {"t": "box",  "bone": "arm_l", "slot": 1, "c0": (3.8, -1.4, -19.4),
+             "c1": (4.8, 1.4, -2.0)},
+            {"t": "box",  "bone": "arm_r", "slot": 1, "c0": (-4.8, -1.4, -19.4),
+             "c1": (-3.8, 1.4, -2.0)},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -20.4), "r": 4.8,
+             "squash": (1.0, 1.0, 0.38)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -20.4), "r": 4.8,
+             "squash": (1.0, 1.0, 0.38)},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {

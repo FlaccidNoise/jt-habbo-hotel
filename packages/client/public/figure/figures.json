@@ -2253,6 +2253,54 @@
       "figuredataVersion": 1,
       "recipeHash": "831791e7e80188f98179754dd8770fa18d22be6da88805e87d5d2814c0fc63f4",
       "pixelHash": "668d52e1ac7b469ebac6f8cb68d709ec16ce66e6bdd33167fa9bd6d653cc77bb"
+    },
+    {
+      "partId": "ch44",
+      "setId": 44,
+      "type": "ch",
+      "name": "Tracksuit Top",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch44.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d07505d8b057cf124de9c6dbbadc6a51a5f6efaed93b7a9e5f015d6091699056",
+      "pixelHash": "36db0adf1602a11d4c0326dcb35b3222b55c543a6280f3ab5310fe9de7bfab7d"
     }
   ]
 }
