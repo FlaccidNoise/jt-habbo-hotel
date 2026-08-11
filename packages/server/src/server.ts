@@ -15,6 +15,7 @@ import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
+import { buySet, ownedSetIds } from "./figure.ts";
 import {
   COFFEE_STARS, NPC_FAUCET_CAP, settleEarn, settlePurchase, settleSpend, settleTrickle,
 } from "./ledger.ts";
@@ -322,6 +323,7 @@ export async function startServer(opts: {
     // Also claims: an account can complete a set through a path that predates this code, and a
     // reward owed is a reward paid the next time it joins.
     settleSets(account.id);
+    emit(account.id, { t: "wardrobe", ownedSets: ownedSetIds(db, account.id) });
     log("join", { accountId: account.id, username: account.username, roomId: msg.roomId });
     npcService.onPlayerJoin(msg.roomId, account.username);
     const hint = onboardingHint(db, account.id);
@@ -433,6 +435,22 @@ export async function startServer(opts: {
         });
         settleSets(accountId);
         quest(accountId, "purchase");
+        break;
+      }
+      // The wardrobe's Stars shelf (#352): a garment is bought once and owned for good, so it
+      // mints no item and adds nothing to the inventory — the whole delivery is the owned_sets row
+      // this hands back as the account's new wardrobe.
+      case "buy_set": {
+        const result = buySet(db, accountId, msg.setId);
+        log("buy_set", { accountId, setId: msg.setId, ok: result.ok });
+        if (!result.ok) {
+          fail(conn.ws, "purchase", result.reason);
+          break;
+        }
+        emit(accountId, {
+          t: "stars", balance: result.balance, delta: -result.price, reason: "wardrobe",
+        });
+        emit(accountId, { t: "wardrobe", ownedSets: ownedSetIds(db, accountId) });
         break;
       }
       // The Luck Lever (#210): one message, one draw, no session — the only repeatable sink, so

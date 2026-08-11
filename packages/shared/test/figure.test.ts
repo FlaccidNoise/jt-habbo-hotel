@@ -1,7 +1,9 @@
 import { describe, expect, test } from "vitest";
 import {
-  FIGURE_SETS, LAYER_ORDER, SELECTABLE_TYPES, STAFF_GRANT_SETS, STARTER_GRANT_SETS, setById,
+  FIGURE_SETS, LAYER_ORDER, SELECTABLE_TYPES, STAFF_GRANT_SETS, STARTER_GRANT_SETS,
+  UNPURCHASABLE_SETS, WEARABLE_PRICES, setById,
 } from "../src/figuredata.ts";
+import { CATALOG_PRICES } from "../src/furni.ts";
 import type { FigureSet } from "../src/figuredata.ts";
 import {
   checkHideDirection, parseFigure, resolveLayers, resolvedKey, serializeFigure,
@@ -172,5 +174,49 @@ describe("the wardrobe registry", () => {
     expect(STARTER_GRANT_SETS).toContain(17);         // an eyed face: a new player is not blank
     expect(STARTER_GRANT_SETS).not.toContain(16);     // staff blazer is never player-grantable
     expect(STARTER_GRANT_SETS).not.toContain(28);     // the hair expansion is earned (#352)
+  });
+});
+
+// The wardrobe's half of the price ladder (#352), held to the same rule furni.test.ts holds
+// CATALOG_PRICES to: a garment nobody can obtain is a bug, and an exemption has to be written down.
+describe("the Stars shelf", () => {
+  const grantable = (id: number): boolean =>
+    STARTER_GRANT_SETS.includes(id) || STAFF_GRANT_SETS.includes(id);
+
+  test("every set is grantable, priced, or explicitly unpurchasable with a reason", () =>
+    expect(
+      FIGURE_SETS.filter((s) => !grantable(s.id) && !WEARABLE_PRICES.has(s.id)
+        && !UNPURCHASABLE_SETS.has(s.id)).map((s) => s.id),
+      "price it into WEARABLE_PRICES or add the id to UNPURCHASABLE_SETS with a reason comment",
+    ).toEqual([]));
+
+  test("the hair expansion is the shelf: all ten, and only those", () =>
+    expect([...WEARABLE_PRICES.keys()].sort((a, b) => a - b))
+      .toEqual([28, 29, 30, 31, 32, 33, 34, 35, 36, 37]));
+
+  test("nothing already granted is also for sale", () =>
+    expect([...WEARABLE_PRICES.keys()].filter(grantable)).toEqual([]));
+
+  test("no price names a set that left the registry, or one that retired", () => {
+    for (const id of WEARABLE_PRICES.keys()) {
+      const set = setById(id);
+      expect(set, `set ${id} missing`).toBeDefined();
+      expect(set?.retired, `set ${id} retired`).toBe(false);
+    }
+  });
+
+  // A wearable priced above the furni band would read as a different currency, and one above the
+  // 600 daily ceiling could not be bought in a day's play — hair is stock, not a prestige fixture.
+  test("prices sit inside the furni band and under a day's earnings", () => {
+    const furni = [...CATALOG_PRICES.values()];
+    for (const [id, price] of WEARABLE_PRICES) {
+      expect(price, `set ${id}`).toBeGreaterThanOrEqual(Math.min(...furni));
+      expect(price, `set ${id}`).toBeLessThanOrEqual(600);
+    }
+  });
+
+  test("the shelf is a ladder, cheapest first", () => {
+    const prices = [...WEARABLE_PRICES.values()];
+    expect(prices).toEqual([...prices].sort((a, b) => a - b));
   });
 });

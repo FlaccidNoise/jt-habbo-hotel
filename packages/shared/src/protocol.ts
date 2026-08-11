@@ -146,6 +146,9 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("trade_accept") }),
   z.object({ t: z.literal("trade_cancel") }),
   z.object({ t: z.literal("buy"), defId: z.string() }),
+  // Buying a garment is not buying furni: a set is owned by the account, mints no item, and never
+  // trades — so it is its own message rather than a defId the furni path would have to special-case.
+  z.object({ t: z.literal("buy_set"), setId: z.number().int() }),
   z.object({ t: z.literal("nav_list") }),
   z.object({ t: z.literal("lever_pull") }),
   // Donating is irreversible, so the client confirms before sending it (#210).
@@ -180,6 +183,10 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("posture"), id: z.number().int(), posture: PostureSchema,
              x: z.number().int(), y: z.number().int(), z: z.number(), dir: DirSchema }),
   z.object({ t: z.literal("figure_changed"), id: z.number().int(), figure: z.string() }),
+  // Every set the account owns (#352), sent on join and after a wearable purchase. The wardrobe
+  // used to infer this from the starter grant plus whatever the player had on, which could not see
+  // a bought set that was not currently worn.
+  z.object({ t: z.literal("wardrobe"), ownedSets: z.array(z.number().int()) }),
   // Transient: no posture, no server-held state. The client plays the two frames and drops back.
   z.object({ t: z.literal("wave"), id: z.number().int() }),
   // #326. `state` is the only thing that changes, so it travels alone rather than as a whole item.

@@ -7,6 +7,8 @@ import {
   ROOM_FURNI_CAP,
   LEVER_COST,
   WALL_CATALOG,
+  WEARABLE_PRICES,
+  WEARABLE_THEME,
   checkPlacement,
   checkWallPlacement,
   footprintTiles,
@@ -14,6 +16,7 @@ import {
   screenToTile,
   leverOdds,
   seatAt,
+  setById,
   tileHeight,
   wallOffsetLimits,
   worldToScreen,
@@ -45,8 +48,9 @@ import { RoomScene, SCALE, ZOOM, loadZoom, setZoom } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
 import { catalogGroups, thumbCrop } from "./ui/catalog.ts";
+import type { CatalogItem } from "./ui/catalog.ts";
 import { ChatOverlay } from "./ui/chat.ts";
-import { Creator } from "./ui/creator.ts";
+import { Creator, wearableThumb } from "./ui/creator.ts";
 import { parseChatInput } from "./ui/parse.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
@@ -57,6 +61,18 @@ type SetRows = Extract<ServerMsg, { t: "sets" }>["sets"];
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
+
+// Wearables share the shop with furni (#352). The grid is keyed by string ids, so a set enters it
+// as `set:<id>`; `setId` is what tells a card to bake its thumbnail and buy with `buy_set`.
+const WEARABLE_ITEMS: CatalogItem[] = [];
+const SHOP_PRICES = new Map(CATALOG_PRICES);
+for (const [setId, price] of WEARABLE_PRICES) {
+  const set = setById(setId);
+  if (!set) continue;
+  const id = `set:${setId}`;
+  WEARABLE_ITEMS.push({ id, name: set.name, theme: WEARABLE_THEME, setId });
+  SHOP_PRICES.set(id, price);
+}
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
 /** Thumbnail box, in CSS px. The .thumb rule in index.html is the same size — the crop is
  *  computed against these numbers, so the two have to agree. */
@@ -99,6 +115,9 @@ let menuItem: number | null = null;   // placed item whose edit menu is open
 let you: number | null = null;
 let clockOffset: number | null = null;
 let stars = 0;
+/** Every figure set the account owns (#352). The server sends it on join and after every wearable
+ *  purchase, so both the shop shelf and the wardrobe read the same list. */
+let ownedSets: ReadonlySet<number> = new Set();
 let catalogTheme: string | null = null;   // which theme's shelf the shop is showing
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
@@ -132,6 +151,8 @@ function toast(text: string, kind?: "notice"): void {
 const creator = new Creator(el("creator"), {
   baker: () => figureBaker,
   send: (figure) => net.send({ t: "set_figure", figure }),
+  stars: () => stars,
+  buySet: (setId) => net.send({ t: "buy_set", setId }),
   onClose: () => {
     releaseKeyboard();
     el("tab-wardrobe").classList.remove("open");
@@ -326,7 +347,8 @@ function furniThumb(defId: string): HTMLElement {
 function renderCatalog(): void {
   const strip = el("catalog");
   strip.replaceChildren();
-  const groups = catalogGroups([...PROTOTYPE_CATALOG, ...WALL_CATALOG], CATALOG_PRICES, stars);
+  const groups = catalogGroups(
+    [...PROTOTYPE_CATALOG, ...WALL_CATALOG, ...WEARABLE_ITEMS], SHOP_PRICES, stars);
   if (groups.length === 0) {
     const empty = document.createElement("span");
     empty.className = "empty";
@@ -354,20 +376,30 @@ function renderCatalog(): void {
   const grid = document.createElement("div");
   grid.className = "grid";
   for (const entry of groups.find((g) => g.theme === catalogTheme)?.entries ?? []) {
+    const setId = entry.setId;
+    // A garment is owned once and forever, so a bought one stays on the shelf marked as yours —
+    // vanishing would read as the shop losing it (#352). Furni has no such state: you can own ten.
+    const yours = setId !== undefined && ownedSets.has(setId);
     const card = document.createElement("button");
     card.type = "button";
-    card.disabled = !entry.affordable;
-    card.title = entry.affordable
-      ? `Buy ${entry.name} for ${entry.price} ★`
-      : `${entry.name} costs ${entry.price} ★ — you have ${stars}`;
+    card.disabled = yours || !entry.affordable;
+    card.title = yours
+      ? `${entry.name} is already yours — wear it from the 👕 wardrobe`
+      : entry.affordable
+        ? `Buy ${entry.name} for ${entry.price} ★`
+        : `${entry.name} costs ${entry.price} ★ — you have ${stars}`;
     const name = document.createElement("span");
     name.className = "name";
     name.textContent = entry.name;
     const price = document.createElement("span");
     price.className = "price";
-    price.textContent = `${entry.price}★`;
-    card.append(furniThumb(entry.id), name, price);
-    card.addEventListener("click", () => net.send({ t: "buy", defId: entry.id }));
+    price.textContent = yours ? "yours" : `${entry.price}★`;
+    card.append(
+      setId === undefined ? furniThumb(entry.id) : wearableThumb(figureBaker, setId),
+      name, price,
+    );
+    card.addEventListener("click", () => net.send(
+      setId === undefined ? { t: "buy", defId: entry.id } : { t: "buy_set", setId }));
     grid.appendChild(card);
   }
   strip.appendChild(grid);
@@ -980,7 +1012,13 @@ function handle(msg: ServerMsg): void {
     case "stars":
       stars = msg.balance;
       renderStars();
+      creator.refresh();
       toast(`${msg.delta > 0 ? "+" : ""}${msg.delta} ★ (${msg.reason})`);
+      break;
+    case "wardrobe":
+      ownedSets = new Set(msg.ownedSets);
+      creator.setWardrobe(msg.ownedSets);
+      renderCatalog();
       break;
     case "trade_invite":
       toast(`${msg.from} wants to trade — type /trade ${msg.from} to accept`);
@@ -1031,9 +1069,11 @@ function handle(msg: ServerMsg): void {
       toast(msg.text, "notice");
       break;
     case "error":
-      // A refused outfit is answered inside the panel that proposed it, where the picks still are.
-      if (msg.code === "figure" && creator.isOpen) creator.rejected(msg.message);
-      else toast(msg.message);
+      // A refused outfit — or a refused wardrobe buy — is answered inside the panel that proposed
+      // it, where the picks still are. A toast behind the panel would go unread.
+      if ((msg.code === "figure" || msg.code === "purchase") && creator.isOpen) {
+        creator.rejected(msg.message);
+      } else toast(msg.message);
       break;
     default:
       break;

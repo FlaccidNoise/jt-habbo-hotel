@@ -1,7 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { STARTER_GRANT_SETS, parseFigure, serializeFigure } from "@grand/shared";
 import {
-  figureToLook, lockedPicks, lookToFigure, randomLook, setsOfType,
+  STARTER_GRANT_SETS, WEARABLE_PRICES, parseFigure, serializeFigure, setById,
+} from "@grand/shared";
+import {
+  figureToLook, lockedPicks, lookToFigure, offersFor, randomLook, setsOfType,
 } from "../src/ui/creator.ts";
 
 // The creator's state is the panel's whole contract with the server: whatever the tabs put in it
@@ -64,6 +66,48 @@ describe("what the account may wear", () => {
 
   test("the staff uniform is not offered at all", () => {
     expect(setsOfType("ch").map((s) => s.id)).toEqual([5, 6]);
+  });
+});
+
+// Buying a locked piece (#352). The panel turns a lock into a price and a button; what it must
+// never do is offer a button that could only fail.
+describe("what a locked piece costs", () => {
+  const CURLS = setById(30)!;    // 350 ★
+  const BUZZ = setById(32)!;     // 150 ★
+  const COAT = setById(11)!;     // earned, unpriced — no acquisition path yet (#425)
+
+  test("a locked hair is offered at its shelf price", () => {
+    expect(offersFor([CURLS], 1000)).toEqual([{ set: CURLS, price: 350, short: 0 }]);
+  });
+
+  test("a locked piece with no price is not offered at all", () => {
+    expect(offersFor([COAT], 1000)).toEqual([]);
+    expect(offersFor([COAT, BUZZ], 1000).map((o) => o.set.id)).toEqual([32]);
+  });
+
+  test("too few Stars still offers the piece, and says how short you are", () => {
+    expect(offersFor([CURLS], 100)[0]).toEqual({ set: CURLS, price: 350, short: 250 });
+  });
+
+  test("exactly the price is not short", () => {
+    expect(offersFor([CURLS], 350)[0]?.short).toBe(0);
+    expect(offersFor([CURLS], 349)[0]?.short).toBe(1);
+  });
+
+  test("an empty balance offers the whole shelf, none of it affordable", () => {
+    const hair = [...WEARABLE_PRICES.keys()].map((id) => setById(id)!);
+    const offers = offersFor(hair, 0);
+    expect(offers.length).toBe(WEARABLE_PRICES.size);
+    expect(offers.every((o) => o.short === o.price)).toBe(true);
+  });
+
+  // Owning it is what ends the offer: a bought set stops being a locked pick, so nothing has to
+  // filter the shelf a second time.
+  test("a set the account owns is never locked, so it is never offered again", () => {
+    const wearing = { ...figureToLook(STARTER), hair: 30 };
+    const bought: ReadonlySet<number> = new Set([...STARTER_GRANT_SETS, 30]);
+    expect(lockedPicks(wearing, bought)).toEqual([]);
+    expect(offersFor(lockedPicks(wearing, bought), 1000)).toEqual([]);
   });
 });
 

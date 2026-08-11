@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { CATALOG_PRICES, PROTOTYPE_CATALOG, WALL_CATALOG } from "@grand/shared";
+import {
+  CATALOG_PRICES, PROTOTYPE_CATALOG, WALL_CATALOG, WEARABLE_PRICES, WEARABLE_THEME,
+} from "@grand/shared";
 import { catalogGroups, themeLabel, thumbCrop } from "../src/ui/catalog.ts";
 import type { CatalogItem } from "../src/ui/catalog.ts";
 import type { FurniMeta } from "../src/scene/frames.ts";
@@ -87,6 +89,43 @@ describe("shelves", () => {
 
   test("the label is the theme, not a lookup table", () => {
     expect([themeLabel("cafe"), themeLabel("wall_art")]).toEqual(["Cafe", "Wall Art"]);
+  });
+
+  // Wearables ride the same shelves as furni (#352): a set carries `setId`, which is the only
+  // thing that tells a card to bake a figure instead of cropping a sheet.
+  test("a wearable lands on its own shelf, carrying the set id the buy needs", () => {
+    const groups = catalogGroups(
+      [...ITEMS, { id: "set:30", name: "Curls", theme: WEARABLE_THEME, setId: 30 }],
+      new Map([...PRICES, ["set:30", 350]]), 1000,
+    );
+    expect(groups.at(-1)).toMatchObject({ theme: "hair", label: "Hair" });
+    expect(groups.at(-1)?.entries).toEqual([
+      { id: "set:30", name: "Curls", theme: "hair", setId: 30, price: 350, affordable: true },
+    ]);
+  });
+
+  test("a wearable priced past the balance shows greyed, like any other item", () => {
+    const groups = catalogGroups(
+      [{ id: "set:30", name: "Curls", theme: WEARABLE_THEME, setId: 30 }],
+      new Map([["set:30", 350]]), 349,
+    );
+    expect(groups[0]?.entries[0]?.affordable).toBe(false);
+  });
+
+  test("every hair on the shelf is priced, and furni entries carry no set id", () => {
+    const wearables = [...WEARABLE_PRICES].map(([setId, price]) => ({
+      item: { id: `set:${setId}`, name: `Set ${setId}`, theme: WEARABLE_THEME, setId },
+      price,
+    }));
+    const groups = catalogGroups(
+      [...PROTOTYPE_CATALOG, ...WALL_CATALOG, ...wearables.map((w) => w.item)],
+      new Map<string, number>([...CATALOG_PRICES, ...wearables.map((w) => [w.item.id, w.price] as const)]),
+      10000,
+    );
+    const hair = groups.find((g) => g.theme === WEARABLE_THEME);
+    expect(hair?.entries.length).toBe(WEARABLE_PRICES.size);
+    const furni = groups.filter((g) => g.theme !== WEARABLE_THEME).flatMap((g) => g.entries);
+    expect(furni.filter((e) => e.setId !== undefined)).toEqual([]);
   });
 });
 

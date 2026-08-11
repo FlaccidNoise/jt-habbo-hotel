@@ -3,6 +3,7 @@ import {
   FIGURE_SETS,
   STAFF_GRANT_SETS,
   STARTER_GRANT_SETS,
+  WEARABLE_PRICES,
   paletteFor,
   parseFigure,
   serializeFigure,
@@ -48,6 +49,57 @@ const STAFF_ONLY: ReadonlySet<number> = new Set(
 
 export function setsOfType(type: LayerType): FigureSet[] {
   return FIGURE_SETS.filter((s) => s.type === type && !s.retired && !STAFF_ONLY.has(s.id));
+}
+
+/** Where a garment of each type is cropped on its card. The shop sells exactly what the wardrobe
+ *  wears (#352), so a shelf thumbnail is the same crop of the same bake. */
+const TYPE_CROP: Partial<Record<LayerType, Crop>> = {
+  hd: CROP.face, fa: CROP.face, hr: CROP.hair, ch: CROP.top, cc: CROP.top,
+  lg: CROP.legs, wa: CROP.legs, sh: CROP.shoes, ha: CROP.hat, ea: CROP.face, ca: CROP.top,
+};
+
+/** A ramp every slot of `set` can legally wear — the house skin for a skin slot, charcoal for the
+ *  rest, which is in both the material and the iris palettes. */
+function plainColors(set: FigureSet): string[] {
+  return Array.from({ length: set.slots }, (_, i) =>
+    (set.slotFamilies?.[i] ?? set.family) === "skin" ? "skin_3" : "charcoal");
+}
+
+/** A shop thumbnail for one purchasable set: the garment on the house default head, cropped to
+ *  where it sits. The catalog draws its wearable shelf with this rather than a furni sheet. */
+export function wearableThumb(baker: FigureBaker | null, setId: number): HTMLElement {
+  const set = setById(setId);
+  if (!set) return thumbOf(null, { version: FIGUREDATA_VERSION, parts: [] }, CROP.hair, CARD_DIR);
+  const head: WornPart = { type: "hd", set: 2, colors: ["skin_3"] };
+  const worn: WornPart = { type: set.type, set: setId, colors: plainColors(set) };
+  const parts = set.type === "hd" ? [worn] : [head, worn];
+  return thumbOf(baker, { version: FIGUREDATA_VERSION, parts },
+    TYPE_CROP[set.type] ?? CROP.hair, CARD_DIR);
+}
+
+/** One crop of a baked cell, at nearest-neighbour. A blank tile stands in when the bundles are
+ *  missing or the stack drew nothing — never a plausible-looking stand-in. */
+function thumbOf(
+  baker: FigureBaker | null, figure: Figure, crop: Crop, dir: number,
+): HTMLElement {
+  const w = crop.w * crop.scale;
+  const h = crop.h * crop.scale;
+  const source = baker?.canvas(figure, "stand", dir);
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  if (!source || !ctx) {
+    const blank = document.createElement("div");
+    blank.className = "blank";
+    blank.style.width = `${w}px`;
+    blank.style.height = `${h}px`;
+    blank.textContent = "no art";
+    return blank;
+  }
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(source, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h);
+  return canvas;
 }
 
 /** Slot 1 is an iris only on the curated face sets; the plain head has no second slot. */
@@ -140,6 +192,23 @@ export function lockedPicks(look: Look, owned: ReadonlySet<number>): FigureSet[]
     .filter((s): s is FigureSet => s !== undefined);
 }
 
+export interface Offer {
+  set: FigureSet;
+  price: number;
+  /** Stars still needed, 0 once the account can afford it. */
+  short: number;
+}
+
+/** The locked picks that are actually for sale, priced against a balance (#352). A locked piece
+ *  with no price has no way in yet, so it is not an offer — a buy button that could only fail is
+ *  worse than no button at all. */
+export function offersFor(locked: readonly FigureSet[], stars: number): Offer[] {
+  return locked.flatMap((set) => {
+    const price = WEARABLE_PRICES.get(set.id);
+    return price === undefined ? [] : [{ set, price, short: Math.max(0, price - stars) }];
+  });
+}
+
 /** Randomize only ever produces a wearable outfit, so the dice can never walk the player into the
  *  refusal state. Colours come from the whole palette of each slot's family. */
 export function randomLook(
@@ -174,6 +243,9 @@ export interface CreatorHost {
   /** Read late: the atlas loads during boot, after this panel is constructed. */
   baker: () => FigureBaker | null;
   send: (figure: string) => void;
+  /** Read at render time, so the buy buttons price against the balance as it stands. */
+  stars: () => number;
+  buySet: (setId: number) => void;
   onClose: () => void;
 }
 
@@ -184,8 +256,15 @@ const SAVE_TIMEOUT_MS = 5000;
 export class Creator {
   private look: Look | null = null;
   private mode: "create" | "wardrobe" = "create";
+  /** What the server says the account owns. The starter grant until the first `wardrobe` message
+   *  lands, which is the same guess the panel made before it had one to read. */
+  private granted: ReadonlySet<number> = new Set(STARTER_GRANT_SETS);
+  /** The sets on the player's back when the panel opened — owned by definition, since the server
+   *  accepted them, and the reason an old account is never told its own coat is locked. */
+  private worn: readonly number[] = [];
   private owned: ReadonlySet<number> = new Set(STARTER_GRANT_SETS);
   private saving = false;
+  private buying: number | null = null;
   private error: string | null = null;
   private timer: ReturnType<typeof setTimeout> | null = null;
   private scroll = 0;
@@ -196,26 +275,23 @@ export class Creator {
     return this.look !== null;
   }
 
-  /** `figure` is what the player is wearing right now, so the panel opens on their own look. Its
-   *  sets are owned by definition — the server accepted them — which is how an account that earned
-   *  more than the starter grant avoids being told its own coat is locked. */
+  /** `figure` is what the player is wearing right now, so the panel opens on their own look. */
   open(figure: string, mode: "create" | "wardrobe"): void {
     this.mode = mode;
     this.saving = false;
+    this.buying = null;
     this.error = null;
     this.scroll = 0;
     try {
       this.look = figureToLook(figure);
-      this.owned = new Set([
-        ...STARTER_GRANT_SETS,
-        ...parseFigure(figure).parts.map((p) => p.set),
-      ]);
+      this.worn = parseFigure(figure).parts.map((p) => p.set);
     } catch {
       // An unreadable figure must not lock the player out of their own wardrobe.
       this.look = figureToLook(`v${FIGUREDATA_VERSION}|hd-2-skin_3`);
-      this.owned = new Set(STARTER_GRANT_SETS);
+      this.worn = [];
       this.error = "We could not read your saved look, so this starts from the house default.";
     }
+    this.recomputeOwned();
     this.render();
     // Take the keyboard: chat holds focus otherwise, which makes the window handler treat every
     // key as typing — Escape dead, keystrokes landing in the room behind the panel.
@@ -228,18 +304,37 @@ export class Creator {
     this.clearTimer();
     this.look = null;
     this.saving = false;
+    this.buying = null;
     this.error = null;
     this.root.classList.remove("open");
     this.root.replaceChildren();
     this.host.onClose();
   }
 
-  /** The server refused the outfit (error code `figure`). The panel keeps every pick and says
-   *  which pieces are the problem — a toast here would throw the answer away. */
+  /** The account's real wardrobe (#352): the grant plus everything it has bought. It arrives on
+   *  join and again after every purchase, so a bought set unlocks its own card here. */
+  setWardrobe(ids: Iterable<number>): void {
+    this.granted = new Set(ids);
+    if (this.buying !== null) {
+      this.buying = null;
+      this.clearTimer();
+    }
+    this.recomputeOwned();
+    if (this.isOpen) this.render();
+  }
+
+  /** The balance moved, and with it what the buy buttons can afford. */
+  refresh(): void {
+    if (this.isOpen) this.render();
+  }
+
+  /** The server refused the outfit (error code `figure`) or the purchase (`purchase`). The panel
+   *  keeps every pick and says what the problem is — a toast here would throw the answer away. */
   rejected(message: string): void {
     if (!this.isOpen) return;
     this.clearTimer();
     this.saving = false;
+    this.buying = null;
     this.error = message;
     this.render();
   }
@@ -255,6 +350,10 @@ export class Creator {
     this.timer = null;
   }
 
+  private recomputeOwned(): void {
+    this.owned = new Set([...this.granted, ...this.worn]);
+  }
+
   private update(patch: Partial<Look>): void {
     if (!this.look) return;
     if (patch.tab !== undefined && patch.tab !== this.look.tab) this.scroll = 0;
@@ -262,8 +361,24 @@ export class Creator {
     this.render();
   }
 
+  /** Buy one locked set. The verdict comes back as a `wardrobe` message that unlocks the card, or
+   *  as a `purchase` error this panel shows in place — never as a toast behind it. */
+  private buy(setId: number): void {
+    if (!this.look || this.saving || this.buying !== null) return;
+    this.buying = setId;
+    this.error = null;
+    this.clearTimer();
+    this.timer = setTimeout(() => {
+      this.buying = null;
+      this.error = "The server did not answer. Nothing was bought — try again.";
+      this.render();
+    }, SAVE_TIMEOUT_MS);
+    this.host.buySet(setId);
+    this.render();
+  }
+
   private confirm(): void {
-    if (!this.look || this.saving) return;
+    if (!this.look || this.saving || this.buying !== null) return;
     this.saving = true;
     this.error = null;
     this.clearTimer();
@@ -318,7 +433,7 @@ export class Creator {
     sub.textContent = this.mode === "create" ? "Create your look" : "Wardrobe";
     const grant = document.createElement("span");
     grant.className = "grant";
-    grant.textContent = "your wardrobe is the starter grant — earn the rest inside";
+    grant.textContent = "the starter grant, plus whatever you buy with Stars";
     header.append(brand, sub, grant);
     return header;
   }
@@ -335,7 +450,7 @@ export class Creator {
 
     const stage = document.createElement("div");
     stage.className = "stage";
-    stage.appendChild(this.thumb(lookToFigure(look), CROP.preview, look.dir));
+    stage.appendChild(thumbOf(this.host.baker(), lookToFigure(look), CROP.preview, look.dir));
 
     const turn = document.createElement("div");
     turn.className = "turn";
@@ -502,41 +617,26 @@ export class Creator {
     row.className = "cards";
     for (const item of items) {
       const locked = item.id !== 0 && !this.owned.has(item.id);
+      // A locked set with a price is for sale (#352): the card still previews it on the avatar,
+      // and the buy button lands below with the rest of the locked picks.
+      const price = locked ? WEARABLE_PRICES.get(item.id) : undefined;
       const card = document.createElement("button");
       card.type = "button";
       card.className = item.id === current ? "on" : "";
-      if (locked) card.title = "not yours yet — you can look, but The Grand will not let you wear it";
+      if (locked) {
+        card.title = price === undefined
+          ? "not yours yet — you can look, but The Grand will not let you wear it"
+          : `${item.name} costs ${price} ★ — try it on, then buy it below`;
+      }
       const name = document.createElement("span");
       name.className = locked ? "locked" : "";
-      name.textContent = locked ? `🔒 ${item.name}` : item.name;
-      card.append(this.thumb(item.figure, crop, CARD_DIR), name);
+      name.textContent = !locked ? item.name
+        : price === undefined ? `🔒 ${item.name}` : `🔒 ${item.name} · ${price}★`;
+      card.append(thumbOf(this.host.baker(), item.figure, crop, CARD_DIR), name);
       card.addEventListener("click", () => pick(item.id));
       row.appendChild(card);
     }
     return row;
-  }
-
-  /** One crop of a baked cell, at nearest-neighbour. A blank tile stands in when the bundles are
-   *  missing or the stack drew nothing — never a plausible-looking stand-in. */
-  private thumb(figure: Figure, crop: Crop, dir: number): HTMLElement {
-    const w = crop.w * crop.scale;
-    const h = crop.h * crop.scale;
-    const source = this.host.baker()?.canvas(figure, "stand", dir);
-    const canvas = document.createElement("canvas");
-    canvas.width = w;
-    canvas.height = h;
-    const ctx = canvas.getContext("2d");
-    if (!source || !ctx) {
-      const blank = document.createElement("div");
-      blank.className = "blank";
-      blank.style.width = `${w}px`;
-      blank.style.height = `${h}px`;
-      blank.textContent = "no art";
-      return blank;
-    }
-    ctx.imageSmoothingEnabled = false;
-    ctx.drawImage(source, crop.x, crop.y, crop.w, crop.h, 0, 0, w, h);
-    return canvas;
   }
 
   private problem(locked: FigureSet[]): HTMLElement {
@@ -551,7 +651,7 @@ export class Creator {
     if (locked.length > 0) {
       const list = document.createElement("span");
       list.textContent = `Locked: ${locked.map((s) => s.name).join(", ")}. `
-        + "You can wear them once you earn them. Everything else is ready to go.";
+        + "You can wear them once they are yours. Everything else is ready to go.";
       box.appendChild(list);
     }
     if (this.error !== null) {
@@ -559,6 +659,16 @@ export class Creator {
       why.className = "why";
       why.textContent = `server: ${this.error}`;
       box.appendChild(why);
+    }
+    for (const offer of offersFor(locked, this.host.stars())) {
+      const label = this.buying === offer.set.id
+        ? `Buying ${offer.set.name}…`
+        : offer.short > 0
+          ? `${offer.set.name} — ${offer.price} ★ (${offer.short} short)`
+          : `Buy ${offer.set.name} — ${offer.price} ★`;
+      const buy = button(label, () => this.buy(offer.set.id), "buy");
+      buy.disabled = offer.short > 0 || this.buying !== null || this.saving;
+      box.appendChild(buy);
     }
     if (locked.length > 0) {
       box.appendChild(button("Swap them for pieces you own", () => this.dropLocked()));

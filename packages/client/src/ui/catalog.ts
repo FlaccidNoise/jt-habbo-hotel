@@ -5,6 +5,9 @@ export interface CatalogItem {
   id: string;
   name: string;
   theme: string;
+  /** Set id when the entry is a wearable (#352) rather than furni. A wearable has no sheet to crop
+   *  and mints no item, so a card carrying this bakes its thumbnail and buys with `buy_set`. */
+  setId?: number;
 }
 
 export interface CatalogEntry extends CatalogItem {

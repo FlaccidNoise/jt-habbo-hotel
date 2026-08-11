@@ -136,3 +136,39 @@ export const STAFF_GRANT_SETS: readonly number[] = [
   2, 3, 9, 7, 16,
   17, 18, 19, 20, 21, 22, 23, 24,
 ];
+
+/** The shelf the catalog files purchasable wearables under. Themes are the catalog's organizing
+ *  unit (#355, #364), and every set on sale today is hair. */
+export const WEARABLE_THEME = "hair";
+
+/** Wearables bought with Stars (#352). Hair is the cosmetics economy's stock — the one garment
+ *  type with the variety to make a cut say something — so 28-37 are sold rather than granted, and
+ *  a bought set belongs to the account for good. Ownership is not an item: sets never trade, so
+ *  none of this touches #118's marketplace.
+ *
+ *  Cheapest first, four rungs inside the furni band (25-3300) and under the 600 daily earn
+ *  ceiling: 150 for a plain silhouette, 250 for a shaped one, 350 for a styled one, and 450 for
+ *  the three that read across a room — most of a day's play, never more. */
+export const WEARABLE_PRICES: ReadonlyMap<number, number> = new Map([
+  [32, 150],   // Buzz
+  [34, 150],   // Fringe
+  [28, 250],   // Bob
+  [31, 250],   // Slick Back
+  [29, 350],   // Ponytail
+  [30, 350],   // Curls
+  [33, 350],   // Bun
+  [35, 450],   // Afro
+  [36, 450],   // Braids
+  [37, 450],   // Mohawk
+]);
+
+/** Every set that is neither granted nor priced must be listed here with a reason — checked by
+ *  figure.test.ts, so a garment nobody can ever obtain stays a deliberate choice rather than a
+ *  silent gap, the same rule UNPRICED holds furni to. */
+export const UNPURCHASABLE_SETS: ReadonlySet<number> = new Set([
+  BODY_SET_ID,   // implicit: never named in a figure string, so never bought
+  16,            // staff blazer: the NPC uniform, granted to staff accounts and sold to nobody
+  // The coat and the accessories predate the Stars shelf and still have no acquisition path —
+  // #425, tracked separately because #352 covers the faces and the hair expansion.
+  11, 12, 13, 14, 15,
+]);

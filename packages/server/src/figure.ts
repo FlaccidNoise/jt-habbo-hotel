@@ -1,13 +1,15 @@
+import { randomUUID } from "node:crypto";
 import type Database from "better-sqlite3";
 import {
-  FigureError, STAFF_GRANT_SETS, STARTER_GRANT_SETS, parseFigure, paletteFor, serializeFigure,
-  setById,
+  FigureError, STAFF_GRANT_SETS, STARTER_GRANT_SETS, WEARABLE_PRICES, parseFigure, paletteFor,
+  serializeFigure, setById,
 } from "@grand/shared";
 import type { LayerType, WornPart } from "@grand/shared";
+import { settleSpend } from "./ledger.ts";
 
-// Garment ownership and the registration grant (#127). Wearing is gated on owned_sets from day
-// one: today the grant is the only writer, and when #118's ledger lands it takes the table over
-// without saveFigure changing.
+// Garment ownership, the registration grant (#127) and the Stars shelf (#352). Wearing is gated on
+// owned_sets from day one; the grant writes the rows a new account starts with and a purchase
+// writes the rest.
 
 /** The types a default outfit dresses. Everything else is earned. */
 const DRESSED: readonly LayerType[] = ["hd", "hr", "ch", "lg", "sh"];
@@ -83,6 +85,52 @@ export function ownsSet(db: Database.Database, accountId: number, setId: number)
       .prepare("SELECT 1 FROM owned_sets WHERE account_id = ? AND set_id = ?")
       .get(accountId, setId) !== undefined
   );
+}
+
+/** The account's whole wardrobe — the grant plus everything it has bought. */
+export function ownedSetIds(db: Database.Database, accountId: number): number[] {
+  return (
+    db
+      .prepare("SELECT set_id AS setId FROM owned_sets WHERE account_id = ? ORDER BY set_id")
+      .all(accountId) as Array<{ setId: number }>
+  ).map((r) => r.setId);
+}
+
+export type BuySetResult =
+  | { ok: true; setId: number; price: number; balance: number }
+  | { ok: false; reason: string };
+
+/** Buying a garment (#352). Only WEARABLE_PRICES is for sale: the starter grant already owns
+ *  2-10 and the faces 17-27, and the staff blazer is sold to nobody — so a buy aimed at any of
+ *  them is refused rather than charged for something the account has or can never wear.
+ *
+ *  Debit and grant land in one transaction, so a refused debit cannot leave the set owned and a
+ *  failed grant cannot keep the Stars. The op is its own — `catalog_wearable`, debit-only with no
+ *  item row — so /api/metrics can tell what the wardrobe absorbs from what the furni shop does.
+ *  It is a sink, so no earn cap applies; settleSpend clamps nothing on the way out. */
+export function buySet(
+  db: Database.Database,
+  accountId: number,
+  setId: number,
+  now = Date.now(),
+): BuySetResult {
+  const price = WEARABLE_PRICES.get(setId);
+  const set = setById(setId);
+  if (price === undefined || !set || set.retired) {
+    return { ok: false, reason: "that is not for sale" };
+  }
+  return db.transaction((): BuySetResult => {
+    if (ownsSet(db, accountId, setId)) {
+      return { ok: false, reason: `${set.name} is already yours` };
+    }
+    const paid = settleSpend(db, {
+      opKey: randomUUID(), op: "catalog_wearable", accountId, price, now,
+    });
+    if (!paid.ok) return { ok: false, reason: paid.reason };
+    db.prepare("INSERT INTO owned_sets (account_id, set_id, granted_at) VALUES (?, ?, ?)")
+      .run(accountId, setId, now);
+    return { ok: true, setId, price, balance: paid.balance };
+  })();
 }
 
 /** Parses, then checks every named set against owned_sets. Any miss leaves the stored figure
