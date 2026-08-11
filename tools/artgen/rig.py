@@ -2351,6 +2351,27 @@ FIGURE_PARTS = {
              "c1": (4.5, 6.9, -SHIN_LEN + 5.6)},
         ],
     },
+    # Boots (set 50, one slot). The shaft is why sh sits after lg in LAYER_ORDER — it draws over
+    # whatever trousers are underneath and costs nothing to do it. A limb cannot make a shaft: it
+    # hangs from its bone and the knee bone is at the TOP of the shin, so a limb here would clothe
+    # the calf and leave the ankle bare. The shaft is a box from the sole to mid-shin at -9.4,
+    # with a wider cuff band closing it.
+    "sh50": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.5, -4.2, -float(SHIN_LEN)),
+             "c1": (4.5, 7.8, -SHIN_LEN + 4.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.5, -4.2, -float(SHIN_LEN)),
+             "c1": (4.5, 7.8, -SHIN_LEN + 4.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.4, -4.2, -float(SHIN_LEN)),
+             "c1": (4.4, 4.4, -9.4)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.4, -4.2, -float(SHIN_LEN)),
+             "c1": (4.4, 4.4, -9.4)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-5.0, -4.8, -10.6),
+             "c1": (5.0, 5.0, -9.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-5.0, -4.8, -10.6),
+             "c1": (5.0, 5.0, -9.2)},
+        ],
+    },
     # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
     # stays clear because the brow and nose reach further forward than the hair does.
     "hr3": {
