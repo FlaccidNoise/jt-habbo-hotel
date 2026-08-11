@@ -151,6 +151,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 64, type: "lg", name: "Breeches",        slots: 1, family: "material", hides: [], retired: false },
   { id: 65, type: "sh", name: "Sabatons",        slots: 1, family: "material", hides: [], retired: false },
   { id: 66, type: "ch", name: "Gambeson",        slots: 2, family: "material", hides: [], retired: false },
+  { id: 67, type: "wa", name: "Sword Belt",      slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -263,6 +264,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 64, price: 200, theme: "bannerhold" },  // Breeches
   { set: 65, price: 250, theme: "bannerhold" },  // Sabatons
   { set: 66, price: 300, theme: "bannerhold" },  // Gambeson
+  { set: 67, price: 300, theme: "bannerhold" },  // Sword Belt
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

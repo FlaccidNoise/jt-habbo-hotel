@@ -3076,6 +3076,42 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.74, 1.0)},
         ],
     },
+    # Sword Belt (set 67, two slots). The sash 63 is a continuous diagonal from shoulder to hip with
+    # nothing under the waist, so this one is its opposite: a horizontal band with one long spur
+    # below it and nothing above the waist but a hilt.
+    #
+    # The spur hangs outboard of the LEFT thigh — leg_l sits at hip x +4.0 and carries a 4.2 limb, so
+    # its outer surface is at 8.2 and the scabbard starts at 8.6, clearing it by 0.4. It rides the
+    # spine bone rather than the leg: a scabbard is hung off the belt, so it must not swing with the
+    # thigh through the walk cycle.
+    #
+    # It also has to clear the ARM, which is what the thigh clearance alone misses. bd1's arm hangs
+    # from chest x +/-9.5 at r 3.2 and reaches spine z -7, so a spur drawn centred at y 0 shares the
+    # arm's whole depth: the first pass lost 6.4 px of a 13.4 px scabbard and the hilt entirely,
+    # because the arm is nearer and the holdout is doing its job. Moved to y 3.8, the whole spur
+    # stands 0.6 in front of the arm and hangs at the front of the hip, which is where a sword belt
+    # carries it anyway.
+    #
+    # The band is 4.0 px tall against the belt 15's 2.8, and the height is measured rather than
+    # chosen. Drawn at 3.4 the two quantised to the same rows, and at walk0 d7 — a back frame where
+    # the body hides the spur outright — this set came out pixel-identical to the belt. 4.0 puts a
+    # row between them in every one of the 64 cells.
+    #
+    # The mouth is what joins the spur to the band. Drawn only as wide as the scabbard it left a gap
+    # between x 8.1 and 8.6, so it reaches back to 7.4 and overlaps the band in x, y and z — the
+    # whole set is one island in all 64 cells.
+    "wa67": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.2),
+             "c1": (8.1, 6.6, 4.2)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (8.6, 3.8, -14.0),
+             "c1": (12.0, 7.2, -0.6)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (7.4, 3.4, -0.6),
+             "c1": (12.2, 7.6, 2.6)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (9.2, 4.0, 2.6),
+             "c1": (11.6, 7.0, 7.6)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -3363,6 +3363,54 @@
       "figuredataVersion": 1,
       "recipeHash": "c864595de54a7ccbdd50d61d6a227333d148aeea3d2b67df869c64044071e008",
       "pixelHash": "6f90406bd0bbe9cc4b657b8ad83e7dab0c265135c48a7e5aa681456222c44cac"
+    },
+    {
+      "partId": "wa67",
+      "setId": 67,
+      "type": "wa",
+      "name": "Sword Belt",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa67.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "c07692971c485106116eaf72c8aa117253eb0a567bf843ee98083921102ff072",
+      "pixelHash": "32a3c3f60fdd873c712d969682550484dfedb2347f83529d396f23493a313fe6"
     }
   ]
 }
