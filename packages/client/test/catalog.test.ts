@@ -164,6 +164,19 @@ describe("thumbnails", () => {
     expect(art.y + art.h).toBeLessThanOrEqual(BOX.h);
   });
 
+  // Cards never upscale (maxIntegerScale 1, the default); the folio detail leaf passes 2, and
+  // growth stays on whole ratios either way, like the shrinking.
+  test("a detail preview may double; a card keeps the no-upscale rule", () => {
+    const small: FurniMeta = { sheet: "stool_lodge.png", frameW: 16, frameH: 16, dirs: [4], anchorsX: [8], anchorY: 12 };
+    const box = { w: 96, h: 96 };
+    expect(thumbCrop(small, box)!.sheetWidth).toBe(16);            // fits 6x, capped at 1x
+    expect(thumbCrop(small, box, undefined, 2)!.sheetWidth).toBe(32);
+    const mid: FurniMeta = { ...small, frameW: 40, frameH: 40 };
+    expect(thumbCrop(mid, box, undefined, 2)!.sheetWidth).toBe(80);  // fit 2.4 -> whole 2x
+    const big: FurniMeta = { ...small, frameW: 60, frameH: 60 };
+    expect(thumbCrop(big, box, undefined, 2)!.sheetWidth).toBe(60);  // fit 1.6 -> stays 1x
+  });
+
   // The measured art of every shipped wall sheet sits in the top corner of its cell: the plane
   // plus the half-width the isometric skew adds. Fitting the whole cell would draw a stamp.
   test("a wall item crops to the plane, not to the air under it", () => {

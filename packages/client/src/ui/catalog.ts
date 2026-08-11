@@ -71,11 +71,14 @@ export interface ThumbCrop {
 }
 
 /** Null when the bundle is missing — the caller draws the no-art tile rather than an empty box.
- *  `plane` is the WallDef's drawn size, and passing it is what says "this hangs on a wall". */
+ *  `plane` is the WallDef's drawn size, and passing it is what says "this hangs on a wall".
+ *  `maxIntegerScale` bounds whole-ratio upscaling: cards keep 1 (a thumbnail never upscales), the
+ *  detail leaf passes 2 so small art can double without leaving the pixel grid. */
 export function thumbCrop(
   meta: FurniMeta | undefined,
   box: { w: number; h: number },
   plane?: { w: number; h: number },
+  maxIntegerScale = 1,
 ): ThumbCrop | null {
   if (!meta || meta.dirs.length === 0 || meta.frameW <= 0 || meta.frameH <= 0) return null;
   const dir = THUMB_DIRS.find((d) => meta.dirs.includes(d)) ?? meta.dirs[0]!;
@@ -83,8 +86,9 @@ export function thumbCrop(
   const art = artBox(meta, i, dir, plane);
   const fit = Math.min(box.w / art.w, box.h / art.h);
   // Nearest-neighbour only lands on the pixel grid at whole ratios, so shrink by 1/2, 1/3, 1/4 —
-  // a 0.45 fit that fills the box costs more in ragged edges than it buys in size.
-  const scale = fit >= 1 ? 1 : 1 / Math.ceil(1 / fit);
+  // a 0.45 fit that fills the box costs more in ragged edges than it buys in size. Growth is whole
+  // too, and bounded by maxIntegerScale: a card caps it at 1 (no upscale), a detail leaf at 2.
+  const scale = fit >= 1 ? Math.min(Math.floor(fit), maxIntegerScale) : 1 / Math.ceil(1 / fit);
   return {
     sheetWidth: meta.frameW * meta.dirs.length * scale,
     left: -art.x * scale + (box.w - art.w * scale) / 2,
