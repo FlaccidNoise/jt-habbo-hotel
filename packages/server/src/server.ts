@@ -13,6 +13,7 @@ import {
 } from "@grand/shared";
 import type { ClientMsg, ErrorCode, ServerMsg } from "@grand/shared";
 import { ArcadeService } from "./arcade.ts";
+import { BlackjackService } from "./blackjack.ts";
 import { AuthError, login, register, sessionAccount } from "./auth.ts";
 import { closeDb, openDb } from "./db.ts";
 import { buySet, ownedSetIds } from "./figure.ts";
@@ -84,6 +85,8 @@ export async function startServer(opts: {
   tradeCountdownMs?: number;
   /** Hi-Lo card source, 1..13. Tests inject a scripted deck. */
   arcadeDraw?: () => number;
+  /** Blackjack card source, 1..13. Tests inject a scripted deck. */
+  blackjackDraw?: () => number;
   /** Luck Lever roll source in [0, 1). Tests pin it to land on a chosen prize. */
   leverRoll?: () => number;
 }): Promise<ServerHandle> {
@@ -196,6 +199,7 @@ export async function startServer(opts: {
   }
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
+  const blackjackService = new BlackjackService({ db, emit, draw: opts.blackjackDraw });
   const leverRoll = opts.leverRoll ?? Math.random;
 
   const NAV_LIMIT = 60;
@@ -234,7 +238,7 @@ export async function startServer(opts: {
       entry.dispose = undefined;
       return entry.room;
     }
-    const room = new Room(db, roomId, emit);
+    const room = new Room(db, roomId, emit, (accountId) => blackjackService.open(accountId));
     for (const def of npcService.npcsFor(roomId)) room.addNpc(def);
     rooms.set(roomId, { room });
     return room;
@@ -246,6 +250,7 @@ export async function startServer(opts: {
     conn.roomId = undefined;
     tradeService.onLeave(conn.accountId);
     arcadeService.onLeave(conn.accountId);
+    blackjackService.onLeave(conn.accountId);
     const entry = rooms.get(roomId);
     if (!entry) return;
 
@@ -509,6 +514,15 @@ export async function startServer(opts: {
         break;
       case "arcade_move":
         arcadeService.move(accountId, msg.move);
+        break;
+      case "bj_deal":
+        blackjackService.deal(accountId, msg.stake);
+        break;
+      case "bj_hit":
+        blackjackService.hit(accountId);
+        break;
+      case "bj_stand":
+        blackjackService.stand(accountId);
         break;
     }
   }

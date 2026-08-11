@@ -154,7 +154,10 @@ const CASINO: Layout = {
     { defId: "railing_iron", x: 4, y: 14 },
     { defId: "railing_iron", x: 4, y: 17 },
     { defId: "railing_iron", x: 4, y: 18 },
-    { defId: "casino_table", x: 6, y: 13 },
+    // The blackjack table (#428), in the pit's north-west slot with its four stools. Its dealer
+    // works the tile at (7,12), north of the felt where the chip tray is — that tile is left open
+    // for Whitmore and assertOpen refuses the layout if anything ever covers it.
+    { defId: "blackjack_table", x: 6, y: 13 },
     { defId: "casino_stool", x: 5, y: 13, dir: 2 },
     { defId: "casino_stool", x: 5, y: 14, dir: 2 },
     { defId: "casino_stool", x: 8, y: 13, dir: 6 },
@@ -221,8 +224,11 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  stamp is per room and a room seeded at version 2 would never be handed the new one's layout.
  *  4 is #409: the Resort Grounds went 300x300 to 200x200 and its whole layout moved 50 rows north
  *  with it. The heightmap changed too, so seedRoom would re-lay the room on that alone — the bump
- *  is what makes the two agree instead of leaving the layout stamp claiming the old plan. */
-export const LAYOUT_VERSION = 4;
+ *  is what makes the two agree instead of leaving the layout stamp claiming the old plan.
+ *  5 is #428: the casino's north-west card table became the blackjack table. A live hotel would
+ *  otherwise keep a plain casino_table in the slot the dealer stands at, and the one table in the
+ *  building you can actually play would exist in no room that had already been seeded. */
+export const LAYOUT_VERSION = 5;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));

@@ -20,7 +20,7 @@ export const DAY_MS = 24 * 60 * 60 * 1000;
 // by naming its op here and no handler can forget to ask. The Luck Lever is one of them, which
 // bounds it to five pulls a day.
 export const DAILY_STAKE_CAP = 500;
-export const GAMBLE_OPS: ReadonlySet<string> = new Set(["lever", "wheel"]);
+export const GAMBLE_OPS: ReadonlySet<string> = new Set(["lever", "wheel", "blackjack"]);
 const GAMBLE_LIST = [...GAMBLE_OPS];
 const GAMBLE_HOLES = GAMBLE_LIST.map(() => "?").join(", ");
 
@@ -271,11 +271,15 @@ export const settleSpend = timed(function settleSpend(
  *  day's remaining 600 and charge the player's faucet allowance for their own luck. The bound is
  *  the caller's: a payout is at most stake × WHEEL_MAX_MULTIPLIER, and the stake is capped both
  *  per bet and per day. Replaying an op_key pays nothing, so a resent spin cannot pay twice —
- *  which means the payout needs its own key, not the stake's. */
+ *  which means the payout needs its own key, not the stake's.
+ *
+ *  The bypass is why the op must be a house-banked one: handed a faucet op this is an uncapped
+ *  faucet wearing a payout's name, paying past the ceiling and then counting against it. */
 export const settleWin = timed(function settleWin(
   db: Database.Database,
   opts: { opKey: string; op: string; accountId: number; amount: number; now?: number },
 ): EarnResult {
+  if (!GAMBLE_OPS.has(opts.op)) throw new Error(`settleWin: ${opts.op} is not a house-banked op`);
   if (opts.amount < 0) throw new Error(`settleWin: negative payout ${opts.amount}`);
   const now = opts.now ?? Date.now();
   return db.transaction((): EarnResult => {

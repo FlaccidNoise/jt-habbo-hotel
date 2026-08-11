@@ -164,6 +164,21 @@
       #sets-list .set .bar { font-size: 12px; color: #9aa3b8; }
       #sets-list .set.done .bar { color: #7fd48c; }
       #sets-list .set .need { font-size: 12px; color: #c9b27a; }
+      /* jtbug #428: no launcher button — the panel opens only on a blackjack_state, which the
+         server sends when the player uses a card table (the open-at-table rule). */
+      #blackjack { position: fixed; top: 60px; left: 340px; width: 260px; background: #1c1f2bf2;
+        border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px;
+        text-align: center; }
+      #blackjack[hidden] { display: none; }
+      #blackjack h2 { margin: 0; font-size: 15px; }
+      .bj-cards { font-size: 20px; font-weight: 700; min-height: 26px; }
+      .bj-total { font-size: 13px; color: #9aa3b8; min-height: 16px; }
+      #bj-status { font-size: 13px; color: #9aa3b8; min-height: 18px; }
+      #bj-headroom { font-size: 12px; color: #7d8496; }
+      #blackjack .row { display: flex; gap: 6px; }
+      #blackjack .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
+      #blackjack .row button:disabled { opacity: .4; cursor: default; }
       #furni-menu .engraved { font-style: italic; color: #c9b27a; }
       /* #321: the strips covered the lower half of an oversized room. Collapsed behind tabs,
          one open at a time; chat, hint and the furni menu stay. */
@@ -277,6 +292,26 @@
         <button type="button" id="arcade-deal">Deal</button>
         <button type="button" id="arcade-close">Close</button>
       </div>
+    </div>
+    <div id="blackjack" hidden>
+      <h2>Blackjack</h2>
+      <div id="bj-dealer" class="bj-cards"></div>
+      <div id="bj-dealer-total" class="bj-total"></div>
+      <div id="bj-player" class="bj-cards"></div>
+      <div id="bj-player-total" class="bj-total"></div>
+      <div id="bj-status"></div>
+      <div id="bj-headroom"></div>
+      <div class="row">
+        <button type="button" id="bj-stake-10">10 ★</button>
+        <button type="button" id="bj-stake-25">25 ★</button>
+        <button type="button" id="bj-stake-50">50 ★</button>
+        <button type="button" id="bj-stake-100">100 ★</button>
+      </div>
+      <div class="row">
+        <button type="button" id="bj-hit">Hit</button>
+        <button type="button" id="bj-stand">Stand</button>
+      </div>
+      <button type="button" id="bj-close">Close</button>
     </div>
     <div id="lever" hidden>
       <h2>Luck Lever</h2>

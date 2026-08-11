@@ -10,7 +10,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
-  "trade", "purchase", "arcade", "no_seat", "room_busy", "figure", "wheel",
+  "trade", "purchase", "arcade", "no_seat", "room_busy", "figure", "wheel", "casino",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -29,7 +29,7 @@ export const FurniDefSchema = z.object({
   color: z.number().int(),
   /** #326: what the "use" verb does to this item. Absent on furni you can only stand on or sit in.
    *  A "toggle" def must declare a height per state — placement reads stackHeights[state]. */
-  interaction: z.enum(["vend", "wash", "toggle", "wish", "read", "wheel"]).optional(),
+  interaction: z.enum(["vend", "wash", "toggle", "wish", "read", "wheel", "blackjack"]).optional(),
   /** #347: what a "vend" or "read" puts in the hand, and what it costs. Every def with one of
    *  those two interactions carries it (furni.test.ts) and nothing else does. A price of 0 is a
    *  prop rather than a sink — a book off a shelf moves no Stars and writes no ledger row. */
@@ -159,6 +159,11 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("donate"), itemId: z.number().int() }),
   z.object({ t: z.literal("arcade_start") }),
   z.object({ t: z.literal("arcade_move"), move: z.enum(["higher", "lower", "stop"]) }),
+  // Blackjack (#428). The stake is unconstrained here for the wheel's reason: BLACKJACK_STAKES is
+  // a house rule, and a rule the player can be told about refuses better than a parse error.
+  z.object({ t: z.literal("bj_deal"), stake: z.number().int() }),
+  z.object({ t: z.literal("bj_hit") }),
+  z.object({ t: z.literal("bj_stand") }),
 ]);
 export type ClientMsg = z.infer<typeof ClientMsgSchema>;
 
@@ -248,6 +253,21 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("nav_rooms"), rooms: z.array(z.object({
              roomId: z.number().int(), name: z.string(), players: z.number().int(),
              yours: z.boolean() })) }),
+  // The whole table, every time (#428): a hand is four or five messages long, so a full state is
+  // cheaper than a diff protocol and it doubles as the reconnect path. Totals are not here — the
+  // client runs the same shared handValue the dealer does, so an ace can never read 11 on one side
+  // and 1 on the other. `dealer` is the upcard alone until the hand resolves; the hole card exists
+  // only on the server until then, so a client cannot peek at what it has not been shown.
+  z.object({
+    t: z.literal("blackjack_state"),
+    phase: z.enum(["idle", "player", "resolved"]),
+    player: z.array(z.number().int()),
+    dealer: z.array(z.number().int()),
+    stake: z.number().int(),
+    stakedToday: z.number().int(),   // rolling 24h, for the headroom line under the table
+    outcome: z.enum(["blackjack", "win", "push", "loss"]).optional(),
+    paid: z.number().int().optional(),
+  }),
   z.object({ t: z.literal("notice"), text: z.string() }),   // onboarding and system prompts
   z.object({ t: z.literal("error"), code: ErrorCodeSchema, message: z.string() }),
 ]);

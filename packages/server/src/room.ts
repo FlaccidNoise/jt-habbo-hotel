@@ -142,8 +142,13 @@ export class Room {
   private lastUse = new Map<number, number>();
   private hands = new Map<number, ReturnType<typeof setTimeout>>();
   private openMask: Uint8Array | null = null;   // built lazily by roamOk, dropped by reindex
+  /** Opens the blackjack panel (#428). The table is a use verb like the fountain, but the game
+   *  itself is per account and outlives the room, so the room forwards and holds nothing. Absent
+   *  in tests that build a room with no server around it — the only caller that has a casino to
+   *  open is server.ts. */
+  private blackjack?: (accountId: number) => void;
 
-  constructor(db: Database.Database, roomId: number, emit: Emit) {
+  constructor(db: Database.Database, roomId: number, emit: Emit, blackjack?: (accountId: number) => void) {
     const row = db.prepare("SELECT name, doc FROM rooms WHERE id = ?").get(roomId) as
       | { name: string; doc: string }
       | undefined;
@@ -152,6 +157,7 @@ export class Room {
 
     this.db = db;
     this.emit = emit;
+    this.blackjack = blackjack;
     this.roomId = roomId;
     this.name = row.name;
     this.heightmap = doc.heightmap;
@@ -454,6 +460,9 @@ export class Room {
         break;
       case "toggle":
         this.toggle(item);
+        break;
+      case "blackjack":
+        this.blackjack?.(accountId);
         break;
     }
   }

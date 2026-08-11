@@ -170,6 +170,19 @@ describe("the daily stake cap", () => {
     expect(stake(id, 10).ok).toBe(false);
   });
 
+  // #428: a new table inherits the cap by naming its op in GAMBLE_OPS and nothing else. Three
+  // tables share the one 500 — they do not get 500 each, which is the whole point of a cap on the
+  // player rather than on the table.
+  test("blackjack draws on the same 500 as the wheel and the lever", () => {
+    const id = account();
+    fund(id, 2000);
+    expect(stake(id, 300, { op: "blackjack" }).ok).toBe(true);
+    expect(stake(id, 100, { op: "lever" }).ok).toBe(true);
+    expect(stake(id, 100).ok).toBe(true);                        // the wheel, to exactly 500
+    expect(stake(id, 10, { op: "blackjack" }).ok).toBe(false);
+    expect(balanceOf(db, id)).toBe(1500);
+  });
+
   test("shopping is not gambling: the cap does not touch the other sinks", () => {
     const id = account();
     fund(id, 4000);
@@ -200,6 +213,17 @@ describe("settleWin", () => {
       .granted).toBe(max);
     expect(earn(id, 50).granted).toBe(50);
     expect(balanceOf(db, id)).toBe(max + 50);
+  });
+
+  // The ceiling bypass is what this function is for, so it must be unreachable from a faucet op:
+  // settleWin(op: "npc_coffee") is an uncapped coffee faucet, and the mistake is one typo deep.
+  test("a non-gamble op is a bug — the bypass is not a general credit path", () => {
+    const id = account();
+    expect(() =>
+      settleWin(db, { opKey: "w:bad", op: "npc_coffee", accountId: id, amount: 50, now: T0 }),
+    ).toThrow(/not a house-banked op/);
+    expect(balanceOf(db, id)).toBe(0);
+    expect(db.prepare("SELECT COUNT(*) AS n FROM ledger_entries").get()).toEqual({ n: 0 });
   });
 
   test("a negative payout is a bug, and never a debit", () => {

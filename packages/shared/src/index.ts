@@ -11,4 +11,5 @@ export * from "./walls.ts";
 export * from "./decor.ts";
 export * from "./lever.ts";
 export * from "./wheel.ts";
+export * from "./blackjack.ts";
 export * from "./sets.ts";

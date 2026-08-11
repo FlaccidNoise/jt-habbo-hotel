@@ -82,6 +82,9 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // a taller one and placement.ts throws on a state it has no height for (the lamp_basic rule).
   { id: "grand_wheel",  name: "Grand Wheel", theme: "casino", w: 2, l: 1, stackHeights: [3.625, 3.625, 3.625, 3.625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
   { id: "wheel_podium", name: "Odds Board",  theme: "casino", w: 1, l: 1, stackHeights: [1.9375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  // Blackjack (#428). Same 2x2 as casino_table and deliberately not the same object: the deep
+  // apron, the ivory rail and the dealer's tray on the north edge are what say which game it is.
+  { id: "blackjack_table", name: "Blackjack Table", theme: "casino", w: 2, l: 2, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57, interaction: "blackjack" },
   // Colorways (#229): the same authored mesh with its ramps remapped, so they share their base's
   // geometry exactly — heights and seat surfaces are identical and the gates check that.
   { id: "cafe_chair_crimson",  name: "Crimson Café Chair", theme: "cafe", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
@@ -320,6 +323,9 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   // furni instance can never become a player-owned gambling machine.
   "grand_wheel",
   "wheel_podium",
+  // R-26 (#428): the blackjack table pays out of the house's bank, so the house is the only thing
+  // that may own one. A player-owned table is a player holding the dealer's side of every hand.
+  "blackjack_table",
 ]);
 
 /** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
@@ -332,6 +338,7 @@ export const UNPRICED: ReadonlySet<string> = new Set([
 export const HOUSE_FIXTURE_DEFS: ReadonlySet<string> = new Set([
   "grand_wheel",
   "wheel_podium",
+  "blackjack_table",
 ]);
 
 /** Bought like anything else, but minted account-bound: these never enter the trade economy, so

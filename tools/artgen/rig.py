@@ -1849,6 +1849,51 @@ PARTS = {
              "ramp": "gold"},
         ],
     },
+    # The blackjack table (#428). It shares casino_table's footprint and has to read as a
+    # different game from across the room, so three things differ: a deep apron on thick legs
+    # instead of a thin top on thin ones, an ivory rail rather than a walnut one, and the
+    # dealer's furniture standing on the NORTH edge — the side the working spot at y-1 is on.
+    # The tray and the shoe are what tell a player which way round the table is before they read
+    # a card, and they are the whole reason the silhouette is asymmetric.
+    "blackjack_table": {
+        "w": 2, "l": 2, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.12, 0.12, 0.00), "c1": (0.40, 0.40, 0.92)},
+            {"t": "box", "c0": (1.60, 0.12, 0.00), "c1": (1.88, 0.40, 0.92)},
+            {"t": "box", "c0": (0.12, 1.60, 0.00), "c1": (0.40, 1.88, 0.92)},
+            {"t": "box", "c0": (1.60, 1.60, 0.00), "c1": (1.88, 1.88, 0.92)},
+            {"t": "box", "c0": (0.16, 0.16, 0.86), "c1": (1.84, 1.84, 1.18), "bevel": 0.04},
+            {"t": "box", "c0": (0.06, 0.06, 1.18), "c1": (1.94, 1.94, 1.44), "bevel": 0.04,
+             "ramp": "fern"},
+            # One seam group across the four runs, so no line is drawn where they meet.
+            {"t": "hcyl", "x": 0.11, "y0": 0.11, "y1": 1.89, "z": 1.44, "r": 0.08,
+             "ramp": "ivory", "group": 100},
+            {"t": "hcyl", "x": 1.89, "y0": 0.11, "y1": 1.89, "z": 1.44, "r": 0.08,
+             "ramp": "ivory", "group": 100},
+            {"t": "hcyl", "x": 0.11, "y0": 0.11, "y1": 1.89, "z": 1.44, "r": 0.08, "axis": "x",
+             "ramp": "ivory", "group": 100},
+            {"t": "hcyl", "x": 1.89, "y0": 0.11, "y1": 1.89, "z": 1.44, "r": 0.08, "axis": "x",
+             "ramp": "ivory", "group": 100},
+            # The betting arc: an ivory disc with a fern one set inside it and 0.01 proud, the
+            # inlay idiom casino_table uses on a square. Round against square is the difference
+            # a player sees on the felt.
+            {"t": "cyl", "cx": 1.00, "cy": 1.14, "rx": 0.60, "ry": 0.60, "z0": 1.44, "z1": 1.47,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.00, "cy": 1.14, "rx": 0.50, "ry": 0.50, "z0": 1.45, "z1": 1.48,
+             "ramp": "fern"},
+            # Chip tray and card shoe, both clear of the rail at fy 0.19 and fx 1.81.
+            {"t": "box", "c0": (0.30, 0.22, 1.44), "c1": (1.30, 0.54, 1.50), "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.29, "y0": 0.36, "y1": 1.24, "z": 1.53, "r": 0.055, "axis": "x",
+             "ramp": "gold"},
+            {"t": "hcyl", "x": 0.38, "y0": 0.36, "y1": 1.24, "z": 1.53, "r": 0.055, "axis": "x",
+             "ramp": "crimson"},
+            {"t": "hcyl", "x": 0.47, "y0": 0.36, "y1": 1.24, "z": 1.53, "r": 0.055, "axis": "x",
+             "ramp": "ivory"},
+            # Stepped, not a plain box: the step is what makes it a shoe rather than a crate.
+            {"t": "box", "c0": (1.38, 0.22, 1.44), "c1": (1.76, 0.66, 1.52), "ramp": "charcoal"},
+            {"t": "box", "c0": (1.38, 0.22, 1.52), "c1": (1.76, 0.48, 1.72), "ramp": "charcoal"},
+        ],
+    },
 }
 
 # ---- figure rig (#127) ---------------------------------------------------------------------

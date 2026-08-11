@@ -1,5 +1,6 @@
 import { Application, TextureSource } from "pixi.js";
 import {
+  BLACKJACK_STAKES,
   CATALOG_PRICES,
   MAX_TRADE_ITEMS,
   PROTOTYPE_CATALOG,
@@ -12,6 +13,7 @@ import {
   checkPlacement,
   checkWallPlacement,
   footprintTiles,
+  handValue,
   parseHeightmap,
   screenToTile,
   leverOdds,
@@ -23,6 +25,7 @@ import {
 } from "@grand/shared";
 import type {
   AvatarState,
+  ClientMsg,
   FurniDef,
   FurniItem,
   InventoryItem,
@@ -58,6 +61,7 @@ type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
 type ArcadeState = Extract<ServerMsg, { t: "arcade_state" }>;
 type NavRooms = Extract<ServerMsg, { t: "nav_rooms" }>["rooms"];
 type SetRows = Extract<ServerMsg, { t: "sets" }>["sets"];
+type BlackjackState = Extract<ServerMsg, { t: "blackjack_state" }>;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
@@ -77,6 +81,9 @@ const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
 /** Thumbnail box, in CSS px. The .thumb rule in index.html is the same size — the crop is
  *  computed against these numbers, so the two have to agree. */
 const THUMB_BOX = { w: 72, h: 64 };
+/** Rolling-24h stake cap for the blackjack tables (jtbug #428). The server is the authority; this
+ *  only drives the headroom line and the buttons that a click past it would just get refused. */
+const BJ_DAILY_CAP = 500;
 const defName = (id: string): string => DEFS.get(id)?.name ?? WALL_DEFS.get(id)?.name ?? id;
 
 function el<T extends HTMLElement>(id: string): T {
@@ -121,6 +128,7 @@ let ownedSets: ReadonlySet<number> = new Set();
 let catalogTheme: string | null = null;   // which theme's shelf the shop is showing
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
+let blackjack: BlackjackState | null = null;
 let myRoomId: number | null = null;
 let myFigure: string | null = null;
 let hereRoomId = roomId;
@@ -497,6 +505,62 @@ function renderArcade(): void {
   el<HTMLButtonElement>("arcade-deal").disabled = running;
 }
 
+/** 1 is the ace, 11/12/13 the court cards — the same ranks blackjack.ts scores. */
+function cardGlyph(rank: number): string {
+  if (rank === 1) return "A";
+  if (rank === 11) return "J";
+  if (rank === 12) return "Q";
+  if (rank === 13) return "K";
+  return String(rank);
+}
+
+function totalLabel(hand: { total: number; soft: boolean }): string {
+  return `Total: ${hand.soft ? "soft " : ""}${hand.total}`;
+}
+
+function outcomeLabel(state: BlackjackState): string {
+  switch (state.outcome) {
+    case "blackjack":
+      return `Blackjack! +${state.paid ?? 0} ★`;
+    case "win":
+      return `+${state.paid ?? 0} ★`;
+    case "push":
+      return "Push — stake returned";
+    case "loss":
+      return "House wins";
+    default:
+      return "";
+  }
+}
+
+/** The card table (jtbug #428). No local memory of the hand — everything here is read straight off
+ *  `blackjack`, so a reconnect mid-play renders correctly from whatever the server re-emits. */
+function renderBlackjack(): void {
+  const inHand = blackjack?.phase === "player";
+  const resolved = blackjack?.phase === "resolved";
+  const dealerCards = (blackjack?.dealer ?? []).map(cardGlyph);
+  el("bj-dealer").textContent = inHand
+    ? `Dealer: ${[...dealerCards, "🂠"].join(" ")}`
+    : `Dealer: ${dealerCards.join(" ") || "—"}`;
+  el("bj-dealer-total").textContent = resolved && blackjack ? totalLabel(handValue(blackjack.dealer)) : "";
+  const playerCards = (blackjack?.player ?? []).map(cardGlyph);
+  el("bj-player").textContent = `You: ${playerCards.join(" ") || "—"}`;
+  el("bj-player-total").textContent =
+    blackjack && blackjack.player.length > 0 ? totalLabel(handValue(blackjack.player)) : "";
+  el("bj-status").textContent = resolved && blackjack ? outcomeLabel(blackjack) : "";
+  const stakedToday = blackjack?.stakedToday ?? 0;
+  const capReached = stakedToday >= BJ_DAILY_CAP;
+  el("bj-headroom").textContent = capReached
+    ? `daily stake cap reached — ${BJ_DAILY_CAP} ★ used`
+    : `${BJ_DAILY_CAP - stakedToday} ★ of ${BJ_DAILY_CAP} left to stake today`;
+  const stakesOpen = blackjack?.phase !== "player";
+  for (const stake of BLACKJACK_STAKES) {
+    el<HTMLButtonElement>(`bj-stake-${stake}`).disabled = !stakesOpen || capReached;
+  }
+  el<HTMLButtonElement>("bj-hit").disabled = !inHand;
+  el<HTMLButtonElement>("bj-stand").disabled = !inHand;
+}
+
 /** The Luck Lever's odds are the same table the server draws from (shared/lever.ts), rendered
  *  straight from it — a published number cannot drift from the real one if there is only one. */
 function renderLever(): void {
@@ -843,6 +907,9 @@ function buildRoom(msg: RoomState): void {
   renderTrade();
   renderArcade();
   el("arcade").hidden = true;
+  blackjack = null;
+  renderBlackjack();
+  el("blackjack").hidden = true;
   el("lever").hidden = true;
   el("lever-result").textContent = "";
   el("sets").hidden = true;
@@ -940,6 +1007,11 @@ function armPendingUse(msg: Extract<ServerMsg, { t: "walk" }>): void {
 
 function handle(msg: ServerMsg): void {
   switch (msg.t) {
+    case "blackjack_state":
+      blackjack = msg;
+      el("blackjack").hidden = false;
+      renderBlackjack();
+      break;
     case "room_state":
       buildRoom(msg);
       break;
@@ -1072,12 +1144,15 @@ function handle(msg: ServerMsg): void {
     case "error":
       // A refused outfit — or a refused wardrobe buy — is answered inside the panel that proposed
       // it, where the picks still are. A toast behind the panel would go unread. `purchase` is
-      // shared with furni buys and the lever, so the panel only claims it mid-buy.
+      // shared with furni buys and the lever, so the panel only claims it mid-buy. A refused deal
+      // or hit follows the same rule for the blackjack table (jtbug #428).
       if (
         (msg.code === "figure" || (msg.code === "purchase" && creator.hasPendingBuy)) &&
         creator.isOpen
       ) {
         creator.rejected(msg.message);
+      } else if (msg.code === "casino" && !el("blackjack").hidden) {
+        el("bj-status").textContent = msg.message;
       } else toast(msg.message);
       break;
     default:
@@ -1244,6 +1319,12 @@ el("arcade-open").addEventListener("click", () => {
 });
 el("arcade-deal").addEventListener("click", () => net.send({ t: "arcade_start" }));
 el("arcade-close").addEventListener("click", () => (el("arcade").hidden = true));
+for (const stake of BLACKJACK_STAKES) {
+  el(`bj-stake-${stake}`).addEventListener("click", () => net.send({ t: "bj_deal", stake }));
+}
+el("bj-hit").addEventListener("click", () => net.send({ t: "bj_hit" }));
+el("bj-stand").addEventListener("click", () => net.send({ t: "bj_stand" }));
+el("bj-close").addEventListener("click", () => (el("blackjack").hidden = true));
 el("lever-open").addEventListener("click", () => {
   const panel = el("lever");
   panel.hidden = !panel.hidden;
@@ -1270,6 +1351,7 @@ function signedOut(message: string): void {
   sessionStorage.removeItem(TOKEN_KEY);
   session = "";
   el("hud").style.display = "none";
+  el("blackjack").hidden = true;
   for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open", "zoom-open"]) {
     el(id).style.display = "none";
   }

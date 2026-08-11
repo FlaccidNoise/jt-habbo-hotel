@@ -209,12 +209,13 @@ describe("wandering: who roams", () => {
     expect(say).toHaveBeenCalled(); // it is still working, just not walking
   });
 
-  test("the café and the casino are unchanged: Pierre, Maya and Lola never take a step", () => {
-    // Scoped to the three that shipped before wandering. The Grounds staff (WP8) do roam — they
-    // are the reason the field exists — so a roster-wide "nobody has a home rect" claim would now
-    // be a claim about the Grounds instead of about these three.
+  test("the café and the casino are unchanged: Pierre, Maya, Lola and Whitmore never take a step", () => {
+    // Scoped to the staff outside the Grounds. The Grounds staff (WP8) do roam — they are the
+    // reason the field exists — so a roster-wide "nobody has a home rect" claim would now be a
+    // claim about the Grounds instead of about these four. Whitmore (#428) is the newest of them
+    // and the most load-bearing: a dealer who wandered would leave her table unplayable.
     const still = NPC_ROSTER.filter((n) => n.roomId !== GROUNDS_ROOM_ID);
-    expect(still.map((n) => n.name)).toEqual(["Pierre", "Maya", "Lola Vale"]);
+    expect(still.map((n) => n.name)).toEqual(["Pierre", "Maya", "Lola Vale", "Whitmore"]);
     expect(still.filter((n) => n.home !== undefined)).toEqual([]);
 
     const occ = still.map(staff);

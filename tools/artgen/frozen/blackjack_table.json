@@ -1,0 +1,32 @@
+{
+  "defId": "blackjack_table",
+  "archetype": "artgen",
+  "sheet": "blackjack_table.png",
+  "frameW": 128,
+  "frameH": 120,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:74ebc8ce92a8e8c5",
+  "recipeHash": "74ebc8ce92a8e8c56d24c33d402b7c85f99331f9f519d880381319fe46716219",
+  "pixelHash": "587ee9de92bfdfc25045d0473246360ee313d96b530c8029573497991a0f86c6"
+}

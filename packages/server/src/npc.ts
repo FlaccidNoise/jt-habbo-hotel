@@ -135,6 +135,32 @@ export const NPC_ROSTER: NpcDef[] = [
       "You've been a wonderful crowd.",
     ],
   },
+  {
+    // The blackjack dealer (#428). Static: no home rect, no seats, no ritual — a dealer who
+    // wandered off would leave the table she is the whole reason anyone walks up to. Her post is
+    // the tile north of the felt, on the chip-tray side, and she faces it.
+    id: -12,
+    roomId: 2,
+    name: "Whitmore",
+    post: { x: 7, y: 12 },
+    dir: 4,
+    persona:
+      "the blackjack dealer in the casino's card pit at The Grand. Precise, unhurried and dry, " +
+      "speaks in the short flat sentences of someone who has dealt the same game for twenty " +
+      "years, and never remarks on how a hand went.",
+    greetings: [
+      "Table's open, {name}. Take any seat you like.",
+      "Evening, {name}. Fresh shoe, if you are superstitious about that.",
+      "Seat's yours whenever you want it, {name}.",
+    ],
+    lines: [
+      "Dealer stands on all seventeens. That is the house rule, not a mood.",
+      "One card at a time. Say hit, or say stand, and I will wait either way.",
+      "An ace counts one or eleven — whichever of the two does you a favour.",
+      "Cards stay on the felt, please. Both hands where I can see them.",
+      "I have dealt this table since the room opened. It does not remember you.",
+    ],
+  },
 
   // The Resort Grounds (room 4). Eight staff across the five zones, two of them the jazz
   // residency. Every post below is walkable, unblocked, reachable from the door and inside its own

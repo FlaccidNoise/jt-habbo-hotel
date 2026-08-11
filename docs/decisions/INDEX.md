@@ -1,5 +1,16 @@
 # Decision Log
 
+- 2026-08-10 — **Blackjack joins the stake cap by naming its op, and `settleWin` now refuses an
+  op that is not house-banked (#428).** The table's entire ledger layer is one string: "blackjack"
+  in `GAMBLE_OPS` buys the 500/day cap, the whole-bet refusal, and the exclusion from the faucet
+  sum, which is what "a new table inherits it by naming its op here" was built to mean. Three
+  tables share one 500 — not 500 each — because the cap is on the player, not the table. The guard
+  is the other half of that bargain: `settleWin` bypasses GLOBAL_EARN_CEILING by design, so handed
+  a faucet op it is an uncapped faucet wearing a payout's name, and the mistake is one typo deep.
+  It now throws. No `settleStake`/`settleWinnings` pair was added: that is `settleSpend` and
+  `settleWin` under another name, and a second path to the same cap is a second path to forget to
+  check. #428 was filed believing neither the cap nor the winnings path existed — #429 landed both
+  six minutes later. server/ledger.ts.
 - 2026-08-10 — **The daily stake cap is 500 a rolling 24h, refused whole, and it lives in the
   ledger (#429).** GAME.md's "daily stake caps bound dependence" and ROADMAP step 9's acceptance
   test — "stake 501 of the day is refused" — are one line of code: `settleSpend` checks

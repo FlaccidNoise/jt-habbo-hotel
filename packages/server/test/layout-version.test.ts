@@ -13,12 +13,12 @@ function layoutsHash(): string {
 }
 
 const RECORDED = {
-  // #409: the Resort Grounds shrank to 200x200 and its layout moved 50 rows north, so
-  // LAYOUT_VERSION went 3 -> 4. Its layout is built by grounds.ts rather than written out, so the
-  // hash also covers the builder's output — a rhythm constant edited without a bump lands here the
-  // same way a moved chair would.
-  version: 4,
-  hash: "b8b702a0b5e07bd6045f44dbd6bafcb9402a16a73f8ccc723d5734ba46e7d866",
+  // #428: the casino's north-west card table became the blackjack table, so LAYOUT_VERSION went
+  // 4 -> 5. The Grounds layout is built by grounds.ts rather than written out, so the hash also
+  // covers the builder's output — a rhythm constant edited without a bump lands here the same way
+  // a moved chair would.
+  version: 5,
+  hash: "719cdadc8a2cda9cf19c6309fcc0da3bce4177323bbb52874892619ea13e1684",
 };
 
 test("a LAYOUTS edit is accompanied by a LAYOUT_VERSION bump", () => {
