@@ -2117,6 +2117,23 @@ FIGURE_PARTS = {
              "c1": (8.0, -6.2, 19.0)},
         ],
     },
+    # Polo (set 41, one slot). Set 5 is the plain tee, so the collar is the whole argument: a band
+    # 2.3 narrower than the body and 0.6 prouder, which puts a step on both the side outline and the
+    # front. It tops out at 21.6, six tenths over the chin plane and four rows clear of the stamped
+    # mouth, so a collar never eats a face. Sleeves run 2 px past the tee's for the same reason —
+    # one silhouette difference is a recolour, two is a garment.
+    "ch41": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 1.2),
+             "c1": (7.9, 6.4, 19.2)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.6, -7.0, 19.2),
+             "c1": (5.6, 7.0, 21.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-1.3, 6.3, 13.6),
+             "c1": (1.3, 7.0, 19.2)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 10.0, "r": 3.8},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 10.0, "r": 3.8},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {

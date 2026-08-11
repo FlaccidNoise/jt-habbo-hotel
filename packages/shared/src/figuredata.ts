@@ -110,6 +110,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 38, type: "ch", name: "Hoodie",        slots: 2, family: "material", hides: [], retired: false },
   { id: 39, type: "ch", name: "Blazer",        slots: 2, family: "material", hides: [], retired: false },
   { id: 40, type: "ch", name: "Vest + Shirt",  slots: 2, family: "material", hides: [], retired: false },
+  { id: 41, type: "ch", name: "Polo",          slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -171,6 +172,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 35, price: 450, theme: "hair" },   // Afro
   { set: 36, price: 450, theme: "hair" },   // Braids
   { set: 37, price: 450, theme: "hair" },   // Mohawk
+  { set: 41, price: 150, theme: "tops" },   // Polo
   { set: 38, price: 300, theme: "tops" },   // Hoodie
   { set: 40, price: 350, theme: "tops" },   // Vest + Shirt
   { set: 39, price: 400, theme: "tops" },   // Blazer
