@@ -337,8 +337,13 @@ export async function startServer(opts: {
         break;
       case "chat": {
         room.chat(accountId, msg.mode, msg.text);
-        const speaker = room.occupants().find((o) => o.accountId === accountId);
-        if (speaker) npcService.onPlayerChat(room.roomId, speaker, msg.mode, msg.text);
+        const occupants = room.occupants();
+        const speaker = occupants.find((o) => o.accountId === accountId);
+        if (speaker) {
+          npcService.onPlayerChat(
+            room.roomId, speaker, occupants, room.chatConfig.speakRadius, msg.mode, msg.text,
+          );
+        }
         break;
       }
       case "whisper":

@@ -13,8 +13,8 @@ import { log } from "./log.ts";
 
 const RULESET = loadRuleset(new URL("../filter-words.txt", import.meta.url).pathname);
 
-const EARSHOT = 5;                    // matches seeded speakRadius
-const APPROACH = 2;                   // close enough to count as talking to the NPC
+const APPROACH = 2;                   // a social distance, not an audio one — stays fixed
+                                       // across rooms regardless of speakRadius
 const REPLY_GAP_MS = 8000;            // per-NPC floor between replies
 const DAILY_LLM_CAP = 200;            // per-NPC LLM calls per UTC day; canned lines after
 const PERFORM_MS = 3 * 60 * 1000;     // lounge set cadence while the room has players
@@ -167,6 +167,14 @@ const RITUALS: Record<NonNullable<NpcDef["ritual"]>, RegExp> = { coffee: /\bcoff
 const day = (): string => new Date().toISOString().slice(0, 10);
 const cheb = (a: Tile, b: Tile): number => Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
 
+// Room.addNpc puts every NPC into the room's occupant map at its declared post; once it moves
+// (wandering, not yet built) that map is the only place tracking where it actually is. `post`
+// stays the fallback for an NPC the caller hasn't put in a snapshot (e.g. direct-unit-test calls).
+function liveTile(npc: NpcDef, occupants: readonly Speaker[]): Tile {
+  const occ = occupants.find((o) => o.accountId === npc.id);
+  return occ ? { x: occ.x, y: occ.y } : npc.post;
+}
+
 export class NpcService {
   private generate: NpcGenerate | null;
   private say: (roomId: number, npcId: number, text: string) => void;
@@ -215,9 +223,16 @@ export class NpcService {
     }
   }
 
-  onPlayerChat(roomId: number, speaker: Speaker, mode: "say" | "shout", text: string): void {
+  onPlayerChat(
+    roomId: number,
+    speaker: Speaker,
+    occupants: readonly Speaker[],
+    speakRadius: number,
+    mode: "say" | "shout",
+    text: string,
+  ): void {
     const heard = this.npcsFor(roomId).filter(
-      (n) => mode === "shout" || cheb(n.post, speaker) <= EARSHOT,
+      (n) => mode === "shout" || cheb(liveTile(n, occupants), speaker) <= speakRadius,
     );
     if (heard.length === 0) return;
     const line = `${speaker.username}: ${filterChat(RULESET, text)}`;
@@ -227,7 +242,7 @@ export class NpcService {
     // plus a regex, the amount is the ledger's decision: zero LLM authority end to end.
     if (this.payout) {
       const server = heard.find(
-        (n) => n.ritual && cheb(n.post, speaker) <= APPROACH && RITUALS[n.ritual].test(text),
+        (n) => n.ritual && cheb(liveTile(n, occupants), speaker) <= APPROACH && RITUALS[n.ritual].test(text),
       );
       if (server?.ritual) {
         const granted = this.payout(speaker.accountId, server.ritual);
@@ -246,8 +261,12 @@ export class NpcService {
       return new RegExp(`\\b${first}\\b`, "i").test(text);
     };
     const candidates = heard
-      .filter((n) => mentions(n) || cheb(n.post, speaker) <= APPROACH)
-      .sort((a, b) => Number(mentions(b)) - Number(mentions(a)) || cheb(a.post, speaker) - cheb(b.post, speaker));
+      .filter((n) => mentions(n) || cheb(liveTile(n, occupants), speaker) <= APPROACH)
+      .sort(
+        (a, b) =>
+          Number(mentions(b)) - Number(mentions(a)) ||
+          cheb(liveTile(a, occupants), speaker) - cheb(liveTile(b, occupants), speaker),
+      );
     const npc = candidates[0];
     if (!npc) return;
 

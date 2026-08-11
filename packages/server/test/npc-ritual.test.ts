@@ -6,6 +6,7 @@ import { NPC_ROSTER, NpcService } from "../src/npc.ts";
 
 const MAYA = NPC_ROSTER.find((n) => n.name === "Maya")!;
 const nearMaya = { accountId: 42, username: "ann", x: MAYA.post.x, y: MAYA.post.y + 1 };
+const CAFE_SPEAK_RADIUS = 5; // matches CAFE_CHAT in db.ts — these NPCs live in room 1
 
 function service(payout: (accountId: number, ritual: string) => number) {
   const generate = vi.fn(async () => "llm line");
@@ -18,7 +19,7 @@ describe("coffee ritual", () => {
   test("asking the barista for coffee pays out and replies without the LLM", async () => {
     const payout = vi.fn(() => 10);
     const { svc, generate, say } = service(payout);
-    svc.onPlayerChat(1, nearMaya, "say", "one coffee please!");
+    svc.onPlayerChat(1, nearMaya, [], CAFE_SPEAK_RADIUS, "say", "one coffee please!");
     expect(payout).toHaveBeenCalledOnce();
     expect(payout).toHaveBeenCalledWith(42, "coffee");
     expect(say).toHaveBeenCalledOnce();
@@ -30,7 +31,7 @@ describe("coffee ritual", () => {
   test("a capped payout gets the come-back-tomorrow line, still no LLM", () => {
     const payout = vi.fn(() => 0);
     const { svc, say, generate } = service(payout);
-    svc.onPlayerChat(1, nearMaya, "say", "coffee");
+    svc.onPlayerChat(1, nearMaya, [], CAFE_SPEAK_RADIUS, "say", "coffee");
     expect(say.mock.calls[0]?.[2]).toMatch(/tomorrow/);
     expect(generate).not.toHaveBeenCalled();
   });
@@ -38,14 +39,17 @@ describe("coffee ritual", () => {
   test("no payout from across the room, even by mention or shout", () => {
     const payout = vi.fn(() => 10);
     const { svc } = service(payout);
-    svc.onPlayerChat(1, { accountId: 42, username: "ann", x: 0, y: 5 }, "shout", "Maya coffee!");
+    svc.onPlayerChat(
+      1, { accountId: 42, username: "ann", x: 0, y: 5 }, [], CAFE_SPEAK_RADIUS,
+      "shout", "Maya coffee!",
+    );
     expect(payout).not.toHaveBeenCalled();
   });
 
   test("adjacent chat without the word coffee is not a ritual", () => {
     const payout = vi.fn(() => 10);
     const { svc } = service(payout);
-    svc.onPlayerChat(1, nearMaya, "say", "nice espresso machine");
+    svc.onPlayerChat(1, nearMaya, [], CAFE_SPEAK_RADIUS, "say", "nice espresso machine");
     expect(payout).not.toHaveBeenCalled();
   });
 
@@ -53,7 +57,10 @@ describe("coffee ritual", () => {
     const payout = vi.fn(() => 10);
     const { svc } = service(payout);
     const pierre = NPC_ROSTER.find((n) => n.name === "Pierre")!;
-    svc.onPlayerChat(1, { accountId: 42, username: "ann", x: pierre.post.x, y: pierre.post.y + 1 }, "say", "coffee");
+    svc.onPlayerChat(
+      1, { accountId: 42, username: "ann", x: pierre.post.x, y: pierre.post.y + 1 }, [],
+      CAFE_SPEAK_RADIUS, "say", "coffee",
+    );
     expect(payout).not.toHaveBeenCalled();
   });
 });
