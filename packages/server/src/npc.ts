@@ -39,6 +39,8 @@ const ROAM_MAX = 20;                  // Chebyshev cap from where the NPC stands
 const ROAM_TRIES = 6;                 // draws per cycle before giving up and waiting
 const POST_BIAS = 3;                  // one waypoint in three is the post itself: a centre of
                                        // gravity, cheaper than a return-to-post state
+const SEAT_BIAS = 4;                  // one move cycle in four tries a seat first, when the NPC
+                                       // has any listed
 const IDLE_MS = 20_000;               // floor between waypoints. An 8-tile walk is 4 s, so an NPC
 const IDLE_JITTER = 20_000;           // is stationary ~85 % of the time — a person, not a patrol
 const MAX_PATHS_PER_TICK = 2;         // across every room in one tick. A runaway guard, not a
@@ -61,6 +63,10 @@ export interface NpcDef {
                                       // its post; a `performs` NPC never roams whatever it says,
                                       // because a singer who wanders off the stage is not a
                                       // residency.
+  seats?: Tile[];                     // sit spots inside the home rect, tried occasionally instead
+                                      // of a floor waypoint. npc.ts stays furni-blind — the roster
+                                      // test checks each tile is actually a seat, the way posts
+                                      // are checked.
   ritual?: "coffee";                  // deterministic faucet trigger — never the LLM's call
   lines: string[];                    // canned fallbacks and performance material
 }
@@ -176,7 +182,7 @@ export function screenNpcLine(rs: Ruleset, name: string, raw: string): string | 
   return text;
 }
 
-type NpcMode = "post" | "roam";
+type NpcMode = "post" | "roam" | "seated";
 
 interface NpcState {
   memory: string[];
@@ -193,7 +199,7 @@ interface NpcState {
   nextPerformAt: number;              // epoch ms; performers only, seeded on room activation
   busyUntil: number;                  // epoch ms; a nearby player holds the NPC at its post
   nextMoveAt: number;                 // epoch ms; roamers only, seeded on room activation
-  mode: NpcMode;                      // where the NPC is headed: its post, or a waypoint
+  mode: NpcMode;                      // where the NPC is headed: its post, a waypoint, or a seat
 }
 
 export interface Speaker {
@@ -262,6 +268,14 @@ function waypoint(npc: NpcDef, from: Tile, room: NpcRoom): Tile | null {
     if (cheb({ x, y }, from) <= ROAM_MAX && room.roamOk(x, y)) return { x, y };
   }
   return null;
+}
+
+/** A listed seat the NPC can reach right now, or null. Same two gates as a floor waypoint —
+ *  `roamOk` (reachable, and nobody's on it) and ROAM_MAX — applied to the def's own tiles instead
+ *  of a random draw, since there are only ever a handful of them. */
+function seatpoint(npc: NpcDef, from: Tile, room: NpcRoom): Tile | null {
+  const open = (npc.seats ?? []).filter((s) => cheb(s, from) <= ROAM_MAX && room.roamOk(s.x, s.y));
+  return open.length > 0 ? (open[Math.floor(Math.random() * open.length)] ?? null) : null;
 }
 
 /** The closest player standing still within ENGAGE_R of `tile`, or null. A walking player is on
@@ -470,12 +484,40 @@ export class NpcService {
           this.speak(npc, this.nextLine(npc));
         }
 
+        // A sit request is unconfirmed until the walk finishes, and it is silently refused (seat
+        // picked up, seat claimed) exactly like a refused move — read posture back rather than
+        // trust the request landed.
+        if (st.mode === "seated") {
+          const occ = occupants.find((o) => o.accountId === npc.id);
+          st.mode = occ?.posture === "sit" ? "seated" : "post";
+        }
+
         // Wandering is evaluated last, so an NPC that is walking, engaged or performing never
-        // picks a waypoint. Over the path budget it waits for a later tick — deferred, never
-        // dropped, which is why the clock is not advanced on that branch.
+        // picks a waypoint or stands up. Over the path budget it waits for a later tick —
+        // deferred, never dropped, which is why the clock is not advanced on that branch.
+        //
+        // A confirmed sit (the correction above already dropped a vanished one back to "post")
+        // never wanders — it just waits out its seat until the next due cycle, then stands. No
+        // pathfinding is involved, so the path budget doesn't gate it.
+        if (st.mode === "seated" && now >= st.nextMoveAt) {
+          st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
+          st.mode = "post";
+          room.requestStand(npc.id);
+          continue;
+        }
         if (roams(npc) && now >= st.nextMoveAt) {
           if (paths >= MAX_PATHS_PER_TICK) continue;
           st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
+          const seat =
+            npc.seats && npc.seats.length > 0 && Math.random() < 1 / SEAT_BIAS
+              ? seatpoint(npc, here, room)
+              : null;
+          if (seat) {
+            paths++;
+            st.mode = "seated";
+            room.requestSit(npc.id, seat.x, seat.y);
+            continue;
+          }
           const to = waypoint(npc, here, room);
           if (!to) continue;                    // nowhere free this cycle: wait, don't search on
           paths++;
