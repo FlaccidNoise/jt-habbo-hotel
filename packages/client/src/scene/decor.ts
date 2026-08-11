@@ -1,6 +1,6 @@
 import { Assets, Texture } from "pixi.js";
 import { DECOR_CATALOG } from "@grand/shared";
-import type { DecorDef } from "@grand/shared";
+import type { DecorDef, RoomDecor } from "@grand/shared";
 
 /** Flat decor (#260). One tile per pattern, repeated by the GPU — nothing here is pre-projected.
  *  The floor tile is laid straight down in screen space; the wall tile is carried onto the wall
@@ -30,6 +30,38 @@ export const floorDecor = (a: DecorAssets | null, id?: string): DecorAsset<Floor
 /** The wallpaper a room chose, or null for the default plaster. */
 export const wallDecor = (a: DecorAssets | null, id?: string): DecorAsset<WallDecor> | null =>
   of(a, id, "wall");
+
+/** One of a room's floor overrides (#407) with its texture already resolved. Inclusive bounds, the
+ *  same ones the server sent. */
+export interface FloorRegion {
+  x0: number; y0: number; x1: number; y1: number;
+  asset: DecorAsset<FloorDecor>;
+}
+
+/** A room's floor overrides, in the order the server sent them. A region whose tile failed to load
+ *  is dropped rather than drawn blank, so the room-wide floor shows through — the same fallback a
+ *  missing room-wide tile gets. */
+export function floorRegions(a: DecorAssets | null, decor: RoomDecor): FloorRegion[] {
+  const out: FloorRegion[] = [];
+  for (const r of decor.regions ?? []) {
+    const asset = floorDecor(a, r.floor);
+    if (asset) out.push({ x0: r.x0, y0: r.y0, x1: r.x1, y1: r.y1, asset });
+  }
+  return out;
+}
+
+/** The region covering (x, y), or null where the room-wide floor stands. Later rectangles paint
+ *  over earlier ones: the server builds its floor with rect fills that overwrite, and decor laid on
+ *  top of them has to read the same way round. */
+export function regionAt(
+  regions: readonly FloorRegion[], x: number, y: number,
+): FloorRegion | null {
+  for (let i = regions.length - 1; i >= 0; i--) {
+    const r = regions[i];
+    if (r && x >= r.x0 && x <= r.x1 && y >= r.y0 && y <= r.y1) return r;
+  }
+  return null;
+}
 
 /** Empty when the tiles are missing — every room then draws the colours it always did. A decor
  *  that fails to load must not take the room with it. */

@@ -118,12 +118,17 @@ for (const y of [ZONES.PROMENADE.y0, ZONES.PROMENADE.y1]) {
   for (const [a, b] of PROM_GATES) paint(a, y, b, y, 0);
 }
 
+/** The curb ring. A local constant rather than a ZONES member because it is the basin, not a zone:
+ *  ZONES.POOL is the whole screened courtyard, cabanas and loungers included. The water is what
+ *  this ring encloses, which is the rect #407 lays floor_pool on. */
+const POOL_CURB: Rect = { x0: 51, y0: 67, x1: 79, y1: 83 };
+
 /** Pool courtyard: screened north, west and east, open south through the x 44-47 gate and around
  *  both screen ends at y 93-96. */
 paint(ZONES.POOL.x0, ZONES.POOL.y0, ZONES.POOL.x1, ZONES.POOL.y0, VOID);
 paint(ZONES.POOL.x0, ZONES.POOL.y0, ZONES.POOL.x0, ZONES.POOL.y1, VOID);
 paint(ZONES.POOL.x1, ZONES.POOL.y0, ZONES.POOL.x1, ZONES.POOL.y1, VOID);
-rim(51, 67, 79, 83, 1);              // the pool curb
+rim(POOL_CURB.x0, POOL_CURB.y0, POOL_CURB.x1, POOL_CURB.y1, 1);
 paint(82, 66, 90, 76, 1);            // east viewing deck, looking across the water
 
 /** Jazz wing: the mirror of the courtyard, open north through the x 44-47 gate and around the
@@ -178,10 +183,28 @@ export const GROUNDS_DOOR: Door = { x: 0, y: 100, dir: 2 };
 /** Outdoors and loud: the promenade is long enough that a normal voice has to carry further than
  *  it does indoors, and a resort lawn is the one public room where shouting across it is the point. */
 export const GROUNDS_CHAT: ChatConfig = { speakRadius: 6, shoutAllowed: true };
-/** Decor is room-wide (decor.ts), so the whole 200x200 takes one pair. Deck boards and spa tile
- *  are the pair that reads as ground rather than as a floor — the zones are told apart by what
- *  stands on them, which is the only lever a single-decor room has. */
-export const GROUNDS_DECOR: RoomDecor = { floor: "floor_deck", wall: "wall_spa" };
+/** Deck boards and spa tile are the pair that reads as ground rather than as a floor, and they stay
+ *  the room-wide default: lawn, promenade, plaza, café corner and every corridor between them.
+ *
+ *  The four regions (#407) are the surfaces that have to read as material instead of as ground.
+ *  Water goes inside the curb rather than on ZONES.POOL, which is the screened courtyard — laying
+ *  it there would put the cabanas, the loungers, the hot tubs and the bar under water. The jazz
+ *  wing takes carpet in two pieces on purpose: the strip between them at y 123-125 is where the
+ *  apron rail stands, and leaving it deck reads as the walkway in front of the stage. */
+export const GROUNDS_DECOR: RoomDecor = {
+  floor: "floor_deck",
+  wall: "wall_spa",
+  regions: [
+    {
+      x0: POOL_CURB.x0 + 1, y0: POOL_CURB.y0 + 1,
+      x1: POOL_CURB.x1 - 1, y1: POOL_CURB.y1 - 1,
+      floor: "floor_pool",
+    },
+    { ...ZONES.JAZZ_STAGE, floor: "floor_lounge" },
+    { ...ZONES.JAZZ_BOOTHS, floor: "floor_lounge" },
+    { ...ZONES.GALLERY, floor: "floor_fandeco" },
+  ],
+};
 
 // ---------------------------------------------------------------------------------------------
 // Arrival plaza. The fountain sits at the centre of a sunken court; the rim carries a railing
@@ -219,7 +242,7 @@ run(["potted_palm_teal", "potted_palm"], 36, 102, 20, 0, 7);
 // Pool courtyard. Cabanas along the north screen, loungers south, the bar and the tubs west, and
 // the viewing deck east. Palms every eighth curb tile ring the water.
 
-const POOL_RIM = rimTiles(51, 67, 79, 83);
+const POOL_RIM = rimTiles(POOL_CURB.x0, POOL_CURB.y0, POOL_CURB.x1, POOL_CURB.y1);
 for (let i = 0; i < POOL_RIM.length; i += 8) {
   const t = POOL_RIM[i];
   if (t) put(i % 16 === 0 ? "potted_palm" : "potted_palm_teal", t.x, t.y);

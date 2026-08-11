@@ -52,14 +52,6 @@ export const DecorDefSchema = z.discriminatedUnion("kind", [
 ]);
 export type DecorDef = z.infer<typeof DecorDefSchema>;
 
-/** What a room hangs and lays. Both sides optional: a room with neither keeps the default green
- *  checker and plaster the client has always drawn. */
-export const RoomDecorSchema = z.object({
-  floor: z.string().optional(),
-  wall: z.string().optional(),
-});
-export type RoomDecor = z.infer<typeof RoomDecorSchema>;
-
 /** Screen-space lattice cell of the floor: the bounding box of one tile diamond at scale 64, and
  *  the smallest rectangle that repeats on the diamond lattice. */
 export const FLOOR_CELL_W = 64;
@@ -166,3 +158,55 @@ export const DECOR_CATALOG: DecorDef[] = [
     cap: 0xc2a36b,
   },
 ];
+
+const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));
+
+/** Enough for a zoned public room to name every surface it has, and few enough that the regions can
+ *  never be the reason a room_state is big. The Resort Grounds — 200x200, the largest room in the
+ *  hotel — spends four. */
+export const MAX_DECOR_REGIONS = 32;
+
+/** A floor override on a rectangle of tiles, inclusive at both ends, which is how the room builders
+ *  measure their own rect fills (server grounds.ts).
+ *
+ *  Rectangles rather than a decor id per tile: room_state already carries a 40,000-character
+ *  heightmap for the Grounds (#362), and a per-tile map would be the larger half of the message for
+ *  a floor that is laid out in zones anyway. The Grounds' four rectangles cost 245 bytes.
+ *
+ *  The id is checked against the catalog here, unlike the room-wide `floor` below. Regions are
+ *  authored by the house in server constants and never by a player, so a strict check is a
+ *  boot-time typo catcher with nobody to lock out. */
+export const DecorRegionSchema = z
+  .object({
+    x0: z.number().int().min(0), y0: z.number().int().min(0),
+    x1: z.number().int().min(0), y1: z.number().int().min(0),
+    floor: z.string().refine((id) => FLOOR_IDS.has(id), "not a floor decor id"),
+  })
+  .refine((r) => r.x0 <= r.x1 && r.y0 <= r.y1, "rectangle is inside out (x1 < x0, or y1 < y0)");
+export type DecorRegion = z.infer<typeof DecorRegionSchema>;
+
+/** What a room hangs and lays. Every side optional: a room with none keeps the default green
+ *  checker and plaster the client has always drawn. */
+export const RoomDecorSchema = z.object({
+  floor: z.string().optional(),
+  wall: z.string().optional(),
+  /** Floor overrides on top of `floor` (#407), so a zoned room can give its pool, its stage and its
+   *  colonnade different surfaces. Later rectangles paint over earlier ones, matching the rect
+   *  fills the room builders draw the floor with. Walls stay room-wide. */
+  regions: z.array(DecorRegionSchema).max(MAX_DECOR_REGIONS).optional(),
+});
+export type RoomDecor = z.infer<typeof RoomDecorSchema>;
+
+/** Why a room's decor regions do not fit a `width` x `height` floor, or null when they do. The one
+ *  check the wire schema cannot make, because the schema never sees the room it decorates. The
+ *  server runs it at seed time so a mistyped rect fails at boot rather than painting off the edge
+ *  of a live room. */
+export function decorRegionsFault(decor: RoomDecor, width: number, height: number): string | null {
+  for (const r of decor.regions ?? []) {
+    if (r.x1 < width && r.y1 < height) continue;
+    return `decor region ${r.floor} at ${r.x0},${r.y0}..${r.x1},${r.y1} runs past the ` +
+      `${width}x${height} floor — the bounds are inclusive, so the last tile is ` +
+      `${width - 1},${height - 1}`;
+  }
+  return null;
+}

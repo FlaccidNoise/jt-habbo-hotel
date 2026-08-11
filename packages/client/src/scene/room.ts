@@ -2,7 +2,8 @@ import { Container, Graphics } from "pixi.js";
 import type { FederatedPointerEvent } from "pixi.js";
 import { WALL_TOP_PX, screenToTile, tileHeight, worldToScreen } from "@grand/shared";
 import type { RoomModel, Tile } from "@grand/shared";
-import type { DecorAsset, FloorDecor } from "./decor.ts";
+import { regionAt } from "./decor.ts";
+import type { DecorAsset, FloorDecor, FloorRegion } from "./decor.ts";
 import { LAYER, tileDepth } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
@@ -126,6 +127,7 @@ export class RoomScene {
   onWindow: ((window: TileWindow) => void) | null = null;
   private handlers: TileHandlers;
   private decor: DecorAsset<FloorDecor> | null;
+  private regions: readonly FloorRegion[];
   private background: (e: FederatedPointerEvent) => void;
   private touchMove: (e: FederatedPointerEvent) => void;
   private touchEnd: () => void;
@@ -142,12 +144,16 @@ export class RoomScene {
      *  about to draw on, because building 90,000 tiles only to cull them on the next line is
      *  slower than never building them. */
     view: { width: number; height: number } | null = null,
+    /** Floor overrides on top of `decor` (#407). Last one covering a tile wins. Trails `view`
+     *  rather than sitting beside `decor` so that every caller passing neither keeps working. */
+    regions: readonly FloorRegion[] = [],
   ) {
     this.model = model;
     this.stage = stage;
     this.handlers = handlers;
     this.depth = depth;
     this.decor = decor;
+    this.regions = regions;
     const range = heightRange(model);
     this.floor = range.low;
     this.ceiling = range.high;
@@ -468,14 +474,20 @@ export class RoomScene {
 
   private addTile(x: number, y: number, h: number, handlers: TileHandlers): void {
     const isDoor = x === this.model.door.x && y === this.model.door.y;
+    // The room-wide floor, or the last region covering this tile (#407). Resolved once for the
+    // surface and its risers together, or a raised tile inside a region would wear its own carpet
+    // over deck-coloured sides.
+    const decor = regionAt(this.regions, x, y)?.asset ?? this.decor;
     const tile = new Graphics();
     // The decor tile is laid down once across the whole floor plane and each diamond cuts its own
     // window out of it (textureSpace "global"), so the pattern runs on unbroken between tiles and
     // a raised tile still lands on the same phase — its lift is a whole number of tile heights.
+    // Neighbouring regions therefore share one lattice too: each is anchored in the same world
+    // space, so the phase carries across the seam rather than restarting at it.
     // Hit-testing is untouched: the shape is still the polygon, only the paint changed.
     tile.poly(diamond(x, y, h));
     if (isDoor) tile.fill(DOOR).stroke(SEAM);
-    else if (this.decor) tile.fill({ texture: this.decor.texture, textureSpace: "global" });
+    else if (decor) tile.fill({ texture: decor.texture, textureSpace: "global" });
     else tile.fill((x + y) % 2 === 0 ? FLOOR_A : FLOOR_B).stroke(SEAM);
     tile.eventMode = "static";
     tile.cursor = "pointer";
@@ -492,7 +504,7 @@ export class RoomScene {
     this.tiles.set(`${x},${y}`, tile);
     this.world.addChild(tile);
 
-    const sides = this.sides(x, y, h);
+    const sides = this.sides(x, y, h, decor);
     if (sides) {
       sides.eventMode = "none";
       this.skirts.set(`${x},${y}`, sides);
@@ -523,7 +535,9 @@ export class RoomScene {
    *  read as raised. A void neighbour gets a face too — the floor is a slab with thickness, not
    *  a painted sheet, so the room boundary shows a lip below the lowest floor. Null when the
    *  tile is flush with both neighbours. */
-  private sides(x: number, y: number, h: number): Graphics | null {
+  private sides(
+    x: number, y: number, h: number, decor: DecorAsset<FloorDecor> | null,
+  ): Graphics | null {
     const SLAB = 0.25;
     const sRaw = tileHeight(this.model, x, y + 1);
     const eRaw = tileHeight(this.model, x + 1, y);
@@ -541,8 +555,8 @@ export class RoomScene {
     };
     // Flat colours even under a decor floor: a riser is the ground plane turned on edge, and
     // shearing the tile pattern up it would read as a smear rather than as the same material.
-    const left = this.decor?.def.sides.left ?? SIDE_LEFT;
-    const right = this.decor?.def.sides.right ?? SIDE_RIGHT;
+    const left = decor?.def.sides.left ?? SIDE_LEFT;
+    const right = decor?.def.sides.right ?? SIDE_RIGHT;
     if (south < h) face(x - 0.5, y + 0.5, x + 0.5, y + 0.5, south, left);
     if (east < h) face(x + 0.5, y + 0.5, x + 0.5, y - 0.5, east, right);
     return g;

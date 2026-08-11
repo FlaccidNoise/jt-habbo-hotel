@@ -40,7 +40,7 @@ import { loadFurniAssets } from "./scene/assets.ts";
 import { FigureBaker, loadFigureAtlas } from "./scene/figure.ts";
 import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
-import { floorDecor, loadDecorAssets, wallDecor } from "./scene/decor.ts";
+import { floorDecor, floorRegions, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
 import { Effects } from "./scene/effects.ts";
 import { FurniLayer } from "./scene/furni.ts";
@@ -863,7 +863,8 @@ function buildRoom(msg: RoomState): void {
 
   scene = new RoomScene(app.stage, model, { click: onTileClick, hover: onTileHover }, depth,
     floorDecor(decorAssets, msg.decor.floor),
-    { width: app.screen.width, height: app.screen.height });
+    { width: app.screen.width, height: app.screen.height },
+    floorRegions(decorAssets, msg.decor));
   scene.center(app.screen.width, app.screen.height);
   furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth, scene.visible);
   for (const item of furni) furniLayer.apply(item);

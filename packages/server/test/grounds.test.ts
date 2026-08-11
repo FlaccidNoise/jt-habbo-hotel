@@ -3,11 +3,15 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
-import { PROTOTYPE_CATALOG, footprintTiles, parseHeightmap, tileHeight } from "@grand/shared";
-import type { FurniItem, RoomModel } from "@grand/shared";
+import {
+  PROTOTYPE_CATALOG, RoomDecorSchema, decorRegionsFault, footprintTiles, parseHeightmap, tileHeight,
+} from "@grand/shared";
+import type { FurniItem, RoomDecor, RoomModel } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
-import { GROUNDS, GROUNDS_DOOR, GROUNDS_HEIGHTMAP, GROUNDS_ROOM_ID, ZONES } from "../src/grounds.ts";
+import {
+  GROUNDS, GROUNDS_DECOR, GROUNDS_DOOR, GROUNDS_HEIGHTMAP, GROUNDS_ROOM_ID, ZONES,
+} from "../src/grounds.ts";
 import { reachable } from "../src/pathfind.ts";
 
 // The Resort Grounds (#406). The room is generated, so what these tests hold onto is what a
@@ -168,6 +172,97 @@ describe("the seeded Resort Grounds", () => {
     expect(stranded).toEqual([]);
     closeDb(db);
   }, 20_000);
+});
+
+// Per-region floor decor (#407). The Grounds is the room the feature exists for: one deck floor
+// across 40,000 tiles could only tell its zones apart by what stood on them.
+describe("the Resort Grounds decor regions", () => {
+  const storedDecor = (db: Database.Database): RoomDecor =>
+    (
+      JSON.parse(
+        (db.prepare("SELECT doc FROM rooms WHERE id = ?").get(GROUNDS_ROOM_ID) as { doc: string })
+          .doc,
+      ) as { decor: RoomDecor }
+    ).decor;
+
+  const furniIds = (db: Database.Database): number[] =>
+    (db.prepare("SELECT id FROM furni_items WHERE room_id = ? ORDER BY id").all(GROUNDS_ROOM_ID) as
+      Array<{ id: number }>).map((r) => r.id);
+
+  test("the constant is a legal decor selection for a 200x200 floor", () => {
+    expect(RoomDecorSchema.safeParse(GROUNDS_DECOR).success).toBe(true);
+    expect(decorRegionsFault(GROUNDS_DECOR, 200, 200)).toBeNull();
+  });
+
+  test("a fresh seed stores them", () => {
+    const db = openDb(dbPath);
+    expect(storedDecor(db)).toEqual(GROUNDS_DECOR);
+    closeDb(db);
+  }, 20_000);
+
+  // The reseed path (#315/#330): a hotel booted before #407 has a stored doc with no regions in
+  // it, and nothing re-reads the constants unless the doc drifts from them. The drift here is
+  // decor-only, so the room keeps the furniture it is holding — a relay would mint new item ids
+  // for 260 locked pieces.
+  test("an existing hotel picks them up on the next boot, keeping its furniture", () => {
+    const first = openDb(dbPath);
+    const before = furniIds(first);
+    const doc = JSON.parse(
+      (first.prepare("SELECT doc FROM rooms WHERE id = ?").get(GROUNDS_ROOM_ID) as { doc: string })
+        .doc,
+    ) as { decor: RoomDecor };
+    delete doc.decor.regions;
+    first.prepare("UPDATE rooms SET doc = ? WHERE id = ?").run(
+      JSON.stringify(doc), GROUNDS_ROOM_ID,
+    );
+    expect(storedDecor(first).regions).toBeUndefined();
+    closeDb(first);
+
+    const second = openDb(dbPath);
+    expect(storedDecor(second).regions).toEqual(GROUNDS_DECOR.regions);
+    expect(furniIds(second)).toEqual(before);
+    closeDb(second);
+  }, 30_000);
+
+  // #362: room_state for this room is already ~103 KB, nearly all of it the heightmap. Rectangles
+  // were chosen over a decor id per tile so that this number stays in the hundreds of bytes — a
+  // per-tile map of 40,000 tiles would have doubled the message.
+  test("they cost the room_state under a kilobyte", () => {
+    const db = openDb(dbPath);
+    const decor = storedDecor(db);
+    const { regions, ...roomWide } = decor;
+    const growth = JSON.stringify(decor).length - JSON.stringify(roomWide).length;
+    expect(regions?.length).toBeGreaterThan(0);
+    expect(growth).toBeGreaterThan(0);
+    expect(growth).toBeLessThanOrEqual(1024);
+    closeDb(db);
+  }, 20_000);
+
+  // The water goes inside the pool curb, not on ZONES.POOL — that rect is the whole screened
+  // courtyard, so laying floor_pool there would put the cabanas, the loungers, the hot tubs and
+  // the bar under water. Pin the distinction: every water tile is open ground, and the ring around
+  // it is the raised curb.
+  test("the water sits inside the curb rather than over the courtyard", () => {
+    const model = parseHeightmap(GROUNDS_HEIGHTMAP, GROUNDS_DOOR);
+    const water = GROUNDS_DECOR.regions?.find((r) => r.floor === "floor_pool");
+    if (!water) throw new Error("the Grounds no longer lay floor_pool anywhere");
+
+    for (let y = water.y0; y <= water.y1; y++) {
+      for (let x = water.x0; x <= water.x1; x++) {
+        expect(tileHeight(model, x, y), `water at ${x},${y}`).toBe(0);
+      }
+    }
+    for (let x = water.x0 - 1; x <= water.x1 + 1; x++) {
+      expect(tileHeight(model, x, water.y0 - 1), `curb at ${x},${water.y0 - 1}`).toBe(1);
+      expect(tileHeight(model, x, water.y1 + 1), `curb at ${x},${water.y1 + 1}`).toBe(1);
+    }
+    // A lounger or a cabana inside the water rect would mean the rect had grown into the deck.
+    for (const spot of GROUNDS.floor) {
+      const inside = spot.x >= water.x0 && spot.x <= water.x1 &&
+        spot.y >= water.y0 && spot.y <= water.y1;
+      if (inside) expect(spot.defId, `${spot.defId} at ${spot.x},${spot.y}`).toBe("pool_ladder");
+    }
+  });
 });
 
 describe("ZONES", () => {

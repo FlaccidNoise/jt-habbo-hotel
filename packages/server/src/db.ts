@@ -1,5 +1,5 @@
 import Database from "better-sqlite3";
-import { STARTER_GRANT_SETS, parseHeightmap } from "@grand/shared";
+import { RoomDecorSchema, STARTER_GRANT_SETS, decorRegionsFault, parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
 import { LAYOUT_VERSION, clearHouseLayout, seedPublicFurni } from "./furnish.ts";
 import {
@@ -156,7 +156,13 @@ function seedRoom(
   decor: RoomDecor = {},
   layout = 0,
 ): boolean {
-  parseHeightmap(heightmap, door); // never skip: an unwalkable seed must fail loudly at boot
+  const model = parseHeightmap(heightmap, door); // never skip: unwalkable must fail loudly at boot
+  // Same reason, for what the decor says: a mistyped region id or a rect that runs off the floor
+  // would otherwise reach a client as a room_state it refuses to parse, locking the room instead
+  // of the boot.
+  RoomDecorSchema.parse(decor);
+  const fault = decorRegionsFault(decor, model.width, model.height);
+  if (fault) throw new Error(`room ${id} (${name}): ${fault}`);
   const doc = JSON.stringify({ v: 1, heightmap, door, chat, decor, layout });
   const inserted =
     db
