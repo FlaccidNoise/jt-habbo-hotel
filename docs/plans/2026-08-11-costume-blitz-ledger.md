@@ -250,6 +250,8 @@ Per pack, before moving on:
 
 - Every part in the pack renders on one figure at 2× without a layer eating another.
 - The `cc` set covers the pack's `ch` set with no `ch` pixel showing at any of the 64 dir-frames.
+  The mechanism is the `hides` rule — `resolveLayers` drops `ch` from the drawn stack. Geometric
+  containment is NOT required and open-sided coats cannot provide it (pack 1 finding).
 - The `ha` set clears the face at every walk down-step, checked against all eight face sets 17-24.
 - The shelf reads cheapest-first and the theme string matches the furniture chapter exactly.
 
