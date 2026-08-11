@@ -139,6 +139,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // hr and fa, ca draws after cc so a neck piece is worn over a coat, and wa draws between ch and
   // cc so a coat covers it. Only the sash carries a second slot.
   { id: 58, type: "ea", name: "Sunglasses",  slots: 1, family: "material", hides: [], retired: false },
+  { id: 59, type: "ea", name: "Round Specs", slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -235,6 +236,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 55, price: 300, theme: "hats" },   // Headphones
   { set: 54, price: 400, theme: "hats" },   // Top Hat
   { set: 57, price: 450, theme: "hats" },   // Crown
+  { set: 59, price: 200, theme: "accessories" },  // Round Specs
   { set: 58, price: 250, theme: "accessories" },  // Sunglasses
 ];
 

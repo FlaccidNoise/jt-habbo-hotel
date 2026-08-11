@@ -2979,6 +2979,54 @@
       "figuredataVersion": 1,
       "recipeHash": "e9b174d723e91b95ee2aac2f141c769dc94bd801224e9110bc66f31a62740726",
       "pixelHash": "9e01133f4853305467ff9ae4b562e1e974d3b5f647c37685ddc37dda593f9ee4"
+    },
+    {
+      "partId": "ea59",
+      "setId": 59,
+      "type": "ea",
+      "name": "Round Specs",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ea59.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "68dffadef0fe5d7976346e566d1eac2324440e07ef28c61329fcfbc3a8bde620",
+      "pixelHash": "0025023e22aa3a458159c5b65695a3098c5275c31bfc611a7fbb458103f2ff04"
     }
   ]
 }

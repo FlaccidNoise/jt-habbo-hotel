@@ -2757,6 +2757,55 @@ FIGURE_PARTS = {
              "c1": (7.2, 10.2, 15.2)},
         ],
     },
+    # Round Specs (set 59). The manifest asks for outline circles with the lens left transparent,
+    # and transparent is the hard part: there is no torus prim and no boolean, so a rim has to be
+    # built as four bars round a hole. Ellipsoid bars were drawn first and do not close — two of
+    # them meeting at 45 degrees leave a 0.5 px gap at each diagonal, because an ellipsoid loses
+    # its thickness fastest exactly where the next one arrives. Boxes hold their width to the end,
+    # so these close.
+    #
+    # It is a rim and not a square: the top and bottom bars stop at +/-2.5 while the side bars run
+    # out to +/-3.4, which notches all four corners. At a 6.8 px lens that notch is the whole
+    # difference between a frame and a window, and it is the roundest thing the prim vocabulary
+    # can state.
+    #
+    # The hole is 4.2 x 4.2 and lands on rows 32-36 with the stamped eyes at 33-35 inside it, so a
+    # wearer still looks at you. It is sized a row bigger than the eyes on both sides on purpose:
+    # a walk down-step drops the root 2.5 px while the face art moves by an integer 2, and this
+    # rim measured 3 rows of drop against the face's 2 on exactly those frames. One row of slack
+    # each way is what absorbs that. Drawn a row and a bit higher, the top bar sat on the eyes at
+    # stand and only cleared them at walk, which is the trap in the other direction.
+    #
+    # The corner pieces are hinges, not arms. A temple running back to y -4.2 was drawn first: at
+    # dir 3 the far end projects 4.4 rows above the near end, so it came out a vertical bracket
+    # standing on the forehead, and at dir 1 it swung clear of the head and hung in space. A hinge
+    # only 1.5 deep sits at the outer edge of each lens and stays there in all eight directions.
+    "ea59": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-6.7, 9.05, 16.7),
+             "c1": (-1.7, 10.55, 18.0)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-6.7, 9.05, 11.2),
+             "c1": (-1.7, 10.55, 12.5)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-7.6, 9.05, 12.1),
+             "c1": (-6.3, 10.55, 17.1)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-2.1, 9.05, 12.1),
+             "c1": (-0.8, 10.55, 17.1)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (1.7, 9.05, 16.7),
+             "c1": (6.7, 10.55, 18.0)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (1.7, 9.05, 11.2),
+             "c1": (6.7, 10.55, 12.5)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (6.3, 9.05, 12.1),
+             "c1": (7.6, 10.55, 17.1)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (0.8, 9.05, 12.1),
+             "c1": (2.1, 10.55, 17.1)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-1.0, 9.05, 13.8),
+             "c1": (1.0, 10.55, 15.0)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (7.6, 8.4, 13.6),
+             "c1": (8.7, 9.9, 15.0)},
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-8.7, 8.4, 13.6),
+             "c1": (-7.6, 9.9, 15.0)},
+        ],
+    },
     "fa13": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-8.2, 6.2, 11.0),
