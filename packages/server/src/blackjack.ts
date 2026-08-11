@@ -32,16 +32,22 @@ export class BlackjackService {
   private hands = new Map<number, Hand>();
   private db: Database.Database;
   private emit: (accountId: number, msg: ServerMsg) => void;
+  private announce?: (accountId: number, phrase: string) => void;
   private draw: () => number;
 
   constructor(opts: {
     db: Database.Database;
     emit: (accountId: number, msg: ServerMsg) => void;
+    /** Tells the player's room what they just did, third person and without their name — the
+     *  room owns the roster, so it is the room that knows what to call them. Absent in tests
+     *  that build the service with no rooms around it. */
+    announce?: (accountId: number, phrase: string) => void;
     /** Card source, 1..RANK_MAX. Tests inject a scripted deck. */
     draw?: () => number;
   }) {
     this.db = opts.db;
     this.emit = opts.emit;
+    this.announce = opts.announce;
     this.draw = opts.draw ?? (() => 1 + Math.floor(Math.random() * RANK_MAX));
   }
 
@@ -146,6 +152,14 @@ export class BlackjackService {
       stake: hand.stake, stakedToday: this.stakedToday(accountId),
       outcome, paid: returned,
     });
+    // Wins only, the wheel's rule (#433): the room watches someone take the table, and nobody
+    // else needs to be told a stranger lost or got their stake back. The figure is what the
+    // house paid, stake included — the same number the player's own panel shows.
+    if (outcome === "win" || outcome === "blackjack") {
+      this.announce?.(accountId, outcome === "blackjack"
+        ? `takes blackjack — ${returned} ★`
+        : `wins ${returned} ★ at the card table`);
+    }
   }
 
   /** The upcard and nothing else — the hole card is in `hand` and stays there until finish. */

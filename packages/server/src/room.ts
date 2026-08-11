@@ -1000,6 +1000,16 @@ export class Room {
     return def;
   }
 
+  /** A line the whole room reads, named for the occupant it is about (#433). The card table is
+   *  private by construction — the hand lives in a per-account service — so a win only becomes
+   *  the room's business through here. Silent for someone who has already left: the announcement
+   *  belongs to the room they were standing in, not the one they walked into. */
+  announce(accountId: number, phrase: string): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    this.broadcast({ t: "notice", text: `${occupant.username} ${phrase}` });
+  }
+
   private broadcast(msg: ServerMsg): void {
     for (const id of this.occ.keys()) this.emit(id, msg);
   }

@@ -201,7 +201,17 @@ export async function startServer(opts: {
   }
 
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
-  const blackjackService = new BlackjackService({ db, emit, draw: opts.blackjackDraw });
+  const blackjackService = new BlackjackService({
+    db,
+    emit,
+    draw: opts.blackjackDraw,
+    announce: (accountId, phrase) => {
+      const ws = byAccount.get(accountId);
+      const conn = ws ? conns.get(ws) : undefined;
+      if (conn?.roomId === undefined) return;
+      rooms.get(conn.roomId)?.room.announce(accountId, phrase);
+    },
+  });
   const leverRoll = opts.leverRoll ?? Math.random;
   const wheelRoll = opts.wheelRoll ?? Math.random;
 

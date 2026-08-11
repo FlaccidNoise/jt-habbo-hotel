@@ -98,6 +98,10 @@ const rows = (accountId: number): Array<{ opKey: string; stars: number }> =>
 const deal = (p: Player, stake: number): void =>
   p.ws.send(JSON.stringify({ t: "bj_deal", stake }));
 
+/** The join hands a fresh account its onboarding prompt on the same channel the table's
+ *  announcement rides, so a test that reads announcements clears that one first. */
+const drainHint = (p: Player): Promise<unknown> => p.bus.waitFor("notice");
+
 test("the table opens for a player standing at it, and refuses one across the room", async () => {
   const { port } = await start([7, 8, 9, 5]);
   const { ws, bus, id } = await joinAs(port, "alice");
@@ -342,6 +346,46 @@ test("a second deal mid-hand is refused", async () => {
   expect(refused).toMatchObject({ code: "casino" });
   expect(refused.message).toMatch(/finish your hand/);
   expect(rows(alice.id).map((r) => r.stars)).toEqual([-25]);
+});
+
+// The room can see the table (#433). A hand is private machinery — one account, one service —
+// so the win is the only part of it the bystanders get, on the same win-only rule the wheel keeps.
+test("a win and a natural are announced to the whole room", async () => {
+  const { port } = await start([10, 9, 10, 7, 1, 13, 9, 5]);
+  const alice = await joinAs(port, "alice");
+  const bob = await joinAs(port, "bob");
+  await drainHint(alice);
+  await drainHint(bob);
+  fund(alice.id, 100);
+
+  deal(alice, 25);                                    // player 19, dealer stands on 17
+  await alice.bus.waitFor("blackjack_state");
+  alice.ws.send(JSON.stringify({ t: "bj_stand" }));
+  expect(await alice.bus.waitFor("blackjack_state")).toMatchObject({ outcome: "win", paid: 50 });
+  expect((await bob.bus.waitFor("notice")).text).toBe("alice wins 50 ★ at the card table");
+  expect((await alice.bus.waitFor("notice")).text).toBe("alice wins 50 ★ at the card table");
+
+  deal(alice, 25);                                    // an ace and a king: it ends where it stands
+  expect(await alice.bus.waitFor("blackjack_state")).toMatchObject({
+    outcome: "blackjack", paid: 63,
+  });
+  expect((await bob.bus.waitFor("notice")).text).toBe("alice takes blackjack — 63 ★");
+});
+
+test("a loss stays between the player and the dealer", async () => {
+  const { port } = await start([10, 9, 5, 5, 10]);    // the hit takes the player to 29
+  const alice = await joinAs(port, "alice");
+  const bob = await joinAs(port, "bob");
+  await drainHint(alice);
+  await drainHint(bob);
+  fund(alice.id, 100);
+
+  deal(alice, 25);
+  await alice.bus.waitFor("blackjack_state");
+  alice.ws.send(JSON.stringify({ t: "bj_hit" }));
+  expect(await alice.bus.waitFor("blackjack_state")).toMatchObject({ outcome: "loss", paid: 0 });
+  await bob.bus.never("notice", 200);
+  await alice.bus.never("notice", 100);
 });
 
 // Walking away stands the hand. A hand that voided on disconnect would refund a player who saw
