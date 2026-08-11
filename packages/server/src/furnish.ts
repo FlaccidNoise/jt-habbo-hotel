@@ -243,8 +243,13 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  building you can actually play would exist in no room that had already been seeded.
  *  6 is #429: the Grand Wheel and its odds board went onto the casino's east strip and the exotic
  *  fern moved off a tile the wheel needs to be bet from. A live hotel would otherwise have the
- *  handler, the message and the art for a wheel that stands in no room. */
-export const LAYOUT_VERSION = 6;
+ *  handler, the message and the art for a wheel that stands in no room.
+ *  7 is #427: the Grounds' pool grew a deep end, so its water is two decor rects instead of one.
+ *  The first bump no Layout constant moved for — seedRoom compares the stored decor as well as
+ *  the stamp, so the tiles would have reached a live room on their own. It is here because the
+ *  pool now means something to walk into rather than across, and a room that changes what its
+ *  floor does to the people standing on it should say so in the one stamp rooms are versioned by. */
+export const LAYOUT_VERSION = 7;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));

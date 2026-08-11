@@ -82,12 +82,6 @@ export interface NpcDef {
  *  This rect is the approach between the door and the plaza's west gate, so the greeting lands. */
 const ARRIVAL_COURT: Rect = { x0: 2, y0: 96, x1: 12, y1: 104 };
 
-/** The pool deck south of the curb. The water #407 lays inside the curb is ordinary walkable
- *  ground — floor decor, not a hole — so ZONES.POOL as a home rect would send the lifeguard for a
- *  stroll across the deep end. This rect stops at the curb's south rim (y 83) and covers the
- *  lounger row, which is the part of the courtyard that is deck. */
-const POOL_DECK: Rect = { x0: 52, y0: 83, x1: 78, y1: 92 };
-
 export const NPC_ROSTER: NpcDef[] = [
   {
     id: -1,
@@ -238,7 +232,11 @@ export const NPC_ROSTER: NpcDef[] = [
       "Walk the curb, {name}. It is wet and it does not forgive.",
       "I am right here if you need me. Try not to.",
     ],
-    home: POOL_DECK,
+    // The whole screened courtyard, water included (#427). The rect used to stop at the curb's
+    // south rim because the pool was walkable ground that a lifeguard would have strolled across;
+    // now that stepping in sinks a figure to the shoulders, a lifeguard who occasionally wades is
+    // the courtyard behaving correctly rather than a bug to fence out.
+    home: ZONES.POOL,
     lines: [
       "Loungers are first come. The parasols move if you ask them nicely.",
       "No running on the curb. I say it forty times a shift.",

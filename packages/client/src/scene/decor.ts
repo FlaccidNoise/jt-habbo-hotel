@@ -65,8 +65,15 @@ export function regionAt(
 
 /** How far a figure standing on a floor is sunk into it, in figure pixels (#427). A floor that is
  *  not in the table is dry land, which is every floor but the pool's water. Deep water is another
- *  tile with a bigger number here, not another mechanism. */
-const WATERLINE: Readonly<Record<string, number>> = { floor_pool: 34 };
+ *  tile with a bigger number here, not another mechanism.
+ *
+ *  Both numbers are landmarks on the baked cell, measured off the layer sheets rather than chosen:
+ *  the feet sit at row 102 (`anchorY`, figures.json), the shirt hem at row 67 and the head at rows
+ *  21-45. 34 is the hem, so wading cuts at the waist. The torso's silhouette then ramps out from
+ *  1 px at row 44 and reaches its full 20 at row 50 — that ramp is the shoulder, so 102 - 50 = 52
+ *  puts the deep surface at the foot of it and leaves the whole head plus the shoulder slope above
+ *  water. Cutting at the top of the ramp instead would take two rows of jaw with it. */
+const WATERLINE: Readonly<Record<string, number>> = { floor_pool: 34, floor_pool_deep: 52 };
 
 /** How deep the water is on (x, y), 0 where the tile is not water. */
 export function waterlineAt(regions: readonly FloorRegion[], x: number, y: number): number {

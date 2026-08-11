@@ -186,11 +186,16 @@ export const GROUNDS_CHAT: ChatConfig = { speakRadius: 6, shoutAllowed: true };
 /** Deck boards and spa tile are the pair that reads as ground rather than as a floor, and they stay
  *  the room-wide default: lawn, promenade, plaza, café corner and every corridor between them.
  *
- *  The four regions (#407) are the surfaces that have to read as material instead of as ground.
+ *  The regions (#407) are the surfaces that have to read as material instead of as ground.
  *  Water goes inside the curb rather than on ZONES.POOL, which is the screened courtyard — laying
  *  it there would put the cabanas, the loungers, the hot tubs and the bar under water. The jazz
  *  wing takes carpet in two pieces on purpose: the strip between them at y 123-125 is where the
- *  apron rail stands, and leaving it deck reads as the walkway in front of the stage. */
+ *  apron rail stands, and leaving it deck reads as the walkway in front of the stage.
+ *
+ *  The pool is two rects rather than one (#427): the deep end lies inside the shallow one and
+ *  covers it, because regionAt takes the last rect that contains the tile. That leaves a two-tile
+ *  shallow ring all the way round, which is what a swimmer crosses on the way in — deep water
+ *  reached straight off the curb would sink anyone who stepped over it in a single stride. */
 export const GROUNDS_DECOR: RoomDecor = {
   floor: "floor_deck",
   wall: "wall_spa",
@@ -199,6 +204,11 @@ export const GROUNDS_DECOR: RoomDecor = {
       x0: POOL_CURB.x0 + 1, y0: POOL_CURB.y0 + 1,
       x1: POOL_CURB.x1 - 1, y1: POOL_CURB.y1 - 1,
       floor: "floor_pool",
+    },
+    {
+      x0: POOL_CURB.x0 + 3, y0: POOL_CURB.y0 + 3,
+      x1: POOL_CURB.x1 - 3, y1: POOL_CURB.y1 - 3,
+      floor: "floor_pool_deep",
     },
     { ...ZONES.JAZZ_STAGE, floor: "floor_lounge" },
     { ...ZONES.JAZZ_BOOTHS, floor: "floor_lounge" },

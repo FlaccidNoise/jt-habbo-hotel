@@ -13,12 +13,17 @@ function layoutsHash(): string {
 }
 
 const RECORDED = {
-  // #429: the Grand Wheel and its odds board went onto the casino's east strip, the exotic fern
-  // moved off a betting tile and two props went out to hold the room under the density ceiling, so
-  // LAYOUT_VERSION went 5 -> 6. The Grounds layout is built by grounds.ts rather than written out,
-  // so the hash also covers the builder's output — a rhythm constant edited without a bump lands
-  // here the same way a moved chair would.
-  version: 6,
+  // #427: the Grounds' pool got a deep end, so LAYOUT_VERSION went 6 -> 7 with the hash unmoved —
+  // the first entry here where that is the whole point. The deep end is decor (a second rect in
+  // GROUNDS_DECOR), and decor is not a Layout, so nothing this test hashes changed. seedRoom
+  // compares the stored decor as well as the stamp, so the water would have reached a live room
+  // without the bump; it was taken anyway because the pool now sinks the people standing in it.
+  // An identical hash beside a new version is therefore a reading, not a failure: it says the
+  // furniture is where it was.
+  // Before it, #429 moved the Grand Wheel onto the casino's east strip for 5 -> 6. The Grounds
+  // layout is built by grounds.ts rather than written out, so the hash also covers the builder's
+  // output — a rhythm constant edited without a bump lands here the same way a moved chair would.
+  version: 7,
   hash: "2be18333962b106e684deba934efcdce2292e553d3ceaba75effc05d1a6cc1b0",
 };
 

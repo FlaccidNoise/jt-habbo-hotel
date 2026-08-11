@@ -129,6 +129,16 @@ export const DECOR_CATALOG: DecorDef[] = [
     sides: { left: 0x2f8f8f, right: 0x3dbaba },
   },
   {
+    // The deep end (#427). The same pattern with both shades one step down the ladder, so the
+    // deep tile's highlight is the shallow tile's base and the two read as one body of water.
+    // The step leaves teal at the dark end because teal's own next shade down (left, luma 74.5)
+    // is under the 82 a backdrop needs — navy.right at 92 is the darkest blue the decor gamut
+    // holds, and #435 already found that "deeper" here has to mean bluer rather than darker.
+    kind: "floor", id: "floor_pool_deep", name: "Deep Water",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x3f5e9e, right: 0x2f8f8f },
+  },
+  {
     kind: "wall", id: "wall_spa", name: "Spa Tile",
     tile: { w: 16, h: 32 },
     cap: 0xcbc0ac,
