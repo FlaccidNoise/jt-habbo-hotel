@@ -54,6 +54,21 @@ describe("look ↔ figure", () => {
     expect(serializeFigure(lookToFigure(figureToLook(worn)))).toBe(canonical(worn));
   });
 
+  // The eyewear, neck and waist tabs held ONE colour each until the sash shipped, so a second slot
+  // on any of them came back filled from slot 0 and its trim was unpickable (#440). Named as a
+  // rule rather than as set 63: what has to hold is that a two-slot set on those tabs round-trips
+  // both slots, however many of them there come to be.
+  test("a two-slot accessory keeps its trim colour apart from its body colour", () => {
+    const twoSlot = FIGURE_SETS.filter(
+      (s) => ["ea", "ca", "wa"].includes(s.type) && s.slots === 2 && !s.retired,
+    );
+    expect(twoSlot.length).toBeGreaterThan(0);
+    for (const set of twoSlot) {
+      const worn = `${STARTER}.${set.type}-${set.id}-crimson-gold`;
+      expect(serializeFigure(lookToFigure(figureToLook(worn)))).toBe(canonical(worn));
+    }
+  });
+
   test("a figure wearing none of the optional layers round-trips without gaining them", () => {
     const figure = serializeFigure(lookToFigure(figureToLook(STARTER)));
     for (const type of ["cc", "ea", "ca", "wa"]) expect(figure).not.toContain(`${type}-`);

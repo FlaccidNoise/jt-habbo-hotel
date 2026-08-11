@@ -126,11 +126,11 @@ export interface Look {
   coat: number;
   coatColors: [string, string];
   eyewear: number;
-  eyewearColor: string;
+  eyewearColors: [string, string];
   neck: number;
-  neckColor: string;
+  neckColors: [string, string];
   waist: number;
-  waistColor: string;
+  waistColors: [string, string];
 }
 
 export function figureToLook(input: string): Look {
@@ -158,11 +158,11 @@ export function figureToLook(input: string): Look {
     coat: worn.get("cc")?.set ?? 0,
     coatColors: [of("cc", 0, "navy"), of("cc", 1, "ivory")],
     eyewear: worn.get("ea")?.set ?? 0,
-    eyewearColor: of("ea", 0, "charcoal"),
+    eyewearColors: [of("ea", 0, "charcoal"), of("ea", 1, "ivory")],
     neck: worn.get("ca")?.set ?? 0,
-    neckColor: of("ca", 0, "gold"),
+    neckColors: [of("ca", 0, "gold"), of("ca", 1, "ivory")],
     waist: worn.get("wa")?.set ?? 0,
-    waistColor: of("wa", 0, "walnut"),
+    waistColors: [of("wa", 0, "walnut"), of("wa", 1, "ivory")],
   };
 }
 
@@ -185,9 +185,9 @@ export function lookToFigure(look: Look): Figure {
   wear("sh", look.shoes, [look.shoesColor]);
   wear("ha", look.hat, [look.hatColor]);
   wear("cc", look.coat, look.coatColors);
-  wear("ea", look.eyewear, [look.eyewearColor]);
-  wear("ca", look.neck, [look.neckColor]);
-  wear("wa", look.waist, [look.waistColor]);
+  wear("ea", look.eyewear, look.eyewearColors);
+  wear("ca", look.neck, look.neckColors);
+  wear("wa", look.waist, look.waistColors);
   return { version: FIGUREDATA_VERSION, parts };
 }
 
@@ -254,11 +254,11 @@ export function randomLook(
     coat: rand() < 0.2 ? ownedOf("cc") : 0,
     coatColors: [ramp("material"), ramp("material")],
     eyewear: rand() < 0.2 ? ownedOf("ea") : 0,
-    eyewearColor: ramp("material"),
+    eyewearColors: [ramp("material"), ramp("material")],
     neck: rand() < 0.2 ? ownedOf("ca") : 0,
-    neckColor: ramp("material"),
+    neckColors: [ramp("material"), ramp("material")],
     waist: rand() < 0.2 ? ownedOf("wa") : 0,
-    waistColor: ramp("material"),
+    waistColors: [ramp("material"), ramp("material")],
   };
 }
 
@@ -650,11 +650,16 @@ export class Creator {
         const specs = [{ id: 0, name: "None" }, ...setsOfType("ea")].map((s) => ({
           id: s.id, name: s.name, figure: figureOf({ ...look, eyewear: s.id }, ["ea"]),
         }));
+        const trim = setById(look.eyewear)?.slots === 2;
         return [
           group("Eyewear",
             this.cards(specs, look.eyewear, CROP.face, (eyewear) => this.update({ eyewear }))),
-          group("Colour", this.swatches("material", look.eyewearColor, (eyewearColor) =>
-            this.update({ eyewearColor }))),
+          group("Colour — slot 0", this.swatches("material", look.eyewearColors[0], (c) =>
+            this.update({ eyewearColors: [c, look.eyewearColors[1]] }))),
+          ...(trim
+            ? [group("Trim — slot 1", this.swatches("material", look.eyewearColors[1], (c) =>
+              this.update({ eyewearColors: [look.eyewearColors[0], c] })))]
+            : []),
         ];
       }
 
@@ -662,11 +667,16 @@ export class Creator {
         const necks = [{ id: 0, name: "None" }, ...setsOfType("ca")].map((s) => ({
           id: s.id, name: s.name, figure: figureOf({ ...look, neck: s.id }, ["ca"]),
         }));
+        const trim = setById(look.neck)?.slots === 2;
         return [
           group("Neck — worn over whatever is on your chest",
             this.cards(necks, look.neck, CROP.top, (neck) => this.update({ neck }))),
-          group("Colour",
-            this.swatches("material", look.neckColor, (neckColor) => this.update({ neckColor }))),
+          group("Colour — slot 0", this.swatches("material", look.neckColors[0], (c) =>
+            this.update({ neckColors: [c, look.neckColors[1]] }))),
+          ...(trim
+            ? [group("Trim — slot 1", this.swatches("material", look.neckColors[1], (c) =>
+              this.update({ neckColors: [look.neckColors[0], c] })))]
+            : []),
         ];
       }
 
@@ -674,11 +684,16 @@ export class Creator {
         const belts = [{ id: 0, name: "None" }, ...setsOfType("wa")].map((s) => ({
           id: s.id, name: s.name, figure: figureOf({ ...look, waist: s.id }, ["wa"]),
         }));
+        const trim = setById(look.waist)?.slots === 2;
         return [
           group("Waist",
             this.cards(belts, look.waist, CROP.legs, (waist) => this.update({ waist }))),
-          group("Colour",
-            this.swatches("material", look.waistColor, (waistColor) => this.update({ waistColor }))),
+          group("Colour — slot 0", this.swatches("material", look.waistColors[0], (c) =>
+            this.update({ waistColors: [c, look.waistColors[1]] }))),
+          ...(trim
+            ? [group("Trim — slot 1", this.swatches("material", look.waistColors[1], (c) =>
+              this.update({ waistColors: [look.waistColors[0], c] })))]
+            : []),
         ];
       }
     }
