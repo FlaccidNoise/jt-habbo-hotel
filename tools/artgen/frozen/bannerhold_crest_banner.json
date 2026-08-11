@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_crest_banner",
+  "archetype": "artgen",
+  "sheet": "bannerhold_crest_banner.png",
+  "frameW": 64,
+  "frameH": 127,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 111,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.96875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 24,
+    "mountU": 2,
+    "mountV": 34,
+    "gap": 0.02,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c9b0a80a4a6408bc",
+  "recipeHash": "c9b0a80a4a6408bc7b0966308a18316651f1285ba4f6f1728e6b7a22cacd726b",
+  "pixelHash": "d05c30c9eb50e95fa16b72ab90e70fd60ffc14336d944433d05530e7844cac2b"
+}

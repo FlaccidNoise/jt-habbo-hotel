@@ -1,5 +1,15 @@
 # Decision Log
 
+- 2026-08-11 — **Bannerhold pilots prove the art budget before bulk authoring (furniture blitz,
+  task 5).** `bannerhold_oak_bench` (base, seat), `bannerhold_oak_bench_dusk` (colorway, oak→slate,
+  no extra render), and `bannerhold_crest_banner` (wall) all render through the 3D-assisted path,
+  pass every gate, freeze, and publish byte-identical; the bench's seat ships a `.near.png` and the
+  banner's mount.u is even. Full `make gen` (re-gate + publish, no Blender) walls at **~3.5 s**, so
+  the per-item cost of the remaining waves is the Blender render, which colorways and walls do not
+  add — bulk authoring is scheduled on that basis. The 26-prim cap and even wall-mount are now
+  exported gates (`gatePrimCount`, `gateWallMountEven`) with staged known-bad tests, so the budget
+  is enforced outside Blender too. Silhouettes reviewed at room and 2× scale: the bench reads as a
+  backless trestle bench and the banner as a hanging heraldic banner without their labels.
 - 2026-08-11 — **The catalog strip is replaced by The Grand Furnishings Folio, a full-screen
   binder (furniture blitz, task 4; supersedes #364).** A 600+ item shop cannot live in a
   `max-height:32vh` HUD strip: the folio is opened by the existing Catalog tab, mounts at most

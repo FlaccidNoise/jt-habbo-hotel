@@ -33,6 +33,27 @@ export function gatePalette(sheet: Canvas): GateResult {
     }
   }
   return { ok: true };
+  return { ok: true };
+}
+
+/** Artgen meshes encode at most 26 emitting primitives — the mask is one base-3 digit per prim
+ *  per channel, so a 27th prim would silently alias onto prim 0. rig.py asserts the same cap at
+ *  render time; this is the post-render backstop. */
+export const ARTGEN_PRIM_CAP = 26;
+export function gatePrimCount(primCount: number): GateResult {
+  if (primCount > ARTGEN_PRIM_CAP) {
+    return fail("prim-count", `${primCount} emitting prims exceed the ${ARTGEN_PRIM_CAP} the mask encoding holds`);
+  }
+  return { ok: true };
+}
+
+/** A wall item's along-wall mount offset must be even: the wall's 2:1 axis drops half a screen
+ *  pixel per along-wall pixel, so an odd `u` lands the sprite half a pixel off the plane. */
+export function gateWallMountEven(mountU: number): GateResult {
+  if (mountU % 2 !== 0) {
+    return fail("wall-mount", `mount.u ${mountU} is odd — off the wall's 2 px lattice`);
+  }
+  return { ok: true };
 }
 
 /** The emitted collision metadata must agree with the catalog def the server places by.

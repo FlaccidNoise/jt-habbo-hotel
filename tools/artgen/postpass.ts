@@ -25,7 +25,7 @@ import { WALL_HEIGHT } from "../../packages/shared/src/walls.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { makeCanvas, putPixel, getPixel, blit } from "../../packages/generator/src/raster.ts";
 import { rampByName, OUTLINE, STYLE_VERSION, GENERATOR_VERSION } from "../../packages/generator/src/style.ts";
-import { runGates, runWallGates } from "../../packages/generator/src/gates.ts";
+import { runGates, runWallGates, gatePrimCount, gateWallMountEven } from "../../packages/generator/src/gates.ts";
 import { reviewIslands } from "../../packages/generator/src/review.ts";
 import type { Bundle } from "../../packages/generator/src/compose.ts";
 import { encodePng } from "../../packages/generator/src/png.ts";
@@ -217,6 +217,9 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // hues, so the rim goes ivory and keeps framing the gold lens.
   stage_light_plum:     { base: "stage_light",     ramps: { charcoal: "plum", crimson: "ivory" } },
   stage_curtain_plum:   { base: "stage_curtain",   ramps: { crimson: "plum" } },
+  // Bannerhold pilot colorway (blitz task 5): the oak plank goes slate for dusk; the walnut
+  // trestles stay, so the colorway is a different object, not a relabel.
+  bannerhold_oak_bench_dusk: { base: "bannerhold_oak_bench", ramps: { oak: "slate" } },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {
@@ -532,6 +535,20 @@ for (const [id, part] of work) {
   // is visible next to the ${id}@3x.png just written, whether or not the gates pass.
   for (const w of reviewIslands(bundle)) {
     console.warn(`${id}: WARN ${w.where}: ${w.detail}`);
+  }
+  const primGate = gatePrimCount(part.prims.length);
+  if (!primGate.ok) {
+    failures++;
+    console.error(`${id}: FAIL ${primGate.gate} gate: ${primGate.detail}`);
+    continue;
+  }
+  if (isWall && wallDef) {
+    const mountGate = gateWallMountEven(wallDef.mount.u);
+    if (!mountGate.ok) {
+      failures++;
+      console.error(`${id}: FAIL ${mountGate.gate} gate: ${mountGate.detail}`);
+      continue;
+    }
   }
   const result = wallDef ? runWallGates(bundle, wallDef) : runGates(bundle, def);
   if (!result.ok) {

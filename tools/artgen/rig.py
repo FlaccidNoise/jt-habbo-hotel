@@ -3156,6 +3156,34 @@ FIGURE_PARTS = {
              "squash": (1.15, 0.72, 0.95)},
         ],
     },
+    # Crested Helm (set 70, two slots, hides hr). The beanie 53 is a 0.88 tall-to-wide dome with a
+    # 0.6-proud cuff ledge at z 20.2 and nothing above the crown. This has no ledge, adds a
+    # fore-and-aft fin, and carries a flare down the nape.
+    #
+    # The shell is pushed 3.2 px BACK rather than sat centred, and that shift is the whole front
+    # edge. A shell centred on the skull leaves it at the brow: the two ellipsoids part company
+    # where the skull is widest in y, low down and far forward, which lands the visible hem on the
+    # eyes. Pushed back, the shell's front is buried inside the skull until z 18.9 and the hem
+    # surfaces at row 28 instead — while the same shift carries the back down past the nape.
+    #
+    # The flare is a second ball, wider in y and squashed, standing ~1.9 px proud of the shell at the
+    # nape. Its bottom is authored at head z 11.9 rather than the intent's 14 because the shell's own
+    # back edge leaves the skull at 12.2: a flare stopping at 14 ends in mid-air above the helm's
+    # own hem instead of finishing it.
+    #
+    # The fin is sagittal and 3.4 px thick, which is the floor — the chain 62 established that
+    # anything 2 px or under is pure outline with no interior shade left to read. It tops 6.0 px
+    # over the shell's crown and its base is buried inside the shell, so helm and crest are one mass.
+    "ha70": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -3.2, 17.6), "r": 10.0,
+             "squash": (1.10, 1.00, 0.70)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -6.8, 17.0), "r": 9.6,
+             "squash": (0.95, 0.86, 0.53)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, -1.0, 25.0), "r": 8.0,
+             "squash": (0.2125, 1.0, 0.70)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

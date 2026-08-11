@@ -124,11 +124,19 @@ describe("shelves", () => {
       new Map<string, number>([...CATALOG_PRICES, ...wearables.map((w) => [w.item.id, w.price] as const)]),
       10000,
     );
-    const themes = new Set(WEARABLE_SHELF.map((w) => w.theme));
-    const shelved = groups.filter((g) => themes.has(g.theme)).flatMap((g) => g.entries);
-    expect(shelved.map((e) => e.id).sort()).toEqual(wearables.map((w) => w.item.id).sort());
-    const furni = groups.filter((g) => !themes.has(g.theme)).flatMap((g) => g.entries);
-    expect(furni.filter((e) => e.setId !== undefined)).toEqual([]);
+    // A theme may now host both furni and wearables (bannerhold does — furni from the
+    // furniture blitz, garments from the costume blitz), so a shelf is no longer one-kind.
+    // The invariants that survive: every priced wearable reaches its own theme's shelf, and
+    // nothing that is not a wearable carries a set id.
+    const wearableIds = new Set(wearables.map((w) => w.item.id));
+    for (const w of wearables) {
+      const group = groups.find((g) => g.theme === w.item.theme);
+      expect(group?.entries.some((e) => e.id === w.item.id), w.item.id).toBe(true);
+    }
+    const shelved = groups.flatMap((g) => g.entries);
+    expect(shelved.filter((e) => wearableIds.has(e.id)).map((e) => e.id).sort())
+      .toEqual([...wearableIds].sort());
+    expect(shelved.filter((e) => !wearableIds.has(e.id) && e.setId !== undefined)).toEqual([]);
   });
 });
 

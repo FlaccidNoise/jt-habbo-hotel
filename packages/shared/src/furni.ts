@@ -150,6 +150,11 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // Collection-set rewards (#210): minted account-bound on completion, obtainable no other way.
   { id: "cafe_table_marble",   name: "Marble Café Table",   theme: "cafe", w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: true,  seatHeight: null, color: 0x5b6672 },
   { id: "casino_table_onyx",   name: "Onyx Casino Table",   theme: "casino", w: 2, l: 2, stackHeights: [1.4375],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  // Bannerhold pilots (blitz task 5): one base, one colorway, one wall — the proof the art budget
+  // holds before bulk authoring. stackHeights/seatHeight and span/plane/mount read off the render
+  // by tools/artgen/postpass.ts. The dusk colorway is the same mesh, oak remapped to slate.
+  { id: "bannerhold_oak_bench", name: "Bannerhold Oak Bench", theme: "bannerhold", w: 2, l: 1, stackHeights: [0.5625], canWalk: false, canStackOn: false, seatHeight: 0.54, color: 0x8b4513 },
+  { id: "bannerhold_oak_bench_dusk", name: "Dusk Oak Bench", theme: "bannerhold", w: 2, l: 1, stackHeights: [0.5625], canWalk: false, canStackOn: false, seatHeight: 0.54, color: 0x5b6672 },
 ];
 
 // Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
@@ -172,6 +177,8 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "neon_sign",     name: "Neon Sign",     theme: "lounge", span: 1, plane: { w: 26, h: 28 }, mount: { u: 2, v: 34 }, color: 0xdaa520 },
   { id: "stage_curtain", name: "Stage Curtain", theme: "lounge", span: 1, plane: { w: 26, h: 32 }, mount: { u: 2, v: 33 }, color: 0xaa3333 },
   { id: "stage_curtain_plum", name: "Plum Stage Curtain", theme: "lounge", span: 1, plane: { w: 26, h: 32 }, mount: { u: 2, v: 33 }, color: 0x7a3e9d },
+  // Bannerhold pilot wall (blitz task 5): a hanging heraldic banner, original charge.
+  { id: "bannerhold_crest_banner", name: "Bannerhold Crest Banner", theme: "bannerhold", span: 1, plane: { w: 24, h: 24 }, mount: { u: 2, v: 34 }, color: 0xaa3333 },
 ];
 
 /** What a new account is given, and nothing else. Explicitly listed, never "the whole catalog" —
@@ -306,6 +313,10 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   // ceiling, so it is weeks of play rather than an afternoon's.
   ["billiards_table", 3300],
   ["penthouse_candelabra", 1800],
+  // Bannerhold pilots (blitz task 5): the colorway costs what its base costs.
+  ["bannerhold_oak_bench", 50],
+  ["bannerhold_oak_bench_dusk", 50],
+  ["bannerhold_crest_banner", 75],
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
@@ -351,7 +362,12 @@ export const PRESTIGE_DEFS: ReadonlySet<string> = new Set([
 /** Content-blitz ledger (docs/plans/2026-08-11-furniture-content-blitz-catalog.md). Each wave
  *  adds its ids here in the same commit as its defs and assets; content-blitz.test.ts gates the
  *  routing of every landed id. */
-export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([]);
+export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([
+  // Task 5 pilots: one base, one colorway, one wall — the first three of Bannerhold's 40.
+  "bannerhold_oak_bench",
+  "bannerhold_oak_bench_dusk",
+  "bannerhold_crest_banner",
+]);
 /** Landed blitz decor tiles (the plan's Appendix B). */
 export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([]);
 /** The staged prestige line: the eight blitz prestige fixtures land together but surface in the

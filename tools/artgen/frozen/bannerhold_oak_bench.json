@@ -1,0 +1,34 @@
+{
+  "defId": "bannerhold_oak_bench",
+  "archetype": "artgen",
+  "sheet": "bannerhold_oak_bench.png",
+  "frameW": 96,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": 0.54,
+  "occlusion": null,
+  "nearSheet": "bannerhold_oak_bench.near.png",
+  "nearHash": "542f85961315c3155e532d333c05f0c528fc48512605c9fbfa2312fe869ac7fb",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6c9016f92e060f33",
+  "recipeHash": "6c9016f92e060f335b5c39bd0481087b79f25fe4ea42b599b4501a1f74f01fb6",
+  "pixelHash": "2bbb8a7f8436157f8d3d1c87f2bc6ee14c4c87f932f828a8425d855a1a4cc0de"
+}

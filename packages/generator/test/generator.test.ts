@@ -19,6 +19,9 @@ import {
   gateDrawOrder,
   gateFootprint,
   gatePalette,
+  gatePrimCount,
+  ARTGEN_PRIM_CAP,
+  gateWallMountEven,
   gateSeat,
   gateSeatOcclusion,
   gateUniqueness,
@@ -216,6 +219,44 @@ describe("recipe hashing", () => {
 
   test("a different seed is a different design", () => {
     expect(recipeHash({ ...CHAIR_RECIPE!, seed: 12 })).not.toBe(recipeHash(CHAIR_RECIPE!));
+  });
+});
+
+// Blitz task 5: the artgen pilots' gates, staged known-bad. A gate exists only if a bad input
+// actually bounces — these pin the prim cap, the palette, colorway footprint parity, the wall
+// 2 px lattice, and the recipe-uniqueness backstop that catches near-duplicate re-mints.
+describe("artgen pilot gates bounce staged known-bad input", () => {
+  test("prim-count: a 27-primitive part exceeds the mask encoding", () => {
+    expect(gatePrimCount(ARTGEN_PRIM_CAP)).toEqual({ ok: true });
+    expect(gatePrimCount(ARTGEN_PRIM_CAP + 1)).toMatchObject({ ok: false, gate: "prim-count" });
+  });
+
+  test("palette: a recolored sheet carrying one off-palette pixel", () => {
+    const bundle = chairBundle();
+    expect(gatePalette(bundle.sheet)).toEqual({ ok: true });
+    putPixel(bundle.sheet, 4, 4, 0x00ff00);
+    expect(gatePalette(bundle.sheet)).toMatchObject({ ok: false, gate: "palette" });
+  });
+
+  test("footprint: a colorway def that disagrees with its base mesh", () => {
+    // A colorway is the same mesh remapped, so its def must match the base bundle; a widened
+    // footprint is a transcription typo that would leave a phantom collision column.
+    const { bundle } = bundleFor(CAFE_CHAIR_DEF!);
+    expect(gateFootprint(bundle, CAFE_CHAIR_DEF!)).toEqual({ ok: true });
+    expect(gateFootprint(bundle, { ...CAFE_CHAIR_DEF!, w: 2 }))
+      .toMatchObject({ ok: false, gate: "footprint" });
+  });
+
+  test("wall-mount: an odd along-wall offset is off the 2 px lattice", () => {
+    expect(gateWallMountEven(2)).toEqual({ ok: true });
+    expect(gateWallMountEven(3)).toMatchObject({ ok: false, gate: "wall-mount" });
+  });
+
+  test("uniqueness: a near-duplicate recipe reusing a published hash", () => {
+    const seen = new Set<string>();
+    const hash = recipeHash(CHAIR_RECIPE!);
+    expect(gateUniqueness(seen, hash)).toEqual({ ok: true });
+    expect(gateUniqueness(seen, hash)).toMatchObject({ ok: false, gate: "uniqueness" });
   });
 });
 
