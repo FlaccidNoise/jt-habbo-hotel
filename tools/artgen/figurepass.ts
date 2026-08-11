@@ -2,7 +2,14 @@
 // emits, quantizes on the same fixed linear-luma thresholds so figures and furni read as one
 // style, and freezes one bundle per wearable layer.
 //
-//   node --experimental-strip-types tools/artgen/figurepass.ts <renderDir> [--freeze]
+//   node --experimental-strip-types tools/artgen/figurepass.ts <renderDir> [--freeze] [--only <id>]
+//
+// --only <id> scopes the freeze to one layer (#422). It still builds the canonical body, because
+// every gate below measures a layer against it, but it writes only <id> and stops if a layer it
+// rebuilt to gate against disagrees with the frozen tree: <renderDir> is shared and accumulating,
+// so republishing the rest would push whatever it holds over a freeze made from newer geometry.
+// An id that is not a figure layer is a no-op, so `make art PART=<furni-id>` can call this
+// unconditionally.
 //
 // Three things differ from the furni pass.
 //
@@ -24,7 +31,7 @@
 //    for the art and the "face sets" section below for the machinery.
 
 import { createHash } from "node:crypto";
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   BEARD_AXES, BEARD_SETS, FACE_AXES, FACE_SETS, FIXED_RAMPS, GEOMETRY, INKS, REFERENCE_DIR,
@@ -49,6 +56,12 @@ const SHADE_OUTLINE = 0, SHADE_LEFT = 1, SHADE_RIGHT = 2, SHADE_TOP = 3, SHADE_H
 const renderDir = process.argv[2] ?? "/tmp/artgen";
 const freeze = process.argv.includes("--freeze");
 const frozenDir = new URL("./frozen/figure/", import.meta.url).pathname;
+const onlyAt = process.argv.indexOf("--only");
+const only = onlyAt < 0 ? null : process.argv[onlyAt + 1] ?? null;
+if (onlyAt >= 0 && !only) {
+  console.error("--only needs a layer id, as in `--only ha10`");
+  process.exit(1);
+}
 
 function toLinear(v: number): number {
   const s = v / 255;
@@ -251,7 +264,41 @@ function frameOf(part: FigurePart, frame: string, dir: number): FigureFrame {
 const partIds = Object.keys(meta.figures);
 const layers = new Map<string, Canvas[]>();   // partId -> frames in (row, col) order
 const bundles: Array<Record<string, unknown>> = [];
+const sheets = new Map<string, Uint8Array>();  // partId -> encoded sheet, frozen after the gates
+const faceIds: string[] = [];                  // the hd2-derived layers, filled by the face pass
 let failures = 0;
+
+const figuresPath = join(frozenDir, "figures.json");
+interface FrozenDoc {
+  canvas: Record<string, unknown>;
+  palette: Record<string, number[]>;
+  layers: Array<Record<string, unknown>>;
+}
+const frozenDoc: FrozenDoc | null = existsSync(figuresPath)
+  ? JSON.parse(readFileSync(figuresPath, "utf8")) as FrozenDoc
+  : null;
+
+/** Which rendered layers this run builds. Under --only that is the named one plus the canonical
+ *  body: registration, height and holdout all measure a layer against bd1+hd2, so a scoped run
+ *  that skipped them would print PASS for gates that never looked at anything. */
+let build = partIds;
+if (only !== null) {
+  const known = new Set([...partIds, ...(frozenDoc?.layers ?? []).map((l) => l.partId as string)]);
+  if (!known.has(only)) {
+    console.log(`${only}: not a figure layer — figure pass skipped`);
+    process.exit(0);
+  }
+  const missing = HOLDOUT_IDS.filter((id) => !partIds.includes(id));
+  if (missing.length > 0) {
+    console.error(
+      `--only ${only}: ${renderDir} holds no ${missing.join(" or ")} render, and every figure ` +
+      `gate measures a layer against the canonical body. Run \`make art\` once with no PART= to ` +
+      `fill ${renderDir}, then re-run this.`,
+    );
+    process.exit(1);
+  }
+  build = [...new Set([...HOLDOUT_IDS, ...(partIds.includes(only) ? [only] : [])])];
+}
 
 /** The head's vertical position in a frame, read off the projection rig.py already emits. It is
  *  the same for all eight directions — yaw turns the head, it does not raise it — so dir 3, the
@@ -297,12 +344,11 @@ function emit(
     pixelHash: createHash("sha256").update(sheet.px).digest("hex"),
   });
 
+  // The render dir gets the sheet either way; the frozen tree gets it only after the gates run,
+  // and only for the layers this invocation is allowed to write.
   const png = encodePng(sheet.w, sheet.h, sheet.px);
   writeFileSync(join(renderDir, `${id}.png`), png);
-  if (freeze) {
-    mkdirSync(frozenDir, { recursive: true });
-    writeFileSync(join(frozenDir, `${id}.png`), png);
-  }
+  sheets.set(id, png);
 }
 
 /** hd2's own cells, kept whole. Every face set is this skull with a different map laid on it, so
@@ -311,7 +357,7 @@ function emit(
 const headCells: Array<{ cell: Canvas; primAt: Int32Array }> = [];
 let headRepaint = 0;
 
-for (const id of partIds) {
+for (const id of build) {
   const part = meta.figures[id]!;
   const setId = Number(id.replace(/^[a-z]+/, ""));
   const set = setById(setId);
@@ -498,6 +544,7 @@ if (headCells.length === FRAMES.length * 8) {
       failures++;
       continue;
     }
+    faceIds.push(`${set.type}${setId}`);
     buildFaceLayer(`${set.type}${setId}`, set, picks, axes, base);
   }
 } else if (layers.has(HEAD_ID)) {
@@ -519,7 +566,7 @@ const cellIndex = (frame: string, dir: number): number => FRAMES.indexOf(frame) 
 function gateRegistration(): GateResult {
   const body = meta.figures["bd1"];
   if (!body) return fail("registration", "no bd1 to register against");
-  for (const id of partIds) {
+  for (const id of build) {
     for (const frame of FRAMES) {
       for (let dir = 0; dir < 8; dir++) {
         const a = frameOf(body, frame, dir).anchorY;
@@ -592,7 +639,7 @@ function gateHoldout(): GateResult {
   // garment has no reference render and needs none: the holdout set is the body by design, and
   // the per-set hides rules are what keep it that way.
   const body = HOLDOUT_IDS.filter((id) => layers.has(id));
-  for (const id of partIds) {
+  for (const id of build) {
     if (HOLDOUT_IDS.includes(id) || !layers.has(id)) continue;
     const part = meta.figures[id]!;
     const stackIds = [...body, id];
@@ -874,6 +921,17 @@ for (const [name, gate] of [
   }
 }
 
+/** Write only when the bytes move, so a run that reproduces a layer leaves its file — and its line
+ *  in `git status` — alone. postpass.ts keeps the same rule for furni (#234). */
+function freezeFile(path: string, next: Uint8Array, label: string): void {
+  if (existsSync(path) && readFileSync(path).equals(next)) {
+    console.log(`${label}: unchanged`);
+    return;
+  }
+  writeFileSync(path, next);
+  console.log(`${label}: frozen`);
+}
+
 if (freeze && failures === 0) {
   mkdirSync(frozenDir, { recursive: true });
   // The bundle carries its own palette, in shade order, so the client resolves (slot, shade)
@@ -902,11 +960,60 @@ if (freeze && failures === 0) {
     }
     return (meta.figures["bd1"] ? frameOf(meta.figures["bd1"], frame, 0).anchorY : 0) - top;
   });
-  writeFileSync(
-    join(frozenDir, "figures.json"),
-    JSON.stringify({ canvas: { ...CANVAS, crown }, palette, layers: bundles }, null, 2),
-  );
-  console.log(`froze ${bundles.length} figure layer(s) to tools/artgen/frozen/figure/`);
+  const canvas = { ...CANVAS, crown };
+
+  // Under --only the body — and hd2's face sets with it — was rebuilt to gate the named layer
+  // against, not to be republished. Anything rebuilt that the frozen tree already disagrees with
+  // is a stop with one remedy, never a silent overwrite: the render dir is shared, and the layer
+  // it disagrees about may have been frozen by another run from geometry this dir has never seen.
+  const scope = only === null ? null
+    : new Set(only === HEAD_ID ? [HEAD_ID, ...faceIds] : [only]);
+  const REMEDY = "run `make art` with no PART=, so every layer re-renders, re-gates and re-freezes";
+  const stale: string[] = [];
+  if (scope) {
+    if (!frozenDoc) {
+      stale.push(`--only ${only}: there is no ${figuresPath} to merge one layer into — ${REMEDY}`);
+    } else {
+      if (JSON.stringify(frozenDoc.canvas) !== JSON.stringify(canvas)
+        || JSON.stringify(frozenDoc.palette) !== JSON.stringify(palette)) {
+        stale.push(`--only ${only}: the figure canvas or the palette has moved, and all ` +
+          `${frozenDoc.layers.length} frozen layers share both — ${REMEDY}`);
+      }
+      const frozenBy = new Map(frozenDoc.layers.map((l) => [l.partId as string, l]));
+      for (const b of bundles) {
+        const id = b.partId as string;
+        if (frozenBy.get(id)?.pixelHash === b.pixelHash) continue;
+        if (HOLDOUT_IDS.includes(id)) {
+          stale.push(`--only ${only}: ${id} is the canonical body and its pixels moved. Every ` +
+            `garment is cut against it, so a scoped freeze would leave the other ` +
+            `${frozenDoc.layers.length - 1} layers stale — ${REMEDY}`);
+        } else if (!scope.has(id)) {
+          stale.push(`--only ${only}: ${id} was rebuilt to gate ${only} against, and its pixels ` +
+            `disagree with the frozen tree. Either ${renderDir} is stale or ${id} was frozen ` +
+            `from a newer render — ${REMEDY}`);
+        }
+      }
+    }
+  }
+
+  if (stale.length > 0) {
+    for (const line of stale) console.error(line);
+    failures += stale.length;
+  } else {
+    const write = scope ? bundles.filter((b) => scope.has(b.partId as string)) : bundles;
+    for (const b of write) {
+      const id = b.partId as string;
+      freezeFile(join(frozenDir, b.sheet as string), sheets.get(id)!, id);
+    }
+    const written = new Map(write.map((b) => [b.partId as string, b]));
+    const merged = scope && frozenDoc
+      ? [...frozenDoc.layers.map((l) => written.get(l.partId as string) ?? l),
+         ...write.filter((b) => !frozenDoc.layers.some((l) => l.partId === b.partId))]
+      : bundles;
+    freezeFile(figuresPath, Buffer.from(JSON.stringify({ canvas, palette, layers: merged }, null, 2)),
+      "figures.json");
+    console.log(`froze ${write.length} figure layer(s) to tools/artgen/frozen/figure/`);
+  }
 }
 
 console.log(`${HEAD_ID}: cleanup repainted ${headRepaint} pixel(s)`);

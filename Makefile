@@ -58,6 +58,7 @@ art:
 	blender --background --factory-startup --python tools/artgen/rig.py -- \
 		--out $(ART_DIR) $(if $(PART),--only $(PART))
 	node --experimental-strip-types tools/artgen/postpass.ts $(ART_DIR) --freeze
-# Figures only on a full run: --only renders that part and no figure, so figurepass would have
-# no body to gate and would fail a render that actually succeeded.
-	$(if $(PART),,node --experimental-strip-types tools/artgen/figurepass.ts $(ART_DIR) --freeze)
+# Both passes run on both kinds of PART (#422): each one knows its own ids, so make does not have
+# to. figurepass scopes its freeze to --only and no-ops on a furni id; a figure PART= reads the
+# body out of ART_DIR, which one full `make art` fills.
+	node --experimental-strip-types tools/artgen/figurepass.ts $(ART_DIR) --freeze $(if $(PART),--only $(PART))
