@@ -1,5 +1,17 @@
 # Decision Log
 
+- 2026-08-11 — **The catalog strip is replaced by The Grand Furnishings Folio, a full-screen
+  binder (furniture blitz, task 4; supersedes #364).** A 600+ item shop cannot live in a
+  `max-height:32vh` HUD strip: the folio is opened by the existing Catalog tab, mounts at most
+  **24 cards per page** (the bound that keeps the DOM finite under a 618-entry catalog), and
+  buys through a detail leaf — selection is never purchase. The visual direction is original to
+  The Grand: navy boards, a walnut spine, gold rules, dark raised pages, using only hex values
+  already in `index.html` — no Habbo palette, icons, layout, or trade dress. Purchase protocol
+  is unchanged (`buy` / `buy_set`); a purchase counts only against its own `{t:"stars"}` line
+  with a matching reason and debit, and errors or disconnects re-arm the Buy controls.
+  Responsive scope: designed at 1440×900, fully usable at **720 px width (the supported-window
+  boundary)**, readable and scrollable at 360 px — but no mobile-client commitment, per
+  GAME.md's v1 non-goals. Keyboard-complete with focus restoration to the Catalog tab.
 - 2026-08-11 — **The design studio composes artgen meshes; the box path is retired from the
   minting plan (#334, Josh).** Every fidelity gain since #311 — dither/crease v2, trim-by-prim,
   48 catalog items — lives in the artgen/Blender path, and a minted item that reads a generation

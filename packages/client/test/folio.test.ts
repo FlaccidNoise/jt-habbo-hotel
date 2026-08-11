@@ -2,6 +2,10 @@
 // synthetic 600-entry catalog standing in for the released shop.
 
 import { describe, expect, test } from "vitest";
+import {
+  CATALOG_PRICES, COLLECTION_SETS, HOUSE_FIXTURE_DEFS, LEVER_EXCLUSIVE_DEFS,
+  PROTOTYPE_CATALOG, UNPRICED, WALL_CATALOG, WEARABLE_SHELF,
+} from "@grand/shared";
 import type { CollectionSet } from "@grand/shared";
 import {
   folioCardState, folioChapters, folioEntries, folioPage, folioSearch,
@@ -122,6 +126,34 @@ describe("paging", () => {
       for (const e of folioPage(all, p).entries) seen.add(e.item.id);
     }
     expect(seen.size).toBe(600);
+  });
+});
+
+// The shipped shelves, end to end through the model: everything on sale reaches the folio,
+// rewards ride along with their sets, and nothing unpriced sneaks in. The content waves extend
+// PROTOTYPE_CATALOG/WALL_CATALOG, so these hold at every step of the blitz.
+describe("the shipped catalog", () => {
+  const items: FolioItem[] = [
+    ...PROTOTYPE_CATALOG.map((d) => ({ id: d.id, name: d.name, theme: d.theme })),
+    ...WALL_CATALOG.map((d) => ({ id: d.id, name: d.name, theme: d.theme })),
+    ...WEARABLE_SHELF.map(({ set, theme }) => ({ id: `set:${set}`, name: `Set ${set}`, theme, setId: set })),
+  ];
+  const prices = new Map<string, number>(
+    [...CATALOG_PRICES, ...WEARABLE_SHELF.map((w) => [`set:${w.set}`, w.price] as const)]);
+  const shipped = folioEntries(items, prices, COLLECTION_SETS);
+
+  test("every priced def and wearable reaches the folio, plus each set reward", () => {
+    const ids = new Set(shipped.map((e) => e.item.id));
+    for (const [id] of prices) expect(ids.has(id), id).toBe(true);
+    for (const set of COLLECTION_SETS) expect(ids.has(set.reward), set.reward).toBe(true);
+    expect(shipped.length).toBe(prices.size + COLLECTION_SETS.length);
+  });
+
+  test("lever exclusives, house fixtures and staged unpriced defs stay out of the shop", () => {
+    const hidden = new Set([...LEVER_EXCLUSIVE_DEFS, ...HOUSE_FIXTURE_DEFS, ...UNPRICED]);
+    for (const e of shipped) {
+      if (e.acquisition.kind !== "set_reward") expect(hidden.has(e.item.id), e.item.id).toBe(false);
+    }
   });
 });
 

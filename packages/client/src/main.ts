@@ -2,6 +2,7 @@ import { Application, TextureSource } from "pixi.js";
 import {
   BLACKJACK_STAKES,
   CATALOG_PRICES,
+  COLLECTION_SETS,
   MAX_TRADE_ITEMS,
   PROTOTYPE_CATALOG,
   ROOM_CAPACITY,
@@ -15,6 +16,7 @@ import {
   handValue,
   insuranceBet,
   parseHeightmap,
+  PRESTIGE_DEFS,
   screenToTile,
   leverOdds,
   seatAt,
@@ -50,10 +52,12 @@ import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE, ZOOM, loadZoom, setZoom } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
 import { WallLayer } from "./scene/walls.ts";
-import { catalogGroups, thumbCrop } from "./ui/catalog.ts";
+import type { FolioItem } from "./ui/folio.ts";
 import type { CatalogItem } from "./ui/catalog.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { Creator, wearableThumb } from "./ui/creator.ts";
+import { FolioPanel, furniThumb } from "./ui/folioPanel.ts";
+import type { FolioPanelInput } from "./ui/folioPanel.ts";
 import { parseChatInput } from "./ui/parse.ts";
 import { WheelPanel, revealText } from "./ui/wheel.ts";
 
@@ -79,6 +83,17 @@ for (const { set: setId, price, theme } of WEARABLE_SHELF) {
   WEARABLE_ITEMS.push({ id, name: set.name, theme, setId });
   SHOP_PRICES.set(id, price);
 }
+// The folio reads the same shelves the strip showed (blitz task 4): floor and wall definitions
+// carry the geometry and interaction payloads the detail leaf prints, and wearables carry the
+// setId that bakes their thumbnail and buys with buy_set.
+const FOLIO_ITEMS: FolioItem[] = [
+  ...PROTOTYPE_CATALOG.map((d) => ({
+    id: d.id, name: d.name, theme: d.theme, w: d.w, l: d.l,
+    interaction: d.interaction, vend: d.vend,
+  })),
+  ...WALL_CATALOG.map((d) => ({ id: d.id, name: d.name, theme: d.theme, span: d.span, plane: d.plane })),
+  ...WEARABLE_ITEMS,
+];
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
 /** Thumbnail box, in CSS px. The .thumb rule in index.html is the same size — the crop is
  *  computed against these numbers, so the two have to agree. */
@@ -127,7 +142,6 @@ let stars = 0;
 /** Every figure set the account owns (#352). The server sends it on join and after every wearable
  *  purchase, so both the shop shelf and the wardrobe read the same list. */
 let ownedSets: ReadonlySet<number> = new Set();
-let catalogTheme: string | null = null;   // which theme's shelf the shop is showing
 let trade: TradeState | null = null;
 let arcade: ArcadeState | null = null;
 let blackjack: BlackjackState | null = null;
@@ -179,6 +193,52 @@ const wheel = new WheelPanel(el("wheel"), {
  *  spins inside one animation vanishingly rare, so a second result simply replaces the first
  *  rather than earning a queue. */
 let wheelReveal: number | undefined;
+
+/** The Furnishings Folio (blitz task 4): the full-screen binder that replaces the bottom catalog
+ *  strip. Selection is not purchase — a card opens a detail leaf, and only its Buy button sends
+ *  anything. The panel owns the ring-up state; main tracks the pending price so a `{t:"stars"}`
+ *  resolves the purchase only when the reason and the debit both match. */
+let pendingPurchase: { kind: "buy" | "buy_set"; price: number } | null = null;
+
+function folioInput(): FolioPanelInput {
+  return {
+    items: FOLIO_ITEMS,
+    prices: SHOP_PRICES,
+    collectionSets: COLLECTION_SETS,
+    setProgress: sets,
+    prestigeDefs: PRESTIGE_DEFS,
+    stars,
+    ownedWearableSets: ownedSets,
+  };
+}
+
+const folio = new FolioPanel(el("folio"), {
+  buy: (defId) => {
+    const price = SHOP_PRICES.get(defId);
+    if (price === undefined) return;
+    pendingPurchase = { kind: "buy", price };
+    net.send({ t: "buy", defId });
+  },
+  buySet: (setId) => {
+    const price = SHOP_PRICES.get(`set:${setId}`);
+    if (price === undefined) return;
+    pendingPurchase = { kind: "buy_set", price };
+    net.send({ t: "buy_set", setId });
+  },
+  furniThumb: (entry, box, maxIntegerScale) => entry.item.setId !== undefined
+    ? wearableThumb(figureBaker, entry.item.setId)
+    : furniThumb(furniAssets?.get(entry.item.id)?.meta, WALL_DEFS.get(entry.item.id)?.plane,
+      box, maxIntegerScale),
+});
+folio.onClose = () => el("tab-catalog").classList.remove("open");
+/** A refusal, a dropped connection, or a reconnect all land here: the ring-up re-arms and the
+ *  purchase is never silently counted. */
+function failPendingPurchase(message: string): void {
+  if (!pendingPurchase) return;
+  pendingPurchase = null;
+  folio.purchaseResolved(false, message);
+}
+
 
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
@@ -301,7 +361,7 @@ function renderInventory(): void {
     const name = document.createElement("span");
     name.className = "name";
     name.textContent = defName(item.defId);
-    button.append(furniThumb(item.defId), name);
+    button.append(inventoryThumb(item.defId), name);
     const offered = trade?.yours.some((i) => i.id === item.id) ?? false;
     if (item.id === armed || offered) button.classList.add("armed");
     button.addEventListener("click", () => {
@@ -335,96 +395,15 @@ function renderInventory(): void {
 
 function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
-  renderCatalog();
+  folio.refresh(folioInput());
   renderLever();
   wheel.refresh();
 }
 
-/** One shipped sheet, cropped to the facing the shop shows, at nearest-neighbour. A hatched tile
- *  stands in when the bundle is missing or the file will not load — never a plausible stand-in. */
-function furniThumb(defId: string): HTMLElement {
-  const box = document.createElement("span");
-  box.className = "thumb";
-  const meta = furniAssets?.get(defId)?.meta;
-  const crop = thumbCrop(meta, THUMB_BOX, WALL_DEFS.get(defId)?.plane);
-  if (!meta || !crop) {
-    box.classList.add("blank");
-    box.textContent = "no art";
-    return box;
-  }
-  const img = document.createElement("img");
-  img.src = `/furni/${meta.sheet}`;
-  img.alt = "";
-  img.style.width = `${crop.sheetWidth}px`;
-  img.style.left = `${crop.left}px`;
-  img.style.top = `${crop.top}px`;
-  img.addEventListener("error", () => {
-    box.classList.add("blank");
-    box.replaceChildren(document.createTextNode("no art"));
-  });
-  box.appendChild(img);
-  return box;
-}
-
-function renderCatalog(): void {
-  const strip = el("catalog");
-  strip.replaceChildren();
-  const groups = catalogGroups(
-    [...PROTOTYPE_CATALOG, ...WALL_CATALOG, ...WEARABLE_ITEMS], SHOP_PRICES, stars);
-  if (groups.length === 0) {
-    const empty = document.createElement("span");
-    empty.className = "empty";
-    empty.textContent = "The shop has nothing for sale right now.";
-    strip.appendChild(empty);
-    return;
-  }
-  // One theme at a time, so 110 items never become 110 thumbnails over the room. The pick
-  // survives a re-render, and a theme that leaves the data hands the tab back to the first one.
-  if (!groups.some((g) => g.theme === catalogTheme)) catalogTheme = groups[0]!.theme;
-  const tabs = document.createElement("div");
-  tabs.className = "themes";
-  for (const group of groups) {
-    const tab = document.createElement("button");
-    tab.type = "button";
-    tab.textContent = `${group.label} · ${group.entries.length}`;
-    tab.classList.toggle("on", group.theme === catalogTheme);
-    tab.addEventListener("click", () => {
-      catalogTheme = group.theme;
-      renderCatalog();
-    });
-    tabs.appendChild(tab);
-  }
-  strip.appendChild(tabs);
-  const grid = document.createElement("div");
-  grid.className = "grid";
-  for (const entry of groups.find((g) => g.theme === catalogTheme)?.entries ?? []) {
-    const setId = entry.setId;
-    // A garment is owned once and forever, so a bought one stays on the shelf marked as yours —
-    // vanishing would read as the shop losing it (#352). Furni has no such state: you can own ten.
-    const yours = setId !== undefined && ownedSets.has(setId);
-    const card = document.createElement("button");
-    card.type = "button";
-    card.disabled = yours || !entry.affordable;
-    card.title = yours
-      ? `${entry.name} is already yours — wear it from the 👕 wardrobe`
-      : entry.affordable
-        ? `Buy ${entry.name} for ${entry.price} ★`
-        : `${entry.name} costs ${entry.price} ★ — you have ${stars}`;
-    const name = document.createElement("span");
-    name.className = "name";
-    name.textContent = entry.name;
-    const price = document.createElement("span");
-    price.className = "price";
-    price.textContent = yours ? "yours" : `${entry.price}★`;
-    card.append(
-      setId === undefined ? furniThumb(entry.id) : wearableThumb(figureBaker, setId),
-      name, price,
-    );
-    card.addEventListener("click", () => net.send(
-      setId === undefined ? { t: "buy", defId: entry.id } : { t: "buy_set", setId }));
-    grid.appendChild(card);
-  }
-  strip.appendChild(grid);
+/** The inventory keeps its 72x64 crop; the thumbnail itself moved to folioPanel with the folio
+ *  (blitz task 4), where the detail leaf may double it. */
+function inventoryThumb(defId: string): HTMLElement {
+  return furniThumb(furniAssets?.get(defId)?.meta, WALL_DEFS.get(defId)?.plane, THUMB_BOX);
 }
 
 function renderTrade(): void {
@@ -931,6 +910,7 @@ function closeMenu(): void {
 
 function buildRoom(msg: RoomState): void {
   if (!app) return;
+  failPendingPurchase("reconnected — the purchase was not confirmed, try again");
   for (const sprite of avatars.values()) sprite.destroy();
   avatars.clear();
   chat.clear();
@@ -1133,16 +1113,26 @@ function handle(msg: ServerMsg): void {
       inventory.push(msg.item);
       renderInventory();
       break;
-    case "stars":
+    case "stars": {
       stars = msg.balance;
       renderStars();
       creator.refresh();
+      // A purchase resolves only on its own Stars line: the matching reason and the exact debit.
+      // Any other movement — a coffee, a vote, a trade — leaves the ring-up waiting, and a
+      // mismatched delta never counts as confirmation.
+      if (pendingPurchase !== null
+        && (msg.reason === "purchase" || msg.reason === "prestige" || msg.reason === "wardrobe")
+        && -msg.delta === pendingPurchase.price) {
+        pendingPurchase = null;
+        folio.purchaseResolved(true, "Purchased — it is on its way to your inventory.");
+      }
       toast(`${msg.delta > 0 ? "+" : ""}${msg.delta} ★ (${msg.reason})`);
       break;
+    }
     case "wardrobe":
       ownedSets = new Set(msg.ownedSets);
       creator.setWardrobe(msg.ownedSets);
-      renderCatalog();
+      folio.refresh(folioInput());
       break;
     case "trade_invite":
       toast(`${msg.from} wants to trade — type /trade ${msg.from} to accept`);
@@ -1203,6 +1193,7 @@ function handle(msg: ServerMsg): void {
     case "sets":
       sets = msg.sets;
       renderSets();
+      folio.refresh(folioInput());
       break;
     case "set_complete":
       toast(`${msg.name} complete — ${defName(msg.item.defId)} is yours`, "notice");
@@ -1223,6 +1214,8 @@ function handle(msg: ServerMsg): void {
         creator.isOpen
       ) {
         creator.rejected(msg.message);
+      } else if (msg.code === "purchase" && pendingPurchase !== null) {
+        failPendingPurchase(msg.message);
       } else if (msg.code === "casino" && !el("blackjack").hidden) {
         el("bj-status").textContent = msg.message;
       } else if (wheel.isOpen && (msg.code === "wheel" || wheel.hasPendingBet)) {
@@ -1282,6 +1275,9 @@ async function boot(): Promise<void> {
       if (e.key === "Escape") creator.close();
       return;
     }
+    // The folio covers the room like the creator does: its cards, search and Escape are the
+    // player's keys while it is up, and the canvas underneath gets none of them.
+    if (folio.isOpen()) return;
     if (e.key === "r" || e.key === "R") {
       rotateArmed();
       e.preventDefault();
@@ -1296,6 +1292,7 @@ async function boot(): Promise<void> {
 
   net.onMessage(handle);
   net.onClose((code) => {
+    failPendingPurchase("connection lost — the purchase was not confirmed, try again");
     // 4401 is the server refusing the token — the only close a fresh login can fix.
     if (code === 4401) signedOut("that session is no longer valid — log in again");
     else toast("disconnected from the server — reload to rejoin");
@@ -1336,18 +1333,18 @@ el<HTMLInputElement>("chat-input").addEventListener("keydown", (e) => {
   sendChat(el<HTMLInputElement>("chat-input"), e.shiftKey);
 });
 el<HTMLFormElement>("chat-form").addEventListener("submit", (e) => e.preventDefault());
-// #321: the strips hid the lower half of a big room, so they collapse behind tabs — an
-// accordion, at most one open, and the toggles work before and after login alike.
-const HUD_TABS = [["tab-catalog", "catalog"], ["tab-inventory", "inventory"]] as const;
-for (const [tab, strip] of HUD_TABS) {
-  el(tab).addEventListener("click", () => {
-    const opening = !el(strip).classList.contains("open");
-    for (const [t, s] of HUD_TABS) {
-      el(s).classList.toggle("open", opening && s === strip);
-      el(t).classList.toggle("open", opening && s === strip);
-    }
-  });
-}
+// #321 collapsed the strips behind tabs; the blitz (task 4) replaced the catalog strip with
+// the full-screen folio, so the catalog tab opens it and only the inventory keeps the accordion.
+el("tab-inventory").addEventListener("click", () => {
+  const opening = !el("inventory").classList.contains("open");
+  el("inventory").classList.toggle("open", opening);
+  el("tab-inventory").classList.toggle("open", opening);
+});
+el("tab-catalog").addEventListener("click", () => {
+  if (folio.isOpen()) folio.close();
+  else folio.open();
+  el("tab-catalog").classList.toggle("open", folio.isOpen());
+});
 // The wardrobe is a panel, not a strip: the tab opens the creator on the look you are wearing.
 el("tab-wardrobe").addEventListener("click", () => {
   if (myFigure === null) return;
@@ -1434,6 +1431,7 @@ function signedOut(message: string): void {
   el("hud").style.display = "none";
   el("blackjack").hidden = true;
   wheel.close();
+  folio.close();
   for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open", "zoom-open"]) {
     el(id).style.display = "none";
   }

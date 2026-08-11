@@ -7,7 +7,8 @@ import {
   folioCardState, folioChapters, folioEntries, folioPage, folioSearch,
 } from "./folio.ts";
 import type { FolioCardContext, FolioEntry, FolioItem } from "./folio.ts";
-import { themeLabel } from "./catalog.ts";
+import { themeLabel, thumbCrop } from "./catalog.ts";
+import type { FurniMeta } from "../scene/frames.ts";
 
 export interface FolioPanelInput {
   items: readonly FolioItem[];
@@ -57,6 +58,8 @@ export class FolioPanel {
   private selectedId: string | null = null;
   private mountedSig = "";
   private mounted = new Map<string, MountedCard>();
+  /** main.ts keeps its opener tab lit in sync; the panel owns every other path out. */
+  onClose: (() => void) | null = null;
   /** The purchase awaiting a server answer; every Buy disables until it resolves. */
   private pending: { kind: "buy" | "buy_set"; price: number } | null = null;
 
@@ -157,6 +160,7 @@ export class FolioPanel {
     this.root.hidden = true;
     this.closeDetail();
     document.getElementById("tab-catalog")?.focus();
+    this.onClose?.();
   }
 
   isOpen(): boolean { return this.openState; }
@@ -475,4 +479,38 @@ export class FolioPanel {
     this.page += delta;
     this.render();
   }
+}
+
+/** One shipped sheet, cropped to the facing the shop shows, at nearest-neighbour — moved here
+ *  from main.ts with the folio (blitz task 4); the inventory still uses it at its own box size.
+ *  A hatched tile stands in when the bundle is missing or the file will not load — never a
+ *  plausible stand-in. */
+export function furniThumb(
+  meta: FurniMeta | undefined,
+  plane: { w: number; h: number } | undefined,
+  box: { w: number; h: number },
+  maxIntegerScale = 1,
+): HTMLElement {
+  const holder = document.createElement("span");
+  holder.className = "thumb";
+  holder.style.width = `${box.w}px`;
+  holder.style.height = `${box.h}px`;
+  const crop = thumbCrop(meta, box, plane, maxIntegerScale);
+  if (!meta || !crop) {
+    holder.classList.add("blank");
+    holder.textContent = "no art";
+    return holder;
+  }
+  const img = document.createElement("img");
+  img.src = `/furni/${meta.sheet}`;
+  img.alt = "";
+  img.style.width = `${crop.sheetWidth}px`;
+  img.style.left = `${crop.left}px`;
+  img.style.top = `${crop.top}px`;
+  img.addEventListener("error", () => {
+    holder.classList.add("blank");
+    holder.replaceChildren(document.createTextNode("no art"));
+  });
+  holder.appendChild(img);
+  return holder;
 }
