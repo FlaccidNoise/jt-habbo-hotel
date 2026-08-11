@@ -282,6 +282,96 @@
       #creator footer .go { padding: 9px 22px; border-color: #7fd98a; background: #24422a;
         color: #d9f2dd; font-weight: 600; }
       #creator footer .go:disabled { opacity: .55; cursor: default; }
+      /* The Furnishings Folio (blitz task 3): the full-screen binder that replaces the old
+         catalog strip. Navy boards, a walnut spine, gold rules — every colour below is already
+         in this file; the cards mount 24 to a page and the detail leaf is the only place art
+         upscales. */
+      #folio { position: fixed; inset: 0; display: none; background: #11131aee; }
+      #folio.open { display: block; }
+      #folio .frame { position: absolute; inset: 0; display: flex; flex-direction: column; }
+      #folio header { display: flex; align-items: center; gap: 14px; padding: 10px 20px;
+        background: #1c1f2b; border-bottom: 2px solid #6a5a2e; }
+      #folio header h1 { margin: 0; font-size: 17px; font-weight: 700; color: #ffd76a;
+        overflow-wrap: anywhere; }
+      #folio header .stars { color: #ffd76a; font-weight: 600; white-space: nowrap; }
+      #folio header input { flex: 1; max-width: 340px; min-height: 44px; padding: 8px 10px;
+        border-radius: 8px; border: 1px solid #444c63; background: #10121a; color: #eef; }
+      #folio header .close { margin-left: auto; min-width: 44px; min-height: 44px;
+        border-radius: 8px; border: 1px solid #444c63; background: #2c3346; color: #eef;
+        cursor: pointer; font: inherit; }
+      #folio .body { flex: 1; display: flex; min-height: 0; }
+      #folio .spine { width: 148px; flex: none; overflow-y: auto; background: #2b2517;
+        border-right: 2px solid #6a5a2e; padding: 10px 8px; display: flex;
+        flex-direction: column; gap: 6px; }
+      #folio .spine button { text-align: left; padding: 10px 12px; min-height: 44px;
+        border-radius: 8px; border: 1px solid #6a5a2e; background: #221d12e6; color: #c9b27a;
+        cursor: pointer; font: inherit; font-size: 13px; overflow-wrap: anywhere; }
+      #folio .spine button[aria-selected="true"] { border-color: #ffd76a; background: #3a3016;
+        color: #ffe9a8; }
+      #folio .page { flex: 1; min-width: 0; display: flex; flex-direction: column; min-height: 0; }
+      #folio .grid { flex: 1; overflow-y: auto; padding: 14px; display: grid; gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); align-content: start; }
+      #folio .card { display: flex; flex-direction: column; align-items: center; gap: 4px;
+        padding: 8px 6px; border-radius: 8px; border: 1px solid #6a5a2e; background: #221d12e6;
+        color: #eee0b0; cursor: pointer; font: inherit; min-height: 44px; }
+      #folio .card.selected { border-color: #7fb2d9; background: #24405c; color: #eef; }
+      #folio .card .name { font-size: 12px; line-height: 1.25; text-align: center;
+        overflow-wrap: anywhere; }
+      #folio .card .price { font-size: 13px; font-weight: 600; color: #ffd76a; }
+      #folio .card .ribbon { font-size: 12px; font-weight: 600; color: #c9b27a; }
+      /* Too dear to buy, not too dear to look at: only the art dims. */
+      #folio .card.unaffordable .thumb { opacity: .45; }
+      #folio .card .tags { display: flex; gap: 4px; flex-wrap: wrap; justify-content: center; }
+      #folio .card .tag { font-size: 10px; padding: 1px 6px; border-radius: 6px;
+        border: 1px solid #444c63; background: #1c1f2b; color: #9aa3b8; }
+      #folio .detail { width: 320px; flex: none; overflow-y: auto; background: #1c1f2b;
+        border-left: 2px solid #6a5a2e; padding: 16px; display: flex; flex-direction: column;
+        gap: 10px; }
+      #folio .detail[hidden] { display: none; }
+      #folio .detail h2 { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+      #folio .detail .meta { font-size: 12px; color: #9aa3b8; display: grid; gap: 3px; }
+      #folio .detail .note { font-size: 12px; color: #c9b27a; overflow-wrap: anywhere; }
+      #folio .detail .buy { min-height: 44px; padding: 10px 14px; border-radius: 8px;
+        border: 1px solid #7fd98a; background: #24422a; color: #d9f2dd; font-weight: 600;
+        cursor: pointer; font: inherit; }
+      #folio .detail .buy:disabled { opacity: .55; cursor: default; }
+      #folio .detail .dismiss { min-height: 44px; padding: 8px 12px; border-radius: 8px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer;
+        font: inherit; }
+      #folio footer { display: flex; align-items: center; gap: 10px; padding: 8px 20px;
+        background: #1c1f2b; border-top: 2px solid #6a5a2e; }
+      #folio footer button { min-width: 44px; min-height: 44px; border-radius: 8px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer;
+        font: inherit; }
+      #folio footer button:disabled { opacity: .4; cursor: default; }
+      #folio footer .pageinfo { font-size: 13px; color: #9aa3b8; white-space: nowrap; }
+      #folio footer .result { flex: 1; text-align: right; font-size: 13px; min-height: 18px;
+        overflow-wrap: anywhere; }
+      #folio footer .result.ok { color: #9fd9a6; }
+      #folio footer .result.fail { color: #ff9b9b; }
+      #folio button:focus-visible, #folio input:focus-visible {
+        outline: 2px solid #7fb2d9; outline-offset: 2px; }
+      @media (prefers-reduced-motion: reduce) {
+        #folio * { transition: none; animation: none; }
+      }
+      /* Under 1024px the spine becomes horizontally scrollable tabs and the detail leaf a
+         full-width sheet; under 720px everything stacks into one scrolling column. 360px stays
+         readable and scrollable — no mobile-client claim. */
+      @media (max-width: 1023px) {
+        #folio .body { flex-direction: column; }
+        #folio .spine { width: auto; flex: none; flex-direction: row; overflow-x: auto;
+          overflow-y: hidden; border-right: none; border-bottom: 2px solid #6a5a2e; }
+        #folio .spine button { flex: none; }
+        #folio .detail { position: fixed; left: 0; right: 0; bottom: 0; width: auto;
+          max-height: 60vh; border-left: none; border-top: 2px solid #6a5a2e; }
+      }
+      @media (max-width: 719px) {
+        #folio header { flex-wrap: wrap; }
+        #folio header input { max-width: none; }
+        #folio .body { display: block; overflow-y: auto; }
+        #folio .grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
+        #folio .detail { position: static; max-height: none; width: auto; }
+      }
     </style>
   </head>
   <body>
@@ -389,6 +479,9 @@
     <!-- The creator sits between the HUD it replaces and the login overlay, so DOM order alone
          decides the stack: login covers everything, the creator covers the room. -->
     <div id="creator"></div>
+    <!-- The folio replaces the bottom catalog strip (blitz task 3). The class builds every
+         child; the page owns the shell, the CSS, and nothing else. -->
+    <div id="folio" hidden></div>
     <div id="login">
       <form id="login-form">
         <h1>The Grand</h1>
