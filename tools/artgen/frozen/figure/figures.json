@@ -2205,6 +2205,54 @@
       "figuredataVersion": 1,
       "recipeHash": "8a5340b161936773c503a5b874a1355607e51b02da13f612660bd60177ee2243",
       "pixelHash": "b7e5ffedb9af06ef9d99695ca83f4c46334b32db4067861e8e9e48851d2cee19"
+    },
+    {
+      "partId": "ch43",
+      "setId": 43,
+      "type": "ch",
+      "name": "Tank",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ch43.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "831791e7e80188f98179754dd8770fa18d22be6da88805e87d5d2814c0fc63f4",
+      "pixelHash": "668d52e1ac7b469ebac6f8cb68d709ec16ce66e6bdd33167fa9bd6d653cc77bb"
     }
   ]
 }

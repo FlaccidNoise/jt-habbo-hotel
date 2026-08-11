@@ -2152,6 +2152,20 @@ FIGURE_PARTS = {
             {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 3.6},
         ],
     },
+    # Tank (set 43, one slot). The only garment in the pack defined by what it leaves off: three
+    # prims, no sleeves, and the body stops at 14.2 — below the shoulder at 15 — so bd1's own skin
+    # is what fills the chest above it. The two straps are 3.6 wide with a 6.4 gap between them,
+    # which is the bare chest that says tank rather than vest.
+    "ch43": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 0.8),
+             "c1": (7.9, 6.4, 14.2)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-6.8, -6.4, 14.2),
+             "c1": (-3.2, 6.4, 20.0)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (3.2, -6.4, 14.2),
+             "c1": (6.8, 6.4, 20.0)},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {
