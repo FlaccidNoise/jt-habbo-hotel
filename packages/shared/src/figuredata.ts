@@ -118,6 +118,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // lg and sh are the two layer types nothing in the wardrobe has ever hidden.
   { id: 45, type: "lg", name: "Shorts",     slots: 1, family: "material", hides: [], retired: false },
   { id: 46, type: "lg", name: "Flares",     slots: 1, family: "material", hides: [], retired: false },
+  { id: 47, type: "lg", name: "Cargo",      slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -190,6 +191,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 40, price: 350, theme: "tops" },   // Vest + Shirt
   { set: 39, price: 400, theme: "tops" },   // Blazer
   { set: 45, price: 150, theme: "legs" },   // Shorts
+  { set: 47, price: 200, theme: "legs" },   // Cargo
   { set: 46, price: 250, theme: "legs" },   // Flares
 ];
 

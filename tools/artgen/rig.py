@@ -2264,6 +2264,33 @@ FIGURE_PARTS = {
             {"t": "cone", "bone": "knee_r", "slot": 0, "len": 16.0, "r0": 4.4, "r1": 7.4},
         ],
     },
+    # Cargo (set 47, one slot). The exact inverse of the flares: baggy at the thigh (5.5 against
+    # the trousers' 4.7) and TAPERED at the shin, 5.4 down to 4.6, so the two never read as the
+    # same trouser at a different width.
+    #
+    # A pocket has to break the leg's outline to exist at all at this scale. The thigh pair runs
+    # from x 4.2 out to 7.6 in leg-local px — 2.1 clear of the 5.5 tube — on the outboard face,
+    # +x on leg_l and -x on leg_r because the leg bones sit either side of the hip. The shin pair
+    # sits on the front instead, where it breaks the outline in the three directions the thigh
+    # pockets do not.
+    "lg47": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.2, -6.6, -2.6),
+             "c1": (8.2, 6.6, 2.4)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 5.5},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 5.5},
+            {"t": "cone", "bone": "knee_l", "slot": 0, "len": 15.5, "r0": 5.4, "r1": 4.6},
+            {"t": "cone", "bone": "knee_r", "slot": 0, "len": 15.5, "r0": 5.4, "r1": 4.6},
+            {"t": "box",  "bone": "leg_l",  "slot": 0, "c0": (4.2, -3.4, -14.2),
+             "c1": (7.6, 3.4, -7.6)},
+            {"t": "box",  "bone": "leg_r",  "slot": 0, "c0": (-7.6, -3.4, -14.2),
+             "c1": (-4.2, 3.4, -7.6)},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.2, 4.2, -12.0),
+             "c1": (3.2, 6.6, -6.0)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.2, 4.2, -12.0),
+             "c1": (3.2, 6.6, -6.0)},
+        ],
+    },
     "sh9": {
         "prims": [
             {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),

@@ -2397,6 +2397,54 @@
       "figuredataVersion": 1,
       "recipeHash": "2e6a51f8f349217ad25cb715eec95ff6ebdce4c1bbc9f4b6be1ff4552c964588",
       "pixelHash": "c9fda855b5e9272a856dfa29dd923cc7172b6b47a2a45a82a34bc99509b4498d"
+    },
+    {
+      "partId": "lg47",
+      "setId": 47,
+      "type": "lg",
+      "name": "Cargo",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg47.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "94e6bd1d72ed3777eb5d09c92933fa6f7543e6f65f0fe3f5ab1457000e0bf87a",
+      "pixelHash": "d1d1b52022775c818692e259cfc9249ab50274e3adf735a8dd9e5c6fd70eaafd"
     }
   ]
 }
