@@ -8,11 +8,13 @@
 export class IndexedHeap {
   private readonly heap: Int32Array;
   private readonly at: Int32Array;
+  private readonly better: (a: number, b: number) => boolean;
   private len = 0;
 
-  constructor(capacity: number, private readonly better: (a: number, b: number) => boolean) {
+  constructor(capacity: number, better: (a: number, b: number) => boolean) {
     this.heap = new Int32Array(capacity);
     this.at = new Int32Array(capacity).fill(-1);
+    this.better = better;
   }
 
   get length(): number {

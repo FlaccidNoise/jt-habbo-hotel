@@ -2038,12 +2038,18 @@ FIGURE_PARTS = {
     },
     # Bellhop Cap (set 10, hides hr). The hides rule is what keeps the holdout set at size one:
     # without it a cap would need a holdout render per hair set.
+    #
+    # jtbug #349: the visor's front-bottom edge landed on row 34 at stand dir 3 and drew over the
+    # eyed faces' brow (row 31) and eyes (rows 34-35). figure_project's row term is `- p.z` with no
+    # rotation coupling, and the head bone carries zero rotation in every pose, so a +6 lift on both
+    # prims' z is an exact -6 row shift in every frame and direction — no reshaping needed. New
+    # visor edge lands at row 28, three rows clear of the brow.
     "ha10": {
         "prims": [
-            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 17.0), "r": 10.6,
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 23.0), "r": 10.6,
              "squash": (1.0, 0.94, 0.62)},
-            {"t": "box",  "bone": "head", "slot": 0, "c0": (-8.0, 4.0, 15.2),
-             "c1": (8.0, 11.6, 16.6)},
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-8.0, 4.0, 21.2),
+             "c1": (8.0, 11.6, 22.6)},
         ],
     },
     "ea12": {
