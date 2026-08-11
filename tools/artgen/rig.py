@@ -2619,6 +2619,23 @@ FIGURE_PARTS = {
              "squash": (0.995, 0.95, 0.24)},
         ],
     },
+    # Top Hat (set 54, hides hr). The only garment in the wardrobe tall enough to argue with the
+    # bounds gate, so it is measured from the top down: the crown's flat lid sits at z 35.5, and a
+    # circle of radius r drops at most r/2 rows below its own centre in any direction, so the lid
+    # lands on row 44 - 35.5 - 3.65 = 4.85 and the gate has 4 rows of slack.
+    #
+    # The crown is a cylinder — a cone with a 0.7 flare, which is what a real block has — because a
+    # box crown would be 14 px wide face-on and 20 px corner-on, and a hat that changes width when
+    # its wearer turns is not a hat. The brim is a 26-px disc flattened to 3 px, one prim, sat at
+    # z 19.8: any lower and its forward edge slides onto the brow at row 31.
+    "ha54": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 19.8), "r": 13.0,
+             "squash": (1.0, 0.95, 0.115)},
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 35.5, "len": 16.0,
+             "r0": 7.3, "r1": 8.0},
+        ],
+    },
     "ea12": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),
@@ -2870,10 +2887,15 @@ def add_figure_prim(prim):
             made.append(cap)
     elif t == "cone":
         # Truncated cone down local -Z: r0 at the bone, r1 at the far end. Skirts and coat flares.
+        # "z0" moves the r0 end off the bone origin, and equal radii make it a cylinder: the head
+        # bone sits at the chin, so a hat that stands ABOVE the crown has nothing to hang from.
+        # A box would do it with four corners, and a corner-on box pulses 14 px wide to 20 as the
+        # figure turns — a 24-gon holds its width in all eight directions, which is what a hat
+        # made of straight sides has to do.
         length, r0, r1 = prim["len"], prim["r0"], prim["r1"]
         bpy.ops.mesh.primitive_cone_add(vertices=24, radius1=r1, radius2=r0, depth=length)
         obj = bpy.context.active_object
-        obj.location = (0.0, 0.0, -length / 2.0)
+        obj.location = (0.0, 0.0, prim.get("z0", 0.0) - length / 2.0)
         finish(obj, smooth=True)
         made.append(obj)
     elif t == "ball":
