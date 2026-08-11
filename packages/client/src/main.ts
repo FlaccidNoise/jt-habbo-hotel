@@ -45,7 +45,7 @@ import type { FurniAssets } from "./scene/assets.ts";
 import { AvatarSprite } from "./scene/avatar.ts";
 import { floorDecor, floorRegions, loadDecorAssets, wallDecor } from "./scene/decor.ts";
 import type { DecorAssets } from "./scene/decor.ts";
-import { Effects } from "./scene/effects.ts";
+import { Effects, WHEEL_SPIN_MS } from "./scene/effects.ts";
 import { FurniLayer } from "./scene/furni.ts";
 import { RoomScene, SCALE, ZOOM, loadZoom, setZoom } from "./scene/room.ts";
 import { DepthIndex } from "./scene/sort.ts";
@@ -55,6 +55,7 @@ import type { CatalogItem } from "./ui/catalog.ts";
 import { ChatOverlay } from "./ui/chat.ts";
 import { Creator, wearableThumb } from "./ui/creator.ts";
 import { parseChatInput } from "./ui/parse.ts";
+import { WheelPanel, revealText } from "./ui/wheel.ts";
 
 type RoomState = Extract<ServerMsg, { t: "room_state" }>;
 type TradeState = Extract<ServerMsg, { t: "trade_state" }>;
@@ -166,6 +167,17 @@ const creator = new Creator(el("creator"), {
     el("tab-wardrobe").classList.remove("open");
   },
 });
+
+/** The Grand Wheel's bet panel (#429). It has no HUD button: clicking the machine is what opens
+ *  it, since a bet is only legal within reach of the machine. */
+const wheel = new WheelPanel(el("wheel"), {
+  stars: () => stars,
+  bet: (msg) => net.send(msg),
+});
+/** The reveal waits for the wheel to stop turning. Latest wins: the server's cooldown makes two
+ *  spins inside one animation vanishingly rare, so a second result simply replaces the first
+ *  rather than earning a queue. */
+let wheelReveal: number | undefined;
 
 function addAvatar(state: AvatarState): void {
   if (!scene) return;
@@ -324,6 +336,7 @@ function renderStars(): void {
   el("stars").textContent = `★ ${stars}`;
   renderCatalog();
   renderLever();
+  wheel.refresh();
 }
 
 /** One shipped sheet, cropped to the facing the shop shows, at nearest-neighbour. A hatched tile
@@ -718,6 +731,9 @@ function onTileClick(x: number, y: number, button: number): void {
   const top = topItemOn(x, y);
   const topDef = top && DEFS.get(top.defId);
   if (top && topDef?.interaction) {
+    // The wheel's panel is local (#429): the server no-ops `use` on it, and the walk `useFurni`
+    // starts is what puts me inside the reach the bet itself needs.
+    if (topDef.interaction === "wheel") wheel.open(top.id);
     useFurni(topDef, top);
     return;
   }
@@ -913,6 +929,10 @@ function buildRoom(msg: RoomState): void {
   el("lever").hidden = true;
   el("lever-result").textContent = "";
   el("sets").hidden = true;
+  // The wheel we were betting at is in the room we just left, and so is any reveal it owed us.
+  wheel.close();
+  if (wheelReveal !== undefined) clearTimeout(wheelReveal);
+  wheelReveal = undefined;
 
   depth = new DepthIndex();   // the old room's views are gone with it
   hereRoomId = msg.roomId;
@@ -1122,6 +1142,25 @@ function handle(msg: ServerMsg): void {
         : "No win. Pull again?";
       renderLever();
       break;
+    case "wheel_result": {
+      // Every occupant gets this, bettor or not — the spin is the room's spectacle, and the reveal
+      // is held back until the wheel has actually stopped on the slot the server drew.
+      const item = furni.find((f) => f.id === msg.itemId);
+      if (item) {
+        const at = worldToScreen(item.x, item.y, item.z, SCALE);
+        effects?.wheelSpin(at, item.dir === 2 || item.dir === 6, msg.slot, msg.payout > 0,
+          Date.now());
+      }
+      if (wheelReveal !== undefined) clearTimeout(wheelReveal);
+      wheelReveal = window.setTimeout(() => {
+        wheelReveal = undefined;
+        // A win is announced to the room; a loss is only the quiet beat at the wheel itself and a
+        // line in the bettor's own panel. Nobody else needs to be told a stranger lost.
+        if (msg.payout > 0) toast(revealText(msg), "notice");
+        if (msg.accountId === you) wheel.resolved(msg);
+      }, WHEEL_SPIN_MS);
+      break;
+    }
     case "donated":
       inventory = inventory.filter((i) => i.id !== msg.itemId);
       renderInventory();
@@ -1153,6 +1192,11 @@ function handle(msg: ServerMsg): void {
         creator.rejected(msg.message);
       } else if (msg.code === "casino" && !el("blackjack").hidden) {
         el("bj-status").textContent = msg.message;
+      } else if (wheel.isOpen && (msg.code === "wheel" || wheel.hasPendingBet)) {
+        // Anything refused while a bet of ours is in flight answers in the panel: it is the only
+        // place that can un-stick SPIN, so routing it to a toast would leave the panel waiting for
+        // a spin that is never coming.
+        wheel.rejected(msg.message);
       } else toast(msg.message);
       break;
     default:
@@ -1352,6 +1396,7 @@ function signedOut(message: string): void {
   session = "";
   el("hud").style.display = "none";
   el("blackjack").hidden = true;
+  wheel.close();
   for (const id of ["nav-open", "suite-nav", "arcade-open", "lever-open", "sets-open", "zoom-open"]) {
     el(id).style.display = "none";
   }

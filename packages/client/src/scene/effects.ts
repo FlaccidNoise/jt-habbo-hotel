@@ -1,4 +1,5 @@
 import { Container, Graphics } from "pixi.js";
+import { WHEEL_LAYOUT } from "@grand/shared";
 
 /** Above every sorted sprite. An effect is a flourish over the room rather than an object in it,
  *  so it stays out of the painter sort — there is nothing for it to hide behind. */
@@ -21,6 +22,56 @@ const CLINK_DOTS = 5;
 const CLINK_SPREAD = 15;
 const CLINK_ARM = 3;           // half-length of each sparkle's arms
 const CLINK_COLOR = 0xfff3c4;
+
+/** How long the wheel turns before it settles (#429), and how long the landing beat holds after
+ *  that. The bettor's panel and the room's announcement both wait out the spin, so this is the
+ *  number the whole reveal is timed against. */
+export const WHEEL_SPIN_MS = 3400;
+const WHEEL_LAND_MS = 1300;
+const WHEEL_TURNS = 4;         // whole turns before the marker reaches the drawn slot
+const WHEEL_TRAIL = 3;         // slots of dimming marker left behind the leading one
+/** The face of grand_wheel.png, in sprite pixels off the item's own origin: the disc is a tilted
+ *  ellipse, and the two facing pairs mirror it. Measured off the shipped sheet, which is what the
+ *  marker has to sit on — the four state frames render byte-identical (#430), so every bit of
+ *  motion here is overlay rather than an animated sprite. */
+const FACE = { dx: 10, dy: -63, major: 28, minor: 19, tilt: (64 * Math.PI) / 180 };
+const WHEEL_POOL = 30;         // radius of the light the lit slot throws over the sprite
+const WHEEL_POOL_RINGS = 6;
+const WHEEL_BURST = 46;        // how far a winning burst's rings travel off the face
+const WIN_COLOR = 0xf5d76e;
+const LOSS_COLOR = 0x6c7385;
+
+/** The five colours a slot can be, keyed by the segment ids in shared/wheel.ts. Taken from the
+ *  catalog defs that already wear them (crimson chairs, baize stools, plum beds) so the wheel, the
+ *  furniture and the bet buttons are one palette. */
+export const SEGMENT_COLOR: ReadonlyMap<string, number> = new Map([
+  ["crimson", 0xaa3333],
+  ["fern", 0x2e8b57],
+  ["plum", 0x7a3e9d],
+  ["gold", 0xc9b27a],
+  ["grand", 0xf5d76e],
+]);
+
+/** Which slot the marker is on `t` of the way through the spin. A cubic ease-out over a whole
+ *  number of slots, so t = 1 lands on `target` exactly — the animation cannot disagree with the
+ *  slot the server drew, however the curve is retuned. */
+export function spinSlot(t: number, target: number): number {
+  const steps = WHEEL_TURNS * WHEEL_LAYOUT.length + target;
+  const eased = 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3);
+  return Math.floor(steps * eased) % WHEEL_LAYOUT.length;
+}
+
+/** Where slot `n` sits on the face, in the effect's own coordinates. Slot 0 is the top of the disc,
+ *  under the stand's pointer — which end of the major axis that is depends on which way the face
+ *  is tilted, hence the half-turn on one of them. */
+function slotPoint(n: number, mirror: number): { x: number; y: number } {
+  const a = (n / WHEEL_LAYOUT.length) * Math.PI * 2 + (mirror > 0 ? Math.PI : 0);
+  const tilt = FACE.tilt * mirror;
+  return {
+    x: Math.cos(a) * FACE.major * Math.cos(tilt) - Math.sin(a) * FACE.minor * Math.sin(tilt),
+    y: Math.cos(a) * FACE.major * Math.sin(tilt) + Math.sin(a) * FACE.minor * Math.cos(tilt),
+  };
+}
 
 /** A rising column of vapour, tuned per emitter (#331). */
 export interface Wisp {
@@ -89,6 +140,55 @@ export class Effects {
         g.rect(x - CLINK_ARM, y - 0.5, CLINK_ARM * 2, 1).fill(paint);
         g.rect(x - 0.5, y - CLINK_ARM, 1, CLINK_ARM * 2).fill(paint);
       }
+    });
+    view.blendMode = "add";
+  }
+
+  /** The Grand Wheel turning (#429), for everyone in the room. `at` is the item's own origin in
+   *  screen space and `rotated` says which way its face is tilted; the marker steps round the 24
+   *  slots of WHEEL_LAYOUT, fast then slowing, over a pool of the colour it is passing, and stops
+   *  on `slot`. Then the beat: a gold burst off the face for a win, one grey pulse for a loss —
+   *  which is the whole of what a spectator sees of a losing spin. */
+  wheelSpin(at: Point, rotated: boolean, slot: number, win: boolean, now: number): void {
+    const total = WHEEL_SPIN_MS + WHEEL_LAND_MS;
+    const mirror = rotated ? -1 : 1;
+    const face = { sx: at.sx + FACE.dx * mirror, sy: at.sy + FACE.dy };
+    const view = this.add(face, now, total, (g, t) => {
+      const spin = Math.min(1, (t * total) / WHEEL_SPIN_MS);
+      const land = Math.max(0, (t * total - WHEEL_SPIN_MS) / WHEEL_LAND_MS);
+      const lit = spinSlot(spin, slot);
+      const color = SEGMENT_COLOR.get(WHEEL_LAYOUT[lit] ?? "") ?? WIN_COLOR;
+      // The pool holds while the reveal is read, then goes out with the effect.
+      const hold = land < 0.5 ? 1 : 2 * (1 - land);
+      for (let ring = WHEEL_POOL_RINGS; ring > 0; ring--) {
+        const k = ring / WHEEL_POOL_RINGS;
+        g.circle(0, 0, WHEEL_POOL * k).fill({ color, alpha: (0.03 + 0.05 * (1 - k)) * hold });
+      }
+      // The face lights up only while it turns: the 24 slots in their own colours, so the sweep is
+      // visibly crossing Crimson after Crimson to reach the one Grand, and gone again at rest.
+      for (let n = 0; n < WHEEL_LAYOUT.length; n++) {
+        const p = slotPoint(n, mirror);
+        const pip = SEGMENT_COLOR.get(WHEEL_LAYOUT[n] ?? "") ?? WIN_COLOR;
+        g.circle(p.x, p.y, 1.5).fill({ color: pip, alpha: 0.5 * hold });
+      }
+      // The trail is what makes a 24-step walk read as a spin rather than as a blinking light.
+      for (let back = WHEEL_TRAIL; back >= 0; back--) {
+        const p = slotPoint(lit - back, mirror);
+        const fade = (1 - back / (WHEEL_TRAIL + 1)) * hold;
+        g.circle(p.x, p.y, back === 0 ? 3 : 2).fill({ color: WIN_COLOR, alpha: fade });
+      }
+      if (land <= 0) return;
+      const p = slotPoint(slot, mirror);
+      if (win) {
+        for (let ring = 0; ring < 3; ring++) {
+          const age = land - ring * 0.18;
+          if (age <= 0) continue;
+          g.circle(p.x, p.y, WHEEL_BURST * age)
+            .stroke({ width: 1.5, color: WIN_COLOR, alpha: 0.8 * (1 - age) });
+        }
+        return;
+      }
+      g.circle(p.x, p.y, 6 + 10 * land).stroke({ width: 1, color: LOSS_COLOR, alpha: 0.5 * (1 - land) });
     });
     view.blendMode = "add";
   }

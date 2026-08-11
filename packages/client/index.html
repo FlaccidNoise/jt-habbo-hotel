@@ -148,6 +148,27 @@
       #lever .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
         border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
       #lever .row button:disabled { opacity: .4; cursor: default; }
+      /* #429: no launcher button — the bet panel opens where the wheel is, because a bet is only
+         legal within reach of it. Right-hand side, clear of the machine panels on the left. */
+      #wheel { position: fixed; top: 96px; right: 12px; width: 250px; background: #1c1f2bf2;
+        border: 1px solid #333a4d; border-radius: 10px; padding: 14px; display: grid; gap: 8px;
+        text-align: center; }
+      #wheel[hidden] { display: none; }
+      #wheel h2 { margin: 0; font-size: 15px; }
+      #wheel .note { font-size: 13px; color: #9aa3b8; min-height: 34px; }
+      #wheel .segs { display: grid; gap: 4px; }
+      #wheel .segs button { display: flex; justify-content: space-between; gap: 8px;
+        padding: 6px 8px; border-radius: 6px; border: 1px solid #444c63; background: #222738;
+        color: #eef; cursor: pointer; font: inherit; font-size: 13px; }
+      #wheel .segs button span { color: #9aa3b8; font-size: 12px; }
+      #wheel .segs button.on { background: #2c3346; font-weight: 600; }
+      #wheel .stake { justify-content: center; align-items: center; }
+      #wheel .stake .amount { min-width: 62px; font-size: 14px; font-weight: 600; }
+      #wheel .bal { font-size: 12px; color: #7d8496; }
+      #wheel .row { display: flex; gap: 6px; }
+      #wheel .row button { flex: 1; padding: 7px 4px; border-radius: 6px;
+        border: 1px solid #444c63; background: #2c3346; color: #eef; cursor: pointer; }
+      #wheel .row button:disabled { opacity: .4; cursor: default; }
       #sets-open { position: fixed; top: 184px; left: 12px; padding: 5px 10px;
         border-radius: 8px; border: 1px solid #444c63; background: #1c1f2be6; color: #eef;
         cursor: pointer; display: none; }
@@ -322,6 +343,8 @@
       </div>
       <div id="lever-odds"></div>
     </div>
+    <!-- #429: built by WheelPanel, like the creator — the markup is the panel's, not the page's. -->
+    <div id="wheel" hidden></div>
     <div id="sets" hidden>
       <h2>Collections</h2>
       <div id="sets-list"></div>
