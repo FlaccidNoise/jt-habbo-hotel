@@ -3219,6 +3219,54 @@
       "figuredataVersion": 1,
       "recipeHash": "bfb31c948fd9d97e56e7ff18a48bbb960af7924176ea7acb72818bf5c3faa1b0",
       "pixelHash": "36610f3f9f637c07fc59acb45089ff1d685e4470198db272f0b8df685a824f45"
+    },
+    {
+      "partId": "lg64",
+      "setId": 64,
+      "type": "lg",
+      "name": "Breeches",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg64.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "1528007930053ad5f5c5389483767171de7bff26db799960c8f23009adfa08a6",
+      "pixelHash": "d23142440aad960b0914c872cd6c7c236b01339ff89c7ce116a91ddb5dc88f52"
     }
   ]
 }

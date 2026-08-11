@@ -2950,6 +2950,38 @@ FIGURE_PARTS = {
              "c1": (6.2, 7.6, 0.6)},
         ],
     },
+    # ---- costume pack 1: bannerhold (#449) ----
+    # Seven layers that dress one figure off a single shelf. Each is modelled from the ledger's
+    # silhouette intent (docs/plans/2026-08-11-costume-blitz-ledger.md), and each names the sibling
+    # it has to stay clear of in outline rather than in ramp.
+    #
+    # Breeches (set 64, one slot). The lg shelf splits on hem row before anything else, and 64 owns
+    # the row just BELOW the knee: the thigh tube runs the leg bone's full 19 px and a cuff ring
+    # closes it 2 px down the shin, leaving bd1's own shin bare. Shorts 45 cuts 7.5 px ABOVE the
+    # knee with "caps": "top" and no band, so the two never share a hem row and 45 has no ring to
+    # break its outline.
+    #
+    # The ring hangs off knee_l/knee_r, not leg_l/leg_r. A cuff buckled below the knee follows the
+    # shin, and the knee bone is where the shin starts — on the thigh bone the ring would stay put
+    # while the knee bends 28 degrees in walk1 and walk3 and tear away from its own hem.
+    #
+    # The tube keeps "caps": "top" for the reason the shorts 45 do: a bottom cap is a sphere hanging
+    # below the cut, which turns a hem into a bulb. Here the ring is the hem, and it overlaps the
+    # tube's flat end by 1.08 px so the layer stays one island through the deepest knee bend.
+    "lg64": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -6.4, -2.4),
+             "c1": (8.0, 6.4, 2.4)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 5.0,
+             "caps": "top"},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 5.0,
+             "caps": "top"},
+            {"t": "ball", "bone": "knee_l", "slot": 0, "c": (0.0, 0.0, -2.0), "r": 5.6,
+             "squash": (1.0, 1.0, 0.55)},
+            {"t": "ball", "bone": "knee_r", "slot": 0, "c": (0.0, 0.0, -2.0), "r": 5.6,
+             "squash": (1.0, 1.0, 0.55)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

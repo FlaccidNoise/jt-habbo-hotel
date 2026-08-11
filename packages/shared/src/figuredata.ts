@@ -144,6 +144,11 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 61, type: "ca", name: "Tie",         slots: 1, family: "material", hides: [], retired: false },
   { id: 62, type: "ca", name: "Chain",       slots: 1, family: "material", hides: [], retired: false },
   { id: 63, type: "wa", name: "Sash",        slots: 2, family: "material", hides: [], retired: false },
+  // Costume pack 1 — bannerhold (#449). One shelf that dresses a whole figure, so the pack spans
+  // seven layer types rather than crowding one. The `hides` column is the shipped pattern and
+  // nothing more: the surcoat hides the shirt it is worn over, the helm replaces hair, and the
+  // other five draw alongside whatever is underneath.
+  { id: 64, type: "lg", name: "Breeches",        slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -208,7 +213,14 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  player adds to a look already paid for, so the whole shelf sits at or under the mid rung of
  *  every other one. 150 for the two that are a line on the chest, 200-250 once a set lands on the
  *  face, and 300-350 for the two that add real bulk — a scarf's drape and the sash's second
- *  colour slot. */
+ *  colour slot.
+ *
+ *  bannerhold (64-70, #449) is the first shelf that dresses a whole figure rather than one layer,
+ *  so it prices on how much of the outline a piece changes rather than on which layer it sits:
+ *  200-250 for the breeches and sabatons that reshape a limb, 300 for the three that add a band or
+ *  a padded body, and 350-450 for the mantle, the helm and the surcoat, which are read across a
+ *  room. The theme string is the furniture chapter's, exactly — a folio chapter sells its room and
+ *  its outfit from the same page, and a new theme costs no UI edit (#438). */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -246,6 +258,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 58, price: 250, theme: "accessories" },  // Sunglasses
   { set: 60, price: 300, theme: "accessories" },  // Scarf
   { set: 63, price: 350, theme: "accessories" },  // Sash
+  { set: 64, price: 200, theme: "bannerhold" },  // Breeches
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
