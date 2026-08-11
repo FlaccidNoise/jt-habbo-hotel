@@ -96,8 +96,15 @@ describe("what the account may wear", () => {
     expect(locked.map((s) => s.name)).toEqual(["Curls"]);
   });
 
+  // Named as a rule rather than a list: a garment pack adds ch sets (#440 took it from two to
+  // nine), and what has to hold is the same however many there are — every ch set except the
+  // staff blazer 16 is on offer, and 16 never is.
   test("the staff uniform is not offered at all", () => {
-    expect(setsOfType("ch").map((s) => s.id)).toEqual([5, 6]);
+    const offered = setsOfType("ch").map((s) => s.id);
+    expect(offered).not.toContain(16);
+    expect(offered).toEqual(
+      FIGURE_SETS.filter((s) => s.type === "ch" && !s.retired && s.id !== 16).map((s) => s.id),
+    );
   });
 });
 
