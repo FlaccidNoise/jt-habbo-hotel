@@ -36,7 +36,7 @@ import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
 import { figureOf, saveFigure, staffFigure } from "./figure.ts";
 import { balanceOf, settleSpend } from "./ledger.ts";
-import { findPath } from "./pathfind.ts";
+import { findPath, reachable } from "./pathfind.ts";
 import {
   getItem,
   listInventory,
@@ -141,6 +141,7 @@ export class Room {
   private walks: Map<number, Walk>;
   private lastUse = new Map<number, number>();
   private hands = new Map<number, ReturnType<typeof setTimeout>>();
+  private openMask: Uint8Array | null = null;   // built lazily by roamOk, dropped by reindex
 
   constructor(db: Database.Database, roomId: number, emit: Emit) {
     const row = db.prepare("SELECT name, doc FROM rooms WHERE id = ?").get(roomId) as
@@ -299,6 +300,22 @@ export class Room {
    *  destination on one it already asked for. */
   isWalking(accountId: number): boolean {
     return this.walks.has(accountId);
+  }
+
+  /** May a driver send an occupant to wander onto this tile? Two gates, and they are deliberately
+   *  different in kind. The mask is static — the heightmap plus non-walkable furni, swept once
+   *  from the door — so a walkable but walled-off pocket is refused without asking the pathfinder,
+   *  which would otherwise drain its whole open set to prove there is no route. Avatars are
+   *  excluded from the mask on purpose, which is what makes it cacheable; live occupancy is the
+   *  second check, and `findPath` refuses a blocked destination before it searches anyway. */
+  roamOk(x: number, y: number): boolean {
+    if (x < 0 || y < 0 || x >= this.model.width || y >= this.model.height) return false;
+    this.openMask ??= reachable(this.model, (bx, by) => this.furniBlocks(bx, by), this.door);
+    if (this.openMask[y * this.model.width + x] !== 1) return false;
+    for (const o of this.occ.values()) {
+      if (o.x === x && o.y === y) return false;
+    }
+    return true;
   }
 
   /** Turn in place toward any tile — `toward` need not be adjacent, so the offset is reduced to
@@ -835,6 +852,7 @@ export class Room {
 
   private reindex(): void {
     this.index.clear();
+    this.openMask = null;   // furni moved: what is reachable from the door moved with it
     for (const item of this.furni) {
       for (const t of footprintTiles(this.defOf(item), item.x, item.y, item.dir)) {
         const at = this.index.get(key(t.x, t.y));

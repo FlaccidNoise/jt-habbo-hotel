@@ -28,6 +28,7 @@ function fakeRoom(players: number) {
     requestSit: vi.fn(),
     requestStand: vi.fn(),
     isWalking: vi.fn(() => false),
+    roamOk: vi.fn(() => true),
     face: vi.fn(),
   };
 }

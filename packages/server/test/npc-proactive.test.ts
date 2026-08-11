@@ -53,6 +53,7 @@ function fakeRoom(occ: NpcOccupant[]) {
     requestSit: vi.fn(),
     requestStand: vi.fn(),
     isWalking: vi.fn((id: number) => walking.has(id)),
+    roamOk: vi.fn(() => true),
     face: vi.fn(),
     walking,
   };

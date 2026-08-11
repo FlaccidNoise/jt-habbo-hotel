@@ -1,6 +1,7 @@
 import type { Tile } from "@grand/shared";
 import { filterChat, loadRuleset } from "./filter.ts";
 import type { Ruleset } from "./filter.ts";
+import type { Rect } from "./grounds.ts";
 import { log } from "./log.ts";
 
 // Hard guardrails (docs/design/GAME.md §Liveness, decision log 2026-08-03):
@@ -31,6 +32,17 @@ const ENGAGE_R = 3;                   // proactive notice radius: inside every r
 const ENGAGE_HOLD_MS = 20_000;        // a player standing nearby holds an NPC where it is
 const NOTICE_COOLDOWN_MS = 10 * 60 * 1000;  // per NPC+player pair — never re-greet the same person
 const PROACTIVE_GAP_MS = 15_000;      // one proactive line per room: the anti-dogpile rule
+const ROAM_MAX = 20;                  // Chebyshev cap from where the NPC stands to its waypoint.
+                                       // Bounds every path to a 41x41 region however large the
+                                       // home rect is, and makes staff drift instead of
+                                       // route-marching a 143-tile promenade end to end.
+const ROAM_TRIES = 6;                 // draws per cycle before giving up and waiting
+const POST_BIAS = 3;                  // one waypoint in three is the post itself: a centre of
+                                       // gravity, cheaper than a return-to-post state
+const IDLE_MS = 20_000;               // floor between waypoints. An 8-tile walk is 4 s, so an NPC
+const IDLE_JITTER = 20_000;           // is stationary ~85 % of the time — a person, not a patrol
+const MAX_PATHS_PER_TICK = 2;         // across every room in one tick. A runaway guard, not a
+                                       // throttle: demand at this cadence is ~0.4 paths/s
 const MEMORY_LINES = 12;
 const MAX_LINE = 200;                 // protocol chat cap
 
@@ -45,6 +57,10 @@ export interface NpcDef {
   greetings?: string[];               // proactive notice lines, round-robin, {name} substituted;
                                       // falls back to `lines`. Canned by contract, see above.
   performs?: boolean;
+  home?: Rect;                        // inclusive roam bounds. Omit it and the NPC never leaves
+                                      // its post; a `performs` NPC never roams whatever it says,
+                                      // because a singer who wanders off the stage is not a
+                                      // residency.
   ritual?: "coffee";                  // deterministic faucet trigger — never the LLM's call
   lines: string[];                    // canned fallbacks and performance material
 }
@@ -160,6 +176,8 @@ export function screenNpcLine(rs: Ruleset, name: string, raw: string): string | 
   return text;
 }
 
+type NpcMode = "post" | "roam";
+
 interface NpcState {
   memory: string[];
   lastReplyAt: number;
@@ -174,6 +192,8 @@ interface NpcState {
                                       // on a day clock, the other a notice on a 10-minute one.
   nextPerformAt: number;              // epoch ms; performers only, seeded on room activation
   busyUntil: number;                  // epoch ms; a nearby player holds the NPC at its post
+  nextMoveAt: number;                 // epoch ms; roamers only, seeded on room activation
+  mode: NpcMode;                      // where the NPC is headed: its post, or a waypoint
 }
 
 export interface Speaker {
@@ -199,6 +219,7 @@ export interface NpcRoom {
   requestSit(id: number, x: number, y: number): void;
   requestStand(id: number): void;
   isWalking(id: number): boolean;
+  roamOk(x: number, y: number): boolean;
   face(id: number, toward: Tile): void;
 }
 
@@ -213,6 +234,34 @@ const cheb = (a: Tile, b: Tile): number => Math.max(Math.abs(a.x - b.x), Math.ab
 function liveTile(npc: NpcDef, occupants: readonly Speaker[]): Tile {
   const occ = occupants.find((o) => o.accountId === npc.id);
   return occ ? { x: occ.x, y: occ.y } : npc.post;
+}
+
+/** A post is where an NPC belongs; a home rect is permission to leave it. No rect, no roaming —
+ *  which is how Pierre, Maya and Lola keep behaving exactly as they did before this existed. */
+const roams = (npc: NpcDef): boolean => npc.home !== undefined && !npc.performs;
+
+/** A tile inside the NPC's home rect it can actually reach, or null when this cycle finds none.
+ *  Two gates, and the first one is the whole reason wandering is safe: `roamOk` consults the
+ *  room's static reachability mask, so a walkable-but-walled-off pocket is refused outright
+ *  rather than handed to `findPath`, which would drain its entire open set to prove there is no
+ *  route. The second gate is ROAM_MAX. Six draws and then wait: a crowded zone is a reason to
+ *  stay put for a cycle, not to search harder. */
+function waypoint(npc: NpcDef, from: Tile, room: NpcRoom): Tile | null {
+  const home = npc.home;
+  if (!home) return null;
+  // One draw in three is the post itself. Staff visibly drift back to their stations and the post
+  // stays the centre of gravity, with no separate return-to-post mode to keep in step. The walk
+  // home is the one waypoint exempt from ROAM_MAX: a wide rect lets an NPC get further from its
+  // post than the cap, and refusing to let it back would strand it there.
+  if (Math.random() < 1 / POST_BIAS) {
+    return room.roamOk(npc.post.x, npc.post.y) ? { ...npc.post } : null;
+  }
+  for (let i = 0; i < ROAM_TRIES; i++) {
+    const x = home.x0 + Math.floor(Math.random() * (home.x1 - home.x0 + 1));
+    const y = home.y0 + Math.floor(Math.random() * (home.y1 - home.y0 + 1));
+    if (cheb({ x, y }, from) <= ROAM_MAX && room.roamOk(x, y)) return { x, y };
+  }
+  return null;
 }
 
 /** The closest player standing still within ENGAGE_R of `tile`, or null. A walking player is on
@@ -285,6 +334,22 @@ export class NpcService {
     acts.forEach((act, i) => {
       this.state(act.id).nextPerformAt = now + (PERFORM_MS * (i + 1)) / acts.length;
     });
+
+    // A room that went quiet may have left staff mid-drift, and Room.dispose cancelled the walk
+    // out from under them. Send anyone off their post back to it, so whoever walks in finds the
+    // staff at their stations rather than scattered across the lawn.
+    const roamers = npcs.filter(roams);
+    if (roamers.length === 0) return;
+    const room = this.room(roomId);
+    const occupants = room?.occupants() ?? [];
+    for (const npc of roamers) {
+      const st = this.state(npc.id);
+      st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
+      st.mode = "post";
+      const here = liveTile(npc, occupants);
+      if (!room || (here.x === npc.post.x && here.y === npc.post.y)) continue;
+      room.requestMove(npc.id, npc.post.x, npc.post.y);
+    }
   }
 
   onPlayerChat(
@@ -344,10 +409,18 @@ export class NpcService {
     });
   }
 
-  /** The room lost its last player. Deactivating is the whole cleanup: activation reseeds every
-   *  per-NPC clock, so nothing an emptied room was part-way through carries into the next one. */
+  /** The room lost its last player. Deactivating stops the work; clearing the movement state
+   *  stops it lying, because `Room.dispose` cancels the walks out from under this service. Every
+   *  per-NPC clock is reseeded on the next activation, so nothing an emptied room was part-way
+   *  through carries into the next one. */
   onRoomEmpty(roomId: number): void {
     this.active.delete(roomId);
+    for (const npc of this.npcsFor(roomId)) {
+      const st = this.states.get(npc.id);
+      if (!st) continue;
+      st.nextMoveAt = 0;
+      st.mode = "post";
+    }
   }
 
   stop(): void {
@@ -359,6 +432,7 @@ export class NpcService {
    *  read is hoisted out of the per-NPC loop. */
   private tick(): void {
     const now = Date.now();
+    let paths = 0;                              // MAX_PATHS_PER_TICK, counted across every room
     for (const roomId of this.active) {
       const room = this.room(roomId);
       if (!room || room.occupantCount() === 0) continue;
@@ -373,7 +447,8 @@ export class NpcService {
         // Notice a player who has stopped nearby: hold position, turn to them, and nominate the
         // pair for this room's one proactive line. Performers are exempt — a singer who greets
         // the crowd mid-set is not a residency.
-        const near = npc.performs ? null : nearestStopped(liveTile(npc, occupants), players, room);
+        const here = liveTile(npc, occupants);
+        const near = npc.performs ? null : nearestStopped(here, players, room);
         if (near) {
           const held = now < st.busyUntil;
           st.busyUntil = now + ENGAGE_HOLD_MS;
@@ -393,6 +468,21 @@ export class NpcService {
         if (npc.performs && now >= st.nextPerformAt) {
           st.nextPerformAt = now + PERFORM_MS;
           this.speak(npc, this.nextLine(npc));
+        }
+
+        // Wandering is evaluated last, so an NPC that is walking, engaged or performing never
+        // picks a waypoint. Over the path budget it waits for a later tick — deferred, never
+        // dropped, which is why the clock is not advanced on that branch.
+        if (roams(npc) && now >= st.nextMoveAt) {
+          if (paths >= MAX_PATHS_PER_TICK) continue;
+          st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
+          const to = waypoint(npc, here, room);
+          if (!to) continue;                    // nowhere free this cycle: wait, don't search on
+          paths++;
+          st.mode = to.x === npc.post.x && to.y === npc.post.y ? "post" : "roam";
+          // A refused move is silent for an NPC — no socket owns a negative id — so nothing here
+          // may assume the request landed. The next tick reads the snapshot to find out.
+          room.requestMove(npc.id, to.x, to.y);
         }
       }
 
@@ -473,6 +563,8 @@ export class NpcService {
         noticed: new Map(),
         nextPerformAt: 0,
         busyUntil: 0,
+        nextMoveAt: 0,
+        mode: "post",
       };
       this.states.set(npcId, st);
     }
