@@ -17,7 +17,9 @@ import type { FigureBaker } from "../scene/figure.ts";
 // Every preview bakes at runtime through FigureBaker, so the panel ships no art of its own and the
 // bake cache it shares with the room means a card and the avatar wearing it cost one bake, not two.
 
-const TABS = ["Skin", "Face", "Hair", "Top", "Legs", "Shoes", "Hat"] as const;
+const TABS = [
+  "Skin", "Face", "Hair", "Top", "Legs", "Shoes", "Hat", "Coat", "Eyewear", "Neck", "Waist",
+] as const;
 export type Tab = (typeof TABS)[number];
 
 interface Crop { x: number; y: number; w: number; h: number; scale: number }
@@ -36,10 +38,6 @@ const CROP = {
 const SHOES_SET = 9;   // Loafers is the whole shipped sh library
 const CARD_DIR = 3;    // cards always face front — only the big preview turns
 const DIRS = 8;
-
-/** The types the seven tabs own. Anything else the player wears — a coat, spectacles, a pendant —
- *  is carried through untouched, so confirming the panel never strips a cosmetic they earned. */
-const MANAGED: readonly LayerType[] = ["hd", "fa", "hr", "ch", "lg", "sh", "ha"];
 
 /** The staff uniform is granted to NPC accounts and can never be earned, so it is never offered.
  *  A staff player already wearing it keeps it: `lookToFigure` re-emits whatever the state holds. */
@@ -124,7 +122,15 @@ export interface Look {
   shoesColor: string;
   hat: number;          // 0 = bare-headed
   hatColor: string;
-  extras: WornPart[];
+  // The optional layers. Every one is 0 = not worn, and a 0 writes no part at all (#439).
+  coat: number;
+  coatColors: [string, string];
+  eyewear: number;
+  eyewearColor: string;
+  neck: number;
+  neckColor: string;
+  waist: number;
+  waistColor: string;
 }
 
 export function figureToLook(input: string): Look {
@@ -149,12 +155,19 @@ export function figureToLook(input: string): Look {
     shoesColor: of("sh", 0, "charcoal"),
     hat: worn.get("ha")?.set ?? 0,
     hatColor: of("ha", 0, "navy"),
-    extras: [...worn.values()].filter((p) => !MANAGED.includes(p.type)),
+    coat: worn.get("cc")?.set ?? 0,
+    coatColors: [of("cc", 0, "navy"), of("cc", 1, "ivory")],
+    eyewear: worn.get("ea")?.set ?? 0,
+    eyewearColor: of("ea", 0, "charcoal"),
+    neck: worn.get("ca")?.set ?? 0,
+    neckColor: of("ca", 0, "gold"),
+    waist: worn.get("wa")?.set ?? 0,
+    waistColor: of("wa", 0, "walnut"),
   };
 }
 
 export function lookToFigure(look: Look): Figure {
-  const parts: WornPart[] = [...look.extras];
+  const parts: WornPart[] = [];
   const wear = (type: LayerType, id: number, colors: readonly string[]): void => {
     const set = setById(id);
     if (!set) return;   // 0 is "none", and a set the registry lost is not worn either
@@ -171,12 +184,16 @@ export function lookToFigure(look: Look): Figure {
   wear("lg", look.legs, [look.legsColor]);
   wear("sh", look.shoes, [look.shoesColor]);
   wear("ha", look.hat, [look.hatColor]);
+  wear("cc", look.coat, look.coatColors);
+  wear("ea", look.eyewear, [look.eyewearColor]);
+  wear("ca", look.neck, [look.neckColor]);
+  wear("wa", look.waist, [look.waistColor]);
   return { version: FIGUREDATA_VERSION, parts };
 }
 
 /** The head plus the named types — a card shows one garment, not the whole outfit. */
 function figureOf(look: Look, keep: readonly LayerType[]): Figure {
-  const all = lookToFigure({ ...look, extras: [] });
+  const all = lookToFigure(look);
   return {
     version: all.version,
     parts: all.parts.filter((p) => p.type === "hd" || keep.includes(p.type)),
@@ -234,6 +251,14 @@ export function randomLook(
     shoesColor: ramp("material"),
     hat: rand() < 0.2 ? ownedOf("ha") : 0,
     hatColor: ramp("material"),
+    coat: rand() < 0.2 ? ownedOf("cc") : 0,
+    coatColors: [ramp("material"), ramp("material")],
+    eyewear: rand() < 0.2 ? ownedOf("ea") : 0,
+    eyewearColor: ramp("material"),
+    neck: rand() < 0.2 ? ownedOf("ca") : 0,
+    neckColor: ramp("material"),
+    waist: rand() < 0.2 ? ownedOf("wa") : 0,
+    waistColor: ramp("material"),
   };
 }
 
@@ -397,8 +422,8 @@ export class Creator {
     this.render();
   }
 
-  /** Swap every locked piece for one the account owns, keeping the rest of the look. Hair, hat and
-   *  facial hair fall back to nothing; the head, top and legs fall back to the first owned set,
+  /** Swap every locked piece for one the account owns, keeping the rest of the look. Everything
+   *  optional falls back to nothing; the head, top and legs fall back to the first owned set,
    *  because a figure with no head does not parse and a naked one is not what they asked for. */
   private dropLocked(): void {
     const look = this.look;
@@ -413,6 +438,10 @@ export class Creator {
       top: first("ch", look.top),
       legs: first("lg", look.legs),
       hat: optional(look.hat),
+      coat: optional(look.coat),
+      eyewear: optional(look.eyewear),
+      neck: optional(look.neck),
+      waist: optional(look.waist),
     });
   }
 
@@ -595,6 +624,61 @@ export class Creator {
             this.cards(hats, look.hat, CROP.hat, (hat) => this.update({ hat }))),
           group("Hat colour",
             this.swatches("material", look.hatColor, (hatColor) => this.update({ hatColor }))),
+        ];
+      }
+
+      case "Coat": {
+        // Both cards keep `ch` so the hides rule is what the player sees: None shows the top, a
+        // coat shows the coat in its place.
+        const coats = [{ id: 0, name: "None" }, ...setsOfType("cc")].map((s) => ({
+          id: s.id, name: s.name, figure: figureOf({ ...look, coat: s.id }, ["cc", "ch"]),
+        }));
+        const trim = setById(look.coat)?.slots === 2;
+        return [
+          group("Coat — hides your top while it is on",
+            this.cards(coats, look.coat, CROP.top, (coat) => this.update({ coat }))),
+          group("Colour — slot 0", this.swatches("material", look.coatColors[0], (c) =>
+            this.update({ coatColors: [c, look.coatColors[1]] }))),
+          ...(trim
+            ? [group("Trim — slot 1", this.swatches("material", look.coatColors[1], (c) =>
+              this.update({ coatColors: [look.coatColors[0], c] })))]
+            : []),
+        ];
+      }
+
+      case "Eyewear": {
+        const specs = [{ id: 0, name: "None" }, ...setsOfType("ea")].map((s) => ({
+          id: s.id, name: s.name, figure: figureOf({ ...look, eyewear: s.id }, ["ea"]),
+        }));
+        return [
+          group("Eyewear",
+            this.cards(specs, look.eyewear, CROP.face, (eyewear) => this.update({ eyewear }))),
+          group("Colour", this.swatches("material", look.eyewearColor, (eyewearColor) =>
+            this.update({ eyewearColor }))),
+        ];
+      }
+
+      case "Neck": {
+        const necks = [{ id: 0, name: "None" }, ...setsOfType("ca")].map((s) => ({
+          id: s.id, name: s.name, figure: figureOf({ ...look, neck: s.id }, ["ca"]),
+        }));
+        return [
+          group("Neck — worn over whatever is on your chest",
+            this.cards(necks, look.neck, CROP.top, (neck) => this.update({ neck }))),
+          group("Colour",
+            this.swatches("material", look.neckColor, (neckColor) => this.update({ neckColor }))),
+        ];
+      }
+
+      case "Waist": {
+        const belts = [{ id: 0, name: "None" }, ...setsOfType("wa")].map((s) => ({
+          id: s.id, name: s.name, figure: figureOf({ ...look, waist: s.id }, ["wa"]),
+        }));
+        return [
+          group("Waist",
+            this.cards(belts, look.waist, CROP.legs, (waist) => this.update({ waist }))),
+          group("Colour",
+            this.swatches("material", look.waistColor, (waistColor) => this.update({ waistColor }))),
         ];
       }
     }

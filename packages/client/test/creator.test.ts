@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
-  STARTER_GRANT_SETS, WEARABLE_PRICES, parseFigure, serializeFigure, setById,
+  FIGURE_SETS, SELECTABLE_TYPES, STARTER_GRANT_SETS, WEARABLE_PRICES, paletteFor, parseFigure,
+  resolveLayers, serializeFigure, setById,
 } from "@grand/shared";
 import {
   figureToLook, lockedPicks, lookToFigure, offersFor, randomLook, setsOfType,
@@ -14,6 +15,15 @@ const STARTER = "v1|hd-2-skin_3.hr-3-charcoal.ch-6-crimson-ivory.lg-7-navy.sh-9-
 /** Both ends normalise to LAYER_ORDER, so that — not the order it was typed in — is the string a
  *  round trip has to reproduce. */
 const canonical = (figure: string): string => serializeFigure(parseFigure(figure));
+
+/** One legal part per selectable type, built from the registry rather than typed out, so a layer
+ *  type that ships a set with no tab behind it fails here instead of being dropped on save. */
+const ONE_OF_EACH = `v1|${SELECTABLE_TYPES.map((type) => {
+  const set = FIGURE_SETS.find((s) => s.type === type && !s.retired)!;
+  const colors = Array.from({ length: set.slots }, (_, i) =>
+    paletteFor(set.slotFamilies?.[i] ?? set.family)[0]);
+  return [type, set.id, ...colors].join("-");
+}).join(".")}`;
 
 describe("look ↔ figure", () => {
   test("a worn figure round-trips through the panel unchanged", () => {
@@ -35,17 +45,39 @@ describe("look ↔ figure", () => {
     expect(serializeFigure(lookToFigure({ ...look, faceSetId: 2 }))).toContain("hd-2-skin_3");
   });
 
-  test("cosmetics no tab owns survive a confirm", () => {
-    // A coat is earned, and the panel has no Coat tab. Dropping it on save would delete it.
-    const worn = `${STARTER}.cc-11-plum-gold`;
+  test("every selectable layer survives a confirm — the panel drops nothing (#439)", () => {
+    expect(serializeFigure(lookToFigure(figureToLook(ONE_OF_EACH)))).toBe(canonical(ONE_OF_EACH));
+  });
+
+  test("the coat, spectacles, pendant and belt come back with their own colours", () => {
+    const worn = `${STARTER}.cc-11-plum-gold.ea-12-teal.ca-14-gold.wa-15-walnut`;
     expect(serializeFigure(lookToFigure(figureToLook(worn)))).toBe(canonical(worn));
   });
 
-  test("clearing hair and hat drops those parts rather than writing set 0", () => {
-    const look = { ...figureToLook(STARTER), hair: 0, hat: 0 };
+  test("a figure wearing none of the optional layers round-trips without gaining them", () => {
+    const figure = serializeFigure(lookToFigure(figureToLook(STARTER)));
+    for (const type of ["cc", "ea", "ca", "wa"]) expect(figure).not.toContain(`${type}-`);
+  });
+
+  // The preview bakes lookToFigure(look) through resolveLayers, so what the coat hides is decided
+  // here rather than by anything the panel draws.
+  test("wearing a coat takes the top out of the drawn stack, and taking it off puts it back", () => {
+    const look = { ...figureToLook(STARTER), top: 6 };
+    const drawn = (l: typeof look): string[] => resolveLayers(lookToFigure(l)).map((p) => p.type);
+    expect(drawn({ ...look, coat: 11 })).toContain("cc");
+    expect(drawn({ ...look, coat: 11 })).not.toContain("ch");
+    expect(drawn({ ...look, coat: 0 })).toContain("ch");
+  });
+
+  test("clearing an optional layer drops the part rather than writing set 0", () => {
+    const look = {
+      ...figureToLook(ONE_OF_EACH),
+      hair: 0, hat: 0, coat: 0, eyewear: 0, neck: 0, waist: 0,
+    };
     const figure = serializeFigure(lookToFigure(look));
-    expect(figure).not.toContain("hr-");
-    expect(figure).not.toContain("ha-");
+    for (const type of ["hr", "ha", "cc", "ea", "ca", "wa"]) {
+      expect(figure).not.toContain(`${type}-`);
+    }
     expect(() => parseFigure(figure)).not.toThrow();
   });
 });
@@ -119,6 +151,17 @@ describe("randomize", () => {
       const rolled = randomLook(look, OWNED, () => i / 100);
       expect(lockedPicks(rolled, OWNED)).toEqual([]);
       expect(() => parseFigure(serializeFigure(lookToFigure(rolled)))).not.toThrow();
+    }
+  });
+
+  // The optional layers are the only picks that can already be locked when the dice are rolled:
+  // nothing in the starter grant is a coat, so a coat on the avatar came from a card the panel let
+  // the player try on.
+  test("a locked coat is rolled away, not carried through", () => {
+    const wearing = { ...figureToLook(STARTER), coat: 11 };
+    expect(lockedPicks(wearing, OWNED).map((s) => s.name)).toEqual(["Overcoat"]);
+    for (let i = 0; i < 100; i++) {
+      expect(lockedPicks(randomLook(wearing, OWNED, () => i / 100), OWNED)).toEqual([]);
     }
   });
 
