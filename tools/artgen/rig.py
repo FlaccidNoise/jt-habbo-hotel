@@ -2683,6 +2683,29 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.96, 0.24)},
         ],
     },
+    # Crown (set 57, hides hr). A band and three points. The band is a cylinder-with-flare like
+    # the top hat's, 5 px tall and sat at z 18-23, so it rings the head at the temples and the
+    # skull shows through its opening — a ring seen from a camera 30 degrees up is an ellipse with
+    # the crown of the head inside it, and that gap is what says band rather than cap.
+    #
+    # The points are ellipsoids 5.5 px across and 7 tall, based inside the band so the layer stays
+    # one island in all 64 cells. Thinner and taller was drawn first and reads as antlers: a point
+    # narrow enough to be one shade wide has no interior left to shade, so it comes out a line
+    # rather than a solid. One faces front and two sit at the sides — at dir 3 they draw at cols
+    # 24, 32 and 40, and the side pair projects 4 rows higher than the front one, which is what a
+    # ring of equal points does under this camera. Gold is the ramp it is drawn for.
+    "ha57": {
+        "prims": [
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 23.0, "len": 5.0,
+             "r0": 8.4, "r1": 9.6},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 7.6, 25.0), "r": 5.0,
+             "squash": (0.55, 0.46, 0.72)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (7.6, 0.0, 25.0), "r": 5.0,
+             "squash": (0.46, 0.55, 0.72)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-7.6, 0.0, 25.0), "r": 5.0,
+             "squash": (0.46, 0.55, 0.72)},
+        ],
+    },
     "ea12": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),
