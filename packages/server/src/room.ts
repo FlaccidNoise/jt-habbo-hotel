@@ -294,6 +294,24 @@ export class Room {
     this.standUp(occupant);
   }
 
+  /** A walk is in flight. A driver that steers an occupant on a clock must not stack a second
+   *  destination on one it already asked for. */
+  isWalking(accountId: number): boolean {
+    return this.walks.has(accountId);
+  }
+
+  /** Turn in place toward any tile — `toward` need not be adjacent, so the offset is reduced to
+   *  its sign before `dirFromStep`, which only accepts unit steps. */
+  face(accountId: number, toward: Tile): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    const dx = Math.sign(toward.x - occupant.x);
+    const dy = Math.sign(toward.y - occupant.y);
+    if (dx === 0 && dy === 0) return;
+    occupant.dir = dirFromStep(dx, dy);
+    this.broadcastPosture(occupant);
+  }
+
   private travel(accountId: number, x: number, y: number, sitOnArrival: boolean): void {
     const occupant = this.occ.get(accountId);
     if (!occupant) return;

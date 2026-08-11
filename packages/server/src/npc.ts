@@ -17,7 +17,12 @@ const APPROACH = 2;                   // a social distance, not an audio one —
                                        // across rooms regardless of speakRadius
 const REPLY_GAP_MS = 8000;            // per-NPC floor between replies
 const DAILY_LLM_CAP = 200;            // per-NPC LLM calls per UTC day; canned lines after
-const PERFORM_MS = 3 * 60 * 1000;     // lounge set cadence while the room has players
+export const PERFORM_MS = 3 * 60 * 1000;   // lounge set cadence while the room has players
+const NPC_TICK_MS = 1000;             // one decision clock for every NPC in every occupied room.
+                                       // Decisions run on 20-180 s scales, so this only has to be
+                                       // fine enough to notice an arrival within about a second.
+                                       // Room keeps its own per-walk interval — that one is the
+                                       // animation clock the client interpolates against.
 const MEMORY_LINES = 12;
 const MAX_LINE = 200;                 // protocol chat cap
 
@@ -153,13 +158,33 @@ interface NpcState {
   calls: number;
   lineIdx: number;
   greeted: Map<string, string>;       // username → last greeting day
+  nextPerformAt: number;              // epoch ms; performers only, seeded on room activation
 }
 
-interface Speaker {
+export interface Speaker {
   accountId: number;
   username: string;
   x: number;
   y: number;
+}
+
+/** The occupant fields this module reads. Room's `Occupant` satisfies it structurally. */
+export interface NpcOccupant extends Speaker {
+  posture: string;
+}
+
+/** The slice of a room the service drives. Structural on purpose: npc.ts never imports room.ts,
+ *  and server.ts stays the only module that knows both sides. Keep it narrow — every member
+ *  added here is a new way for NPC behaviour to reach into room state. */
+export interface NpcRoom {
+  readonly chatConfig: { speakRadius: number };
+  occupants(): readonly NpcOccupant[];
+  occupantCount(): number;            // players only — staff never count
+  requestMove(id: number, x: number, y: number): void;
+  requestSit(id: number, x: number, y: number): void;
+  requestStand(id: number): void;
+  isWalking(id: number): boolean;
+  face(id: number, toward: Tile): void;
 }
 
 const RITUALS: Record<NonNullable<NpcDef["ritual"]>, RegExp> = { coffee: /\bcoffee\b/i };
@@ -179,21 +204,28 @@ export class NpcService {
   private generate: NpcGenerate | null;
   private say: (roomId: number, npcId: number, text: string) => void;
   private payout?: (accountId: number, ritual: string) => number;
+  private room: (roomId: number) => NpcRoom | null;
   private roster: NpcDef[];
   private states = new Map<number, NpcState>();
-  private performers = new Map<number, ReturnType<typeof setInterval>>();
+  private active = new Set<number>();       // roomIds with players in them
+  private timer: ReturnType<typeof setInterval>;
 
   constructor(opts: {
     generate: NpcGenerate | null;
     say: (roomId: number, npcId: number, text: string) => void;
     /** Deterministic ledger grant; returns the Stars actually granted (0 when capped). */
     payout?: (accountId: number, ritual: string) => number;
+    /** Null for a room that is not loaded — the tick skips it. */
+    room?: (roomId: number) => NpcRoom | null;
     roster?: NpcDef[];
   }) {
     this.generate = opts.generate;
     this.say = opts.say;
     this.payout = opts.payout;
+    this.room = opts.room ?? (() => null);
     this.roster = opts.roster ?? NPC_ROSTER;
+    this.timer = setInterval(() => this.tick(), NPC_TICK_MS);
+    this.timer.unref();                     // a decision clock must never hold the process open
   }
 
   npcsFor(roomId: number): NpcDef[] {
@@ -210,17 +242,17 @@ export class NpcService {
       st.greeted.set(username, today);
       this.speak(npc, npc.greeting.replaceAll("{name}", username));
     }
-    if (!this.performers.has(roomId)) {
-      const acts = npcs.filter((n) => n.performs);
-      if (acts.length > 0) {
-        this.performers.set(
-          roomId,
-          setInterval(() => {
-            for (const act of acts) this.speak(act, this.nextLine(act));
-          }, PERFORM_MS),
-        );
-      }
-    }
+    if (this.active.has(roomId)) return;
+    this.active.add(roomId);
+
+    // Spread the acts across one cycle so two performers trade sets instead of chorusing: with
+    // two, one sings at 90 s and the other answers at 180 s, then every 180 s alternating. A lone
+    // act lands on PERFORM_MS exactly, which is the cadence the room had before the tick existed.
+    const acts = npcs.filter((n) => n.performs);
+    const now = Date.now();
+    acts.forEach((act, i) => {
+      this.state(act.id).nextPerformAt = now + (PERFORM_MS * (i + 1)) / acts.length;
+    });
   }
 
   onPlayerChat(
@@ -280,15 +312,31 @@ export class NpcService {
     });
   }
 
+  /** The room lost its last player. Deactivating is the whole cleanup: activation reseeds every
+   *  per-NPC clock, so nothing an emptied room was part-way through carries into the next one. */
   onRoomEmpty(roomId: number): void {
-    const timer = this.performers.get(roomId);
-    if (timer !== undefined) clearInterval(timer);
-    this.performers.delete(roomId);
+    this.active.delete(roomId);
   }
 
   stop(): void {
-    for (const timer of this.performers.values()) clearInterval(timer);
-    this.performers.clear();
+    clearInterval(this.timer);
+    this.active.clear();
+  }
+
+  /** The decision clock. Bounded by design: inactive rooms cost nothing, and every room-level
+   *  read is hoisted out of the per-NPC loop. */
+  private tick(): void {
+    const now = Date.now();
+    for (const roomId of this.active) {
+      const room = this.room(roomId);
+      if (!room || room.occupantCount() === 0) continue;
+      for (const npc of this.npcsFor(roomId)) {
+        const st = this.state(npc.id);
+        if (!npc.performs || now < st.nextPerformAt) continue;
+        st.nextPerformAt = now + PERFORM_MS;
+        this.speak(npc, this.nextLine(npc));
+      }
+    }
   }
 
   private async reply(npc: NpcDef, st: NpcState): Promise<void> {
@@ -343,6 +391,7 @@ export class NpcService {
         calls: 0,
         lineIdx: 0,
         greeted: new Map(),
+        nextPerformAt: 0,
       };
       this.states.set(npcId, st);
     }

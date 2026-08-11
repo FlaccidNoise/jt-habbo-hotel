@@ -246,6 +246,44 @@ describe("room: movement", () => {
   });
 });
 
+// What a clock-driven occupant needs from the room: whether it is already going somewhere, and a
+// way to turn without going anywhere.
+describe("room: steering", () => {
+  test("isWalking is true only between departure and arrival", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    expect(room.isWalking(a)).toBe(false);
+
+    room.requestMove(a, 4, 5);
+    expect(room.isWalking(a)).toBe(true);
+
+    vi.advanceTimersByTime(MS_PER_TILE * 4);
+    expect(at(a)).toMatchObject({ x: 4, y: 5 });
+    expect(room.isWalking(a)).toBe(false);
+  });
+
+  test("face turns toward a distant tile and broadcasts the new dir", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    emitted.length = 0;
+
+    room.face(a, { x: 9, y: 9 });   // alice stands at (0,5): down-right, dir 3
+    expect(to(a, "posture")).toEqual([
+      { t: "posture", id: a, posture: "stand", x: 0, y: 5, z: 0, dir: 3 },
+    ]);
+    expect(at(a)).toMatchObject({ x: 0, y: 5 });
+  });
+
+  test("facing your own tile changes nothing", () => {
+    const a = account("alice");
+    room.join(a, "alice");
+    emitted.length = 0;
+
+    room.face(a, { x: 0, y: 5 });
+    expect(to(a, "posture")).toHaveLength(0);
+  });
+});
+
 describe("room: chat", () => {
   test("say reaches the speaker and fades beyond the speak radius", () => {
     const a = account("alice");

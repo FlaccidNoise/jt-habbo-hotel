@@ -141,6 +141,7 @@ export async function startServer(opts: {
   const npcService = new NpcService({
     generate: opts.npcGenerate !== undefined ? opts.npcGenerate : llmFromEnv(),
     say: (roomId, npcId, text) => rooms.get(roomId)?.room.chat(npcId, "say", text),
+    room: (roomId) => rooms.get(roomId)?.room ?? null,
     // The one NPC payout path: a deterministic server trigger into the ledger, which clamps to
     // the NPC faucet cap and the global earn ceiling. The LLM is not in this code path.
     payout: (accountId, ritual) => {
