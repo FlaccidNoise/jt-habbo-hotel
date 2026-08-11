@@ -69,6 +69,12 @@ interface RoomEntry {
 export async function startServer(opts: {
   port: number;
   dbPath: string;
+  /** Interface to bind, loopback by default. A wildcard bind and a loopback bind on the same
+   *  port do not conflict, so a server on 0.0.0.0 that draws a port some other local process
+   *  already holds on 127.0.0.1 receives none of that port's traffic — it all goes to the more
+   *  specific binding. Tests take whatever ephemeral port the OS offers, so only an explicit
+   *  loopback bind makes that collision impossible (#400). */
+  host?: string;
   staticDir?: string;
   handshakeMs?: number;
   disposeMs?: number;
@@ -704,7 +710,7 @@ export async function startServer(opts: {
 
   await new Promise<void>((resolve, reject) => {
     http.once("error", reject);
-    http.listen(opts.port, () => {
+    http.listen(opts.port, opts.host ?? "127.0.0.1", () => {
       http.removeListener("error", reject);
       resolve();
     });

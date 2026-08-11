@@ -1,5 +1,6 @@
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { request } from "node:http";
+import { createServer as createNetServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, test } from "vitest";
@@ -274,6 +275,22 @@ describe("server lifecycle", () => {
     await bob.bus.waitFor("avatar_leave");
     bob.ws.close();
     await eventually(() => server.stats().rooms === 0);
+  });
+
+  // #400: the flake that ate whole runs. A wildcard bind does not conflict with a loopback bind
+  // on the same port, so a server on 0.0.0.0 that drew a port some other local process already
+  // held on 127.0.0.1 got none of the traffic — every request in that test reached the squatter,
+  // and the test failed on whatever that stranger replied. Holding the loopback address
+  // ourselves is what makes the collision impossible: the OS refuses the second bind.
+  test("binds the loopback, so no local process can shadow the port", async () => {
+    const { port } = await start();
+    const squatter = createNetServer();
+    const outcome = await new Promise<string>((resolve) => {
+      squatter.once("error", (e: NodeJS.ErrnoException) => resolve(e.code ?? "unknown"));
+      squatter.listen(port, "127.0.0.1", () => resolve("bound alongside the server"));
+    });
+    squatter.close();
+    expect(outcome).toBe("EADDRINUSE");
   });
 
   test("close() resolves with a socket still open", { timeout: 2000 }, async () => {
