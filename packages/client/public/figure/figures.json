@@ -2833,6 +2833,54 @@
       "figuredataVersion": 1,
       "recipeHash": "6841dbc37dce6801ccbf832d4836bf62e510b8feaed40be84ccfdfe55341fe44",
       "pixelHash": "713970589ee9f74498b273b35f1915b29e52918ee868a141842b618547aef48d"
+    },
+    {
+      "partId": "ha56",
+      "setId": 56,
+      "type": "ha",
+      "name": "Visor",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ha56.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6e303f18756b0ccb9225748459a58df0929a9e6dcf65c9c283a6f6f756823d45",
+      "pixelHash": "ea68d9908b2772ce202f6598c78e27dc24bd1df2d054f84b3257ece9d1efffa2"
     }
   ]
 }

@@ -2662,6 +2662,27 @@ FIGURE_PARTS = {
              "squash": (0.50, 0.94, 0.94)},
         ],
     },
+    # Visor (set 56, hides nothing). A brim and a strap and no crown — the top of the head is left
+    # bare on purpose, which is what a visor is and what makes it the only hat here that shows
+    # whatever hair is worn with it.
+    #
+    # The brim is a disc pushed FORWARD to y 6.6 so its back half is swallowed by the skull and
+    # only the crescent in front survives the holdout. Drawn centred, the same disc reads as a
+    # full circular brim with the head threaded through it, because the disc's back edge clears
+    # the crown at the very top of the skull where the skull has no width left to hide it.
+    # Its forward edge lands on row 30, one row above the brow the face sets draw.
+    #
+    # 17 px across, not the head's own 21: a brim as wide as the skull reads as a saucer laid over
+    # the whole head rather than a peak coming off the front of it. The strap is the wider of the
+    # two at 20, so the brim projects from a band instead of floating on one.
+    "ha56": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 6.6, 20.8), "r": 10.6,
+             "squash": (0.82, 0.717, 0.12)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.6, 18.6), "r": 9.9,
+             "squash": (1.0, 0.96, 0.24)},
+        ],
+    },
     "ea12": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),

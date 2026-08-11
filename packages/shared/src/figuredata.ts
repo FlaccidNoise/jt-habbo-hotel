@@ -132,6 +132,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 53, type: "ha", name: "Beanie",     slots: 1, family: "material", hides: ["hr"], retired: false },
   { id: 54, type: "ha", name: "Top Hat",    slots: 1, family: "material", hides: ["hr"], retired: false },
   { id: 55, type: "ha", name: "Headphones", slots: 1, family: "material", hides: [], retired: false },
+  { id: 56, type: "ha", name: "Visor",      slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -217,6 +218,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 52, price: 150, theme: "shoes" },  // Sandals
   { set: 50, price: 250, theme: "shoes" },  // Boots
   { set: 51, price: 300, theme: "shoes" },  // Heels
+  { set: 56, price: 150, theme: "hats" },   // Visor
   { set: 53, price: 200, theme: "hats" },   // Beanie
   { set: 55, price: 300, theme: "hats" },   // Headphones
   { set: 54, price: 400, theme: "hats" },   // Top Hat
