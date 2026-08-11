@@ -140,6 +140,27 @@ test("pulling with too few Stars is refused and costs nothing", async () => {
   );
 });
 
+// The daily stake cap (#429) lives in the ledger, so the lever inherited it without the handler
+// changing. What is checked here is the seam: the refusal has to reach the player as a sentence
+// that says why, not be swallowed into a pull that silently does nothing.
+test("the sixth lever pull of the day is refused, and the player is told why", async () => {
+  srv = await startServer({ port: 0, dbPath, npcGenerate: null, leverRoll: () => rollFor(BLANK) });
+  const alice = await joinAs(srv.port, "alice");
+  fund(alice.id, 1000);
+  for (let i = 0; i < 5; i++) {
+    alice.ws.send(JSON.stringify({ t: "lever_pull" }));
+    await alice.bus.waitFor("lever_result");
+  }
+  alice.ws.send(JSON.stringify({ t: "lever_pull" }));
+  const refused = await alice.bus.waitFor("error");
+  expect(refused.code).toBe("purchase");
+  expect(refused.message).toMatch(/daily stake cap — 0 ★ of 500 left to stake today/);
+  expect(withDb((db) =>
+    db.prepare("SELECT balance FROM star_balances WHERE account_id = ?").get(alice.id))).toEqual(
+    { balance: 1000 - 5 * LEVER_COST },
+  );
+});
+
 test("a prestige fixture mints account-bound and cannot be traded", async () => {
   srv = await startServer({ port: 0, dbPath, npcGenerate: null });
   const alice = await joinAs(srv.port, "alice");

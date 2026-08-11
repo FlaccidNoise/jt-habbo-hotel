@@ -10,7 +10,7 @@ export const FurniDirSchema = z.union([z.literal(0), z.literal(2), z.literal(4),
 export const ErrorCodeSchema = z.enum([
   "bad_message", "internal", "no_room", "already_joined", "whisper_target",
   "not_owner", "bad_position", "occupied", "no_stack", "room_full", "no_path",
-  "trade", "purchase", "arcade", "no_seat", "room_busy", "figure",
+  "trade", "purchase", "arcade", "no_seat", "room_busy", "figure", "wheel",
 ]);
 export type ErrorCode = z.infer<typeof ErrorCodeSchema>;
 
@@ -29,7 +29,7 @@ export const FurniDefSchema = z.object({
   color: z.number().int(),
   /** #326: what the "use" verb does to this item. Absent on furni you can only stand on or sit in.
    *  A "toggle" def must declare a height per state — placement reads stackHeights[state]. */
-  interaction: z.enum(["vend", "wash", "toggle", "wish", "read"]).optional(),
+  interaction: z.enum(["vend", "wash", "toggle", "wish", "read", "wheel"]).optional(),
   /** #347: what a "vend" or "read" puts in the hand, and what it costs. Every def with one of
    *  those two interactions carries it (furni.test.ts) and nothing else does. A price of 0 is a
    *  prop rather than a sink — a book off a shelf moves no Stars and writes no ledger row. */
@@ -151,6 +151,10 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("buy_set"), setId: z.number().int() }),
   z.object({ t: z.literal("nav_list") }),
   z.object({ t: z.literal("lever_pull") }),
+  // The Grand Wheel (#429). Stake bounds stay off the schema like every other price: the server
+  // refuses a bad one with a sentence the player can act on, which a schema rejection cannot say.
+  z.object({ t: z.literal("wheel_bet"), itemId: z.number().int(), segment: z.string(),
+             stake: z.number().int().min(1) }),
   // Donating is irreversible, so the client confirms before sending it (#210).
   z.object({ t: z.literal("donate"), itemId: z.number().int() }),
   z.object({ t: z.literal("arcade_start") }),
@@ -222,6 +226,15 @@ export const ServerMsgSchema = z.discriminatedUnion("t", [
   // actually drawn. `defId` null is the blank — the common outcome and the reason it drains.
   z.object({ t: z.literal("lever_result"), defId: z.string().nullable(), label: z.string(),
              balance: z.number().int(), item: InventoryItemSchema.optional() }),
+  // A spin, sent to the whole room — the wheel is a spectacle, and watching someone else's Grand
+  // land is most of the point. The odds table ships in the client bundle (wheel.ts), so the result
+  // carries only what was drawn. `slot` is the physical slot, not the colour: the client draws
+  // WHEEL_LAYOUT and lands the animation on that slot, and two slots share a colour. The bettor's
+  // new balance travels on the existing "stars" message rather than being repeated here.
+  z.object({ t: z.literal("wheel_result"), itemId: z.number().int(),
+             accountId: z.number().int(), name: z.string(),
+             betSegment: z.string(), resultSegment: z.string(), slot: z.number().int().min(0).max(23),
+             stake: z.number().int(), payout: z.number().int() }),
   // Collection sets (#210): progress on every join and after anything that can add a def, so the
   // player can see what a set still needs — the missing piece is the sink.
   z.object({ t: z.literal("sets"), sets: z.array(z.object({

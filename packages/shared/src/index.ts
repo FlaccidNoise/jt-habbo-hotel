@@ -10,4 +10,5 @@ export * from "./figure.ts";
 export * from "./walls.ts";
 export * from "./decor.ts";
 export * from "./lever.ts";
+export * from "./wheel.ts";
 export * from "./sets.ts";

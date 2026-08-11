@@ -1,5 +1,27 @@
 # Decision Log
 
+- 2026-08-10 — **The daily stake cap is 500 a rolling 24h, refused whole, and it lives in the
+  ledger (#429).** GAME.md's "daily stake caps bound dependence" and ROADMAP step 9's acceptance
+  test — "stake 501 of the day is refused" — are one line of code: `settleSpend` checks
+  `GAMBLE_OPS` membership of the op it was handed, so the cap is inherited by naming an op and no
+  table can forget to ask. It refuses rather than clamps: a 20-Star bet quietly settled as 10 is
+  not the bet the player made, and being told no is the mechanism. `GAMBLE_OPS` is {lever, wheel},
+  which newly bounds the Luck Lever to five pulls a day — it was uncapped, and an uncapped
+  repeatable sink is the dependence the cap exists to stop. `stakedSince` counts debits only, so
+  winning something back never buys headroom to stake it again. server/ledger.ts.
+- 2026-08-10 — **Winnings are the house returning a stake, not income, so settleWin bypasses the
+  faucet ceilings (#429).** Two ways the obvious implementation would have taken the player's own
+  luck out of their day's earnings: routing a payout through `settleEarn` clamps it to what is
+  left of GLOBAL_EARN_CEILING (a 2,000 win pays 600), and even a separate credit would be summed
+  by `earnedSince`'s global branch and starve every faucet after it. `settleWin` clamps against
+  nothing and the gamble ops are excluded from that sum. Nothing is unbounded by it: the payout is
+  stake × `WHEEL_MAX_MULTIPLIER` (100 × 20 = 2,000), the stake is capped per bet and per day, and
+  the spin is idempotent per op_key. The wheel's own edge is pinned by an EV-band test — every
+  segment returns 75–90% of the stake, never a fair one — because a house-banked table that pays
+  fair is a faucet nobody budgeted. 12.5–16.7% is wider than a real casino's ~5% and gentler than
+  the lever's gacha drain, which is what GAME.md's "anchor venue, never the economy's centre" asks
+  for: Crimson lands on 10 of 24 slots, so hits stay frequent enough to be spectacle while the
+  wheel is arithmetically certain to absorb. shared/wheel.ts, server/ledger.ts.
 - 2026-08-10 — **GLOBAL_LLM_CAP 600/day fleet-wide joins the per-NPC 200 cap.** The roster
   scaling to 11 NPCs (WP8) must not scale the committed LLM spend — 3 NPCs × 200 was what the
   $2/month cloud-fallback figure (decision log 2026-08-04) was sized against, and the per-NPC cap

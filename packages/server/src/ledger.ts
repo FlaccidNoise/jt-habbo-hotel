@@ -15,6 +15,15 @@ export const NPC_FAUCET_CAP = 50;    // GAME.md §Faucets: NPC staff rituals + t
 export const COFFEE_STARS = 10;      // GAME.md §Dailies: the barista coffee
 export const DAY_MS = 24 * 60 * 60 * 1000;
 
+// GAME.md §The casino floor: a daily stake cap bounds individual loss and economy dependence.
+// It is enforced inside settleSpend rather than in each game's handler, so a new table inherits it
+// by naming its op here and no handler can forget to ask. The Luck Lever is one of them, which
+// bounds it to five pulls a day.
+export const DAILY_STAKE_CAP = 500;
+export const GAMBLE_OPS: ReadonlySet<string> = new Set(["lever", "wheel"]);
+const GAMBLE_LIST = [...GAMBLE_OPS];
+const GAMBLE_HOLES = GAMBLE_LIST.map(() => "?").join(", ");
+
 export function balanceOf(db: Database.Database, accountId: number): number {
   const row = db.prepare("SELECT balance FROM star_balances WHERE account_id = ?").get(accountId) as
     | { balance: number }
@@ -25,13 +34,30 @@ export function balanceOf(db: Database.Database, accountId: number): number {
 const settled = (db: Database.Database, opKey: string): boolean =>
   db.prepare("SELECT 1 FROM ledger_entries WHERE op_key = ? LIMIT 1").get(opKey) !== undefined;
 
+/** Faucet income inside a window. Winnings are not income — a wheel payout is the house returning
+ *  a stake — so the global sum steps over the gamble ops. Counting them would let one lucky spin
+ *  eat the day's 600 and leave every faucet paying zero. The per-op branch is only ever asked
+ *  about faucet ops, so it needs no such exclusion. */
 function earnedSince(db: Database.Database, accountId: number, since: number, op?: string): number {
   const row = db
     .prepare(
       `SELECT COALESCE(SUM(stars), 0) AS s FROM ledger_entries
-       WHERE account_id = ? AND stars > 0 AND created_at > ?${op ? " AND op = ?" : ""}`,
+       WHERE account_id = ? AND stars > 0 AND created_at > ?
+         ${op ? "AND op = ?" : `AND op NOT IN (${GAMBLE_HOLES})`}`,
     )
-    .get(...(op ? [accountId, since, op] : [accountId, since])) as { s: number };
+    .get(...(op ? [accountId, since, op] : [accountId, since, ...GAMBLE_LIST])) as { s: number };
+  return row.s;
+}
+
+/** Stars staked on the house-banked games inside a window: the debits only, so winning something
+ *  back never buys headroom to stake it again. */
+export function stakedSince(db: Database.Database, accountId: number, since: number): number {
+  const row = db
+    .prepare(
+      `SELECT COALESCE(-SUM(stars), 0) AS s FROM ledger_entries
+       WHERE account_id = ? AND stars < 0 AND created_at > ? AND op IN (${GAMBLE_HOLES})`,
+    )
+    .get(accountId, since, ...GAMBLE_LIST) as { s: number };
   return row.s;
 }
 
@@ -191,6 +217,17 @@ export const settleSpend = timed(function settleSpend(
   const now = opts.now ?? Date.now();
   return db.transaction((): SpendResult => {
     if (settled(db, opts.opKey)) return { ok: false, reason: "that was already settled" };
+    // The stake that would cross the cap bounces whole rather than settling for the remainder:
+    // a bet clamped to 3 Stars is not the bet the player made, and a refusal is the point.
+    if (GAMBLE_OPS.has(opts.op)) {
+      const staked = stakedSince(db, opts.accountId, now - DAY_MS);
+      if (staked + opts.price > DAILY_STAKE_CAP) {
+        return {
+          ok: false,
+          reason: `daily stake cap — ${DAILY_STAKE_CAP - staked} ★ of ${DAILY_STAKE_CAP} left to stake today`,
+        };
+      }
+    }
     if (balanceOf(db, opts.accountId) < opts.price) {
       return { ok: false, reason: `not enough Stars — that costs ${opts.price}` };
     }
@@ -226,6 +263,33 @@ export const settleSpend = timed(function settleSpend(
       entry.run(opts.op, opts.opKey, 1, opts.accountId, 0, itemId, now);
     }
     return { ok: true, balance: balanceOf(db, opts.accountId), ...(itemId ? { itemId } : {}) };
+  })();
+});
+
+/** A house-banked payout: the table handing back a stake it already took, not a faucet issuing
+ *  income. So it clamps against nothing — running a win through settleEarn would cap it at the
+ *  day's remaining 600 and charge the player's faucet allowance for their own luck. The bound is
+ *  the caller's: a payout is at most stake × WHEEL_MAX_MULTIPLIER, and the stake is capped both
+ *  per bet and per day. Replaying an op_key pays nothing, so a resent spin cannot pay twice —
+ *  which means the payout needs its own key, not the stake's. */
+export const settleWin = timed(function settleWin(
+  db: Database.Database,
+  opts: { opKey: string; op: string; accountId: number; amount: number; now?: number },
+): EarnResult {
+  if (opts.amount < 0) throw new Error(`settleWin: negative payout ${opts.amount}`);
+  const now = opts.now ?? Date.now();
+  return db.transaction((): EarnResult => {
+    if (settled(db, opts.opKey)) return { granted: 0, balance: balanceOf(db, opts.accountId) };
+    db.prepare(
+      "INSERT INTO ledger_entries (op, op_key, account_id, stars, created_at) VALUES (?, ?, ?, ?, ?)",
+    ).run(opts.op, opts.opKey, opts.accountId, opts.amount, now);
+    if (opts.amount > 0) {
+      db.prepare(
+        `INSERT INTO star_balances (account_id, balance) VALUES (?, ?)
+         ON CONFLICT(account_id) DO UPDATE SET balance = balance + excluded.balance`,
+      ).run(opts.accountId, opts.amount);
+    }
+    return { granted: opts.amount, balance: balanceOf(db, opts.accountId) };
   })();
 });
 

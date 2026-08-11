@@ -5,14 +5,20 @@ import { afterEach, beforeEach, describe, expect, test } from "vitest";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
 import { grantStarter, listInventory } from "../src/items.ts";
+import { flows } from "../src/metrics.ts";
 import {
+  DAILY_STAKE_CAP,
   GLOBAL_EARN_CEILING,
   balanceOf,
   settleEarn,
   settlePurchase,
+  settleSpend,
   settleTrade,
+  settleWin,
 } from "../src/ledger.ts";
-import { PROTOTYPE_CATALOG, STARTER_GRANT_DEFS } from "@grand/shared";
+import {
+  LEVER_COST, PROTOTYPE_CATALOG, STARTER_GRANT_DEFS, WHEEL_MAX_MULTIPLIER, WHEEL_MAX_STAKE,
+} from "@grand/shared";
 
 let dir: string;
 let db: Database.Database;
@@ -96,6 +102,126 @@ describe("settleEarn", () => {
     for (let i = 0; i < 5; i++) earn(id, 10);
     expect(earn(id, 10).granted).toBe(0);
     expect(earn(id, 10, { now: T0 + 25 * HOUR }).granted).toBe(10);
+  });
+});
+
+/** A balance to gamble with. settleEarn cannot supply one: it clamps every faucet to 600 a day,
+ *  which is barely over the stake cap this is here to test. */
+function fund(accountId: number, amount: number): void {
+  db.prepare(
+    `INSERT INTO star_balances (account_id, balance) VALUES (?, ?)
+     ON CONFLICT(account_id) DO UPDATE SET balance = balance + excluded.balance`,
+  ).run(accountId, amount);
+}
+
+const stake = (
+  accountId: number, price: number, over: Partial<Parameters<typeof settleSpend>[1]> = {},
+) => settleSpend(db, { opKey: `s${++nextKey}`, op: "wheel", accountId, price, now: T0, ...over });
+
+const gambleRows = (accountId: number): number =>
+  (db
+    .prepare(
+      "SELECT COUNT(*) AS n FROM ledger_entries WHERE account_id = ? AND op IN ('wheel', 'lever')",
+    )
+    .get(accountId) as { n: number }).n;
+
+// GAME.md §The casino floor + ROADMAP step 9: "stake 501 of the day is refused". The cap lives in
+// settleSpend, so it is the ledger that refuses — not a check each table has to remember.
+describe("the daily stake cap", () => {
+  test("500 settles and the next stake of the day is refused, whatever its size", () => {
+    const id = account();
+    fund(id, 2000);
+    for (let i = 0; i < 5; i++) expect(stake(id, 100).ok).toBe(true);
+    const refused = stake(id, 1);
+    expect(refused.ok).toBe(false);
+    if (refused.ok) return;
+    expect(refused.reason).toBe(`daily stake cap — 0 ★ of ${DAILY_STAKE_CAP} left to stake today`);
+    expect(balanceOf(db, id)).toBe(1500);
+    expect(gambleRows(id)).toBe(5);
+  });
+
+  test("a stake that would cross the cap bounces whole — the remainder is never clamped to", () => {
+    const id = account();
+    fund(id, 2000);
+    expect(stake(id, 490).ok).toBe(true);
+    const refused = stake(id, 20);
+    expect(refused.ok).toBe(false);
+    if (refused.ok) return;
+    expect(refused.reason).toMatch(/10 ★ of 500 left/);
+    expect(balanceOf(db, id)).toBe(1510);
+    expect(gambleRows(id)).toBe(1);
+  });
+
+  test("one cap covers both tables and rolls with the 24h window", () => {
+    const id = account();
+    fund(id, 2000);
+    // The Luck Lever was uncapped; at 100 a pull the cap now bounds it to five pulls a day.
+    for (let i = 0; i < 5; i++) expect(stake(id, LEVER_COST, { op: "lever" }).ok).toBe(true);
+    expect(stake(id, LEVER_COST, { op: "lever" }).ok).toBe(false);
+    expect(stake(id, 10).ok).toBe(false);   // and the wheel draws on the same 500
+    expect(stake(id, LEVER_COST, { op: "lever", now: T0 + 25 * HOUR }).ok).toBe(true);
+  });
+
+  test("winning does not buy back headroom to stake again", () => {
+    const id = account();
+    fund(id, 2000);
+    for (let i = 0; i < 5; i++) stake(id, 100);
+    settleWin(db, { opKey: "cap:win", op: "wheel", accountId: id, amount: 2000, now: T0 });
+    expect(stake(id, 10).ok).toBe(false);
+  });
+
+  test("shopping is not gambling: the cap does not touch the other sinks", () => {
+    const id = account();
+    fund(id, 4000);
+    expect(stake(id, 1800, { op: "prestige" }).ok).toBe(true);
+    expect(stake(id, 1800, { op: "prestige" }).ok).toBe(true);
+    expect(balanceOf(db, id)).toBe(400);
+  });
+});
+
+describe("settleWin", () => {
+  test("credits the payout in one entry, and a replayed spin pays nothing", () => {
+    const id = account();
+    const args = { opKey: "spin1:win", op: "wheel", accountId: id, amount: 200, now: T0 };
+    expect(settleWin(db, args)).toEqual({ granted: 200, balance: 200 });
+    expect(settleWin(db, args)).toEqual({ granted: 0, balance: 200 });
+    expect(db.prepare("SELECT op, stars FROM ledger_entries WHERE account_id = ?").all(id)).toEqual([
+      { op: "wheel", stars: 200 },
+    ]);
+  });
+
+  // The trap this function exists to avoid: routed through settleEarn a 2,000 payout would have
+  // paid 600, and the player would have spent their whole day's faucet allowance on their own luck.
+  test("a max payout is neither clamped nor charged against the faucet ceiling", () => {
+    const id = account();
+    const max = WHEEL_MAX_STAKE * WHEEL_MAX_MULTIPLIER;
+    expect(max).toBeGreaterThan(GLOBAL_EARN_CEILING);
+    expect(settleWin(db, { opKey: "spin2:win", op: "wheel", accountId: id, amount: max, now: T0 })
+      .granted).toBe(max);
+    expect(earn(id, 50).granted).toBe(50);
+    expect(balanceOf(db, id)).toBe(max + 50);
+  });
+
+  test("a negative payout is a bug, and never a debit", () => {
+    const id = account();
+    expect(() =>
+      settleWin(db, { opKey: "spin3:win", op: "wheel", accountId: id, amount: -1, now: T0 }),
+    ).toThrow(/negative payout/);
+    expect(balanceOf(db, id)).toBe(0);
+  });
+
+  // Both halves of a spin land under one op, so /metrics.html can read the house take as the
+  // difference between the sink row and the faucet row rather than guessing at a net.
+  test("stakes and payouts share the op, so the metrics can net the house take", () => {
+    const id = account();
+    fund(id, 1000);
+    stake(id, 100);
+    settleWin(db, { opKey: "spin4:win", op: "wheel", accountId: id, amount: 150, now: T0 });
+    stake(id, 100);
+    const { faucets, sinks } = flows(db, 0);
+    expect(sinks.find((r) => r.op === "wheel")?.stars).toBe(200);
+    expect(faucets.find((r) => r.op === "wheel")?.stars).toBe(150);
+    expect(balanceOf(db, id)).toBe(950);
   });
 });
 
