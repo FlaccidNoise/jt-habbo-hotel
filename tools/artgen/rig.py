@@ -2867,6 +2867,37 @@ FIGURE_PARTS = {
              "c1": (2.3, 7.5, 12.0)},
         ],
     },
+    # Chain (set 62). The manifest asks for a 1 px arc and a 1 px arc is not available: the
+    # headphones 55 established that geometry only one px clear of the body is pure silhouette
+    # outline with no interior shade left between its edges, and comes out a pencil line. So the
+    # arc is drawn as seven links instead, each 3.2 px across and overlapping its neighbours, which
+    # is both thick enough to hold an interior and what a chain actually looks like at this size.
+    #
+    # The links sit y 6.6 +/- 0.94, so only the 1.5 px in front of the torso survives the holdout —
+    # that shallow depth is what keeps a 3.2 px ball reading as a link rather than a bead. They
+    # stop at x +/-5.4 rather than running to the shoulder: the torso edge is 7.5 and an arc that
+    # ends ON the outline reads as a collar band, not as something hanging on the chest.
+    #
+    # No drop. The pendant 14 is a drop on its own and adding one here would make the two sets
+    # differ by an arc instead of by their whole shape.
+    "ca62": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-5.4, 6.6, 19.0), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-3.8, 6.6, 17.3), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-2.0, 6.6, 16.0), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.6, 15.4), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (2.0, 6.6, 16.0), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (3.8, 6.6, 17.3), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (5.4, 6.6, 19.0), "r": 1.7,
+             "squash": (0.95, 0.55, 0.95)},
+        ],
+    },
     "wa15": {
         "prims": [
             {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.6),

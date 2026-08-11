@@ -3123,6 +3123,54 @@
       "figuredataVersion": 1,
       "recipeHash": "992d69f0310e1e0fc63df3a1b3c767cb1adffd526694d8bb2c9f36db3a0e2add",
       "pixelHash": "09d2e22c61bc3d75988045b92fd6412bfdefd7097cfeb6152175e85f708237ab"
+    },
+    {
+      "partId": "ca62",
+      "setId": 62,
+      "type": "ca",
+      "name": "Chain",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ca62.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "925eeae1815a44477f55534dcbabe64fc2fde1824ce0fefb17e8df2ecf3dc726",
+      "pixelHash": "e3940f67ad5d2725df69cb53390cf86d9118d899bf4051b439133f950adc85b0"
     }
   ]
 }
