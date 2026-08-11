@@ -2402,6 +2402,29 @@ FIGURE_PARTS = {
              "c1": (1.8, -3.2, -SHIN_LEN + 3.4)},
         ],
     },
+    # Sandals (set 52, one slot). Defined by what it leaves off, the way the tank 43 is. A sole
+    # plate carries the whole foot and overhangs it — 0.7 in x, 2.3 past the toe — and two bands
+    # cross it, so the instep and the toes stay bd1's own skin.
+    #
+    # Both bands clear the foot box's -14.6 top on purpose. A strap laid across the instep BELOW
+    # that line is inside the foot and renders as nothing; a strap has to straddle the top edge to
+    # be a strap.
+    "sh52": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.4, -4.2, -float(SHIN_LEN)),
+             "c1": (4.4, 8.6, -SHIN_LEN + 1.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.4, -4.2, -float(SHIN_LEN)),
+             "c1": (4.4, 8.6, -SHIN_LEN + 1.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.1, 3.2, -SHIN_LEN + 1.6),
+             "c1": (4.1, 5.0, -SHIN_LEN + 4.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.1, 3.2, -SHIN_LEN + 1.6),
+             "c1": (4.1, 5.0, -SHIN_LEN + 4.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.3, -4.1, -13.8),
+             "c1": (4.3, 4.1, -12.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.3, -4.1, -13.8),
+             "c1": (4.3, 4.1, -12.2)},
+        ],
+    },
     # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
     # stays clear because the brow and nose reach further forward than the hair does.
     "hr3": {
