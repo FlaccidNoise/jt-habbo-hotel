@@ -230,7 +230,7 @@ describe("room: movement", () => {
     expect([at(b).x, at(b).y]).not.toEqual([at(a).x, at(a).y]);
   });
 
-  test("a walk stops at the previous tile when the next tile becomes blocked", () => {
+  test("a walk re-routes around a tile that becomes blocked mid-walk, and still arrives", () => {
     const a = account("alice");
     const b = account("bob");
     room.join(a, "alice");
@@ -241,7 +241,7 @@ describe("room: movement", () => {
     room.place(b, itemOf(b, "chair_basic"), 5, 5, 0);
     vi.advanceTimersByTime(MS_PER_TILE * 10);
 
-    expect(at(a)).toMatchObject({ x: 4, y: 5 });
+    expect(at(a)).toMatchObject({ x: 9, y: 5 });
     expect(vi.getTimerCount()).toBe(0);
   });
 });
@@ -281,6 +281,86 @@ describe("room: steering", () => {
 
     room.face(a, { x: 0, y: 5 });
     expect(to(a, "posture")).toHaveLength(0);
+  });
+
+  test("two walkers cross paths — the blocked one re-routes and still arrives", () => {
+    const a = account("alice");
+    const b = account("bob");
+    room.join(a, "alice");
+    room.join(b, "bob");
+
+    room.requestMove(b, 5, 3);
+    vi.advanceTimersByTime(MS_PER_TILE * 15); // bob settles well clear of alice's row
+    expect(at(b)).toMatchObject({ x: 5, y: 3 });
+
+    room.requestMove(a, 9, 5); // computed with row 5 clear
+    vi.advanceTimersByTime(MS_PER_TILE * 2); // alice reaches (2,5)
+
+    room.requestMove(b, 5, 5); // bob crosses down into alice's row
+    vi.advanceTimersByTime(MS_PER_TILE * 2); // bob is parked at (5,5) before alice gets there
+    expect(at(b)).toMatchObject({ x: 5, y: 5 });
+    expect(room.isWalking(b)).toBe(false);
+
+    vi.advanceTimersByTime(MS_PER_TILE * 10); // alice hits the block, re-routes, arrives
+    expect(at(a)).toMatchObject({ x: 9, y: 5 });
+    expect(room.isWalking(a)).toBe(false);
+    expect(to(a, "walk").length).toBeGreaterThanOrEqual(2); // initial path + at least one re-route
+  });
+
+  test("a walker fully boxed in mid-walk cancels and broadcasts its true position", () => {
+    const a = account("alice");
+    const b = account("bob");
+    const c = account("carol");
+    room.join(a, "alice");
+
+    room.requestMove(a, 0, 0); // the room's corner: only 3 real neighbours off-grid aside
+    vi.advanceTimersByTime(MS_PER_TILE * 10);
+    expect(at(a)).toMatchObject({ x: 0, y: 0 });
+    expect(room.isWalking(a)).toBe(false);
+
+    room.requestMove(a, 5, 5); // a path exists right now, before the corner is sealed
+    room.place(b, itemOf(b, "chair_basic"), 1, 0, 0);
+    room.place(b, itemOf(b, "plant_basic"), 0, 1, 0);
+    room.place(c, itemOf(c, "chair_basic"), 1, 1, 0);
+    emitted.length = 0;
+
+    vi.advanceTimersByTime(MS_PER_TILE * 3); // the first step finds every way out blocked
+
+    const walks = to(a, "walk");
+    expect(walks).toHaveLength(1); // no route to re-path onto — cancels on the first try
+    expect(walks[0]).toMatchObject({ from: { x: 0, y: 0, z: 0 }, path: [] });
+    expect(room.isWalking(a)).toBe(false);
+    expect(at(a)).toMatchObject({ x: 0, y: 0 });
+  });
+
+  test("a walker retries at most once — a second block on the new route ends the walk", () => {
+    const a = account("alice");
+    const b = account("bob");
+    const c = account("carol");
+    room.join(a, "alice");
+    room.join(b, "bob");
+    room.join(c, "carol");
+
+    room.requestMove(a, 9, 5);
+    vi.advanceTimersByTime(MS_PER_TILE * 2); // alice reaches (2,5)
+
+    room.place(b, itemOf(b, "chair_basic"), 5, 5, 0);
+    vi.advanceTimersByTime(MS_PER_TILE * 3); // alice hits the block at (4,5) and re-routes
+
+    const afterFirstBlock = to(a, "walk");
+    expect(afterFirstBlock).toHaveLength(2); // initial path + the one re-route
+    const rerouted = afterFirstBlock[1]!.path;
+    expect(rerouted.length).toBeGreaterThan(0);
+
+    // Block the very next tile of the new route before alice can take it — the retry is spent,
+    // so this has to cancel outright rather than re-route a second time.
+    const nextTile = rerouted[0]!;
+    room.place(c, itemOf(c, "plant_basic"), nextTile.x, nextTile.y, 0);
+    vi.advanceTimersByTime(MS_PER_TILE * 5);
+
+    expect(to(a, "walk")).toHaveLength(3); // no third path was ever broadcast
+    expect(room.isWalking(a)).toBe(false);
+    expect(at(a)).toMatchObject({ x: 4, y: 5 });
   });
 });
 

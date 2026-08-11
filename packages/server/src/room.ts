@@ -105,6 +105,7 @@ interface Walk {
   i: number;
   dest: Tile;                     // reserved until arrival or cancel
   sitOnArrival: boolean;          // a sit request walks first, then sits
+  repathed: boolean;              // one retry per walk: re-routes once when a step is blocked
   timer: ReturnType<typeof setInterval>;
 }
 
@@ -342,6 +343,7 @@ export class Room {
       i: 0,
       dest: { x, y },
       sitOnArrival,
+      repathed: false,
       timer: setInterval(() => this.step(accountId), MS_PER_TILE),
     });
   }
@@ -728,8 +730,24 @@ export class Room {
       this.cancelWalk(accountId);
       return;
     }
-    if (this.blockedFor(accountId, walk.sitOnArrival ? walk.dest : undefined)(next.x, next.y)) {
-      // Blocked since path time — stop here and tell the room where the avatar actually is.
+    const exempt = walk.sitOnArrival ? walk.dest : undefined;
+    if (this.blockedFor(accountId, exempt)(next.x, next.y)) {
+      // One retry: re-route from here to the same destination before giving up. A second block
+      // after the retry is spent cancels outright, so a walker can never thrash.
+      if (!walk.repathed) {
+        const path = findPath(
+          this.model, this.blockedFor(accountId, exempt), { x: occupant.x, y: occupant.y }, walk.dest,
+        );
+        if (path) {
+          walk.path = path.map((t) => ({ x: t.x, y: t.y, z: this.tileZ(t.x, t.y) }));
+          walk.i = 0;
+          walk.repathed = true;
+          this.broadcast(this.walkMsg(occupant, walk.path));
+          return;
+        }
+      }
+      // No route around it, or the retry is already spent — stop here and tell the room where
+      // the avatar actually is.
       this.cancelWalk(accountId);
       this.broadcast(this.walkMsg(occupant, []));
       return;
