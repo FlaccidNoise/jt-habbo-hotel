@@ -1060,9 +1060,11 @@ async function boot(): Promise<void> {
     furniLayer?.update(now);
     effects?.update(now);
     // The camera tracks my avatar through its walk lerp, so it runs after updates, before layout.
+    // Called on every frame whether or not there is an avatar to follow, because the floor builds
+    // itself over several frames after a jump (#408) and needs the frames to do it in.
     const me = you === null ? undefined : avatars.get(you);
-    if (me && scene && app) {
-      scene.follow({ sx: me.view.x, sy: me.view.y }, app.screen.width, app.screen.height);
+    if (scene && app) {
+      scene.follow(me ? { sx: me.view.x, sy: me.view.y } : null, app.screen.width, app.screen.height);
     }
     depth.flush();
     chat.layout((id) => {

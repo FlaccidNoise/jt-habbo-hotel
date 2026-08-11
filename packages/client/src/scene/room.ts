@@ -73,6 +73,16 @@ function heightRange(m: RoomModel): { low: number; high: number } {
  *  tile popping in at the edge of the screen. */
 const CULL_MARGIN = 4;
 
+/** Tiles beyond the viewport that one frame will build or drop. Everything the player can see is
+ *  built in the frame that asks for it whatever this is set to — the budget only rations the work
+ *  nobody can see, which on a 16:10 screen is most of the window: the CULL_MARGIN ring and the
+ *  corners of the tile rectangle, 63% of it measured on the Resort Grounds.
+ *
+ *  600 is a jump settled in about ten frames with roughly a millisecond of build in each. Raising
+ *  it settles sooner and costs more per frame; the number that must not move is zero, because a
+ *  frame that does no off-screen work leaves a backlog that never drains. */
+const OFF_SCREEN_BUDGET = 600;
+
 /** Screen-space corners of the tile diamond at (x, y) whose floor sits at height z. */
 export function diamond(x: number, y: number, z: number): number[] {
   const corners = [
@@ -102,9 +112,16 @@ export class RoomScene {
   /** Viewport in screen px, once the camera has been given one. Null means "draw the whole room",
    *  which is what a scene built without a camera — every unit test — gets. */
   private view: { width: number; height: number } | null = null;
-  /** The tile rectangle currently built, so a camera that has not crossed a tile boundary since
-   *  the last frame costs one comparison. */
+  /** The tile rectangle the camera is asking for, so a camera that has not crossed a tile boundary
+   *  since the last frame costs one comparison. What is actually built follows it over a frame or
+   *  two — see `drain`. */
   private window: TileWindow | null = null;
+  /** Tiles the window wants that are not up yet, nearest the middle of the screen first, each with
+   *  the `offCentre` score that put it there. */
+  private queue: Array<{ x: number; y: number; h: number; out: number }> = [];
+  /** Built tiles the window no longer wants. Every one of them is off screen, so nothing here is
+   *  urgent. */
+  private doomed: string[] = [];
   /** Told whenever the window changes, so the wall layer culls against the same rectangle. */
   onWindow: ((window: TileWindow) => void) | null = null;
   private handlers: TileHandlers;
@@ -227,7 +244,8 @@ export class RoomScene {
   }
 
   /** Bring the built tiles in line with the window. A room that fits on screen builds once and
-   *  never runs the body again; a big one pays only for the rows the camera crossed.
+   *  never runs the body again; a big one pays only for the rows the camera crossed, and a camera
+   *  that jumped pays over the next few frames rather than all at once.
    *
    *  Culling is what keeps a 300×300 room affordable at all: a tile is a Graphics with four
    *  listeners, and a raised one is two more nodes in the painter sort, so building the whole
@@ -236,24 +254,101 @@ export class RoomScene {
   private reconcile(): void {
     const next = this.visibleWindow();
     const now = this.window;
-    if (now && now.x0 === next.x0 && now.y0 === next.y0 && now.x1 === next.x1 && now.y1 === next.y1) {
-      return;
+    const moved = !now
+      || now.x0 !== next.x0 || now.y0 !== next.y0 || now.x1 !== next.x1 || now.y1 !== next.y1;
+    if (!moved && this.queue.length === 0 && this.doomed.length === 0) return;
+    if (moved) {
+      this.window = next;
+      this.plan(next);
     }
-    this.window = next;
-    for (const key of [...this.tiles.keys()]) {
+    this.drain();
+    // The walls and the furniture cull to the window the camera is asking for, not to the part of
+    // it that happens to be built: `drain` only ever leaves off-screen tiles behind, so a layer
+    // held back to match would be hiding things the player can see.
+    if (moved) this.onWindow?.(next);
+  }
+
+  /** Work out the whole difference between what is built and what `w` wants, and order it. The
+   *  scan costs the window either way — the old build loop walked the same cells — so the only
+   *  new work is the sort, and it buys the guarantee `drain` depends on: whatever falls off the
+   *  end of a frame's budget is the part of the window furthest from the player's eye.
+   *
+   *  Scored once, here, rather than every frame the queue is drained: the camera can drift most of
+   *  a tile before the window moves and the scores are taken again. Ordering is what covers that —
+   *  a frame's ration is spent on the ring just past the screen edge, which is where the drift can
+   *  only ever reach next. */
+  private plan(w: TileWindow): void {
+    this.doomed = [];
+    for (const key of this.tiles.keys()) {
       const at = key.indexOf(",");
       const x = Number(key.slice(0, at)), y = Number(key.slice(at + 1));
-      if (x < next.x0 || x >= next.x1 || y < next.y0 || y >= next.y1) this.dropTile(key);
+      if (x < w.x0 || x >= w.x1 || y < w.y0 || y >= w.y1) this.doomed.push(key);
     }
-    for (let y = next.y0; y < next.y1; y++) {
-      for (let x = next.x0; x < next.x1; x++) {
+    const queue: Array<{ x: number; y: number; h: number; out: number }> = [];
+    for (let y = w.y0; y < w.y1; y++) {
+      for (let x = w.x0; x < w.x1; x++) {
         if (this.tiles.has(`${x},${y}`)) continue;
         const h = tileHeight(this.model, x, y);
         if (h < 0) continue;
-        this.addTile(x, y, h, this.handlers);
+        queue.push({ x, y, h, out: this.offCentre(x, y, h) });
       }
     }
-    this.onWindow?.(next);
+    // Stable, which is what leaves a scene with no camera building row-major: every tile scores 0
+    // there, and the tiles are the world's only interactive children, so their order is a contract
+    // (room-touch.test.ts).
+    queue.sort((a, b) => a.out - b.out);
+    this.queue = queue;
+  }
+
+  /** How far off the middle of the screen a tile sits, as a fraction of the half-viewport — and the
+   *  visibility test the budget turns on, because it is written to cross 1 exactly where the tile's
+   *  own diamond leaves the screen: the diamond is SCALE wide and half that tall, so its half-extent
+   *  comes off the distance before the viewport normalises it.
+   *
+   *  Measured per axis and taken at its worst rather than as a plain distance. The viewport is a
+   *  wide rectangle, and a diagonal would rank a tile just off the left edge nearer than one well
+   *  inside the top — which is the wrong way round for deciding what the player can see. */
+  private offCentre(x: number, y: number, h: number): number {
+    const view = this.view;
+    if (!view) return 0;
+    const p = worldToScreen(x, y, h, SCALE);
+    const dx = Math.abs(this.world.x + ZOOM * p.sx - view.width / 2) - ZOOM * SCALE / 2;
+    const dy = Math.abs(this.world.y + ZOOM * p.sy - view.height / 2) - ZOOM * SCALE / 4;
+    return Math.max(Math.max(0, dx) / (view.width / 2), Math.max(0, dy) / (view.height / 2));
+  }
+
+  /** One frame's worth of the plan. A jump moves the window wholesale — a room entry, a zoom, a
+   *  walk that unpins the camera from a room edge — and doing that diff inside the frame that
+   *  noticed it stalled a 200x200 floor for 18 ms (#408). The rest lands over the frames after,
+   *  which the ticker's `follow` calls drive.
+   *
+   *  What the player can see is never deferred, and that is structural rather than tuned: the queue
+   *  is ordered by `offCentre`, which crosses 1 exactly where a tile leaves the screen, so a frame
+   *  builds every tile it finds under 1 before it starts spending the budget. Only the off-screen
+   *  remainder is rationed, and the drops come out of the same ration behind the builds — a tile
+   *  the window has left cannot be seen at all, where a tile the window has arrived at is a hole in
+   *  the floor.
+   *
+   *  A scene with no camera has no frames to protect and nothing off screen — `offCentre` scores
+   *  every tile 0 — so it builds the room in one pass, which is what every unit test wants. */
+  private drain(): void {
+    let spare = OFF_SCREEN_BUDGET;
+    let done = 0;
+    for (const t of this.queue) {
+      if (t.out > 1) {
+        if (spare === 0) break;
+        spare--;
+      }
+      this.addTile(t.x, t.y, t.h, this.handlers);
+      done++;
+    }
+    this.queue.splice(0, done);
+    while (spare > 0) {
+      const key = this.doomed.pop();
+      if (!key) break;
+      this.dropTile(key);
+      spare--;
+    }
   }
 
   private dropTile(key: string): void {
@@ -265,28 +360,33 @@ export class RoomScene {
     this.depth.delete(`tile:${key}:sides`);
   }
 
-  /** The camera. A room that fits the viewport sits centred and never moves — the Habbo read.
-   *  One that overflows follows `target` (the player's own view position, world px) on the
-   *  overflowing axis, clamped so the room edge never pulls inside the viewport. */
+  /** The camera, once per frame. A room that fits the viewport sits centred and never moves — the
+   *  Habbo read. One that overflows follows `target` (the player's own view position, world px) on
+   *  the overflowing axis, clamped so the room edge never pulls inside the viewport.
+   *
+   *  A null target is a frame with nobody to follow, and it still reconciles: the floor settles
+   *  over several frames (`drain`), so the room the player has already been shown must not depend
+   *  on the camera having somewhere to be. */
   follow(target: { sx: number; sy: number } | null, width: number, height: number): void {
     this.view = { width, height };
-    if (!target) return;
-    const h = SCALE / 2, v = SCALE / 4;
-    const m = this.model;
-    // Floor extremes in world px, padded up for the walls and down for the slab lip.
-    const minSx = -m.height * h, maxSx = m.width * h;
-    const minSy = -v - WALL_TOP_PX - 8, maxSy = (m.width + m.height - 1) * v + 12;
-    const clamp = (n: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, n));
-    this.world.x = Math.round(
-      ZOOM * (maxSx - minSx) <= width
-        ? width / 2 - ZOOM * ((minSx + maxSx) / 2)
-        : clamp(width / 2 - ZOOM * target.sx, width - ZOOM * maxSx, -ZOOM * minSx),
-    );
-    this.world.y = Math.round(
-      ZOOM * (maxSy - minSy) <= height
-        ? height / 2 - ZOOM * ((minSy + maxSy) / 2)
-        : clamp(height / 2 - ZOOM * (target.sy - 40), height - ZOOM * maxSy, -ZOOM * minSy),
-    );
+    if (target) {
+      const h = SCALE / 2, v = SCALE / 4;
+      const m = this.model;
+      // Floor extremes in world px, padded up for the walls and down for the slab lip.
+      const minSx = -m.height * h, maxSx = m.width * h;
+      const minSy = -v - WALL_TOP_PX - 8, maxSy = (m.width + m.height - 1) * v + 12;
+      const clamp = (n: number, lo: number, hi: number): number => Math.max(lo, Math.min(hi, n));
+      this.world.x = Math.round(
+        ZOOM * (maxSx - minSx) <= width
+          ? width / 2 - ZOOM * ((minSx + maxSx) / 2)
+          : clamp(width / 2 - ZOOM * target.sx, width - ZOOM * maxSx, -ZOOM * minSx),
+      );
+      this.world.y = Math.round(
+        ZOOM * (maxSy - minSy) <= height
+          ? height / 2 - ZOOM * ((minSy + maxSy) / 2)
+          : clamp(height / 2 - ZOOM * (target.sy - 40), height - ZOOM * maxSy, -ZOOM * minSy),
+      );
+    }
     this.reconcile();
   }
 

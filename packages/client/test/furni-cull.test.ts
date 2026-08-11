@@ -71,6 +71,13 @@ function build(model: RoomModel, camera: boolean, assets: FurniAssets | null = n
   return { scene, furni, depth, nodes, furniNodes };
 }
 
+/** Let frames pass without moving the camera. The floor builds and drops at most a screenful per
+ *  frame (#408), so a jump comes to rest over the next few — and the item counts here are taken
+ *  against a floor at rest, not against one frame of it. */
+function settle(scene: RoomScene): void {
+  for (let i = 0; i < 30; i++) scene.follow(null, VIEW.width, VIEW.height);
+}
+
 /** Where the camera has to stand for a given tile to be on screen. worldToScreen at z 0. */
 function cameraOn(x: number, y: number): { sx: number; sy: number } {
   return { sx: (x - y) * 32, sy: (x + y) * 16 };
@@ -124,16 +131,19 @@ test("an item on the window's last tile is in, one past it is out", () => {
 test("panning away and back restores exactly the same nodes", () => {
   const { scene, furni, furniNodes } = build(flat(SIDE), true);
   scene.follow(cameraOn(40, 40), VIEW.width, VIEW.height);
+  settle(scene);
   for (let i = 0; i < 60; i++) furni.apply(item(i, "stool", 20 + (i % 10) * 4, 20 + Math.floor(i / 10) * 4));
   const before = furniNodes().sort().join(" ");
   const shown = scene.world.children.length;
   expect(before.length).toBeGreaterThan(0);
 
   scene.follow(cameraOn(280, 280), VIEW.width, VIEW.height);
+  settle(scene);
   expect(furniNodes()).toEqual([]);
   expect(scene.world.children.length).toBeLessThan(shown);
 
   scene.follow(cameraOn(40, 40), VIEW.width, VIEW.height);
+  settle(scene);
   expect(furniNodes().sort().join(" ")).toBe(before);
   expect(scene.world.children.length).toBe(shown);
 });
