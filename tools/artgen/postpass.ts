@@ -55,13 +55,15 @@ const renderDir = process.argv[2] ?? "/tmp/artgen";
 const freeze = process.argv.includes("--freeze");
 const frozenDir = new URL("./frozen/", import.meta.url).pathname;
 
-interface Frame { dir: number; spanY: number; rgba: string; mask: string; near?: boolean[] }
+interface Frame { dir: number; spanY: number; rgba: string; mask: string; near?: boolean[]; state?: number }
 interface PartMeta {
   w: number; l: number; ramp: string; maxZ: number; seatZ: number | null; frames: Frame[];
   surface?: "floor" | "wall";
   wallGap: number; wallDepth: number;
   prims: Array<{ ramp: string; group: number }>;
   src: unknown;
+  /** #430: the axle a state turns about and the step per state, when the part declares one. */
+  spin?: unknown;
 }
 
 interface BBox { minX: number; minY: number; maxX: number; maxY: number }
@@ -293,6 +295,7 @@ function provenanceHash(id: string, part: PartMeta): string {
   return createHash("sha256")
     .update(JSON.stringify(sorted({
       id, w: part.w, l: part.l, ramp: part.ramp, prims: part.prims, src: part.src,
+      spin: part.spin,
       styleVersion: STYLE_VERSION, generatorVersion: GENERATOR_VERSION,
     })))
     .digest("hex");
@@ -343,17 +346,25 @@ for (const [id, part] of work) {
   const raws = part.frames.map((f) => readFileSync(join(renderDir, f.rgba)));
   const masks = part.frames.map((f) => readFileSync(join(renderDir, f.mask)));
 
-  const sheet = makeCanvas(frameW * part.frames.length, frameH);
+  // #430: the sheet is a grid, direction across and state down — state 0 in row 0, so a part with
+  // one state lays out exactly as it always did. `dirs` is read off state 0 alone, which every
+  // part has; the later states are the same object with a sub-assembly turned, so they repeat it
+  // direction for direction. The seat-occluder row, when there is one, follows the last state row
+  // (see BundleMeta.states) — it is no longer row 1 by construction.
+  const dirs = part.frames.filter((f) => (f.state ?? 0) === 0).map((f) => f.dir);
+  const states = Math.max(...part.frames.map((f) => f.state ?? 0)) + 1;
+  const sheet = makeCanvas(frameW * dirs.length, frameH * states);
   // #227: the same frames again, keeping only the prims that draw IN FRONT of a seated occupant.
   // A companion sheet rather than a new base sheet layout, so the base bytes and the pixelHash
-  // that is the item's identity never move.
-  const nearSheet = makeCanvas(frameW * part.frames.length, frameH);
+  // that is the item's identity never move. One row: a seat does not turn.
+  const nearSheet = makeCanvas(frameW * dirs.length, frameH);
   let hasNear = false;
   const anchorsX: number[] = [];
   const boxes: Array<BBox | null> = [];
   for (let q = 0; q < part.frames.length; q++) {
-    const { spanY } = part.frames[q]!;
-    anchorsX.push(spanY * H);
+    const { spanY, state = 0 } = part.frames[q]!;
+    const col = dirs.indexOf(part.frames[q]!.dir);
+    if (state === 0) anchorsX.push(spanY * H);
     const frame = makeCanvas(frameW, frameH);
     const nearOf = part.frames[q]!.near ?? [];
     const groupAt = new Int32Array(frameW * frameH).fill(-1);
@@ -428,10 +439,10 @@ for (const [id, part] of work) {
       }
     }
     outlineSilhouette(frame);
-    boxes.push(opaqueBox(frame));
-    blit(sheet, frame, q * frameW, 0);
+    if (state === 0) boxes.push(opaqueBox(frame));
+    blit(sheet, frame, col * frameW, state * frameH);
 
-    if (nearOf.some(Boolean)) {
+    if (state === 0 && nearOf.some(Boolean)) {
       // Cut from the FINISHED frame, so the near half carries the same outlines and detail lines
       // the base does — re-rendering it separately would give it its own silhouette.
       const nearFrame = makeCanvas(frameW, frameH);
@@ -444,7 +455,7 @@ for (const [id, part] of work) {
           putPixel(nearFrame, fx, fy, px.color);
         }
       }
-      blit(nearSheet, nearFrame, q * frameW, 0);
+      blit(nearSheet, nearFrame, col * frameW, 0);
       hasNear = true;
     }
   }
@@ -497,12 +508,15 @@ for (const [id, part] of work) {
     geometry: null,
     meta: {
       defId: id, archetype: isProof ? "proof" : "artgen", sheet: `${id}.png`, frameW, frameH,
-      dirs: part.frames.map((f) => f.dir), anchorsX, anchorY: V + heightPx,
+      dirs, anchorsX, anchorY: V + heightPx,
       footprint: { w: part.w, l: part.l },
       // `occlusion` stays null: that is the in-sheet row-1 split the procedural composer emits,
       // and the Blender path has never had one (#235). A 3D-assisted seat splits through the
       // companion near-sheet below instead, which the client sorts on the same `seat_front` layer.
       drawnHeight: heightPx / ZU, seatZ: part.seatZ, occlusion: null,
+      // Declared only when the part authored more than one (#430), so a still part's frozen
+      // metadata — and the provenance check that reads it — is unmoved.
+      ...(states > 1 ? { states } : {}),
       ...(plane ? { wall: { span: part.w, ...plane, gap: part.wallGap, depth: part.wallDepth } } : {}),
       ...(hasNear
         ? { nearSheet: `${id}.near.png`,
@@ -525,7 +539,7 @@ for (const [id, part] of work) {
     console.error(`${id}: FAIL ${result.gate} gate: ${result.detail}`);
     continue;
   }
-  console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames)`);
+  console.log(`${id}: PASS all gates  (${frameW}x${frameH} frames${states > 1 ? `, ${states} states` : ""})`);
   if (freeze && !isProof) {
     const metaPath = join(frozenDir, `${id}.json`);
     // #234: a style or generator bump moves every recipeHash, but a bundle it did not repaint was

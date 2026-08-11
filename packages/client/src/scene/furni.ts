@@ -3,7 +3,7 @@ import { worldToScreen } from "@grand/shared";
 import type { DepthBox, FurniDef, FurniItem } from "@grand/shared";
 import type { FurniAssets } from "./assets.ts";
 import { frameTexture, nearFrameTexture } from "./assets.ts";
-import { wisps } from "./effects.ts";
+import { WHEEL_SPIN_MS, spinFrame, wisps } from "./effects.ts";
 import type { Wisp } from "./effects.ts";
 import { frameFor, occluderFor } from "./frames.ts";
 import type { FrameSpec, Occluder } from "./frames.ts";
@@ -143,6 +143,11 @@ export class FurniLayer {
   /** The wisps off each lit hearth (#331), redrawn every frame. The Graphics is a child of the
    *  item's own view, so `remove` destroys it with the view and only has to forget the key. */
   private smoking = new Map<number, Graphics>();
+  /** #430: the state an item is DRAWN in while something animates it, over the state the server
+   *  put it in. Only the Grand Wheel has one, and only while it turns. */
+  private drawn = new Map<number, number>();
+  /** The wheels turning right now, and when each started. */
+  private spinning = new Map<number, number>();
   private ghostView: Container | null = null;
   /** The floor's visible window, or null for "draw every item" — a scene with no camera. */
   private window: TileWindow | null;
@@ -238,15 +243,56 @@ export class FurniLayer {
     this.world.addChild(front.view);
   }
 
+  /** Turn an item's face for the length of one spin (#430). Client-local, exactly like the sweep
+   *  Effects draws over it: the server holds a spinning wheel at state 0 and broadcasts the slot
+   *  it drew, never the turn, so nothing here is a claim about the room. An item whose bundle has
+   *  no state frames ignores it and the overlay is then the whole of the spin. */
+  spin(id: number, from: number): void {
+    const item = this.items.get(id);
+    if (item && this.statesOf(item) > 1) this.spinning.set(id, from);
+  }
+
   /** Only the continuous animations. The one-shot flourishes live in `Effects`, which owns its own
    *  clock; a hearth burns for as long as it is switched on, so it has nothing to expire. */
   update(now: number): void {
     for (const smoke of this.smoking.values()) wisps(smoke.clear(), now, SMOKE);
+    for (const [id, from] of this.spinning) {
+      const item = this.items.get(id);
+      const t = (now - from) / WHEEL_SPIN_MS;
+      if (!item || t >= 1) {
+        this.spinning.delete(id);
+        this.redraw(id, null);
+        continue;
+      }
+      this.redraw(id, spinFrame(t, this.statesOf(item)));
+    }
   }
 
   remove(id: number): void {
     this.items.delete(id);
+    this.spinning.delete(id);
+    this.drawn.delete(id);
     this.drop(id);
+  }
+
+  /** How many state frames the item's sheet carries. One for everything that has no bundle. */
+  private statesOf(item: FurniItem): number {
+    return this.assets?.get(item.defId)?.meta.states ?? 1;
+  }
+
+  /** Draw an item in a state of its own, or `null` to go back to the one it is in. The frame is
+   *  chosen when the sprite is made, so a change is a rebuild — and only the sprite: the depth box
+   *  stays where it was, because a face turning does not move the object it is on. */
+  private redraw(id: number, state: number | null): void {
+    if ((this.drawn.get(id) ?? null) === state) return;
+    if (state === null) this.drawn.delete(id);
+    else this.drawn.set(id, state);
+    const item = this.items.get(id);
+    const def = item && this.defs.get(item.defId);
+    // A culled item keeps the override and picks it up from `build` when the window returns.
+    if (!item || !def || !this.views.has(id)) return;
+    this.drop(id);
+    this.build(def, item);
   }
 
   /** Take an item's views and sort nodes down without forgetting the item — what a cull does, and
@@ -264,7 +310,8 @@ export class FurniLayer {
 
   private backFor(item: FurniItem): Sprite | null {
     const asset = this.assets?.get(item.defId);
-    return asset ? this.spriteFor(item, frameFor(asset.meta, item.dir)) : null;
+    if (!asset) return null;
+    return this.spriteFor(item, frameFor(asset.meta, item.dir, this.drawn.get(item.id) ?? item.state));
   }
 
   private frontFor(item: FurniItem): { view: Sprite; box: Occluder } | null {

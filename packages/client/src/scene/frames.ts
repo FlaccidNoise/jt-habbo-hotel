@@ -12,6 +12,10 @@ export interface FurniMeta {
   dirs: number[];
   anchorsX: number[];
   anchorY: number;
+  /** #430: how many state frames the sheet carries per dir, as rows down from row 0. Absent means
+   *  one — every item whose states are a light being switched on rather than a part of it moving.
+   *  Everything else the sheet carries is placed after them, so the two never collide. */
+  states?: number;
   /** Per dir, the half of the sprite that draws in front of a seated occupant. Null throughout
    *  when the sheet is a single row, which is every item you cannot sit on.
    *
@@ -35,13 +39,16 @@ export interface FrameSpec {
   offsetY: number;
 }
 
-/** Pure sheet geometry: which frame shows `dir`, and where its anchor sits. */
-export function frameFor(meta: FurniMeta, dir: number): FrameSpec | null {
+/** Pure sheet geometry: which frame shows `dir` in `state`, and where its anchor sits. A state the
+ *  sheet does not carry falls back to row 0 rather than reading past the last row — an item whose
+ *  states are a glow the client paints has one row and every state of it looks the same. */
+export function frameFor(meta: FurniMeta, dir: number, state = 0): FrameSpec | null {
   const i = meta.dirs.indexOf(dir);
   if (i < 0) return null;
+  const row = state >= 0 && state < (meta.states ?? 1) ? state : 0;
   return {
     x: i * meta.frameW,
-    y: 0,
+    y: row * meta.frameH,
     w: meta.frameW,
     h: meta.frameH,
     offsetX: -(meta.anchorsX[i] ?? 0),
@@ -49,13 +56,15 @@ export function frameFor(meta: FurniMeta, dir: number): FrameSpec | null {
   };
 }
 
-/** Row 1: the half of `dir`'s frame that draws in front of a seated occupant, with the box to
- *  sort it by. Null when nothing does — a stool with no back, a chair seen from behind, anything
- *  you cannot sit on. Same anchor as row 0, so the two halves line up pixel for pixel. */
+/** The row after the last state row: the half of `dir`'s frame that draws in front of a seated
+ *  occupant, with the box to sort it by. Null when nothing does — a stool with no back, a chair
+ *  seen from behind, anything you cannot sit on. Same anchor as row 0, so the two halves line up
+ *  pixel for pixel. Nothing carries both a seat and authored states today, but the row is derived
+ *  rather than fixed at 1, so a sheet that grows state rows moves this one with them (#430). */
 export function occluderFor(meta: FurniMeta, dir: number): { frame: FrameSpec; box: Occluder } | null {
   const i = meta.dirs.indexOf(dir);
   const box = i < 0 ? null : meta.occlusion?.[i];
   const frame = frameFor(meta, dir);
   if (!box || !frame) return null;
-  return { frame: { ...frame, y: meta.frameH }, box };
+  return { frame: { ...frame, y: (meta.states ?? 1) * meta.frameH }, box };
 }

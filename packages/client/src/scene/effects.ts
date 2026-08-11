@@ -30,10 +30,15 @@ export const WHEEL_SPIN_MS = 3400;
 const WHEEL_LAND_MS = 1300;
 const WHEEL_TURNS = 4;         // whole turns before the marker reaches the drawn slot
 const WHEEL_TRAIL = 3;         // slots of dimming marker left behind the leading one
+/** Whole cycles of the wheel face's own pattern over one spin (#430). Its four state frames cover
+ *  one turn of the eight-pin ring, so the sprite repeats every four states and this is how many
+ *  times it does that before it settles — the pins blur at the start and step visibly at the end,
+ *  which is the read the marker's ease-out gives the light. */
+const WHEEL_FACE_TURNS = 9;
 /** The face of grand_wheel.png, in sprite pixels off the item's own origin: the disc is a tilted
  *  ellipse, and the two facing pairs mirror it. Measured off the shipped sheet, which is what the
- *  marker has to sit on — the four state frames render byte-identical (#430), so every bit of
- *  motion here is overlay rather than an animated sprite. */
+ *  marker has to sit on — the sheet's state frames turn the pins and leave the rim where it is,
+ *  so these hold for all four. */
 const FACE = { dx: 10, dy: -63, major: 28, minor: 19, tilt: (64 * Math.PI) / 180 };
 const WHEEL_POOL = 30;         // radius of the light the lit slot throws over the sprite
 const WHEEL_POOL_RINGS = 6;
@@ -52,13 +57,23 @@ export const SEGMENT_COLOR: ReadonlyMap<string, number> = new Map([
   ["grand", 0xf5d76e],
 ]);
 
-/** Which slot the marker is on `t` of the way through the spin. A cubic ease-out over a whole
- *  number of slots, so t = 1 lands on `target` exactly — the animation cannot disagree with the
- *  slot the server drew, however the curve is retuned. */
+/** The spin's curve: a cubic ease-out, arriving at rest. The marker and the wheel face both walk
+ *  on it, which is what makes them slow together rather than merely at the same time. */
+const ease = (t: number): number => 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3);
+
+/** Which slot the marker is on `t` of the way through the spin. A whole number of slots, so t = 1
+ *  lands on `target` exactly — the animation cannot disagree with the slot the server drew,
+ *  however the curve is retuned. */
 export function spinSlot(t: number, target: number): number {
   const steps = WHEEL_TURNS * WHEEL_LAYOUT.length + target;
-  const eased = 1 - Math.pow(1 - Math.min(Math.max(t, 0), 1), 3);
-  return Math.floor(steps * eased) % WHEEL_LAYOUT.length;
+  return Math.floor(steps * ease(t)) % WHEEL_LAYOUT.length;
+}
+
+/** Which of the wheel's own state frames the face shows `t` of the way through the spin (#430).
+ *  A whole number of cycles of `states`, so t = 1 comes back to state 0 — the face is at rest in
+ *  the frame the item sits in when nothing is spinning, and the settle costs no extra step. */
+export function spinFrame(t: number, states: number): number {
+  return Math.floor(WHEEL_FACE_TURNS * states * ease(t)) % states;
 }
 
 /** Where slot `n` sits on the face, in the effect's own coordinates. Slot 0 is the top of the disc,

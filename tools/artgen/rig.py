@@ -48,6 +48,12 @@ os.makedirs(OUT, exist_ok=True)
 # wall as dir 6 — the rotation that maps the plane fy=0 onto fx=0. Because the projection folds
 # depth into screen width, a wall part must start at least its own depth along the wall
 # (min fx >= max fy) or it overhangs the segment before it.
+#
+# A part with "spin" (#430) renders more than one state. Its prims tagged "spin": True turn about
+# the declared axle by state * "step" degrees before the direction loop rotates them; every other
+# prim stands still. That is the only way a part gets a second state frame — a state is the same
+# object with a sub-assembly moved, so its footprint, height and seat surface cannot change and
+# the def gates hold for every state at once.
 
 PARTS = {
     "proof_armchair": {
@@ -1745,6 +1751,13 @@ PARTS = {
     # narrow pair of feet under the posts passes dir 0 and floats in dir 2.
     "grand_wheel": {
         "w": 2, "l": 1, "ramp": "crimson",
+        # The four states the def declares, as four rotations of the face (#430). The step is a
+        # quarter of the pins' own 45-degree pitch, so state 3 -> state 0 advances by the same
+        # quarter as every other step and the cycle wraps without a jump: the pin ring is its own
+        # period, and four states cover exactly one of them. Only the pins carry "spin" — the
+        # courses are concentric, so turning them moves no pixel, and the plinth, the posts and
+        # the flapper are the parts that must stand still for the face to read as turning.
+        "spin": {"cx": 1.00, "cz": 2.30, "step": 11.25, "states": 4},
         "prims": [
             # Gold reads as a foot, not as the plinth. The first pass had the gold slab on top and
             # wider than the charcoal under it, which hid the charcoal from every angle and left a
@@ -1798,21 +1811,21 @@ PARTS = {
             # z = 2.30 + 0.86/ZSCALE sin. Offset 22.5 degrees so no pin lands at the horizontal
             # extremes, where it would be buried inside a post.
             {"t": "hcyl", "x": 1.795, "y0": 0.34, "y1": 0.60, "z": 2.703, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 1.329, "y0": 0.34, "y1": 0.60, "z": 3.273, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 0.671, "y0": 0.34, "y1": 0.60, "z": 3.273, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 0.205, "y0": 0.34, "y1": 0.60, "z": 2.703, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 0.205, "y0": 0.34, "y1": 0.60, "z": 1.897, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 0.671, "y0": 0.34, "y1": 0.60, "z": 1.327, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 1.329, "y0": 0.34, "y1": 0.60, "z": 1.327, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             {"t": "hcyl", "x": 1.795, "y0": 0.34, "y1": 0.60, "z": 1.897, "r": 0.055,
-             "ramp": "charcoal"},
+             "ramp": "charcoal", "spin": True},
             # The flapper. Widest at the top and narrowest where it meets the pins, centred on the
             # disc's own thickness so it is there from all four sides. It starts below the rim
             # crest so it overlaps the disc — a pointer with a gap under it is a second island in
@@ -2625,6 +2638,23 @@ def prim_top(prim):
         return prim["z"] + prim["r"] / ZSCALE   # world-space radius, unsquashed
     return prim["c"][2] + prim["r"]
 
+def spin_prim(prim, spin, degrees):
+    """Turn one prim about the part's axle, in the fx/z plane its disc stands in (#430).
+
+    The turn is done in WORLD coords and squashed back, not in footprint ones: z is scaled by
+    ZSCALE, so a pin set into a rim traces a true circle in the render and an ellipse in the
+    numbers. Turning it in footprint space would walk it off the rim at 45 degrees and back on at
+    90, which reads as a wobble rather than a rotation.
+    """
+    assert prim["t"] == "hcyl" and prim.get("axis", "y") == "y", (
+        f"spin is defined for the fy-axis cylinders a wheel face is made of, not {prim['t']}")
+    a = math.radians(degrees)
+    dx, dz = prim["x"] - spin["cx"], (prim["z"] - spin["cz"]) * ZSCALE
+    p = dict(prim)
+    p["x"] = spin["cx"] + dx * math.cos(a) - dz * math.sin(a)
+    p["z"] = spin["cz"] + (dx * math.sin(a) + dz * math.cos(a)) / ZSCALE
+    return p
+
 def rotate_prim(prim, span_y):
     pts = [rot_pt(p, span_y) for p in prim_points(prim)]
     p = dict(prim)
@@ -2821,8 +2851,6 @@ for part_id, part in PARTS.items():
     if only and part_id not in only:
         continue
     assert len(part["prims"]) <= 26, f"{part_id}: mask encoding holds 26 prims max"
-    prims = [dict(p) for p in part["prims"]]
-    span = (part["w"], part["l"])   # (spanX, spanY), dir-0 frame
     max_z = max(prim_top(prim) for prim in part["prims"])
     seats = [p for p in part["prims"] if p.get("seat")]
     seat_z = max(prim_top(p) for p in seats) if seats else None
@@ -2845,37 +2873,46 @@ for part_id, part in PARTS.items():
             f"{part_id}: spans fx {fx_min}..{fx_max}, off-centre in its {part['w']}-segment span. "
             f"Centre the bounds so the left and right walls mirror: fx_min + fx_max == {part['w']}")
     dirs = (0, 3) if is_wall else (0, 1, 2, 3)
+    # #430: every direction of state 0, then of state 1, and so on. The spin is applied to the
+    # authored dir-0 mesh and the quarter turns carry the spun prims round, so a state costs a
+    # full set of renders and nothing else — no direction knows it is looking at a turned face.
+    spin = part.get("spin")
     frames = []
     scene = bpy.context.scene
-    for q in range(4):
-        if q > 0:
-            prims = [rotate_prim(p, span[1]) for p in prims]
-            span = (span[1], span[0])
-        if q not in dirs:
-            continue
-        clear_meshes()
-        prim_objs = [add_prim(prim) for prim in prims]
-        base = os.path.join(OUT, f"{part_id}_d{q * 2}")
-        if hasattr(scene, "eevee"):
-            scene.eevee.taa_render_samples = 16
-        scene.render.filepath = base + ".png"
-        bpy.ops.render.render(write_still=True)
-        dump_rgba(base + ".png", base + ".rgba")
-        # mask pass: same geometry, flat per-prim emission, no AA so indices decode exactly
-        for i, objs in enumerate(prim_objs):
-            for obj in objs:
-                obj.data.materials.clear()
-                obj.data.materials.append(mask_material(i + 1))
-        if hasattr(scene, "eevee"):
-            scene.eevee.taa_render_samples = 1
-        scene.render.filepath = base + "_mask.png"
-        bpy.ops.render.render(write_still=True)
-        dump_rgba(base + "_mask.png", base + ".mask.rgba")
-        # #227: which prims sit in front of an occupant, in THIS direction's rotated frame.
-        seat_now = next((p for p in prims if p.get("seat")), None)
-        frames.append({"near": near_flags(prims, seat_now),
-                       "dir": q * 2, "spanY": span[1], "rgba": f"{part_id}_d{q * 2}.rgba",
-                       "mask": f"{part_id}_d{q * 2}.mask.rgba"})
+    for s in range(spin["states"] if spin else 1):
+        prims = [spin_prim(p, spin, s * spin["step"]) if s and p.get("spin") else dict(p)
+                 for p in part["prims"]]
+        span = (part["w"], part["l"])   # (spanX, spanY), dir-0 frame
+        for q in range(4):
+            if q > 0:
+                prims = [rotate_prim(p, span[1]) for p in prims]
+                span = (span[1], span[0])
+            if q not in dirs:
+                continue
+            clear_meshes()
+            prim_objs = [add_prim(prim) for prim in prims]
+            name = f"{part_id}_s{s}_d{q * 2}"
+            base = os.path.join(OUT, name)
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 16
+            scene.render.filepath = base + ".png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + ".png", base + ".rgba")
+            # mask pass: same geometry, flat per-prim emission, no AA so indices decode exactly
+            for i, objs in enumerate(prim_objs):
+                for obj in objs:
+                    obj.data.materials.clear()
+                    obj.data.materials.append(mask_material(i + 1))
+            if hasattr(scene, "eevee"):
+                scene.eevee.taa_render_samples = 1
+            scene.render.filepath = base + "_mask.png"
+            bpy.ops.render.render(write_still=True)
+            dump_rgba(base + "_mask.png", base + ".mask.rgba")
+            # #227: which prims sit in front of an occupant, in THIS direction's rotated frame.
+            seat_now = next((p for p in prims if p.get("seat")), None)
+            frames.append({"near": near_flags(prims, seat_now), "state": s,
+                           "dir": q * 2, "spanY": span[1], "rgba": name + ".rgba",
+                           "mask": name + ".mask.rgba"})
     meta["parts"][part_id] = {
         "w": part["w"], "l": part["l"], "ramp": part["ramp"], "maxZ": max_z, "seatZ": seat_z,
         "surface": part.get("surface", "floor"),
@@ -2884,8 +2921,12 @@ for part_id, part in PARTS.items():
         "prims": [{"ramp": p.get("ramp", part["ramp"]), "group": p.get("group", i)}
                   for i, p in enumerate(part["prims"])],
         "src": part["prims"],   # full authored geometry — postpass hashes it as provenance
+        # The axle and the step are as much of the authored design as the prims are: move them and
+        # the states repaint, so postpass hashes this into the recipe alongside `src`. Emitted only
+        # when the part has one, so a still part's provenance is untouched (#430).
+        **({"spin": spin} if spin else {}),
     }
-    print(f"rendered {part_id} (maxZ {max_z})")
+    print(f"rendered {part_id} (maxZ {max_z}, {len(frames)} frames)")
 
 # ---- figure render loop ---------------------------------------------------------------------
 # 8 native directions, no mirroring. Mirroring exists to halve hand-drawing and we do not

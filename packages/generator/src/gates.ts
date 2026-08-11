@@ -80,13 +80,14 @@ export function gateSeat(bundle: Bundle, def: FurniDef): GateResult {
 
 interface BBox { minX: number; minY: number; maxX: number; maxY: number }
 
-/** Opaque extent of one frame, in frame-local pixels. Null when the frame is empty. */
-function frameBox(bundle: Bundle, f: number): BBox | null {
+/** Opaque extent of one frame, in frame-local pixels. Null when the frame is empty. `row` is the
+ *  state row it sits in (#430); every caller but the bounds gate reads state 0. */
+function frameBox(bundle: Bundle, f: number, row = 0): BBox | null {
   const { frameW, frameH } = bundle.meta;
   let box: BBox | null = null;
   for (let y = 0; y < frameH; y++) {
     for (let x = 0; x < frameW; x++) {
-      if (getPixel(bundle.sheet, f * frameW + x, y).alpha === 0) continue;
+      if (getPixel(bundle.sheet, f * frameW + x, row * frameH + y).alpha === 0) continue;
       if (!box) box = { minX: x, minY: y, maxX: x, maxY: y };
       else {
         if (x < box.minX) box.minX = x;
@@ -100,14 +101,21 @@ function frameBox(bundle: Bundle, f: number): BBox | null {
 }
 
 /** Grid alignment: every frame has pixels, and its geometry reaches the ground line. Floor only —
- *  a hanging item never touches the ground, so wall bundles run gateWallBounds instead. */
+ *  a hanging item never touches the ground, so wall bundles run gateWallBounds instead.
+ *
+ *  Every state row is checked, not just row 0 (#430). A state is the same object with a
+ *  sub-assembly moved, so it stands on the same ground; a state that came back empty or floating
+ *  is a rig fault, and it would otherwise reach the client with nothing looking at it. */
 export function gateBounds(bundle: Bundle): GateResult {
-  const { frameH, dirs } = bundle.meta;
-  for (let f = 0; f < dirs.length; f++) {
-    const box = frameBox(bundle, f);
-    if (!box) return fail("bounds", `dir ${dirs[f]}: frame is empty`);
-    if (box.maxY < frameH - 1 - GROUND_TOLERANCE) {
-      return fail("bounds", `dir ${dirs[f]}: lowest pixel ${box.maxY} floats above ground ${frameH - 1}`);
+  const { frameH, dirs, states } = bundle.meta;
+  for (let s = 0; s < (states ?? 1); s++) {
+    for (let f = 0; f < dirs.length; f++) {
+      const where = `dir ${dirs[f]}${states ? `, state ${s}` : ""}`;
+      const box = frameBox(bundle, f, s);
+      if (!box) return fail("bounds", `${where}: frame is empty`);
+      if (box.maxY < frameH - 1 - GROUND_TOLERANCE) {
+        return fail("bounds", `${where}: lowest pixel ${box.maxY} floats above ground ${frameH - 1}`);
+      }
     }
   }
   return { ok: true };

@@ -1,7 +1,12 @@
+import { Container, Sprite, Texture, TextureSource } from "pixi.js";
 import { describe, expect, test } from "vitest";
 import { WHEEL_LAYOUT, WHEEL_MAX_STAKE, WHEEL_MIN_STAKE } from "@grand/shared";
-import type { ServerMsg } from "@grand/shared";
-import { SEGMENT_COLOR, WHEEL_SPIN_MS, spinSlot } from "../src/scene/effects.ts";
+import type { FurniDef, FurniItem, ServerMsg } from "@grand/shared";
+import type { FurniAssets } from "../src/scene/assets.ts";
+import { SEGMENT_COLOR, WHEEL_SPIN_MS, spinFrame, spinSlot } from "../src/scene/effects.ts";
+import type { FurniMeta } from "../src/scene/frames.ts";
+import { FurniLayer } from "../src/scene/furni.ts";
+import { DepthIndex } from "../src/scene/sort.ts";
 import {
   betMessage, clampStake, emptyWheel, outcomeText, revealText, segmentRows, wheelView,
 } from "../src/ui/wheel.ts";
@@ -127,5 +132,88 @@ describe("the spin", () => {
   test("the reveal waits for the wheel, so the announcement cannot beat the slot it names", () => {
     expect(WHEEL_SPIN_MS).toBeGreaterThanOrEqual(3000);
     expect(WHEEL_SPIN_MS).toBeLessThanOrEqual(4000);
+  });
+});
+
+// The sprite's own half of the spin (#430). The marker above is drawn over the wheel; these four
+// frames are the wheel, and the server sends nothing about either — a spun wheel stays in state 0
+// as far as the room is concerned.
+
+const WHEEL_H = 164;
+
+const WHEEL_DEFS: ReadonlyMap<string, FurniDef> = new Map([["grand_wheel", {
+  id: "grand_wheel", name: "Grand Wheel", theme: "casino", w: 2, l: 1,
+  stackHeights: [3.625, 3.625, 3.625, 3.625], canWalk: false, canStackOn: false,
+  seatHeight: null, color: 0xaa3333, interaction: "wheel",
+}]]);
+
+const WHEEL_ITEM: FurniItem = { id: 7, defId: "grand_wheel", x: 2, y: 2, z: 0, dir: 0, state: 0 };
+
+/** The shipped bundle's geometry: four dirs across, four states down. Nothing is rendered here —
+ *  the texture is a descriptor and is never uploaded. */
+function wheelAssets(states?: number): FurniAssets {
+  const meta: FurniMeta = {
+    sheet: "grand_wheel.png", frameW: 96, frameH: WHEEL_H,
+    dirs: [0, 2, 4, 6], anchorsX: [32, 64, 32, 64], anchorY: 132, states,
+  };
+  const base = new Texture({ source: new TextureSource({ width: 384, height: WHEEL_H * 4 }) });
+  return new Map([["grand_wheel", { base, meta, frames: new Map(), near: null, nearFrames: new Map() }]]);
+}
+
+function spinning(states?: number): { row: () => number; layer: FurniLayer } {
+  const world = new Container();
+  const layer = new FurniLayer(world, WHEEL_DEFS, wheelAssets(states), new DepthIndex());
+  layer.apply(WHEEL_ITEM);
+  return { layer, row: () => (world.children[0] as Sprite).texture.frame.y / WHEEL_H };
+}
+
+describe("the face", () => {
+  test("it comes to rest on the state the item is in, at both ends of the curve", () => {
+    expect(spinFrame(0, 4)).toBe(0);
+    expect(spinFrame(1, 4)).toBe(0);
+    expect(spinFrame(1.4, 4)).toBe(0);   // a late frame settles rather than wrapping on
+  });
+
+  test("it passes every state the sheet carries, and decelerates like the marker", () => {
+    const seen = new Set<number>();
+    for (let i = 0; i <= 400; i++) seen.add(spinFrame(i / 400, 4));
+    expect([...seen].sort()).toEqual([0, 1, 2, 3]);
+
+    const steps = (from: number, to: number): number => {
+      let count = 0;
+      let last = spinFrame(from, 4);
+      for (let i = 1; i <= 200; i++) {
+        const state = spinFrame(from + ((to - from) * i) / 200, 4);
+        if (state !== last) count++;
+        last = state;
+      }
+      return count;
+    };
+    expect(steps(0, 0.2)).toBeGreaterThan(steps(0.8, 1) * 4);
+  });
+
+  test("a turning wheel walks the sheet's rows and settles back on row 0", () => {
+    const { layer, row } = spinning(4);
+    expect(row()).toBe(0);
+
+    layer.spin(WHEEL_ITEM.id, 0);
+    const seen = new Set<number>();
+    for (let i = 0; i < 200; i++) {
+      layer.update((WHEEL_SPIN_MS * i) / 200);
+      seen.add(row());
+    }
+    expect([...seen].sort()).toEqual([0, 1, 2, 3]);
+
+    layer.update(WHEEL_SPIN_MS);
+    expect(row()).toBe(0);
+  });
+
+  test("a bundle with no state frames spins as the overlay alone, never off the end of its sheet", () => {
+    const { layer, row } = spinning();
+    layer.spin(WHEEL_ITEM.id, 0);
+    for (let i = 0; i <= 200; i++) {
+      layer.update((WHEEL_SPIN_MS * i) / 200);
+      expect(row()).toBe(0);
+    }
   });
 });

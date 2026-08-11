@@ -1177,10 +1177,12 @@ function handle(msg: ServerMsg): void {
       // Every occupant gets this, bettor or not — the spin is the room's spectacle, and the reveal
       // is held back until the wheel has actually stopped on the slot the server drew.
       const item = furni.find((f) => f.id === msg.itemId);
+      const spun = Date.now();
+      // Two halves of one spin: the face turns in the sprite (#430) and the sweep runs over it.
+      furniLayer?.spin(msg.itemId, spun);
       if (item) {
         const at = worldToScreen(item.x, item.y, item.z, SCALE);
-        effects?.wheelSpin(at, item.dir === 2 || item.dir === 6, msg.slot, msg.payout > 0,
-          Date.now());
+        effects?.wheelSpin(at, item.dir === 2 || item.dir === 6, msg.slot, msg.payout > 0, spun);
       }
       if (wheelReveal !== undefined) clearTimeout(wheelReveal);
       wheelReveal = window.setTimeout(() => {

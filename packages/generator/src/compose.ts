@@ -40,6 +40,11 @@ export interface BundleMeta {
    *  with nothing in front. Null outright when the sheet is one row: no seat, or no direction puts
    *  anything in front of one. The sheet has a second row exactly when this is not null. */
   occlusion: Array<Occluder | null> | null;
+  /** #430: how many state frames the sheet carries per direction, laid out as rows from row 0.
+   *  Absent means one — every part but the Grand Wheel, whose four rows are its face at four
+   *  rotations. It is what places every row below the states: the seat-occluder row is row
+   *  `states`, so a sheet with both is unambiguous rather than a collision at row 1. */
+  states?: number;
   /** #227: the same split for a 3D-assisted part, which ships it as a companion sheet instead of
    *  a second row — the base sheet keeps every prim, so adding this moved no existing pixel.
    *  Absent on items with no seat, and never set at the same time as `occlusion`. */
