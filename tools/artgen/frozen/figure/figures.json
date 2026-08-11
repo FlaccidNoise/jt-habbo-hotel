@@ -3509,6 +3509,56 @@
       "figuredataVersion": 1,
       "recipeHash": "b84ea6644cc5db903ab84a7ded10dc3d25d16268124bac30081cadd6ad8ed556",
       "pixelHash": "eee61e5ab10760a28c11815a7feacde1f1a23bbc4b1207c836401d466c4bc723"
+    },
+    {
+      "partId": "ha70",
+      "setId": 70,
+      "type": "ha",
+      "name": "Crested Helm",
+      "slots": 2,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha70.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "58dc9e5f4d60b7313b298c037a48a1546962da08e46063ec9794c58458265d62",
+      "pixelHash": "4b2d49785719285b2075c7ea3b06c6461008c78d4e2d66f7c665dc2184659e5a"
     }
   ]
 }

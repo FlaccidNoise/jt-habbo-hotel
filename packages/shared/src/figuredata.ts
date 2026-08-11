@@ -154,6 +154,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 67, type: "wa", name: "Sword Belt",      slots: 2, family: "material", hides: [], retired: false },
   { id: 68, type: "cc", name: "Surcoat",         slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 69, type: "ca", name: "Heraldic Mantle", slots: 2, family: "material", hides: [], retired: false },
+  { id: 70, type: "ha", name: "Crested Helm",    slots: 2, family: "material", hides: ["hr"], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -268,6 +269,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 66, price: 300, theme: "bannerhold" },  // Gambeson
   { set: 67, price: 300, theme: "bannerhold" },  // Sword Belt
   { set: 69, price: 350, theme: "bannerhold" },  // Heraldic Mantle
+  { set: 70, price: 400, theme: "bannerhold" },  // Crested Helm
   { set: 68, price: 450, theme: "bannerhold" },  // Surcoat
 ];
 
