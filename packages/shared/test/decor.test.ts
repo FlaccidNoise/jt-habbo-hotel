@@ -5,7 +5,7 @@ import {
   decorTileFault,
 } from "../src/decor.ts";
 import type { DecorRegion } from "../src/decor.ts";
-import { PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
+import { LANDED_DECOR_IDS, PROTOTYPE_CATALOG, WALL_CATALOG } from "../src/furni.ts";
 
 test("the decor catalog validates against the wire schema", () =>
   expect(z.array(DecorDefSchema).safeParse(DECOR_CATALOG).success).toBe(true));
@@ -81,3 +81,8 @@ describe("decorRegionsFault", () => {
   test("a room with no regions has no fault", () =>
     expect(decorRegionsFault({ floor: "floor_deck" }, 16, 16)).toBeNull());
 });
+
+// Content blitz (docs/plans/2026-08-11-furniture-content-blitz-catalog.md): 18 pre-blitz tiles
+// plus whatever waves have landed. content-blitz.test.ts gates every landed decor id.
+test("the decor total is the pre-blitz baseline plus landed waves", () =>
+  expect(DECOR_CATALOG.length).toBe(18 + LANDED_DECOR_IDS.size));

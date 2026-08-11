@@ -347,3 +347,14 @@ export const PRESTIGE_DEFS: ReadonlySet<string> = new Set([
   "billiards_table",
   "penthouse_candelabra",
 ]);
+
+/** Content-blitz ledger (docs/plans/2026-08-11-furniture-content-blitz-catalog.md). Each wave
+ *  adds its ids here in the same commit as its defs and assets; content-blitz.test.ts gates the
+ *  routing of every landed id. */
+export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([]);
+/** Landed blitz decor tiles (the plan's Appendix B). */
+export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([]);
+/** The staged prestige line: the eight blitz prestige fixtures land together but surface in the
+ *  catalog one per wave. An id here is priced in CATALOG_PRICES; an id absent is staged in
+ *  UNPRICED. The two pre-blitz prestige fixtures above are unaffected — they were always on sale. */
+export const RELEASED_PRESTIGE_IDS: ReadonlySet<string> = new Set<string>([]);

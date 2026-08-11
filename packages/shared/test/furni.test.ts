@@ -44,10 +44,13 @@ test("every wall def fits the wall it hangs on", () =>
 // A house fixture is the one route that ends without the player owning anything (R-26, #429). It
 // is listed rather than inferred for the same reason the other three are: an unreachable def has
 // to be a decision somebody wrote down, not an id that fell through every lookup.
-test("every def is obtainable — priced, won, minted by a set, or placed by the house", () =>
+//
+// Staged prestige is the fifth route: a blitz prestige fixture sits in UNPRICED until its release
+// wave names it in RELEASED_PRESTIGE_IDS (content-blitz.test.ts pins which ids may be staged).
+test("every def is obtainable — priced, won, set-minted, house-placed, or staged prestige", () =>
   expect(ALL_IDS.filter((id) =>
     !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id) && !SET_REWARD_DEFS.has(id)
-    && !HOUSE_FIXTURE_DEFS.has(id)))
+    && !HOUSE_FIXTURE_DEFS.has(id) && !(PRESTIGE_DEFS.has(id) && UNPRICED.has(id))))
     .toEqual([]));
 
 // R-26: the house's edge is not merchandise. A wheel a player owns is a wheel a player sets the
@@ -90,7 +93,10 @@ test("every catalog id is priced or explicitly unpriced with a reason", () =>
 test("every lever prize names a real def", () =>
   expect(LEVER_PRIZES.filter((p) => p.defId !== null && !ALL_IDS.includes(p.defId)).map((p) => p.label))
     .toEqual([]));
-test("prestige fixtures are priced and never won", () => {
-  expect([...PRESTIGE_DEFS].filter((id) => !CATALOG_PRICES.has(id))).toEqual([]);
+
+// A staged blitz prestige fixture sits in UNPRICED until its release wave; content-blitz.test.ts
+// pins which ids may be staged and that a fixture is never both staged and priced.
+test("prestige fixtures are priced or deliberately staged, and never won", () => {
+  expect([...PRESTIGE_DEFS].filter((id) => !CATALOG_PRICES.has(id) && !UNPRICED.has(id))).toEqual([]);
   expect(LEVER_PRIZES.filter((p) => p.defId !== null && PRESTIGE_DEFS.has(p.defId))).toEqual([]);
 });
