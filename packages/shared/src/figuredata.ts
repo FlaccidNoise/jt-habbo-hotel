@@ -134,6 +134,11 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 55, type: "ha", name: "Headphones", slots: 1, family: "material", hides: [], retired: false },
   { id: 56, type: "ha", name: "Visor",      slots: 1, family: "material", hides: [], retired: false },
   { id: 57, type: "ha", name: "Crown",      slots: 1, family: "material", hides: ["hr"], retired: false },
+  // Accessories pack (#440), the last of the blitz. Three layer types that all draw over a
+  // garment rather than replacing one, so none of them hides anything: ea sits on the face after
+  // hr and fa, ca draws after cc so a neck piece is worn over a coat, and wa draws between ch and
+  // cc so a coat covers it. Only the sash carries a second slot.
+  { id: 58, type: "ea", name: "Sunglasses",  slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -192,7 +197,13 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *
  *  Hats (53-57, #440) price on how much of the head the garment takes and how far it stands off
  *  it: 150 for a brim on its own, 200-300 for the two that cover the head or hang off its sides,
- *  and 400-450 for the pair that changes the figure's outline from across a room. */
+ *  and 400-450 for the pair that changes the figure's outline from across a room.
+ *
+ *  Accessories (58-63, #440) are the cheapest shelf, and deliberately: they are the pieces a
+ *  player adds to a look already paid for, so the whole shelf sits at or under the mid rung of
+ *  every other one. 150 for the two that are a line on the chest, 200-250 once a set lands on the
+ *  face, and 300-350 for the two that add real bulk — a scarf's drape and the sash's second
+ *  colour slot. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -224,6 +235,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 55, price: 300, theme: "hats" },   // Headphones
   { set: 54, price: 400, theme: "hats" },   // Top Hat
   { set: 57, price: 450, theme: "hats" },   // Crown
+  { set: 58, price: 250, theme: "accessories" },  // Sunglasses
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

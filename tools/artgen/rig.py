@@ -2712,6 +2712,51 @@ FIGURE_PARTS = {
              "c1": (7.4, 9.6, 14.0)},
         ],
     },
+    # Accessories pack (#440). ea is the first layer authored to land ON the face rather than
+    # around it, so both sets below are placed against the stamped art rather than the skull.
+    #
+    # Measured, not assumed: at dir 3 a head-bone point draws at row 44 + y/2 - z, the face sets
+    # stamp rows 31-39 standing (brow 31, eyes 33-35, mouth 36-39), and the skull runs rows 21-44.
+    # Covering the eyes is legal and already shipped — the spectacles 12 draw at rows 34-36 — and
+    # it is legal because figurepass places every face pixel against the HEAD's own prim buffer
+    # (buildFaceLayer reads source.primAt and asks whether head.prims[prim].part is hd2). No
+    # garment layer is in that buffer, so gateFace cannot see one. What it does assert is that the
+    # art still lands on the skull, which no ea set can move.
+    #
+    # The gate that does bind here is holdout. figurepass repaints 12 lone catchlights on the bare
+    # head, and a garment that touches (28,34) at dirs 2/6 or (30,36) at dir 4 DIAGONALLY — with
+    # neither the pixel nor an orthogonal neighbour of it covered — changes the modal shade the
+    # repaint picks and fails by one pixel. Both sets here cover the eye band outright at those
+    # dirs, which is the safe side of that rule rather than the near side.
+    #
+    # Sunglasses (set 58). One box, and both of those words were argued for by the renderer.
+    #
+    # A box rather than an ellipsoid: a curved lens was drawn first and came out a 1 px line across
+    # the brow. An ellipsoid whose depth falls with |x| the way the skull does never gets far
+    # enough in front of the skull to survive the holdout — only its top edge does — so what was
+    # meant as a wraparound rendered as a hairband. A box holds one y across its whole span, which
+    # is why the spectacles 12 read: at the temples the skull has curved away and the flat front
+    # face is standing 4 px off it. On this head a garment stands off the face, it does not hug it.
+    #
+    # ONE box, because a wraparound cannot reach the temple from here. Side wings were drawn three
+    # ways — out to x 8.6, to 7.9, and swept back to y 0 — and every one of them failed gateHoldout
+    # on the cheek. The skull carries a broad `hi` highlight down its side at dirs 2 and 4, and
+    # patchHead's stray rule asks whether a lone `hi` still has two orthogonal `hi` neighbours. A
+    # garment edge landing NEXT TO that run does not have to cover anything to break it: the wing's
+    # own antialiasing shifts the neighbour's quantised shade by one, the neighbour stops counting
+    # as `hi`, and a pixel two columns away is repainted in the combined render and not in the bare
+    # head. Measured: with the wings, 2 to 5 pixels; without them, zero. The block's edge lands at
+    # column 32 with the highlight ending at 29, and three columns of clear is what it costs.
+    #
+    # So the set separates from the spectacles 12 on the three axes that stay inside the face:
+    # it covers rows 33-35 where 12 straddles eyes and mouth at 34-36, it is 2.0 deep against 12's
+    # 1.8, and it stands to y 10.2 against 12's 9.6. Silhouette overlap with 12 is 0.44.
+    "ea58": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-7.2, 7.6, 13.2),
+             "c1": (7.2, 10.2, 15.2)},
+        ],
+    },
     "fa13": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-8.2, 6.2, 11.0),

@@ -2931,6 +2931,54 @@
       "figuredataVersion": 1,
       "recipeHash": "05363be9a594ef66a538cd7f75d90fc2fc7bb36e97e15b54db7bcb2028c33d7d",
       "pixelHash": "fe19ab65e66453076ae8878c7b6e4c32cb07ab1d32a437ff41a76c74d6930fc1"
+    },
+    {
+      "partId": "ea58",
+      "setId": 58,
+      "type": "ea",
+      "name": "Sunglasses",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ea58.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e9b174d723e91b95ee2aac2f141c769dc94bd801224e9110bc66f31a62740726",
+      "pixelHash": "9e01133f4853305467ff9ae4b562e1e974d3b5f647c37685ddc37dda593f9ee4"
     }
   ]
 }
