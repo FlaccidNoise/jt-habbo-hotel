@@ -833,7 +833,7 @@ function buildRoom(msg: RoomState): void {
     floorDecor(decorAssets, msg.decor.floor),
     { width: app.screen.width, height: app.screen.height });
   scene.center(app.screen.width, app.screen.height);
-  furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth);
+  furniLayer = new FurniLayer(scene.world, DEFS, furniAssets, depth, scene.visible);
   for (const item of furni) furniLayer.apply(item);
   effects = new Effects(scene.world);
   clinkAt.clear();   // the pairs in the old room are gone with it
@@ -842,8 +842,12 @@ function buildRoom(msg: RoomState): void {
   wallLayer = new WallLayer(scene.world, model, WALL_DEFS, furniAssets,
     { click: onWallClick, hover: onWallHover }, depth, wallDecor(decorAssets, msg.decor.wall),
     scene.visible);
-  // The walls cull against the floor's window, so a camera move rebuilds both or neither.
-  scene.onWindow = (window) => wallLayer?.cull(window);
+  // The walls and the furniture cull against the floor's window, so a camera move rebuilds all
+  // three or none.
+  scene.onWindow = (window) => {
+    wallLayer?.cull(window);
+    furniLayer?.cull(window);
+  };
   for (const item of wallFurni) wallLayer.apply(item);
   el("room-name").textContent = `${msg.name} (#${msg.roomId})`;
   for (const avatar of msg.avatars) addAvatar(avatar);

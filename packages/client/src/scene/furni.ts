@@ -8,6 +8,7 @@ import type { Wisp } from "./effects.ts";
 import { frameFor, occluderFor } from "./frames.ts";
 import type { FrameSpec, Occluder } from "./frames.ts";
 import { SCALE } from "./room.ts";
+import type { TileWindow } from "./room.ts";
 import { LAYER } from "./sort.ts";
 import type { DepthIndex } from "./sort.ts";
 
@@ -114,6 +115,17 @@ function furniBox(def: FurniDef, item: FurniItem): DepthBox {
   };
 }
 
+/** Does the item reach into the window? An item is a box on the floor, not a point: a bed laid
+ *  across the edge is still half on screen, so the test is rectangle overlap over the whole
+ *  footprint. Both rectangles are half-open, so an item whose last tile is the window's first is
+ *  in. The window's own CULL_MARGIN (room.ts) is what covers the height a sprite draws above the
+ *  tiles it stands on. A null window is a scene with no camera, which draws everything. */
+function inWindow(def: FurniDef, item: FurniItem, window: TileWindow | null): boolean {
+  if (!window) return true;
+  const box = furniBox(def, item);
+  return box.x0 < window.x1 && box.x1 > window.x0 && box.y0 < window.y1 && box.y1 > window.y0;
+}
+
 /** Every placed item in the room, drawn from generated sprite sheets when the def has a bundle.
  *  `apply` covers `furni_placed` (new id creates, known id updates) and `furni_moved` — the same
  *  rebuild either way. */
@@ -122,6 +134,9 @@ export class FurniLayer {
   private defs: ReadonlyMap<string, FurniDef>;
   private assets: FurniAssets | null;
   private depth: DepthIndex;
+  /** Every placed item, drawn or not. A culled item keeps its record here and nothing else, so
+   *  the way back into the window rebuilds it from the state it left with (#404). */
+  private items = new Map<number, FurniItem>();
   private views = new Map<number, Container>();
   /** #227: the half of a seating item that draws again above every avatar. */
   private fronts = new Map<number, Container>();
@@ -129,17 +144,23 @@ export class FurniLayer {
    *  item's own view, so `remove` destroys it with the view and only has to forget the key. */
   private smoking = new Map<number, Graphics>();
   private ghostView: Container | null = null;
+  /** The floor's visible window, or null for "draw every item" — a scene with no camera. */
+  private window: TileWindow | null;
 
   constructor(
     world: Container,
     defs: ReadonlyMap<string, FurniDef>,
     assets: FurniAssets | null,
     depth: DepthIndex,
+    /** The floor's window at construction. Omitting it draws every item, which is what a scene
+     *  with no camera — every unit test — wants. */
+    window: TileWindow | null = null,
   ) {
     this.world = world;
     this.defs = defs;
     this.assets = assets;
     this.depth = depth;
+    this.window = window;
   }
 
   /** A translucent copy of the item being placed, drawn where it would land and facing the way it
@@ -163,18 +184,43 @@ export class FurniLayer {
     this.depth.delete("ghost");
   }
 
-  /** A seat goes up as two views, so a sitter lands between them: the legs and the far side draw
-   *  behind the body, the near-side back and arm draw over it. The front half carries the box the
-   *  generator measured for it, which is what sorts it against the rest of the room; what puts it
-   *  after the body is the forced `seat_front` edge in sort.ts, since no box can say that. */
+  /** The item is remembered whatever the camera is looking at; it is drawn only if the window
+   *  reaches it. */
   apply(item: FurniItem): void {
     const def = this.defs.get(item.defId);
     if (!def) {
       console.warn(`furni ${item.id}: unknown def ${item.defId}`);
       return;
     }
-    this.remove(item.id);
+    this.drop(item.id);
+    this.items.set(item.id, item);
+    if (inWindow(def, item, this.window)) this.build(def, item);
+  }
 
+  /** Draw the items inside `window` and take down the ones outside, against the same rectangle
+   *  the floor and the walls cull to. Without this a placed item is a permanent child of the world
+   *  and a permanent node in the painter sort however far off screen it is, so the sort's cost
+   *  follows the room's furniture rather than the camera's (#404).
+   *
+   *  A seat's two halves go up and come down together — `build` and `drop` each cover both — or a
+   *  sitter would be drawn over by a backrest whose base had been culled away (#227/#235). */
+  cull(window: TileWindow): void {
+    this.window = window;
+    for (const [id, item] of this.items) {
+      const def = this.defs.get(item.defId);
+      if (!def) continue;
+      const wanted = inWindow(def, item, window);
+      if (wanted === this.views.has(id)) continue;
+      if (wanted) this.build(def, item);
+      else this.drop(id);
+    }
+  }
+
+  /** A seat goes up as two views, so a sitter lands between them: the legs and the far side draw
+   *  behind the body, the near-side back and arm draw over it. The front half carries the box the
+   *  generator measured for it, which is what sorts it against the rest of the room; what puts it
+   *  after the body is the forced `seat_front` edge in sort.ts, since no box can say that. */
+  private build(def: FurniDef, item: FurniItem): void {
     const base = this.backFor(item) ?? this.slabFor(def, item);
     const view = def.interaction === "toggle" && item.state === 1
       ? this.lit(def, item, base)
@@ -199,6 +245,13 @@ export class FurniLayer {
   }
 
   remove(id: number): void {
+    this.items.delete(id);
+    this.drop(id);
+  }
+
+  /** Take an item's views and sort nodes down without forgetting the item — what a cull does, and
+   *  what `apply` does before it rebuilds. */
+  private drop(id: number): void {
     this.smoking.delete(id);
     for (const [views, key] of [[this.views, `furni:${id}`], [this.fronts, `furni:${id}:front`]] as const) {
       const view = views.get(id);
