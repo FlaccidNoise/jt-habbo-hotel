@@ -3075,6 +3075,54 @@
       "figuredataVersion": 1,
       "recipeHash": "f2e369d21109234ede21691d06d4c96c7f22c678a014bb2ac72128fdd5229f31",
       "pixelHash": "52a8a8bd8c82af1de26f023aa1f816b1cb907703f47035655323b58a4e93207c"
+    },
+    {
+      "partId": "ca61",
+      "setId": 61,
+      "type": "ca",
+      "name": "Tie",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ca61.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "992d69f0310e1e0fc63df3a1b3c767cb1adffd526694d8bb2c9f36db3a0e2add",
+      "pixelHash": "09d2e22c61bc3d75988045b92fd6412bfdefd7097cfeb6152175e85f708237ab"
     }
   ]
 }

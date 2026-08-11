@@ -2844,6 +2844,29 @@ FIGURE_PARTS = {
              "c1": (-0.6, 8.0, 8.0)},
         ],
     },
+    # Tie (set 61). Three prims and the whole set is the taper. A box cannot taper, so the blade is
+    # two of them — the ch39 lapel idiom, a staircase of two being enough notch at this scale —
+    # 2.4 wide under the knot and 4.6 at the point. Drawn 3.0 and 4.2, the step was one pixel and
+    # the set read as a stripe painted down the shirt.
+    #
+    # The knot is the third prim and it is the widest of the three at 3.8, which is what names the
+    # garment: a band that is narrowest at the collar is a placket, and one that is widest there is
+    # a tie. It reaches z 20.6, just under the chin plane at 21, so the knot sits in the collar
+    # rather than halfway down the chest.
+    #
+    # It sits at y 6.3 forward, 0.3 proud of bd1's torso, which is all it needs: ca draws after ch
+    # and cc in LAYER_ORDER, so a tie paints over whatever top is underneath by layer order and
+    # never by depth. Clearing the BODY is the only thing its own holdout render cares about.
+    "ca61": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-1.9, 6.3, 18.2),
+             "c1": (1.9, 7.7, 20.6)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-1.2, 6.3, 12.0),
+             "c1": (1.2, 7.4, 18.2)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-2.3, 6.3, 5.6),
+             "c1": (2.3, 7.5, 12.0)},
+        ],
+    },
     "wa15": {
         "prims": [
             {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.6),
