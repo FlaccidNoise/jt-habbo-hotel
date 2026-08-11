@@ -59,6 +59,11 @@ describe("fleet-wide LLM budget and tick metrics", () => {
 
   describe("GLOBAL_LLM_CAP", () => {
     test("the 601st LLM call of the day falls back to canned, spread so no per-NPC cap trips", async () => {
+      // Pin the clock: the loop advances fake time by 601 x 8s ≈ 80 minutes, and rollDay()
+      // re-arms the fleet cap if that window crosses UTC midnight. Off a real wall clock the
+      // test therefore failed once a day during the last ~80 minutes before midnight (#448);
+      // mid-morning keeps the whole run inside one UTC day.
+      vi.setSystemTime(new Date("2026-08-10T10:00:00Z"));
       const roster = [0, 1, 2, 3].map((i) => npc(-(i + 1)));
       const generate = vi.fn<NpcGenerate>(async () => "an LLM line");
       const { svc, say } = service(roster, generate);
