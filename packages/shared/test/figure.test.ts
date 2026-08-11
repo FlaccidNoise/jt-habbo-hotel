@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   FIGURE_SETS, LAYER_ORDER, SELECTABLE_TYPES, STAFF_GRANT_SETS, STARTER_GRANT_SETS,
-  UNPURCHASABLE_SETS, WEARABLE_PRICES, setById,
+  UNPURCHASABLE_SETS, WEARABLE_PRICES, WEARABLE_SHELF, setById,
 } from "../src/figuredata.ts";
 import { CATALOG_PRICES } from "../src/furni.ts";
 import type { FigureSet } from "../src/figuredata.ts";
@@ -179,26 +179,35 @@ describe("the wardrobe registry", () => {
 
 // The wardrobe's half of the price ladder (#352), held to the same rule furni.test.ts holds
 // CATALOG_PRICES to: a garment nobody can obtain is a bug, and an exemption has to be written down.
+// No test here names a set id: a garment pack adds rows to WEARABLE_SHELF, and what has to hold
+// about those rows is the same however many there are (#438).
 describe("the Stars shelf", () => {
   const grantable = (id: number): boolean =>
     STARTER_GRANT_SETS.includes(id) || STAFF_GRANT_SETS.includes(id);
 
   test("every set is grantable, priced, or explicitly unpurchasable with a reason", () =>
     expect(
-      FIGURE_SETS.filter((s) => !grantable(s.id) && !WEARABLE_PRICES.has(s.id)
+      FIGURE_SETS.filter((s) => !s.retired && !grantable(s.id) && !WEARABLE_PRICES.has(s.id)
         && !UNPURCHASABLE_SETS.has(s.id)).map((s) => s.id),
-      "price it into WEARABLE_PRICES or add the id to UNPURCHASABLE_SETS with a reason comment",
+      "price it into WEARABLE_SHELF or add the id to UNPURCHASABLE_SETS with a reason comment",
     ).toEqual([]));
 
-  test("the hair expansion is the shelf: all ten, and only those", () =>
-    expect([...WEARABLE_PRICES.keys()].sort((a, b) => a - b))
-      .toEqual([28, 29, 30, 31, 32, 33, 34, 35, 36, 37]));
+  // The other half of that partition. STAFF_GRANT_SETS sits out of the last pair on purpose: the
+  // blazer 16 is granted to NPCs and sold to nobody, so it is legitimately in both lists.
+  test("no set lands in two of the three lists", () => {
+    const priced = [...WEARABLE_PRICES.keys()];
+    expect(priced.filter(grantable), "granted and also for sale").toEqual([]);
+    expect(priced.filter((id) => UNPURCHASABLE_SETS.has(id)),
+      "for sale and also marked unpurchasable").toEqual([]);
+    expect(STARTER_GRANT_SETS.filter((id) => UNPURCHASABLE_SETS.has(id)),
+      "granted and also marked unpurchasable").toEqual([]);
+  });
 
-  test("nothing already granted is also for sale", () =>
-    expect([...WEARABLE_PRICES.keys()].filter(grantable)).toEqual([]));
+  test("one row per set — a repeated id would drop a price on the floor", () =>
+    expect(WEARABLE_PRICES.size).toBe(WEARABLE_SHELF.length));
 
   test("no price names a set that left the registry, or one that retired", () => {
-    for (const id of WEARABLE_PRICES.keys()) {
+    for (const { set: id } of WEARABLE_SHELF) {
       const set = setById(id);
       expect(set, `set ${id} missing`).toBeDefined();
       expect(set?.retired, `set ${id} retired`).toBe(false);
@@ -206,17 +215,34 @@ describe("the Stars shelf", () => {
   });
 
   // A wearable priced above the furni band would read as a different currency, and one above the
-  // 600 daily ceiling could not be bought in a day's play — hair is stock, not a prestige fixture.
-  test("prices sit inside the furni band and under a day's earnings", () => {
+  // 600 daily ceiling could not be bought in a day's play — garments are stock, not prestige
+  // fixtures.
+  test("prices are positive, inside the furni band, and under a day's earnings", () => {
     const furni = [...CATALOG_PRICES.values()];
-    for (const [id, price] of WEARABLE_PRICES) {
-      expect(price, `set ${id}`).toBeGreaterThanOrEqual(Math.min(...furni));
-      expect(price, `set ${id}`).toBeLessThanOrEqual(600);
+    for (const { set, price } of WEARABLE_SHELF) {
+      expect(price, `set ${set}`).toBeGreaterThan(0);
+      expect(price, `set ${set}`).toBeGreaterThanOrEqual(Math.min(...furni));
+      expect(price, `set ${set}`).toBeLessThanOrEqual(600);
     }
   });
 
-  test("the shelf is a ladder, cheapest first", () => {
-    const prices = [...WEARABLE_PRICES.values()];
-    expect(prices).toEqual([...prices].sort((a, b) => a - b));
+  // The client titles a shelf by splitting its theme on "_" and capitalising each word, so a theme
+  // that is empty, spaced, or capitalised reaches the tab bar looking like a typo.
+  test("every priced set carries a theme the catalog can title", () => {
+    for (const { set, theme } of WEARABLE_SHELF) {
+      expect(theme, `set ${set}`).toMatch(/^[a-z]+(_[a-z]+)*$/);
+    }
+  });
+
+  test("each shelf is a ladder, cheapest first", () => {
+    // Per theme, not across all of them: shelves are separate tabs, so two themes' prices are
+    // never read as one list.
+    const byTheme = new Map<string, number[]>();
+    for (const { price, theme } of WEARABLE_SHELF) {
+      byTheme.set(theme, [...(byTheme.get(theme) ?? []), price]);
+    }
+    for (const [theme, prices] of byTheme) {
+      expect(prices, theme).toEqual([...prices].sort((a, b) => a - b));
+    }
   });
 });

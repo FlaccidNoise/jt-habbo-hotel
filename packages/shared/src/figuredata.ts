@@ -137,30 +137,36 @@ export const STAFF_GRANT_SETS: readonly number[] = [
   17, 18, 19, 20, 21, 22, 23, 24,
 ];
 
-/** The shelf the catalog files purchasable wearables under. Themes are the catalog's organizing
- *  unit (#355, #364), and every set on sale today is hair. */
-export const WEARABLE_THEME = "hair";
-
-/** Wearables bought with Stars (#352). Hair is the cosmetics economy's stock — the one garment
- *  type with the variety to make a cut say something — so 28-37 are sold rather than granted, and
- *  a bought set belongs to the account for good. Ownership is not an item: sets never trade, so
+/** Wearables bought with Stars (#352). One row per set on sale: what it costs, and the catalog
+ *  shelf it files under. Themes are the catalog's organizing unit (#355, #364), so a garment pack
+ *  opens a new shelf by writing a new `theme` string here and nothing else — the client derives
+ *  its tabs from this, and no UI edit follows (#438).
+ *
+ *  A bought set belongs to the account for good. Ownership is not an item: sets never trade, so
  *  none of this touches #118's marketplace.
  *
- *  Cheapest first, four rungs inside the furni band (25-3300) and under the 600 daily earn
- *  ceiling: 150 for a plain silhouette, 250 for a shaped one, 350 for a styled one, and 450 for
- *  the three that read across a room — most of a day's play, never more. */
-export const WEARABLE_PRICES: ReadonlyMap<number, number> = new Map([
-  [32, 150],   // Buzz
-  [34, 150],   // Fringe
-  [28, 250],   // Bob
-  [31, 250],   // Slick Back
-  [29, 350],   // Ponytail
-  [30, 350],   // Curls
-  [33, 350],   // Bun
-  [35, 450],   // Afro
-  [36, 450],   // Braids
-  [37, 450],   // Mohawk
-]);
+ *  Rows are cheapest-first within a theme, because that is the order a shelf shows them in. Hair
+ *  is the cosmetics economy's stock — the one garment type with the variety to make a cut say
+ *  something — so 28-37 are sold rather than granted, on four rungs inside the furni band
+ *  (25-3300) and under the 600 daily earn ceiling: 150 for a plain silhouette, 250 for a shaped
+ *  one, 350 for a styled one, and 450 for the three that read across a room. */
+export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
+  { set: 32, price: 150, theme: "hair" },   // Buzz
+  { set: 34, price: 150, theme: "hair" },   // Fringe
+  { set: 28, price: 250, theme: "hair" },   // Bob
+  { set: 31, price: 250, theme: "hair" },   // Slick Back
+  { set: 29, price: 350, theme: "hair" },   // Ponytail
+  { set: 30, price: 350, theme: "hair" },   // Curls
+  { set: 33, price: 350, theme: "hair" },   // Bun
+  { set: 35, price: 450, theme: "hair" },   // Afro
+  { set: 36, price: 450, theme: "hair" },   // Braids
+  { set: 37, price: 450, theme: "hair" },   // Mohawk
+];
+
+/** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
+ *  is not for sale. */
+export const WEARABLE_PRICES: ReadonlyMap<number, number> =
+  new Map(WEARABLE_SHELF.map((w) => [w.set, w.price]));
 
 /** Every set that is neither granted nor priced must be listed here with a reason — checked by
  *  figure.test.ts, so a garment nobody can ever obtain stays a deliberate choice rather than a

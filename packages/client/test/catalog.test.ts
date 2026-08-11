@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
-  CATALOG_PRICES, PROTOTYPE_CATALOG, WALL_CATALOG, WEARABLE_PRICES, WEARABLE_THEME,
+  CATALOG_PRICES, PROTOTYPE_CATALOG, WALL_CATALOG, WEARABLE_SHELF,
 } from "@grand/shared";
 import { catalogGroups, themeLabel, thumbCrop } from "../src/ui/catalog.ts";
 import type { CatalogItem } from "../src/ui/catalog.ts";
@@ -95,7 +95,7 @@ describe("shelves", () => {
   // thing that tells a card to bake a figure instead of cropping a sheet.
   test("a wearable lands on its own shelf, carrying the set id the buy needs", () => {
     const groups = catalogGroups(
-      [...ITEMS, { id: "set:30", name: "Curls", theme: WEARABLE_THEME, setId: 30 }],
+      [...ITEMS, { id: "set:30", name: "Curls", theme: "hair", setId: 30 }],
       new Map([...PRICES, ["set:30", 350]]), 1000,
     );
     expect(groups.at(-1)).toMatchObject({ theme: "hair", label: "Hair" });
@@ -106,15 +106,17 @@ describe("shelves", () => {
 
   test("a wearable priced past the balance shows greyed, like any other item", () => {
     const groups = catalogGroups(
-      [{ id: "set:30", name: "Curls", theme: WEARABLE_THEME, setId: 30 }],
+      [{ id: "set:30", name: "Curls", theme: "hair", setId: 30 }],
       new Map([["set:30", 350]]), 349,
     );
     expect(groups[0]?.entries[0]?.affordable).toBe(false);
   });
 
-  test("every hair on the shelf is priced, and furni entries carry no set id", () => {
-    const wearables = [...WEARABLE_PRICES].map(([setId, price]) => ({
-      item: { id: `set:${setId}`, name: `Set ${setId}`, theme: WEARABLE_THEME, setId },
+  // A garment pack ships new themes in WEARABLE_SHELF, so what has to hold is that every priced
+  // set reaches the shelf its own row names — not that they all land on one (#438).
+  test("every priced wearable reaches its own theme's shelf, and furni entries carry no set id", () => {
+    const wearables = WEARABLE_SHELF.map(({ set, price, theme }) => ({
+      item: { id: `set:${set}`, name: `Set ${set}`, theme, setId: set },
       price,
     }));
     const groups = catalogGroups(
@@ -122,9 +124,10 @@ describe("shelves", () => {
       new Map<string, number>([...CATALOG_PRICES, ...wearables.map((w) => [w.item.id, w.price] as const)]),
       10000,
     );
-    const hair = groups.find((g) => g.theme === WEARABLE_THEME);
-    expect(hair?.entries.length).toBe(WEARABLE_PRICES.size);
-    const furni = groups.filter((g) => g.theme !== WEARABLE_THEME).flatMap((g) => g.entries);
+    const themes = new Set(WEARABLE_SHELF.map((w) => w.theme));
+    const shelved = groups.filter((g) => themes.has(g.theme)).flatMap((g) => g.entries);
+    expect(shelved.map((e) => e.id).sort()).toEqual(wearables.map((w) => w.item.id).sort());
+    const furni = groups.filter((g) => !themes.has(g.theme)).flatMap((g) => g.entries);
     expect(furni.filter((e) => e.setId !== undefined)).toEqual([]);
   });
 });

@@ -8,8 +8,7 @@ import {
   ROOM_FURNI_CAP,
   LEVER_COST,
   WALL_CATALOG,
-  WEARABLE_PRICES,
-  WEARABLE_THEME,
+  WEARABLE_SHELF,
   checkPlacement,
   checkWallPlacement,
   footprintTiles,
@@ -69,14 +68,15 @@ const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) =>
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
 
 // Wearables share the shop with furni (#352). The grid is keyed by string ids, so a set enters it
-// as `set:<id>`; `setId` is what tells a card to bake its thumbnail and buy with `buy_set`.
+// as `set:<id>`; `setId` is what tells a card to bake its thumbnail and buy with `buy_set`. Each
+// row carries its own theme, so a garment pack's shelf appears here with no edit (#438).
 const WEARABLE_ITEMS: CatalogItem[] = [];
 const SHOP_PRICES = new Map(CATALOG_PRICES);
-for (const [setId, price] of WEARABLE_PRICES) {
+for (const { set: setId, price, theme } of WEARABLE_SHELF) {
   const set = setById(setId);
   if (!set) continue;
   const id = `set:${setId}`;
-  WEARABLE_ITEMS.push({ id, name: set.name, theme: WEARABLE_THEME, setId });
+  WEARABLE_ITEMS.push({ id, name: set.name, theme, setId });
   SHOP_PRICES.set(id, price);
 }
 const DIRS: ReadonlyArray<0 | 2 | 4 | 6> = [0, 2, 4, 6];
