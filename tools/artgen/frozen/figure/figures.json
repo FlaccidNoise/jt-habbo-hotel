@@ -2445,6 +2445,54 @@
       "figuredataVersion": 1,
       "recipeHash": "94e6bd1d72ed3777eb5d09c92933fa6f7543e6f65f0fe3f5ab1457000e0bf87a",
       "pixelHash": "d1d1b52022775c818692e259cfc9249ab50274e3adf735a8dd9e5c6fd70eaafd"
+    },
+    {
+      "partId": "lg48",
+      "setId": 48,
+      "type": "lg",
+      "name": "Long Skirt",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg48.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2b5232f866dc2e25d32674bd52cbe8d650abb10404574f9434fcaf6dd8d16920",
+      "pixelHash": "453d41c40a017da0abb28b972922efa2bf524a05529dc80d500f360b7c44581a"
     }
   ]
 }

@@ -2291,6 +2291,28 @@ FIGURE_PARTS = {
              "c1": (3.2, 6.6, -6.0)},
         ],
     },
+    # Long Skirt (set 48, one slot). Same two prims as the pleated skirt 8, and the difference is
+    # entirely in their numbers: the cone falls 28 px to the calf where 8 stops 15 px down above
+    # the knee, and opens to 14.2 at the hem against 8's 11.6.
+    #
+    # It stops at the calf rather than the ankle's 33 px because of the sit frame. The cone hangs
+    # from the hip, the hip IS the sit anchor at row 74, and a cone of radius r reaches exactly
+    # r/2 rows past its own hem in every direction — 74 + 28 + 7.1 is the last row that clears the
+    # 112-row canvas the bounds gate holds every layer to.
+    #
+    # The 14.2 hem is structural, not decoration. A walk frame swings the shin 22 degrees, which
+    # puts its outer surface 14.0 px off the hip axis at hem height; a narrower cone lets a bare
+    # shin through the front of the skirt, because the body wins the depth test wherever it is
+    # nearer. A second, narrower cone inside this one was the first try at breaking the profile,
+    # and it is not available: every cone starts at its bone, so two of them share a top cap plane
+    # at z 0 and the pair z-fights along the inner rim — one pixel of it failed the holdout gate.
+    "lg48": {
+        "prims": [
+            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-8.2, -6.6, -2.2),
+             "c1": (8.2, 6.6, 3.0)},
+            {"t": "cone", "bone": "hip", "slot": 0, "len": 28.0, "r0": 8.8, "r1": 14.2},
+        ],
+    },
     "sh9": {
         "prims": [
             {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
