@@ -108,6 +108,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // near-duplicate rule is the whole brief, so 39 differs from the staff blazer 16 by
   // hem and shoulder width, not by ramp. None hides anything: ch is what a coat hides.
   { id: 38, type: "ch", name: "Hoodie",        slots: 2, family: "material", hides: [], retired: false },
+  { id: 39, type: "ch", name: "Blazer",        slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -170,6 +171,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 36, price: 450, theme: "hair" },   // Braids
   { set: 37, price: 450, theme: "hair" },   // Mohawk
   { set: 38, price: 300, theme: "tops" },   // Hoodie
+  { set: 39, price: 400, theme: "tops" },   // Blazer
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

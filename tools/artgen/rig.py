@@ -2058,6 +2058,37 @@ FIGURE_PARTS = {
              "c1": (5.8, 7.4, 9.4)},
         ],
     },
+    # Blazer (set 39, two slots). Set 16 is already a two-slot jacket with full sleeves, so this one
+    # has to differ in outline, not ramp. It is tailored where 16 is a straight box: 9.4 at the
+    # shoulder, 8.4 at the chest, 7.7 at the waist, and a skirt that hangs to -7.0 where 16 stops at
+    # the waist. A box cannot taper, so the taper is two boxes. The waist stays at 7.7 rather than
+    # going narrower — bd1's torso is 7.5, and a garment inside that lets skin through at the seam.
+    # The lapel is a two-step wedge, a staircase of two being enough notch at this scale, and slot 1
+    # is the shirt beneath as a front-only V where 16's slot 1 wraps front to back.
+    "ch39": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -6.8, 8.0),
+             "c1": (8.4, 6.8, 18.8)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.7, -6.3, -7.0),
+             "c1": (7.7, 6.3, 8.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-9.4, -6.4, 14.4),
+             "c1": (9.4, 6.4, 19.6)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 3.9},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 3.9},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-6.6, 6.6, 15.0),
+             "c1": (-2.8, 7.6, 19.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (2.8, 6.6, 15.0),
+             "c1": (6.6, 7.6, 19.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-4.6, 6.6, 10.8),
+             "c1": (-1.4, 7.6, 15.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (1.4, 6.6, 10.8),
+             "c1": (4.6, 7.6, 15.0)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-2.8, 6.7, 13.4),
+             "c1": (2.8, 7.3, 19.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-1.4, 6.7, 9.0),
+             "c1": (1.4, 7.3, 13.4)},
+        ],
+    },
     # Overcoat (set 11, two slots, hides ch). Full sleeves plus a flare below the hip — the flare
     # is why the cone prim exists.
     "cc11": {
