@@ -2349,6 +2349,54 @@
       "figuredataVersion": 1,
       "recipeHash": "d58c8eed2ee34952d910d8af9a017fdbad3344ca928c0d15a5bd4dc02cd3b1e6",
       "pixelHash": "50090a5442231ca4eab08099e340075bafec873a96655d62a0a3ee4b2a5464a9"
+    },
+    {
+      "partId": "lg46",
+      "setId": 46,
+      "type": "lg",
+      "name": "Flares",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg46.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2e6a51f8f349217ad25cb715eec95ff6ebdce4c1bbc9f4b6be1ff4552c964588",
+      "pixelHash": "c9fda855b5e9272a856dfa29dd923cc7172b6b47a2a45a82a34bc99509b4498d"
     }
   ]
 }

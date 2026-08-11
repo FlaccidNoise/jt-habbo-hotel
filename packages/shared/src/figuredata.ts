@@ -117,6 +117,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // Legs and shoes pack (#440). Four lg and four sh, all one colour slot, none hiding anything —
   // lg and sh are the two layer types nothing in the wardrobe has ever hidden.
   { id: 45, type: "lg", name: "Shorts",     slots: 1, family: "material", hides: [], retired: false },
+  { id: 46, type: "lg", name: "Flares",     slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -189,6 +190,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 40, price: 350, theme: "tops" },   // Vest + Shirt
   { set: 39, price: 400, theme: "tops" },   // Blazer
   { set: 45, price: 150, theme: "legs" },   // Shorts
+  { set: 46, price: 250, theme: "legs" },   // Flares
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

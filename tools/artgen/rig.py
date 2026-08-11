@@ -2249,6 +2249,21 @@ FIGURE_PARTS = {
             {"t": "limb", "bone": "leg_r", "slot": 0, "len": 11.5, "r": 5.4, "caps": "top"},
         ],
     },
+    # Flares (set 46, one slot). Trousers 7 are a straight tube, so this one is the only lg
+    # silhouette here that gets WIDER going down: a cone on the knee bone, 4.4 at the knee opening
+    # to 7.4 at the hem. The thigh is cut slim at 4.5 against the trousers' 4.7 so the flare has
+    # something to flare from. The hem stops at 16 of the shin's 18 rather than at the sole,
+    # because a bell that reaches the floor swallows the shoe layer whole.
+    "lg46": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-7.9, -6.3, -1.6),
+             "c1": (7.9, 6.3, 3.4)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.5},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.5},
+            {"t": "cone", "bone": "knee_l", "slot": 0, "len": 16.0, "r0": 4.4, "r1": 7.4},
+            {"t": "cone", "bone": "knee_r", "slot": 0, "len": 16.0, "r0": 4.4, "r1": 7.4},
+        ],
+    },
     "sh9": {
         "prims": [
             {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
