@@ -20,6 +20,25 @@ import type { Hanging, Layout, Spot } from "./furnish.ts";
 // trade worth making.
 export const GROUNDS_ROOM_ID = 4;
 
+export interface Rect { x0: number; y0: number; x1: number; y1: number }
+
+/** The room's named regions, so the NPC roster's home rects, the staging work, and bug #407's
+ *  per-region decor can all point at the same rectangles the floor below was built from. PLAZA,
+ *  JAZZ_STAGE, GALLERY and PROMENADE are the rects the paint calls below already used inline; POOL
+ *  is the screened courtyard, not the curb (that stays a local literal, reused as-is at the pool
+ *  rim and again for POOL_RIM). POOL_BAR, JAZZ_BOOTHS and CAFE_CORNER have no paint call of their
+ *  own — they bound the furniture cluster comments already named them for. */
+export const ZONES = {
+  PLAZA: { x0: 9, y0: 92, x1: 25, y1: 108 },
+  POOL: { x0: 38, y0: 60, x1: 92, y1: 92 },
+  POOL_BAR: { x0: 42, y0: 70, x1: 48, y1: 76 },
+  JAZZ_STAGE: { x0: 58, y0: 114, x1: 74, y1: 122 },
+  JAZZ_BOOTHS: { x0: 44, y0: 126, x1: 86, y1: 138 },
+  GALLERY: { x0: 104, y0: 76, x1: 144, y1: 88 },
+  CAFE_CORNER: { x0: 101, y0: 111, x1: 128, y1: 135 },
+  PROMENADE: { x0: 34, y0: 97, x1: 176, y1: 103 },
+} satisfies Record<string, Rect>;
+
 const W = 200;
 const H = 200;
 const VOID = -1;
@@ -84,27 +103,26 @@ function run(
 // walk out of is a bug rather than a mood. Read each screen with the opening named beside it.
 
 /** The plaza rim, and the four gaps that make it a place you walk into rather than climb. */
-const PLAZA = { x0: 9, y0: 92, x1: 25, y1: 108 };
-rim(PLAZA.x0, PLAZA.y0, PLAZA.x1, PLAZA.y1, 1);
-paint(PLAZA.x0, 99, PLAZA.x0, 101, 0);
-paint(PLAZA.x1, 99, PLAZA.x1, 101, 0);
-paint(16, PLAZA.y0, 18, PLAZA.y0, 0);
-paint(16, PLAZA.y1, 18, PLAZA.y1, 0);
+rim(ZONES.PLAZA.x0, ZONES.PLAZA.y0, ZONES.PLAZA.x1, ZONES.PLAZA.y1, 1);
+paint(ZONES.PLAZA.x0, 99, ZONES.PLAZA.x0, 101, 0);
+paint(ZONES.PLAZA.x1, 99, ZONES.PLAZA.x1, 101, 0);
+paint(16, ZONES.PLAZA.y0, 18, ZONES.PLAZA.y0, 0);
+paint(16, ZONES.PLAZA.y1, 18, ZONES.PLAZA.y1, 0);
 
 /** The promenade: a five-tile lane at y 98-102 hedged on both sides from x 34 to x 176, with
  *  three four-tile gates through each hedge. The gates are the room's connective tissue — every
  *  zone hangs off one, and the corridors below line up with them. */
 const PROM_GATES: ReadonlyArray<readonly [number, number]> = [[44, 47], [96, 99], [150, 153]];
-for (const y of [97, 103]) {
-  paint(34, y, 176, y, VOID);
+for (const y of [ZONES.PROMENADE.y0, ZONES.PROMENADE.y1]) {
+  paint(ZONES.PROMENADE.x0, y, ZONES.PROMENADE.x1, y, VOID);
   for (const [a, b] of PROM_GATES) paint(a, y, b, y, 0);
 }
 
 /** Pool courtyard: screened north, west and east, open south through the x 44-47 gate and around
  *  both screen ends at y 93-96. */
-paint(38, 60, 92, 60, VOID);
-paint(38, 60, 38, 92, VOID);
-paint(92, 60, 92, 92, VOID);
+paint(ZONES.POOL.x0, ZONES.POOL.y0, ZONES.POOL.x1, ZONES.POOL.y0, VOID);
+paint(ZONES.POOL.x0, ZONES.POOL.y0, ZONES.POOL.x0, ZONES.POOL.y1, VOID);
+paint(ZONES.POOL.x1, ZONES.POOL.y0, ZONES.POOL.x1, ZONES.POOL.y1, VOID);
 rim(51, 67, 79, 83, 1);              // the pool curb
 paint(82, 66, 90, 76, 1);            // east viewing deck, looking across the water
 
@@ -113,7 +131,8 @@ paint(82, 66, 90, 76, 1);            // east viewing deck, looking across the wa
 paint(38, 108, 38, 138, VOID);
 paint(92, 108, 92, 138, VOID);
 paint(42, 142, 88, 142, VOID);
-paint(58, 114, 74, 122, 1);          // the stage
+// the stage
+paint(ZONES.JAZZ_STAGE.x0, ZONES.JAZZ_STAGE.y0, ZONES.JAZZ_STAGE.x1, ZONES.JAZZ_STAGE.y1, 1);
 paint(44, 126, 52, 134, 1);          // west viewing deck, facing the stage
 
 /** Gallery colonnade: two rows of single-tile columns four apart, with the gallery walk between
@@ -121,8 +140,8 @@ paint(44, 126, 52, 134, 1);          // west viewing deck, facing the stage
  *  hangings — a 200x200 room has walls only at x 0 and y 0 otherwise. */
 const COLUMNS: readonly number[] = [104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144];
 for (const x of COLUMNS) {
-  paint(x, 76, x, 76, VOID);
-  paint(x, 88, x, 88, VOID);
+  paint(x, ZONES.GALLERY.y0, x, ZONES.GALLERY.y0, VOID);
+  paint(x, ZONES.GALLERY.y1, x, ZONES.GALLERY.y1, VOID);
 }
 
 /** Six corridors, two per promenade gate: parallel screens four apart, open at both ends, running
@@ -177,7 +196,7 @@ run(["potted_palm"], 11, 94, 12, 0, 2);
 run(["potted_palm"], 11, 106, 12, 0, 2);
 run(["potted_palm_teal"], 11, 100, 12, 0, 2);
 
-const RIM_RAIL = rimTiles(PLAZA.x0, PLAZA.y0, PLAZA.x1, PLAZA.y1)
+const RIM_RAIL = rimTiles(ZONES.PLAZA.x0, ZONES.PLAZA.y0, ZONES.PLAZA.x1, ZONES.PLAZA.y1)
   .filter((t) => heightAt(t.x, t.y) === 1);
 for (let i = 0; i < RIM_RAIL.length; i += 4) {
   const t = RIM_RAIL[i];

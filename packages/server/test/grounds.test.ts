@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -6,7 +7,7 @@ import { PROTOTYPE_CATALOG, footprintTiles, parseHeightmap, tileHeight } from "@
 import type { FurniItem, RoomModel } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { openDb, closeDb } from "../src/db.ts";
-import { GROUNDS, GROUNDS_DOOR, GROUNDS_HEIGHTMAP, GROUNDS_ROOM_ID } from "../src/grounds.ts";
+import { GROUNDS, GROUNDS_DOOR, GROUNDS_HEIGHTMAP, GROUNDS_ROOM_ID, ZONES } from "../src/grounds.ts";
 import { reachable } from "../src/pathfind.ts";
 
 // The Resort Grounds (#406). The room is generated, so what these tests hold onto is what a
@@ -68,6 +69,15 @@ describe("the Resort Grounds floor", () => {
     const model = parseHeightmap(GROUNDS_HEIGHTMAP, GROUNDS_DOOR);
     expect([model.width, model.height]).toEqual([200, 200]);
     expect(tileHeight(model, GROUNDS_DOOR.x, GROUNDS_DOOR.y)).toBe(0);
+  });
+
+  test("the heightmap is unchanged (WP3 ZONES refactor guard)", () => {
+    // The ZONES rects replaced inline literals in the paint/rim calls that build this string.
+    // A hash pin means a future edit to those calls that drifts the floor fails here instead of
+    // silently shipping a moved terrace.
+    expect(createHash("sha256").update(GROUNDS_HEIGHTMAP).digest("hex")).toBe(
+      "3c0771a6b88b185cf14ce0456caf8227c8b9710ca89fdc8183d83899484292a7",
+    );
   });
 
   test("the layout stays under the house's own cap", () => {
@@ -158,4 +168,17 @@ describe("the seeded Resort Grounds", () => {
     expect(stranded).toEqual([]);
     closeDb(db);
   }, 20_000);
+});
+
+describe("ZONES", () => {
+  test("every rect sits inside the 200x200 floor with x0<=x1 and y0<=y1", () => {
+    for (const [name, rect] of Object.entries(ZONES)) {
+      expect(rect.x0, `${name}.x0`).toBeGreaterThanOrEqual(0);
+      expect(rect.y0, `${name}.y0`).toBeGreaterThanOrEqual(0);
+      expect(rect.x1, `${name}.x1`).toBeLessThan(200);
+      expect(rect.y1, `${name}.y1`).toBeLessThan(200);
+      expect(rect.x0, `${name}: x0<=x1`).toBeLessThanOrEqual(rect.x1);
+      expect(rect.y0, `${name}: y0<=y1`).toBeLessThanOrEqual(rect.y1);
+    }
+  });
 });
