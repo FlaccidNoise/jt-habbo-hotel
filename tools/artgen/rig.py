@@ -2636,6 +2636,32 @@ FIGURE_PARTS = {
              "r0": 7.3, "r1": 8.0},
         ],
     },
+    # Headphones (set 55, hides nothing). The one hat here that has to read over hair, so it is
+    # authored as an outline laid ON the head rather than a shell replacing it: ha draws after hr,
+    # so the band paints over whatever is underneath, Afro and Mohawk included.
+    #
+    # The band is a CORONAL disc — thin in y, wide in x and z — so it arcs ear to ear over the
+    # crown. The sagittal version of the same prim was drawn first and is what a headband is: it
+    # runs front to back and its front edge falls down the forehead to row 33, between the eyes.
+    # A coronal band sits at y -3.4 with a 5.5 px depth and never reaches past the skull's own
+    # front. It stands 2.2 px proud of the skull sideways and 1.6 above the crown: an arc only one
+    # px clear reads as a pencil line at 64, because every pixel of it is silhouette outline with
+    # no interior shade left between the edges.
+    #
+    # The cups are pucks 2 px proud of the skull at ear height. Their z is 9.4 rather than the
+    # ear's own 11 for the catchlight above: at dir 6 the near cup's rim passed through (28,34)'s
+    # neighbourhood, and dropping it two px puts the whole cup below the pixel while the band,
+    # which covers it outright, takes the contact instead.
+    "ha55": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -3.4, 15.2), "r": 12.0,
+             "squash": (1.025, 0.23, 0.716)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (10.4, -3.4, 9.4), "r": 3.3,
+             "squash": (0.50, 0.94, 0.94)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (-10.4, -3.4, 9.4), "r": 3.3,
+             "squash": (0.50, 0.94, 0.94)},
+        ],
+    },
     "ea12": {
         "prims": [
             {"t": "box", "bone": "head", "slot": 0, "c0": (-7.4, 7.0, 12.2),

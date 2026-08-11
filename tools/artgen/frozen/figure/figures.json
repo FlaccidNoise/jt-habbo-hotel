@@ -2785,6 +2785,54 @@
       "figuredataVersion": 1,
       "recipeHash": "35458a0595817f769d74e72cf45d7ce510485a641dbd8be240729470c891845f",
       "pixelHash": "8425f9c9f4effb23d070c60cb0f956ef4ea65fe3d5e6b1c4c4228400c742c5b4"
+    },
+    {
+      "partId": "ha55",
+      "setId": 55,
+      "type": "ha",
+      "name": "Headphones",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ha55.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6841dbc37dce6801ccbf832d4836bf62e510b8feaed40be84ccfdfe55341fe44",
+      "pixelHash": "713970589ee9f74498b273b35f1915b29e52918ee868a141842b618547aef48d"
     }
   ]
 }
