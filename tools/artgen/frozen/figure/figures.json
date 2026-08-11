@@ -2589,6 +2589,54 @@
       "figuredataVersion": 1,
       "recipeHash": "4f90cf2f3dab8c97142d19071f45d869e24d96c9e4f3434b00d3c891344c8bab",
       "pixelHash": "9082b9fd70b3f47169af261e5abf8390833d1b2e13476ab009675e3f1089ee09"
+    },
+    {
+      "partId": "sh51",
+      "setId": 51,
+      "type": "sh",
+      "name": "Heels",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh51.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "9a27e3e7ad738f8ba6fa6e6566814cd43ea014e26524a60270351c558d75a464",
+      "pixelHash": "95ff5ad5540cb7d75e978a579f36efd9105ecb4664c5af9a430d0c007991df7f"
     }
   ]
 }

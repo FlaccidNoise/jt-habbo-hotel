@@ -2372,6 +2372,36 @@ FIGURE_PARTS = {
              "c1": (5.0, 5.0, -9.2)},
         ],
     },
+    # Heels (set 51, one slot). The lift is in the shoe, never in the figure. The bones are shared
+    # by every wearable ever made and the sole stays on the ground plane at -18, so what a heel
+    # gets instead is a wedge: the vamp is cut low over the toes at -14.2 and the counter behind it
+    # rises to -12.4, 1.4 over the loafer 9's flat -13.8. That rising back, a point in front and a
+    # spike behind are three steps in an outline the loafer draws as one flat box.
+    #
+    # The spike and the point both start clear of the floor. A frame's deepest row is
+    # (|x| + |y|) / 2.828 below the prim's own z, and the loafer's footprint already lands on row
+    # 110 in the walk-contact frames against a bounds gate that fails at 111 — so anything reaching
+    # further out than the loafer does has to sit higher up than the loafer's sole to pay for it.
+    "sh51": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.05, -3.25, -float(SHIN_LEN)),
+             "c1": (4.05, 6.7, -SHIN_LEN + 3.8)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.05, -3.25, -float(SHIN_LEN)),
+             "c1": (4.05, 6.7, -SHIN_LEN + 3.8)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.05, -3.25, -SHIN_LEN + 3.8),
+             "c1": (4.05, 1.0, -SHIN_LEN + 5.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.05, -3.25, -SHIN_LEN + 3.8),
+             "c1": (4.05, 1.0, -SHIN_LEN + 5.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-2.4, 6.7, -SHIN_LEN + 0.6),
+             "c1": (2.4, 9.2, -SHIN_LEN + 2.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-2.4, 6.7, -SHIN_LEN + 0.6),
+             "c1": (2.4, 9.2, -SHIN_LEN + 2.2)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-1.8, -5.4, -SHIN_LEN + 0.4),
+             "c1": (1.8, -3.2, -SHIN_LEN + 3.4)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-1.8, -5.4, -SHIN_LEN + 0.4),
+             "c1": (1.8, -3.2, -SHIN_LEN + 3.4)},
+        ],
+    },
     # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
     # stays clear because the brow and nose reach further forward than the hair does.
     "hr3": {
