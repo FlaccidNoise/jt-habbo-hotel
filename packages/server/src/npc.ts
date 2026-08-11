@@ -9,6 +9,8 @@ import { log } from "./log.ts";
 //   message, and the ledger clamps the amount regardless of what this module asks for.
 // - Every outbound line passes the player chat filter plus screenNpcLine. Assume prompt
 //   injection from day one: a screened-out reply falls back to a canned in-character line.
+// - Proactive greetings are canned, always. The LLM is consulted only for a reply to something a
+//   player said, so spend scales with deliberate player intent and not with roster size.
 // - NPCs are visibly staff: negative ids, staff flag on the avatar state, badge on the client.
 
 const RULESET = loadRuleset(new URL("../filter-words.txt", import.meta.url).pathname);
@@ -23,6 +25,12 @@ const NPC_TICK_MS = 1000;             // one decision clock for every NPC in eve
                                        // fine enough to notice an arrival within about a second.
                                        // Room keeps its own per-walk interval — that one is the
                                        // animation clock the client interpolates against.
+const ENGAGE_R = 3;                   // proactive notice radius: inside every room's speakRadius
+                                       // so the line is heard, outside APPROACH so it never
+                                       // competes with a deliberate walk-up
+const ENGAGE_HOLD_MS = 20_000;        // a player standing nearby holds an NPC where it is
+const NOTICE_COOLDOWN_MS = 10 * 60 * 1000;  // per NPC+player pair — never re-greet the same person
+const PROACTIVE_GAP_MS = 15_000;      // one proactive line per room: the anti-dogpile rule
 const MEMORY_LINES = 12;
 const MAX_LINE = 200;                 // protocol chat cap
 
@@ -34,6 +42,8 @@ export interface NpcDef {
   dir: number;
   persona: string;
   greeting?: string;                  // join ritual, {name} substituted
+  greetings?: string[];               // proactive notice lines, round-robin, {name} substituted;
+                                      // falls back to `lines`. Canned by contract, see above.
   performs?: boolean;
   ritual?: "coffee";                  // deterministic faucet trigger — never the LLM's call
   lines: string[];                    // canned fallbacks and performance material
@@ -157,8 +167,13 @@ interface NpcState {
   day: string;
   calls: number;
   lineIdx: number;
-  greeted: Map<string, string>;       // username → last greeting day
+  greetIdx: number;
+  greeted: Map<string, string>;       // username → last greeting day (join ritual, once per day)
+  noticed: Map<string, number>;       // username → epoch ms of the last proactive greeting.
+                                      // Separate from `greeted` on purpose: one is a join ritual
+                                      // on a day clock, the other a notice on a 10-minute one.
   nextPerformAt: number;              // epoch ms; performers only, seeded on room activation
+  busyUntil: number;                  // epoch ms; a nearby player holds the NPC at its post
 }
 
 export interface Speaker {
@@ -200,6 +215,22 @@ function liveTile(npc: NpcDef, occupants: readonly Speaker[]): Tile {
   return occ ? { x: occ.x, y: occ.y } : npc.post;
 }
 
+/** The closest player standing still within ENGAGE_R of `tile`, or null. A walking player is on
+ *  their way somewhere: an NPC notices you when you stop, not as you pass. */
+function nearestStopped(
+  tile: Tile,
+  players: readonly NpcOccupant[],
+  room: NpcRoom,
+): { player: NpcOccupant; d: number } | null {
+  let best: { player: NpcOccupant; d: number } | null = null;
+  for (const p of players) {
+    const d = cheb(tile, p);
+    if (d > ENGAGE_R || (best && d >= best.d) || room.isWalking(p.accountId)) continue;
+    best = { player: p, d };
+  }
+  return best;
+}
+
 export class NpcService {
   private generate: NpcGenerate | null;
   private say: (roomId: number, npcId: number, text: string) => void;
@@ -208,6 +239,7 @@ export class NpcService {
   private roster: NpcDef[];
   private states = new Map<number, NpcState>();
   private active = new Set<number>();       // roomIds with players in them
+  private lastProactiveAt = new Map<number, number>();   // roomId → epoch ms of its last greeting
   private timer: ReturnType<typeof setInterval>;
 
   constructor(opts: {
@@ -330,11 +362,49 @@ export class NpcService {
     for (const roomId of this.active) {
       const room = this.room(roomId);
       if (!room || room.occupantCount() === 0) continue;
+      const occupants = room.occupants();       // ONE snapshot per room per tick, never per NPC
+      const players = occupants.filter((o) => o.accountId > 0);   // staff ids are negative
+      let greeter: { npc: NpcDef; player: NpcOccupant; d: number } | null = null;
+
       for (const npc of this.npcsFor(roomId)) {
         const st = this.state(npc.id);
-        if (!npc.performs || now < st.nextPerformAt) continue;
-        st.nextPerformAt = now + PERFORM_MS;
-        this.speak(npc, this.nextLine(npc));
+        if (room.isWalking(npc.id)) continue;
+
+        // Notice a player who has stopped nearby: hold position, turn to them, and nominate the
+        // pair for this room's one proactive line. Performers are exempt — a singer who greets
+        // the crowd mid-set is not a residency.
+        const near = npc.performs ? null : nearestStopped(liveTile(npc, occupants), players, room);
+        if (near) {
+          const held = now < st.busyUntil;
+          st.busyUntil = now + ENGAGE_HOLD_MS;
+          // Room.face broadcasts whether or not the direction changed, so turn only on the tick
+          // the engagement starts. Re-sending an unchanged dir every second is pure noise.
+          if (!held) room.face(npc.id, { x: near.player.x, y: near.player.y });
+          const seen = st.noticed.get(near.player.username);
+          const quiet = !st.pending && now - st.lastReplyAt >= REPLY_GAP_MS;
+          const fresh = seen === undefined || now - seen >= NOTICE_COOLDOWN_MS;
+          if (quiet && fresh && (!greeter || near.d < greeter.d)) {
+            greeter = { npc, player: near.player, d: near.d };
+          }
+        }
+
+        if (now < st.busyUntil) continue;       // engaged: nothing else this tick
+
+        if (npc.performs && now >= st.nextPerformAt) {
+          st.nextPerformAt = now + PERFORM_MS;
+          this.speak(npc, this.nextLine(npc));
+        }
+      }
+
+      // One proactive line per room per gap, nearest pair first. This is the rule that stops
+      // every NPC in earshot greeting the same arrival.
+      const last = this.lastProactiveAt.get(roomId);
+      if (greeter && (last === undefined || now - last >= PROACTIVE_GAP_MS)) {
+        this.lastProactiveAt.set(roomId, now);
+        const st = this.state(greeter.npc.id);
+        st.noticed.set(greeter.player.username, now);
+        st.lastReplyAt = now;                   // shares the reply mutex: one line per NPC per gap
+        this.speak(greeter.npc, this.nextGreeting(greeter.npc, greeter.player.username));
       }
     }
   }
@@ -374,6 +444,14 @@ export class NpcService {
     return line;
   }
 
+  private nextGreeting(npc: NpcDef, username: string): string {
+    const st = this.state(npc.id);
+    const lines = npc.greetings ?? npc.lines;
+    const line = lines[st.greetIdx % lines.length] ?? "…";
+    st.greetIdx++;
+    return line.replaceAll("{name}", username);
+  }
+
   private remember(npc: NpcDef, line: string): void {
     const st = this.state(npc.id);
     st.memory.push(line);
@@ -390,8 +468,11 @@ export class NpcService {
         day: day(),
         calls: 0,
         lineIdx: 0,
+        greetIdx: 0,
         greeted: new Map(),
+        noticed: new Map(),
         nextPerformAt: 0,
+        busyUntil: 0,
       };
       this.states.set(npcId, st);
     }
