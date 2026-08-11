@@ -143,6 +143,13 @@ the server renderer and displays the returned sprite — client and server can n
 because there is only one renderer. Named seeded PRNG, integer arithmetic in the
 recipe-to-sprite path.
 
+**Part library** (decision 2026-08-11, #334): the studio composes **artgen meshes**, not the
+box-path composer. The rig renders each recipe server-side at mint time, the full gates run
+before publish, and the frozen bundle remains the item's identity exactly as above. The
+seeded-PRNG integer-arithmetic guarantee was the box path's and retires with it (#335); mint-time
+render cost is bounded by the 5/day mint cap, and the preview strategy is #121 implementation
+detail.
+
 ### Stages
 
 1. **Archetype specs.** Floor archetypes: chair, sofa, table, bed, lamp, plant, shelf, rug,

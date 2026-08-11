@@ -1,5 +1,30 @@
 # Decision Log
 
+- 2026-08-11 — **The design studio composes artgen meshes; the box path is retired from the
+  minting plan (#334, Josh).** Every fidelity gain since #311 — dither/crease v2, trim-by-prim,
+  48 catalog items — lives in the artgen/Blender path, and a minted item that reads a generation
+  older than the house catalog defeats the point of minting. Box-path v2 was rejected as
+  duplicated effort under a permanent 7-prim ceiling. The rig renders each player recipe
+  server-side at mint time and the full gates run before publish; PIPELINES §2's frozen-bundle
+  identity is unchanged — the mint-time render IS the item, and a disagreeing re-render was
+  already a detected error. The seeded-PRNG integer-arithmetic determinism guarantee was the box
+  path's and retires with it (#335 re-meshes or retires the five box-path catalog items). Render
+  cost per mint is bounded by the existing 5/day mint cap; preview strategy (approximate client
+  composite vs reduced-scope render) is #121 implementation detail. Near-duplicate gating moves
+  to recipe space over mesh selections + parameters.
+- 2026-08-11 — **Ramp-index textures are the surface-detail architecture, sequenced decor-first
+  (#270 accepted, #266 superseded, Josh).** Ramp choice becomes per-texel via a UV-mapped
+  ramp-index render while the lit pass stays white, so the luma quantizer, the silhouette, and
+  every gate survive by construction — gatePalette passes because the texture stores ramp
+  indices. The furni third Blender pass is deferred: at ~28×14 texels a furni face holds one
+  motif, not a pattern — the measured payoff tiles, so AI motifs flow through the shipped
+  flat-decor pipeline (#260) first. Motifs come from Gemini plus our own committed reducer,
+  constrained to a chosen ramp set (keeps VARIANTS colorways free); Retro Diffusion was rejected
+  because input_palette puts quantization inside a vendor API we cannot reproduce — owning the
+  reducer keeps provenance ours. Wallpaper faces self-shade at the measured 0.71 left/right luma
+  ratio — deliberately more contrasty than today's 0.87 flat walls, self-limiting, and walls come
+  onto the 91-colour palette for the first time. When the furni pass lands it must ship with a
+  gate for the load-bearing invariant: never texture the lit pass.
 - 2026-08-10 — **Blackjack joins the stake cap by naming its op, and `settleWin` now refuses an
   op that is not house-banked (#428).** The table's entire ledger layer is one string: "blackjack"
   in `GAMBLE_OPS` buys the 500/day cap, the whole-bet refusal, and the exclusion from the faucet
