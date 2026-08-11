@@ -3046,6 +3046,36 @@ FIGURE_PARTS = {
              "c1": (2.4, 8.6, -15.0)},
         ],
     },
+    # Gambeson (set 66, two slots). A padded body that never pinches, against the tracksuit top 44
+    # which does: 44 runs an 8.6 body down to a 7.8 waistband and has no shoulder break at all. This
+    # one keeps 8.6 the whole way and then GAINS width below the waist in a flared skirt band, so
+    # the two hems are 1.8 px apart in the opposite direction.
+    #
+    # The band is flared 2.0 px past the body rather than the 1.0 it was first drawn at, and that is
+    # the measured separator against the BLAZER 39 rather than against 44. A straight 8.6 body sits
+    # in the middle of 39's 9.4/8.4/7.7 taper and shares almost all of it: at 1.0 the pair measured
+    # 0.847 silhouette IoU over 64 dir-frames, which passes the 0.854 bar on 0.007. The extra px of
+    # flare buys the margin in the one place 39 has no geometry at all.
+    #
+    # The rolls are the second half of the separator and they break the outline upward. A ball on
+    # the arm bone rotates about the shoulder, so one centred 0.8 px down the bone stays at the
+    # shoulder cap through the walk swing and the two wave frames. At r 6.0 it stands 1.6 proud of
+    # the sleeve sideways and tops out 1.6 above the body — squashed to 0.74 in y so it never
+    # reaches past the body's own 7.1 and the roll stays a shoulder rather than a chest.
+    "ch66": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.6, -7.1, 0.0),
+             "c1": (8.6, 7.1, 20.2)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.2},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.2},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-10.6, -8.8, -4.0),
+             "c1": (10.6, 8.8, 0.0)},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, 0.8), "r": 6.0,
+             "squash": (1.0, 0.74, 1.0)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, 0.8), "r": 6.0,
+             "squash": (1.0, 0.74, 1.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
