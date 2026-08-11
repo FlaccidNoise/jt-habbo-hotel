@@ -660,6 +660,11 @@ export class NpcService {
       );
     const npc = candidates[0];
     if (!npc) return;
+    // A shout can be heard and become a candidate from anywhere in the room, but a reply is spoken
+    // and carries the room's ordinary speak radius like any other line (jtbug #320) — walking up is
+    // the interaction model, same as APPROACH for the coffee ritual and ENGAGE_R for a greeting.
+    // Checked before any state write, so a suppressed reply never spends the NPC's reply gate.
+    if (cheb(liveTile(npc, occupants), speaker) > speakRadius) return;
 
     const st = this.state(npc.id);
     const now = Date.now();

@@ -45,6 +45,30 @@ describe("speakRadius replaces the hardcoded earshot", () => {
   });
 });
 
+describe("a reply requires earshot, matching the audible radius (jtbug #320)", () => {
+  test("a shout naming the NPC from beyond speakRadius draws no reply, and does not spend the reply gate", async () => {
+    const { svc, generate } = service();
+    // 20 tiles out is well past speakRadius 6 — shout still lets Rex hear it (unaffected: this is
+    // the "heard" filter, not the reply gate), but a reply now needs the same earshot as any line.
+    svc.onPlayerChat(1, { accountId: 1, username: "ann", x: 20, y: 0 }, [], 6, "shout", "hey Rex");
+    await Promise.resolve();
+    expect(generate).not.toHaveBeenCalled();
+
+    // If the suppressed shout had spent the reply gate (lastReplyAt), this follow-up — well inside
+    // REPLY_GAP_MS — would still be blocked. It replies at once, so the gate was never touched.
+    svc.onPlayerChat(1, { accountId: 1, username: "ann", x: 3, y: 0 }, [], 6, "say", "hey Rex");
+    await Promise.resolve();
+    expect(generate).toHaveBeenCalledOnce();
+  });
+
+  test("a shout naming the NPC from inside speakRadius replies normally", async () => {
+    const { svc, generate } = service();
+    svc.onPlayerChat(1, { accountId: 1, username: "ann", x: 6, y: 0 }, [], 6, "shout", "hey Rex");
+    await Promise.resolve();
+    expect(generate).toHaveBeenCalledOnce();
+  });
+});
+
 describe("live occupant tile overrides the declared post", () => {
   test("an NPC moved off its post replies based on its new tile", async () => {
     const { svc, generate } = service();

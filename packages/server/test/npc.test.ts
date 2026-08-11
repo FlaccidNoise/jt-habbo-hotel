@@ -119,8 +119,10 @@ describe("rituals", () => {
 
 // A reply is spoken, so it carries the speak radius like anyone else's: these two read the words
 // back, which means asking from inside earshot. The bellhop's post is two tiles off the café door
-// — the greeter stands where arrivals stand. Shouting at the lounge act from the far side of the
-// casino is covered below, where only the fact of a reply matters.
+// — the greeter stands where arrivals stand. Rate limiting is proven the same way, from inside
+// radius. Shouting at the lounge act from the far side of the casino is covered below too, but for
+// the opposite reason now: a shout naming an NPC beyond its speakRadius must draw no reply at all
+// (jtbug #320) — walking up is the interaction model, same as the coffee ritual's APPROACH gate.
 describe("LLM replies", () => {
   test("staff reply when named, from their transcript", async () => {
     // Snapshot the transcript at call time — the live memory array gains the reply afterwards.
@@ -158,14 +160,18 @@ describe("LLM replies", () => {
   });
 
   test("replies are rate limited to one per gap", async () => {
-    const generate = vi.fn<NpcGenerate>(async () => "Darling, hello.");
+    // Moved off the casino/Lola shout used before jtbug #320: that scenario now draws no reply at
+    // all (see below), so it can no longer carry the rate-limit assertion. Pierre from the café
+    // door is inside speakRadius already (proven above), which is all rate limiting needs.
+    const generate = vi.fn<NpcGenerate>(async () => "Every bag has a story, and I have heard them all.");
     const { port } = await start({ npcGenerate: generate });
-    const alice = await joinAs(port, await signUp(port, "alice"), 2);
+    const alice = await joinAs(port, await signUp(port, "alice"), 1);
+    await chatFrom(alice.bus, PIERRE); // the join greeting, consumed so it doesn't confuse chatFrom below
 
-    alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "Lola one" }));
-    alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "Lola two" }));
-    await chatFrom(alice.bus, LOLA);
-    await expect(chatFrom(alice.bus, LOLA, 400)).rejects.toThrow();
+    alice.ws.send(JSON.stringify({ t: "chat", mode: "say", text: "hey Pierre" }));
+    alice.ws.send(JSON.stringify({ t: "chat", mode: "say", text: "hey Pierre again" }));
+    await chatFrom(alice.bus, PIERRE);
+    await expect(chatFrom(alice.bus, PIERRE, 400)).rejects.toThrow();
     expect(generate).toHaveBeenCalledTimes(1);
   });
 
@@ -175,6 +181,19 @@ describe("LLM replies", () => {
     const alice = await joinAs(port, await signUp(port, "alice"), 2);
 
     alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "nice stage up there" }));
+    await expect(chatFrom(alice.bus, LOLA, 400)).rejects.toThrow();
+    expect(generate).not.toHaveBeenCalled();
+  });
+
+  test("a shout naming Lola from across the casino, beyond her speakRadius, draws no reply (jtbug #320)", async () => {
+    // The casino door is 10 tiles from Lola's post; speakRadius is 5. Before #320 this shout, by
+    // naming her, replied from any distance — the asker saw "…" because the reply itself still
+    // carried the ordinary speak radius. Now the reply is gated the same way the sighting was.
+    const generate = vi.fn<NpcGenerate>(async () => "Darling, hello.");
+    const { port } = await start({ npcGenerate: generate });
+    const alice = await joinAs(port, await signUp(port, "alice"), 2);
+
+    alice.ws.send(JSON.stringify({ t: "chat", mode: "shout", text: "Lola one" }));
     await expect(chatFrom(alice.bus, LOLA, 400)).rejects.toThrow();
     expect(generate).not.toHaveBeenCalled();
   });
