@@ -2817,6 +2817,33 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.8, 15.0), "r": 2.0},
         ],
     },
+    # Accessories pack (#440), neck layer. On the spine bone a point draws at row 65 + y/2 - z,
+    # and the space a neck piece has is smaller than it looks: bd1's torso box reaches the chin
+    # plane at spine z 21, so anything narrower than 7.5 in x and shallower than 6.0 in y is
+    # swallowed whole below that line. Every prim below is therefore either PROUD of the torso or
+    # above z 21 — the turtleneck 42 lives by the same rule and shows only rows 42-44 because of
+    # it.
+    #
+    # Scarf (set 60). The drape is what a scarf is at 64 px: a mass wider than the shoulders, not
+    # a tube round the neck. At x 8.43 and y 7.40 it clears the torso's 7.5 and 6.0 in both, so it
+    # survives the holdout all the way round instead of only under the chin. A second lump is set
+    # 1.2 to +x, 1.6 forward and 1.8 lower, which is what stops the pair reading as a smooth
+    # collar — a scarf is wrapped, and wrapped means the two turns do not line up.
+    #
+    # The tail hangs off-centre at x -4.4..-1.6 and widens at its end. Centred, it reads as a tie;
+    # off-centre it reads as thrown over a shoulder, and the widening is the fringe.
+    "ca60": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 0.0, 19.6), "r": 8.6,
+             "squash": (0.94, 0.86, 0.34)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (1.2, 1.6, 17.6), "r": 7.6,
+             "squash": (0.92, 0.88, 0.30)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.0, 6.4, 8.0),
+             "c1": (-1.2, 7.8, 17.6)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-5.6, 6.4, 5.0),
+             "c1": (-0.6, 8.0, 8.0)},
+        ],
+    },
     "wa15": {
         "prims": [
             {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.6),
