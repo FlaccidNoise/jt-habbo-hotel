@@ -120,6 +120,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 46, type: "lg", name: "Flares",     slots: 1, family: "material", hides: [], retired: false },
   { id: 47, type: "lg", name: "Cargo",      slots: 1, family: "material", hides: [], retired: false },
   { id: 48, type: "lg", name: "Long Skirt", slots: 1, family: "material", hides: [], retired: false },
+  { id: 49, type: "sh", name: "Sneakers",   slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -172,7 +173,9 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  the figure's outline — a hood, a shirt under a vest, a jacket that hangs past the hip.
  *
  *  Legs (45-48, #440) run 150-300 on how much of the leg the garment replaces: shorts leave the
- *  shin bare, cargo and flares clothe it, and the long skirt covers the leg to the calf. */
+ *  shin bare, cargo and flares clothe it, and the long skirt covers the leg to the calf. *
+ *  Shoes (49-52, #440) are two rungs, not four: 150 for the flat everyday pair and 250-300 once
+ *  the shoe changes the leg's outline — a shaft up the shin, or a heel. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -195,6 +198,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 47, price: 200, theme: "legs" },   // Cargo
   { set: 46, price: 250, theme: "legs" },   // Flares
   { set: 48, price: 300, theme: "legs" },   // Long Skirt
+  { set: 49, price: 150, theme: "shoes" },  // Sneakers
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

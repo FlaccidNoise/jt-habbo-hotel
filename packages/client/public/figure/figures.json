@@ -2493,6 +2493,54 @@
       "figuredataVersion": 1,
       "recipeHash": "2b5232f866dc2e25d32674bd52cbe8d650abb10404574f9434fcaf6dd8d16920",
       "pixelHash": "453d41c40a017da0abb28b972922efa2bf524a05529dc80d500f360b7c44581a"
+    },
+    {
+      "partId": "sh49",
+      "setId": 49,
+      "type": "sh",
+      "name": "Sneakers",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh49.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "31f1d344a46514bd529acf68f901b92af9712000a85eb8cbc53c876489dc0c21",
+      "pixelHash": "c098bfc2ce1cdfae2ec542d81516d38c80ff7bc8d9fe3df895677deee81e8f46"
     }
   ]
 }

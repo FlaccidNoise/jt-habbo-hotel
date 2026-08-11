@@ -2321,6 +2321,36 @@ FIGURE_PARTS = {
              "c1": (4.2, 7.2, -SHIN_LEN + 4.2)},
         ],
     },
+    # Shoes pack (#440). bd1's foot is a box: half-width 3.7, y -2.9 to 6.3, top at -14.6 with the
+    # sole on the ground plane at -18. Every prim below either CONTAINS that box or sits outside
+    # it, and the difference is not style — a shoe part tucked inside the foot is not subtle, it
+    # is invisible, because the body wins the depth test wherever it is nearer.
+    #
+    # Sneakers (set 49, one slot). Tread, flared midsole, upper — three stacked boxes against the
+    # loafer 9's one, and the flare is what makes it chunky.
+    #
+    # The bulk has to sit ABOVE the ground plane, which is not a style choice. A frame's deepest
+    # row is (|x| + |y|) / 2.828 below the prim's own z, so a px of overhang at z -18 costs a third
+    # of a row and a px at z -17 costs the same third from one row higher up. The loafer's
+    # footprint already lands on row 110 in the walk-contact frames and 111 is where the bounds
+    # gate fails, so the tread keeps the loafer's exact footprint and every wider box starts a
+    # px or more off the floor.
+    "sh49": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 1.0)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -SHIN_LEN + 1.0)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.9, -4.3, -SHIN_LEN + 1.0),
+             "c1": (4.9, 8.4, -SHIN_LEN + 2.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.9, -4.3, -SHIN_LEN + 1.0),
+             "c1": (4.9, 8.4, -SHIN_LEN + 2.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.5, -3.9, -SHIN_LEN + 2.6),
+             "c1": (4.5, 6.9, -SHIN_LEN + 5.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.5, -3.9, -SHIN_LEN + 2.6),
+             "c1": (4.5, 6.9, -SHIN_LEN + 5.6)},
+        ],
+    },
     # Hair sits proud of the skull and the head's own holdout cuts it back to a shell — the face
     # stays clear because the brow and nose reach further forward than the hair does.
     "hr3": {
