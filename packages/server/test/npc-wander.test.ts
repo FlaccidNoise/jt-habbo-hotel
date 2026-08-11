@@ -5,6 +5,7 @@ import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import type { ServerMsg, Tile } from "@grand/shared";
 import type Database from "better-sqlite3";
 import { closeDb, openDb } from "../src/db.ts";
+import { GROUNDS_ROOM_ID } from "../src/grounds.ts";
 import { grantStarter } from "../src/items.ts";
 import { NPC_ROSTER, NpcService } from "../src/npc.ts";
 import type { NpcDef, NpcOccupant, NpcRoom } from "../src/npc.ts";
@@ -209,18 +210,23 @@ describe("wandering: who roams", () => {
     expect(say).toHaveBeenCalled(); // it is still working, just not walking
   });
 
-  test("the shipped roster is unchanged: Pierre, Maya and Lola never take a step", () => {
-    expect(NPC_ROSTER.filter((n) => n.home !== undefined)).toEqual([]);
+  test("the café and the casino are unchanged: Pierre, Maya and Lola never take a step", () => {
+    // Scoped to the three that shipped before wandering. The Grounds staff (WP8) do roam — they
+    // are the reason the field exists — so a roster-wide "nobody has a home rect" claim would now
+    // be a claim about the Grounds instead of about these three.
+    const still = NPC_ROSTER.filter((n) => n.roomId !== GROUNDS_ROOM_ID);
+    expect(still.map((n) => n.name)).toEqual(["Pierre", "Maya", "Lola Vale"]);
+    expect(still.filter((n) => n.home !== undefined)).toEqual([]);
 
-    const occ = NPC_ROSTER.map(staff);
+    const occ = still.map(staff);
     const rooms = new Map<number, NpcRoom>();
     const seen: ReturnType<typeof fakeRoom>[] = [];
-    for (const roomId of new Set(NPC_ROSTER.map((n) => n.roomId))) {
+    for (const roomId of new Set(still.map((n) => n.roomId))) {
       const r = fakeRoom([...occ, player(ALICE, "alice", 30, 30)]);
       rooms.set(roomId, r);
       seen.push(r);
     }
-    const { svc } = service(NPC_ROSTER, rooms);
+    const { svc } = service(still, rooms);
     seedRandom(13);
 
     for (const roomId of rooms.keys()) svc.onPlayerJoin(roomId, "alice");

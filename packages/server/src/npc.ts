@@ -1,6 +1,7 @@
 import type { Tile } from "@grand/shared";
 import { filterChat, loadRuleset } from "./filter.ts";
 import type { Ruleset } from "./filter.ts";
+import { ZONES } from "./grounds.ts";
 import type { Rect } from "./grounds.ts";
 import { log } from "./log.ts";
 
@@ -71,6 +72,18 @@ export interface NpcDef {
   lines: string[];                    // canned fallbacks and performance material
 }
 
+/** The concierge's beat. Not ZONES.PLAZA: the join greeting is spoken from wherever she is
+ *  standing and carries the room's speak radius like any other line, and the Grounds' door is at
+ *  (0, 100) while the plaza starts at x 9 — an arrival would read "…" from anywhere inside it.
+ *  This rect is the approach between the door and the plaza's west gate, so the greeting lands. */
+const ARRIVAL_COURT: Rect = { x0: 2, y0: 96, x1: 12, y1: 104 };
+
+/** The pool deck south of the curb. The water #407 lays inside the curb is ordinary walkable
+ *  ground — floor decor, not a hole — so ZONES.POOL as a home rect would send the lifeguard for a
+ *  stroll across the deep end. This rect stops at the curb's south rim (y 83) and covers the
+ *  lounger row, which is the part of the courtyard that is deck. */
+const POOL_DECK: Rect = { x0: 52, y0: 83, x1: 78, y1: 92 };
+
 export const NPC_ROSTER: NpcDef[] = [
   {
     id: -1,
@@ -116,6 +129,210 @@ export const NPC_ROSTER: NpcDef[] = [
       "This next number goes out to the night shift.",
       "♪ Double down, darling, the night is young ♪",
       "You've been a wonderful crowd.",
+    ],
+  },
+
+  // The Resort Grounds (room 4). Eight staff across the five zones, two of them the jazz
+  // residency. Every post below is walkable, unblocked, reachable from the door and inside its own
+  // home rect — checked by npc-roster.test.ts against the generated floor rather than by eye,
+  // because the floor is built by rect fills and moves whenever grounds.ts does.
+  //
+  // Posts are also kept at least 7 tiles apart, which is two ENGAGE_R circles plus one: a player
+  // who stops walking is inside at most one NPC's notice radius, so nobody collects two greetings
+  // for standing still. The two performers are the exception and are exempt by construction —
+  // the tick never lets a `performs` NPC greet anyone.
+  {
+    id: -4,
+    roomId: 4,
+    name: "Odette",
+    post: { x: 5, y: 99 },              // the approach, five tiles off the door
+    dir: 6,                             // facing the door: arrivals are the job
+    persona:
+      "the concierge who works the arrival lane at The Grand. Unhurried and exact, keeps the " +
+      "whole resort's geography in her head so guests do not have to, and treats every arrival " +
+      "as a booking she was already expecting.",
+    greeting: "Good evening, {name}. The Grand has been expecting someone like you.",
+    greetings: [
+      "Ask me first, {name}, and save yourself the walk.",
+      "The promenade runs east from here. Everything worth finding hangs off it.",
+      "Straight through the gate, {name} — the fountain is less in your way than it looks.",
+      "You have arrived at a civil hour. That is rarer than it sounds.",
+    ],
+    home: ARRIVAL_COURT,
+    lines: [
+      "Pool to the north through the first gate, jazz wing to the south of it.",
+      "The gallery is worth the walk. Go while the light is still on it.",
+      "Luggage goes up before you do. That is the whole trick of the place.",
+      "Turned around out there? Come back to the fountain and start again.",
+      "I have worked this lane for years and it still fills up before I do.",
+    ],
+  },
+  {
+    id: -5,
+    roomId: 4,
+    name: "Bruno",
+    post: { x: 47, y: 71 },             // the gap in the deck chairs at the counter's east end
+    dir: 0,                             // facing the counter and the guests across it
+    persona:
+      "the bartender on the pool apron at The Grand. Dry, economical with words, quick with his " +
+      "hands and slow with his opinions, most of which are about ice.",
+    greetings: [
+      "You are at the right end of the pool, {name}.",
+      "Sit anywhere. The chairs are better than they look.",
+      "Say the word and I will get to it.",
+      "Shade comes over this side after four.",
+    ],
+    home: ZONES.POOL_BAR,
+    seats: [{ x: 42, y: 71 }, { x: 44, y: 71 }, { x: 46, y: 71 }],
+    lines: [
+      "The rail is open from either side. Come at it whichever way suits you.",
+      "Two things, done properly, beats five done fast.",
+      "The trolleys are stocked. I would still rather make it myself.",
+      "Hot tubs are west. Take a towel, not my word for it.",
+      "Ice goes in last. That is not a preference, that is the drink.",
+    ],
+  },
+  {
+    id: -6,
+    roomId: 4,
+    name: "Kit",
+    post: { x: 60, y: 86 },             // the lounger row, three tiles clear of the curb
+    dir: 0,                             // facing the water
+    persona:
+      "the lifeguard on the pool deck at The Grand. Young, alert, cheerful in a professional way " +
+      "and completely immovable about the rules of the water — would much rather be boring than " +
+      "pull anyone out of it.",
+    greetings: [
+      "Afternoon, {name}. Water is clear today.",
+      "Ladders at all four corners, and I count everyone who uses them.",
+      "Walk the curb, {name}. It is wet and it does not forgive.",
+      "I am right here if you need me. Try not to.",
+    ],
+    home: POOL_DECK,
+    lines: [
+      "Loungers are first come. The parasols move if you ask them nicely.",
+      "No running on the curb. I say it forty times a shift.",
+      "East deck has the view, south deck has the sun. Pick your afternoon.",
+      "If you cannot see the bottom, you are not in the pool, you are in the bar.",
+      "Two hours of nothing happening is a good shift. I like good shifts.",
+    ],
+  },
+  {
+    id: -7,
+    roomId: 4,
+    name: "Sable Rey",
+    post: { x: 64, y: 118 },            // behind the mic at (64, 119), the booths in front of her
+    dir: 4,
+    persona:
+      "the vocalist holding the jazz residency at The Grand. Late-set glamour and unhurried " +
+      "phrasing, treats the stage as a room she is letting you sit in, and introduces songs the " +
+      "way other people introduce old friends.",
+    performs: true,
+    lines: [
+      "♪ Slow water, slow hands, and the whole night still to spend ♪",
+      "This one is for the table that has not ordered yet.",
+      "♪ Palms in the dark, and nobody counting the hours ♪",
+      "Milo takes the next one. Listen to his left hand.",
+      "♪ I came for the weather and I stayed for the noise ♪",
+      "We are here until the lights say otherwise.",
+    ],
+  },
+  {
+    id: -8,
+    roomId: 4,
+    name: "Milo",
+    post: { x: 62, y: 117 },            // at the keyboard end of the grand piano
+    dir: 6,                             // facing the piano
+    persona:
+      "the pianist in the jazz residency at The Grand. Quiet and watchful, answers in half " +
+      "sentences and finishes the thought at the keyboard, and has played the same eight bars a " +
+      "thousand ways without getting bored of them.",
+    performs: true,
+    lines: [
+      "♪ four bars of something the room has not heard before ♪",
+      "Sable is back in a minute. I will keep it warm.",
+      "♪ one low chord, held, until the talking drops under it ♪",
+      "This piano was tuned on Tuesday. It has opinions about Fridays.",
+      "Requests are welcome. Whether you get them depends on the hour.",
+    ],
+  },
+  {
+    id: -9,
+    roomId: 4,
+    name: "Delphine",
+    post: { x: 122, y: 84 },            // mid-walk, between the deco row and the ottomans
+    dir: 4,
+    persona:
+      "the docent of the penthouse gallery at The Grand. Precise, warm about the work and cool " +
+      "about everything else, gives two sentences of history to anyone who slows down and twenty " +
+      "minutes of it to anyone who asks twice.",
+    greetings: [
+      "Take the walk slowly, {name}. It was hung to be walked.",
+      "The piece behind you is older than the hotel, {name}.",
+      "Ask me anything. I have been waiting all afternoon to be asked.",
+      "The light is best on this side until five.",
+    ],
+    home: ZONES.GALLERY,
+    seats: [{ x: 114, y: 86 }, { x: 122, y: 86 }, { x: 130, y: 86 }],
+    lines: [
+      "The colonnade is the exhibit. The pieces are only the argument.",
+      "Deco is a promise about the future, made by people who could not see it.",
+      "Sit if you like. The ottomans are period, and sturdier than they look.",
+      "The mirrors are hung for a shorter century than yours.",
+      "Nothing here is for sale, which is why it is all still here.",
+    ],
+  },
+  {
+    id: -10,
+    roomId: 4,
+    name: "Aurelio",
+    post: { x: 108, y: 113 },           // the service alley between the shelves and the counter
+    dir: 4,                             // facing across the counter into the room
+    persona:
+      "the host of the café corner at The Grand. Brisk and hospitable, runs the counter and the " +
+      "room at the same time, and takes a table left waiting as a personal failure.",
+    greetings: [
+      "Table or counter, {name}? Both are open.",
+      "Sit where you like. I will find you.",
+      "You look like the walk was longer than you planned, {name}.",
+      "The kitchen is quiet. The counter is not. Your choice.",
+    ],
+    home: ZONES.CAFE_CORNER,
+    // A second coffee point, not a second faucet: the payout runs op `npc_coffee` under
+    // NPC_FAUCET_CAP, which is per account per op, so Maya and Aurelio share one daily allowance
+    // between them. npc-roster.test.ts pays that claim out against the real ledger.
+    ritual: "coffee",
+    lines: [
+      "Ask me for coffee and you will have coffee. That is the whole system.",
+      "Corner tables are quieter, the counter is faster.",
+      "I have run this room long enough to know who is waiting before they do.",
+      "Marble tops for the ones who linger, wood for the ones who do not.",
+      "The vending machine is there for after I close. Not before.",
+    ],
+  },
+  {
+    id: -11,
+    roomId: 4,
+    name: "Wren",
+    post: { x: 100, y: 98 },            // beside the middle gate, off the centre lane
+    dir: 4,
+    persona:
+      "the groundskeeper of the promenade at The Grand. Weathered and unhurried, talks about " +
+      "hedges the way other people talk about family, and would rather you kept to the lane but " +
+      "will not stop you.",
+    greetings: [
+      "Mind the hedge line, {name} — it is newer than it looks.",
+      "Gates are at the four-tile gaps. Saves you the long way round.",
+      "Long lane, this one. Take the middle of it.",
+      "Afternoon. Watering is done, so it is safe to stand still.",
+    ],
+    home: ZONES.PROMENADE,
+    lines: [
+      "Three gates a side, and I cut every one of them by hand.",
+      "The palms out here are in pots. The hedges are not. That is the difference.",
+      "The lawn is flat because I keep it flat. It does not happen on its own.",
+      "There are nooks at the far end if you want to be left alone. I will not tell.",
+      "A hedge is a wall you have to apologise to.",
     ],
   },
 ];
@@ -270,11 +487,28 @@ function waypoint(npc: NpcDef, from: Tile, room: NpcRoom): Tile | null {
   return null;
 }
 
-/** A listed seat the NPC can reach right now, or null. Same two gates as a floor waypoint —
- *  `roamOk` (reachable, and nobody's on it) and ROAM_MAX — applied to the def's own tiles instead
- *  of a random draw, since there are only ever a handful of them. */
-function seatpoint(npc: NpcDef, from: Tile, room: NpcRoom): Tile | null {
-  const open = (npc.seats ?? []).filter((s) => cheb(s, from) <= ROAM_MAX && room.roamOk(s.x, s.y));
+/** A listed seat the NPC can reach right now, or null. A seat cannot be gated the way a floor
+ *  waypoint is: `roamOk` answers "may an occupant stand here", and a chair is non-walkable furni,
+ *  so asking it about a seat tile refuses every seat there is. What has to hold instead is that
+ *  the seat is *approachable* — one orthogonal neighbour in the room's roam mask is a way in, and
+ *  it is what keeps `requestSit` from handing the pathfinder a walled-off target to drain its
+ *  whole open set proving unreachable. Occupancy is read off the snapshot so two NPCs never set
+ *  off for the same chair; a seat claimed between decision and arrival is refused silently by the
+ *  room and read back as posture on the next tick. */
+const APPROACHES: ReadonlyArray<readonly [number, number]> = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+
+function seatpoint(
+  npc: NpcDef,
+  from: Tile,
+  room: NpcRoom,
+  occupants: readonly NpcOccupant[],
+): Tile | null {
+  const open = (npc.seats ?? []).filter(
+    (s) =>
+      cheb(s, from) <= ROAM_MAX &&
+      !occupants.some((o) => o.x === s.x && o.y === s.y) &&
+      APPROACHES.some(([dx, dy]) => room.roamOk(s.x + dx, s.y + dy)),
+  );
   return open.length > 0 ? (open[Math.floor(Math.random() * open.length)] ?? null) : null;
 }
 
@@ -510,7 +744,7 @@ export class NpcService {
           st.nextMoveAt = now + IDLE_MS + Math.random() * IDLE_JITTER;
           const seat =
             npc.seats && npc.seats.length > 0 && Math.random() < 1 / SEAT_BIAS
-              ? seatpoint(npc, here, room)
+              ? seatpoint(npc, here, room, occupants)
               : null;
           if (seat) {
             paths++;
