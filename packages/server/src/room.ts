@@ -4,6 +4,9 @@ import {
   PROTOTYPE_CATALOG,
   ROOM_FURNI_CAP,
   WALL_CATALOG,
+  WHEEL_MAX_STAKE,
+  WHEEL_MIN_STAKE,
+  WHEEL_SEGMENTS,
   checkPlacement,
   checkWallPlacement,
   climbOk,
@@ -13,6 +16,7 @@ import {
   seatAt,
   stackTop,
   tileHeight,
+  wheelDraw,
 } from "@grand/shared";
 import type {
   AvatarState,
@@ -35,7 +39,7 @@ import { randomUUID } from "node:crypto";
 import type Database from "better-sqlite3";
 import { filterChat, loadRuleset } from "./filter.ts";
 import { figureOf, saveFigure, staffFigure } from "./figure.ts";
-import { balanceOf, settleSpend } from "./ledger.ts";
+import { balanceOf, settleSpend, settleWin } from "./ledger.ts";
 import { findPath, reachable } from "./pathfind.ts";
 import {
   getItem,
@@ -461,6 +465,11 @@ export class Room {
       case "toggle":
         this.toggle(item);
         break;
+      // Clicking the wheel opens the bet panel in the client and nothing more: the wager arrives
+      // as its own message, because a spin needs a segment and a stake that "use" cannot carry.
+      // The arm is here so the click lands on a no-op rather than falling through to an error.
+      case "wheel":
+        break;
       case "blackjack":
         this.blackjack?.(accountId);
         break;
@@ -526,6 +535,91 @@ export class Room {
     this.broadcast({ t: "action", accountId, action: "wish", itemId });
     this.emit(accountId, {
       t: "notice", text: FORTUNES[Math.floor(Math.random() * FORTUNES.length)]!,
+    });
+  }
+
+  /** A spin of the Grand Wheel (#429). Every refusal below happens before a Star moves, and each
+   *  one says what to do about it — a wager that vanishes in silence is the one outcome a player
+   *  cannot tell from a lost bet. `roll` is the server's source, handed in per call so a test can
+   *  pin the slot the way `leverRoll` pins a prize. */
+  wheelBet(
+    accountId: number, itemId: number, segment: string, stake: number, roll: () => number,
+  ): void {
+    const occupant = this.occ.get(accountId);
+    if (!occupant) return;
+    const item = this.furni.find((f) => f.id === itemId);
+    const def = item ? this.defOf(item) : null;
+    // R-26 holds by construction: grand_wheel is a house fixture, so the only one in the building
+    // is the one furnish.ts stood here, and there is no player-owned instance to find.
+    if (!item || !def || def.interaction !== "wheel") {
+      this.fail(accountId, "wheel", "there is no wheel there");
+      return;
+    }
+
+    const inReach = footprintTiles(def, item.x, item.y, item.dir).some(
+      (t) => Math.max(Math.abs(t.x - occupant.x), Math.abs(t.y - occupant.y)) <= 1,
+    );
+    if (!inReach) {
+      this.fail(accountId, "wheel", "step up to the wheel first");
+      return;
+    }
+    // The use verb's own cooldown, shared with it rather than counted separately: one spin per
+    // window, and a bet the wheel refuses still costs the window, so a bad segment cannot be
+    // hammered. `use` drops the second click in silence; a wager cannot, because a bet that
+    // produces no message is one the player has to assume they lost.
+    const now = Date.now();
+    if (now - (this.lastUse.get(accountId) ?? 0) < USE_COOLDOWN_MS) {
+      this.fail(accountId, "wheel", "the wheel is still spinning");
+      return;
+    }
+    this.lastUse.set(accountId, now);
+
+    const bet = WHEEL_SEGMENTS[segment];
+    if (!bet) {
+      this.fail(accountId, "wheel", "that's not a segment on the wheel");
+      return;
+    }
+    if (stake < WHEEL_MIN_STAKE) {
+      this.fail(accountId, "wheel", `the wheel takes no less than ${WHEEL_MIN_STAKE} ★`);
+      return;
+    }
+    if (stake > WHEEL_MAX_STAKE) {
+      this.fail(accountId, "wheel", `the wheel takes no more than ${WHEEL_MAX_STAKE} ★`);
+      return;
+    }
+
+    // The stake settles before the draw, so a spin nobody paid for is never resolved. The daily
+    // stake cap and an empty balance both come back here as a sentence the ledger wrote.
+    const spinId = randomUUID();
+    const spend = settleSpend(this.db, {
+      opKey: `wheel:${spinId}`, op: "wheel", accountId, price: stake,
+    });
+    if (!spend.ok) {
+      this.fail(accountId, "purchase", spend.reason);
+      return;
+    }
+    this.emit(accountId, {
+      t: "stars", balance: spend.balance, delta: -stake, reason: "Grand Wheel",
+    });
+
+    const { slot, segment: resultSegment } = wheelDraw(roll());
+    const payout = resultSegment === segment ? stake * bet.multiplier : 0;
+    if (payout > 0) {
+      // A different op_key from the stake's, or the settled() check that makes a resent spin
+      // harmless would read the payout as already settled and pay 0.
+      const win = settleWin(this.db, {
+        opKey: `wheel:${spinId}:win`, op: "wheel", accountId, amount: payout,
+      });
+      this.emit(accountId, {
+        t: "stars", balance: win.balance, delta: payout, reason: "Grand Wheel",
+      });
+    }
+    // The item's state stays 0 and no furni_state goes out: the four declared states render
+    // byte-identical until #430 lands the multi-row sheet, so cycling them would be a broadcast
+    // that changes nothing on screen. The client spins from `slot` alone.
+    this.broadcast({
+      t: "wheel_result", itemId: item.id, accountId, name: occupant.username,
+      betSegment: segment, resultSegment, slot, stake, payout,
     });
   }
 

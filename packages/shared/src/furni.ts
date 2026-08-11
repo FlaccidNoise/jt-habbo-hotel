@@ -80,7 +80,7 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   // an avatar above the next tallest. Four states, one per quarter of the spin — the client cycles
   // 0→1→2→3 while the wheel runs. Every state is the same height, because a spinning wheel is not
   // a taller one and placement.ts throws on a state it has no height for (the lamp_basic rule).
-  { id: "grand_wheel",  name: "Grand Wheel", theme: "casino", w: 2, l: 1, stackHeights: [3.625, 3.625, 3.625, 3.625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "grand_wheel",  name: "Grand Wheel", theme: "casino", w: 2, l: 1, stackHeights: [3.625, 3.625, 3.625, 3.625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "wheel" },
   { id: "wheel_podium", name: "Odds Board",  theme: "casino", w: 1, l: 1, stackHeights: [1.9375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   // Blackjack (#428). Same 2x2 as casino_table and deliberately not the same object: the deep
   // apron, the ivory rail and the dealer's tray on the north edge are what say which game it is.

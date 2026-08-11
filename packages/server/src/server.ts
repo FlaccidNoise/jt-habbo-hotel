@@ -89,6 +89,8 @@ export async function startServer(opts: {
   blackjackDraw?: () => number;
   /** Luck Lever roll source in [0, 1). Tests pin it to land on a chosen prize. */
   leverRoll?: () => number;
+  /** Grand Wheel roll source in [0, 1). Tests pin it to land on a chosen slot. */
+  wheelRoll?: () => number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
@@ -201,6 +203,7 @@ export async function startServer(opts: {
   const arcadeService = new ArcadeService({ db, emit, draw: opts.arcadeDraw });
   const blackjackService = new BlackjackService({ db, emit, draw: opts.blackjackDraw });
   const leverRoll = opts.leverRoll ?? Math.random;
+  const wheelRoll = opts.wheelRoll ?? Math.random;
 
   const NAV_LIMIT = 60;
 
@@ -391,6 +394,12 @@ export async function startServer(opts: {
         break;
       case "use":
         room.useFurni(accountId, msg.itemId);
+        break;
+      // The Grand Wheel (#429). A wager rather than a use: the segment and the stake are the
+      // message, so it cannot ride the use verb. Reach, cooldown and the item all live where
+      // useFurni's do; only the roll source is the server's, injected the way leverRoll is.
+      case "wheel_bet":
+        room.wheelBet(accountId, msg.itemId, msg.segment, msg.stake, wheelRoll);
         break;
       case "set_figure":
         room.setFigure(accountId, msg.figure);

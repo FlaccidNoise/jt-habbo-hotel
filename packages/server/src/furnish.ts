@@ -122,8 +122,10 @@ const CAFE: Layout = {
 // wholly on the stage ring, or wholly on the terrace. The north wall carries the two slot banks
 // split by dividers, with the vending machine standing in the gap between them at the same height
 // as the slots, the card pit fills the south in a two-by-two of tables with a two-tile lane
-// at x 9-10 and y 15-16, and the billiards nook and arcades take the south-west corner. The
-// concourse in from the door — x 0-7, y 3-11 — stays open: that is where a crowd stands.
+// at x 9-10 and y 15-16, and the billiards nook and arcades take the south-west corner. The Grand
+// Wheel stands on the east strip at y 9, on flat ground two rows north of where the terrace
+// starts. The concourse in from the door — x 0-7, y 3-11 — stays open: that is where a crowd
+// stands.
 const CASINO: Layout = {
   floor: [
     { defId: "slot_machine", x: 3, y: 0, dir: 4 },             // west slot bank
@@ -147,7 +149,6 @@ const CASINO: Layout = {
     { defId: "casino_table_onyx", x: 16, y: 4 },               // high-roller table, north-east
     { defId: "casino_stool_fern", x: 15, y: 4, dir: 2 },
     { defId: "casino_stool_fern", x: 15, y: 5, dir: 2 },
-    { defId: "side_table", x: 14, y: 5 },                      // beside the west-side stools
     { defId: "casino_stool_fern", x: 18, y: 4, dir: 6 },
     { defId: "casino_stool_fern", x: 18, y: 5, dir: 6 },
     { defId: "railing_iron", x: 4, y: 13 },                    // the card pit's west rail
@@ -187,13 +188,25 @@ const CASINO: Layout = {
     { defId: "stool_lodge", x: 16, y: 15 },
     { defId: "stool_lodge_charcoal", x: 17, y: 15 },
     { defId: "stool_lodge", x: 18, y: 15 },
-    { defId: "stool_lodge_charcoal", x: 19, y: 15 },
     { defId: "sofa_lodge", x: 16, y: 17, dir: 4 },             // terrace lounge, around its hearth
     { defId: "fireplace_stone", x: 18, y: 17 },
     { defId: "rug_basic", x: 17, y: 18 },                      // covers x 17-19, y 18-19
+    // The Grand Wheel (#429) on the east strip, clear of the terrace's first raised row at y 12.
+    // The casino was at the #315 density ceiling — one piece per 6-8 walkable tiles — so the two
+    // pieces carrying the least went out to make room: the lone side table at (14,5), which served
+    // nothing, and the fourth bar stool at (19,15), the last of a row of four. Neither breaks a
+    // pair, which is why they went rather than a railing or a stool off the high-roller table.
+    // dir 0 for the lit face: the disc's normal runs along fy, and only dirs 0 and 4 turn it into
+    // the light — dirs 2 and 6 render the shaded side, a dark red plate on the room's landmark.
+    // Both of those lay the 2x1 along x, so the wheel takes (18,9) and (19,9) and the odds board
+    // stands down-left of it at (17,10), where it reads beside the wheel instead of behind it.
+    { defId: "grand_wheel", x: 18, y: 9, dir: 0 },
+    { defId: "wheel_podium", x: 17, y: 10 },
     { defId: "lamp_basic", x: 1, y: 3 },
     { defId: "plant_fern", x: 1, y: 10 },
-    { defId: "plant_fern_exotic", x: 19, y: 8 },
+    // Moved off (19,8) for the wheel: it stood on one of the tiles a player has to bet from, and
+    // a 3.625-unit wheel one tile south of it would have swallowed the fern whole anyway.
+    { defId: "plant_fern_exotic", x: 19, y: 6 },
   ],
   walls: [
     // High enough to clear a 2-height slot machine standing under it.
@@ -227,8 +240,11 @@ export const LAYOUTS: ReadonlyMap<number, Layout> = new Map([
  *  is what makes the two agree instead of leaving the layout stamp claiming the old plan.
  *  5 is #428: the casino's north-west card table became the blackjack table. A live hotel would
  *  otherwise keep a plain casino_table in the slot the dealer stands at, and the one table in the
- *  building you can actually play would exist in no room that had already been seeded. */
-export const LAYOUT_VERSION = 5;
+ *  building you can actually play would exist in no room that had already been seeded.
+ *  6 is #429: the Grand Wheel and its odds board went onto the casino's east strip and the exotic
+ *  fern moved off a tile the wheel needs to be bet from. A live hotel would otherwise have the
+ *  handler, the message and the art for a wheel that stands in no room. */
+export const LAYOUT_VERSION = 6;
 
 const DEFS: ReadonlyMap<string, FurniDef> = new Map(PROTOTYPE_CATALOG.map((d) => [d.id, d]));
 const WALL_DEFS: ReadonlyMap<string, WallDef> = new Map(WALL_CATALOG.map((d) => [d.id, d]));
