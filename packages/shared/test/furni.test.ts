@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { z } from "zod";
 import { FurniDefSchema, WallDefSchema } from "../src/protocol.ts";
 import {
-  CATALOG_PRICES, PRESTIGE_DEFS, PROTOTYPE_CATALOG, UNPRICED, WALL_CATALOG,
+  CATALOG_PRICES, HOUSE_FIXTURE_DEFS, PRESTIGE_DEFS, PROTOTYPE_CATALOG, UNPRICED, WALL_CATALOG,
 } from "../src/furni.ts";
 import { LEVER_EXCLUSIVE_DEFS, LEVER_PRIZES } from "../src/lever.ts";
 import { COLLECTION_SETS, SET_REWARD_DEFS } from "../src/sets.ts";
@@ -39,11 +39,24 @@ test("every wall def fits the wall it hangs on", () =>
 
 // Both price lookups fail closed: the HUD hides the button, the server refuses the buy. A def
 // with neither a price nor a way to win it is therefore an item nobody can ever own, with no
-// error anywhere — so every def must be reachable by exactly one of the two routes.
-test("every def is obtainable — priced, won, or minted by a completed set", () =>
+// error anywhere — so every def must be reachable by exactly one of the routes.
+//
+// A house fixture is the one route that ends without the player owning anything (R-26, #429). It
+// is listed rather than inferred for the same reason the other three are: an unreachable def has
+// to be a decision somebody wrote down, not an id that fell through every lookup.
+test("every def is obtainable — priced, won, minted by a set, or placed by the house", () =>
   expect(ALL_IDS.filter((id) =>
-    !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id) && !SET_REWARD_DEFS.has(id)))
+    !CATALOG_PRICES.has(id) && !LEVER_EXCLUSIVE_DEFS.has(id) && !SET_REWARD_DEFS.has(id)
+    && !HOUSE_FIXTURE_DEFS.has(id)))
     .toEqual([]));
+
+// R-26: the house's edge is not merchandise. A wheel a player owns is a wheel a player sets the
+// odds on, so neither route that ends in a player inventory may name one.
+test("a house fixture is never for sale and never a prize", () => {
+  expect([...HOUSE_FIXTURE_DEFS].filter((id) => CATALOG_PRICES.has(id))).toEqual([]);
+  expect(LEVER_PRIZES.filter((p) => p.defId !== null && HOUSE_FIXTURE_DEFS.has(p.defId))).toEqual([]);
+  expect([...HOUSE_FIXTURE_DEFS].filter((id) => !ALL_IDS.includes(id))).toEqual([]);
+});
 
 // A set whose members cannot all be bought could never be completed, and its reward would be
 // unreachable — the reward itself is the one member that must not be for sale.

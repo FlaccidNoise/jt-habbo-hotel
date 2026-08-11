@@ -1730,6 +1730,125 @@ PARTS = {
              "ramp": "gold"},
         ],
     },
+    # ---- grand wheel (#429) ----------------------------------------------------------------
+    # The wheel face is an hcyl run along fy with no caps — a bare disc standing in the fx/z
+    # plane, the record-disc idiom at spectacle size. Its radius is a WORLD radius, so in
+    # footprint coords the disc is an ellipse: 0.86 across fx and 0.86/ZSCALE = 1.053 up z. Every
+    # number below that has to sit on the rim is derived from that pair, not from 0.86 twice.
+    #
+    # 2x1, not 2x2. The disc is thin, and a 2x2 footprint would reserve a tile of floor nothing
+    # ever draws into — the wheel would read as standing in the middle of its own empty square.
+    #
+    # The plinth spans almost the whole footprint on purpose. gateBounds measures the lowest
+    # pixel per direction, and on a 2x1 the ground contact has to reach fx+fy >= 1.9375 in all
+    # four rotations; only a base that fills the footprint reaches its far corner every time. A
+    # narrow pair of feet under the posts passes dir 0 and floats in dir 2.
+    "grand_wheel": {
+        "w": 2, "l": 1, "ramp": "crimson",
+        "prims": [
+            # Gold reads as a foot, not as the plinth. The first pass had the gold slab on top and
+            # wider than the charcoal under it, which hid the charcoal from every angle and left a
+            # butter-coloured brick carrying the wheel.
+            {"t": "box", "c0": (0.02, 0.10, 0.00), "c1": (1.98, 0.90, 0.06), "bevel": 0.02,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.06, 0.14, 0.06), "c1": (1.94, 0.86, 0.34), "bevel": 0.03,
+             "ramp": "charcoal"},
+            # Two posts to the axle rather than one centre column: a centre column sits behind the
+            # disc and is invisible from every direction, which leaves the wheel floating.
+            {"t": "box", "c0": (0.04, 0.40, 0.34), "c1": (0.22, 0.62, 2.46), "bevel": 0.03,
+             "ramp": "charcoal"},
+            {"t": "box", "c0": (1.78, 0.40, 0.34), "c1": (1.96, 0.62, 2.46), "bevel": 0.03,
+             "ramp": "charcoal"},
+            # The gold rim is the full-thickness core; the courses are thin discs laid on each
+            # face, so from the front you get a gold ring round a crimson field. Each course is
+            # its own seam group, so the postpass draws a detail line at every radius change —
+            # that is what makes the face read as a wheel rather than a plate.
+            #
+            # BOTH faces are dressed. A disc normal of +fy comes back as -fx at dir 2 and -fy at
+            # dir 4, so a single-sided wheel shows the player a blank gold plate from half the
+            # directions it can be walked past. That is what the first render did.
+            #
+            # The ring has to be WIDER than the depth step that puts the field in front of it.
+            # Depth projects into screen x, so a course 0.05 nearer slides 1.6 px left of the one
+            # behind it; at the first pass's 0.08 radius gap that ate the rim on one side and
+            # doubled it on the other, and the wheel wore a gold crescent. 0.14 of radius is
+            # 4.5 px of ring against 1.6 px of slide, which survives all the way round.
+            {"t": "hcyl", "x": 1.00, "y0": 0.34, "y1": 0.60, "z": 2.30, "r": 0.86,
+             "caps": False, "ramp": "gold"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.60, "y1": 0.65, "z": 2.30, "r": 0.72,
+             "caps": False},
+            {"t": "hcyl", "x": 1.00, "y0": 0.65, "y1": 0.69, "z": 2.30, "r": 0.36,
+             "caps": False, "ramp": "plum"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.69, "y1": 0.73, "z": 2.30, "r": 0.12,
+             "caps": False, "ramp": "gold"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.29, "y1": 0.34, "z": 2.30, "r": 0.72,
+             "caps": False},
+            {"t": "hcyl", "x": 1.00, "y0": 0.25, "y1": 0.29, "z": 2.30, "r": 0.36,
+             "caps": False, "ramp": "plum"},
+            {"t": "hcyl", "x": 1.00, "y0": 0.21, "y1": 0.25, "z": 2.30, "r": 0.12,
+             "caps": False, "ramp": "gold"},
+            # Eight pins through the rim at 45-degree steps, half in and half out of the
+            # silhouette. They are what separates a Big Six wheel from a target: the outline comes
+            # back cogged, and the cogs are the segment boundaries the pointer counts. Charcoal,
+            # because a gold pin on a gold rim is 0 luma of contrast and the first render lost
+            # them. They run the rim's own thickness and no further: at the first pass's 0.54 they
+            # projected into long horizontal bars and the wheel read as an aerial array.
+            #
+            # The face is a WORLD circle, so its footprint form is an ellipse: fx = 1 + 0.86 cos,
+            # z = 2.30 + 0.86/ZSCALE sin. Offset 22.5 degrees so no pin lands at the horizontal
+            # extremes, where it would be buried inside a post.
+            {"t": "hcyl", "x": 1.795, "y0": 0.34, "y1": 0.60, "z": 2.703, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 1.329, "y0": 0.34, "y1": 0.60, "z": 3.273, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.671, "y0": 0.34, "y1": 0.60, "z": 3.273, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.205, "y0": 0.34, "y1": 0.60, "z": 2.703, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.205, "y0": 0.34, "y1": 0.60, "z": 1.897, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 0.671, "y0": 0.34, "y1": 0.60, "z": 1.327, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 1.329, "y0": 0.34, "y1": 0.60, "z": 1.327, "r": 0.055,
+             "ramp": "charcoal"},
+            {"t": "hcyl", "x": 1.795, "y0": 0.34, "y1": 0.60, "z": 1.897, "r": 0.055,
+             "ramp": "charcoal"},
+            # The flapper. Widest at the top and narrowest where it meets the pins, centred on the
+            # disc's own thickness so it is there from all four sides. It starts below the rim
+            # crest so it overlaps the disc — a pointer with a gap under it is a second island in
+            # every frame.
+            {"t": "cyl", "cx": 1.00, "cy": 0.47, "rx": 0.09, "ry": 0.09, "z0": 3.30, "z1": 3.62,
+             "taper": 2.2, "ramp": "gold"},
+        ],
+    },
+    # The odds board that stands beside the wheel. The face is a slab proud of its gold frame in
+    # fy, and the three price rows are proud again: depth projects into screen x, so each course
+    # steps left and down off the one behind it and reads as raised rather than printed.
+    #
+    # Both faces are dressed, for the wheel's reason — a board is a sign, and a sign that is blank
+    # gold from dirs 2 and 4 is a sign half the room cannot read.
+    "wheel_podium": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.00), "c1": (0.86, 0.86, 0.09), "bevel": 0.02},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.26, "ry": 0.26, "z0": 0.09, "z1": 0.22,
+             "taper": 0.55},
+            {"t": "cyl", "cx": 0.50, "cy": 0.50, "rx": 0.07, "ry": 0.07, "z0": 0.22, "z1": 1.06,
+             "ramp": "slate"},
+            {"t": "box", "c0": (0.10, 0.44, 1.06), "c1": (0.90, 0.56, 1.84), "bevel": 0.03,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.15, 0.56, 1.10), "c1": (0.85, 0.60, 1.80), "ramp": "crimson"},
+            {"t": "box", "c0": (0.21, 0.60, 1.60), "c1": (0.79, 0.65, 1.70), "ramp": "gold"},
+            {"t": "box", "c0": (0.21, 0.60, 1.42), "c1": (0.79, 0.65, 1.52), "ramp": "plum"},
+            {"t": "box", "c0": (0.21, 0.60, 1.24), "c1": (0.79, 0.65, 1.34), "ramp": "gold"},
+            {"t": "box", "c0": (0.15, 0.40, 1.10), "c1": (0.85, 0.44, 1.80), "ramp": "crimson"},
+            {"t": "box", "c0": (0.21, 0.35, 1.60), "c1": (0.79, 0.40, 1.70), "ramp": "gold"},
+            {"t": "box", "c0": (0.21, 0.35, 1.42), "c1": (0.79, 0.40, 1.52), "ramp": "plum"},
+            {"t": "box", "c0": (0.21, 0.35, 1.24), "c1": (0.79, 0.40, 1.34), "ramp": "gold"},
+            {"t": "box", "c0": (0.08, 0.42, 1.84), "c1": (0.92, 0.58, 1.92), "bevel": 0.02,
+             "ramp": "gold"},
+        ],
+    },
 }
 
 # ---- figure rig (#127) ---------------------------------------------------------------------

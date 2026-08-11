@@ -76,6 +76,12 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "velvet_booth", name: "Velvet Booth", theme: "lounge", w: 2, l: 1, stackHeights: [2.1875], canWalk: false, canStackOn: false, seatHeight: 0.96, color: 0xaa3333 },
   { id: "cocktail_table", name: "Cocktail Table", theme: "lounge", w: 1, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: true, seatHeight: null, color: 0x4a4d55 },
   { id: "stage_light", name: "Stage Light", theme: "lounge", w: 1, l: 1, stackHeights: [1.75, 1.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55, interaction: "toggle" },
+  // Grand Wheel (#429): the casino's landmark, at 3.625 the tallest thing in the catalog and half
+  // an avatar above the next tallest. Four states, one per quarter of the spin — the client cycles
+  // 0→1→2→3 while the wheel runs. Every state is the same height, because a spinning wheel is not
+  // a taller one and placement.ts throws on a state it has no height for (the lamp_basic rule).
+  { id: "grand_wheel",  name: "Grand Wheel", theme: "casino", w: 2, l: 1, stackHeights: [3.625, 3.625, 3.625, 3.625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "wheel_podium", name: "Odds Board",  theme: "casino", w: 1, l: 1, stackHeights: [1.9375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
   // Colorways (#229): the same authored mesh with its ramps remapped, so they share their base's
   // geometry exactly — heights and seat surfaces are identical and the gates check that.
   { id: "cafe_chair_crimson",  name: "Crimson Café Chair", theme: "cafe", w: 1, l: 1, stackHeights: [1.25],    canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xaa3333 },
@@ -310,6 +316,22 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "cafe_table_marble",
   "casino_table_onyx",
   "wall_art_gilded",
+  // R-26 (#429): chance furni is never player-purchasable. Only the house layout places one, so a
+  // furni instance can never become a player-owned gambling machine.
+  "grand_wheel",
+  "wheel_podium",
+]);
+
+/** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
+ *  set. They are the fourth and last route a def may take out of the obtainability test, and the
+ *  only one that ends with the player never owning the item.
+ *
+ *  slot_machine is NOT here and is sold at 300, because it carries no `interaction` — it is
+ *  casino-shaped scenery. The line R-26 draws is the verb: a def that resolves a wager belongs to
+ *  the house, or the house has sold a player its own edge. */
+export const HOUSE_FIXTURE_DEFS: ReadonlySet<string> = new Set([
+  "grand_wheel",
+  "wheel_podium",
 ]);
 
 /** Bought like anything else, but minted account-bound: these never enter the trade economy, so

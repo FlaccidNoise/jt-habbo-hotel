@@ -4,8 +4,8 @@ import { join } from "node:path";
 import { afterEach, beforeEach, expect, test } from "vitest";
 import Database from "better-sqlite3";
 import {
-  COLLECTION_SETS, LEVER_COST, LEVER_PRIZES, LEVER_TOTAL_WEIGHT, PROTOTYPE_CATALOG,
-  WALL_CATALOG, WALL_TOP_PX,
+  COLLECTION_SETS, HOUSE_FIXTURE_DEFS, LEVER_COST, LEVER_PRIZES, LEVER_TOTAL_WEIGHT,
+  PROTOTYPE_CATALOG, WALL_CATALOG, WALL_TOP_PX,
 } from "@grand/shared";
 import { MUSEUM_ROOM_ID, PLAQUE_V } from "../src/museum.ts";
 import { flows } from "../src/metrics.ts";
@@ -283,9 +283,15 @@ test("a donation goes on show with an engraved plaque and never comes back", asy
 
 // A tall exhibit standing in front of its own donor plaque defeats the point of donating, and
 // the plaque hangs at a fixed height, so that height has to clear anything donatable.
+// A house fixture is not donatable and so is not measured here: `donate` reads the item out of the
+// donor's inventory, and R-26 (#429) keeps a house fixture from ever reaching one. grand_wheel is
+// 3.625 units, half again the plaque's clearance, and it stands in the casino where there is no
+// plaque to hide. Every other def stays in the sweep, bound ones included — the candelabra cannot
+// be donated either, and the bound still holds above it.
 test("the donor plaque hangs clear of the tallest thing that can stand under it", () => {
   const plaque = WALL_CATALOG.find((d) => d.id === "record_trophy")!;
-  const tallest = Math.max(...PROTOTYPE_CATALOG.map((d) => d.stackHeights[0] ?? 0)) * 32;
+  const donatable = PROTOTYPE_CATALOG.filter((d) => !HOUSE_FIXTURE_DEFS.has(d.id));
+  const tallest = Math.max(...donatable.map((d) => d.stackHeights[0] ?? 0)) * 32;
   expect(WALL_TOP_PX - PLAQUE_V - plaque.plane.h).toBeGreaterThan(tallest);
 });
 

@@ -1,0 +1,32 @@
+{
+  "defId": "wheel_podium",
+  "archetype": "artgen",
+  "sheet": "wheel_podium.png",
+  "frameW": 64,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 78,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:783c2daab1c0d099",
+  "recipeHash": "783c2daab1c0d099666e78da95973e544fdb639c1f86c476ed42a175b4cd6837",
+  "pixelHash": "1d74bf6b2b3180fa1ed985eeafde429638227ab660c3d4a93b1f7e6ffa978b30"
+}

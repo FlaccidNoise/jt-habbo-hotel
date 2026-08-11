@@ -1,0 +1,32 @@
+{
+  "defId": "grand_wheel",
+  "archetype": "artgen",
+  "sheet": "grand_wheel.png",
+  "frameW": 96,
+  "frameH": 164,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 132,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 3.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:06007ce1fb37986a",
+  "recipeHash": "06007ce1fb37986ab1e25b6650f7bcfe5c55fe84a16a0120b143ce10f9ef6651",
+  "pixelHash": "90d5eea18bf26adc99c8da11ac304a0de1c883d291f6760707b29ef770d73e3b"
+}

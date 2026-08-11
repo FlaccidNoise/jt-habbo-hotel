@@ -1638,6 +1638,70 @@
       "recipeHash": "9b4a1f85b1c6474a2796f341f149e24f0d0a32dff30f0bc77c35dd13e19bb297",
       "pixelHash": "0abe2d04e381c09476e2277134faac5b4a0aad73d52200aa3cca3fddd6eec57a"
     },
+    "grand_wheel": {
+      "defId": "grand_wheel",
+      "archetype": "artgen",
+      "sheet": "grand_wheel.png",
+      "frameW": 96,
+      "frameH": 164,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 132,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 3.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:06007ce1fb37986a",
+      "recipeHash": "06007ce1fb37986ab1e25b6650f7bcfe5c55fe84a16a0120b143ce10f9ef6651",
+      "pixelHash": "90d5eea18bf26adc99c8da11ac304a0de1c883d291f6760707b29ef770d73e3b"
+    },
+    "wheel_podium": {
+      "defId": "wheel_podium",
+      "archetype": "artgen",
+      "sheet": "wheel_podium.png",
+      "frameW": 64,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 78,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:783c2daab1c0d099",
+      "recipeHash": "783c2daab1c0d099666e78da95973e544fdb639c1f86c476ed42a175b4cd6837",
+      "pixelHash": "1d74bf6b2b3180fa1ed985eeafde429638227ab660c3d4a93b1f7e6ffa978b30"
+    },
     "cafe_chair_crimson": {
       "defId": "cafe_chair_crimson",
       "archetype": "artgen",
@@ -2980,70 +3044,6 @@
       "recipeHash": "652c015148c648a5a3a3b314857e20dd420d4133cffa464a6f4ddfa8b74c3449",
       "pixelHash": "616eebb3030c7d83d5bfe65be5a62df57a8b34d26699e57d27ec15bc1989b06b"
     },
-    "arcade_cabinet_plum": {
-      "defId": "arcade_cabinet_plum",
-      "archetype": "artgen",
-      "sheet": "arcade_cabinet_plum.png",
-      "frameW": 64,
-      "frameH": 92,
-      "dirs": [
-        0,
-        2,
-        4,
-        6
-      ],
-      "anchorsX": [
-        32,
-        32,
-        32,
-        32
-      ],
-      "anchorY": 76,
-      "footprint": {
-        "w": 1,
-        "l": 1
-      },
-      "drawnHeight": 1.875,
-      "seatZ": null,
-      "occlusion": null,
-      "styleVersion": 2,
-      "generatorVersion": 2,
-      "partLibraryHash": "artgen:99b96c39cbe123a7",
-      "recipeHash": "99b96c39cbe123a72704f042ce67d50d47ba37321f5e1bc27ca8fb23a13ed2a5",
-      "pixelHash": "8ce043262bea34b854cd42371db30bedb24e3ad7097f9c562743a552ac035901"
-    },
-    "fountain_gilded": {
-      "defId": "fountain_gilded",
-      "archetype": "artgen",
-      "sheet": "fountain_gilded.png",
-      "frameW": 128,
-      "frameH": 118,
-      "dirs": [
-        0,
-        2,
-        4,
-        6
-      ],
-      "anchorsX": [
-        64,
-        64,
-        64,
-        64
-      ],
-      "anchorY": 70,
-      "footprint": {
-        "w": 2,
-        "l": 2
-      },
-      "drawnHeight": 1.6875,
-      "seatZ": null,
-      "occlusion": null,
-      "styleVersion": 2,
-      "generatorVersion": 2,
-      "partLibraryHash": "artgen:865629414d5e12a9",
-      "recipeHash": "865629414d5e12a9069a9924c7bd4c1bdaa76ed0e8285f85b231243c6212df92",
-      "pixelHash": "e2766c20560e4d7ac02e2cbe702e3ec3ed2595494ef55c2db32f6dd60864c08a"
-    },
     "stage_platform_parquet": {
       "defId": "stage_platform_parquet",
       "archetype": "artgen",
@@ -3303,6 +3303,70 @@
       "partLibraryHash": "artgen:928ab7ac4074a9d1",
       "recipeHash": "928ab7ac4074a9d10d8c501943b8c4754ab0363e5678f324506c5d8f8541ca03",
       "pixelHash": "2700213091d4b33d61471641ed4b6a65c5409c17bbda7993fb49c71226fa278a"
+    },
+    "arcade_cabinet_plum": {
+      "defId": "arcade_cabinet_plum",
+      "archetype": "artgen",
+      "sheet": "arcade_cabinet_plum.png",
+      "frameW": 64,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 76,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:99b96c39cbe123a7",
+      "recipeHash": "99b96c39cbe123a72704f042ce67d50d47ba37321f5e1bc27ca8fb23a13ed2a5",
+      "pixelHash": "8ce043262bea34b854cd42371db30bedb24e3ad7097f9c562743a552ac035901"
+    },
+    "fountain_gilded": {
+      "defId": "fountain_gilded",
+      "archetype": "artgen",
+      "sheet": "fountain_gilded.png",
+      "frameW": 128,
+      "frameH": 118,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 70,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 2,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:865629414d5e12a9",
+      "recipeHash": "865629414d5e12a9069a9924c7bd4c1bdaa76ed0e8285f85b231243c6212df92",
+      "pixelHash": "e2766c20560e4d7ac02e2cbe702e3ec3ed2595494ef55c2db32f6dd60864c08a"
     },
     "cafe_table_marble": {
       "defId": "cafe_table_marble",
