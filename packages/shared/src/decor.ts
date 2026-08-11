@@ -157,6 +157,35 @@ export const DECOR_CATALOG: DecorDef[] = [
     tile: { w: 16, h: 32 },
     cap: 0xc2a36b,
   },
+  // First AI-motif set (#435, the #270 decision). The motif is generated, the repeat is ours:
+  // tools/decor/motif.ts samples each motif through a map that is periodic on the tile, and
+  // reduces to the ramps named beside each def rather than to all 91. Wider tiles than the hand-
+  // authored set, because one generated motif needs the room to read.
+  {
+    // gold + navy + ivory. A spot wallpaper: one medallion per floor tile of wall.
+    kind: "wall", id: "wall_sunburst", name: "Deco Sunburst",
+    tile: { w: 32, h: 32 },
+    cap: 0xcbc0ac,
+  },
+  {
+    // crimson + sand + ivory. Half the height of the sunburst, so the fans stack into rows.
+    kind: "wall", id: "wall_fanshell", name: "Fan Shell",
+    tile: { w: 32, h: 16 },
+    cap: 0xc2a36b,
+  },
+  {
+    // ivory + sand + slate. The chips are carried onto the diamond lattice like every floor here,
+    // so they lie in the ground plane instead of facing the camera.
+    kind: "floor", id: "floor_terrazzo", name: "Terrazzo",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x656056, right: 0x9c9484 },
+  },
+  {
+    // gold + navy + ivory. One star per diamond — the motif's own square edge becomes the grout.
+    kind: "floor", id: "floor_mosaic", name: "Deco Mosaic",
+    tile: { w: 64, h: 32 },
+    sides: { left: 0x3f5e9e, right: 0x527acd },
+  },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

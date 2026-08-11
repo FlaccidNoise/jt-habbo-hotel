@@ -168,6 +168,58 @@
       },
       "styleVersion": 3,
       "pixelHash": "c9db51ecccade31d0f74bd23d7f8715d5f0bef01259224f5f34d4138cb30f0a2"
+    },
+    {
+      "id": "wall_sunburst",
+      "kind": "wall",
+      "sheet": "wall_sunburst.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "fa71eb50c50afdc53bb6effd9beb9b26ec82894f69dfa86ff75f4e9ac42cb69c"
+    },
+    {
+      "id": "wall_fanshell",
+      "kind": "wall",
+      "sheet": "wall_fanshell.png",
+      "tileW": 32,
+      "tileH": 16,
+      "source": {
+        "w": 64,
+        "h": 32
+      },
+      "styleVersion": 3,
+      "pixelHash": "dd75e998463d6da7b383bfae225775801862d42c2d62ccb1dfd6b0f96e110480"
+    },
+    {
+      "id": "floor_terrazzo",
+      "kind": "floor",
+      "sheet": "floor_terrazzo.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "6851a5abfb70b2bffe978d49984a807d48fefb787f7589ae72d9fcd39173e133"
+    },
+    {
+      "id": "floor_mosaic",
+      "kind": "floor",
+      "sheet": "floor_mosaic.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "e0f3df4c2b49168e8e0722ffd4c710819ad7085cfb001ac384df195e7852743e"
     }
   ]
 }
