@@ -3222,6 +3222,52 @@ FIGURE_PARTS = {
              "r0": 13.4, "r1": 14.9},
         ],
     },
+    # Pointed Boot (set 72, one slot). The heels 51 are an open court shoe — vamp cut low at -14.2,
+    # counter to -12.4, a needle spike behind. This is the closed answer: a shell that swallows the
+    # ankle to -13.0, and its length spent forward in the toe rather than upward in the heel.
+    #
+    # The toe is a taper, and a box cannot taper, so it is two of them — the tie 61's idiom. Half
+    # widths 4.3, 3.2 and 2.0 against reaches of 6.6, 7.8 and 9.4, which puts the point 3.1 px past
+    # bd1's own foot box at y 6.3 and narrows it to under half the shell on the way.
+    #
+    # Every step of that toe is paid for in lift. A frame's deepest row is (|x| + |y|) / 2.828
+    # below the prim's own z, the loafer 9's footprint already lands on row 110 and the bounds gate
+    # fails at 111: the loafer spends 4.03 of those rows. The shell spends 3.85 at its widest
+    # corner, the first toe box 2.89 and the point 2.43, because each one starts higher than the
+    # sole it reaches past — the point sits 1.6 px off the ground plane.
+    #
+    # The heel behind is two stacked lifts rather than one block, so the back of the boot steps the
+    # way the toe does. It tops at -12.8, which is 1.8 above bd1's foot box, and the ankle collar
+    # laps over both — collar and upper lift share y -4.0..-3.0 and z -14.8..-13.0, so shell, toe,
+    # heel and collar are one island in all 64 cells. The collar clears the shin limb's 3.7 by 0.3.
+    "sh72": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.3, -4.2, -float(SHIN_LEN)),
+             "c1": (4.3, 6.6, -14.0)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.3, -4.2, -float(SHIN_LEN)),
+             "c1": (4.3, 6.6, -14.0)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.2, 5.6, -17.0),
+             "c1": (3.2, 7.8, -14.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.2, 5.6, -17.0),
+             "c1": (3.2, 7.8, -14.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-2.0, 7.4, -16.4),
+             "c1": (2.0, 9.4, -14.8)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-2.0, 7.4, -16.4),
+             "c1": (2.0, 9.4, -14.8)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.0, -4.0, -14.8),
+             "c1": (4.0, 4.6, -13.0)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.0, -4.0, -14.8),
+             "c1": (4.0, 4.6, -13.0)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.5, -6.2, -17.6),
+             "c1": (3.5, -3.2, -15.4)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.5, -6.2, -17.6),
+             "c1": (3.5, -3.2, -15.4)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.2, -5.8, -15.8),
+             "c1": (3.2, -3.0, -12.8)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.2, -5.8, -15.8),
+             "c1": (3.2, -3.0, -12.8)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

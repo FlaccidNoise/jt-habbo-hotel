@@ -3607,6 +3607,54 @@
       "figuredataVersion": 1,
       "recipeHash": "c6caf434dd00e26057b493467a86907cb195cc07a9a91e85921b05ba5ad9ede3",
       "pixelHash": "34dcefbd14c4e15ebe5c2412da60a5209ba722fcbd996691cc9eb9f1eb8d9a2f"
+    },
+    {
+      "partId": "sh72",
+      "setId": 72,
+      "type": "sh",
+      "name": "Pointed Boot",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh72.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "9e2968b33aa9c5e7304841c1aaab4fb70c4a4e947ffbaaa706b1efe3e4c3e940",
+      "pixelHash": "f4c45369172f7ee5d342aa5e6495e70d183e2b94661a92204294b3c499ff55be"
     }
   ]
 }
