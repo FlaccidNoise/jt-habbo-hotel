@@ -179,6 +179,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // for the shipped reason — it replaces the hair rather than sitting on it.
   { id: 84, type: "lg", name: "Pressure Leggings", slots: 2, family: "material", hides: [], retired: false },
   { id: 85, type: "sh", name: "Mag Boots",       slots: 2, family: "material", hides: [], retired: false },
+  { id: 86, type: "ch", name: "Flight Suit",     slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -322,6 +323,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 83, price: 300, theme: "mochi" },       // Sleep Cap
   { set: 84, price: 200, theme: "starliner" },   // Pressure Leggings
   { set: 85, price: 300, theme: "starliner" },   // Mag Boots
+  { set: 86, price: 300, theme: "starliner" },   // Flight Suit
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

@@ -4412,6 +4412,46 @@ FIGURE_PARTS = {
              "c1": (4.0, 7.8, -12.2)},
         ],
     },
+    # Flight Suit (set 86, two slots). The row asks for a right angle at each shoulder where every
+    # other top is round, and the first build put it in the wrong place. A yoke out to x 9.4 — the
+    # intent's 1.4 proud of an 8.0 body — is INVISIBLE: the sleeves hang off bones at x 9.5 with
+    # r 3.8, so the arm surface is already at 13.3 and it, not the body, owns the shoulder outline
+    # from z 11 to 18.8. That build measured 0.9560 IoU against the staff blazer 16 and 0.8705
+    # against the turtleneck 42, because what it actually shipped was their silhouette exactly.
+    #
+    # The corner has to go where nothing else reaches: ABOVE the sleeve's top cap at z 18.8. So the
+    # yoke runs z 14.6-21.6 and stands 2.2 px over the body's own top edge at 19.4, out to x 10.6.
+    # Its top-outer corner at (10.6, 21.6) is in clear air — no shipped ch has any mass above 20.4
+    # outboard of the neck — and that corner is the whole set.
+    #
+    # The body is 7.6, slimmer than all four of the tops it was colliding with (16 at 8.2, 42 at
+    # 7.7, 40 at 8.0, 39 stepping 9.4/8.4/7.7) and with no taper anywhere, so the outline is two
+    # parallel lines from hem to shoulder and then a hard block. Measured, every purchasable ch
+    # pair now clears: the turtleneck 42 drops to 0.8067, the tracksuit top 44 to 0.7901, the
+    # hoodie 38 to 0.7893 and the blazer 39 to 0.7644.
+    #
+    # The staff blazer 16 sits at 0.8716, over the 0.854 bar and left there deliberately. 16 is the
+    # NPC uniform — not in WEARABLE_SHELF, not priced, not in the starter grant — so no player can
+    # own both and the pair is not a purchasable one. It is also inside the envelope the wardrobe
+    # already ships against 16: the vest 40 is at 0.8732 and the turtleneck 42 at 0.8588. A body
+    # slim enough to clear 16 outright would have to leave the 7.6-8.2 band every plain-bodied top
+    # lives in, and the row's separator is the shoulder, not the waist.
+    #
+    # Slot 1 is the yoke and the chest rig band.
+    "ch86": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.6, -6.3, 0.5),
+             "c1": (7.6, 6.3, 19.4)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 3.8},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (4.6, -6.6, 14.6),
+             "c1": (10.6, 6.6, 21.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-10.6, -6.6, 14.6),
+             "c1": (-4.6, 6.6, 21.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.8, 6.3, 9.4),
+             "c1": (7.8, 7.3, 12.8)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -4285,6 +4285,54 @@
       "figuredataVersion": 1,
       "recipeHash": "b48355c3032b1601d5e1c208a83f077c3e2156a6fe0f82a0ff4cb72641596257",
       "pixelHash": "9217089e522e189e548a8f547887d81f00d06b874050bcc98255fbc53587f04b"
+    },
+    {
+      "partId": "ch86",
+      "setId": 86,
+      "type": "ch",
+      "name": "Flight Suit",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch86.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e2041338d87117f71a0a11f866cb054f85218db2468cc0967f51a6e1f60784a2",
+      "pixelHash": "d80ab2f069b7e75a7fb17a4fe4b29bcb6e74dc7706537533bf685704257f6126"
     }
   ]
 }
