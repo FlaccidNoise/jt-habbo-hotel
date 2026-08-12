@@ -4623,6 +4623,56 @@
       "figuredataVersion": 1,
       "recipeHash": "0e0692b33938212883c4c89ac378097c181d721b1935e6a542ba54d19aa9fa0e",
       "pixelHash": "9042c69b02d1da41cff18330c72814c6d000abcb24e0be9aa55f66190e5b4882"
+    },
+    {
+      "partId": "cc93",
+      "setId": 93,
+      "type": "cc",
+      "name": "Wizard Robe",
+      "slots": 2,
+      "hides": [
+        "ch"
+      ],
+      "sheet": "cc93.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "489b10d32bb0829d5c379da6d6bebf68cc4d98edbe9cc2910ab3d82281851a08",
+      "pixelHash": "1c68e4274220fd7445d73ea3fa0edc924d4112149e74eb35847d806180bf1393"
     }
   ]
 }

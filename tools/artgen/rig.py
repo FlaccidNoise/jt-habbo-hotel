@@ -4682,6 +4682,35 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.85, 1.35)},
         ],
     },
+    # Wizard Robe (set 93, two slots, hides ch). The longest garment in the wardrobe. The overcoat
+    # 11's flare is 8.6 to 10.4 over 14 px and closes smoothly over the shoulders; this one falls
+    # 22 px to a 13.6 hem and breaks the shoulder line backward with a hood.
+    #
+    # Sit is what caps the length. The cone hangs off the hip, the hip IS the sit anchor at row 74,
+    # and a cone of radius r reaches r/2 rows past its own hem: 74 + 22 + 6.8 = row 102, nine clear
+    # of the 111 the bounds gate fails at.
+    #
+    # The 13.6 hem is structural the way the long skirt 48's 14.2 is. A walk frame swings the shin
+    # forward, and at this hem's height bd1's own shin reaches 12.0 px off the hip axis — inside
+    # 13.6, so no bare leg comes through the front of the robe. A worn lg does come through, by
+    # about a px on the stride frames, and that is a leg showing under a robe rather than a defect.
+    #
+    # The hood is one ball behind the neck, the hoodie 38's construction with the mass moved down:
+    # at spine z 19 and y -6.4 it stands 8.2 px behind the torso's own back at the shoulder line
+    # and the skull holds out its front half, so what draws is the shell climbing out from behind
+    # the head. `fa` and `ha` both draw after `cc`, so nothing here can eat a beard or a hat — the
+    # sage beard 95 composited over this loses 0 pixels.
+    "cc93": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, -6.6, 0.0),
+             "c1": (8.0, 6.6, 20.4)},
+            {"t": "cone", "bone": "hip",   "slot": 0, "len": 22.0, "r0": 8.2, "r1": 13.6},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 21.0, "r": 4.4},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 4.4},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, -6.4, 19.0), "r": 7.8,
+             "squash": (1.06, 1.0, 0.92)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
