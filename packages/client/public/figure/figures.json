@@ -3899,6 +3899,54 @@
       "figuredataVersion": 1,
       "recipeHash": "fd77fba26883daccce109b7b5a4ad97ca2c7e0badb4f462aea4afc352a30c15d",
       "pixelHash": "ee01300a969af916449bdab94b6434ca0a580ff8417d4077deb273bae06a94a3"
+    },
+    {
+      "partId": "lg78",
+      "setId": 78,
+      "type": "lg",
+      "name": "Bloomers",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg78.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b212abc51dd12b89653f2bb1f65df0217f7ea50e1c681ca6f414020b702da8cf",
+      "pixelHash": "9e237e741fb26b5822c025b47b88b666c6fae0080d84ac3dc83669fa92e05612"
     }
   ]
 }

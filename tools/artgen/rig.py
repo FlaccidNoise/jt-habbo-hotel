@@ -3418,6 +3418,39 @@ FIGURE_PARTS = {
              "r0": 6.6, "r1": 8.9},
         ],
     },
+    # ---- costume pack 3: mochi (#452) ----
+    # Soft and rounded. Bannerhold padded the figure out and nocturne cut into it; this pack curves
+    # it. Every row here replaces a straight edge somewhere in the wardrobe with an arc, so the
+    # meshes lean on the ball prim where the other two packs leaned on the box.
+    #
+    # Bloomers (set 78, one slot). The shorts 45 are a straight r 5.4 tube with a flat cut — two
+    # parallel lines in profile — so this one spends its whole budget on the thigh being a curve:
+    # a ball r 6.6 centred at leg z -6.4, which bulges 1.2 past 45 at mid-thigh and has narrowed
+    # back inside it by the hem.
+    #
+    # The cuff is a second ball rather than a ring band, and the two are sized so one is always
+    # clearly proud of the other rather than tangent to it. At leg z -11 the thigh ball still holds
+    # 4.73 against the cuff's 4.07, and by -12 the cuff is at 4.74 against the thigh's 3.49 — they
+    # cross at about -11.5, which is a 1.25 px step at the hem instead of the 0.05 px coincidence
+    # the first pass drew when both were centred on the same 2.4 px of z.
+    #
+    # The visible cuff is where it clears bd1's own 4.2 thigh limb: 4.8 * sqrt(1 - (dz/2.64)^2)
+    # passes 4.2 at dz 1.28, so the ring reads from leg z -11.1 to -13.7 and the hem sits 5.3 px
+    # above the knee. Below it the thigh, the knee and the shin are all bare skin, which is free.
+    "lg78": {
+        "prims": [
+            {"t": "box",  "bone": "hip",   "slot": 0, "c0": (-8.0, -6.4, -2.4),
+             "c1": (8.0, 6.4, 2.2)},
+            {"t": "ball", "bone": "leg_l", "slot": 0, "c": (0.0, 0.0, -6.4), "r": 6.6,
+             "squash": (1.0, 0.95, 1.0)},
+            {"t": "ball", "bone": "leg_r", "slot": 0, "c": (0.0, 0.0, -6.4), "r": 6.6,
+             "squash": (1.0, 0.95, 1.0)},
+            {"t": "ball", "bone": "leg_l", "slot": 0, "c": (0.0, 0.0, -12.4), "r": 4.8,
+             "squash": (1.0, 1.0, 0.55)},
+            {"t": "ball", "bone": "leg_r", "slot": 0, "c": (0.0, 0.0, -12.4), "r": 4.8,
+             "squash": (1.0, 1.0, 0.55)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -165,6 +165,10 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 75, type: "cc", name: "Tailcoat",        slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 76, type: "ca", name: "Lace Ruff",       slots: 1, family: "material", hides: [], retired: false },
   { id: 77, type: "ha", name: "Mourning Hat",    slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 3 — mochi (#452). Soft and rounded, where the first two packs are cut and
+  // padded. No `cc` in this one: the pack's read is curves on the figure itself, so the layer
+  // that would cover them is the one it leaves out. Only the sleep cap hides anything.
+  { id: 78, type: "lg", name: "Bloomers",        slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -241,7 +245,14 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  nocturne (71-77, #450) prices on the same axis: 200-250 for the ruff, the boot and the cincher,
  *  which each reshape one end of the figure, 300 for the skirt and the bodice that rebuild a whole
  *  half of it, and 400-450 for the hat and the tailcoat, whose read is a wide brim and a pair of
- *  tails seen from across a room. */
+ *  tails seen from across a room.
+ *
+ *  mochi (78-83, #452) is the cheapest of the three costume shelves, because softness is the one
+ *  thing this wardrobe can add without adding bulk: 150-200 for the slippers, the bloomers and the
+ *  muffler, which round off one end of the figure, 250 for the apron's hanging panel, and 300 for
+ *  the cardigan and the sleep cap, the two that change the outline — the widest body in the
+ *  wardrobe, and a taper standing 8 px over the crown. Six rows rather than seven: the pack has no
+ *  `cc`, so nothing here covers the curves it is selling. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -293,6 +304,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 73, price: 300, theme: "nocturne" },    // Corset Bodice
   { set: 77, price: 400, theme: "nocturne" },    // Mourning Hat
   { set: 75, price: 450, theme: "nocturne" },    // Tailcoat
+  { set: 78, price: 200, theme: "mochi" },       // Bloomers
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
