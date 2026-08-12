@@ -6271,6 +6271,54 @@
       "figuredataVersion": 1,
       "recipeHash": "e7f226f83a46017e0315c86ee1da48f79246b6f656d49b2c9bfb6b97b9e3e045",
       "pixelHash": "cbf64c7b63905d20ce30cf16278b9306d823356f917e1ae7e96696da7ae571b8"
+    },
+    {
+      "partId": "ea127",
+      "setId": 127,
+      "type": "ea",
+      "name": "Snorkel Mask",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ea127.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "06e576044c77ae135c73cb7c2c8df700a47e368658b568418fe6cbf77652b948",
+      "pixelHash": "b5fc85e8d004b9799aa63e11a4a7f3ee39959708c90d052c6882a73565ea5186"
     }
   ]
 }

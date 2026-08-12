@@ -250,6 +250,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 124, type: "ch", name: "Swim Top",             slots: 2, family: "material", hides: [], retired: false },
   { id: 125, type: "wa", name: "Towel Wrap",           slots: 2, family: "material", hides: [], retired: false },
   { id: 126, type: "cc", name: "Beach Robe",           slots: 2, family: "material", hides: ["ch"], retired: false },
+  { id: 127, type: "ea", name: "Snorkel Mask",         slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -433,6 +434,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 123, price: 150, theme: "pool" },       // Pool Slides
   { set: 124, price: 200, theme: "pool" },       // Swim Top
   { set: 125, price: 250, theme: "pool" },       // Towel Wrap
+  { set: 127, price: 300, theme: "pool" },       // Snorkel Mask
   { set: 126, price: 350, theme: "pool" },       // Beach Robe
 ];
 

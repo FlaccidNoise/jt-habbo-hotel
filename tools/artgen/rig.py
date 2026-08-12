@@ -5806,6 +5806,49 @@ FIGURE_PARTS = {
              "c1": (7.4, 9.6, 18.4)},
         ],
     },
+    # Snorkel Mask (set 127, two slots). The goggles 88 keep every pixel on the face. This is the
+    # only `ea` that breaks the head's outline sideways: a tube climbing the side of the skull to
+    # head z 26, which is above the crown.
+    #
+    # The mask block covers the eye band outright — rows 32-37 across columns 24-40 — which is the
+    # safe side of the catchlight rule and the side 88 and the sunglasses 58 both shipped on.
+    #
+    # The row's "x 11.6 (1.5 clear of the skull's own 10.1)" is the tube's OUTER surface, not its
+    # centre: at 3.4 across it spans x 8.2..11.6, so its base laps the mask block's own +/-9.0
+    # footprint and the two are one island, while its outer edge stands 1.5 px past the widest
+    # point of the skull. Centred on 11.6 instead it would start at 9.9, float clear of the block
+    # and draw as a second island hanging beside the head.
+    #
+    # Three boxes rather than a cone: a cone and a limb both run on their bone's axis and this tube
+    # is off-axis by design, so the prim vocabulary leaves boxes or a ball stack. Balls at r 1.7
+    # necking to 2.2 px between centres fall under the wardrobe's 3 px floor; the boxes hold 3.4
+    # end to end and step back in y so the tube rakes over the temple the way a snorkel does.
+    #
+    # Coverage, measured over hd17-24 across all 64 cells the way 88 was: of the eye art the layer
+    # is there to hide, d2 and d3 leave ZERO pixels uncovered and d4 leaves 8. 88 itself leaves 8
+    # at d2 and 8 at d4, so this covers strictly more than the set the rule was written from. The
+    # profiles d1/d5 are half covered against 88's fifth, and no `ea` reaches the eye art there.
+    #
+    # The corridor is clear on both terms the rule allows. (28,34) at d2 is covered outright in all
+    # 8 frames; (30,36) at d4 is covered in 7 and stands 2 px off in the eighth; (28,34) at d6
+    # stands 3 px off. Nowhere on the sheet does this layer put ink exactly 1 px from a site, which
+    # is the one case that fails, and gateHoldout — the gate the sunglasses 58's wings died on —
+    # passes, so the tube's antialiasing leaves the skull's own side highlight intact at d2 and d4.
+    #
+    # One island in all 64 cells: the tube's base laps the mask block, and above the crown it
+    # stands free at a full 3.4 with interior shade rather than as an outline.
+    "ea127": {
+        "prims": [
+            {"t": "box", "bone": "head", "slot": 0, "c0": (-9.0, 7.2, 11.8),
+             "c1": (9.0, 12.4, 18.0)},
+            {"t": "box", "bone": "head", "slot": 1, "c0": (8.2, 6.6, 13.8),
+             "c1": (11.6, 10.0, 18.6)},
+            {"t": "box", "bone": "head", "slot": 1, "c0": (8.2, 4.8, 18.0),
+             "c1": (11.6, 8.2, 22.4)},
+            {"t": "box", "bone": "head", "slot": 1, "c0": (8.2, 3.0, 21.8),
+             "c1": (11.6, 6.4, 26.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
