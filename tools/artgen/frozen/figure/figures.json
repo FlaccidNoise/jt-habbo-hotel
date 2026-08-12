@@ -5543,6 +5543,54 @@
       "figuredataVersion": 1,
       "recipeHash": "d8329becabb59f7d94b84ba9f82a616024bf8e84554e121bf82513f7a585f499",
       "pixelHash": "25868dd3544d2bead70783705aab19b3301777d18911f18443df008720ffc975"
+    },
+    {
+      "partId": "wa111",
+      "setId": 111,
+      "type": "wa",
+      "name": "Gear Belt",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa111.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e073796e548fd3c46d77195441dd9c5b75311ad9e36d7e511f28791173a59945",
+      "pixelHash": "10d87b10aa5dc1a0fa1ae09cf262c5deebf33404b8781159ef7b65b0fcb68de3"
     }
   ]
 }

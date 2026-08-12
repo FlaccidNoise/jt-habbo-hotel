@@ -5314,6 +5314,47 @@ FIGURE_PARTS = {
              "r0": 5.8, "r1": 4.8},
         ],
     },
+    # Gear Belt (set 111, two slots). The potion belt 92 hangs four small even vials BELOW its
+    # band. This one puts one 8.8 px cog BESIDE the hip and runs four drive links UP to the ribs,
+    # so its mass is asymmetric and vertical where 92's is symmetric and hanging. Measured against
+    # 92 with the band copied unchanged it is 0.6056, which is the mass doing all of the work —
+    # the tool roll 106 made the same trade at 0.6185.
+    #
+    # The cog sits inside the arm's columns and is resolved on DEPTH, the sword belt 67 and seed
+    # satchel 107 way. It spans x 2.0 to 10.8 and bd1's arm owns x 6.3 to 12.7, so 4.5 px of the
+    # disc is in the arm's shadow; at y 3.8 to 7.0 its nearest face is 0.6 clear of the arm's own
+    # 3.2, which is 67's number for its scabbard spur. So the cog wins those pixels outright at
+    # dirs 2/3/4 and the body takes it at 6/7/0 — 2 px and 1 px survive at d0 against the potion
+    # belt 92's own 8, which is the shape a front-mounted `wa` has at the back rather than a hole.
+    #
+    # Measured in the outline at stand d3, the layer spans columns 21..39 — 11 px left of the
+    # figure's centre column 32 and 7 px right. The potion belt 92's band and vials span 22..41,
+    # 10 and 9. Rows 68-69 carry ink on the cog side only, where 92's vials scallop both sides.
+    #
+    # The links are the pair the ledger's diagonal line governs, and here it points the right way.
+    # They sit at y 5.78 to 7.82, so they stand 1.42 proud of the bracered jacket 110's 6.4 body
+    # and 1.82 of bd1's 6.0, and their outer corner (8.1, 7.82) reaches 11.24 on the diagonal
+    # against the jacket's (8.0, 6.4) at 10.24. `wa` draws after `ch`, so they are never overdrawn
+    # either way; with 110 worn under it, 4144 of the jacket's 4726 px still show at stand and
+    # 4324 of 4946 at walk0.
+    #
+    # Slot 1 is the cog and the links — everything that is machinery, and nothing that is belt.
+    "wa111": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.0),
+             "c1": (8.1, 6.6, 3.6)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (6.4, 5.4, 1.8), "r": 4.4,
+             "squash": (1.0, 0.364, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (6.4, 6.8, 7.0), "r": 1.7,
+             "squash": (1.0, 0.60, 1.3)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (6.1, 6.8, 9.4), "r": 1.7,
+             "squash": (1.0, 0.60, 1.3)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (5.8, 6.8, 11.8), "r": 1.7,
+             "squash": (1.0, 0.60, 1.3)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (5.5, 6.8, 14.2), "r": 1.7,
+             "squash": (1.0, 0.60, 1.3)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
