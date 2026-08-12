@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_floor_cushion",
+  "archetype": "artgen",
+  "sheet": "mochi_floor_cushion.png",
+  "frameW": 64,
+  "frameH": 40,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 24,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.25,
+  "seatZ": 0.16,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:423d1e054c0d2c5d",
+  "recipeHash": "423d1e054c0d2c5d16b292547ade6da1157c22f409f0da8bb551daad26b40f4f",
+  "pixelHash": "59c2c1f5b61ee523e519882609e5fe54296640e0a395fe4c4d8164ab525d62d2"
+}

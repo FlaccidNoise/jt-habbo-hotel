@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_charm_hooks",
+  "archetype": "artgen",
+  "sheet": "mochi_charm_hooks.png",
+  "frameW": 64,
+  "frameH": 114,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 98,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 4,
+    "mountU": 4,
+    "mountV": 50,
+    "gap": 0,
+    "depth": 0.18000000000000002
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d255a4cd48221ff1",
+  "recipeHash": "d255a4cd48221ff1da10e94923894b6479cf551f5f2225c5f136e1a472f2a4bb",
+  "pixelHash": "56e972cdc0e2c1427053f032d19c5f5f25d96b41dc0b9406a5dd0a2ef060f20f"
+}

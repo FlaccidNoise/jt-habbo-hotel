@@ -38,6 +38,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "mochi",
+    name: "The Mochi Set",
+    members: ["mochi_day_bed", "mochi_boba_cart", "mochi_mallow_plush", "mochi_cloud_sofa"],
+    reward: "mochi_mallow_plush_yuzu",
+    badge: "set_mochi",
+  },
+  {
     id: "nocturne",
     name: "The Nocturne Set",
     members: ["nocturne_coffin_daybed", "nocturne_high_throne", "nocturne_pipe_organ", "nocturne_iron_gate"],

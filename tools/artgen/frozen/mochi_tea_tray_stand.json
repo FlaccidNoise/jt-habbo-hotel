@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_tea_tray_stand",
+  "archetype": "artgen",
+  "sheet": "mochi_tea_tray_stand.png",
+  "frameW": 64,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f4da1968f55766eb",
+  "recipeHash": "f4da1968f55766eb2ff47510c4beed486f6cf52225941697aa54a5463cc2a0e2",
+  "pixelHash": "6149bac458a5e6129d75afe7f29cce5b1d13183ed09881b046788636b769f54e"
+}

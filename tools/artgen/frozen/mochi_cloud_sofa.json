@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_cloud_sofa",
+  "archetype": "artgen",
+  "sheet": "mochi_cloud_sofa.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "mochi_cloud_sofa.near.png",
+  "nearHash": "96249ba812979592a031d49dedd4f376534f488eaa9851513330c1b138139b06",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1605508e1bdc3bc4",
+  "recipeHash": "1605508e1bdc3bc413f881586f4313f68a7e3d2e0da7eb95bfc8bb77b91954c8",
+  "pixelHash": "eb1295304b39ad178799249459780558dc91f2908105aff753b33b6818ba7d63"
+}

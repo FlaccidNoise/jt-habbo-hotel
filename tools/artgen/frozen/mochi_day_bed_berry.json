@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_day_bed_berry",
+  "archetype": "artgen",
+  "sheet": "mochi_day_bed_berry.png",
+  "frameW": 96,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": 0.22,
+  "occlusion": null,
+  "nearSheet": "mochi_day_bed_berry.near.png",
+  "nearHash": "b617c41612c50e9f04364918a7bf33c65110ff77d81c762f4fd094d40615b34f",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a6b6d8fe7deecb87",
+  "recipeHash": "a6b6d8fe7deecb8708ef90b3b154af19929f2c53ec0ebf2cafeef0f1f8d2a8ec",
+  "pixelHash": "c14f5425e525f1676d88ffe964730f38c0c69704ad620acd6a56ca9156e7f5b6"
+}

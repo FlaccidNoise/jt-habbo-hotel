@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_bean_bag",
+  "archetype": "artgen",
+  "sheet": "mochi_bean_bag.png",
+  "frameW": 64,
+  "frameH": 46,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 30,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.4375,
+  "seatZ": 0.3,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e2489254a875cac8",
+  "recipeHash": "e2489254a875cac8135c494c50d5b4fb759ae489a0554f3aca081cfc05bf89cd",
+  "pixelHash": "f94b32a38c98dca9b40dea25959bbc37bbb2be242c05a3a9ac1d8330dde93ed3"
+}

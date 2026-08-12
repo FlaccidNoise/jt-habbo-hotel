@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_rice_lamp",
+  "archetype": "artgen",
+  "sheet": "mochi_rice_lamp.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:44b2df2d6fd922bd",
+  "recipeHash": "44b2df2d6fd922bde399c206fa91583da0e3ffe69d95061719fe99e773496ab1",
+  "pixelHash": "f1f619cf9d633a1642f986f0269f128e37e6f15e84991d3b74496a3c88e66751"
+}

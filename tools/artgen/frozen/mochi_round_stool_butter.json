@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_round_stool_butter",
+  "archetype": "artgen",
+  "sheet": "mochi_round_stool_butter.png",
+  "frameW": 64,
+  "frameH": 48,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 32,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5,
+  "seatZ": 0.48,
+  "occlusion": null,
+  "nearSheet": "mochi_round_stool_butter.near.png",
+  "nearHash": "450cd97fb315782d6c482b21abb6c9e5bd79fb38e5c7a211d14743b672579326",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:50c259735b613ba7",
+  "recipeHash": "50c259735b613ba7d516d96fc19f39409ec066b73eed24aae326fd685b29e7cd",
+  "pixelHash": "2fa4f358d0574fc43bf9de8086353b12c4aaceb44ae0a1bbfb9a4d56fb6406c8"
+}

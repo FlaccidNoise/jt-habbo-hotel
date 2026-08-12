@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_pastel_drawers_honey",
+  "archetype": "artgen",
+  "sheet": "mochi_pastel_drawers_honey.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:118cdbb10e99cf2b",
+  "recipeHash": "118cdbb10e99cf2b915731d6e1a9bdbaa4ae4f822ba496a7044d0fa390fd055e",
+  "pixelHash": "dbdcf905f3239bdbe06db409dc311eb257efef7689cf8dee4036fe0e8d5f51b9"
+}

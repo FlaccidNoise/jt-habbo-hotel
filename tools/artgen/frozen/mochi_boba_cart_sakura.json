@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_boba_cart_sakura",
+  "archetype": "artgen",
+  "sheet": "mochi_boba_cart_sakura.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bdc6bc2c4a0c2ee0",
+  "recipeHash": "bdc6bc2c4a0c2ee07211f1705d94b15a7ff0721ed9f715abdee05b9d40fdaea5",
+  "pixelHash": "109367fc418ca2cc904a82aada07954b02f828c340aee6316f4d519c3dfc15e1"
+}

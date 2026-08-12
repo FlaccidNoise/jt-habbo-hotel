@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_mallow_plush_yuzu",
+  "archetype": "artgen",
+  "sheet": "mochi_mallow_plush_yuzu.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c28e32189c639026",
+  "recipeHash": "c28e32189c639026c073d2ba52a3a50076ca4888bc336bcb5783055821324866",
+  "pixelHash": "34b4f13779df37374993b6f89f6db56a680881c96b47deeea2228a708becce8d"
+}

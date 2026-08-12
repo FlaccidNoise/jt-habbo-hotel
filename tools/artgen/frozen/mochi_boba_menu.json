@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_boba_menu",
+  "archetype": "artgen",
+  "sheet": "mochi_boba_menu.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d96442bc041ccb5d",
+  "recipeHash": "d96442bc041ccb5d46190267f79c29a95b276df88bc2a9503b3d79540a749bf9",
+  "pixelHash": "cfa6dede61869b8c7a25f8eb6332692240b4a10b34627586c285680e234c4a93"
+}

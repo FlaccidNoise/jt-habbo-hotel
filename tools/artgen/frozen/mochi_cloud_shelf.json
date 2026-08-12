@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_cloud_shelf",
+  "archetype": "artgen",
+  "sheet": "mochi_cloud_shelf.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 9,
+    "mountU": 0,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0ce3b453780f77ee",
+  "recipeHash": "0ce3b453780f77ee0bcd0ad6fddea643ce595c86deb51c054957f62b8830e922",
+  "pixelHash": "7def6e27866933ab30eb0df5aeea6067846774b0e59de7db3d9b2ae4e856c6a3"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_cloud_rug",
+  "archetype": "artgen",
+  "sheet": "mochi_cloud_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3b4c534f06c6be28",
+  "recipeHash": "3b4c534f06c6be28f147bb13454a2c204700197d2706ea707d4a534876bcf288",
+  "pixelHash": "21786cb959d27feaeed165cc61c83af72203a681da262a7ddea209cd0eb61880"
+}

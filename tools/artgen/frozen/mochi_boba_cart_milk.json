@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_boba_cart_milk",
+  "archetype": "artgen",
+  "sheet": "mochi_boba_cart_milk.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:587ec806f9d74f20",
+  "recipeHash": "587ec806f9d74f202b6bffe27493712eb600af3a04ff8647307931fe4b6e3824",
+  "pixelHash": "24473a230bec31c4bb5852f192c9aac5c0a41103964fc983e0526a610ae492d3"
+}

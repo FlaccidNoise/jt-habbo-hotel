@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_rice_lamp_sky",
+  "archetype": "artgen",
+  "sheet": "mochi_rice_lamp_sky.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:72cbcdf391a6f386",
+  "recipeHash": "72cbcdf391a6f386e85cb057dff43483722923d4350ca3f1b5904dcdb854b5f6",
+  "pixelHash": "4b31c9e8d8d7327ea9d09e18acfbe09c83c213ca8cd323a61fec2009aa630966"
+}

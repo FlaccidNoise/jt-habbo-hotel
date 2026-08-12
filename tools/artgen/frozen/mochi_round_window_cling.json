@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_round_window_cling",
+  "archetype": "artgen",
+  "sheet": "mochi_round_window_cling.png",
+  "frameW": 64,
+  "frameH": 112,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 20,
+    "planeH": 6,
+    "mountU": 4,
+    "mountV": 51,
+    "gap": 0,
+    "depth": 0.21000000000000002
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:66870de70f5dd7c2",
+  "recipeHash": "66870de70f5dd7c262ef08302438e7245670dfef7497af2f039bdbd89f8107e9",
+  "pixelHash": "3839958565b4290d2b15eaa6bb974db8e92da97025ba5e9e94a4f067e04fc349"
+}

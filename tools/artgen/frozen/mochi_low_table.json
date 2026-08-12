@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_low_table",
+  "archetype": "artgen",
+  "sheet": "mochi_low_table.png",
+  "frameW": 64,
+  "frameH": 46,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 30,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e33427644bdac365",
+  "recipeHash": "e33427644bdac36501495c671829096f1be5fd925af58bf4bd25d8b07d7fed88",
+  "pixelHash": "f7a8a61dab64353c51dd4ed370741602fc7c38b6618777c136cee49c6f0895f6"
+}

@@ -6741,6 +6741,982 @@
       "recipeHash": "c0ae59b821882042b00814438aa7f9ab96563109c01666d95d261d4972df8391",
       "pixelHash": "8c845505ee64de1ce7b23d98c253fee602a8faf74da7b787675f71f61b7b60a1"
     },
+    "mochi_day_bed_cream": {
+      "defId": "mochi_day_bed_cream",
+      "archetype": "artgen",
+      "sheet": "mochi_day_bed_cream.png",
+      "frameW": 96,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": 0.22,
+      "occlusion": null,
+      "nearSheet": "mochi_day_bed_cream.near.png",
+      "nearHash": "b6767e40ac1eeedefd903b6569b0fc67eb28896c7b6103743c956823960048dc",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a952bde68b25071f",
+      "recipeHash": "a952bde68b25071fb3ed808e46752bd8c34f852f3428c9a390dee3da51602f5e",
+      "pixelHash": "4baabc896a9e801faa7d98d6098e71126a581b99cb5faff83fead52be8070379"
+    },
+    "mochi_boba_cart_sakura": {
+      "defId": "mochi_boba_cart_sakura",
+      "archetype": "artgen",
+      "sheet": "mochi_boba_cart_sakura.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bdc6bc2c4a0c2ee0",
+      "recipeHash": "bdc6bc2c4a0c2ee07211f1705d94b15a7ff0721ed9f715abdee05b9d40fdaea5",
+      "pixelHash": "109367fc418ca2cc904a82aada07954b02f828c340aee6316f4d519c3dfc15e1"
+    },
+    "mochi_mallow_plush_taro": {
+      "defId": "mochi_mallow_plush_taro",
+      "archetype": "artgen",
+      "sheet": "mochi_mallow_plush_taro.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:91bb8311a4bfcc0d",
+      "recipeHash": "91bb8311a4bfcc0d0dc8c58b8bac105bfe34a0f53dcefe7710f473ec2a384964",
+      "pixelHash": "5fa47645ad4056efafe4c6e3a74e2c9fae305eaabd0348541290ca95bbec2b5b"
+    },
+    "mochi_cloud_sofa_matcha": {
+      "defId": "mochi_cloud_sofa_matcha",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_sofa_matcha.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "mochi_cloud_sofa_matcha.near.png",
+      "nearHash": "4c914622aed4d9b11751ee494b8014f8af81d7ee93278eefbcdbed3083bd6866",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:11c33e0838ef894f",
+      "recipeHash": "11c33e0838ef894fc481dc7df77be5adc8bee2f8ffc6ae65b6c6271f57a87484",
+      "pixelHash": "571e75c54cf4d0e8012abc1184448141ece469acc9e65db570c381f97a93c666"
+    },
+    "mochi_pastel_drawers_honey": {
+      "defId": "mochi_pastel_drawers_honey",
+      "archetype": "artgen",
+      "sheet": "mochi_pastel_drawers_honey.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:118cdbb10e99cf2b",
+      "recipeHash": "118cdbb10e99cf2b915731d6e1a9bdbaa4ae4f822ba496a7044d0fa390fd055e",
+      "pixelHash": "dbdcf905f3239bdbe06db409dc311eb257efef7689cf8dee4036fe0e8d5f51b9"
+    },
+    "mochi_low_table_sesame": {
+      "defId": "mochi_low_table_sesame",
+      "archetype": "artgen",
+      "sheet": "mochi_low_table_sesame.png",
+      "frameW": 64,
+      "frameH": 46,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 30,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dd0bdbcf9b5142f1",
+      "recipeHash": "dd0bdbcf9b5142f1716c66f3780b1e898e2eb0bf57d5fa61a40d7a440288c8e0",
+      "pixelHash": "8802eb0e1da90143779460ffe0fa48594326035a3d24e07bfe05794c7d3146fb"
+    },
+    "mochi_rice_lamp_sky": {
+      "defId": "mochi_rice_lamp_sky",
+      "archetype": "artgen",
+      "sheet": "mochi_rice_lamp_sky.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:72cbcdf391a6f386",
+      "recipeHash": "72cbcdf391a6f386e85cb057dff43483722923d4350ca3f1b5904dcdb854b5f6",
+      "pixelHash": "4b31c9e8d8d7327ea9d09e18acfbe09c83c213ca8cd323a61fec2009aa630966"
+    },
+    "mochi_cloud_rug_peach": {
+      "defId": "mochi_cloud_rug_peach",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_rug_peach.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:352d8797043e7d09",
+      "recipeHash": "352d8797043e7d096815a919ebf9905ea8f912af74cd1bbed21de9444126d4f4",
+      "pixelHash": "64f730aac6f7a4c2ff442ce53f289d5bce13eba8140205bc8970e09e2ef8dfcd"
+    },
+    "mochi_tea_tray_stand_cocoa": {
+      "defId": "mochi_tea_tray_stand_cocoa",
+      "archetype": "artgen",
+      "sheet": "mochi_tea_tray_stand_cocoa.png",
+      "frameW": 64,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:de38666ade8b91bd",
+      "recipeHash": "de38666ade8b91bd7ce15e455c6c3c16b2ad0430591a78f2b8588628b04e1d1f",
+      "pixelHash": "9968cdb8e235d5abc3afcdb3bdd12c5ad629ce0e78c9182be905fcdcd4cd5007"
+    },
+    "mochi_bean_bag_mint": {
+      "defId": "mochi_bean_bag_mint",
+      "archetype": "artgen",
+      "sheet": "mochi_bean_bag_mint.png",
+      "frameW": 64,
+      "frameH": 46,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 30,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.4375,
+      "seatZ": 0.3,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:30bf8630a922413f",
+      "recipeHash": "30bf8630a922413f0efb56db39e32c4f4ac5d6aa739f16643f30ca5a52a27ac0",
+      "pixelHash": "ecc9b4355d6ded5725222d05ec5b7f0c1ecc9a2deab90903d29f027f54fd3f36"
+    },
+    "mochi_floor_cushion_lilac": {
+      "defId": "mochi_floor_cushion_lilac",
+      "archetype": "artgen",
+      "sheet": "mochi_floor_cushion_lilac.png",
+      "frameW": 64,
+      "frameH": 40,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 24,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.25,
+      "seatZ": 0.16,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:692aca0acdcf6e42",
+      "recipeHash": "692aca0acdcf6e42d37341cd541c2b769c5f22a6d755ef7378948da465b9c8f2",
+      "pixelHash": "3bee5478e997a36daf66a02f28088ebd04f4d736436f2e9973335756cae14fb2"
+    },
+    "mochi_round_stool_butter": {
+      "defId": "mochi_round_stool_butter",
+      "archetype": "artgen",
+      "sheet": "mochi_round_stool_butter.png",
+      "frameW": 64,
+      "frameH": 48,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 32,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5,
+      "seatZ": 0.48,
+      "occlusion": null,
+      "nearSheet": "mochi_round_stool_butter.near.png",
+      "nearHash": "450cd97fb315782d6c482b21abb6c9e5bd79fb38e5c7a211d14743b672579326",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:50c259735b613ba7",
+      "recipeHash": "50c259735b613ba7d516d96fc19f39409ec066b73eed24aae326fd685b29e7cd",
+      "pixelHash": "2fa4f358d0574fc43bf9de8086353b12c4aaceb44ae0a1bbfb9a4d56fb6406c8"
+    },
+    "mochi_day_bed_berry": {
+      "defId": "mochi_day_bed_berry",
+      "archetype": "artgen",
+      "sheet": "mochi_day_bed_berry.png",
+      "frameW": 96,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": 0.22,
+      "occlusion": null,
+      "nearSheet": "mochi_day_bed_berry.near.png",
+      "nearHash": "b617c41612c50e9f04364918a7bf33c65110ff77d81c762f4fd094d40615b34f",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a6b6d8fe7deecb87",
+      "recipeHash": "a6b6d8fe7deecb8708ef90b3b154af19929f2c53ec0ebf2cafeef0f1f8d2a8ec",
+      "pixelHash": "c14f5425e525f1676d88ffe964730f38c0c69704ad620acd6a56ca9156e7f5b6"
+    },
+    "mochi_boba_cart_milk": {
+      "defId": "mochi_boba_cart_milk",
+      "archetype": "artgen",
+      "sheet": "mochi_boba_cart_milk.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:587ec806f9d74f20",
+      "recipeHash": "587ec806f9d74f202b6bffe27493712eb600af3a04ff8647307931fe4b6e3824",
+      "pixelHash": "24473a230bec31c4bb5852f192c9aac5c0a41103964fc983e0526a610ae492d3"
+    },
+    "mochi_mallow_plush_yuzu": {
+      "defId": "mochi_mallow_plush_yuzu",
+      "archetype": "artgen",
+      "sheet": "mochi_mallow_plush_yuzu.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c28e32189c639026",
+      "recipeHash": "c28e32189c639026c073d2ba52a3a50076ca4888bc336bcb5783055821324866",
+      "pixelHash": "34b4f13779df37374993b6f89f6db56a680881c96b47deeea2228a708becce8d"
+    },
+    "mochi_cloud_sofa_redbean": {
+      "defId": "mochi_cloud_sofa_redbean",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_sofa_redbean.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "mochi_cloud_sofa_redbean.near.png",
+      "nearHash": "5cd1cf0371fc3f3d21b9a9f12c04dc088275d167b4612ddf4c8dedfac262a54c",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:40c79b91f1bb6e39",
+      "recipeHash": "40c79b91f1bb6e391145e76e1461f6b691248356daf6e883dc81820f52509629",
+      "pixelHash": "f18088bb72f9e841299cee8371aade58fe3a4000a3044740eb2539b151636781"
+    },
+    "mochi_pastel_drawers_latte": {
+      "defId": "mochi_pastel_drawers_latte",
+      "archetype": "artgen",
+      "sheet": "mochi_pastel_drawers_latte.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:756c9b2b9b40899f",
+      "recipeHash": "756c9b2b9b40899fd6c4f6615a9bebc889d5a4596f5256e66212ee039d3954cf",
+      "pixelHash": "fda0e682af651ff2bb751e7111c6708ca5340e71a3fb0d50c4a3599ce602bc13"
+    },
+    "mochi_low_table_plum": {
+      "defId": "mochi_low_table_plum",
+      "archetype": "artgen",
+      "sheet": "mochi_low_table_plum.png",
+      "frameW": 64,
+      "frameH": 46,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 30,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5c0ae08f9c8e0693",
+      "recipeHash": "5c0ae08f9c8e0693202e3f1302f6023a6c4822b093cb4a0c54a2f18ba7177205",
+      "pixelHash": "bfe1201118576ebf0c7a2c12f72a3c77ab2dad14c4c90984f364ebe1e0ae6e19"
+    },
+    "mochi_day_bed": {
+      "defId": "mochi_day_bed",
+      "archetype": "artgen",
+      "sheet": "mochi_day_bed.png",
+      "frameW": 96,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": 0.22,
+      "occlusion": null,
+      "nearSheet": "mochi_day_bed.near.png",
+      "nearHash": "914ec1de71bda714405f3070c73b9ae6ac52fb2e12caa48eca6dadaaedd2f041",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d73187704f6f843d",
+      "recipeHash": "d73187704f6f843d9bb7c8faf5a36c2487fc985c6ca18bcd47028711067c5be4",
+      "pixelHash": "eab1a904cb558a47f4d2c209846e67813aa54d7252addea68d3c8e07cdbbc520"
+    },
+    "mochi_boba_cart": {
+      "defId": "mochi_boba_cart",
+      "archetype": "artgen",
+      "sheet": "mochi_boba_cart.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f5fd4927399c0653",
+      "recipeHash": "f5fd4927399c06532c87eeb9953c507ac469230a61c262d385dabe1aececcfa1",
+      "pixelHash": "ce5b512dbb1215fb2a57d4db83253fbdc6c56ddf7297d4320021bcfcb8345e58"
+    },
+    "mochi_mallow_plush": {
+      "defId": "mochi_mallow_plush",
+      "archetype": "artgen",
+      "sheet": "mochi_mallow_plush.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f5bc45a7d9e4c5b5",
+      "recipeHash": "f5bc45a7d9e4c5b5e7f5ee797b83f28907000be4cced7d96b3b621c88f68c53e",
+      "pixelHash": "b7a8f964054066a8c331956011aab20288c6472ad6da8376e5bbaf9fc60a809d"
+    },
+    "mochi_cloud_sofa": {
+      "defId": "mochi_cloud_sofa",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_sofa.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "mochi_cloud_sofa.near.png",
+      "nearHash": "96249ba812979592a031d49dedd4f376534f488eaa9851513330c1b138139b06",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1605508e1bdc3bc4",
+      "recipeHash": "1605508e1bdc3bc413f881586f4313f68a7e3d2e0da7eb95bfc8bb77b91954c8",
+      "pixelHash": "eb1295304b39ad178799249459780558dc91f2908105aff753b33b6818ba7d63"
+    },
+    "mochi_pastel_drawers": {
+      "defId": "mochi_pastel_drawers",
+      "archetype": "artgen",
+      "sheet": "mochi_pastel_drawers.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:029901d2de61097f",
+      "recipeHash": "029901d2de61097f2c0cc5e79a163f544c6b8db59d61388f5f8db5422fbce6e6",
+      "pixelHash": "951485675fc50bff1a72779c4b39e5e80815840d6dfbe110c7b159706af07ec6"
+    },
+    "mochi_low_table": {
+      "defId": "mochi_low_table",
+      "archetype": "artgen",
+      "sheet": "mochi_low_table.png",
+      "frameW": 64,
+      "frameH": 46,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 30,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e33427644bdac365",
+      "recipeHash": "e33427644bdac36501495c671829096f1be5fd925af58bf4bd25d8b07d7fed88",
+      "pixelHash": "f7a8a61dab64353c51dd4ed370741602fc7c38b6618777c136cee49c6f0895f6"
+    },
+    "mochi_rice_lamp": {
+      "defId": "mochi_rice_lamp",
+      "archetype": "artgen",
+      "sheet": "mochi_rice_lamp.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:44b2df2d6fd922bd",
+      "recipeHash": "44b2df2d6fd922bde399c206fa91583da0e3ffe69d95061719fe99e773496ab1",
+      "pixelHash": "f1f619cf9d633a1642f986f0269f128e37e6f15e84991d3b74496a3c88e66751"
+    },
+    "mochi_cloud_rug": {
+      "defId": "mochi_cloud_rug",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3b4c534f06c6be28",
+      "recipeHash": "3b4c534f06c6be28f147bb13454a2c204700197d2706ea707d4a534876bcf288",
+      "pixelHash": "21786cb959d27feaeed165cc61c83af72203a681da262a7ddea209cd0eb61880"
+    },
+    "mochi_tea_tray_stand": {
+      "defId": "mochi_tea_tray_stand",
+      "archetype": "artgen",
+      "sheet": "mochi_tea_tray_stand.png",
+      "frameW": 64,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f4da1968f55766eb",
+      "recipeHash": "f4da1968f55766eb2ff47510c4beed486f6cf52225941697aa54a5463cc2a0e2",
+      "pixelHash": "6149bac458a5e6129d75afe7f29cce5b1d13183ed09881b046788636b769f54e"
+    },
+    "mochi_bean_bag": {
+      "defId": "mochi_bean_bag",
+      "archetype": "artgen",
+      "sheet": "mochi_bean_bag.png",
+      "frameW": 64,
+      "frameH": 46,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 30,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.4375,
+      "seatZ": 0.3,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e2489254a875cac8",
+      "recipeHash": "e2489254a875cac8135c494c50d5b4fb759ae489a0554f3aca081cfc05bf89cd",
+      "pixelHash": "f94b32a38c98dca9b40dea25959bbc37bbb2be242c05a3a9ac1d8330dde93ed3"
+    },
+    "mochi_floor_cushion": {
+      "defId": "mochi_floor_cushion",
+      "archetype": "artgen",
+      "sheet": "mochi_floor_cushion.png",
+      "frameW": 64,
+      "frameH": 40,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 24,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.25,
+      "seatZ": 0.16,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:423d1e054c0d2c5d",
+      "recipeHash": "423d1e054c0d2c5d16b292547ade6da1157c22f409f0da8bb551daad26b40f4f",
+      "pixelHash": "59c2c1f5b61ee523e519882609e5fe54296640e0a395fe4c4d8164ab525d62d2"
+    },
+    "mochi_round_stool": {
+      "defId": "mochi_round_stool",
+      "archetype": "artgen",
+      "sheet": "mochi_round_stool.png",
+      "frameW": 64,
+      "frameH": 48,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 32,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5,
+      "seatZ": 0.48,
+      "occlusion": null,
+      "nearSheet": "mochi_round_stool.near.png",
+      "nearHash": "450cd97fb315782d6c482b21abb6c9e5bd79fb38e5c7a211d14743b672579326",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9d51ae31543caea9",
+      "recipeHash": "9d51ae31543caea952ed9a336392f78a0b6e6e689e94dc12a44c93de7e3f7a66",
+      "pixelHash": "8b90fd14ac632ad05558c87ff021df6ba1d9df9df2a3c1ec914a9396f182682d"
+    },
     "nocturne_coffin_daybed": {
       "defId": "nocturne_coffin_daybed",
       "archetype": "artgen",
@@ -11408,6 +12384,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "mochi_boba_menu": {
+      "defId": "mochi_boba_menu",
+      "archetype": "artgen",
+      "sheet": "mochi_boba_menu.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d96442bc041ccb5d",
+      "recipeHash": "d96442bc041ccb5d46190267f79c29a95b276df88bc2a9503b3d79540a749bf9",
+      "pixelHash": "cfa6dede61869b8c7a25f8eb6332692240b4a10b34627586c285680e234c4a93"
+    },
+    "mochi_mallow_clock": {
+      "defId": "mochi_mallow_clock",
+      "archetype": "artgen",
+      "sheet": "mochi_mallow_clock.png",
+      "frameW": 64,
+      "frameH": 112,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 6,
+        "mountU": 2,
+        "mountV": 51,
+        "gap": 0.02,
+        "depth": 0.18
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:32230b44cf0c893d",
+      "recipeHash": "32230b44cf0c893d21c5dfa3917c840b23410bc3e6356a0efcf78019a66ab487",
+      "pixelHash": "7867ba055e56a6b8df5ae8ace94ea8ad23ea5e11f5895a9b5a8cb7dea54e38a8"
+    },
+    "mochi_cloud_shelf": {
+      "defId": "mochi_cloud_shelf",
+      "archetype": "artgen",
+      "sheet": "mochi_cloud_shelf.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 9,
+        "mountU": 0,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0ce3b453780f77ee",
+      "recipeHash": "0ce3b453780f77ee0bcd0ad6fddea643ce595c86deb51c054957f62b8830e922",
+      "pixelHash": "7def6e27866933ab30eb0df5aeea6067846774b0e59de7db3d9b2ae4e856c6a3"
+    },
+    "mochi_pastel_bunting": {
+      "defId": "mochi_pastel_bunting",
+      "archetype": "artgen",
+      "sheet": "mochi_pastel_bunting.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 14,
+        "mountU": 2,
+        "mountV": 46,
+        "gap": 0.02,
+        "depth": 0.05
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:aebb88a3cb82495d",
+      "recipeHash": "aebb88a3cb82495d04ff6f01627adc14ed49a9c88a733a78b661e8aa09a46c0e",
+      "pixelHash": "da59a0bb66a2de5b120ec4cdfc43b2e94a9dbe42216ac0172ca97a9d4d355a23"
+    },
+    "mochi_cream_print": {
+      "defId": "mochi_cream_print",
+      "archetype": "artgen",
+      "sheet": "mochi_cream_print.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d4fa30ece016f9af",
+      "recipeHash": "d4fa30ece016f9afd28c6bbc5c6a1edb4e0d60845976f2b11bbe76b3d9fc4a5e",
+      "pixelHash": "088dc29643327bd49ab86bb1d6f6075ff0191d8e0c44471117ef7dab1287c5f2"
+    },
+    "mochi_steam_decal": {
+      "defId": "mochi_steam_decal",
+      "archetype": "artgen",
+      "sheet": "mochi_steam_decal.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 16,
+        "planeH": 4,
+        "mountU": 6,
+        "mountV": 48,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:82dde77575ca6860",
+      "recipeHash": "82dde77575ca68609901808a198c6ab9190f17b0241c9bd71f782c67451db878",
+      "pixelHash": "0049219d08c851252fc4bbf7020337bfdd00e0166a4b2052adff9ab741d31c1b"
+    },
+    "mochi_round_window_cling": {
+      "defId": "mochi_round_window_cling",
+      "archetype": "artgen",
+      "sheet": "mochi_round_window_cling.png",
+      "frameW": 64,
+      "frameH": 112,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 20,
+        "planeH": 6,
+        "mountU": 4,
+        "mountV": 51,
+        "gap": 0,
+        "depth": 0.21000000000000002
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:66870de70f5dd7c2",
+      "recipeHash": "66870de70f5dd7c262ef08302438e7245670dfef7497af2f039bdbd89f8107e9",
+      "pixelHash": "3839958565b4290d2b15eaa6bb974db8e92da97025ba5e9e94a4f067e04fc349"
+    },
+    "mochi_snack_poster": {
+      "defId": "mochi_snack_poster",
+      "archetype": "artgen",
+      "sheet": "mochi_snack_poster.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 17,
+        "mountU": 6,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dfa32d477aa1bafe",
+      "recipeHash": "dfa32d477aa1bafed7abd9e193826ecc3d8d4ffd9d90e1c362446d035ced3e76",
+      "pixelHash": "eccaf644fee2d940719101149e70e23909cb1430e34738e468038aeabb8f579f"
+    },
+    "mochi_soft_sconce": {
+      "defId": "mochi_soft_sconce",
+      "archetype": "artgen",
+      "sheet": "mochi_soft_sconce.png",
+      "frameW": 64,
+      "frameH": 113,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 97,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 12,
+        "planeH": 2,
+        "mountU": 6,
+        "mountV": 52,
+        "gap": 0,
+        "depth": 0.26
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2f62a9ec33f8154f",
+      "recipeHash": "2f62a9ec33f8154f93a2ab3bb1eb138db1c8baae7f0722d8b3717b67eac45347",
+      "pixelHash": "e8eb9a595d7a22e0180630e67cc4259767eee04e0936818de1b34be0ea17d452"
+    },
+    "mochi_charm_hooks": {
+      "defId": "mochi_charm_hooks",
+      "archetype": "artgen",
+      "sheet": "mochi_charm_hooks.png",
+      "frameW": 64,
+      "frameH": 114,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 4,
+        "mountU": 4,
+        "mountV": 50,
+        "gap": 0,
+        "depth": 0.18000000000000002
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d255a4cd48221ff1",
+      "recipeHash": "d255a4cd48221ff1da10e94923894b6479cf551f5f2225c5f136e1a472f2a4bb",
+      "pixelHash": "56e972cdc0e2c1427053f032d19c5f5f25d96b41dc0b9406a5dd0a2ef060f20f"
     },
     "nocturne_bat_silhouette": {
       "defId": "nocturne_bat_silhouette",

@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_cloud_sofa_redbean",
+  "archetype": "artgen",
+  "sheet": "mochi_cloud_sofa_redbean.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "mochi_cloud_sofa_redbean.near.png",
+  "nearHash": "5cd1cf0371fc3f3d21b9a9f12c04dc088275d167b4612ddf4c8dedfac262a54c",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:40c79b91f1bb6e39",
+  "recipeHash": "40c79b91f1bb6e391145e76e1461f6b691248356daf6e883dc81820f52509629",
+  "pixelHash": "f18088bb72f9e841299cee8371aade58fe3a4000a3044740eb2539b151636781"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_day_bed_cream",
+  "archetype": "artgen",
+  "sheet": "mochi_day_bed_cream.png",
+  "frameW": 96,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": 0.22,
+  "occlusion": null,
+  "nearSheet": "mochi_day_bed_cream.near.png",
+  "nearHash": "b6767e40ac1eeedefd903b6569b0fc67eb28896c7b6103743c956823960048dc",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a952bde68b25071f",
+  "recipeHash": "a952bde68b25071fb3ed808e46752bd8c34f852f3428c9a390dee3da51602f5e",
+  "pixelHash": "4baabc896a9e801faa7d98d6098e71126a581b99cb5faff83fead52be8070379"
+}

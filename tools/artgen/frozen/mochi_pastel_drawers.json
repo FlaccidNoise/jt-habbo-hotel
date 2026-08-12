@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_pastel_drawers",
+  "archetype": "artgen",
+  "sheet": "mochi_pastel_drawers.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:029901d2de61097f",
+  "recipeHash": "029901d2de61097f2c0cc5e79a163f544c6b8db59d61388f5f8db5422fbce6e6",
+  "pixelHash": "951485675fc50bff1a72779c4b39e5e80815840d6dfbe110c7b159706af07ec6"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_soft_sconce",
+  "archetype": "artgen",
+  "sheet": "mochi_soft_sconce.png",
+  "frameW": 64,
+  "frameH": 113,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 97,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 12,
+    "planeH": 2,
+    "mountU": 6,
+    "mountV": 52,
+    "gap": 0,
+    "depth": 0.26
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2f62a9ec33f8154f",
+  "recipeHash": "2f62a9ec33f8154f93a2ab3bb1eb138db1c8baae7f0722d8b3717b67eac45347",
+  "pixelHash": "e8eb9a595d7a22e0180630e67cc4259767eee04e0936818de1b34be0ea17d452"
+}

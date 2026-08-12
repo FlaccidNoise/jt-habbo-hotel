@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_cream_print",
+  "archetype": "artgen",
+  "sheet": "mochi_cream_print.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d4fa30ece016f9af",
+  "recipeHash": "d4fa30ece016f9afd28c6bbc5c6a1edb4e0d60845976f2b11bbe76b3d9fc4a5e",
+  "pixelHash": "088dc29643327bd49ab86bb1d6f6075ff0191d8e0c44471117ef7dab1287c5f2"
+}

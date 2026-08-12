@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_mallow_plush_taro",
+  "archetype": "artgen",
+  "sheet": "mochi_mallow_plush_taro.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:91bb8311a4bfcc0d",
+  "recipeHash": "91bb8311a4bfcc0d0dc8c58b8bac105bfe34a0f53dcefe7710f473ec2a384964",
+  "pixelHash": "5fa47645ad4056efafe4c6e3a74e2c9fae305eaabd0348541290ca95bbec2b5b"
+}

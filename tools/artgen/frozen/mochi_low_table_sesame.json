@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_low_table_sesame",
+  "archetype": "artgen",
+  "sheet": "mochi_low_table_sesame.png",
+  "frameW": 64,
+  "frameH": 46,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 30,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dd0bdbcf9b5142f1",
+  "recipeHash": "dd0bdbcf9b5142f1716c66f3780b1e898e2eb0bf57d5fa61a40d7a440288c8e0",
+  "pixelHash": "8802eb0e1da90143779460ffe0fa48594326035a3d24e07bfe05794c7d3146fb"
+}

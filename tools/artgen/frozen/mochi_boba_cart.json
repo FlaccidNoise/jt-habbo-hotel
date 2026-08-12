@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_boba_cart",
+  "archetype": "artgen",
+  "sheet": "mochi_boba_cart.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f5fd4927399c0653",
+  "recipeHash": "f5fd4927399c06532c87eeb9953c507ac469230a61c262d385dabe1aececcfa1",
+  "pixelHash": "ce5b512dbb1215fb2a57d4db83253fbdc6c56ddf7297d4320021bcfcb8345e58"
+}

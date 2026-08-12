@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_floor_cushion_lilac",
+  "archetype": "artgen",
+  "sheet": "mochi_floor_cushion_lilac.png",
+  "frameW": 64,
+  "frameH": 40,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 24,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.25,
+  "seatZ": 0.16,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:692aca0acdcf6e42",
+  "recipeHash": "692aca0acdcf6e42d37341cd541c2b769c5f22a6d755ef7378948da465b9c8f2",
+  "pixelHash": "3bee5478e997a36daf66a02f28088ebd04f4d736436f2e9973335756cae14fb2"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_mallow_plush",
+  "archetype": "artgen",
+  "sheet": "mochi_mallow_plush.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f5bc45a7d9e4c5b5",
+  "recipeHash": "f5bc45a7d9e4c5b5e7f5ee797b83f28907000be4cced7d96b3b621c88f68c53e",
+  "pixelHash": "b7a8f964054066a8c331956011aab20288c6472ad6da8376e5bbaf9fc60a809d"
+}

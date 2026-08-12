@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_mallow_clock",
+  "archetype": "artgen",
+  "sheet": "mochi_mallow_clock.png",
+  "frameW": 64,
+  "frameH": 112,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 6,
+    "mountU": 2,
+    "mountV": 51,
+    "gap": 0.02,
+    "depth": 0.18
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:32230b44cf0c893d",
+  "recipeHash": "32230b44cf0c893d21c5dfa3917c840b23410bc3e6356a0efcf78019a66ab487",
+  "pixelHash": "7867ba055e56a6b8df5ae8ace94ea8ad23ea5e11f5895a9b5a8cb7dea54e38a8"
+}

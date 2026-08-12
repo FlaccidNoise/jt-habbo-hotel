@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_steam_decal",
+  "archetype": "artgen",
+  "sheet": "mochi_steam_decal.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 16,
+    "planeH": 4,
+    "mountU": 6,
+    "mountV": 48,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:82dde77575ca6860",
+  "recipeHash": "82dde77575ca68609901808a198c6ab9190f17b0241c9bd71f782c67451db878",
+  "pixelHash": "0049219d08c851252fc4bbf7020337bfdd00e0166a4b2052adff9ab741d31c1b"
+}

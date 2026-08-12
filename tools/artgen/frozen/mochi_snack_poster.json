@@ -1,0 +1,37 @@
+{
+  "defId": "mochi_snack_poster",
+  "archetype": "artgen",
+  "sheet": "mochi_snack_poster.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 17,
+    "mountU": 6,
+    "mountV": 41,
+    "gap": 0,
+    "depth": 0.06
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dfa32d477aa1bafe",
+  "recipeHash": "dfa32d477aa1bafed7abd9e193826ecc3d8d4ffd9d90e1c362446d035ced3e76",
+  "pixelHash": "eccaf644fee2d940719101149e70e23909cb1430e34738e468038aeabb8f579f"
+}

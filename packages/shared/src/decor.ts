@@ -256,6 +256,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_nocturne_arch_panel", name: "Nocturne Arch Panel", tile: { w: 32, h: 32 }, cap: 0x656056 },
   { kind: "wall", id: "wall_nocturne_candle_stripe", name: "Nocturne Candle Stripe", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
   { kind: "wall", id: "wall_nocturne_moth_frieze", name: "Nocturne Moth Frieze", tile: { w: 32, h: 32 }, cap: 0xaa3333 },
+  // Mochi Suite (blitz task 13).
+  { kind: "floor", id: "floor_mochi_cream_check", name: "Mochi Cream Check", tile: { w: 64, h: 32 }, sides: { left: 0xcbc0ac, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_mochi_sprinkle", name: "Mochi Sprinkle", tile: { w: 64, h: 32 }, sides: { left: 0xcbc0ac, right: 0xdaa520 } },
+  { kind: "floor", id: "floor_mochi_cloud", name: "Mochi Cloud", tile: { w: 64, h: 32 }, sides: { left: 0x8d9eb1, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_mochi_pastel_tile", name: "Mochi Pastel Tile", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xc2a36b } },
+  { kind: "wall", id: "wall_mochi_cream_soda", name: "Mochi Cream Soda", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_mochi_cloud", name: "Mochi Cloud", tile: { w: 32, h: 32 }, cap: 0x8d9eb1 },
+  { kind: "wall", id: "wall_mochi_charm", name: "Mochi Charm", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_mochi_soft_stripe", name: "Mochi Soft Stripe", tile: { w: 32, h: 32 }, cap: 0xc2a36b },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

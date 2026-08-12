@@ -1,0 +1,32 @@
+{
+  "defId": "mochi_low_table_plum",
+  "archetype": "artgen",
+  "sheet": "mochi_low_table_plum.png",
+  "frameW": 64,
+  "frameH": 46,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 30,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5c0ae08f9c8e0693",
+  "recipeHash": "5c0ae08f9c8e0693202e3f1302f6023a6c4822b093cb4a0c54a2f18ba7177205",
+  "pixelHash": "bfe1201118576ebf0c7a2c12f72a3c77ab2dad14c4c90984f364ebe1e0ae6e19"
+}

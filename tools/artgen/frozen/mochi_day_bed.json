@@ -1,0 +1,34 @@
+{
+  "defId": "mochi_day_bed",
+  "archetype": "artgen",
+  "sheet": "mochi_day_bed.png",
+  "frameW": 96,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": 0.22,
+  "occlusion": null,
+  "nearSheet": "mochi_day_bed.near.png",
+  "nearHash": "914ec1de71bda714405f3070c73b9ae6ac52fb2e12caa48eca6dadaaedd2f041",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d73187704f6f843d",
+  "recipeHash": "d73187704f6f843d9bb7c8faf5a36c2487fc985c6ca18bcd47028711067c5be4",
+  "pixelHash": "eab1a904cb558a47f4d2c209846e67813aa54d7252addea68d3c8e07cdbbc520"
+}
