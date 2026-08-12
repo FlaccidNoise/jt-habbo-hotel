@@ -4527,6 +4527,54 @@
       "figuredataVersion": 1,
       "recipeHash": "393decc752abb155bceefda291e57199a5a4b388f81512e78202ccae8eedb3d3",
       "pixelHash": "b18cfedcbfc80efba7bbf1c9f4783de24c2b93dd13e0a56c250f803dab05ea91"
+    },
+    {
+      "partId": "ch91",
+      "setId": 91,
+      "type": "ch",
+      "name": "Rune Tunic",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch91.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d72dbd7c07a66683642ce8d8d7256dceb1422f2189b8a3acf2b82406c28b2a08",
+      "pixelHash": "2608ad23a652cc42524d994f9cdaeb7cf0d21adee9b8171e5ed1fb971ca105cc"
     }
   ]
 }

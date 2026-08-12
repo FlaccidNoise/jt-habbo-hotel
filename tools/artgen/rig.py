@@ -4619,6 +4619,37 @@ FIGURE_PARTS = {
              "r0": 6.6, "r1": 6.8},
         ],
     },
+    # Rune Tunic (set 91, two slots). The bell sleeve is the whole set and nothing else in the
+    # wardrobe has one: every other ch arm is a limb, which is a capsule of one radius. A cone on
+    # the arm bone is the only prim that changes width along a limb, so the sleeve is 3.8 at the
+    # shoulder against the cloud cardigan 80's constant 5.0 and 6.6 at the wrist against the same
+    # 5.0 — 1.2 narrower at one end and 1.6 wider at the other, so the arm reads as a triangle
+    # where 80's is a rectangle.
+    #
+    # The cuff is a squashed ball at the sleeve's own end rather than a wider ring: at z -20.6 the
+    # cone has reached 6.55, so 6.9 stands 0.35 proud and closes the bell instead of widening it.
+    # A ring authored past the cone's radius makes the sleeve a trumpet, which is a different
+    # garment and a wider silhouette than the row asks for.
+    #
+    # The body is 8.2 straight — no pinch anywhere, which is what separates it from the tracksuit
+    # 44's 8.6-to-7.8 — and the rolled hem band at z -6.0 puts 0.6 px of step past it and hangs
+    # 3.4 px below the hip box every other lg draws, so the tunic covers a waistband instead of
+    # meeting one. Slot 1 is that band and the two cuffs: three places the second ramp lands on an
+    # edge a player can see, rather than piping that quantises to single pixels.
+    "ch91": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -6.8, -2.6),
+             "c1": (8.2, 6.8, 20.4)},
+            {"t": "cone", "bone": "arm_l", "slot": 0, "len": 21.0, "r0": 3.8, "r1": 6.6},
+            {"t": "cone", "bone": "arm_r", "slot": 0, "len": 21.0, "r0": 3.8, "r1": 6.6},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-8.8, -7.4, -6.0),
+             "c1": (8.8, 7.4, -2.0)},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -20.6), "r": 6.9,
+             "squash": (1.0, 1.0, 0.30)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -20.6), "r": 6.9,
+             "squash": (1.0, 1.0, 0.30)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
