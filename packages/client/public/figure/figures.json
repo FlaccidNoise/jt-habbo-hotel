@@ -5011,6 +5011,54 @@
       "figuredataVersion": 1,
       "recipeHash": "1424d09964a4c8f3fddd79e7574dbf3fa2ffa5c3ea58c2da28e8a4a819eb9982",
       "pixelHash": "d7e8aeaa54852b97c97de3428a3d6a4fec3689ee2eab7afb6ffd99bd8fcb11b1"
+    },
+    {
+      "partId": "ca101",
+      "setId": 101,
+      "type": "ca",
+      "name": "Life Ring",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ca101.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "5d2671b7b6ffe3bc417b6192cc3b0b817c7848e353c5fdf1bcc2be893f97ad2c",
+      "pixelHash": "6fa89612522da1755a9f29d7fb3f2e0c9119a28ee7de27919f5f2f61cbc189b5"
     }
   ]
 }

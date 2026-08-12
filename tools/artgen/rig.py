@@ -4930,6 +4930,51 @@ FIGURE_PARTS = {
              "c1": (3.4, 7.6, 1.2)},
         ],
     },
+    # Life Ring (set 101, two slots). The largest ca in the wardrobe and the only open one. The
+    # lace ruff 76 is a closed horizontal plate at the chin; this is vertical, twice across, and
+    # it has a hole in it.
+    #
+    # Four boxes round that hole, which is the round specs 59's construction and not a style
+    # choice — there is no torus prim, and ellipsoid bars leave 0.5 px diagonal gaps where they
+    # meet. The corners are chamfered the way 59's are: the top and bottom bars stop at x +/-7.6
+    # inside the sides' +/-10.0, and the side bars stop at z 6.6 and 19.4 inside the top and
+    # bottom's 4.0 and 22.0, so the ring reads as an octagon rather than a picture frame. Each
+    # pair still laps 1.0 x 0.8 px at every corner, so the layer is one island.
+    #
+    # 20 px across and 18 tall: the row asks for both a 20 px ring and a z 4..22 span, and the
+    # span is the number that governs what the ring collides with, so the width is what gave. The
+    # top bar tops out at spine z 22, one px over the chin plane, and draws at row 46 — eight
+    # clear of the mouth at 39, so nothing here is near a face.
+    #
+    # Sit was the frame to check. The ring hangs off the spine and the spine does not rotate, so
+    # it draws at rows 56-74 against the hip's own anchor at 74. What moves is the thigh: at sit
+    # it runs forward to y 19, far nearer the camera than the ring's 8.2, so bd1 takes the bottom
+    # bar's lower edge back. That is a life ring resting on a lap, and the holdout is what draws
+    # it — the gate measures the layer composed WITH the body, and the body closes it.
+    #
+    # Worn with the rope belt 100 the two clear by 0.6 px: the knot tops out at spine z 3.4 and
+    # this starts at 4.0. `ca` draws after `wa`, so even a touch would resolve in the ring's
+    # favour, but a costume shelf that sells both should not need the layer order to look right.
+    "ca101": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.6, 6.2, 18.6),
+             "c1": (7.6, 8.2, 22.0)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.6, 6.2, 4.0),
+             "c1": (7.6, 8.2, 7.4)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-10.0, 6.2, 6.6),
+             "c1": (-6.6, 8.2, 19.4)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (6.6, 6.2, 6.6),
+             "c1": (10.0, 8.2, 19.4)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-2.2, 6.4, 18.2),
+             "c1": (2.2, 8.6, 22.4)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-2.2, 6.4, 3.6),
+             "c1": (2.2, 8.6, 7.8)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-10.4, 6.4, 10.9),
+             "c1": (-6.2, 8.6, 15.1)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (6.2, 6.4, 10.9),
+             "c1": (10.4, 8.6, 15.1)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
