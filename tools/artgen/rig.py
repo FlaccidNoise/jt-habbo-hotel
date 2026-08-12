@@ -4802,6 +4802,34 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.42)},
         ],
     },
+    # Sea Boots (set 98, one slot). The boots 50's shaft is a straight box stopping at mid-shin at
+    # -9.4 with a cuff band closing it. This one runs 5.4 px higher, to just under the knee at
+    # -4.0, and it is a CONE, so its sides splay 1.8 px outward on the way up — the leg reads as a
+    # funnel where 50 reads as a tube.
+    #
+    # The ledger row is written ankle-up ("r0 4.6 at the ankle to r1 6.4 at the top"), which is
+    # VISUAL order, not prim order: a cone's r0 always sits at z0 and the solid runs DOWN from
+    # there. So the solid the row describes is authored z0 -4.0 with r0 6.4 at that top ring and
+    # r1 4.6 fourteen px below it at the ankle. Read literally the row would have built a funnel
+    # standing on its point.
+    #
+    # A ROUND ankle is what lets the shaft reach the ground plane at all. A frame's deepest row is
+    # (|x| + |y|) / 2.828 below the prim's own z, and for a circle of radius r the worst (|x|+|y|)
+    # is r * sqrt(2) — 6.5 px at the 4.6 ankle against the 12.3 a box of the same span carries
+    # into its corner. So the cone bottoms out on the sole at -18 and still lands two rows
+    # shallower than the boot 50's own footprint does.
+    "sh98": {
+        "prims": [
+            {"t": "cone", "bone": "knee_l", "slot": 0, "z0": -4.0, "len": 14.0,
+             "r0": 6.4, "r1": 4.6},
+            {"t": "cone", "bone": "knee_r", "slot": 0, "z0": -4.0, "len": 14.0,
+             "r0": 6.4, "r1": 4.6},
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-4.5, -4.2, -float(SHIN_LEN)),
+             "c1": (4.5, 7.6, -SHIN_LEN + 4.4)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-4.5, -4.2, -float(SHIN_LEN)),
+             "c1": (4.5, 7.6, -SHIN_LEN + 4.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

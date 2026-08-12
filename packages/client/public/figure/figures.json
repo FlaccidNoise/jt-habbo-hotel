@@ -4867,6 +4867,54 @@
       "figuredataVersion": 1,
       "recipeHash": "0cb4791428fbf576314d01b60d29547d7b0f5432592a3bbf22b2c65572d22c7d",
       "pixelHash": "b3541c525e39f51dd4f7986d3f66f2808ad3c69b4c0e3990ebeda2c31c79cae1"
+    },
+    {
+      "partId": "sh98",
+      "setId": 98,
+      "type": "sh",
+      "name": "Sea Boots",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh98.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6ef041e613d4248f2ac007318d7cb453fddedcccac37f58fa4ac0f8269f81098",
+      "pixelHash": "12fe40ece72b46c633d6f98cbd2fe88077faa6c9b4c9928de4032dd7a02442a5"
     }
   ]
 }

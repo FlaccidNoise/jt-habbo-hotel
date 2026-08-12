@@ -201,6 +201,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // the layer that would cover it. Only the sou'wester hides anything, and it hides `hr` for the
   // shipped reason: it replaces the hair rather than sitting on it.
   { id: 97,  type: "lg", name: "Rolled Deck Trousers", slots: 2, family: "material", hides: [], retired: false },
+  { id: 98,  type: "sh", name: "Sea Boots",            slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -356,6 +357,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 96, price: 400, theme: "fablewood" },   // Pointed Hat
   { set: 93, price: 450, theme: "fablewood" },   // Wizard Robe
   { set: 97,  price: 150, theme: "tidal" },      // Rolled Deck Trousers
+  { set: 98,  price: 300, theme: "tidal" },      // Sea Boots
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
