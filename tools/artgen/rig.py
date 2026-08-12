@@ -5543,6 +5543,44 @@ FIGURE_PARTS = {
              "c1": (8.4, 6.6, 5.6)},
         ],
     },
+    # Opera Cape (set 119, two slots, hides ch). No sleeves and no body box: one bell off the chest
+    # bone, and the arms hang out of the bottom of it. The overcoat 11 is a sleeved body over a hip
+    # flare and this has neither, so the whole upper-arm outline 11 draws is simply absent —
+    # measured 0.5135 against the tailcoat 75, 0.4608 against the frock coat 112 and 0.4116
+    # against 11 itself.
+    #
+    # The cone hangs off the chest rather than the spine because a cape is carried on the
+    # shoulders, the same reason the heraldic mantle 69 does. "z0": 5.6 puts the wide end at spine
+    # z 20.6, just under the torso top, and the hem at spine z 2.0. bd1's arm is a capsule at
+    # x +/-9.5 with r 3.2, so it reaches 12.7 against the cone's 11.7 at the elbow and 10.3 at the
+    # shoulder: the arm is inside the bell at its centre and about a px proud at its outer edge all
+    # the way down, then wholly outside below the hem. That is the row's "arms hang outside it
+    # below the elbow" and it is bd1 drawing past the cape, not the cape failing to cover.
+    #
+    # The collar is the part that had to be measured three times, and the pack-8 frock coat 112's
+    # finding is why. Standing it proud of bd1 is not enough — it has to stand proud of the cape's
+    # own shell as well, and at spine z 20.2 that shell is already r 9.65. Authored at y -9.2 it
+    # was INSIDE the cone at x 0 and only its corners showed.
+    #
+    # Widening it in x from +/-6.6 to +/-8.8 changed nothing at dirs 1 and 5, which is the finding
+    # worth keeping: at the profiles x IS the depth axis, so a collar's screen width there is its
+    # y-thickness and nothing else. At 1.8 thick it came out as pure outline, shade 0 with no
+    # interior, exactly what the wardrobe's 3 px floor predicts. Thickened to 3.2 it carries shade
+    # 3 at rows 38-41 and shade 2 below, and the layer is one island at both profiles. The x width
+    # was kept because it does buy a wider band at dirs 0/6/7, where x is partly screen-x.
+    #
+    # Face: 0 pixels painted over against all eight eyed heads, with 1 clear row below the chin at
+    # hd21 walk0 d1 — the beanie 53 and sou'wester 102 both ship at 0.
+    #
+    # Slot 1 is the collar.
+    "cc119": {
+        "prims": [
+            {"t": "cone", "bone": "chest", "slot": 0, "z0": 5.6, "len": 18.6,
+             "r0": 9.6, "r1": 12.0},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-8.8, -10.6, 20.2),
+             "c1": (8.8, -7.4, 27.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

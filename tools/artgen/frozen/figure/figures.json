@@ -5883,6 +5883,56 @@
       "figuredataVersion": 1,
       "recipeHash": "b7bf7ac4611d4e951d2b469fe38d9671b917730cae46a07ebfd87cc851c5ce23",
       "pixelHash": "07c2a249a379cd2e1c41ebd56c6fc94e83323b396facf485d739cbdc5fce1349"
+    },
+    {
+      "partId": "cc119",
+      "setId": 119,
+      "type": "cc",
+      "name": "Opera Cape",
+      "slots": 2,
+      "hides": [
+        "ch"
+      ],
+      "sheet": "cc119.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "6e82c3e3479cb153af3e20ee2de4cb5311be550ac42b1088d8ee4cbadc0fccfa",
+      "pixelHash": "b89aa789962b64e5d9d31307eaa6729829957574114704a36c5f9b138b4d5433"
     }
   ]
 }
