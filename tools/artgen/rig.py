@@ -5219,6 +5219,56 @@ FIGURE_PARTS = {
              "r0": 3.4, "r1": 8.6},
         ],
     },
+    # ---- costume pack 8: clockwork (#458) ----
+    # Steampunk artisan. Every row bolts a machine part to a plain garment, so the separator is
+    # always a piece of hardware standing off the body rather than a change to the body's own box.
+    #
+    # Jodhpurs (set 109, one slot). Flared at the HIP and tight at the shin, which is the mirror of
+    # the culottes 103 and the opposite of every other trouser: the cargo 47 is baggy at 5.5 with a
+    # step at the knee and stays loose to 4.6.
+    #
+    # The trousers 7 are what this row actually had to clear, not the cargo 47 the ledger names —
+    # the pack-4 finding again. Three builds against it:
+    #
+    #   hip box 8.0 x 6.4 to z 2.6, cone 6.8 -> 4.4, shin tube 4.2      -> 0.9316 vs 7
+    #   hip box 8.3 x 6.7 to z 4.4, cone 6.8 -> 4.4, shin tube 3.9      -> 0.8251 vs 7
+    #   hip box 8.4 x 6.8 to z 4.6, cone 7.8 -> 4.4, shin tube 3.9      -> the build below, 0.8406
+    #
+    # The first build is the ledger's numbers and it is 0.078 over the bar, because its hip box is
+    # the trousers 7's box to the tenth and its shin is within 0.1 of 7's 4.3. A garment that
+    # shares a waistband and a shin with another garment has already spent most of its alpha on it.
+    # So the waist went 2.0 px taller than 7's, which is a band 7 has nothing at, and the shin went
+    # 0.4 narrower — 0.2 clear of bd1's own 3.7 shin, the minimum — to take the rest.
+    #
+    # The knee is why the two balls exist. A cone has a flat end disc and no cap, and bd1's thigh
+    # is a CAPSULE: its bottom cap is a sphere of radius 4.2 centred on the knee. The cone's 4.4
+    # rim clears that by 0.2 and the 3.9 shin tube loses to it outright for the 1.56 px below the
+    # joint where the sphere is still wider — so rows 85-87 at stand d3 came out empty and the
+    # layer split into a thigh island and a shin island. A ball r 4.6 on the leg bone at the knee
+    # is the capsule cap the cone prim does not have, and it closes the joint at every angle
+    # because both solids contain the joint point however far the knee bends.
+    #
+    # What is left is a 7 px and a 1 px fragment at stand dirs 0/2/4/6: the hip flare reaches
+    # x 11.4 and bd1's arm owns x 6.3 to 12.7, so the arm cuts the flare and strands its outboard
+    # tip. The potion belt 92 ships an 8 px detached island at stand d0 and d6 for the same reason.
+    # Dirs 1/3/5/7 are one island, and the stride and sit frames split the way lg7's do (walk0 d0
+    # is 3 islands there and 3 here).
+    "lg109": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.4, -6.8, -2.6),
+             "c1": (8.4, 6.8, 4.6)},
+            {"t": "cone", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN),
+             "r0": 7.8, "r1": 4.4},
+            {"t": "cone", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN),
+             "r0": 7.8, "r1": 4.4},
+            {"t": "ball", "bone": "leg_l",  "slot": 0, "c": (0.0, 0.0, -float(THIGH_LEN)),
+             "r": 4.6},
+            {"t": "ball", "bone": "leg_r",  "slot": 0, "c": (0.0, 0.0, -float(THIGH_LEN)),
+             "r": 4.6},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 16.0, "r": 3.9},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 16.0, "r": 3.9},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -222,6 +222,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // chain up the ribs, a coat that opens at the back, goggles pushed up onto the forehead. The
   // mutton chops are the second and last stamp-path `fa` set, and the goggle cap hides `hr`
   // because it replaces the hair rather than sitting on it.
+  { id: 109, type: "lg", name: "Jodhpurs",             slots: 1, family: "material", hides: [], retired: false },
   { id: 114, type: "fa", name: "Mutton Chops",         slots: 1, family: "material", hides: [], retired: false },
 ];
 
@@ -390,6 +391,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 107, price: 300, theme: "verdant" },    // Seed Satchel
   { set: 108, price: 350, theme: "verdant" },    // Woven Sunshade
   { set: 114, price: 150, theme: "clockwork" },  // Mutton Chops
+  { set: 109, price: 250, theme: "clockwork" },  // Jodhpurs
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

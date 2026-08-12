@@ -5447,6 +5447,54 @@
       "figuredataVersion": 1,
       "recipeHash": "b6d68409941667ff2a14187657aa97dc7f6c35028efffe1e8758cf5730bbc48c",
       "pixelHash": "f6a57fb6b9d3bdb79fb13ef0aa4833d312dd44366b277d82664f6616c3c2eb53"
+    },
+    {
+      "partId": "lg109",
+      "setId": 109,
+      "type": "lg",
+      "name": "Jodhpurs",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg109.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "cf62d30af730eea7216dccb19706d2bca8c405891a7c939b72856ef920174a73",
+      "pixelHash": "a56d907e8c0a35662d5d16afeceb71492bac501f16d4e143ca44aeb2da3436cd"
     }
   ]
 }
