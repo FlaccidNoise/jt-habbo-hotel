@@ -4673,6 +4673,54 @@
       "figuredataVersion": 1,
       "recipeHash": "489b10d32bb0829d5c379da6d6bebf68cc4d98edbe9cc2910ab3d82281851a08",
       "pixelHash": "1c68e4274220fd7445d73ea3fa0edc924d4112149e74eb35847d806180bf1393"
+    },
+    {
+      "partId": "ca94",
+      "setId": 94,
+      "type": "ca",
+      "name": "Star Stole",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ca94.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2c05d584aa7426199f01e7230c2c7237bd123b62c90963059cdc7b7433e48a0a",
+      "pixelHash": "95bdda0da3986a79e155ca32902110b7c874d9b28b57d90fe50ca90c9460b5b4"
     }
   ]
 }

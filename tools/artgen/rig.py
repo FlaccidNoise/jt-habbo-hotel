@@ -4711,6 +4711,34 @@ FIGURE_PARTS = {
              "squash": (1.06, 1.0, 0.92)},
         ],
     },
+    # Star Stole (set 94, two slots). The scarf 60's whole read is the drape at the neck — two
+    # offset lumps clearing the torso all round, with one off-centre tail. This one has no mass at
+    # the neck at all: two symmetric panels off the shoulders and nothing between them, so the
+    # throat is bare in every direction.
+    #
+    # Each panel is 1.4 thick with its outer face 1.6 proud of bd1's 6.0 torso, which is the
+    # surcoat 68 and apron 81's numbers unchanged — thinner and the panel loses its edge at dirs 1
+    # and 5, thicker and its near corner swings wide as the figure turns.
+    #
+    # Two panels are two islands on their own, and that is fine: the review pass measures a layer
+    # composed WITH the body, and the torso between them closes the gap. It is the same reason the
+    # chain 62 is allowed to be a run of separate links.
+    #
+    # Slot 1 is the ends, 0.4 wider and 0.2 more proud than the panel above, so the second ramp
+    # lands on a step rather than on a flat face. They reach spine z 2.0 — 3 px below the scarf
+    # 60's single tail, which is the row the ledger separates the two on.
+    "ca94": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (2.4, 6.2, 5.0),
+             "c1": (5.8, 7.6, 21.0)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-5.8, 6.2, 5.0),
+             "c1": (-2.4, 7.6, 21.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (2.0, 6.2, 2.0),
+             "c1": (6.2, 7.8, 5.4)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-6.2, 6.2, 2.0),
+             "c1": (-2.0, 7.8, 5.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
