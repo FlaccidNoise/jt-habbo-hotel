@@ -5269,6 +5269,51 @@ FIGURE_PARTS = {
             {"t": "limb", "bone": "knee_r", "slot": 0, "len": 16.0, "r": 3.9},
         ],
     },
+    # Bracered Jacket (set 110, two slots). The arm STEPS: a slim upper sleeve to the elbow, then a
+    # forearm bracer. No other `ch` changes width mid-arm — the cardigan 80 is a constant 5.0 tube
+    # the whole way and the rune tunic 91's bell flares smoothly.
+    #
+    # The bracer had to beat the tracksuit top 44, not the cardigan 80 the ledger names. 44's
+    # sleeve is a constant 4.6 with a 4.8 cuff, so a 3.8/5.0 step straddles it and shares almost
+    # all of it. Three builds:
+    #
+    #   sleeve 3.8, bracer 5.0 cylinder, body 8.2 x 6.5 to z 0.0     -> 0.9043 vs 44
+    #   sleeve 3.5, bracer 5.4 cylinder, body 8.0 x 6.4 to z -1.0    -> 0.8587 vs 44
+    #   sleeve 3.4, bracer 5.8 -> 4.8 cone, body 8.0 to z -3.6       -> the build below, 0.8257
+    #
+    # The step is real in the outline, which is what pack 4's ch86 lesson demands of any feature on
+    # a limb. Measured on the frozen sheet at stand, the layer's own columns above the elbow and
+    # below it: d3 19..44 -> 17..46, d2 22..43 -> 20..43, d4 20..41 -> 20..43. Two px per side, at
+    # the elbow row, in the silhouette. At d1 and d5 the span is a constant 26..37 and no arm
+    # feature can show — at the profiles the arms sit inside the body's own depth, and the cardigan
+    # 80's constant 5.0 arm is likewise a flat 25..39 through the same rows.
+    #
+    # The bracer TAPERS, 5.8 at the elbow to 4.8 at the wrist, and that is a face measurement
+    # rather than a style one. As a constant 5.8 cylinder it painted over 3 face pixels at wave1
+    # d5, col 26 row 38, where the raised forearm comes up beside the jaw — the rune tunic 91's
+    # bell does the same thing 11 times and shipped, but a wrist 1.0 slimmer costs nothing and
+    # takes it to 0. Every other `ch` here is at 0.
+    #
+    # The bracer is a cone with equal-ish radii and "z0" -10.4, which is how a prim starts at the
+    # elbow: a limb always runs from its bone, and the arm bone is the shoulder. It laps 0.6 px
+    # over the sleeve's own bottom cap so the arm is one island.
+    #
+    # Slot 1 is the bracers alone. They are the set, and a second ramp on them is what makes the
+    # step read at 2x even before the outline does.
+    "ch110": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, -6.4, -3.6),
+             "c1": (8.0, 6.4, 19.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-4.4, -6.6, 19.4),
+             "c1": (4.4, 6.6, 23.2)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 11.0, "r": 3.4},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 11.0, "r": 3.4},
+            {"t": "cone", "bone": "arm_l", "slot": 1, "z0": -10.4, "len": 11.6,
+             "r0": 5.8, "r1": 4.8},
+            {"t": "cone", "bone": "arm_r", "slot": 1, "z0": -10.4, "len": 11.6,
+             "r0": 5.8, "r1": 4.8},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
