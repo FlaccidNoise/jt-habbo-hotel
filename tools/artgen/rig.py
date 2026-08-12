@@ -5655,6 +5655,39 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "head", "slot": 1, "c": (7.0, 2.6, 23.6), "r": 2.0},
         ],
     },
+    # ---- costume pack 10: pool (#460) ----
+    #
+    # Swim Trunks (set 122, two slots). The shortest and narrowest leg in the wardrobe: a 4.9 tube
+    # cut flat 13 px above the knee, against the shorts 45's 5.4 tube cut at 7.5.
+    #
+    # The waistband is 8.4 and not the row's 5.6, and the reason is the one the choker 120 and the
+    # cravat 113 both recorded: a ring smaller than the body renders as nothing. bd1's torso is a
+    # box x +/-7.5 by y +/-6.0 and its thigh caps are spheres of r 4.2 on bones at x +/-4.0, so the
+    # leg reaches x 8.2 for the whole thigh. A band at r 5.6 is inside both in every direction.
+    # 8.4 clears the torso by 0.9 and the thigh by 0.2, which is the same 8.4 the cincher 74 uses
+    # at this height and for this reason.
+    #
+    # Measured against 45 at stand d3: this ends on row 72 and 45 on row 78, so the hem is 6 rows
+    # higher. The row's other separator does NOT read — 45's tube reaches columns 23..40 where this
+    # one holds 24..39, but only on 45's lowest four rows, and this trunk's leg is too short to
+    # emerge from under its own waistband's screen width at all. So the length carries the pair on
+    # its own: 0.4636 silhouette IoU, and the nearest other `lg` is the bloomers 78 at 0.3911.
+    #
+    # The band leaves a 4 px slot-1 sliver off the main mass at the four diagonal dirs, where the
+    # body's own corner is nearer than the band's flat faces and the holdout takes the middle out.
+    # The peplum 118 ships a 4 px island in the same cells and the cincher 74 a 7 px one; the
+    # island review composes the layer with the body, which is why none of the three is a warning.
+    "lg122": {
+        "prims": [
+            {"t": "box",  "bone": "hip",   "slot": 0, "c0": (-7.8, -6.3, -2.6),
+             "c1": (7.8, 6.3, 1.2)},
+            {"t": "limb", "bone": "leg_l", "slot": 0, "len": 6.0, "r": 4.9, "caps": "top"},
+            {"t": "limb", "bone": "leg_r", "slot": 0, "len": 6.0, "r": 4.9, "caps": "top"},
+            {"t": "box",  "bone": "hip",   "slot": 1, "c0": (-8.4, -6.6, 0.8),
+             "c1": (8.4, 6.6, 4.2)},
+            {"t": "ball", "bone": "hip",   "slot": 1, "c": (0.0, 6.9, 2.0), "r": 1.8},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

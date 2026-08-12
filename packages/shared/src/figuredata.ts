@@ -240,6 +240,12 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 119, type: "cc", name: "Opera Cape",           slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 120, type: "ca", name: "Jewelled Choker",      slots: 2, family: "material", hides: [], retired: false },
   { id: 121, type: "ha", name: "Fascinator",           slots: 2, family: "material", hides: [], retired: false },
+  // Costume pack 10 — pool (#460), and the last of the sixty-four. Swim and deck wear, so skin is
+  // the material the pack is cut from: the trunks are the shortest `lg`, the swim top the only one
+  // that leaves the midriff bare, and the slides cover less of a foot than any other shoe. The
+  // two that add rather than remove are the towel wrap, the tallest `wa` in the wardrobe, and the
+  // snorkel, the only `ea` whose geometry leaves the face at all.
+  { id: 122, type: "lg", name: "Swim Trunks",          slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -419,6 +425,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 121, price: 350, theme: "penthouse" },  // Fascinator
   { set: 116, price: 450, theme: "penthouse" },  // Trained Gown
   { set: 119, price: 450, theme: "penthouse" },  // Opera Cape
+  { set: 122, price: 150, theme: "pool" },       // Swim Trunks
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

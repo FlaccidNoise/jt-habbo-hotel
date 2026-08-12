@@ -6029,6 +6029,54 @@
       "figuredataVersion": 1,
       "recipeHash": "80b12fa8d0c617d02545818187c0e9f3339a7f42432ec17413432b813ad98c6c",
       "pixelHash": "9323747f32d8b136f1686e5143544244b38ed6677f419a7cd86c59eb8ac1a6f6"
+    },
+    {
+      "partId": "lg122",
+      "setId": 122,
+      "type": "lg",
+      "name": "Swim Trunks",
+      "slots": 2,
+      "hides": [],
+      "sheet": "lg122.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2ad7cef3fcb0b65f72176cc6780728a985e5f8092a13125e75bab661d6274fbe",
+      "pixelHash": "d46b959d60a312f1bf98f038d908117b93140196fe5a3eb569cf9ffd899ace09"
     }
   ]
 }
