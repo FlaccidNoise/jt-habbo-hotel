@@ -217,6 +217,12 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 106, type: "wa", name: "Tool Roll",            slots: 2, family: "material", hides: [], retired: false },
   { id: 107, type: "ca", name: "Seed Satchel",         slots: 2, family: "material", hides: [], retired: false },
   { id: 108, type: "ha", name: "Woven Sunshade",       slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 8 — clockwork (#458). Steampunk artisan, and every row is a machine part bolted
+  // to a plain garment: an arm that changes width at the elbow, a cog beside the hip driven by a
+  // chain up the ribs, a coat that opens at the back, goggles pushed up onto the forehead. The
+  // mutton chops are the second and last stamp-path `fa` set, and the goggle cap hides `hr`
+  // because it replaces the hair rather than sitting on it.
+  { id: 114, type: "fa", name: "Mutton Chops",         slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -383,6 +389,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 106, price: 250, theme: "verdant" },    // Tool Roll
   { set: 107, price: 300, theme: "verdant" },    // Seed Satchel
   { set: 108, price: 350, theme: "verdant" },    // Woven Sunshade
+  { set: 114, price: 150, theme: "clockwork" },  // Mutton Chops
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

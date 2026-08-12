@@ -5399,6 +5399,54 @@
       "figuredataVersion": 1,
       "recipeHash": "d005f197038953d442116f87bb2ffd3a407a2cc3754f552b1bc18adacb14f038",
       "pixelHash": "12969770d4d212ef17e64399b11b9c76df6ff5925b9037273a0ec8462807cae0"
+    },
+    {
+      "partId": "fa114",
+      "setId": 114,
+      "type": "fa",
+      "name": "Mutton Chops",
+      "slots": 1,
+      "hides": [],
+      "sheet": "fa114.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b6d68409941667ff2a14187657aa97dc7f6c35028efffe1e8758cf5730bbc48c",
+      "pixelHash": "f6a57fb6b9d3bdb79fb13ef0aa4833d312dd44366b277d82664f6616c3c2eb53"
     }
   ]
 }

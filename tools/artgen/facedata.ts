@@ -240,6 +240,64 @@ export const GEOMETRY_A: Geometry = {
         ...row("b", 40, 28, 38), ...row("b", 41, 29, 37),
         ...row("b", 42, 30, 36), ...row("B", 43, 31, 35)],
     },
+    // Mutton Chops (fa set 114, costume pack 8 — clockwork). The inverse distribution of `full`
+    // 27: 27's mass is the CHIN, rows 40-42 narrowing to x30-33, and this one puts every pixel at
+    // the face's outer edges and leaves the centre bare at every row. Nothing is drawn below row
+    // 41, so the chin is skin, and no row reaches the mouth's own columns — the neutral mouth
+    // (39, x30-33 at d3) is untouched in all three views. Measured against sets 1-108 it is
+    // 0.2309 IoU against the sage beard 95 and 0.1065 against 27.
+    //
+    // The FIRST build ran the chops from row 32 at x24-29, which is the temple as a fraction of
+    // the head but not as a fraction of the FACE: it painted over 1328 face pixels because the
+    // eyes reach x25-28 with `lashes` at row 33, `happy` puts an eye corner at x26 row 34, and
+    // blush and freckles own x26-28 at rows 36-37. Every row moved outboard of all of them —
+    // x22-25 through row 37 at d3 — and the count fell to 64, which is the grin's row-38 corner
+    // at d2 and nothing else. `full` 27 paints over 344 and `sage` 95 over 1576, so a beard
+    // covering a cheek mark is the shipped shape and covering an eye is not.
+    //
+    // The chop is widest across the CHEEK rather than at the jaw's lowest row: 3 px at the temple
+    // opening to 5 at rows 38-39, then tapering to a point at 41. Carrying that width one row
+    // lower would eat the frown's corner at (29,40) and the grin's at (29,38) — the two mouth
+    // variants whose ink sits outboard of the mouth line itself.
+    //
+    // The profile is the view the whole design is for, so it is the one drawn solid: one mass off
+    // the ear at x27 sweeping forward to x35 by row 38. It stops there because the d1 mouth is at
+    // x39-41 and the chin at 37-39, so d1 paints over no face art at all.
+    //
+    // The dir-5 hand rule is what fixes the d1 rows below 39. At dir 5 the wave1 arm punches
+    // x29-34 of the d1 view out of rows 37-43, so rows 40 and 41 — whose runs start at 29 and 30
+    // — would be behind the hand in their entirety. Both are drawn out to x35, which is on the
+    // skull in every frame, so each row keeps an anchor and no blob lands clear of the head.
+    chops: {
+      d3: [...px("B", [22, 33], [22, 34], [22, 35], [22, 36], [23, 37],
+          [23, 38], [24, 39], [25, 40], [26, 41]),
+        ...px("B", [41, 33], [41, 34], [41, 35], [41, 36], [40, 37],
+          [40, 38], [39, 39], [38, 40], [37, 41]),
+        ...row("b", 33, 23, 24), ...row("b", 33, 39, 40),
+        ...row("b", 34, 23, 25), ...row("b", 34, 38, 40),
+        ...row("b", 35, 23, 25), ...row("b", 35, 38, 40),
+        ...row("b", 36, 23, 25), ...row("b", 36, 38, 40),
+        ...row("b", 37, 24, 25), ...row("b", 37, 38, 39),
+        ...row("b", 38, 24, 27), ...row("b", 38, 36, 39),
+        ...row("b", 39, 25, 28), ...row("b", 39, 35, 38),
+        ...row("b", 40, 26, 28), ...row("b", 40, 35, 37),
+        ...row("b", 41, 27, 28), ...row("b", 41, 35, 36)],
+      d2: [...px("B", [28, 33], [28, 34], [28, 35], [28, 36], [28, 37], [29, 38]),
+        ...px("B", [40, 33], [40, 34], [40, 35], [40, 36], [40, 37], [40, 38]),
+        ...row("b", 33, 29, 29), ...row("b", 33, 39, 39),
+        ...row("b", 34, 29, 30), ...row("b", 34, 39, 39),
+        ...row("b", 35, 29, 30),
+        ...row("b", 36, 29, 30),
+        ...row("b", 37, 29, 30), ...row("b", 37, 38, 39),
+        ...row("b", 38, 30, 31), ...row("b", 38, 38, 39)],
+      d1: [...px("B", [27, 32], [27, 33], [27, 34], [27, 35], [27, 36], [27, 37], [27, 38],
+          [28, 39], [29, 40], [30, 41]),
+        ...row("b", 32, 28, 30), ...row("b", 33, 28, 31),
+        ...row("b", 34, 28, 32), ...row("b", 35, 28, 32),
+        ...row("b", 36, 28, 33), ...row("b", 37, 28, 34),
+        ...row("b", 38, 28, 35), ...row("b", 39, 29, 35),
+        ...row("b", 40, 30, 35), ...row("b", 41, 31, 35)],
+    },
   },
   // Cheek marks, under the eye and clear of the nose. The profile has one cheek to put them on.
   extra: {
@@ -332,6 +390,7 @@ export const BEARD_SETS: Readonly<Record<number, FacePicks>> = {
   26: { ...DEFAULTS, beard: "moustache" },
   27: { ...DEFAULTS, beard: "full" },
   95: { ...DEFAULTS, beard: "sage" },
+  114: { ...DEFAULTS, beard: "chops" },
 };
 
 /** A face set draws every axis but the beard, which is its own layer; an `fa` set draws only it. */
