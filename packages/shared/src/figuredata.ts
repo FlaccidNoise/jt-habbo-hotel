@@ -194,6 +194,13 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 94, type: "ca", name: "Star Stole",      slots: 2, family: "material", hides: [], retired: false },
   { id: 95, type: "fa", name: "Sage Beard",      slots: 1, family: "material", hides: [], retired: false },
   { id: 96, type: "ha", name: "Pointed Hat",     slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 6 — tidal (#456). Mariner. Every row puts its silhouette event somewhere the
+  // wardrobe has not used one: a hem at mid-shin, a boot shaft that widens upward, a collar that
+  // exists only behind the figure, a ring standing off the chest, and a brim at the nape. No `cc`
+  // — a coat over a life ring hides the one thing this shelf is selling, so the pack leaves out
+  // the layer that would cover it. Only the sou'wester hides anything, and it hides `hr` for the
+  // shipped reason: it replaces the hair rather than sitting on it.
+  { id: 97,  type: "lg", name: "Rolled Deck Trousers", slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -348,6 +355,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 91, price: 300, theme: "fablewood" },   // Rune Tunic
   { set: 96, price: 400, theme: "fablewood" },   // Pointed Hat
   { set: 93, price: 450, theme: "fablewood" },   // Wizard Robe
+  { set: 97,  price: 150, theme: "tidal" },      // Rolled Deck Trousers
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

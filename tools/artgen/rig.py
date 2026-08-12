@@ -4768,6 +4768,40 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.95, 0.10)},
         ],
     },
+    # ---- costume pack 6: tidal (#456) ----
+    # Mariner. Fablewood draped the figure; this pack rigs it. Every row puts its silhouette event
+    # on a row or a side the wardrobe has not used one before — a hem at mid-shin, a shaft that
+    # widens on the way up, a collar behind the shoulders, a ring standing off the chest, and a
+    # brim at the nape instead of the brow.
+    #
+    # Rolled Deck Trousers (set 97, two slots). The lg shelf splits on hem row before anything
+    # else and this one owns MID-SHIN: the shin tube stops at knee-local -9.0, nine px above the
+    # sole, and a fat roll closes it there. Nothing else in the wardrobe ends on that row — the
+    # shorts 45 cut above the knee, the breeches 64 two px below it, the culotte-less rest reach
+    # the calf or the ankle. The cargo 47 the row names runs the shin out to -15.5 and tapers 5.5
+    # to 4.6; the roll is 6.2 against the 4.94 that cone carries at the same height.
+    #
+    # The roll hangs off knee_l/knee_r for the breeches 64's measured reason: a cuff authored on
+    # the thigh bone stays put while the knee bends 28 degrees in walk1 and walk3 and tears away
+    # from its own hem.
+    #
+    # The shin tube keeps "caps": "top". A bottom cap is a sphere reaching 4.6 px past the cut,
+    # which would hang below the roll's own underside and turn the hem into a bulb — the roll is
+    # the hem, and it laps 2.6 px over the tube's flat end so the layer stays one island.
+    "lg97": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.1, -6.5, -2.4),
+             "c1": (8.1, 6.5, 2.6)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.6},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.6},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": 9.0, "r": 4.6, "caps": "top"},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": 9.0, "r": 4.6, "caps": "top"},
+            {"t": "ball", "bone": "knee_l", "slot": 1, "c": (0.0, 0.0, -9.0), "r": 6.2,
+             "squash": (1.0, 1.0, 0.42)},
+            {"t": "ball", "bone": "knee_r", "slot": 1, "c": (0.0, 0.0, -9.0), "r": 6.2,
+             "squash": (1.0, 1.0, 0.42)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

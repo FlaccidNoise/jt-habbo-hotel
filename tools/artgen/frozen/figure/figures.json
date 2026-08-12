@@ -4819,6 +4819,54 @@
       "figuredataVersion": 1,
       "recipeHash": "d73e2dc7ea9e3a685521db5b83be10d155171d2e0004b522f8bb5ffdb94b4f05",
       "pixelHash": "2184c78188a3a6d833854c9dbbd1553e58bd4781f2a61ae223678706ea2a81f7"
+    },
+    {
+      "partId": "lg97",
+      "setId": 97,
+      "type": "lg",
+      "name": "Rolled Deck Trousers",
+      "slots": 2,
+      "hides": [],
+      "sheet": "lg97.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "0cb4791428fbf576314d01b60d29547d7b0f5432592a3bbf22b2c65572d22c7d",
+      "pixelHash": "b3541c525e39f51dd4f7986d3f66f2808ad3c69b4c0e3990ebeda2c31c79cae1"
     }
   ]
 }
