@@ -5641,6 +5641,54 @@
       "figuredataVersion": 1,
       "recipeHash": "67a5df13dde479db452043a034891905dfc8549cf4e4b724cd0fdf8017e2bbae",
       "pixelHash": "80008e56b2ff4229dca2d87e67e5fabe27ba167c4af76353800a94b316b8e751"
+    },
+    {
+      "partId": "ca113",
+      "setId": 113,
+      "type": "ca",
+      "name": "Cravat",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ca113.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "50bd6558053184330c5f1283bb285feae256b2e426fc92da010e041aba12c5fe",
+      "pixelHash": "1777db0423f31360b861cb1fc6f8edbab7a3ef5508b9dee3c5f42327bb42b06f"
     }
   ]
 }

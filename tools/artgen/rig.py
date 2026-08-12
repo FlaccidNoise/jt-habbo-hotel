@@ -5405,6 +5405,36 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.44)},
         ],
     },
+    # Cravat (set 113, one slot). The tie 61 is a 3.8 knot over a blade that tapers DOWN to z 5.6,
+    # so its profile is a wedge pointing at the floor. This one is the inverse: widest at the
+    # throat and gone by the chest, a lump pointing up, with no blade at all. Measured 0.3672
+    # against 61 and 0.0869 against the puff muffler 82, which is the other set living at the neck.
+    #
+    # Three balls rather than one, because "vanishing into the shirt" is a taper in TWO axes. The
+    # top is 7.0 across at spine z 19.6 with its front face at 7.89 — 1.89 proud of bd1's 6.0
+    # torso. The bottom is 3.4 across at z 14.0 with its front at 7.15, 1.15 proud. So the mass
+    # narrows AND sinks toward the body on the way down, and the torso closes over it rather than
+    # the drawing simply stopping. 3.4 is the chain 62's floor for anything whose read depends on
+    # it, which is why the bottom ball is not smaller.
+    #
+    # It has to be a front mass and not a ring. A prim centred on the spine at this height is
+    # inside bd1's torso in every direction and renders nothing — the lace ruff 76 is a plate at
+    # r 9.4 for exactly that reason. Sitting it at y 6.3-6.7 puts it outside the torso in the one
+    # direction that matters and lets the neck stand out of the top of it.
+    #
+    # Face clearance: it paints over 0 face pixels and keeps 2 clear rows below the chin at hd21
+    # walk0 d1. Its top reaches spine z 21.8, which is 0.8 above the torso, and the skull's own
+    # cross-section there is only y 3.54 — well behind the cravat's 7.89, so the two never argue.
+    "ca113": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.7, 19.6), "r": 3.5,
+             "squash": (1.0, 0.34, 0.63)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.5, 16.4), "r": 2.6,
+             "squash": (1.0, 0.42, 0.85)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.3, 14.0), "r": 1.7,
+             "squash": (1.0, 0.50, 0.90)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
