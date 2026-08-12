@@ -5157,6 +5157,54 @@
       "figuredataVersion": 1,
       "recipeHash": "2f1982e33dc48e9274d4b52e105f8c7c4d0ee5bdbd32841cc4e548abf54ddb50",
       "pixelHash": "c1346306b6d6d11ae5a39d82a0fac33d5cbe2f743eb558ff3959e87491941241"
+    },
+    {
+      "partId": "sh104",
+      "setId": 104,
+      "type": "sh",
+      "name": "Garden Clogs",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh104.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "33ce37dffe227631325c35ab8011467b47f65d36901eff5d81586c2c2d80be26",
+      "pixelHash": "145909a5ca143133c8b27b8168445ae0a035d312571777079590fbee6ec0191d"
     }
   ]
 }

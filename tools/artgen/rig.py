@@ -5035,6 +5035,35 @@ FIGURE_PARTS = {
             {"t": "cone", "bone": "leg_r", "slot": 0, "len": 21.0, "r0": 5.8, "r1": 7.4},
         ],
     },
+    # Garden Clogs (set 104, one slot). The sandals 52 are a sole plate with two bands over an
+    # open instep and a heel line closing the back. This is that shoe reversed: one solid block
+    # over the toes and NOTHING behind them, so bd1's heel is bare skin from the sole up.
+    #
+    # Two boxes per foot, and the split is where the shoe stops being a sole. The sole runs the
+    # whole foot at 2.6 px tall — a wooden clog is thick, and 52's is 1.6 — and the upper sits on
+    # it from y 0.6 forward, topping out at z -12.8. Over the toes that is 3.6 px more shoe than
+    # 52 carries, which has nothing there but its sole at -16.4; 52's tallest prim is its heel
+    # counter at -12.2, and it stands exactly where this shoe is open.
+    #
+    # The open back is 4.0 px of the foot's 9.2 px length, which is what makes the heel read as
+    # bare at dirs 6/7/0. Closing it would cost the separator outright: 52 and this shoe would
+    # then differ only in how tall the sole is.
+    #
+    # The upper stands 0.5 outside the shin capsule's r 3.7 and 0.5 outside the foot box's x 3.7,
+    # so the body never wins the depth test inside it, and the shin still comes up THROUGH the
+    # upper's top face at y 0.6-3.7, which is what an ankle rising out of a clog looks like.
+    "sh104": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.4, -3.4, -float(SHIN_LEN)),
+             "c1": (4.4, 8.0, -SHIN_LEN + 2.6)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.4, -3.4, -float(SHIN_LEN)),
+             "c1": (4.4, 8.0, -SHIN_LEN + 2.6)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, 0.6, -SHIN_LEN + 2.6),
+             "c1": (4.2, 7.6, -12.8)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, 0.6, -SHIN_LEN + 2.6),
+             "c1": (4.2, 7.6, -12.8)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
