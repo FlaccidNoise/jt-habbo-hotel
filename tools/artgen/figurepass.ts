@@ -38,9 +38,13 @@ import {
   REFERENCE_FRAME, facePixels,
 } from "./facedata.ts";
 import type { AxisName, FacePicks, FaceView, FixedRamp, InkCode, InkSlot } from "./facedata.ts";
-import { FIGUREDATA_VERSION, setById } from "../../packages/shared/src/figuredata.ts";
+import { FIGUREDATA_VERSION, FIGURE_SETS, setById } from "../../packages/shared/src/figuredata.ts";
 import type { FigureSet, LayerType } from "../../packages/shared/src/figuredata.ts";
-import { encodePng } from "../../packages/generator/src/png.ts";
+import {
+  GARMENT_TYPES, gateNearDup, nearDupPairs, silhouetteOf,
+} from "../../packages/generator/src/gates.ts";
+import type { FigureSilhouette } from "../../packages/generator/src/gates.ts";
+import { decodePng, encodePng } from "../../packages/generator/src/png.ts";
 import { blit, getPixel, makeCanvas, putPixel } from "../../packages/generator/src/raster.ts";
 import type { Canvas } from "../../packages/generator/src/raster.ts";
 import { reviewFigureIslands } from "../../packages/generator/src/review.ts";
@@ -799,9 +803,33 @@ function gateFace(): GateResult {
   return pass;
 }
 
+/** Every garment in the wardrobe, whether or not this run built it (#442). A scoped run rebuilds
+ *  one layer and still has to measure it against every sibling, so the silhouettes come off the
+ *  sheets rather than out of `layers`. emit() writes this run's sheets into renderDir before the
+ *  gates run, which makes the render dir both the accumulated tree and the freshest copy of
+ *  anything rebuilt here; the frozen tree covers the layers this machine has never rendered. A set
+ *  with no sheet either place is not drawn yet and has no silhouette to judge. */
+function silhouettes(): FigureSilhouette[] {
+  const found: FigureSilhouette[] = [];
+  for (const set of FIGURE_SETS) {
+    if (!GARMENT_TYPES.includes(set.type)) continue;
+    const id = `${set.type}${set.id}`;
+    const path = [join(renderDir, `${id}.png`), join(frozenDir, `${id}.png`)].find(existsSync);
+    if (!path) continue;
+    const png = decodePng(readFileSync(path));
+    found.push({
+      partId: id, setId: set.id, type: set.type,
+      alpha: silhouetteOf({ w: png.width, h: png.height, px: png.rgba }),
+    });
+  }
+  return found;
+}
+const nearDup = nearDupPairs(silhouettes());
+
 for (const [name, gate] of [
   ["registration", gateRegistration], ["bounds", gateBounds],
   ["figureHeight", gateFigureHeight], ["holdout", gateHoldout], ["face", gateFace],
+  ["near-dup", () => gateNearDup(nearDup)],
 ] as const) {
   const result = gate();
   if (result.ok) {
@@ -809,6 +837,14 @@ for (const [name, gate] of [
   } else {
     console.error(`gate ${name}: FAIL — ${result.detail}`);
     failures++;
+  }
+}
+
+// The pairs the gate tolerates, reported so a close sibling is a decision someone made rather than
+// one nobody saw. Same tier as the visual review below: a warning never stops a build.
+for (const p of nearDup) {
+  if (p.verdict === "warn") {
+    console.warn(`${p.a}: WARN near-dup ${p.b}: ${(p.iou * 100).toFixed(2)}% shared silhouette`);
   }
 }
 

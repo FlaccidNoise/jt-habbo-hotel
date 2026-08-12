@@ -4,7 +4,7 @@ import { describe, expect, test } from "vitest";
 import {
   DECOR_CATALOG, FIGURE_SETS, PROTOTYPE_CATALOG, WALL_CATALOG, WALL_MAX_DEPTH, paletteFor,
 } from "@grand/shared";
-import type { DecorDef, WallDef } from "@grand/shared";
+import type { DecorDef, LayerType, WallDef } from "@grand/shared";
 import { FROZEN_DIR, bundleFor, frozenBundle, frozenDecor } from "../src/catalog.ts";
 import { nearestPaletteColor, quantize } from "../src/decor.ts";
 import { render } from "../src/compose.ts";
@@ -18,6 +18,7 @@ import {
   gateDecorTiles,
   gateDrawOrder,
   gateFootprint,
+  gateNearDup,
   gatePalette,
   gatePrimCount,
   ARTGEN_PRIM_CAP,
@@ -27,10 +28,15 @@ import {
   gateUniqueness,
   gateWallBounds,
   gateWallFit,
+  GARMENT_TYPES,
+  NEAR_DUP_FAIL,
+  nearDupPairs,
+  silhouetteOf,
   runDecorGates,
   runGates,
   runWallGates,
 } from "../src/gates.ts";
+import type { FigureSilhouette } from "../src/gates.ts";
 import { getPixel, makeCanvas, putPixel } from "../src/raster.ts";
 import type { Canvas } from "../src/raster.ts";
 import { reviewFigureIslands, reviewIslands } from "../src/review.ts";
@@ -696,5 +702,80 @@ describe("figure visual review", () => {
     expect(warnings.length).toBeGreaterThan(0);
     expect(warnings[0]!.detail).toContain("islands");
     expect(warnings[0]!.where).toMatch(/^\w+ d\d$/);
+  });
+});
+
+// Silhouette distinctness (#442). ASSET-LOOP's "silhouette must differ" rule, which was hand-
+// measured through 90 garments before it was code. The numbers pinned below are those hand
+// measurements: a change in the metric surfaces here as a moved calibration rather than as a
+// quietly different gate.
+describe("figure near-duplicate gate", () => {
+  const FIGURE_DIR = join(FROZEN_DIR, "figure");
+  const doc = JSON.parse(readFileSync(join(FIGURE_DIR, "figures.json"), "utf8")) as {
+    layers: Array<{ partId: string; setId: number; type: LayerType; sheet: string }>;
+  };
+  const wardrobe: FigureSilhouette[] = doc.layers
+    .filter((l) => GARMENT_TYPES.includes(l.type))
+    .map((l) => {
+      const png = decodePng(readFileSync(join(FIGURE_DIR, l.sheet)));
+      return {
+        partId: l.partId, setId: l.setId, type: l.type,
+        alpha: silhouetteOf({ w: png.width, h: png.height, px: png.rgba }),
+      };
+    });
+  const pairs = nearDupPairs(wardrobe);
+  const measured = (a: string, b: string) =>
+    pairs.find((p) => (p.a === a && p.b === b) || (p.a === b && p.b === a));
+
+  /** `base`'s own silhouette with `share` of its pixels kept. The kept pixels are the whole
+   *  intersection and `base` alone is the whole union, so the IoU against `base` is exactly
+   *  `share` — which is what lets a staged near-duplicate be put on either side of the line. */
+  function twin(base: FigureSilhouette, share: number, setId: number): FigureSilhouette {
+    const alpha = Uint8Array.from(base.alpha);
+    let drop = Math.round((1 - share) * base.alpha.reduce((n: number, v: number) => n + v, 0));
+    for (let i = 0; i < alpha.length && drop > 0; i++) {
+      if (alpha[i] !== 0) {
+        alpha[i] = 0;
+        drop--;
+      }
+    }
+    return { partId: `${base.type}${setId}-staged`, setId, type: base.type, alpha };
+  }
+
+  const ch5 = wardrobe.find((l) => l.partId === "ch5");
+  if (!ch5) throw new Error("ch5 is not a frozen garment layer");
+
+  test("the shipped wardrobe passes as authored", () => {
+    // The gate went in behind 127 layers nobody was going to redraw, so it has to clear them.
+    expect(wardrobe).toHaveLength(117);
+    expect(gateNearDup(pairs)).toEqual({ ok: true });
+  });
+
+  test("the hand measurements the line was drawn from", () => {
+    expect(measured("ch5", "ch6")!.iou).toBeCloseTo(0.8542, 4);
+    expect(measured("lg71", "lg48")!.iou).toBeCloseTo(0.8338, 4);
+    expect(measured("ch40", "ch16")!.iou).toBeCloseTo(0.8732, 4);
+    expect(measured("ch42", "ch16")!.iou).toBeCloseTo(0.8588, 4);
+    // ch5 × ch6 is the closest pair a player can own, and the line sits just above it.
+    expect(measured("ch5", "ch6")!.iou).toBeLessThan(NEAR_DUP_FAIL);
+    expect(measured("ch5", "ch6")!.verdict).toBe("warn");
+  });
+
+  test("a pair a player is never offered both of is reported, not refused", () => {
+    // ch16 is the staff blazer (UNPURCHASABLE_SETS). It sits over the fail line against ch40 and
+    // always will: nobody is sold both, so there is no wardrobe for them to be duplicates in.
+    const staff = measured("ch40", "ch16")!;
+    expect(staff.iou).toBeGreaterThan(NEAR_DUP_FAIL);
+    expect(staff.verdict).toBe("warn");
+  });
+
+  test("near-dup: a garment cut down from a sibling's own silhouette", () => {
+    // Set 6 is a starter grant and so is set 5, so this pair is two garments one player owns.
+    const over = gateNearDup(nearDupPairs([...wardrobe, twin(ch5, 0.86, 6)]));
+    expect(over).toMatchObject({ ok: false, gate: "near-dup" });
+    expect(over).toMatchObject({ detail: expect.stringContaining("ch5") });
+    // The same construction one step under the line passes, so the gate is the threshold and not
+    // "any sibling that resembles another".
+    expect(gateNearDup(nearDupPairs([...wardrobe, twin(ch5, 0.84, 6)]))).toEqual({ ok: true });
   });
 });

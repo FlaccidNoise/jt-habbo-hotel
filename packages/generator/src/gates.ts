@@ -1,5 +1,8 @@
-import { WALL_HEIGHT, WALL_MAX_DEPTH, WALL_SEG_PX, WALL_TOP_PX, decorTileFault } from "@grand/shared";
-import type { DecorDef, FurniDef, WallDef } from "@grand/shared";
+import {
+  LAYER_ORDER, STARTER_GRANT_SETS, WALL_HEIGHT, WALL_MAX_DEPTH, WALL_SEG_PX, WALL_TOP_PX,
+  WEARABLE_PRICES, decorTileFault,
+} from "@grand/shared";
+import type { DecorDef, FurniDef, LayerType, WallDef } from "@grand/shared";
 import type { Bundle } from "./compose.ts";
 import { getPixel } from "./raster.ts";
 import type { Canvas } from "./raster.ts";
@@ -32,7 +35,6 @@ export function gatePalette(sheet: Canvas): GateResult {
       }
     }
   }
-  return { ok: true };
   return { ok: true };
 }
 
@@ -313,6 +315,94 @@ export function gateContrast(sheet: Canvas): GateResult {
       `can lay (${BACKDROP_LUMA_MIN.toFixed(1)})`);
   }
   return { ok: true };
+}
+
+// --- figure near-duplicate gate (#442) ---------------------------------------------------------
+// ASSET-LOOP's "silhouette must differ" rule, measured rather than eyeballed. Ninety garments were
+// hand-checked against it before this existed, always with the metric below, so the wardrobe that
+// already passed by hand is what calibrates the line.
+
+/** Every type judged on its outline. `bd` is the body and `hd` the skull each face set repaints —
+ *  a face is the head's silhouette by design, so neither is a garment this can speak about. */
+export const GARMENT_TYPES: readonly LayerType[] =
+  LAYER_ORDER.filter((t) => t !== "bd" && t !== "hd");
+
+/** Over this, two garments a player can both own are one garment in two palettes. ch5 × ch6 — the
+ *  tank and the tee — measure 0.8542 and are the closest such pair the wardrobe shipped with, so
+ *  the line sits one rounding step above them: nothing new may crowd its siblings harder than what
+ *  is already on the shelf does. */
+export const NEAR_DUP_FAIL = 0.8547;
+
+/** Close enough to say so out loud. Legitimately similar siblings live between here and the fail
+ *  line — a coat and a longer coat — so this reports and never refuses. */
+export const NEAR_DUP_WARN = 0.83;
+
+/** One garment's alpha over its whole sheet, which IS its 64 (frame, dir) cells laid out. */
+export interface FigureSilhouette {
+  partId: string;
+  setId: number;
+  type: LayerType;
+  alpha: Uint8Array;
+}
+
+export interface NearDupPair { a: string; b: string; iou: number; verdict: "fail" | "warn" }
+
+/** A sheet's alpha, one byte per pixel. */
+export function silhouetteOf(sheet: Canvas): Uint8Array {
+  const alpha = new Uint8Array(sheet.w * sheet.h);
+  for (let i = 0; i < alpha.length; i++) alpha[i] = (sheet.px[i * 4 + 3] ?? 0) > 0 ? 1 : 0;
+  return alpha;
+}
+
+/** Reachable by a player: granted at signup or priced on the Stars shelf. A staff uniform or an
+ *  unpurchasable set may crowd the wardrobe without anyone ever being offered the two side by
+ *  side, so pairs involving one are reported instead of refused. */
+const reachable = (setId: number): boolean =>
+  STARTER_GRANT_SETS.includes(setId) || WEARABLE_PRICES.has(setId);
+
+/** Aggregate intersection over union of two silhouettes, every cell at once rather than a mean of
+ *  the 64. A garment that matches its sibling in seven directions and differs in one is a
+ *  near-duplicate; averaging per cell would let the one direction that differs pay for the seven
+ *  that do not. */
+function iou(a: Uint8Array, b: Uint8Array): number {
+  let intersection = 0;
+  let union = 0;
+  for (let i = 0; i < a.length; i++) {
+    const inA = a[i] !== 0, inB = b[i] !== 0;
+    if (inA && inB) intersection++;
+    if (inA || inB) union++;
+  }
+  return union === 0 ? 0 : intersection / union;
+}
+
+/** Every same-type pair over the warn line, worst first. Within a type only: a hat is not a
+ *  near-duplicate of a shirt however much alpha the two happen to share. */
+export function nearDupPairs(layers: readonly FigureSilhouette[]): NearDupPair[] {
+  const found: NearDupPair[] = [];
+  for (const [i, a] of layers.entries()) {
+    for (const b of layers.slice(i + 1)) {
+      if (a.type !== b.type) continue;
+      const value = iou(a.alpha, b.alpha);
+      if (value <= NEAR_DUP_WARN) continue;
+      const both = reachable(a.setId) && reachable(b.setId);
+      found.push({
+        a: a.partId, b: b.partId, iou: value,
+        verdict: both && value > NEAR_DUP_FAIL ? "fail" : "warn",
+      });
+    }
+  }
+  return found.sort((p, q) => q.iou - p.iou);
+}
+
+/** Takes the measured pairs rather than the layers, so a caller that also reports the warnings
+ *  measures the wardrobe once. */
+export function gateNearDup(pairs: readonly NearDupPair[]): GateResult {
+  const worst = pairs.find((p) => p.verdict === "fail");
+  if (!worst) return { ok: true };
+  return fail("near-dup",
+    `${worst.a} and ${worst.b} share ${(worst.iou * 100).toFixed(2)}% of their silhouette, past ` +
+    `the ${(NEAR_DUP_FAIL * 100).toFixed(2)}% two purchasable garments may — a player offered ` +
+    `both sees one garment twice. Redraw the outline; a different palette does not fix this.`);
 }
 
 // --- flat decor gates (#260) ------------------------------------------------------------------
