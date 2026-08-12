@@ -5435,6 +5435,45 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.50, 0.90)},
         ],
     },
+    # Goggle Cap (set 115, two slots, hides hr). The headphones 55 put two pucks at EAR height on a
+    # coronal band and have no shell. This one is a shell that replaces the hair, and its two cups
+    # sit on the FOREHEAD — 14 px higher and ninety degrees round. Measured 0.7756 against the
+    # beanie 53, 0.7691 against the mourning hat 77 and 0.2199 against 55 itself.
+    #
+    # The cups are on the forehead rather than the temples because the temples are where the
+    # catchlight corridor is. That is not a preference: the FIRST build's shell reached row 34 at
+    # d6 and put one pixel at (29,33), inside the 3x3 of (28,34), and gateHoldout failed with 5
+    # interior disagreements. figurepass repaints a lone `hi` in the cheek band, and a hat pixel
+    # touching that 3x3 makes the head's own cleanup fire on the bare head and not under the hat,
+    # so the composite and the combined render stop agreeing. Raising the shell 1.8 px in z and
+    # flattening it from 0.70 to 0.655 took the nape edge two rows clear, which is the memo's other
+    # option — cover the pixel outright or stay two clear.
+    #
+    # The ledger's "every pixel above row 20" does not survive contact with the skull, which itself
+    # tops out at row 21. Measured on the frozen sheet: rows 13-28 at stand d3 and rows 12-41 over
+    # all 64 cells, the 41 being the sit frame where the head sits 9 px lower. What the row was
+    # really claiming is the face clearance, and that holds — 0 face pixels painted over against
+    # all eight eyed heads, with 1 clear row above the brow at hd17 walk0 d2. That is the flight
+    # helmet 89 and the sunshade 108's margin and one row better than the beanie 53 and the
+    # sou'wester 102, which both ship at 0.
+    #
+    # The cups stand 3.02 proud of the cap's own surface in y at z 23.8 — the row's 3.0 — and their
+    # lowest row is 28. The band is 3.6 tall at z 21.8-25.4 and 10.26 wide, which is 0.6 past the
+    # shell at that height, so it reads as a strap over the cap rather than a stripe painted on it.
+    #
+    # Slot 1 is the cups.
+    "ha115": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -2.6, 21.0), "r": 10.6,
+             "squash": (0.985, 0.925, 0.655)},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 3.4, 23.6), "r": 9.0,
+             "squash": (1.14, 0.62, 0.20)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (4.6, 6.4, 23.8), "r": 4.0,
+             "squash": (0.90, 0.75, 0.90)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (-4.6, 6.4, 23.8), "r": 4.0,
+             "squash": (0.90, 0.75, 0.90)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
