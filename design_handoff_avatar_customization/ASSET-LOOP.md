@@ -29,7 +29,13 @@ factory unit is: mesh → figuredata set append → render → gate → freeze �
 - Batch renders: queue several PART= renders, then one figurepass pass gates them all (it reads
   the whole accumulated meta.json).
 
-## Backlog manifest (silhouette notes are the authored intent — vary them, never just ramps)
+## Backlog manifest — FULLY SHIPPED (hair #345, clothing rows #440, faces/beards #342)
+The wardrobe continued past this manifest: sets 64-127 shipped as themed costume packs under
+epic #447 — see `docs/plans/2026-08-11-costume-blitz-ledger.md`, which carries the accumulated
+measured-line constraints (prim budgets, gate traps, IoU discipline) any future wearable work
+should start from.
+
+(original manifest below; silhouette notes are the authored intent — vary them, never just ramps)
 | type | name | slots | hides | silhouette |
 |---|---|---|---|---|
 | hr | Bob | 1 | — | helmet dome, hard bottom edge at jaw |

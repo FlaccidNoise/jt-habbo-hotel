@@ -1,5 +1,13 @@
 # Decision Log
 
+- 2026-08-12 — **Wearable themes are furniture themes; a chapter sells the room and the outfit
+  (#447, packs #449-#460).** WEARABLE_SHELF rows carry the same theme strings as furni defs
+  (bannerhold, nocturne, …, penthouse, pool), so folio chapters mix kinds by design — the
+  catalog.test assertion that a theme hosts one kind was rewritten for this. Sets 64-127 shipped
+  through docs/plans/2026-08-11-costume-blitz-ledger.md: an authored SKU ledger over measured
+  body/gate constants, one pack per batch agent, one commit per part, IoU ≤ 0.854 vs every
+  same-type sibling hand-measured (no gate exists — #442). Colorways stay wear-time ramp picks,
+  so style-v4's rose/signal/aether reach all 127 sets with zero work when it lands.
 - 2026-08-11 — **Bannerhold pilots prove the art budget before bulk authoring (furniture blitz,
   task 5).** `bannerhold_oak_bench` (base, seat), `bannerhold_oak_bench_dusk` (colorway, oak→slate,
   no extra render), and `bannerhold_crest_banner` (wall) all render through the 3D-assisted path,
