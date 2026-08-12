@@ -3524,6 +3524,43 @@ FIGURE_PARTS = {
              "c1": (-2.8, 7.8, 6.2)},
         ],
     },
+    # Pinafore Apron (set 81, two slots). Every other wa in the wardrobe is a band round the waist
+    # with something hung off it — the belt 15, the sash 63, the sword belt 67's ring and spur, the
+    # cincher 74. This one has no band at all: a broad plate down the front of the hip, a bib up the
+    # chest, and two straps over the shoulders, so its mass is vertical where theirs is horizontal.
+    #
+    # Every panel is 1.4 thick with its outer face 1.6 proud of bd1's 6.0 torso, which is the
+    # surcoat 68's numbers exactly. That coat measured what happens either side of them: thinner and
+    # the panel has no edge left to read at dirs 1 and 5, thicker and its near corner swings wide
+    # enough to close the gap the garment is defined by.
+    #
+    # The panel runs to spine z -14, five px above the knee, and the sit frame is what caps it. The
+    # hip IS the sit anchor at row 74 and a spine point draws at 74 + y/2 - z, so the panel's
+    # deepest corner lands on row 92.6 at the diagonal — nineteen clear of the 111 the bounds gate
+    # fails at. It hangs rigid from the spine there, past a thigh that has swung horizontal, which
+    # is what the long skirt 48 and the tailcoat 75 both do on that frame.
+    #
+    # Slot 1 is the bib and the straps, and each joint laps 0.6 px into the piece below it rather
+    # than meeting it on a shared face: the bib starts at z 1.4 inside the panel and the front
+    # straps at 13.4 inside the bib, so the whole garment is one island in all 64 cells. The
+    # shoulder pieces cross from y -7.6 to 7.6 and stand 0.4 above the torso's own top at z 21, so
+    # a strap reads from the front, the side and the back rather than only where it is coloured.
+    "wa81": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-5.5, 6.2, -14.0),
+             "c1": (5.5, 7.6, 2.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-3.6, 6.2, 1.4),
+             "c1": (3.6, 7.6, 14.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (2.6, 6.2, 13.4),
+             "c1": (6.0, 7.6, 20.8)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-6.0, 6.2, 13.4),
+             "c1": (-2.6, 7.6, 20.8)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (2.6, -7.6, 19.6),
+             "c1": (6.0, 7.6, 21.4)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-6.0, -7.6, 19.6),
+             "c1": (-2.6, 7.6, 21.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
