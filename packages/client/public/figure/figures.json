@@ -4721,6 +4721,54 @@
       "figuredataVersion": 1,
       "recipeHash": "2c05d584aa7426199f01e7230c2c7237bd123b62c90963059cdc7b7433e48a0a",
       "pixelHash": "95bdda0da3986a79e155ca32902110b7c874d9b28b57d90fe50ca90c9460b5b4"
+    },
+    {
+      "partId": "fa95",
+      "setId": 95,
+      "type": "fa",
+      "name": "Sage Beard",
+      "slots": 1,
+      "hides": [],
+      "sheet": "fa95.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "c3ab0a4431989e68218574ef5046805e9899392f351d824f63ad0f32a141bb4f",
+      "pixelHash": "0e04d5933b1f4d1b53e252dfbf11147f08a54659349780ace83d6225a1952f2d"
     }
   ]
 }

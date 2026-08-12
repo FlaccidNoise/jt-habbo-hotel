@@ -207,6 +207,39 @@ export const GEOMETRY_A: Geometry = {
         ...row("b", 38, 28, 30),
         ...row("b", 40, 33, 37), ...row("b", 41, 34, 37), ...row("B", 42, 35, 37)],
     },
+    // Sage Beard (fa set 95, costume pack 5 — fablewood). `full` 27 is a chin beard: it leaves
+    // row 39 clear, has no moustache, and narrows to x30-33 by row 42. This one is the whole
+    // lower face — the jaw mass runs INTO a moustache across row 38 so the two are one run, row
+    // 39 is covered rather than left as the mouth line, and the chin drops a centred point to
+    // row 43, one lower than 27 reaches.
+    //
+    // Every row is inside the skull's own footprint, measured off hd2's render: at d3 row 43 the
+    // head holds x27-36 and the point takes 30-33. Rows 36-40 of d3 cross the NOSE box rather
+    // than the skull, which is the same prim the moustache 26 already draws on — gateFace tests
+    // the part, not the prim, so a stamp under the nose is on the head.
+    //
+    // The profile keeps the hand rule. At dir 5 the wave1 arm punches x29-34 of the d1 view out
+    // of rows 37-43, so each row here also holds ink at x26-28 or x35-39 and no run of the
+    // drawing is behind the hand in its entirety. Rows 41-43 pay for that at the chin end alone,
+    // which is where a profile beard has its mass anyway.
+    sage: {
+      d3: [...row("b", 36, 25, 26), ...row("b", 36, 37, 38),
+        ...row("b", 37, 25, 26), ...row("b", 37, 37, 38),
+        ...row("b", 38, 26, 28), ...row("B", 38, 29, 34), ...row("b", 38, 35, 37),
+        ...row("b", 39, 27, 36), ...row("b", 40, 27, 36),
+        ...row("b", 41, 28, 35), ...row("b", 42, 29, 34), ...row("B", 43, 30, 33)],
+      d2: [...row("b", 36, 29, 30), ...row("b", 36, 38, 39),
+        ...row("b", 37, 29, 30), ...row("b", 37, 38, 39),
+        ...row("b", 38, 30, 33), ...row("B", 38, 34, 39),
+        ...row("b", 39, 31, 38), ...row("b", 40, 31, 38),
+        ...row("b", 41, 32, 37), ...row("b", 42, 32, 36), ...row("B", 43, 33, 35)],
+      d1: [...row("b", 36, 26, 28), ...row("b", 36, 36, 38),
+        ...row("b", 37, 26, 28), ...row("b", 37, 36, 39),
+        ...row("b", 38, 26, 33), ...row("B", 38, 34, 39),
+        ...row("b", 39, 27, 34), ...row("B", 39, 35, 39),
+        ...row("b", 40, 28, 38), ...row("b", 41, 29, 37),
+        ...row("b", 42, 30, 36), ...row("B", 43, 31, 35)],
+    },
   },
   // Cheek marks, under the eye and clear of the nose. The profile has one cheek to put them on.
   extra: {
@@ -298,6 +331,7 @@ export const BEARD_SETS: Readonly<Record<number, FacePicks>> = {
   25: { ...DEFAULTS, beard: "stubble" },
   26: { ...DEFAULTS, beard: "moustache" },
   27: { ...DEFAULTS, beard: "full" },
+  95: { ...DEFAULTS, beard: "sage" },
 };
 
 /** A face set draws every axis but the beard, which is its own layer; an `fa` set draws only it. */
