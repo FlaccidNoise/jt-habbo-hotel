@@ -164,6 +164,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 74, type: "wa", name: "Waist Cincher",   slots: 2, family: "material", hides: [], retired: false },
   { id: 75, type: "cc", name: "Tailcoat",        slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 76, type: "ca", name: "Lace Ruff",       slots: 1, family: "material", hides: [], retired: false },
+  { id: 77, type: "ha", name: "Mourning Hat",    slots: 2, family: "material", hides: ["hr"], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -290,6 +291,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 74, price: 250, theme: "nocturne" },    // Waist Cincher
   { set: 71, price: 300, theme: "nocturne" },    // Tiered Skirt
   { set: 73, price: 300, theme: "nocturne" },    // Corset Bodice
+  { set: 77, price: 400, theme: "nocturne" },    // Mourning Hat
   { set: 75, price: 450, theme: "nocturne" },    // Tailcoat
 ];
 

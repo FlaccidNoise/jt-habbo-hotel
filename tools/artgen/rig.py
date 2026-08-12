@@ -3382,6 +3382,42 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.170)},
         ],
     },
+    # Mourning Hat (set 77, two slots, hides hr). The top hat 54's brim is a flat 26 px disc, 3 px
+    # thick, lying on one plane, so its side outline is a line. This brim DROOPS: a cone with its
+    # widest ring at the BOTTOM, 8.0 at z 24.4 down to 13.0 at 21.2, which makes the same 26 px of
+    # span read as a wing that slopes 3.2 px on the way out.
+    #
+    # The brim's outer edge is the number the whole set is built around. A horizontal ring of
+    # radius R on plane z puts its forward edge at row 44 + R/2 - z, so 13.0 at 21.2 lands on row
+    # 29.3 — inside the rule that head geometry keeps its lowest lit pixel at row 30 or above, and
+    # one row clear of the brow the face sets draw at 31. That margin is the reason the brim could
+    # not simply be hung lower to make room for the crown.
+    #
+    # So the crown tops at 28 rather than the ledger's 26. The brim's own top ring is at 24.4, and
+    # a dome ending at 26 leaves 1.6 px of crown above the junction — at 64 px that is one pixel,
+    # which is not a crown. At 28 there are 3.6 px of dome standing over the brim and the topmost
+    # lit row is 14, seven clear of the 21 the skull tops out at and well inside the free rows.
+    #
+    # Slot 1 is the hat band, and it is a cone rather than a ring so it can follow the dome as the
+    # dome narrows: 6.6 at z 26.4 flaring to 8.9 at 24.4, which holds it 0.4-0.7 px proud of the
+    # crown the whole way and 0.9 px proud of the brim's top ring where the two meet.
+    #
+    # Measured on the frozen sheet against all eight eyed heads over all 64 dir-frames: 0 face
+    # pixels painted over. The brim's lowest lit row is 30 standing, which leaves one clear row
+    # under it, and 32 on walk0 and walk2 — the down-steps drop the root 2.5 px while the face art
+    # moves with an integer headShift of 2, so exactly the half row the ledger warns about closes
+    # and the brim ends up adjacent to the brow rather than over it. That is the margin the top
+    # hat 54 and the beanie 53 both ship with, measured the same way.
+    "ha77": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -0.4, 21.0), "r": 9.4,
+             "squash": (1.0, 0.97, 0.745)},
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 24.4, "len": 3.2,
+             "r0": 8.0, "r1": 13.0},
+            {"t": "cone", "bone": "head", "slot": 1, "z0": 26.4, "len": 2.0,
+             "r0": 6.6, "r1": 8.9},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

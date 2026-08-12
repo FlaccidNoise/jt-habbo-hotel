@@ -3849,6 +3849,56 @@
       "figuredataVersion": 1,
       "recipeHash": "9074d8058eb3ceab77f5d25b4103f7b82940bdc31af1ce02e6ff992ffe0ffa63",
       "pixelHash": "4e7993f216827e5b34a97f9255997563d21be1dbb467e93d3c70f3c0f30711dd"
+    },
+    {
+      "partId": "ha77",
+      "setId": 77,
+      "type": "ha",
+      "name": "Mourning Hat",
+      "slots": 2,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha77.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "fd77fba26883daccce109b7b5a4ad97ca2c7e0badb4f462aea4afc352a30c15d",
+      "pixelHash": "ee01300a969af916449bdab94b6434ca0a580ff8417d4077deb273bae06a94a3"
     }
   ]
 }
