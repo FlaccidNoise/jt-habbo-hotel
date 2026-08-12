@@ -5185,6 +5185,40 @@ FIGURE_PARTS = {
              "c1": (9.0, 7.8, -6.0)},
         ],
     },
+    # Woven Sunshade (set 108, two slots, hides hr). The mourning hat 77 and this one are the same
+    # prim inverted, which is the whole separator. 77's brim is z0 24.4, r0 8.0 running down to
+    # r1 13.0 at z 21.2 — widest ring at the BOTTOM, so it droops and its side outline is a wing
+    # pointing down. This one is z0 23.0, r0 17.0 down to r1 8.0 at z 20.0 — widest at the TOP, so
+    # it rises off the crown and its edge is 4.0 px further out. Measured against each other the
+    # pair sits at 0.6333, and the tightest `ha` anywhere is the pointed hat 96 at 0.6933.
+    #
+    # The brim row is already in prim notation and the crown row is not (the pack-5 finding). A
+    # cone's r0 is always at z0 with the solid running DOWN, so "widest ring at the TOP, r0 17.0"
+    # is literal, while the crown's "r0 8.6 to r1 3.4 over 6 px" is written bottom-up: authored,
+    # it is z0 26.0 with r0 3.4 at the top ring and r1 8.6 six px below it at z 20.0.
+    #
+    # The two meet because the brim's inner ring, 8.0 at z 20.0, sits INSIDE the crown's own 8.6
+    # at the same plane. A brim that met the crown exactly would break into its own island on some
+    # frame, the way the ponytail 29's tail does.
+    #
+    # 20.0 is the pointed hat 96's crown base, and it is why a bare skull under the brim is the
+    # shipped shape for a hat that hides `hr` rather than a hole.
+    #
+    # Face clearance is the number that governs a brim this wide. The 44 + R/2 - z arithmetic puts
+    # the outer edge on row 29.5; measured, the lowest lit row at stand is 28, and across all eight
+    # eyed heads and all 64 dir-frames it paints over 0 face pixels and keeps 1 clear row above the
+    # brow at hd17 walk0 d2. That is the pointed hat 96's margin exactly, and one row better than
+    # the mourning hat 77 and the sou'wester 102, which both ship at 0.
+    #
+    # gateBounds is not close: at r 17.0 the brim spans columns 15 to 48 of a 64 px frame.
+    "ha108": {
+        "prims": [
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 23.0, "len": 3.0,
+             "r0": 17.0, "r1": 8.0},
+            {"t": "cone", "bone": "head", "slot": 1, "z0": 26.0, "len": 6.0,
+             "r0": 3.4, "r1": 8.6},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

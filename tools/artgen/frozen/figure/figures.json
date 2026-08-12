@@ -5349,6 +5349,56 @@
       "figuredataVersion": 1,
       "recipeHash": "bbb622f564531a3c633389d954cbf4b1593c9527fbc6600ab8309ff797f920b7",
       "pixelHash": "34b4e493ed946ff1da0376531a7fbe1c148649ddf2fe3a8fd8dd724199eadfa5"
+    },
+    {
+      "partId": "ha108",
+      "setId": 108,
+      "type": "ha",
+      "name": "Woven Sunshade",
+      "slots": 2,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha108.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d005f197038953d442116f87bb2ffd3a407a2cc3754f552b1bc18adacb14f038",
+      "pixelHash": "12969770d4d212ef17e64399b11b9c76df6ff5925b9037273a0ec8462807cae0"
     }
   ]
 }
