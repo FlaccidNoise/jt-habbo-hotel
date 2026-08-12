@@ -236,3 +236,11 @@
   behind it at one end and in front at the other, and no single number can do both. The same
   routine sorts the part boxes inside one generated sprite. Tiles stay in a flat band below every
   sprite, so raised tiles do not occlude — #230. Detail: docs/design/PIPELINES.md §Draw order.
+
+- STYLE_VERSION 3→4 is additive-only (furniture content blitz, task 12). `rose`, `signal`, and
+  `aether` join the material ramps so new-theme postpass remaps can name them; every v1 frozen
+  bundle keeps its v3 provenance and its pixels, and `make gen` republishes unchanged hashes.
+  Rollback rule: a theme whose remap targets a v4 ramp may fall back to a v1 ramp without
+  regenerating earlier waves, because the bump adds shades rather than moving any existing one.
+  The palette-collision and clamp gates now walk all 15 material ramps, and a staged-bad test
+  proves the detector still bites on a too-bright base.

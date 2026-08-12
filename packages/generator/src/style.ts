@@ -1,4 +1,4 @@
-export const STYLE_VERSION = 3;
+export const STYLE_VERSION = 4;
 export const GENERATOR_VERSION = 2;
 
 /** Above-front light: top face lightest, right face base, left face darker, outline darkest —
@@ -47,6 +47,11 @@ const RAMPS: readonly Ramp[] = [
   ramp("ivory", 0x9c9484),   // dark enough that top/hi stay distinct instead of clipping to white
   ramp("navy", 0x3f5e9e),
   ramp("charcoal", 0x4a4d55),
+  // Style bible v2 (blitz task 12): additive ramps for the new themes. Brightest channel ≤ 164
+  // so `hi` at 1.55 stays ≤ 254 (no clamp), and no shade collides with a v1 shade.
+  ramp("rose", 0x9d4a5f),
+  ramp("signal", 0xa4642a),
+  ramp("aether", 0x4a8f6a),
 ];
 
 /** Skin is its own family (#127): the 12 material ramps hold no skin tone, and reducing every

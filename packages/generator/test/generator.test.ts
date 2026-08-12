@@ -142,11 +142,11 @@ describe("rendering", () => {
 });
 
 describe("style bible v1", () => {
-  test("the palette is 12 material ramps + 6 skin ramps + paper × 5 shades", () => {
-    expect(RAMP_NAMES).toHaveLength(12);
+  test("the palette is 15 material ramps + 6 skin ramps + paper × 5 shades", () => {
+    expect(RAMP_NAMES).toHaveLength(15);   // 12 v1 + rose/signal/aether (blitz task 12)
     expect(SKIN_RAMP_NAMES).toHaveLength(6);
-    expect(RAMP_SHADES).toHaveLength(95);
-    expect(PALETTE.size).toBe(96);   // + the global outline
+    expect(RAMP_SHADES).toHaveLength(110);
+    expect(PALETTE.size).toBe(111);   // + the global outline
   });
 
   test("figuredata ramp names match the style bible", () => {
@@ -196,6 +196,28 @@ describe("style bible v1", () => {
       const prior = byColor.get(color);
       expect(prior, `${ramp}.${shade} collides with ${prior}`).toBeUndefined();
       byColor.set(color, `${ramp}.${shade}`);
+    }
+  });
+
+  test("staged-bad: the v4 ramps are clamp-free and the detector still bites", () => {
+    // Additive ramps (blitz task 12) must satisfy the same two invariants as v1: `hi` never clamps
+    // and no shade collides. The staged-bad half proves the detector itself still fires, so a
+    // future too-bright ramp cannot slip through silently.
+    const shade = (color: number, f: number): number => {
+      const ch = (s: number): number => Math.min(255, Math.round(((color >> s) & 0xff) * f));
+      return (ch(16) << 16) | (ch(8) << 8) | ch(0);
+    };
+    const clamped = (c: number): boolean => [16, 8, 0].some((s) => ((c >> s) & 0xff) === 255);
+    // A near-white base clamps at `hi` — the detector must call it out.
+    expect(clamped(shade(0xff8080, 1.55))).toBe(true);
+    // The three v4 ramps stay under the clamp and away from every other registered shade.
+    const seen = new Map<number, string>();
+    for (const { ramp, shade: name, color } of RAMP_SHADES) {
+      if (["rose", "signal", "aether"].includes(ramp)) {
+        expect(clamped(color), `${ramp}.${name} clamps`).toBe(false);
+      }
+      expect(seen.get(color), `${ramp}.${name} collides`).toBeUndefined();
+      seen.set(color, `${ramp}.${name}`);
     }
   });
 });

@@ -191,6 +191,6 @@ describe("randomize", () => {
     const look = randomLook(figureToLook(STARTER), OWNED, () => 0.99);
     expect(look.skin).toBe("skin_6");
     expect(look.iris).toBe("navy");
-    expect(look.hairColor).toBe("charcoal");
+    expect(look.hairColor).toBe("aether");   // last material ramp after the v2 palette (task 12)
   });
 });

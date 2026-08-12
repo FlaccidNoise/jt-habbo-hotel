@@ -23,6 +23,8 @@ export const FIGUREDATA_VERSION = 1;
 const MATERIAL: readonly string[] = [
   "walnut", "oak", "plum", "fern", "crimson", "slate", "sand", "teal", "gold", "ivory",
   "navy", "charcoal",
+  // Style bible v2 (blitz task 12): keeps the figuredata copy in sync with style.ts RAMPS.
+  "rose", "signal", "aether",
 ];
 const SKIN: readonly string[] = ["skin_1", "skin_2", "skin_3", "skin_4", "skin_5", "skin_6"];
 
