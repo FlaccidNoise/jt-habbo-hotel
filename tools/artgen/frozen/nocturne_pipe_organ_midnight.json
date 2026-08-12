@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_pipe_organ_midnight",
+  "archetype": "artgen",
+  "sheet": "nocturne_pipe_organ_midnight.png",
+  "frameW": 96,
+  "frameH": 112,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 80,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:526ebe92e466cce7",
+  "recipeHash": "526ebe92e466cce7641006f9519f9cb91816fb815d8fd136ebdee731c7c53e87",
+  "pixelHash": "c49fb0cba2f8e62287e5b5a7fa2671256449f863887d810b751ecdcd5f2a6378"
+}

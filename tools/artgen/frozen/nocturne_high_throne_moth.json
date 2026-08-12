@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_high_throne_moth",
+  "archetype": "artgen",
+  "sheet": "nocturne_high_throne_moth.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "nocturne_high_throne_moth.near.png",
+  "nearHash": "370d8c3a4d723d00cf66b5fc90ce0f5e36b1a4613e20e241759f3abde68b2efd",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8c55029a86070845",
+  "recipeHash": "8c55029a8607084544f45ec98d0a13acd6423c9fffa4b4c6b33a09d12eeb2d35",
+  "pixelHash": "24a164e9fcbca10982dfb17377810a3689fb178e81b2dba3c0b97c4b1830053a"
+}

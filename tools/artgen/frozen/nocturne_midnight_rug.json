@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_midnight_rug",
+  "archetype": "artgen",
+  "sheet": "nocturne_midnight_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3e0cbf18947b6faa",
+  "recipeHash": "3e0cbf18947b6faa5013500d81e4bb691c10ae23bbd17c48af6fb73f454ecd24",
+  "pixelHash": "ac17572f52868baa43e350f16ef215726fd4b3108a8da7240cd005ad2ec0f6fb"
+}

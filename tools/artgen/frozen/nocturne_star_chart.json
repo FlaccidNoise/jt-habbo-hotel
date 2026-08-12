@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_star_chart",
+  "archetype": "artgen",
+  "sheet": "nocturne_star_chart.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 20,
+    "planeH": 16,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.06
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:77b5f4d39e7a9ccf",
+  "recipeHash": "77b5f4d39e7a9ccfa52723e7766d2a50d139e712579313706a46a3a34f5b6720",
+  "pixelHash": "8f33b6fd0963762ccf1682faa0b0898d9f78f1014392274a819d0799ed30d301"
+}

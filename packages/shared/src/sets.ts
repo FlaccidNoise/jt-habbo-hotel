@@ -38,6 +38,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "nocturne",
+    name: "The Nocturne Set",
+    members: ["nocturne_coffin_daybed", "nocturne_high_throne", "nocturne_pipe_organ", "nocturne_iron_gate"],
+    reward: "nocturne_coffin_daybed_slate",
+    badge: "set_nocturne",
+  },
+  {
     id: "bannerhold",
     name: "The Bannerhold Set",
     members: ["bannerhold_feast_table", "bannerhold_high_seat", "bannerhold_armor_stand", "bannerhold_hearth_brazier"],

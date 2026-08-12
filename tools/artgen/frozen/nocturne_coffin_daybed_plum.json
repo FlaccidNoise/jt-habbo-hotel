@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_coffin_daybed_plum",
+  "archetype": "artgen",
+  "sheet": "nocturne_coffin_daybed_plum.png",
+  "frameW": 96,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "nocturne_coffin_daybed_plum.near.png",
+  "nearHash": "c20db9b3421efdbaad0f4617a92676480d2fccced70e5f36c237d88e13a6a4a4",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4b92031904293fb6",
+  "recipeHash": "4b92031904293fb6c57c3dfc0d55af4b376ea9eadd97a564231358bb1e863644",
+  "pixelHash": "d5e5aa672af54e27fbea0526e0e26b8ab239bf3e0c5a4923dc687e47af79fee2"
+}

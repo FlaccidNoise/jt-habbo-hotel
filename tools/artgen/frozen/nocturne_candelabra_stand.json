@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_candelabra_stand",
+  "archetype": "artgen",
+  "sheet": "nocturne_candelabra_stand.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8fa09a9d9d892076",
+  "recipeHash": "8fa09a9d9d8920763f9ad3cf64435518aef45bacffab193f8f71b4daca02d016",
+  "pixelHash": "dc8d8e5431747eb4d8a31e8836d5cfe4620e1969bea5d5041614386ecb709f9c"
+}

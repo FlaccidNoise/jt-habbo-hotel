@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_candelabra_stand_onyx",
+  "archetype": "artgen",
+  "sheet": "nocturne_candelabra_stand_onyx.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c5bba6d44ba4b937",
+  "recipeHash": "c5bba6d44ba4b9376c36675ac3a28e81ed74eb3a0c8e4301bae3faa560708fde",
+  "pixelHash": "602e2db859e02b063b590812530275ba0837207bf344b12ca2e688a85a2554ea"
+}

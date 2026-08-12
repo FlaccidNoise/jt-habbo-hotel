@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_iron_gate_storm",
+  "archetype": "artgen",
+  "sheet": "nocturne_iron_gate_storm.png",
+  "frameW": 96,
+  "frameH": 97,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c0ae59b821882042",
+  "recipeHash": "c0ae59b821882042b00814438aa7f9ab96563109c01666d95d261d4972df8391",
+  "pixelHash": "8c845505ee64de1ce7b23d98c253fee602a8faf74da7b787675f71f61b7b60a1"
+}

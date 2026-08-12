@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_nightstand",
+  "archetype": "artgen",
+  "sheet": "nocturne_nightstand.png",
+  "frameW": 64,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a736e9a18542bedc",
+  "recipeHash": "a736e9a18542bedc34ff0387744e38285c9c11dd1b346d490beecf0778ebdd44",
+  "pixelHash": "7aafe43aec00f3a5b54c7429a26ea73760ae065410455535403ac276bde574c1"
+}

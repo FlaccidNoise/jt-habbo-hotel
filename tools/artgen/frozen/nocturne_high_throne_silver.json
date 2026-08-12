@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_high_throne_silver",
+  "archetype": "artgen",
+  "sheet": "nocturne_high_throne_silver.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "nocturne_high_throne_silver.near.png",
+  "nearHash": "b092f18fdb72176db48f2c0e0bda518b27adff7dc9dc04623232f2efa164464f",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b8287cf7b2aefe8b",
+  "recipeHash": "b8287cf7b2aefe8b2b413be6c25bd77b80ed4f6bd7e54bf27c678fb5af4c2e32",
+  "pixelHash": "854dea6e9d5efabf65bb3e3265c0f73fa7fb4ea1e836f4b022e89fdd6e4d8bff"
+}

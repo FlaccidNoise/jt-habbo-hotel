@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_obsidian_table_dusk",
+  "archetype": "artgen",
+  "sheet": "nocturne_obsidian_table_dusk.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c1586907c772e822",
+  "recipeHash": "c1586907c772e82260939553d8ab6fc31f0046e42cad281c0b931ccf75988829",
+  "pixelHash": "8517c2e1a4d56ea8c35d8c96159ec2e3e32693e3434065e7853acd8266f229da"
+}

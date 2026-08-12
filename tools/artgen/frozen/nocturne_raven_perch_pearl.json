@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_raven_perch_pearl",
+  "archetype": "artgen",
+  "sheet": "nocturne_raven_perch_pearl.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9a9f43463535024e",
+  "recipeHash": "9a9f43463535024e94db3853724764672736001d8de499b93c76b391d5434f86",
+  "pixelHash": "7ca9514ee7e195264754be0262d7a1de0b3591bb97d4e28b54cadbcf7f876b97"
+}

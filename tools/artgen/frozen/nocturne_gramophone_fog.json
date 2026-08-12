@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_gramophone_fog",
+  "archetype": "artgen",
+  "sheet": "nocturne_gramophone_fog.png",
+  "frameW": 64,
+  "frameH": 63,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 47,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.96875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7d4d1f9842637de7",
+  "recipeHash": "7d4d1f9842637de79cfe538c504bf6349665d07e8e109c0d9b8166fc0ef17e26",
+  "pixelHash": "9c6ccf1717bdbbde28052bd0f435986dc98029b6357659fa4af71a782a2b7664"
+}

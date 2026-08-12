@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_scrying_font_lilac",
+  "archetype": "artgen",
+  "sheet": "nocturne_scrying_font_lilac.png",
+  "frameW": 64,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4bbb296083ad03fd",
+  "recipeHash": "4bbb296083ad03fd3c98f3975e4e020214f8d089617c92ce566d3086b32e9359",
+  "pixelHash": "7838a003898716bc2e91b74bdab8ed969a049ed1de85cfb2906f9649ac2f7830"
+}

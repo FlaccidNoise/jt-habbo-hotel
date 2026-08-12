@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_nightstand_indigo",
+  "archetype": "artgen",
+  "sheet": "nocturne_nightstand_indigo.png",
+  "frameW": 64,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c7553c19a0b89f28",
+  "recipeHash": "c7553c19a0b89f28e05f7d61d1292801cdd1bb3c29e9f9c54e338f67c9db4d5b",
+  "pixelHash": "4014d2de4995cf780452fa118efb457a34778469ea825916a288bac2d7dec91e"
+}

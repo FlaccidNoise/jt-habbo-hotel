@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_dusk_sofa_ink",
+  "archetype": "artgen",
+  "sheet": "nocturne_dusk_sofa_ink.png",
+  "frameW": 96,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "nocturne_dusk_sofa_ink.near.png",
+  "nearHash": "59c288b8a620d151f1eff99b3c893e4c596a8d0d442edcb883c4e1148b605a8c",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bc909dc2e91e11cf",
+  "recipeHash": "bc909dc2e91e11cfdb17c925aa546f013b5a69ad677c8a1ea7dd99b5484838b9",
+  "pixelHash": "bf9f988ccbf21e514b8f27d5f097ea6f67cb66c13c59f0b02fc91ee86304c599"
+}

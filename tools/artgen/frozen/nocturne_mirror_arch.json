@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_mirror_arch",
+  "archetype": "artgen",
+  "sheet": "nocturne_mirror_arch.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 20,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dc6dbbe206834393",
+  "recipeHash": "dc6dbbe2068343932c86150144f40cb321cb0429b0fed33fc469c3f2fce0872e",
+  "pixelHash": "934b91047aaa256533c34845195e8c3bd8b56230b5228d62416b0ca9e0329a36"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_raven_frame",
+  "archetype": "artgen",
+  "sheet": "nocturne_raven_frame.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 16,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:55e02a5815142e1a",
+  "recipeHash": "55e02a5815142e1aaabe683fde3d263c2485bfdff0b0e517e58aa3cec30158f5",
+  "pixelHash": "70d7d283d9112355f2893eab6e5b2bcd37cbbaa6a0ab0e0e5af5c1e7bfaf5f43"
+}

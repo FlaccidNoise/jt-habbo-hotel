@@ -6153,6 +6153,984 @@
       "recipeHash": "435edef08b842829a59cc8f48a3c2e1ba063b4af13bd677feb91e653f54f15d8",
       "pixelHash": "478321efbb9498035a9a5b4475dacca7bda2e40c7fdfa4d5c0199cc0e3e9c90c"
     },
+    "nocturne_pipe_organ_midnight": {
+      "defId": "nocturne_pipe_organ_midnight",
+      "archetype": "artgen",
+      "sheet": "nocturne_pipe_organ_midnight.png",
+      "frameW": 96,
+      "frameH": 112,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 80,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:526ebe92e466cce7",
+      "recipeHash": "526ebe92e466cce7641006f9519f9cb91816fb815d8fd136ebdee731c7c53e87",
+      "pixelHash": "c49fb0cba2f8e62287e5b5a7fa2671256449f863887d810b751ecdcd5f2a6378"
+    },
+    "nocturne_coffin_daybed_plum": {
+      "defId": "nocturne_coffin_daybed_plum",
+      "archetype": "artgen",
+      "sheet": "nocturne_coffin_daybed_plum.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "nocturne_coffin_daybed_plum.near.png",
+      "nearHash": "c20db9b3421efdbaad0f4617a92676480d2fccced70e5f36c237d88e13a6a4a4",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4b92031904293fb6",
+      "recipeHash": "4b92031904293fb6c57c3dfc0d55af4b376ea9eadd97a564231358bb1e863644",
+      "pixelHash": "d5e5aa672af54e27fbea0526e0e26b8ab239bf3e0c5a4923dc687e47af79fee2"
+    },
+    "nocturne_high_throne_silver": {
+      "defId": "nocturne_high_throne_silver",
+      "archetype": "artgen",
+      "sheet": "nocturne_high_throne_silver.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "nocturne_high_throne_silver.near.png",
+      "nearHash": "b092f18fdb72176db48f2c0e0bda518b27adff7dc9dc04623232f2efa164464f",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b8287cf7b2aefe8b",
+      "recipeHash": "b8287cf7b2aefe8b2b413be6c25bd77b80ed4f6bd7e54bf27c678fb5af4c2e32",
+      "pixelHash": "854dea6e9d5efabf65bb3e3265c0f73fa7fb4ea1e836f4b022e89fdd6e4d8bff"
+    },
+    "nocturne_dusk_sofa_raven": {
+      "defId": "nocturne_dusk_sofa_raven",
+      "archetype": "artgen",
+      "sheet": "nocturne_dusk_sofa_raven.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "nocturne_dusk_sofa_raven.near.png",
+      "nearHash": "f0936710b758e47aaa7d6ef3b8ecc1cefeae6174567465dc518c7f38c66bbc66",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e489d1fcde6e7327",
+      "recipeHash": "e489d1fcde6e7327635a3dd0001c2c7bb9af3ce2715fe1ea8a388b1563cf1674",
+      "pixelHash": "99374620efb5f4da2542f92bd227f3868ec4babcf3759dc9c09056bc617d3e31"
+    },
+    "nocturne_obsidian_table_dusk": {
+      "defId": "nocturne_obsidian_table_dusk",
+      "archetype": "artgen",
+      "sheet": "nocturne_obsidian_table_dusk.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c1586907c772e822",
+      "recipeHash": "c1586907c772e82260939553d8ab6fc31f0046e42cad281c0b931ccf75988829",
+      "pixelHash": "8517c2e1a4d56ea8c35d8c96159ec2e3e32693e3434065e7853acd8266f229da"
+    },
+    "nocturne_iron_gate_wine": {
+      "defId": "nocturne_iron_gate_wine",
+      "archetype": "artgen",
+      "sheet": "nocturne_iron_gate_wine.png",
+      "frameW": 96,
+      "frameH": 97,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d7573c5127fde28e",
+      "recipeHash": "d7573c5127fde28e7318222f0c81a9d02500d47600bb9a5976a66bbfea80a713",
+      "pixelHash": "90d38875d7f7bcd83dc9195f30f3ceeb3f5bb9d9f88f95245dfb0a2731af244b"
+    },
+    "nocturne_gramophone_fog": {
+      "defId": "nocturne_gramophone_fog",
+      "archetype": "artgen",
+      "sheet": "nocturne_gramophone_fog.png",
+      "frameW": 64,
+      "frameH": 63,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 47,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.96875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7d4d1f9842637de7",
+      "recipeHash": "7d4d1f9842637de79cfe538c504bf6349665d07e8e109c0d9b8166fc0ef17e26",
+      "pixelHash": "9c6ccf1717bdbbde28052bd0f435986dc98029b6357659fa4af71a782a2b7664"
+    },
+    "nocturne_candelabra_stand_onyx": {
+      "defId": "nocturne_candelabra_stand_onyx",
+      "archetype": "artgen",
+      "sheet": "nocturne_candelabra_stand_onyx.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c5bba6d44ba4b937",
+      "recipeHash": "c5bba6d44ba4b9376c36675ac3a28e81ed74eb3a0c8e4301bae3faa560708fde",
+      "pixelHash": "602e2db859e02b063b590812530275ba0837207bf344b12ca2e688a85a2554ea"
+    },
+    "nocturne_scrying_font_lilac": {
+      "defId": "nocturne_scrying_font_lilac",
+      "archetype": "artgen",
+      "sheet": "nocturne_scrying_font_lilac.png",
+      "frameW": 64,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4bbb296083ad03fd",
+      "recipeHash": "4bbb296083ad03fd3c98f3975e4e020214f8d089617c92ce566d3086b32e9359",
+      "pixelHash": "7838a003898716bc2e91b74bdab8ed969a049ed1de85cfb2906f9649ac2f7830"
+    },
+    "nocturne_midnight_rug_ash": {
+      "defId": "nocturne_midnight_rug_ash",
+      "archetype": "artgen",
+      "sheet": "nocturne_midnight_rug_ash.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c268173db228babc",
+      "recipeHash": "c268173db228babc0fe0c4de406910effc1bcfc751baa253faca4654374b699a",
+      "pixelHash": "0e94f45a74c4599132ed7b52be705da447b6392370a6db00197eec0db9cc0990"
+    },
+    "nocturne_nightstand_indigo": {
+      "defId": "nocturne_nightstand_indigo",
+      "archetype": "artgen",
+      "sheet": "nocturne_nightstand_indigo.png",
+      "frameW": 64,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c7553c19a0b89f28",
+      "recipeHash": "c7553c19a0b89f28e05f7d61d1292801cdd1bb3c29e9f9c54e338f67c9db4d5b",
+      "pixelHash": "4014d2de4995cf780452fa118efb457a34778469ea825916a288bac2d7dec91e"
+    },
+    "nocturne_raven_perch_pearl": {
+      "defId": "nocturne_raven_perch_pearl",
+      "archetype": "artgen",
+      "sheet": "nocturne_raven_perch_pearl.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9a9f43463535024e",
+      "recipeHash": "9a9f43463535024e94db3853724764672736001d8de499b93c76b391d5434f86",
+      "pixelHash": "7ca9514ee7e195264754be0262d7a1de0b3591bb97d4e28b54cadbcf7f876b97"
+    },
+    "nocturne_pipe_organ_ember": {
+      "defId": "nocturne_pipe_organ_ember",
+      "archetype": "artgen",
+      "sheet": "nocturne_pipe_organ_ember.png",
+      "frameW": 96,
+      "frameH": 112,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 80,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a8a3728ed8ab5155",
+      "recipeHash": "a8a3728ed8ab5155bed6048b08067ab2db71d4cb3ed0420092571879930bf8cd",
+      "pixelHash": "a63a13459de076a36917cf029a4e78cd1753bab563b01615a877fcec8d1aa80e"
+    },
+    "nocturne_coffin_daybed_slate": {
+      "defId": "nocturne_coffin_daybed_slate",
+      "archetype": "artgen",
+      "sheet": "nocturne_coffin_daybed_slate.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "nocturne_coffin_daybed_slate.near.png",
+      "nearHash": "9905729e2e0fc7b2a37e41ea4dab569f0cb4b3f7806912b4d2d527c402ec6407",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a4024918e5377717",
+      "recipeHash": "a4024918e53777179c688933aefd63ba162caa4e3bf6933a9c9e798e3676d418",
+      "pixelHash": "346104429afb97dd97cdc50928a020bb09400231506aba5cf38561fc9e39317c"
+    },
+    "nocturne_high_throne_moth": {
+      "defId": "nocturne_high_throne_moth",
+      "archetype": "artgen",
+      "sheet": "nocturne_high_throne_moth.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "nocturne_high_throne_moth.near.png",
+      "nearHash": "370d8c3a4d723d00cf66b5fc90ce0f5e36b1a4613e20e241759f3abde68b2efd",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8c55029a86070845",
+      "recipeHash": "8c55029a8607084544f45ec98d0a13acd6423c9fffa4b4c6b33a09d12eeb2d35",
+      "pixelHash": "24a164e9fcbca10982dfb17377810a3689fb178e81b2dba3c0b97c4b1830053a"
+    },
+    "nocturne_dusk_sofa_ink": {
+      "defId": "nocturne_dusk_sofa_ink",
+      "archetype": "artgen",
+      "sheet": "nocturne_dusk_sofa_ink.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "nocturne_dusk_sofa_ink.near.png",
+      "nearHash": "59c288b8a620d151f1eff99b3c893e4c596a8d0d442edcb883c4e1148b605a8c",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bc909dc2e91e11cf",
+      "recipeHash": "bc909dc2e91e11cfdb17c925aa546f013b5a69ad677c8a1ea7dd99b5484838b9",
+      "pixelHash": "bf9f988ccbf21e514b8f27d5f097ea6f67cb66c13c59f0b02fc91ee86304c599"
+    },
+    "nocturne_obsidian_table_amethyst": {
+      "defId": "nocturne_obsidian_table_amethyst",
+      "archetype": "artgen",
+      "sheet": "nocturne_obsidian_table_amethyst.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0c2321692b0b7af7",
+      "recipeHash": "0c2321692b0b7af7077fb0cee3c9583d2f1b58435627f5279f0e40b845170054",
+      "pixelHash": "fe8953c93ef000b5624b8b1b9145c8c26139e6575146f277de515ad235df5951"
+    },
+    "nocturne_iron_gate_storm": {
+      "defId": "nocturne_iron_gate_storm",
+      "archetype": "artgen",
+      "sheet": "nocturne_iron_gate_storm.png",
+      "frameW": 96,
+      "frameH": 97,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c0ae59b821882042",
+      "recipeHash": "c0ae59b821882042b00814438aa7f9ab96563109c01666d95d261d4972df8391",
+      "pixelHash": "8c845505ee64de1ce7b23d98c253fee602a8faf74da7b787675f71f61b7b60a1"
+    },
+    "nocturne_coffin_daybed": {
+      "defId": "nocturne_coffin_daybed",
+      "archetype": "artgen",
+      "sheet": "nocturne_coffin_daybed.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "nocturne_coffin_daybed.near.png",
+      "nearHash": "787f997c4d58c313419e2e31f3de40f6a25d12b2fe0a5bc65158d53b3fc622a7",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:698f9322da68e2a4",
+      "recipeHash": "698f9322da68e2a4381b25163504ded8f114cbf14886ec905a21204d0dd3e937",
+      "pixelHash": "c838e69228ebd38fd20f879854a70f7f8a0dec0c91cc73fe0333b195221131d8"
+    },
+    "nocturne_high_throne": {
+      "defId": "nocturne_high_throne",
+      "archetype": "artgen",
+      "sheet": "nocturne_high_throne.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "nocturne_high_throne.near.png",
+      "nearHash": "370d8c3a4d723d00cf66b5fc90ce0f5e36b1a4613e20e241759f3abde68b2efd",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:26ecf81a394c85c2",
+      "recipeHash": "26ecf81a394c85c2a59f60c44b9c5138685566f1d866565d01e5856ab6a94da6",
+      "pixelHash": "75465f6c11e7b661026f83d10973c9cb41f61cb22b5e52c676be757dee12d5d7"
+    },
+    "nocturne_pipe_organ": {
+      "defId": "nocturne_pipe_organ",
+      "archetype": "artgen",
+      "sheet": "nocturne_pipe_organ.png",
+      "frameW": 96,
+      "frameH": 112,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 80,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c5416a4365922bfb",
+      "recipeHash": "c5416a4365922bfbc0a4c76dd6ebe85f1435497a5c05d9c4c23652dd57ccb35a",
+      "pixelHash": "207f31553c51a6657ac328ea3871b8f8f17ce9a71b793a396f533da4a856a1bc"
+    },
+    "nocturne_iron_gate": {
+      "defId": "nocturne_iron_gate",
+      "archetype": "artgen",
+      "sheet": "nocturne_iron_gate.png",
+      "frameW": 96,
+      "frameH": 97,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ccd77e79a7be1ce0",
+      "recipeHash": "ccd77e79a7be1ce0cb8d7981cf3b1a07c72f8c3c0cae32d8d532ba6f9d4b1366",
+      "pixelHash": "d40803953c94d76a7640c34bdb00293d299d70a0bb61b0c78e3d6f4ec594d0cf"
+    },
+    "nocturne_scrying_font": {
+      "defId": "nocturne_scrying_font",
+      "archetype": "artgen",
+      "sheet": "nocturne_scrying_font.png",
+      "frameW": 64,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6f0c03e80e1773c1",
+      "recipeHash": "6f0c03e80e1773c14efc9a68441625ac04a794be9edb5e97e6c3343c39d19347",
+      "pixelHash": "0e4927c2d2c662427ad02a9d4a2ecf04f4bccb0f5c560aa1d5dd72c18ff16b46"
+    },
+    "nocturne_candelabra_stand": {
+      "defId": "nocturne_candelabra_stand",
+      "archetype": "artgen",
+      "sheet": "nocturne_candelabra_stand.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8fa09a9d9d892076",
+      "recipeHash": "8fa09a9d9d8920763f9ad3cf64435518aef45bacffab193f8f71b4daca02d016",
+      "pixelHash": "dc8d8e5431747eb4d8a31e8836d5cfe4620e1969bea5d5041614386ecb709f9c"
+    },
+    "nocturne_dusk_sofa": {
+      "defId": "nocturne_dusk_sofa",
+      "archetype": "artgen",
+      "sheet": "nocturne_dusk_sofa.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "nocturne_dusk_sofa.near.png",
+      "nearHash": "d7bafa38eb2f9c3dabe3ba3e734d070ba566ae26ae434962577e48f6b9e32e33",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5c582c02810f1ea9",
+      "recipeHash": "5c582c02810f1ea9599b07424e627ed7ed5edcad6cb9c8b347f25697155e9a2a",
+      "pixelHash": "ffc166a5ec1bf83a6cdbdccceb769521114948a4282df46d383fb7ea845f91e5"
+    },
+    "nocturne_gramophone": {
+      "defId": "nocturne_gramophone",
+      "archetype": "artgen",
+      "sheet": "nocturne_gramophone.png",
+      "frameW": 64,
+      "frameH": 63,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 47,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.96875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8ecbbe644b5a7d01",
+      "recipeHash": "8ecbbe644b5a7d01ea925d7aa46b647a0d8c1992b756c59d97dc8f0c81f8be07",
+      "pixelHash": "88a2d296aca957b30d2225ad02d213132b0d579955b92ee70c9cf2517663e1ed"
+    },
+    "nocturne_midnight_rug": {
+      "defId": "nocturne_midnight_rug",
+      "archetype": "artgen",
+      "sheet": "nocturne_midnight_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3e0cbf18947b6faa",
+      "recipeHash": "3e0cbf18947b6faa5013500d81e4bb691c10ae23bbd17c48af6fb73f454ecd24",
+      "pixelHash": "ac17572f52868baa43e350f16ef215726fd4b3108a8da7240cd005ad2ec0f6fb"
+    },
+    "nocturne_nightstand": {
+      "defId": "nocturne_nightstand",
+      "archetype": "artgen",
+      "sheet": "nocturne_nightstand.png",
+      "frameW": 64,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 34,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a736e9a18542bedc",
+      "recipeHash": "a736e9a18542bedc34ff0387744e38285c9c11dd1b346d490beecf0778ebdd44",
+      "pixelHash": "7aafe43aec00f3a5b54c7429a26ea73760ae065410455535403ac276bde574c1"
+    },
+    "nocturne_obsidian_table": {
+      "defId": "nocturne_obsidian_table",
+      "archetype": "artgen",
+      "sheet": "nocturne_obsidian_table.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9d2f453bcb97dbbf",
+      "recipeHash": "9d2f453bcb97dbbf9959b8f02323cbe258f38b1657778ecab26a45648c5434e9",
+      "pixelHash": "40699c443259f78d08f8706e710f74b21477835889420aa674a35251c9c7aac8"
+    },
+    "nocturne_raven_perch": {
+      "defId": "nocturne_raven_perch",
+      "archetype": "artgen",
+      "sheet": "nocturne_raven_perch.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:796f291fb7dfeca1",
+      "recipeHash": "796f291fb7dfeca1c6dbc2b24709e8b5de2bffb4a5c0afd6ba621b1e45725a76",
+      "pixelHash": "3f98448a7b87663b000947e2bd76a45354f527d1333ac75b83288057a50e38d1"
+    },
     "bannerhold_feast_table": {
       "defId": "bannerhold_feast_table",
       "archetype": "artgen",
@@ -10430,6 +11408,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "nocturne_bat_silhouette": {
+      "defId": "nocturne_bat_silhouette",
+      "archetype": "artgen",
+      "sheet": "nocturne_bat_silhouette.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 5,
+        "mountU": 6,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1febebeabbd902ff",
+      "recipeHash": "1febebeabbd902ff1374b3d94740b2e4dcba87aad1eff63d681909e5a3c0dd1f",
+      "pixelHash": "cf2c55e5b1d6a5ff984de5f0bd4dbd8582443da329460db2331bcc23372bfc5e"
+    },
+    "nocturne_candle_sconce": {
+      "defId": "nocturne_candle_sconce",
+      "archetype": "artgen",
+      "sheet": "nocturne_candle_sconce.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 8,
+        "planeH": 8,
+        "mountU": 10,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.15000000000000002
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3fa8c084a1db1553",
+      "recipeHash": "3fa8c084a1db15536d3bd4c5873094e7355c7c3ea911c7a73ce5135a57e26e06",
+      "pixelHash": "5209498e1b391b22b2358ca0835e4a114dbb5c88955229b0a7547fc2d6961d29"
+    },
+    "nocturne_lyric_plaque": {
+      "defId": "nocturne_lyric_plaque",
+      "archetype": "artgen",
+      "sheet": "nocturne_lyric_plaque.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 10,
+        "mountU": 6,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:930bfa9e15dccad0",
+      "recipeHash": "930bfa9e15dccad0a1bce1ee33afe14f03f54a7f34545b9d3cc59e9f21a4ee25",
+      "pixelHash": "b571970660f0e3e3e04b6e57b4dc33c1cd41e4274e163ae8a9a865fad0450905"
+    },
+    "nocturne_mirror_arch": {
+      "defId": "nocturne_mirror_arch",
+      "archetype": "artgen",
+      "sheet": "nocturne_mirror_arch.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 20,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dc6dbbe206834393",
+      "recipeHash": "dc6dbbe2068343932c86150144f40cb321cb0429b0fed33fc469c3f2fce0872e",
+      "pixelHash": "934b91047aaa256533c34845195e8c3bd8b56230b5228d62416b0ca9e0329a36"
+    },
+    "nocturne_moon_phase_chart": {
+      "defId": "nocturne_moon_phase_chart",
+      "archetype": "artgen",
+      "sheet": "nocturne_moon_phase_chart.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 11,
+        "mountU": 4,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.13
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:79590da80586f58e",
+      "recipeHash": "79590da80586f58ee31df2eadd8c644ebbfbfadbddfd5a1281f6a66538e85085",
+      "pixelHash": "1fb016d9faccd1ba68958e74f184ef626b6a76e2b41bc0e9e5fdbaafa6bda68a"
+    },
+    "nocturne_moth_print": {
+      "defId": "nocturne_moth_print",
+      "archetype": "artgen",
+      "sheet": "nocturne_moth_print.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 14,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6d5faa4b32835b2f",
+      "recipeHash": "6d5faa4b32835b2f17775f07e18981dc76f52ab0fe20852d25ec9790a8d0f02a",
+      "pixelHash": "1ff75bff26b9d72d4b51105197f70c9bc839421c6e8e414e433b3f14802e24fb"
+    },
+    "nocturne_night_sky_panel": {
+      "defId": "nocturne_night_sky_panel",
+      "archetype": "artgen",
+      "sheet": "nocturne_night_sky_panel.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 22,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0bd6b49780fd945c",
+      "recipeHash": "0bd6b49780fd945c5d91d6302b9137a971e91cc6ff50af0828119ee1ad002dcb",
+      "pixelHash": "d680061c8c0684d15772bbd5c130590b0d1e3487a7c801170bac0218aa37db6c"
+    },
+    "nocturne_raven_frame": {
+      "defId": "nocturne_raven_frame",
+      "archetype": "artgen",
+      "sheet": "nocturne_raven_frame.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:55e02a5815142e1a",
+      "recipeHash": "55e02a5815142e1aaabe683fde3d263c2485bfdff0b0e517e58aa3cec30158f5",
+      "pixelHash": "70d7d283d9112355f2893eab6e5b2bcd37cbbaa6a0ab0e0e5af5c1e7bfaf5f43"
+    },
+    "nocturne_star_chart": {
+      "defId": "nocturne_star_chart",
+      "archetype": "artgen",
+      "sheet": "nocturne_star_chart.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 20,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:77b5f4d39e7a9ccf",
+      "recipeHash": "77b5f4d39e7a9ccfa52723e7766d2a50d139e712579313706a46a3a34f5b6720",
+      "pixelHash": "8f33b6fd0963762ccf1682faa0b0898d9f78f1014392274a819d0799ed30d301"
+    },
+    "nocturne_velvet_drape": {
+      "defId": "nocturne_velvet_drape",
+      "archetype": "artgen",
+      "sheet": "nocturne_velvet_drape.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 26,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8677cdfcaf2cd799",
+      "recipeHash": "8677cdfcaf2cd799f2b6fe4d4e55d9e1c33a8ddf5a3b350dc2ff05fa7e67770c",
+      "pixelHash": "30946a9b47c078ff3b7189cf9e91d681008427be72adb690c275b17d605cb336"
     },
     "bannerhold_sword_display": {
       "defId": "bannerhold_sword_display",

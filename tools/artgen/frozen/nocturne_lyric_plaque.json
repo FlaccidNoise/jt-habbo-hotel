@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_lyric_plaque",
+  "archetype": "artgen",
+  "sheet": "nocturne_lyric_plaque.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 10,
+    "mountU": 6,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:930bfa9e15dccad0",
+  "recipeHash": "930bfa9e15dccad0a1bce1ee33afe14f03f54a7f34545b9d3cc59e9f21a4ee25",
+  "pixelHash": "b571970660f0e3e3e04b6e57b4dc33c1cd41e4274e163ae8a9a865fad0450905"
+}

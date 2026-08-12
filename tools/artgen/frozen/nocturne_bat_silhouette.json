@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_bat_silhouette",
+  "archetype": "artgen",
+  "sheet": "nocturne_bat_silhouette.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 5,
+    "mountU": 6,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1febebeabbd902ff",
+  "recipeHash": "1febebeabbd902ff1374b3d94740b2e4dcba87aad1eff63d681909e5a3c0dd1f",
+  "pixelHash": "cf2c55e5b1d6a5ff984de5f0bd4dbd8582443da329460db2331bcc23372bfc5e"
+}

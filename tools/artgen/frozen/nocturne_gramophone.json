@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_gramophone",
+  "archetype": "artgen",
+  "sheet": "nocturne_gramophone.png",
+  "frameW": 64,
+  "frameH": 63,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 47,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.96875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8ecbbe644b5a7d01",
+  "recipeHash": "8ecbbe644b5a7d01ea925d7aa46b647a0d8c1992b756c59d97dc8f0c81f8be07",
+  "pixelHash": "88a2d296aca957b30d2225ad02d213132b0d579955b92ee70c9cf2517663e1ed"
+}

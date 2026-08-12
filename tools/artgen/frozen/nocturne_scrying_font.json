@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_scrying_font",
+  "archetype": "artgen",
+  "sheet": "nocturne_scrying_font.png",
+  "frameW": 64,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 34,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6f0c03e80e1773c1",
+  "recipeHash": "6f0c03e80e1773c14efc9a68441625ac04a794be9edb5e97e6c3343c39d19347",
+  "pixelHash": "0e4927c2d2c662427ad02a9d4a2ecf04f4bccb0f5c560aa1d5dd72c18ff16b46"
+}

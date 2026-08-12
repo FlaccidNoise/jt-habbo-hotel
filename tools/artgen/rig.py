@@ -2071,6 +2071,182 @@ PARTS = {
             {"t": "box", "c0": (0.06, 0.62, 0.40), "c1": (0.60, 0.86, 0.80), "bevel": 0.04, "ramp": "crimson"},
         ],
     },
+    # ---- wave B2: Nocturne (blitz task 11) ----
+    "nocturne_coffin_daybed": {
+        "w": 2, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.20, 0.00), "c1": (1.94, 0.80, 0.40), "bevel": 0.05, "ramp": "plum", "seat": True},
+            {"t": "box", "c0": (0.06, 0.62, 0.40), "c1": (0.50, 0.86, 0.90), "bevel": 0.04, "ramp": "plum"},
+            {"t": "box", "c0": (1.50, 0.62, 0.40), "c1": (1.94, 0.86, 0.70), "bevel": 0.04, "ramp": "plum"},
+        ],
+    },
+    "nocturne_high_throne": {
+        "w": 1, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.84, 0.84, 0.44), "bevel": 0.04, "ramp": "plum", "seat": True},
+            {"t": "box", "c0": (0.16, 0.66, 0.44), "c1": (0.84, 0.84, 1.60), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.75, "rx": 0.10, "ry": 0.10, "z0": 1.60, "z1": 1.72, "ramp": "gold"},
+        ],
+    },
+    "nocturne_pipe_organ": {
+        "w": 2, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.30, 0.00), "c1": (1.94, 0.80, 1.00), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.3, "cy": 0.55, "rx": 0.08, "ry": 0.08, "z0": 1.00, "z1": 1.80, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.7, "cy": 0.55, "rx": 0.10, "ry": 0.10, "z0": 1.00, "z1": 2.00, "ramp": "gold"},
+            {"t": "cyl", "cx": 1.1, "cy": 0.55, "rx": 0.10, "ry": 0.10, "z0": 1.00, "z1": 2.00, "ramp": "gold"},
+            {"t": "cyl", "cx": 1.5, "cy": 0.55, "rx": 0.08, "ry": 0.08, "z0": 1.00, "z1": 1.80, "ramp": "gold"},
+        ],
+    },
+    "nocturne_iron_gate": {
+        "w": 2, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.44, 0.00), "c1": (1.94, 0.56, 0.20)},
+            {"t": "cyl", "cx": 0.3, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.20, "z1": 1.50},
+            {"t": "cyl", "cx": 0.7, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.20, "z1": 1.50},
+            {"t": "cyl", "cx": 1.1, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.20, "z1": 1.50},
+            {"t": "cyl", "cx": 1.5, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.20, "z1": 1.50},
+            {"t": "box", "c0": (0.06, 0.44, 1.40), "c1": (1.94, 0.56, 1.52)},
+        ],
+    },
+    "nocturne_scrying_font": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.30, "ry": 0.30, "z0": 0.0, "z1": 0.50, "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.22, "ry": 0.22, "z0": 0.50, "z1": 0.56, "ramp": "plum"},
+        ],
+    },
+    "nocturne_candelabra_stand": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.18, "ry": 0.18, "z0": 0.0, "z1": 0.05},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 0.05, "z1": 1.20},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.05, "ry": 0.05, "z0": 1.20, "z1": 1.34, "ramp": "ivory"},
+            {"t": "box", "c0": (0.28, 0.46, 0.94), "c1": (0.72, 0.54, 1.00)},
+            {"t": "cyl", "cx": 0.32, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 1.00, "z1": 1.14, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.68, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 1.00, "z1": 1.14, "ramp": "ivory"},
+        ],
+    },
+    "nocturne_dusk_sofa": {
+        "w": 2, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.20, 0.00), "c1": (1.94, 0.80, 0.42), "bevel": 0.05, "ramp": "plum", "seat": True},
+            {"t": "box", "c0": (0.06, 0.62, 0.42), "c1": (1.94, 0.86, 0.84), "bevel": 0.04, "ramp": "plum"},
+        ],
+    },
+    "nocturne_gramophone": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.20, 0.00), "c1": (0.80, 0.80, 0.60), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.60, "z1": 0.66, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.62, "cy": 0.5, "rx": 0.14, "ry": 0.14, "z0": 0.66, "z1": 0.96, "taper": 0.4, "ramp": "gold"},
+        ],
+    },
+    "nocturne_midnight_rug": {
+        "w": 2, "l": 2, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.04, 0.00), "c1": (1.96, 1.96, 0.05), "ramp": "plum"},
+            {"t": "box", "c0": (0.50, 0.50, 0.05), "c1": (1.50, 1.50, 0.06), "ramp": "charcoal"},
+        ],
+    },
+    "nocturne_nightstand": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.18, 0.00), "c1": (0.82, 0.82, 0.56), "bevel": 0.02, "ramp": "charcoal"},
+            {"t": "box", "c0": (0.30, 0.14, 0.24), "c1": (0.70, 0.20, 0.32), "ramp": "gold"},
+        ],
+    },
+    "nocturne_obsidian_table": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.36, "ry": 0.36, "z0": 0.60, "z1": 0.70, "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.12, "ry": 0.12, "z0": 0.0, "z1": 0.60, "ramp": "gold"},
+        ],
+    },
+    "nocturne_raven_perch": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.18, "ry": 0.18, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.10},
+            {"t": "box", "c0": (0.30, 0.46, 1.10), "c1": (0.70, 0.54, 1.16), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.46, 0.44, 1.16), "c1": (0.56, 0.56, 1.34), "ramp": "charcoal"},
+        ],
+    },
+    "nocturne_bat_silhouette": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.24, 0.00, 2.50), "c1": (0.76, 0.05, 2.66), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.44, 0.05, 2.44), "c1": (0.56, 0.08, 2.72), "ramp": "charcoal"},
+        ],
+    },
+    "nocturne_candle_sconce": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.44, 0.00, 2.40), "c1": (0.56, 0.06, 2.56)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.05, "ry": 0.05, "z0": 2.56, "z1": 2.70, "ramp": "ivory"},
+        ],
+    },
+    "nocturne_lyric_plaque": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.28, 0.00, 2.40), "c1": (0.72, 0.05, 2.72), "ramp": "gold"},
+            {"t": "box", "c0": (0.36, 0.05, 2.48), "c1": (0.64, 0.07, 2.64), "ramp": "charcoal"},
+        ],
+    },
+    "nocturne_mirror_arch": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.28, 0.00, 2.20), "c1": (0.72, 0.05, 2.80), "ramp": "gold"},
+            {"t": "box", "c0": (0.34, 0.05, 2.28), "c1": (0.66, 0.07, 2.72), "ramp": "slate"},
+        ],
+    },
+    "nocturne_moon_phase_chart": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.00, 2.40), "c1": (0.82, 0.04, 2.76), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.32, "cy": 0.07, "rx": 0.06, "ry": 0.06, "z0": 2.56, "z1": 2.60, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.07, "rx": 0.06, "ry": 0.06, "z0": 2.56, "z1": 2.60, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.68, "cy": 0.07, "rx": 0.06, "ry": 0.06, "z0": 2.56, "z1": 2.60, "ramp": "ivory"},
+        ],
+    },
+    "nocturne_moth_print": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.26, 0.00, 2.36), "c1": (0.74, 0.04, 2.78), "ramp": "plum"},
+            {"t": "box", "c0": (0.40, 0.04, 2.48), "c1": (0.60, 0.07, 2.66), "ramp": "ivory"},
+        ],
+    },
+    "nocturne_night_sky_panel": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.00, 2.20), "c1": (0.82, 0.04, 2.90), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.30, 0.04, 2.60), "c1": (0.36, 0.06, 2.66), "ramp": "ivory"},
+            {"t": "box", "c0": (0.56, 0.04, 2.40), "c1": (0.62, 0.06, 2.46), "ramp": "ivory"},
+        ],
+    },
+    "nocturne_raven_frame": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.26, 0.00, 2.30), "c1": (0.74, 0.05, 2.80), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.34, 0.05, 2.38), "c1": (0.66, 0.07, 2.72), "ramp": "plum"},
+        ],
+    },
+    "nocturne_star_chart": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.22, 0.00, 2.30), "c1": (0.78, 0.04, 2.80), "ramp": "slate"},
+            {"t": "box", "c0": (0.34, 0.04, 2.50), "c1": (0.40, 0.06, 2.56), "ramp": "ivory"},
+            {"t": "box", "c0": (0.56, 0.04, 2.62), "c1": (0.62, 0.06, 2.68), "ramp": "ivory"},
+        ],
+    },
+    "nocturne_velvet_drape": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.10), "c1": (0.84, 0.05, 2.90), "ramp": "plum"},
+            {"t": "box", "c0": (0.26, 0.05, 2.20), "c1": (0.38, 0.07, 2.90), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.62, 0.05, 2.20), "c1": (0.74, 0.07, 2.90), "ramp": "charcoal"},
+        ],
+    },
     # ---- wave B1: Bannerhold (blitz task 10) ----
     "bannerhold_feast_table": {
         "w": 2, "l": 2, "ramp": "walnut",

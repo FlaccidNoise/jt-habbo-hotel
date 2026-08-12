@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_iron_gate_wine",
+  "archetype": "artgen",
+  "sheet": "nocturne_iron_gate_wine.png",
+  "frameW": 96,
+  "frameH": 97,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d7573c5127fde28e",
+  "recipeHash": "d7573c5127fde28e7318222f0c81a9d02500d47600bb9a5976a66bbfea80a713",
+  "pixelHash": "90d38875d7f7bcd83dc9195f30f3ceeb3f5bb9d9f88f95245dfb0a2731af244b"
+}

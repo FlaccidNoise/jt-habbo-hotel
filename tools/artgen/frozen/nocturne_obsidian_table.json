@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_obsidian_table",
+  "archetype": "artgen",
+  "sheet": "nocturne_obsidian_table.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9d2f453bcb97dbbf",
+  "recipeHash": "9d2f453bcb97dbbf9959b8f02323cbe258f38b1657778ecab26a45648c5434e9",
+  "pixelHash": "40699c443259f78d08f8706e710f74b21477835889420aa674a35251c9c7aac8"
+}

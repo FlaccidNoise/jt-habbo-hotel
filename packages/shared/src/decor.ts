@@ -247,6 +247,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_bannerhold_plaster", name: "Bannerhold Plaster", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_bannerhold_tapestry", name: "Bannerhold Tapestry", tile: { w: 32, h: 32 }, cap: 0xaa3333 },
   { kind: "wall", id: "wall_bannerhold_oak_panel", name: "Bannerhold Oak Panel", tile: { w: 32, h: 32 }, cap: 0xb55a19 },
+  // Wave B2 decor (blitz task 11): Nocturne.
+  { kind: "floor", id: "floor_nocturne_parquet", name: "Nocturne Parquet", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0x8b4513 } },
+  { kind: "floor", id: "floor_nocturne_moon_tile", name: "Nocturne Moon Tile", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_nocturne_rose_inlay", name: "Nocturne Rose Inlay", tile: { w: 64, h: 32 }, sides: { left: 0xaa3333, right: 0x656056 } },
+  { kind: "floor", id: "floor_nocturne_ash_stone", name: "Nocturne Ash Stone", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0x9c9484 } },
+  { kind: "wall", id: "wall_nocturne_damask", name: "Nocturne Damask", tile: { w: 32, h: 32 }, cap: 0xaa3333 },
+  { kind: "wall", id: "wall_nocturne_arch_panel", name: "Nocturne Arch Panel", tile: { w: 32, h: 32 }, cap: 0x656056 },
+  { kind: "wall", id: "wall_nocturne_candle_stripe", name: "Nocturne Candle Stripe", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  { kind: "wall", id: "wall_nocturne_moth_frieze", name: "Nocturne Moth Frieze", tile: { w: 32, h: 32 }, cap: 0xaa3333 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

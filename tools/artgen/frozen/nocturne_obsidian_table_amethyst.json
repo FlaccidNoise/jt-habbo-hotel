@@ -1,0 +1,32 @@
+{
+  "defId": "nocturne_obsidian_table_amethyst",
+  "archetype": "artgen",
+  "sheet": "nocturne_obsidian_table_amethyst.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0c2321692b0b7af7",
+  "recipeHash": "0c2321692b0b7af7077fb0cee3c9583d2f1b58435627f5279f0e40b845170054",
+  "pixelHash": "fe8953c93ef000b5624b8b1b9145c8c26139e6575146f277de515ad235df5951"
+}

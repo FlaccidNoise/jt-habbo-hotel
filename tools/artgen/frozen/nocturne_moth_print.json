@@ -1,0 +1,37 @@
+{
+  "defId": "nocturne_moth_print",
+  "archetype": "artgen",
+  "sheet": "nocturne_moth_print.png",
+  "frameW": 64,
+  "frameH": 121,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 105,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 14,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6d5faa4b32835b2f",
+  "recipeHash": "6d5faa4b32835b2f17775f07e18981dc76f52ab0fe20852d25ec9790a8d0f02a",
+  "pixelHash": "1ff75bff26b9d72d4b51105197f70c9bc839421c6e8e414e433b3f14802e24fb"
+}

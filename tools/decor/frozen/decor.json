@@ -831,6 +831,110 @@
       },
       "styleVersion": 3,
       "pixelHash": "51a72ca721516ba11beccf856b03150ace6b2f8da30a9d2f387302db90dd778e"
+    },
+    {
+      "id": "floor_nocturne_parquet",
+      "kind": "floor",
+      "sheet": "floor_nocturne_parquet.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "757f9191b543560ae76482663157b9083fbdf7aecb06a76b91c0bebc26afed0f"
+    },
+    {
+      "id": "floor_nocturne_moon_tile",
+      "kind": "floor",
+      "sheet": "floor_nocturne_moon_tile.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "419cc1e5f9dd873ba21dc35892a3e59cdf06e1a34640be3337a8aa7bdee1b064"
+    },
+    {
+      "id": "floor_nocturne_rose_inlay",
+      "kind": "floor",
+      "sheet": "floor_nocturne_rose_inlay.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "84ad32418aa8fc3fb2f2dc02ba3577d2a243c5adde45032acc96fad4c59301c9"
+    },
+    {
+      "id": "floor_nocturne_ash_stone",
+      "kind": "floor",
+      "sheet": "floor_nocturne_ash_stone.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "c7fd76ed7d1a4f79307144be4483ae05f99325a72e6dcec77c57353b0a3dd362"
+    },
+    {
+      "id": "wall_nocturne_damask",
+      "kind": "wall",
+      "sheet": "wall_nocturne_damask.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "3ac08189167e3deb2de00929cadfe6a9b975f7224605a744f005980027c3b6dd"
+    },
+    {
+      "id": "wall_nocturne_arch_panel",
+      "kind": "wall",
+      "sheet": "wall_nocturne_arch_panel.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "5737f03ff21c9e711bee502a6e9341bbf7d74dbc9491804ea6c5c52adbe23f46"
+    },
+    {
+      "id": "wall_nocturne_candle_stripe",
+      "kind": "wall",
+      "sheet": "wall_nocturne_candle_stripe.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "51767ac7e47889e8427cae726be3925f4f68ae1238d851be86ee3658040f8e27"
+    },
+    {
+      "id": "wall_nocturne_moth_frieze",
+      "kind": "wall",
+      "sheet": "wall_nocturne_moth_frieze.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "564768c5149c42c9371e93e9615315ed0d59121583ba6f1d1a7e85db5e9fc343"
     }
   ]
 }

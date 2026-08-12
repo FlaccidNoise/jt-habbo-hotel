@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_dusk_sofa_raven",
+  "archetype": "artgen",
+  "sheet": "nocturne_dusk_sofa_raven.png",
+  "frameW": 96,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "nocturne_dusk_sofa_raven.near.png",
+  "nearHash": "f0936710b758e47aaa7d6ef3b8ecc1cefeae6174567465dc518c7f38c66bbc66",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e489d1fcde6e7327",
+  "recipeHash": "e489d1fcde6e7327635a3dd0001c2c7bb9af3ce2715fe1ea8a388b1563cf1674",
+  "pixelHash": "99374620efb5f4da2542f92bd227f3868ec4babcf3759dc9c09056bc617d3e31"
+}

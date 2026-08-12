@@ -1,0 +1,34 @@
+{
+  "defId": "nocturne_high_throne",
+  "archetype": "artgen",
+  "sheet": "nocturne_high_throne.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "nocturne_high_throne.near.png",
+  "nearHash": "370d8c3a4d723d00cf66b5fc90ce0f5e36b1a4613e20e241759f3abde68b2efd",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:26ecf81a394c85c2",
+  "recipeHash": "26ecf81a394c85c2a59f60c44b9c5138685566f1d866565d01e5856ab6a94da6",
+  "pixelHash": "75465f6c11e7b661026f83d10973c9cb41f61cb22b5e52c676be757dee12d5d7"
+}
