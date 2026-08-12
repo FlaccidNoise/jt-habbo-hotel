@@ -5533,6 +5533,16 @@ FIGURE_PARTS = {
              "c1": (1.7, 6.9, 22.0)},
         ],
     },
+    # Peplum Belt (set 118, two slots). The waist cincher 74 is a straight band with a flat lower
+    # edge. This hangs a bell off the same band: a cone from z 2.0 to -5.0, 8.2 out to 11.4.
+    "wa118": {
+        "prims": [
+            {"t": "cone", "bone": "spine", "slot": 0, "z0": 2.0, "len": 7.0,
+             "r0": 8.2, "r1": 11.4},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-8.4, -6.6, 1.2),
+             "c1": (8.4, 6.6, 5.6)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
