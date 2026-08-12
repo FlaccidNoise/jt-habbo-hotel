@@ -3494,6 +3494,36 @@ FIGURE_PARTS = {
              "squash": (0.85, 0.72, 0.70)},
         ],
     },
+    # Cloud Cardigan (set 80, two slots). The widest body in the wardrobe at 9.0, against the
+    # gambeson 66's 8.6 and the tracksuit 44's 8.6, and the only one that carries that width from
+    # the shoulder to the hem without a band under it.
+    #
+    # The tracksuit is the pair this has to beat, and both of its separators are on the run of the
+    # garment rather than its shape. 44 pinches 8.6 to a 7.8 waistband and stops at spine z 0.6;
+    # this drops straight past the hip to -2.0, where bd1's own thigh caps hold 7.69 and the body
+    # still clears them. And 44's sleeve is r 4.6 over 20 px; this is 5.0 over 21, so its cap
+    # sphere lands at -26.0 against bd1's arm ending at -25.2 — the cuff closes over the hand where
+    # 44's stops 0.6 short of it.
+    #
+    # Slot 1 is embedded into the body rather than laid on it, which is the tracksuit zip's idiom:
+    # each plate spans y 6.6-7.8, so 0.6 of it is buried in the 7.2 body and 0.6 stands proud. A
+    # plate whose back face is coplanar with the body's front z-fights along the whole panel.
+    # None of it breaks the outline — the placket and the two pockets are inboard of the 9.0 edge,
+    # so the second ramp is a colour down the front and a shade boundary at each pocket lip.
+    "ch80": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-9.0, -7.2, -2.0),
+             "c1": (9.0, 7.2, 20.2)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 21.0, "r": 5.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 5.0},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-1.6, 6.6, -1.4),
+             "c1": (1.6, 7.8, 19.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (2.8, 6.6, 1.2),
+             "c1": (6.4, 7.8, 6.2)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-6.4, 6.6, 1.2),
+             "c1": (-2.8, 7.8, 6.2)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -3995,6 +3995,54 @@
       "figuredataVersion": 1,
       "recipeHash": "e3e0d24a96f1b5048abf110af8904f8e76c541da2b4e1081e509535295b9c441",
       "pixelHash": "7ed2f17d651f4bfb530ebdeab9e0a479004f5f140468f1038b5439d7d41de5ec"
+    },
+    {
+      "partId": "ch80",
+      "setId": 80,
+      "type": "ch",
+      "name": "Cloud Cardigan",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch80.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "7ccd78cb502a63c245db19568bbb5db970fac5d33d53befa40b2188665340cd6",
+      "pixelHash": "76285c378da1045aab56c4d5f8f9d6a84486258859f96b04d7137595ca1944da"
     }
   ]
 }

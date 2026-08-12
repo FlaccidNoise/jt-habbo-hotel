@@ -170,6 +170,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // that would cover them is the one it leaves out. Only the sleep cap hides anything.
   { id: 78, type: "lg", name: "Bloomers",        slots: 1, family: "material", hides: [], retired: false },
   { id: 79, type: "sh", name: "Puff Slippers",   slots: 2, family: "material", hides: [], retired: false },
+  { id: 80, type: "ch", name: "Cloud Cardigan",  slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -307,6 +308,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 75, price: 450, theme: "nocturne" },    // Tailcoat
   { set: 79, price: 150, theme: "mochi" },       // Puff Slippers
   { set: 78, price: 200, theme: "mochi" },       // Bloomers
+  { set: 80, price: 300, theme: "mochi" },       // Cloud Cardigan
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
