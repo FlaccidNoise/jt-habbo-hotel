@@ -4975,6 +4975,32 @@ FIGURE_PARTS = {
              "c1": (10.4, 8.6, 15.1)},
         ],
     },
+    # Sou'wester (set 102, two slots, hides hr). The visor 56's construction mirrored. 56 is a
+    # brim disc pushed FORWARD to y 6.6 with no crown, so its crescent lands in front at row 30.
+    # This one pushes the same disc BACK to y -6.4, where the skull is nearer to the camera than
+    # the disc is at every front direction and the holdout takes its whole front half. What
+    # survives is the crescent at the nape, and nothing reaches the brow at all.
+    #
+    # The numbers that make that true: at head z 18 the skull carries y 7.33 of depth and the
+    # brim's front edge is at 3.92, so the brim is 3.4 px INSIDE the skull there and cut. Behind,
+    # the brim reaches y -16.72 against the crown's own -13.16, so 3.6 px of shelf stands past the
+    # crown at dirs 6/7/0. A point that far behind the head projects UPWARD under this camera —
+    # 44 - 16.72/2 - 18 = row 17.6 — so the crescent draws just under the crown's top rather than
+    # below the jaw, which is what a back brim looks like from 30 degrees up.
+    #
+    # The crown is pushed back to y -3.2 for the flight helmet 89's reason. A dome centred on the
+    # head crosses outside the skull at z 18, where its own lowest lit row is 29.8 — one row off
+    # the brow at 31, and the ledger's rule is never to author a one-row stand margin because the
+    # walk down-steps close half of it. At -3.2 the crossover moves to z 19 and the lowest lit row
+    # is 28.3, which is the margin 89 ships with, measured the same way.
+    "ha102": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -3.2, 17.6), "r": 10.6,
+             "squash": (1.02, 0.94, 0.84)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, -6.4, 18.0), "r": 12.0,
+             "squash": (1.05, 0.86, 0.13)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
