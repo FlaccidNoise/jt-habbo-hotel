@@ -5110,6 +5110,41 @@ FIGURE_PARTS = {
              "c1": (6.0, 7.2, 13.2)},
         ],
     },
+    # Tool Roll (set 106, two slots). The potion belt 92 hangs four round vials BELOW its band.
+    # This one carries one continuous plate across the front of the hip and puts its only lumps on
+    # TOP of the band, so the two have opposite edges: 92's lower edge is scalloped and its upper
+    # edge is straight, and this one is the reverse.
+    #
+    # The band is 92's, unchanged — 8.1 x 6.6, z 0.0 to 3.6. Copying it is the point. If the band
+    # were the separator the shelf would be selling belt heights, and it measured 0.6185 against
+    # 92 with the band identical, which is the mass doing the work.
+    #
+    # The plate is x +/-7.0 and 1.6 thick at y 6.0 to 7.6 — 1.6 proud of the torso, 1.0 proud of
+    # the band. The nubs are 3.0 wide because the chain 62's 3 px floor applies to anything whose
+    # read depends on it, and 1.4 deep, which is the star stole 94's panel.
+    #
+    # This is the pair the ledger's diagonal line names: a `wa` band out-reaches a same-height `ch`
+    # detail on the diagonal, and wa74 left ch73's peplum ~1 px per frame that way. The rolled
+    # shirt 105's uneven hem survives here, and the reason is that this belt's mass is a FRONT
+    # plate rather than a band: it never reaches y < 6.0, so it has no corner to swing outboard,
+    # and the shirttail's 5 px step is a profile event at the sides where the plate is not.
+    # Measured with 105 worn under it — 3103 of 3614 px still visible at stand, and the shirt's
+    # lowest drawn row unchanged at all eight directions (68/71/72/70/72/71/68/65). Over the
+    # shirttail alone, rows 66 and below across all 64 dir-frames, 2902 of 5267 px survive.
+    "wa106": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.0),
+             "c1": (8.1, 6.6, 3.6)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.0, 6.0, -6.0),
+             "c1": (7.0, 7.6, 0.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-5.9, 6.4, 3.6),
+             "c1": (-2.9, 7.8, 7.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-1.5, 6.4, 3.6),
+             "c1": (1.5, 7.8, 7.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (2.9, 6.4, 3.6),
+             "c1": (5.9, 7.8, 7.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -5253,6 +5253,54 @@
       "figuredataVersion": 1,
       "recipeHash": "cfe0589d5434042c54d9f6bb31d694692f5b891953fbd7c2b53953f8dfc35caf",
       "pixelHash": "94567b694a19db486831b28117f8ed3e817efe898195e6965709df4594b4caa4"
+    },
+    {
+      "partId": "wa106",
+      "setId": 106,
+      "type": "wa",
+      "name": "Tool Roll",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa106.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "05127ee78d6bab0cc20b9364b9dd362eb6d156b46eb3b2bb6ad92dc44807a562",
+      "pixelHash": "3d7a0310f880c44ce6fdcc9c501702fc2d0990e871af98c1c44a56b6c5e134ce"
     }
   ]
 }
