@@ -3559,6 +3559,54 @@
       "figuredataVersion": 1,
       "recipeHash": "58dc9e5f4d60b7313b298c037a48a1546962da08e46063ec9794c58458265d62",
       "pixelHash": "4b2d49785719285b2075c7ea3b06c6461008c78d4e2d66f7c665dc2184659e5a"
+    },
+    {
+      "partId": "lg71",
+      "setId": 71,
+      "type": "lg",
+      "name": "Tiered Skirt",
+      "slots": 2,
+      "hides": [],
+      "sheet": "lg71.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "c6caf434dd00e26057b493467a86907cb195cc07a9a91e85921b05ba5ad9ede3",
+      "pixelHash": "34dcefbd14c4e15ebe5c2412da60a5209ba722fcbd996691cc9eb9f1eb8d9a2f"
     }
   ]
 }

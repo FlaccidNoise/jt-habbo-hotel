@@ -155,6 +155,10 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 68, type: "cc", name: "Surcoat",         slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 69, type: "ca", name: "Heraldic Mantle", slots: 2, family: "material", hides: [], retired: false },
   { id: 70, type: "ha", name: "Crested Helm",    slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 2 — nocturne (#450). Gothic manor: tiers, a cinched waist, and a coat that is
+  // cut away at the front. Same `hides` discipline as bannerhold — the tailcoat hides the shirt
+  // it is worn over, the mourning hat replaces hair, and the other five draw alongside.
+  { id: 71, type: "lg", name: "Tiered Skirt",    slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -226,7 +230,12 @@ export const STAFF_GRANT_SETS: readonly number[] = [
  *  200-250 for the breeches and sabatons that reshape a limb, 300 for the three that add a band or
  *  a padded body, and 350-450 for the mantle, the helm and the surcoat, which are read across a
  *  room. The theme string is the furniture chapter's, exactly — a folio chapter sells its room and
- *  its outfit from the same page, and a new theme costs no UI edit (#438). */
+ *  its outfit from the same page, and a new theme costs no UI edit (#438).
+ *
+ *  nocturne (71-77, #450) prices on the same axis: 200-250 for the ruff, the boot and the cincher,
+ *  which each reshape one end of the figure, 300 for the skirt and the bodice that rebuild a whole
+ *  half of it, and 400-450 for the hat and the tailcoat, whose read is a wide brim and a pair of
+ *  tails seen from across a room. */
 export const WEARABLE_SHELF: readonly { set: number; price: number; theme: string }[] = [
   { set: 32, price: 150, theme: "hair" },   // Buzz
   { set: 34, price: 150, theme: "hair" },   // Fringe
@@ -271,6 +280,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 69, price: 350, theme: "bannerhold" },  // Heraldic Mantle
   { set: 70, price: 400, theme: "bannerhold" },  // Crested Helm
   { set: 68, price: 450, theme: "bannerhold" },  // Surcoat
+  { set: 71, price: 300, theme: "nocturne" },    // Tiered Skirt
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

@@ -3184,6 +3184,44 @@ FIGURE_PARTS = {
              "squash": (0.2125, 1.0, 0.70)},
         ],
     },
+    # ---- costume pack 2: nocturne (#450) ----
+    # The gothic-manor shelf, modelled from the same ledger. Where bannerhold padded the figure
+    # out, nocturne cuts into it: a skirt that steps, a waist pulled in, and a coat with nothing
+    # in front of it below the belt.
+    #
+    # Tiered Skirt (set 71, two slots). The long skirt 48 is one smooth cone, 8.8 to 14.2 over
+    # 28 px, and its profile has no break in it anywhere. This is the same envelope broken once:
+    # an upper cone hip to z -13, then a lower one starting 1 px inside it and stepping straight
+    # out. Slot 1 is the lower tier, so the step carries a second ramp as well as an edge.
+    #
+    # The step is 3.3 px, not the intent's 0.4, and the two tiers are what pays for it. At z -12
+    # the intent's upper cone has reached 10.83 and its lower tier starts at 11.4 — 0.57 proud,
+    # half a pixel at 64, and the pack 1 finding says what that renders as: same layer, no holdout
+    # between the two cones, so the upper tier's own surface takes the depth test and the ledge is
+    # gone. Measured, that skirt also came out at 0.858 silhouette IoU against the long skirt 48,
+    # over the 0.854 bar: two cones tracing one smooth cone's envelope ARE that cone.
+    #
+    # So the upper tier flares to 10.2 rather than 11.0 and the lower runs 13.4 to 14.9. That
+    # pulls the whole upper half inside 48's profile, pushes the whole lower half outside it, and
+    # drops the pair to 0.831 — the separator is the break, so the break had to be the thing that
+    # got bigger. The upper tier still clears the thigh limbs' 8.2 by 1.9 at its narrowest point.
+    #
+    # The lower tier's top ring sits at z -12.0 against the upper's hem at -13.0, so the two
+    # overlap by a px and the layer stays one island through the walk swing. Its hem stays past
+    # the skirt 48's 14.2, which is structural rather than styling: a walk frame swings the shin
+    # 22 degrees and puts its outer surface 14.0 px off the hip axis, so a narrower hem lets a
+    # bare shin through the front of the skirt.
+    #
+    # Sit check: the cone hangs from the hip, the hip IS the sit anchor at row 74, and a cone of
+    # radius r reaches r/2 rows past its own hem — 74 + 27 + 7.45 = row 108, three clear of the
+    # 111 the bounds gate fails at.
+    "lg71": {
+        "prims": [
+            {"t": "cone", "bone": "hip", "slot": 0, "len": 13.0, "r0": 8.8, "r1": 10.2},
+            {"t": "cone", "bone": "hip", "slot": 1, "z0": -12.0, "len": 15.0,
+             "r0": 13.4, "r1": 14.9},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
