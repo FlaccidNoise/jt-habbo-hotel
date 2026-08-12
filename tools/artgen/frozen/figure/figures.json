@@ -3947,6 +3947,54 @@
       "figuredataVersion": 1,
       "recipeHash": "b212abc51dd12b89653f2bb1f65df0217f7ea50e1c681ca6f414020b702da8cf",
       "pixelHash": "9e237e741fb26b5822c025b47b88b666c6fae0080d84ac3dc83669fa92e05612"
+    },
+    {
+      "partId": "sh79",
+      "setId": 79,
+      "type": "sh",
+      "name": "Puff Slippers",
+      "slots": 2,
+      "hides": [],
+      "sheet": "sh79.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e3e0d24a96f1b5048abf110af8904f8e76c541da2b4e1081e509535295b9c441",
+      "pixelHash": "7ed2f17d651f4bfb530ebdeab9e0a479004f5f140468f1038b5439d7d41de5ec"
     }
   ]
 }

@@ -3451,6 +3451,49 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.55)},
         ],
     },
+    # Puff Slippers (set 79, two slots). The sneakers 49 are three stacked boxes with a flared
+    # midsole — three horizontal steps in the profile. This has none: one squashed ball carries the
+    # whole upper, so the outline is a single arc from the toe to the ankle.
+    #
+    # The ball alone cannot reach the floor, and that is geometry rather than taste. An ellipsoid
+    # narrows to a point at its lower pole, so low down it holds less than bd1's own 3.7 foot box in
+    # x and less than its 6.3 in y — the toe escapes out the bottom of its own slipper. The sole
+    # plate is what closes that: it carries the whole foot box, 0.2 proud all round, which the
+    # ledger names as the floor for a garment surface. Its top is at -14.2 rather than the foot's
+    # own -14.6 because two coplanar faces z-fight, and 0.4 px of headroom costs nothing.
+    #
+    # It is 0.2 and not the shell's 1.2 because of the ground plane. A prim's deepest row is
+    # (|x| + |y|) / 2.828 below its own z, the loafer 9 already lands on row 110 and the bounds gate
+    # fails at 111: the loafer spends 4.03 rows, this plate spends 3.68, and the same plate drawn at
+    # the shell's 1.2 overhang would spend 4.38 and hang a third of a row past the floor. So the
+    # overhang lives on the shell, which starts 2.2 px up where it can afford it.
+    #
+    # The shell's widest ring is at z -12.8, above the foot box entirely, which is what makes this a
+    # puff rather than a wide shoe: 4.9 in x and 5.8 in y around the ANKLE. Its centre is 1 px above
+    # the intent's, and that px is the ankle. An ellipsoid stops reading where it drops back inside
+    # bd1's 3.7 shin, which the first pass did at z -11.05 — 1.4 px over the sneaker 49's upper,
+    # against a row that claims 3. Lifted, it reads to -9.8, which is 2.6.
+    #
+    # Slot 1 is the toe dome and it has to stand OUTSIDE the shell to exist at all: same layer, no
+    # holdout between them, so the shell's own surface wins the depth test over anything tucked
+    # inside it. At y 8.51 it is 1.07 proud of the shell at the toe and inside it everywhere else,
+    # so the second ramp reads as a cap on the front and never breaks the side outline.
+    "sh79": {
+        "prims": [
+            {"t": "box",  "bone": "knee_l", "slot": 0, "c0": (-3.9, -3.1, -float(SHIN_LEN)),
+             "c1": (3.9, 6.5, -14.2)},
+            {"t": "box",  "bone": "knee_r", "slot": 0, "c0": (-3.9, -3.1, -float(SHIN_LEN)),
+             "c1": (3.9, 6.5, -14.2)},
+            {"t": "ball", "bone": "knee_l", "slot": 0, "c": (0.0, 1.7, -12.8), "r": 5.8,
+             "squash": (0.845, 1.0, 0.793)},
+            {"t": "ball", "bone": "knee_r", "slot": 0, "c": (0.0, 1.7, -12.8), "r": 5.8,
+             "squash": (0.845, 1.0, 0.793)},
+            {"t": "ball", "bone": "knee_l", "slot": 1, "c": (0.0, 5.2, -14.4), "r": 4.6,
+             "squash": (0.85, 0.72, 0.70)},
+            {"t": "ball", "bone": "knee_r", "slot": 1, "c": (0.0, 5.2, -14.4), "r": 4.6,
+             "squash": (0.85, 0.72, 0.70)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
