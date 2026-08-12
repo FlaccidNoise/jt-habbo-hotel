@@ -1,0 +1,34 @@
+{
+  "defId": "penthouse_dining_chair_champagne",
+  "archetype": "artgen",
+  "sheet": "penthouse_dining_chair_champagne.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "penthouse_dining_chair_champagne.near.png",
+  "nearHash": "961e9afb15275e4e4c4b7021596ac78a1647d552179d0b174753d54c82c4d3fd",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:fd9bf88c672fbeed",
+  "recipeHash": "fd9bf88c672fbeed0b03eb0cedc2045a7c487e8309be28621d7ccb29bb51a799",
+  "pixelHash": "e20a14c94baf432a013d5b69825e6057b9cc906750e91a432b2abb7cae63429c"
+}

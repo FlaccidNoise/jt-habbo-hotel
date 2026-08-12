@@ -1,0 +1,32 @@
+{
+  "defId": "penthouse_marble_table",
+  "archetype": "artgen",
+  "sheet": "penthouse_marble_table.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:975d4a63a2f60916",
+  "recipeHash": "975d4a63a2f60916ec729751f3d6475ce2c8525a48d7803668a4bf778871d114",
+  "pixelHash": "ac85535f68acf7cb259c3fc5affb30cbdce226009d90cc18922e6fda6429a1ab"
+}

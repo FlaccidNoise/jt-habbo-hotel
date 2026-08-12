@@ -1,0 +1,32 @@
+{
+  "defId": "prestige_obsidian_table",
+  "archetype": "artgen",
+  "sheet": "prestige_obsidian_table.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f017dc1f82771ba8",
+  "recipeHash": "f017dc1f82771ba88db63a50b7e0bcc5d4819656eee721e30741f83d033132ff",
+  "pixelHash": "40699c443259f78d08f8706e710f74b21477835889420aa674a35251c9c7aac8"
+}

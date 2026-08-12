@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "starter_wall_shelf.png",
   "frameW": 64,
-  "frameH": 122,
+  "frameH": 123,
   "dirs": [
     0,
     6
@@ -12,12 +12,12 @@
     32,
     32
   ],
-  "anchorY": 106,
+  "anchorY": 107,
   "footprint": {
     "w": 1,
     "l": 1
   },
-  "drawnHeight": 2.8125,
+  "drawnHeight": 2.84375,
   "seatZ": null,
   "occlusion": null,
   "wall": {
@@ -27,11 +27,11 @@
     "mountU": 0,
     "mountV": 45,
     "gap": 0,
-    "depth": 0.12
+    "depth": 0.16
   },
   "styleVersion": 3,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:656ada6790fd9ac1",
-  "recipeHash": "656ada6790fd9ac1f6f110827bf214fbb9b2ec482c1bb523a05042e5d4bc5651",
-  "pixelHash": "827b51561ca79ad80d9383148d6b9ca3955e68673328d2cc19491ab48af4a7d5"
+  "partLibraryHash": "artgen:7971c7f333960d93",
+  "recipeHash": "7971c7f333960d93716fdf5e324210360f21e0993fe4be742af1f68f1eeecf4b",
+  "pixelHash": "b235e627b2f9b31b3984fd9ba2c1b9455c929919f5da4e5168d163ee66192a01"
 }

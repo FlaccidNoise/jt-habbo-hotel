@@ -5117,6 +5117,1048 @@
       "recipeHash": "b2d319ec84b5b3cf62a05e8f8cb0461e4265b1a0fab90f6a7e8216ab63d46bab",
       "pixelHash": "dec164ef3319acc41448d86c3f20147868a552ed0623f70dad8b5051f9f8cbc2"
     },
+    "penthouse_sofa_ivory": {
+      "defId": "penthouse_sofa_ivory",
+      "archetype": "artgen",
+      "sheet": "penthouse_sofa_ivory.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "penthouse_sofa_ivory.near.png",
+      "nearHash": "8863dfb99e20564cffa330c281bca2a0b43351e76ecf13076ed84e398141a3f6",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:562e3cdd3fd9bfdd",
+      "recipeHash": "562e3cdd3fd9bfdd1c90df37a4acf855fc3431e4f0ac46294e912606f8a55be5",
+      "pixelHash": "b6f1ec1d7ab2e7e29c1799a67274402d18a71d8d1ac14a4d5963df31f9b7d1b4"
+    },
+    "penthouse_marble_table_noir": {
+      "defId": "penthouse_marble_table_noir",
+      "archetype": "artgen",
+      "sheet": "penthouse_marble_table_noir.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4795900531c326be",
+      "recipeHash": "4795900531c326be8da9dae70e2b57a092d8fdc8aadb8916a2825e9bfe83a0a1",
+      "pixelHash": "7030c251924866bd140ea1135bac40169982bc7bbffae89eccddc0ac713adce8"
+    },
+    "penthouse_dining_chair_champagne": {
+      "defId": "penthouse_dining_chair_champagne",
+      "archetype": "artgen",
+      "sheet": "penthouse_dining_chair_champagne.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "penthouse_dining_chair_champagne.near.png",
+      "nearHash": "961e9afb15275e4e4c4b7021596ac78a1647d552179d0b174753d54c82c4d3fd",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:fd9bf88c672fbeed",
+      "recipeHash": "fd9bf88c672fbeed0b03eb0cedc2045a7c487e8309be28621d7ccb29bb51a799",
+      "pixelHash": "e20a14c94baf432a013d5b69825e6057b9cc906750e91a432b2abb7cae63429c"
+    },
+    "penthouse_bar_midnight": {
+      "defId": "penthouse_bar_midnight",
+      "archetype": "artgen",
+      "sheet": "penthouse_bar_midnight.png",
+      "frameW": 96,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4723c3c2ca742b0c",
+      "recipeHash": "4723c3c2ca742b0c85db3f30dc4b987512f9b4b293ebf4ad142105cf16cca90f",
+      "pixelHash": "c014f085ddecb440c51f4efb22151f42a276f40b140e338ec52384a156e27043"
+    },
+    "penthouse_silk_rug_pearl": {
+      "defId": "penthouse_silk_rug_pearl",
+      "archetype": "artgen",
+      "sheet": "penthouse_silk_rug_pearl.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:81d2fa203d13e86f",
+      "recipeHash": "81d2fa203d13e86f380afde7a3cc226d59ea60ddbf2338eeeb93fc67d4540c66",
+      "pixelHash": "04de8243b154c62090e6c19341388c773662eb7d12949b25662843fa4dd33dc5"
+    },
+    "penthouse_telescope_copper": {
+      "defId": "penthouse_telescope_copper",
+      "archetype": "artgen",
+      "sheet": "penthouse_telescope_copper.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6e88f6bebc337775",
+      "recipeHash": "6e88f6bebc33777523dc33182581cf35971f259a6acd28180edeef65af7f915d",
+      "pixelHash": "6e5c7d662fe7aac4aa87200650f38e9e6b4320e9f31aadf523b799cbb6d52a7e"
+    },
+    "lounge_vibraphone_ivory": {
+      "defId": "lounge_vibraphone_ivory",
+      "archetype": "artgen",
+      "sheet": "lounge_vibraphone_ivory.png",
+      "frameW": 96,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7a705d661cd7cba2",
+      "recipeHash": "7a705d661cd7cba23cd323e2dc5edf2e8bd2f8efe09adbf65d1609cd95439a4b",
+      "pixelHash": "1b3cf875174f9d4b8f1188808d3cf2f00ec15e781957393f5011cbf581662922"
+    },
+    "lounge_velvet_sofa_berry": {
+      "defId": "lounge_velvet_sofa_berry",
+      "archetype": "artgen",
+      "sheet": "lounge_velvet_sofa_berry.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "lounge_velvet_sofa_berry.near.png",
+      "nearHash": "312b389a5aff35698b03313a219f42c952473ff69874b26534987db99f91aa77",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7dc4d87aa7465bce",
+      "recipeHash": "7dc4d87aa7465bce8da5bdef2ff8716fad44da396de3b5f22f2b41dca7e7bf54",
+      "pixelHash": "c0db09c9bf0cb20355d97879b7786aa1295f131d376cccccf6e0638256c0eca6"
+    },
+    "lounge_record_console_smoke": {
+      "defId": "lounge_record_console_smoke",
+      "archetype": "artgen",
+      "sheet": "lounge_record_console_smoke.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:28b0000cbdb01fce",
+      "recipeHash": "28b0000cbdb01fce374a35237014f2016d122f9fdd6e81487a84de31e51cc8fc",
+      "pixelHash": "3b43c9c85206686cb8e0d728ee67524cd2c1208a51d4f6cc4ffb69f44702f95c"
+    },
+    "lounge_bar_stool_brass": {
+      "defId": "lounge_bar_stool_brass",
+      "archetype": "artgen",
+      "sheet": "lounge_bar_stool_brass.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": 0.7,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6ca9c67d88dafa58",
+      "recipeHash": "6ca9c67d88dafa580983bc1db755ad464c61a85e7aedb5e225e3af4d85034560",
+      "pixelHash": "b6df39e1286fe160d1976dcb70df08e55fd2bc9fc310b9e9f5f03392094b46f9"
+    },
+    "lounge_floor_lamp_amber": {
+      "defId": "lounge_floor_lamp_amber",
+      "archetype": "artgen",
+      "sheet": "lounge_floor_lamp_amber.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a5df9abb023fff86",
+      "recipeHash": "a5df9abb023fff864ae75fa311fcb9dfb1221025087b425ed8622399b411f123",
+      "pixelHash": "10d4f41fc03629e671619ecc1308e9fe3f18d27551be2b4a1c924e9b9559ebae"
+    },
+    "lounge_stage_rug_noir": {
+      "defId": "lounge_stage_rug_noir",
+      "archetype": "artgen",
+      "sheet": "lounge_stage_rug_noir.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4c74afce13de8091",
+      "recipeHash": "4c74afce13de80918ab6e7e41fa066e380bf15111dd2864c903878316378859c",
+      "pixelHash": "b5ad2da23e6b0aceee4181001193d0d0f9575929aaced7c6f1d513fd12b84975"
+    },
+    "prestige_gold_throne_onyx": {
+      "defId": "prestige_gold_throne_onyx",
+      "archetype": "artgen",
+      "sheet": "prestige_gold_throne_onyx.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "prestige_gold_throne_onyx.near.png",
+      "nearHash": "48ad941e80fec2e5c9990862304f21093521c20c98fe70ac5b16a85c6b53e68a",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a26316383e9cc16e",
+      "recipeHash": "a26316383e9cc16eaddcc6465c54a57959ba76c7a3448ce7430e991a7241824a",
+      "pixelHash": "83a16e46c7b9af0057a28e634b9b73db35725d834ac192a93a5341e1416026b2"
+    },
+    "prestige_marble_fountain_moonstone": {
+      "defId": "prestige_marble_fountain_moonstone",
+      "archetype": "artgen",
+      "sheet": "prestige_marble_fountain_moonstone.png",
+      "frameW": 128,
+      "frameH": 100,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2a3767ea3f2cf909",
+      "recipeHash": "2a3767ea3f2cf90929955828ec0a3870c826096dc092afe2d1c5378daccaaea2",
+      "pixelHash": "d34495d2e7e415f39a3a0e7b63aefe22a141fe6c5854e419a991048e9246faa6"
+    },
+    "prestige_crystal_screen_amber": {
+      "defId": "prestige_crystal_screen_amber",
+      "archetype": "artgen",
+      "sheet": "prestige_crystal_screen_amber.png",
+      "frameW": 96,
+      "frameH": 93,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:14d15a759f0516b0",
+      "recipeHash": "14d15a759f0516b0b2d77ad7e485a10cc265a8e39128465de334e9d680e730a8",
+      "pixelHash": "61c4403882d53f53fb655b66e60d80e7675cdfb2047bee866eff521f5e0ea402"
+    },
+    "penthouse_sofa": {
+      "defId": "penthouse_sofa",
+      "archetype": "artgen",
+      "sheet": "penthouse_sofa.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "penthouse_sofa.near.png",
+      "nearHash": "d8a34d6ea8c20dc006bd4af6ff392cbb90be4490fe8a2f7c6d4ebc3bf68587e6",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:28b160c12751660a",
+      "recipeHash": "28b160c12751660ad56966577e8b2e48d6a436bd005a1279ba9a69e7f7d22767",
+      "pixelHash": "edb29a76de25620029baeecc2dcc116fba5bb9863dff9d87e3c3ca7a2b9e91af"
+    },
+    "penthouse_marble_table": {
+      "defId": "penthouse_marble_table",
+      "archetype": "artgen",
+      "sheet": "penthouse_marble_table.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:975d4a63a2f60916",
+      "recipeHash": "975d4a63a2f60916ec729751f3d6475ce2c8525a48d7803668a4bf778871d114",
+      "pixelHash": "ac85535f68acf7cb259c3fc5affb30cbdce226009d90cc18922e6fda6429a1ab"
+    },
+    "penthouse_dining_chair": {
+      "defId": "penthouse_dining_chair",
+      "archetype": "artgen",
+      "sheet": "penthouse_dining_chair.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "penthouse_dining_chair.near.png",
+      "nearHash": "961e9afb15275e4e4c4b7021596ac78a1647d552179d0b174753d54c82c4d3fd",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:825c027908b7af57",
+      "recipeHash": "825c027908b7af57b33c311e3930bf194cd12a40f58bb4140c48903afbd5ce08",
+      "pixelHash": "bd65baa5f8b1e2b0d1204320fa9e161e9ded8977abdee50e9332e62f9f993f2c"
+    },
+    "penthouse_bar": {
+      "defId": "penthouse_bar",
+      "archetype": "artgen",
+      "sheet": "penthouse_bar.png",
+      "frameW": 96,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0c4e5f7eae029822",
+      "recipeHash": "0c4e5f7eae029822981033aee3b19ea5dda1b61466eb0a55a286f6a136ff0594",
+      "pixelHash": "b124389d1ab8569099809f3409527a671fba8a084b548a745fdb994d26113843"
+    },
+    "penthouse_silk_rug": {
+      "defId": "penthouse_silk_rug",
+      "archetype": "artgen",
+      "sheet": "penthouse_silk_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:37e1514e435c292b",
+      "recipeHash": "37e1514e435c292bc07f1461a4da2e23d7a34065b151c1760edb31647476661c",
+      "pixelHash": "72489bfb65ed5a634339df3f8611fe7a814bd2cbdf69baee2e286d301eb6fb75"
+    },
+    "penthouse_telescope": {
+      "defId": "penthouse_telescope",
+      "archetype": "artgen",
+      "sheet": "penthouse_telescope.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7cf6e267d42d03f5",
+      "recipeHash": "7cf6e267d42d03f5f3763139c2dcca172a50c66cd908361a66e419b4c78c9805",
+      "pixelHash": "366a0195d042a3284f8c7fbc673bdc2525622bebc8de84324896a95bc722615d"
+    },
+    "lounge_vibraphone": {
+      "defId": "lounge_vibraphone",
+      "archetype": "artgen",
+      "sheet": "lounge_vibraphone.png",
+      "frameW": 96,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0cfbffc7a955efa2",
+      "recipeHash": "0cfbffc7a955efa26dbbae54277ce78f8d014e6df1b0abdfa237f48d99ac4ef3",
+      "pixelHash": "509eab1b9231ed900b17f0ef19944e004fcb591b6d7266c39c973d9691f7d5c3"
+    },
+    "lounge_velvet_sofa": {
+      "defId": "lounge_velvet_sofa",
+      "archetype": "artgen",
+      "sheet": "lounge_velvet_sofa.png",
+      "frameW": 96,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "lounge_velvet_sofa.near.png",
+      "nearHash": "59c288b8a620d151f1eff99b3c893e4c596a8d0d442edcb883c4e1148b605a8c",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:eaa60f3520dbb525",
+      "recipeHash": "eaa60f3520dbb525dafcdeeac99b70ad585e323def0afec746c03db4b3c11ead",
+      "pixelHash": "bf9f988ccbf21e514b8f27d5f097ea6f67cb66c13c59f0b02fc91ee86304c599"
+    },
+    "lounge_record_console": {
+      "defId": "lounge_record_console",
+      "archetype": "artgen",
+      "sheet": "lounge_record_console.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4cd0073996d29c9a",
+      "recipeHash": "4cd0073996d29c9a7990490342c85496c01bbe868704011954826cee504bd75c",
+      "pixelHash": "4eb72d56b00b1cdbc239ae7721cc33a608d4b6fadee392d44bb66b7d8e1f2668"
+    },
+    "lounge_bar_stool": {
+      "defId": "lounge_bar_stool",
+      "archetype": "artgen",
+      "sheet": "lounge_bar_stool.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": 0.7,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e6dce280b0198c88",
+      "recipeHash": "e6dce280b0198c884803c36d5725ee62414b7ccffaa69cb6135a334a662e4553",
+      "pixelHash": "26f86b858c3639d5141003075b2bc0a085e2b71ca33fb97fa319a43d6cbe8783"
+    },
+    "lounge_floor_lamp": {
+      "defId": "lounge_floor_lamp",
+      "archetype": "artgen",
+      "sheet": "lounge_floor_lamp.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:41dd3f2827fe9e40",
+      "recipeHash": "41dd3f2827fe9e4058cd7ca71c5b2c05eb81f276087c1b67a476979daa3e9b0c",
+      "pixelHash": "43d35b390f5a997e611e2b66443f1429834377b2c2e8d22170f82608d704860b"
+    },
+    "lounge_stage_rug": {
+      "defId": "lounge_stage_rug",
+      "archetype": "artgen",
+      "sheet": "lounge_stage_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4f454b6196890e4e",
+      "recipeHash": "4f454b6196890e4eb1ff4d7ceb2a3718a1fe46736f13a4127a8d632fcf1b099f",
+      "pixelHash": "485f902eca3ebe1425559da81dd56eb0e151e3030a7b302b45fc1540b1df5946"
+    },
+    "prestige_gold_throne": {
+      "defId": "prestige_gold_throne",
+      "archetype": "artgen",
+      "sheet": "prestige_gold_throne.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "prestige_gold_throne.near.png",
+      "nearHash": "48ad941e80fec2e5c9990862304f21093521c20c98fe70ac5b16a85c6b53e68a",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c1adcec7a9ac83d5",
+      "recipeHash": "c1adcec7a9ac83d5cf73bf67f6abf83cdd14faed83c9b25e4a3cd550f7fe53e1",
+      "pixelHash": "c90023d8b21d70a9c759448feef13fb951cdf82ae59f06d4879108e3a199be57"
+    },
+    "prestige_marble_fountain": {
+      "defId": "prestige_marble_fountain",
+      "archetype": "artgen",
+      "sheet": "prestige_marble_fountain.png",
+      "frameW": 128,
+      "frameH": 100,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cd856e5d42f30273",
+      "recipeHash": "cd856e5d42f30273c91083fde6ce5283ede1d96408c5c199855e030a9d7b3c0e",
+      "pixelHash": "25a39130d24bd094997805acd487a7bfb5c6deb47d91223d670a660bd8a7b931"
+    },
+    "prestige_crystal_screen": {
+      "defId": "prestige_crystal_screen",
+      "archetype": "artgen",
+      "sheet": "prestige_crystal_screen.png",
+      "frameW": 96,
+      "frameH": 93,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e55fd6fcdd5f9d1a",
+      "recipeHash": "e55fd6fcdd5f9d1a6288e5b0bafee368014af5a6aaff9ef50ba29b8b30888985",
+      "pixelHash": "61c4403882d53f53fb655b66e60d80e7675cdfb2047bee866eff521f5e0ea402"
+    },
+    "prestige_obsidian_table": {
+      "defId": "prestige_obsidian_table",
+      "archetype": "artgen",
+      "sheet": "prestige_obsidian_table.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f017dc1f82771ba8",
+      "recipeHash": "f017dc1f82771ba88db63a50b7e0bcc5d4819656eee721e30741f83d033132ff",
+      "pixelHash": "40699c443259f78d08f8706e710f74b21477835889420aa674a35251c9c7aac8"
+    },
+    "prestige_velvet_daybed": {
+      "defId": "prestige_velvet_daybed",
+      "archetype": "artgen",
+      "sheet": "prestige_velvet_daybed.png",
+      "frameW": 96,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "prestige_velvet_daybed.near.png",
+      "nearHash": "5f79e271a7d952f1faaa0e223c12c43dda9ea83fe869f88d1bda49e6107709d6",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2f18cb8138ba20f6",
+      "recipeHash": "2f18cb8138ba20f6d466dee5e980f25cf72695230dc108aef5e14c5e16000a03",
+      "pixelHash": "82724c194700713394cac4bc6231c22d9e19c67b5de97de9542f9857c99ae967"
+    },
     "lodge_wood_stove": {
       "defId": "lodge_wood_stove",
       "archetype": "artgen",
@@ -7123,7 +8165,7 @@
       "archetype": "artgen",
       "sheet": "starter_wall_shelf.png",
       "frameW": 64,
-      "frameH": 122,
+      "frameH": 123,
       "dirs": [
         0,
         6
@@ -7132,12 +8174,12 @@
         32,
         32
       ],
-      "anchorY": 106,
+      "anchorY": 107,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 2.8125,
+      "drawnHeight": 2.84375,
       "seatZ": null,
       "occlusion": null,
       "wall": {
@@ -7147,13 +8189,13 @@
         "mountU": 0,
         "mountV": 45,
         "gap": 0,
-        "depth": 0.12
+        "depth": 0.16
       },
       "styleVersion": 3,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:656ada6790fd9ac1",
-      "recipeHash": "656ada6790fd9ac1f6f110827bf214fbb9b2ec482c1bb523a05042e5d4bc5651",
-      "pixelHash": "827b51561ca79ad80d9383148d6b9ca3955e68673328d2cc19491ab48af4a7d5"
+      "partLibraryHash": "artgen:7971c7f333960d93",
+      "recipeHash": "7971c7f333960d93716fdf5e324210360f21e0993fe4be742af1f68f1eeecf4b",
+      "pixelHash": "b235e627b2f9b31b3984fd9ba2c1b9455c929919f5da4e5168d163ee66192a01"
     },
     "cafe_neon_cup": {
       "defId": "cafe_neon_cup",
@@ -7184,12 +8226,12 @@
         "mountU": 8,
         "mountV": 42,
         "gap": 0,
-        "depth": 0.07
+        "depth": 0.05
       },
       "styleVersion": 3,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:0a2ae7b98d830a68",
-      "recipeHash": "0a2ae7b98d830a68e68f5ec373e94a8d5149376071326a78dc3a8905a6bc7241",
+      "partLibraryHash": "artgen:96079481a6f4cb7a",
+      "recipeHash": "96079481a6f4cb7aea4b57790ff71166d692bb9361bfaf75270d33e626f7299f",
       "pixelHash": "25aa12ff3a1cf9dec7768d2fd73ff09dd9f78242d005e365fd81e0713ac777aa"
     },
     "bedroom_photo_wall": {
@@ -7197,7 +8239,7 @@
       "archetype": "artgen",
       "sheet": "bedroom_photo_wall.png",
       "frameW": 64,
-      "frameH": 120,
+      "frameH": 123,
       "dirs": [
         0,
         6
@@ -7206,12 +8248,12 @@
         32,
         32
       ],
-      "anchorY": 104,
+      "anchorY": 107,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 2.75,
+      "drawnHeight": 2.84375,
       "seatZ": null,
       "occlusion": null,
       "wall": {
@@ -7225,16 +8267,16 @@
       },
       "styleVersion": 3,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:accb333340c7001f",
-      "recipeHash": "accb333340c7001ff869022de24aad089bf71b19abc08f7637f7c16091311e5e",
-      "pixelHash": "507271673ecba7925a1f286d7fda1bda3e6c1de3fe8bdbf06823387db02edb2c"
+      "partLibraryHash": "artgen:32c5620900904ed3",
+      "recipeHash": "32c5620900904ed3b1a0412e6449011b2ab399696a23265bd9b49bc6cd43c382",
+      "pixelHash": "804d8da04dc1531600dbbb78fc7e5ebafa1a2a42464eb93914d2980cedafd4ae"
     },
     "bedroom_shelf": {
       "defId": "bedroom_shelf",
       "archetype": "artgen",
       "sheet": "bedroom_shelf.png",
       "frameW": 64,
-      "frameH": 120,
+      "frameH": 121,
       "dirs": [
         0,
         6
@@ -7243,12 +8285,12 @@
         32,
         32
       ],
-      "anchorY": 104,
+      "anchorY": 105,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 2.75,
+      "drawnHeight": 2.78125,
       "seatZ": null,
       "occlusion": null,
       "wall": {
@@ -7258,13 +8300,13 @@
         "mountU": 0,
         "mountV": 47,
         "gap": 0,
-        "depth": 0.12
+        "depth": 0.14
       },
       "styleVersion": 3,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:15930e8aaf0e13ed",
-      "recipeHash": "15930e8aaf0e13eddbaa260a3f35dbc3affbc6b0ae55df150d3365f05800fa5c",
-      "pixelHash": "a21fd825f013324b43807765f2149c899af470060924f55bf6d3f9116914708d"
+      "partLibraryHash": "artgen:85faab8e4efe470e",
+      "recipeHash": "85faab8e4efe470e930fffe9e15500fe100d274e6d120c21ef868a855efdb985",
+      "pixelHash": "695330ee8146f5a8ae1a0102b227933d71c9be4d79220a14b7233ec8f151398b"
     },
     "casino_neon_dice": {
       "defId": "casino_neon_dice",
@@ -8486,6 +9528,302 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "penthouse_skyline_art": {
+      "defId": "penthouse_skyline_art",
+      "archetype": "artgen",
+      "sheet": "penthouse_skyline_art.png",
+      "frameW": 64,
+      "frameH": 124,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 108,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 18,
+        "mountU": 4,
+        "mountV": 37,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:81c9e777498397e0",
+      "recipeHash": "81c9e777498397e0249a33ea52bc5012fb24d1892e2eef8226ef759188c29fec",
+      "pixelHash": "2cdab4bd9d78fc92c12975137dd49fb40980fb73f7b06cc4226b303da9535a0e"
+    },
+    "penthouse_gold_mirror": {
+      "defId": "penthouse_gold_mirror",
+      "archetype": "artgen",
+      "sheet": "penthouse_gold_mirror.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 22,
+        "mountU": 8,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:07cdfdffb23dfa5c",
+      "recipeHash": "07cdfdffb23dfa5c86a43fcb20159109a564515ee73b0d0351cd6db03b14f5a8",
+      "pixelHash": "c1a338f87a962950cbe2f1961a004fdf0640443b5d9bc7982e3d64776792cd9e"
+    },
+    "penthouse_sconce": {
+      "defId": "penthouse_sconce",
+      "archetype": "artgen",
+      "sheet": "penthouse_sconce.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 9,
+        "mountU": 8,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:98c2a18cfb147b3a",
+      "recipeHash": "98c2a18cfb147b3a1e955ff1573600aaf882e28da9789a1950fb0ad1d1d0bd49",
+      "pixelHash": "776d716da80f7e2b4441aaa56ef97bff6b02b3a33141b36a1e8bd93815ee33c1"
+    },
+    "penthouse_marble_relief": {
+      "defId": "penthouse_marble_relief",
+      "archetype": "artgen",
+      "sheet": "penthouse_marble_relief.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4a197ae465290e17",
+      "recipeHash": "4a197ae465290e17b98a07e1f2ffaea7fc06c37736c918e973c0724feb14b397",
+      "pixelHash": "37fb4a49200b34bc84f4539e14df83dc79d614c92de986d30ce51bd6bc631cab"
+    },
+    "lounge_neon_note": {
+      "defId": "lounge_neon_note",
+      "archetype": "artgen",
+      "sheet": "lounge_neon_note.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 16,
+        "mountU": 8,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.14
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:50ba3a9c277c50e7",
+      "recipeHash": "50ba3a9c277c50e7e6978cfaf87a8c94f44455e271fc12c33653e23857d558f9",
+      "pixelHash": "75b382e44597883f163028f0d28ba144cd2b90b5495aecfca92c8a06d1581635"
+    },
+    "lounge_stage_drape": {
+      "defId": "lounge_stage_drape",
+      "archetype": "artgen",
+      "sheet": "lounge_stage_drape.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 26,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f3c0308a53e8bb2e",
+      "recipeHash": "f3c0308a53e8bb2e13f690a56c270963b6bb2447db66be281ead461950e35373",
+      "pixelHash": "701f75245d38afbc1f3fe9cb85c6d3510a8e01fe6c49144b9f8d9d9c230377f1"
+    },
+    "lounge_vinyl_print": {
+      "defId": "lounge_vinyl_print",
+      "archetype": "artgen",
+      "sheet": "lounge_vinyl_print.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:84e500931f3bafff",
+      "recipeHash": "84e500931f3bafff94a664935d6dee35df6597fbd727ff452cc75acee1d22faa",
+      "pixelHash": "b9b7f262e58953db90c6727be7612ee745e24a7186b1404d05794247653addf7"
+    },
+    "lounge_disco_ball": {
+      "defId": "lounge_disco_ball",
+      "archetype": "artgen",
+      "sheet": "lounge_disco_ball.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 12,
+        "planeH": 13,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.22999999999999998
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f90962768af30143",
+      "recipeHash": "f90962768af301439f64020a28d4edf086f4af15aa771389583b1e473b98f45b",
+      "pixelHash": "7daf2dcf1d08ae5e7e153a98910ce59e06210b1b9a40d1b15840af979750ed75"
     },
     "lodge_antler_mount": {
       "defId": "lodge_antler_mount",

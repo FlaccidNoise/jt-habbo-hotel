@@ -1,0 +1,34 @@
+{
+  "defId": "penthouse_sofa_ivory",
+  "archetype": "artgen",
+  "sheet": "penthouse_sofa_ivory.png",
+  "frameW": 96,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "penthouse_sofa_ivory.near.png",
+  "nearHash": "8863dfb99e20564cffa330c281bca2a0b43351e76ecf13076ed84e398141a3f6",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:562e3cdd3fd9bfdd",
+  "recipeHash": "562e3cdd3fd9bfdd1c90df37a4acf855fc3431e4f0ac46294e912606f8a55be5",
+  "pixelHash": "b6f1ec1d7ab2e7e29c1799a67274402d18a71d8d1ac14a4d5963df31f9b7d1b4"
+}

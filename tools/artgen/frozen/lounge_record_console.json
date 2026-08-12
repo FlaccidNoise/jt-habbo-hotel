@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_record_console",
+  "archetype": "artgen",
+  "sheet": "lounge_record_console.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4cd0073996d29c9a",
+  "recipeHash": "4cd0073996d29c9a7990490342c85496c01bbe868704011954826cee504bd75c",
+  "pixelHash": "4eb72d56b00b1cdbc239ae7721cc33a608d4b6fadee392d44bb66b7d8e1f2668"
+}

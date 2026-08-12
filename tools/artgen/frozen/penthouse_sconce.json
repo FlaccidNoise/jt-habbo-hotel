@@ -1,0 +1,37 @@
+{
+  "defId": "penthouse_sconce",
+  "archetype": "artgen",
+  "sheet": "penthouse_sconce.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 10,
+    "planeH": 9,
+    "mountU": 8,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:98c2a18cfb147b3a",
+  "recipeHash": "98c2a18cfb147b3a1e955ff1573600aaf882e28da9789a1950fb0ad1d1d0bd49",
+  "pixelHash": "776d716da80f7e2b4441aaa56ef97bff6b02b3a33141b36a1e8bd93815ee33c1"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "penthouse_marble_relief",
+  "archetype": "artgen",
+  "sheet": "penthouse_marble_relief.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4a197ae465290e17",
+  "recipeHash": "4a197ae465290e17b98a07e1f2ffaea7fc06c37736c918e973c0724feb14b397",
+  "pixelHash": "37fb4a49200b34bc84f4539e14df83dc79d614c92de986d30ce51bd6bc631cab"
+}

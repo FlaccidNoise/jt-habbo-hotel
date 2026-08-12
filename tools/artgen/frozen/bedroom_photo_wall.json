@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "bedroom_photo_wall.png",
   "frameW": 64,
-  "frameH": 120,
+  "frameH": 123,
   "dirs": [
     0,
     6
@@ -12,12 +12,12 @@
     32,
     32
   ],
-  "anchorY": 104,
+  "anchorY": 107,
   "footprint": {
     "w": 1,
     "l": 1
   },
-  "drawnHeight": 2.75,
+  "drawnHeight": 2.84375,
   "seatZ": null,
   "occlusion": null,
   "wall": {
@@ -31,7 +31,7 @@
   },
   "styleVersion": 3,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:accb333340c7001f",
-  "recipeHash": "accb333340c7001ff869022de24aad089bf71b19abc08f7637f7c16091311e5e",
-  "pixelHash": "507271673ecba7925a1f286d7fda1bda3e6c1de3fe8bdbf06823387db02edb2c"
+  "partLibraryHash": "artgen:32c5620900904ed3",
+  "recipeHash": "32c5620900904ed3b1a0412e6449011b2ab399696a23265bd9b49bc6cd43c382",
+  "pixelHash": "804d8da04dc1531600dbbb78fc7e5ebafa1a2a42464eb93914d2980cedafd4ae"
 }

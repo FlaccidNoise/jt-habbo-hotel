@@ -1,0 +1,37 @@
+{
+  "defId": "penthouse_gold_mirror",
+  "archetype": "artgen",
+  "sheet": "penthouse_gold_mirror.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 22,
+    "mountU": 8,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:07cdfdffb23dfa5c",
+  "recipeHash": "07cdfdffb23dfa5c86a43fcb20159109a564515ee73b0d0351cd6db03b14f5a8",
+  "pixelHash": "c1a338f87a962950cbe2f1961a004fdf0640443b5d9bc7982e3d64776792cd9e"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "prestige_gold_throne_onyx",
+  "archetype": "artgen",
+  "sheet": "prestige_gold_throne_onyx.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "prestige_gold_throne_onyx.near.png",
+  "nearHash": "48ad941e80fec2e5c9990862304f21093521c20c98fe70ac5b16a85c6b53e68a",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a26316383e9cc16e",
+  "recipeHash": "a26316383e9cc16eaddcc6465c54a57959ba76c7a3448ce7430e991a7241824a",
+  "pixelHash": "83a16e46c7b9af0057a28e634b9b73db35725d834ac192a93a5341e1416026b2"
+}

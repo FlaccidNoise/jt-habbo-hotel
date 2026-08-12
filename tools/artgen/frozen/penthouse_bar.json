@@ -1,0 +1,32 @@
+{
+  "defId": "penthouse_bar",
+  "archetype": "artgen",
+  "sheet": "penthouse_bar.png",
+  "frameW": 96,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0c4e5f7eae029822",
+  "recipeHash": "0c4e5f7eae029822981033aee3b19ea5dda1b61466eb0a55a286f6a136ff0594",
+  "pixelHash": "b124389d1ab8569099809f3409527a671fba8a084b548a745fdb994d26113843"
+}

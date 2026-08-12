@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_floor_lamp_amber",
+  "archetype": "artgen",
+  "sheet": "lounge_floor_lamp_amber.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a5df9abb023fff86",
+  "recipeHash": "a5df9abb023fff864ae75fa311fcb9dfb1221025087b425ed8622399b411f123",
+  "pixelHash": "10d4f41fc03629e671619ecc1308e9fe3f18d27551be2b4a1c924e9b9559ebae"
+}

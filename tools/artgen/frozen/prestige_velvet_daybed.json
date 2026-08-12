@@ -1,0 +1,34 @@
+{
+  "defId": "prestige_velvet_daybed",
+  "archetype": "artgen",
+  "sheet": "prestige_velvet_daybed.png",
+  "frameW": 96,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "prestige_velvet_daybed.near.png",
+  "nearHash": "5f79e271a7d952f1faaa0e223c12c43dda9ea83fe869f88d1bda49e6107709d6",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2f18cb8138ba20f6",
+  "recipeHash": "2f18cb8138ba20f6d466dee5e980f25cf72695230dc108aef5e14c5e16000a03",
+  "pixelHash": "82724c194700713394cac4bc6231c22d9e19c67b5de97de9542f9857c99ae967"
+}

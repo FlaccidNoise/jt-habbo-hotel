@@ -38,6 +38,20 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "deco_suite",
+    name: "The Deco Suite Set",
+    members: ["penthouse_sofa", "penthouse_marble_table", "penthouse_dining_chair", "penthouse_bar"],
+    reward: "penthouse_telescope_copper",
+    badge: "set_deco_suite",
+  },
+  {
+    id: "after_hours",
+    name: "The After Hours Set",
+    members: ["lounge_vibraphone", "lounge_velvet_sofa", "lounge_record_console", "lounge_stage_rug"],
+    reward: "lounge_vibraphone_ivory",
+    badge: "set_after_hours",
+  },
+  {
     id: "hearthside",
     name: "The Hearthside Set",
     members: ["lodge_log_bed", "lodge_wood_table", "lodge_wood_stove", "lodge_lantern"],

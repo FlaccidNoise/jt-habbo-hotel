@@ -1873,6 +1873,204 @@ PARTS = {
             {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.10, "ry": 0.06, "z0": 2.60, "z1": 2.74, "taper": 0.7, "ramp": "ivory"},
         ],
     },
+    # ---- wave A4: penthouse (blitz task 9) ----
+    "penthouse_sofa": {
+        "w": 2, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.20, 0.00), "c1": (1.94, 0.80, 0.42), "bevel": 0.05, "ramp": "ivory", "seat": True},
+            {"t": "box", "c0": (0.06, 0.62, 0.42), "c1": (1.94, 0.86, 0.84), "bevel": 0.04, "ramp": "ivory"},
+            {"t": "box", "c0": (0.02, 0.16, 0.00), "c1": (0.14, 0.86, 0.60), "ramp": "gold"},
+            {"t": "box", "c0": (1.86, 0.16, 0.00), "c1": (1.98, 0.86, 0.60), "ramp": "gold"},
+        ],
+    },
+    "penthouse_marble_table": {
+        "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.36, "ry": 0.36, "z0": 0.60, "z1": 0.70, "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.10, "ry": 0.10, "z0": 0.0, "z1": 0.60, "ramp": "gold"},
+        ],
+    },
+    "penthouse_dining_chair": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.20, 0.00), "c1": (0.80, 0.80, 0.42), "bevel": 0.04, "ramp": "ivory", "seat": True},
+            {"t": "box", "c0": (0.24, 0.66, 0.42), "c1": (0.76, 0.80, 1.00), "ramp": "gold"},
+        ],
+    },
+    "penthouse_bar": {
+        "w": 2, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.24, 0.00), "c1": (1.94, 0.76, 0.90), "bevel": 0.02, "ramp": "walnut"},
+            {"t": "box", "c0": (0.02, 0.18, 0.90), "c1": (1.98, 0.82, 1.00), "ramp": "ivory"},
+            {"t": "box", "c0": (0.30, 0.30, 1.00), "c1": (0.42, 0.42, 1.20), "ramp": "gold"},
+            {"t": "box", "c0": (1.58, 0.30, 1.00), "c1": (1.70, 0.42, 1.20), "ramp": "gold"},
+        ],
+    },
+    "penthouse_silk_rug": {
+        "w": 2, "l": 2, "ramp": "ivory",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.04, 0.00), "c1": (1.96, 1.96, 0.05), "ramp": "ivory"},
+            {"t": "box", "c0": (0.50, 0.50, 0.05), "c1": (1.50, 1.50, 0.06), "ramp": "gold"},
+        ],
+    },
+    "penthouse_telescope": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 0.70},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.08, "ry": 0.08, "z0": 0.70, "z1": 1.30, "ramp": "gold"},
+        ],
+    },
+    "penthouse_skyline_art": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.30), "c1": (0.84, 0.04, 2.86), "ramp": "navy"},
+            {"t": "box", "c0": (0.24, 0.04, 2.44), "c1": (0.40, 0.06, 2.70), "ramp": "gold"},
+            {"t": "box", "c0": (0.48, 0.04, 2.40), "c1": (0.62, 0.06, 2.78), "ramp": "slate"},
+            {"t": "box", "c0": (0.68, 0.04, 2.46), "c1": (0.78, 0.06, 2.66), "ramp": "gold"},
+        ],
+    },
+    "penthouse_gold_mirror": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.30, 0.00, 2.20), "c1": (0.70, 0.05, 2.90), "ramp": "gold"},
+            {"t": "box", "c0": (0.36, 0.05, 2.28), "c1": (0.64, 0.07, 2.82), "ramp": "slate"},
+        ],
+    },
+    "penthouse_sconce": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.44, 0.00, 2.40), "c1": (0.56, 0.06, 2.60)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.10, "ry": 0.06, "z0": 2.60, "z1": 2.74, "taper": 0.7, "ramp": "ivory"},
+        ],
+    },
+    "penthouse_marble_relief": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.30), "c1": (0.80, 0.05, 2.80), "ramp": "ivory"},
+            {"t": "box", "c0": (0.30, 0.05, 2.40), "c1": (0.70, 0.08, 2.70), "ramp": "slate"},
+        ],
+    },
+    # ---- wave A4: lounge (blitz task 9) ----
+    "lounge_vibraphone": {
+        "w": 2, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.30, 0.60), "c1": (1.90, 0.70, 0.72), "ramp": "gold"},
+            {"t": "box", "c0": (0.14, 0.34, 0.00), "c1": (0.24, 0.66, 0.60)},
+            {"t": "box", "c0": (1.76, 0.34, 0.00), "c1": (1.86, 0.66, 0.60)},
+            {"t": "cyl", "cx": 0.4, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 0.72, "z1": 0.80, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.8, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 0.72, "z1": 0.80, "ramp": "slate"},
+            {"t": "cyl", "cx": 1.2, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 0.72, "z1": 0.80, "ramp": "slate"},
+            {"t": "cyl", "cx": 1.6, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 0.72, "z1": 0.80, "ramp": "slate"},
+        ],
+    },
+    "lounge_velvet_sofa": {
+        "w": 2, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.20, 0.00), "c1": (1.94, 0.80, 0.42), "bevel": 0.05, "ramp": "navy", "seat": True},
+            {"t": "box", "c0": (0.06, 0.62, 0.42), "c1": (1.94, 0.86, 0.84), "bevel": 0.04, "ramp": "navy"},
+        ],
+    },
+    "lounge_record_console": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.24, 0.00), "c1": (0.84, 0.76, 0.70), "bevel": 0.02, "ramp": "walnut"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.20, "ry": 0.20, "z0": 0.70, "z1": 0.74, "ramp": "charcoal"},
+        ],
+    },
+    "lounge_bar_stool": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.24, "ry": 0.24, "z0": 0.60, "z1": 0.70, "ramp": "navy", "seat": True},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.05, "ry": 0.05, "z0": 0.0, "z1": 0.60},
+        ],
+    },
+    "lounge_floor_lamp": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.0, "z1": 0.05},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.05, "z1": 1.30},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.18, "ry": 0.18, "z0": 1.30, "z1": 1.56, "taper": 0.7, "ramp": "gold"},
+        ],
+    },
+    "lounge_stage_rug": {
+        "w": 2, "l": 2, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.04, 0.00), "c1": (1.96, 1.96, 0.05), "ramp": "navy"},
+            {"t": "box", "c0": (0.60, 0.60, 0.05), "c1": (1.40, 1.40, 0.06), "ramp": "gold"},
+        ],
+    },
+    "lounge_neon_note": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.30, 0.00, 2.30), "c1": (0.70, 0.04, 2.80), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.44, "cy": 0.08, "rx": 0.08, "ry": 0.06, "z0": 2.40, "z1": 2.48, "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.52, "cy": 0.08, "rx": 0.02, "ry": 0.02, "z0": 2.46, "z1": 2.72, "ramp": "crimson"},
+        ],
+    },
+    "lounge_stage_drape": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.10), "c1": (0.84, 0.05, 2.90), "ramp": "navy"},
+            {"t": "box", "c0": (0.24, 0.05, 2.20), "c1": (0.36, 0.07, 2.90), "ramp": "slate"},
+            {"t": "box", "c0": (0.64, 0.05, 2.20), "c1": (0.76, 0.07, 2.90), "ramp": "slate"},
+        ],
+    },
+    "lounge_vinyl_print": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.24, 0.00, 2.30), "c1": (0.76, 0.04, 2.80), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.34, 0.04, 2.40), "c1": (0.66, 0.08, 2.70), "ramp": "crimson"},
+            {"t": "box", "c0": (0.46, 0.08, 2.52), "c1": (0.54, 0.10, 2.58), "ramp": "ivory"},
+        ],
+    },
+    "lounge_disco_ball": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.46, 0.00, 2.80), "c1": (0.54, 0.06, 2.90)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.12, "rx": 0.11, "ry": 0.11, "z0": 2.50, "z1": 2.80, "ramp": "slate"},
+        ],
+    },
+    # ---- wave A4: prestige (blitz task 9) ----
+    "prestige_gold_throne": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.84, 0.84, 0.46), "bevel": 0.04, "ramp": "crimson", "seat": True},
+            {"t": "box", "c0": (0.16, 0.66, 0.46), "c1": (0.84, 0.84, 1.50), "ramp": "gold"},
+            {"t": "cyl", "cx": 0.22, "cy": 0.75, "rx": 0.06, "ry": 0.06, "z0": 1.50, "z1": 1.62, "ramp": "gold"},
+            {"t": "cyl", "cx": 0.78, "cy": 0.75, "rx": 0.06, "ry": 0.06, "z0": 1.50, "z1": 1.62, "ramp": "gold"},
+        ],
+    },
+    "prestige_marble_fountain": {
+        "w": 2, "l": 2, "ramp": "ivory",
+        "prims": [
+            {"t": "cyl", "cx": 1.0, "cy": 1.0, "rx": 0.90, "ry": 0.90, "z0": 0.0, "z1": 0.30, "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.0, "cy": 1.0, "rx": 0.60, "ry": 0.60, "z0": 0.30, "z1": 0.36, "ramp": "teal"},
+            {"t": "cyl", "cx": 1.0, "cy": 1.0, "rx": 0.14, "ry": 0.14, "z0": 0.30, "z1": 1.00, "ramp": "ivory"},
+            {"t": "cyl", "cx": 1.0, "cy": 1.0, "rx": 0.34, "ry": 0.34, "z0": 1.00, "z1": 1.10, "ramp": "ivory"},
+        ],
+    },
+    "prestige_crystal_screen": {
+        "w": 2, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.40, 0.00), "c1": (1.90, 0.60, 1.40), "ramp": "slate"},
+            {"t": "box", "c0": (0.20, 0.44, 0.20), "c1": (1.80, 0.56, 1.30), "ramp": "teal"},
+        ],
+    },
+    "prestige_obsidian_table": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.36, "ry": 0.36, "z0": 0.60, "z1": 0.70, "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.12, "ry": 0.12, "z0": 0.0, "z1": 0.60, "ramp": "gold"},
+        ],
+    },
+    "prestige_velvet_daybed": {
+        "w": 2, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.20, 0.00), "c1": (1.94, 0.80, 0.40), "bevel": 0.05, "ramp": "crimson", "seat": True},
+            {"t": "box", "c0": (0.06, 0.62, 0.40), "c1": (0.60, 0.86, 0.80), "bevel": 0.04, "ramp": "crimson"},
+        ],
+    },
     # ---- Bannerhold pilots (blitz task 5) ----
     # A trestle bench: two solid trestle ends, a thick plank, and a low stretcher. Reads as a
     # bench (long, backless) rather than a sofa or a stool; oak plank over walnut trestles is the

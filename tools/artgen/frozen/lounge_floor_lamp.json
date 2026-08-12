@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_floor_lamp",
+  "archetype": "artgen",
+  "sheet": "lounge_floor_lamp.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:41dd3f2827fe9e40",
+  "recipeHash": "41dd3f2827fe9e4058cd7ca71c5b2c05eb81f276087c1b67a476979daa3e9b0c",
+  "pixelHash": "43d35b390f5a997e611e2b66443f1429834377b2c2e8d22170f82608d704860b"
+}

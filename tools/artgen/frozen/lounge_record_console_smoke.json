@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_record_console_smoke",
+  "archetype": "artgen",
+  "sheet": "lounge_record_console_smoke.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:28b0000cbdb01fce",
+  "recipeHash": "28b0000cbdb01fce374a35237014f2016d122f9fdd6e81487a84de31e51cc8fc",
+  "pixelHash": "3b43c9c85206686cb8e0d728ee67524cd2c1208a51d4f6cc4ffb69f44702f95c"
+}

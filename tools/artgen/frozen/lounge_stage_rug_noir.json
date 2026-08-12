@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_stage_rug_noir",
+  "archetype": "artgen",
+  "sheet": "lounge_stage_rug_noir.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4c74afce13de8091",
+  "recipeHash": "4c74afce13de80918ab6e7e41fa066e380bf15111dd2864c903878316378859c",
+  "pixelHash": "b5ad2da23e6b0aceee4181001193d0d0f9575929aaced7c6f1d513fd12b84975"
+}

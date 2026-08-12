@@ -27,11 +27,11 @@
     "mountU": 8,
     "mountV": 42,
     "gap": 0,
-    "depth": 0.07
+    "depth": 0.05
   },
   "styleVersion": 3,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:0a2ae7b98d830a68",
-  "recipeHash": "0a2ae7b98d830a68e68f5ec373e94a8d5149376071326a78dc3a8905a6bc7241",
+  "partLibraryHash": "artgen:96079481a6f4cb7a",
+  "recipeHash": "96079481a6f4cb7aea4b57790ff71166d692bb9361bfaf75270d33e626f7299f",
   "pixelHash": "25aa12ff3a1cf9dec7768d2fd73ff09dd9f78242d005e365fd81e0713ac777aa"
 }

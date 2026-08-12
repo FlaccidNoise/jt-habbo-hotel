@@ -1,0 +1,32 @@
+{
+  "defId": "prestige_marble_fountain",
+  "archetype": "artgen",
+  "sheet": "prestige_marble_fountain.png",
+  "frameW": 128,
+  "frameH": 100,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cd856e5d42f30273",
+  "recipeHash": "cd856e5d42f30273c91083fde6ce5283ede1d96408c5c199855e030a9d7b3c0e",
+  "pixelHash": "25a39130d24bd094997805acd487a7bfb5c6deb47d91223d670a660bd8a7b931"
+}

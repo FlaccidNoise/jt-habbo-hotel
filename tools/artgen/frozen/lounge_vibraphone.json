@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_vibraphone",
+  "archetype": "artgen",
+  "sheet": "lounge_vibraphone.png",
+  "frameW": 96,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0cfbffc7a955efa2",
+  "recipeHash": "0cfbffc7a955efa26dbbae54277ce78f8d014e6df1b0abdfa237f48d99ac4ef3",
+  "pixelHash": "509eab1b9231ed900b17f0ef19944e004fcb591b6d7266c39c973d9691f7d5c3"
+}

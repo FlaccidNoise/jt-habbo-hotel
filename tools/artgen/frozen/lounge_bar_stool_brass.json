@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_bar_stool_brass",
+  "archetype": "artgen",
+  "sheet": "lounge_bar_stool_brass.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": 0.7,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6ca9c67d88dafa58",
+  "recipeHash": "6ca9c67d88dafa580983bc1db755ad464c61a85e7aedb5e225e3af4d85034560",
+  "pixelHash": "b6df39e1286fe160d1976dcb70df08e55fd2bc9fc310b9e9f5f03392094b46f9"
+}

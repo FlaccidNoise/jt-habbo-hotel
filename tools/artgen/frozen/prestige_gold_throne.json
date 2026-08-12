@@ -1,0 +1,34 @@
+{
+  "defId": "prestige_gold_throne",
+  "archetype": "artgen",
+  "sheet": "prestige_gold_throne.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "prestige_gold_throne.near.png",
+  "nearHash": "48ad941e80fec2e5c9990862304f21093521c20c98fe70ac5b16a85c6b53e68a",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c1adcec7a9ac83d5",
+  "recipeHash": "c1adcec7a9ac83d5cf73bf67f6abf83cdd14faed83c9b25e4a3cd550f7fe53e1",
+  "pixelHash": "c90023d8b21d70a9c759448feef13fb951cdf82ae59f06d4879108e3a199be57"
+}

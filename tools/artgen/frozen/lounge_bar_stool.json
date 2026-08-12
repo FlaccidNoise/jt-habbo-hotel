@@ -1,0 +1,32 @@
+{
+  "defId": "lounge_bar_stool",
+  "archetype": "artgen",
+  "sheet": "lounge_bar_stool.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": 0.7,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e6dce280b0198c88",
+  "recipeHash": "e6dce280b0198c884803c36d5725ee62414b7ccffaa69cb6135a334a662e4553",
+  "pixelHash": "26f86b858c3639d5141003075b2bc0a085e2b71ca33fb97fa319a43d6cbe8783"
+}

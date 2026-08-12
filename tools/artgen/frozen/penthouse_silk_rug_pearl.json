@@ -1,0 +1,32 @@
+{
+  "defId": "penthouse_silk_rug_pearl",
+  "archetype": "artgen",
+  "sheet": "penthouse_silk_rug_pearl.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:81d2fa203d13e86f",
+  "recipeHash": "81d2fa203d13e86f380afde7a3cc226d59ea60ddbf2338eeeb93fc67d4540c66",
+  "pixelHash": "04de8243b154c62090e6c19341388c773662eb7d12949b25662843fa4dd33dc5"
+}

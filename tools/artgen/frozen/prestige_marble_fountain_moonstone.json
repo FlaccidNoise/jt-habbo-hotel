@@ -1,0 +1,32 @@
+{
+  "defId": "prestige_marble_fountain_moonstone",
+  "archetype": "artgen",
+  "sheet": "prestige_marble_fountain_moonstone.png",
+  "frameW": 128,
+  "frameH": 100,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2a3767ea3f2cf909",
+  "recipeHash": "2a3767ea3f2cf90929955828ec0a3870c826096dc092afe2d1c5378daccaaea2",
+  "pixelHash": "d34495d2e7e415f39a3a0e7b63aefe22a141fe6c5854e419a991048e9246faa6"
+}

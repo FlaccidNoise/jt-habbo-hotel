@@ -1,0 +1,34 @@
+{
+  "defId": "lounge_velvet_sofa_berry",
+  "archetype": "artgen",
+  "sheet": "lounge_velvet_sofa_berry.png",
+  "frameW": 96,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "lounge_velvet_sofa_berry.near.png",
+  "nearHash": "312b389a5aff35698b03313a219f42c952473ff69874b26534987db99f91aa77",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7dc4d87aa7465bce",
+  "recipeHash": "7dc4d87aa7465bce8da5bdef2ff8716fad44da396de3b5f22f2b41dca7e7bf54",
+  "pixelHash": "c0db09c9bf0cb20355d97879b7786aa1295f131d376cccccf6e0638256c0eca6"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "prestige_crystal_screen_amber",
+  "archetype": "artgen",
+  "sheet": "prestige_crystal_screen_amber.png",
+  "frameW": 96,
+  "frameH": 93,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:14d15a759f0516b0",
+  "recipeHash": "14d15a759f0516b0b2d77ad7e485a10cc265a8e39128465de334e9d680e730a8",
+  "pixelHash": "61c4403882d53f53fb655b66e60d80e7675cdfb2047bee866eff521f5e0ea402"
+}

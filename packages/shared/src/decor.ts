@@ -229,6 +229,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "floor", id: "floor_pool_wave_mosaic", name: "Pool Wave Mosaic", tile: { w: 64, h: 32 }, sides: { left: 0x2f8f8f, right: 0x8d9eb1 } },
   { kind: "wall", id: "wall_pool_cabana_stripe", name: "Pool Cabana Stripe", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_pool_sun_tile", name: "Pool Sun Tile", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  // Wave A4 decor (blitz task 9): penthouse + lounge.
+  { kind: "floor", id: "floor_penthouse_marble_fan", name: "Penthouse Marble Fan", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_penthouse_parquet", name: "Penthouse Parquet", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0x656056 } },
+  { kind: "wall", id: "wall_penthouse_deco_fan", name: "Penthouse Deco Fan", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  { kind: "wall", id: "wall_penthouse_silk_panel", name: "Penthouse Silk Panel", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "floor", id: "floor_lounge_parquet_dark", name: "Lounge Parquet Dark", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0x8b4513 } },
+  { kind: "floor", id: "floor_lounge_stage_star", name: "Lounge Stage Star", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0xdaa520 } },
+  { kind: "wall", id: "wall_lounge_velvet_panel", name: "Lounge Velvet Panel", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
+  { kind: "wall", id: "wall_lounge_music_note", name: "Lounge Music Note", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

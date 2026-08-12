@@ -1,0 +1,37 @@
+{
+  "defId": "lounge_disco_ball",
+  "archetype": "artgen",
+  "sheet": "lounge_disco_ball.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 12,
+    "planeH": 13,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.22999999999999998
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f90962768af30143",
+  "recipeHash": "f90962768af301439f64020a28d4edf086f4af15aa771389583b1e473b98f45b",
+  "pixelHash": "7daf2dcf1d08ae5e7e153a98910ce59e06210b1b9a40d1b15840af979750ed75"
+}

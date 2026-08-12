@@ -1,0 +1,34 @@
+{
+  "defId": "penthouse_dining_chair",
+  "archetype": "artgen",
+  "sheet": "penthouse_dining_chair.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "penthouse_dining_chair.near.png",
+  "nearHash": "961e9afb15275e4e4c4b7021596ac78a1647d552179d0b174753d54c82c4d3fd",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:825c027908b7af57",
+  "recipeHash": "825c027908b7af57b33c311e3930bf194cd12a40f58bb4140c48903afbd5ce08",
+  "pixelHash": "bd65baa5f8b1e2b0d1204320fa9e161e9ded8977abdee50e9332e62f9f993f2c"
+}
