@@ -4381,6 +4381,54 @@
       "figuredataVersion": 1,
       "recipeHash": "5549021c94678622f9b10b4a2802cafb38fe3412449cfa3b96fbce0124736e6f",
       "pixelHash": "1635cc940f7b199919c8f7039389518cc5ba284ae1d7a8f59f0b7314394310a9"
+    },
+    {
+      "partId": "ea88",
+      "setId": 88,
+      "type": "ea",
+      "name": "Pressure Goggles",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ea88.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "1304921db4c4fdf9d676856d730b8f7b43db6315b531d8e0e403183cf3ff5ecf",
+      "pixelHash": "1df2d8273dc53bf3864ef787b75aff6708fc68169d8703aadf82c70642ea0242"
     }
   ]
 }

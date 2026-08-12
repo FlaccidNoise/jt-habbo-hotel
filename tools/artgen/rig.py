@@ -4498,6 +4498,53 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 1.647)},
         ],
     },
+    # Pressure Goggles (set 88, two slots). The first eyewear since 58/59 and the third garment
+    # ever to land ON the face, so the catchlight corridor decides its shape before taste does.
+    #
+    # The plate covers the eye band OUTRIGHT — that is the whole reason it exists. figurepass
+    # repaints a lone `hi` in rows 34-43 of the head's own interior, and the sunglasses 58 proved
+    # a garment does not have to cover such a pixel to break it: an edge landing beside the cheek
+    # highlight shifts its neighbour's quantised shade and the repaint stops matching. Covering
+    # x 8.5 leaves nothing but columns 22 and 41 of head in those rows, and both are silhouette
+    # ring, which patchHead exempts outright. So the plate is wide for the same reason 58 is one
+    # box: it is the side of the rule with no pixels left to argue about.
+    #
+    # It stands at y 11.4, which is 2.3 px proud of the skull at eye height and 0.2 past hd2's
+    # own nose box at 11.2. Drawn flush at 9.6 the nose pokes through the plate's lower half at
+    # rows 37-38, because the nose reaches z 12.6 and the band has to come down to 12.2 to cover
+    # row 37 at all. Standing off is what buys both.
+    #
+    # The half-width is 9.0, not 8.5. At 8.5 the plate covered columns 23-39 and left column 40 —
+    # five INTERIOR head pixels at rows 32-36, dir 3, the exact kind patchHead is allowed to
+    # repaint. At 9.0 the band rows 32-37 x columns 24-40 is covered outright with nothing left
+    # but columns 22 and 41, which are silhouette ring. Measured against all eight eyed heads
+    # over all 64 dir-frames, the eye-code art has ZERO uncovered pixels at dirs 2, 3 and 4; the
+    # 416 that remain are all at dirs 1 and 5, where the head is edge-on and a flat plate on the
+    # face projects to a strip. The sunglasses 58 leave 652 the same way.
+    #
+    # The corridor itself, measured per frame: (30,36) at dir 4 is COVERED on seven frames and
+    # 3 px clear on the sit; (28,34) is 3 clear at dir 2 and 5-6 clear at dir 6. No site is ever
+    # 1 px away, which is the only distance that fails. gateHoldout is the binding check and it
+    # passes — the plate perturbs no repaint anywhere on the sheet.
+    #
+    # Drift, swept over all 64: at dir 3 the plate spans rows 30-37 standing and 33-40 on walk0
+    # and walk2 — a 3-row drop against the face art's integer 2, the same 3-against-2 the round
+    # specs 59 measured. Standing leaves 3 rows between the plate's top edge and the eyes at 33,
+    # so one row of relative drift still leaves two.
+    #
+    # Slot 1 is the two cups: balls stretched forward (radius 3.4 / 3.74 / 3.4) to y 13.6, so at
+    # dirs 1/2/4/5 the profile is two barrels where 58 is one flush plate. Against the three
+    # shipped ea sets the tightest pair is the round specs 59 at 0.5471.
+    "ea88": {
+        "prims": [
+            {"t": "box",  "bone": "head", "slot": 0, "c0": (-9.0, 7.6, 12.2),
+             "c1": (9.0, 11.4, 17.6)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (3.6, 9.9, 14.8), "r": 3.4,
+             "squash": (1.0, 1.1, 1.0)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (-3.6, 9.9, 14.8), "r": 3.4,
+             "squash": (1.0, 1.1, 1.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
