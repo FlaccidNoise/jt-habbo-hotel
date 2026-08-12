@@ -5581,6 +5581,43 @@ FIGURE_PARTS = {
              "c1": (8.8, -7.4, 27.0)},
         ],
     },
+    # Jewelled Choker (set 120, two slots). The chain 62 is an open arc across the sternum, capped
+    # at x +/-5.4 and never touching the neck. This closes all round and sits 4 px higher, so one
+    # rings the neck and the other lies on it — 0.0452 against 62, and the pairs that actually
+    # bind are the two other things living at this height: 0.7414 against the lace ruff 76 and
+    # 0.6993 against the puff muffler 82.
+    #
+    # Its radius is 8.4 and not the row's 5.0, and the muffler 82 already recorded why: bd1's
+    # torso is a box x +/-7.5 by y +/-6.0 running all the way to spine z 21, so a ring of r 5.0
+    # over z 19.0-22.4 is inside the body for 2.0 of its 3.4 px and renders a sliver above the
+    # shoulders. Above the torso the skull takes over instead and grows fast — 4.21 px at spine
+    # z 22, 5.81 at 23, 6.93 at 24 — so it passes r 5.0 by z 22.6 and there is no window at all
+    # for a small ring. 8.4 clears the torso by 0.9 in x and 2.4 in y and stays 0.2 inside the
+    # muffler's 8.6 and 1.0 inside the ruff's 9.4.
+    #
+    # Height is what separates it from those two rather than radius: 3.4 px against the muffler's
+    # 7, nested inside 82's z range, which is why the measured overlap sits near the ratio of the
+    # two areas. The box torso's own corners reach 9.6, so at the four diagonal dirs the body wins
+    # the ring below z 21 and only its top 1.4 px shows there — 82 ships with the same behaviour.
+    #
+    # The stone is r 1.7 rather than the row's 3.2 across because it has to clear the ring's own
+    # surface, not the body: same layer, so the ring wins the depth test over anything tucked
+    # inside it. Centred at y 8.4 it reaches 10.1, 1.7 proud, and comes out at rows 47-48 carrying
+    # shade 4 against the ring's shade 2 — a lump with its own highlight rather than a colour
+    # change, which is what the 3 px floor is asking for.
+    #
+    # Face: 0 pixels painted over against all eight eyed heads, 1 clear row below the chin. The
+    # ring's back edge projects UP to row 38 the way 76's and 82's do, and the holdout takes it —
+    # at spine z 22.4 the skull still carries 4.6 px of depth against the ring's -8.4.
+    #
+    # Slot 1 is the stone.
+    "ca120": {
+        "prims": [
+            {"t": "cone", "bone": "spine", "slot": 0, "z0": 22.4, "len": 3.4,
+             "r0": 8.4, "r1": 8.4},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, 8.4, 20.7), "r": 1.7},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
