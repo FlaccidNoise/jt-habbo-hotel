@@ -5981,6 +5981,54 @@
       "figuredataVersion": 1,
       "recipeHash": "81fe01294b4c94ada31edec32398e3bd12b2c623a9371e19cff793db806f8bda",
       "pixelHash": "57dbbf098674a9b40b57aff820a66fa4532282d3bd8c3537f1d5b3752c56ce34"
+    },
+    {
+      "partId": "ha121",
+      "setId": 121,
+      "type": "ha",
+      "name": "Fascinator",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ha121.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "80b12fa8d0c617d02545818187c0e9f3339a7f42432ec17413432b813ad98c6c",
+      "pixelHash": "9323747f32d8b136f1686e5143544244b38ed6677f419a7cd86c59eb8ac1a6f6"
     }
   ]
 }

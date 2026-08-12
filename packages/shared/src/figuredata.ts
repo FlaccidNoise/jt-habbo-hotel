@@ -239,6 +239,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 118, type: "wa", name: "Peplum Belt",          slots: 2, family: "material", hides: [], retired: false },
   { id: 119, type: "cc", name: "Opera Cape",           slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 120, type: "ca", name: "Jewelled Choker",      slots: 2, family: "material", hides: [], retired: false },
+  { id: 121, type: "ha", name: "Fascinator",           slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -415,6 +416,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 118, price: 250, theme: "penthouse" },  // Peplum Belt
   { set: 120, price: 250, theme: "penthouse" },  // Jewelled Choker
   { set: 117, price: 300, theme: "penthouse" },  // Halter Bodice
+  { set: 121, price: 350, theme: "penthouse" },  // Fascinator
   { set: 116, price: 450, theme: "penthouse" },  // Trained Gown
   { set: 119, price: 450, theme: "penthouse" },  // Opera Cape
 ];

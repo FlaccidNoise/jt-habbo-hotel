@@ -5618,6 +5618,43 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, 8.4, 20.7), "r": 1.7},
         ],
     },
+    # Fascinator (set 121, two slots). The crown 57 is a symmetric band ringing the whole head.
+    # This has no band, sits on one side of the crown and leaves the other bare — 0.2662 against
+    # 57 and under 0.25 against every other hat, the loosest `ha` field in the wardrobe.
+    #
+    # It hides nothing, which makes it the only hat in packs 1-9 worn WITH hair. Nothing holds it
+    # out either: HOLDOUT_IDS is bd1+hd2, so `ha` drawing after `hr` simply paints over whatever
+    # hair is underneath and no per-hair render exists or is needed. What that leaves open is the
+    # read, not the depth — a plate with no contact would hover, and one inside a tall hair mass
+    # would say nothing. Swept over all twelve hair sets across all 64 cells: every cell has the
+    # plate touching or overlapping the hair, worst case 22 px against the short crop 3. The two
+    # the ledger flagged behave in opposite directions and both hold — the afro 35 gives the most
+    # contact at 58 px and the plate still breaks its outline at the crown, and the mohawk 37's
+    # crest stands beside the plate rather than through it.
+    #
+    # The disc is centred at head z 21.6 and not the row's 24. The skull tops out at head z 22, so
+    # a plate on plane 24 touches nothing at all and floats over a bald head — the set has to work
+    # with no `hr` chosen. At 21.6 its underside meets the crown, which at x 5.0 sits at head z
+    # 20.56. The cluster is what ends up at the row's 24.
+    #
+    # "All of it draws above row 20" does not survive contact with the skull, the same way the
+    # goggle cap 115's version of that claim did not: rows 14-27 at stand and 14-36 over all 64
+    # cells, the 36 being sit, where the head drops about nine px. The bar the row was really
+    # reaching for is the face, and that holds with room — 0 face pixels painted over against all
+    # eight eyed heads, 3 clear rows above the brow at hd17 walk0 d2, which is two better than the
+    # flight helmet 89, the sunshade 108 and the goggle cap 115. The catchlight corridor is never
+    # close: its rows are 34 and 36 and the plate's lowest standing row is 27.
+    #
+    # Slot 1 is the cluster.
+    "ha121": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (5.0, 0.0, 21.6), "r": 6.0,
+             "squash": (1.0, 1.0, 0.25)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (3.6, 1.8, 23.9), "r": 2.0},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (6.4, -0.6, 24.3), "r": 2.0},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (7.0, 2.6, 23.6), "r": 2.0},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
