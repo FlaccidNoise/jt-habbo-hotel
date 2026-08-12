@@ -5474,6 +5474,53 @@ FIGURE_PARTS = {
              "squash": (0.90, 0.75, 0.90)},
         ],
     },
+    # ---- costume pack 9: penthouse (#459) ----
+    #
+    # Trained Gown (set 116, two slots). The ledger built this as the long skirt 48's cone verbatim
+    # plus a back panel, on the theory that geometry at y < 0 separates the two at dirs 6/7/0 while
+    # dirs 2/3/4 stay identical. Built that way and measured, it came out at 0.9905 against 48 —
+    # and the shortfall is not a tuning gap, it is arithmetic. 48's alpha is a strict SUBSET of the
+    # gown's, so IoU is 46784/(46784 + X) and the bar needs X = 8000 lit px pooled over 64 cells.
+    # A panel at y < 0 cannot carry that. Its front-dir rows land at 65 - Y/2 + |z|, inside the
+    # cone's own screen area, so the cone hides it; its back-dir rows land at 65 + Y/2 + |z| and
+    # only what clears the cone's hem row of 100 is new alpha. Maximising Y/2 + |z| against the sit
+    # gate (|z| + Y/2.83 <= 36, since a sit hip point draws at 74 + |z| + reach/2.83) tops out at
+    # a six-row band ~20 px wide, about 2900 px pooled. Three times short, so the ledger's escape
+    # applies and the newer row changes.
+    #
+    # What changes is the profile, not the length: a column to the knee and a flare below it,
+    # against 48's single straight taper. 8.4 to 10.2 over the top 15 px, then 10.2 to 16.8 over
+    # the last 13. Concave where 48 is straight, 1.5 px narrower at the knee and 2.6 px wider at
+    # the hem, which reads as a trumpet rather than an A-line and is what "gown" was asking for.
+    # The waist goes with it: 48's hip band is a box at +/-8.2 by +/-6.6 over z -2.2..3.0 and this
+    # one is +/-7.9 by +/-6.3 over -1.0..7.0, a fitted waist four px higher, because a gown is
+    # seamed above the hip and because an identical prim is guaranteed shared alpha.
+    #
+    # The narrow half is bounded by the walk frames, not by taste. A leg swung 22 degrees is
+    # displaced |z|*sin(22) at height z and carries bd1's own 4.2 thigh radius, so the skirt must
+    # hold r >= 0.375*|z| + 4.2 everywhere or a stride puts a shin through it. That is 9.83 at the
+    # knee against the 10.2 authored here, and 14.7 at the hem against 16.8 — the same rule that
+    # fixed 48's hem at 14.2.
+    #
+    # Measured on the frozen sheet: 0.7911 against 48, 0.7203 against the tiered skirt 71, and the
+    # deepest row is 109 at sit d0 against 48's own 108 and the 111 the bounds gate fails at.
+    #
+    # The train survives as the second read and as slot 1: x +/-7.0 at y -8.0..-6.4, hanging to
+    # z -31. Not the ledger's -34 — at sit the deepest row is 74 + |z| + 3.0 rather than the row's
+    # 74 + |z| - 4.0, because at d0 the panel's 7.0 half-width becomes the depth axis and projects
+    # DOWN where its y projects up. -34 put ink on row 111 and failed bounds; -31 lands on 108,
+    # which is 48's own sit row.
+    "lg116": {
+        "prims": [
+            {"t": "box",  "bone": "hip", "slot": 0, "c0": (-7.9, -6.3, -1.0),
+             "c1": (7.9, 6.3, 7.0)},
+            {"t": "cone", "bone": "hip", "slot": 0, "len": 15.0, "r0": 8.4, "r1": 10.2},
+            {"t": "cone", "bone": "hip", "slot": 0, "z0": -15.0, "len": 13.0,
+             "r0": 10.2, "r1": 16.8},
+            {"t": "box",  "bone": "hip", "slot": 1, "c0": (-7.0, -8.0, -31.0),
+             "c1": (7.0, -6.4, 1.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

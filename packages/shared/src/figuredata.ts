@@ -229,6 +229,12 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 113, type: "ca", name: "Cravat",               slots: 1, family: "material", hides: [], retired: false },
   { id: 114, type: "fa", name: "Mutton Chops",         slots: 1, family: "material", hides: [], retired: false },
   { id: 115, type: "ha", name: "Goggle Cap",           slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 9 — penthouse (#459). Gala wear, sold beside the penthouse furniture, and every
+  // row is defined by what it leaves out: the gown's train is the only geometry in the wardrobe
+  // that exists behind the figure and nowhere else, the halter has no back, the cape has neither
+  // sleeves nor a body. The fascinator leaves the hair alone, so unlike every other `ha` in these
+  // packs it hides nothing.
+  { id: 116, type: "lg", name: "Trained Gown",         slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -402,6 +408,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 110, price: 350, theme: "clockwork" },  // Bracered Jacket
   { set: 112, price: 400, theme: "clockwork" },  // Frock Coat
   { set: 115, price: 400, theme: "clockwork" },  // Goggle Cap
+  { set: 116, price: 450, theme: "penthouse" },  // Trained Gown
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
