@@ -163,6 +163,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 73, type: "ch", name: "Corset Bodice",   slots: 2, family: "material", hides: [], retired: false },
   { id: 74, type: "wa", name: "Waist Cincher",   slots: 2, family: "material", hides: [], retired: false },
   { id: 75, type: "cc", name: "Tailcoat",        slots: 2, family: "material", hides: ["ch"], retired: false },
+  { id: 76, type: "ca", name: "Lace Ruff",       slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -284,6 +285,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 69, price: 350, theme: "bannerhold" },  // Heraldic Mantle
   { set: 70, price: 400, theme: "bannerhold" },  // Crested Helm
   { set: 68, price: 450, theme: "bannerhold" },  // Surcoat
+  { set: 76, price: 200, theme: "nocturne" },    // Lace Ruff
   { set: 72, price: 250, theme: "nocturne" },    // Pointed Boot
   { set: 74, price: 250, theme: "nocturne" },    // Waist Cincher
   { set: 71, price: 300, theme: "nocturne" },    // Tiered Skirt

@@ -3801,6 +3801,54 @@
       "figuredataVersion": 1,
       "recipeHash": "520f7481801160779cb41ed1a1609a12124034b81870ea07dea3c8d5033377b7",
       "pixelHash": "fb19a7bf8ef564c511936b42abf055d94455169c83c540588405f25af77ee26b"
+    },
+    {
+      "partId": "ca76",
+      "setId": 76,
+      "type": "ca",
+      "name": "Lace Ruff",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ca76.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "9074d8058eb3ceab77f5d25b4103f7b82940bdc31af1ce02e6ff992ffe0ffa63",
+      "pixelHash": "4e7993f216827e5b34a97f9255997563d21be1dbb467e93d3c70f3c0f30711dd"
     }
   ]
 }

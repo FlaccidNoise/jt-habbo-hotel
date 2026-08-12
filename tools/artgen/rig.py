@@ -3357,6 +3357,31 @@ FIGURE_PARTS = {
              "c1": (5.4, 7.4, 22.4)},
         ],
     },
+    # Lace Ruff (set 76, one slot). The scarf 60 is a vertical asymmetric mass with a tail running
+    # down to z 5. This is the plane rotated: one flat symmetric plate lying at the chin with
+    # nothing hanging below it, so the head sits in it.
+    #
+    # It is a single prim on purpose. The neck's whole budget is the space above bd1's torso — the
+    # box reaches the chin plane at spine z 21, so anything narrower than 7.5 in x or shallower
+    # than 6.0 in y is swallowed below that line — and a plate that clears it in both is already
+    # the entire garment. A second ring inside this one would be geometry hidden under its own
+    # layer, which pack 1 measured as rendering nothing at all.
+    #
+    # r 9.4 with 1.6 px of half-height. A spine point draws at row 65 + y/2 - z, so the plate's
+    # forward edge lands on row 48.7 and its lowest lit row is 48, exactly where the ledger put it.
+    #
+    # The edge that needed measuring is the BACK one. A horizontal ring projects its far side
+    # upward, and this one's reaches row 39 — the mouth's own row — in the same columns the face
+    # draws in. The holdout is what makes that safe: at spine z 22 the skull still carries 4.9 px
+    # of depth, so it is nearer than the plate's back at y -8.9 and wins those pixels outright.
+    # Measured on the frozen sheet, the ruff stands at rows 41-48 rather than 39-48, and across
+    # all 64 dir-frames against all eight eyed heads it paints over 0 face pixels.
+    "ca76": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 0.0, 21.0), "r": 9.4,
+             "squash": (1.0, 1.0, 0.170)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
