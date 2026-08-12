@@ -3323,6 +3323,40 @@ FIGURE_PARTS = {
              "c1": (2.1, 7.6, 5.4)},
         ],
     },
+    # Tailcoat (set 75, two slots, hides ch). The overcoat 11's whole read below the waist is a
+    # flare cone, closed and even in all eight directions. This has the opposite: geometry behind
+    # the figure and none at all in front of it. The body is cut off square at z 1.0 and two tails
+    # carry on down to -8.0 at y < 0 only, so dirs 2/3/4 show a bare hip and dirs 6/7/0 show the
+    # tails. Same body and same sleeves as 11 above the waist — that is the point of the pair.
+    #
+    # The tails sit at y -7.4..-6.0, which is 1.4 clear of bd1's torso and 0.5 proud of the coat's
+    # own back face, so they read as panels hung off it rather than as a thicker back. The pack 1
+    # sword belt found the trap this avoids: bd1's arm is a capsule at x +/-9.5, r 3.2, hanging to
+    # spine z -7, so anything centred near y 0 at this height loses half its length to the arm's
+    # holdout. Everything here is behind y -6.0 and the arm never reaches past +/-3.2.
+    #
+    # The gap between them is 3.2 px, which is the floor: the chain 62 established that 2 px or
+    # under is pure outline with no interior shade, and a gap narrower than that closes up into
+    # one panel under quantisation. Each tail laps 0.6 px up into the body at z 1.6, so coat and
+    # tails are one island in all 64 cells.
+    #
+    # Slot 1 is the collar and the tails together. The collar is a stand collar wrapping the neck
+    # at 7.4 in y, 0.5 proud of the body and 1.8 above its shoulder line, and it clears hd2's own
+    # 3.6 neck limb by nearly two.
+    "cc75": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.4, -6.9, 1.0),
+             "c1": (8.4, 6.9, 20.6)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 20.0, "r": 4.0},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.4, -7.4, -8.0),
+             "c1": (-1.6, -6.0, 1.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (1.6, -7.4, -8.0),
+             "c1": (7.4, -6.0, 1.6)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-5.4, -7.4, 19.8),
+             "c1": (5.4, 7.4, 22.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
