@@ -4091,6 +4091,54 @@
       "figuredataVersion": 1,
       "recipeHash": "97617c215921235dd2f6aea617f8b20b86f25abd9708aef6b55353e91d108955",
       "pixelHash": "ba831cecac134aca897643407985e33719889c99a3727e9d82696eaa7bffdac6"
+    },
+    {
+      "partId": "ca82",
+      "setId": 82,
+      "type": "ca",
+      "name": "Puff Muffler",
+      "slots": 1,
+      "hides": [],
+      "sheet": "ca82.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "711fc88d710810e32403e4898a788177743453cbe8820b6224e10fd349065d4e",
+      "pixelHash": "d111101f68cb6befdb255a7b0de5b2ca94e61523e7842f9f26f948586f4c8d9e"
     }
   ]
 }

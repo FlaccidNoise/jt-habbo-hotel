@@ -3905,7 +3905,7 @@ FIGURE_PARTS = {
     # Its radius is 8.6 and not the intent's 6.0, and the reason is bd1 rather than taste. The torso
     # box runs x +/-7.5 by y +/-6.0 all the way up to spine z 21, so a tube of radius 6 spanning
     # z 15-22 is inside the body for six of its seven px. Built that way and rendered, it came out
-    # at 24 lit pixels per dir-frame, all of them in rows 43-46 — a collar sliver above the
+    # at 24-25 lit pixels per dir-frame, all of them in rows 43-46 — a collar sliver above the
     # shoulders, not a muffler. 8.6 clears the torso by 1.1 in x and 2.6 in y, and it stays 0.8
     # inside the ruff's own 9.4, which is what keeps this one hugging the neck where 76 rings it.
     #
