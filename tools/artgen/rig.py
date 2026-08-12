@@ -4650,6 +4650,38 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.30)},
         ],
     },
+    # Potion Belt (set 92, two slots). The sword belt 67 hangs one 14 px spur off one side. This
+    # one hangs four short ones evenly, so its lower edge is scalloped in every direction where
+    # 67's is a single blade on the left.
+    #
+    # A vial is 3.4 px across and not the intent's 3.0, which is the chain 62's floor rather than a
+    # choice: anything 2 px or under is pure outline with no interior shade left between its edges,
+    # and 3.0 quantises to that at half the dir-frames. Stretched 1.35 in z it is 3.4 by 4.6, which
+    # is a vial rather than a bead, and its top laps 0.8 px into the band so the layer is one
+    # island.
+    #
+    # The band is 3.6 px tall. The belt 15 is 2.8 and the sword belt 67 is 4.0, and 67 measured why
+    # that matters — at 3.4 it quantised to the belt's own rows and came out pixel-identical on a
+    # back frame. 3.6 sits a row off both.
+    #
+    # The outer pair is at x 8.4, past the band's own 8.1 and past bd1's thigh at 8.2, so those two
+    # break the outline sideways and survive the holdout below the waist. The inner pair at 2.8 is
+    # inside the thigh's x range and lives on y instead: at 6.2 the vial's back is 4.76, which
+    # clears the thigh limb's 4.2 outright.
+    "wa92": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.1, -6.6, 0.0),
+             "c1": (8.1, 6.6, 3.6)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (-8.4, 6.2, -1.5), "r": 1.7,
+             "squash": (1.0, 0.85, 1.35)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (-2.8, 6.2, -1.5), "r": 1.7,
+             "squash": (1.0, 0.85, 1.35)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (2.8, 6.2, -1.5), "r": 1.7,
+             "squash": (1.0, 0.85, 1.35)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (8.4, 6.2, -1.5), "r": 1.7,
+             "squash": (1.0, 0.85, 1.35)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
