@@ -5521,6 +5521,18 @@ FIGURE_PARTS = {
              "c1": (7.0, -6.4, 1.0)},
         ],
     },
+    # Halter Bodice (set 117, two slots). The tank 43 is a closed box with two shoulder straps.
+    # This deletes the back half outright: one front plate and a strap over the throat.
+    "ch117": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-6.4, 4.6, 4.0),
+             "c1": (6.4, 7.2, 18.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-1.7, 5.4, 17.6),
+             "c1": (1.7, 6.9, 22.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-1.7, -6.6, 20.4),
+             "c1": (1.7, 6.9, 22.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -5787,6 +5787,54 @@
       "figuredataVersion": 1,
       "recipeHash": "90c78edf102b355379574397cb997ff86f3e432c8983d137ed3e7ddc795be954",
       "pixelHash": "285f22c71f55653e092501cb919bc1f8101515cc26e7ffe41c1ef869c436cefd"
+    },
+    {
+      "partId": "ch117",
+      "setId": 117,
+      "type": "ch",
+      "name": "Halter Bodice",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch117.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "4e9544fbfabbe38ebc77f4c16d92d576a5298085c9d93439c3ee0192cb9e4afc",
+      "pixelHash": "23125f16f4d627fcc896be8ecfec6d7ab5e747efc836c36dd46e819b9788d654"
     }
   ]
 }

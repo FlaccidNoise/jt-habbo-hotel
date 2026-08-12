@@ -235,6 +235,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // sleeves nor a body. The fascinator leaves the hair alone, so unlike every other `ha` in these
   // packs it hides nothing.
   { id: 116, type: "lg", name: "Trained Gown",         slots: 2, family: "material", hides: [], retired: false },
+  { id: 117, type: "ch", name: "Halter Bodice",        slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -408,6 +409,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 110, price: 350, theme: "clockwork" },  // Bracered Jacket
   { set: 112, price: 400, theme: "clockwork" },  // Frock Coat
   { set: 115, price: 400, theme: "clockwork" },  // Goggle Cap
+  { set: 117, price: 300, theme: "penthouse" },  // Halter Bodice
   { set: 116, price: 450, theme: "penthouse" },  // Trained Gown
 ];
 
