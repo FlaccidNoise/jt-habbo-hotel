@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_bistro_table_terracotta",
+  "archetype": "artgen",
+  "sheet": "cafe_bistro_table_terracotta.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d382af97dd5a09dc",
+  "recipeHash": "d382af97dd5a09dc687be581e546870dd5a60868643879a9a43020ebdeae9671",
+  "pixelHash": "477664370335fd55ec386039fa9f0cbdb3deaa22d574e8288670c1c8284493e8"
+}

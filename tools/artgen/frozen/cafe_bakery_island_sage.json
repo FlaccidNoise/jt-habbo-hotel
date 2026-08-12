@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_bakery_island_sage",
+  "archetype": "artgen",
+  "sheet": "cafe_bakery_island_sage.png",
+  "frameW": 96,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3e179d31a97cf894",
+  "recipeHash": "3e179d31a97cf894f02d3816fe884039bb047bc11936b4eb38837b2ff5fd3ff4",
+  "pixelHash": "347f5d91439e60ce77c408e3bb495114b1937c7cd08fc41bf4d63ec2285d8ff5"
+}

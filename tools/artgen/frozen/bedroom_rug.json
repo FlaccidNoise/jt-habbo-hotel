@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_rug",
+  "archetype": "artgen",
+  "sheet": "bedroom_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5c65a4f30a95206c",
+  "recipeHash": "5c65a4f30a95206ceab9d4822adb0f186d801518c0d5fbae4e474ccb4f660606",
+  "pixelHash": "fc7b829ce19d93f77e183a0b3985acd92a00a1a620e5344d109bc4b49e7d18af"
+}

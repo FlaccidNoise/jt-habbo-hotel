@@ -1013,6 +1013,343 @@ PARTS = {
              "taper": 0.70, "ramp": "teal"},
         ],
     },
+    # ---- wave A1: starter (blitz task 6) ----
+    "starter_armchair": {
+        "w": 1, "l": 1, "ramp": "sand",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.00), "c1": (0.86, 0.86, 0.14), "ramp": "walnut"},
+            {"t": "box", "c0": (0.12, 0.12, 0.14), "c1": (0.88, 0.88, 0.42), "bevel": 0.04,
+             "ramp": "sand", "seat": True},
+            {"t": "box", "c0": (0.12, 0.66, 0.42), "c1": (0.88, 0.90, 0.92), "bevel": 0.05},
+            {"t": "box", "c0": (0.06, 0.10, 0.30), "c1": (0.18, 0.90, 0.60), "bevel": 0.03},
+            {"t": "box", "c0": (0.82, 0.10, 0.30), "c1": (0.94, 0.90, 0.60), "bevel": 0.03},
+        ],
+    },
+    "starter_coffee_table": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.10, 0.30), "c1": (0.90, 0.90, 0.40), "bevel": 0.02},
+            {"t": "box", "c0": (0.16, 0.16, 0.00), "c1": (0.26, 0.26, 0.30)},
+            {"t": "box", "c0": (0.74, 0.16, 0.00), "c1": (0.84, 0.26, 0.30)},
+            {"t": "box", "c0": (0.16, 0.74, 0.00), "c1": (0.26, 0.84, 0.30)},
+            {"t": "box", "c0": (0.74, 0.74, 0.00), "c1": (0.84, 0.84, 0.30)},
+        ],
+    },
+    "starter_entry_mat": {
+        "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.06, 0.06, 0.00), "c1": (0.94, 0.94, 0.05), "ramp": "crimson"},
+            {"t": "box", "c0": (0.20, 0.20, 0.05), "c1": (0.80, 0.80, 0.06), "ramp": "sand"},
+        ],
+    },
+    "starter_floor_lamp": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.20, "ry": 0.20, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.06, "z1": 1.30},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.24, "ry": 0.24, "z0": 1.30, "z1": 1.62,
+             "taper": 0.7, "ramp": "ivory"},
+        ],
+    },
+    "starter_bookcase": {
+        "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.16, 0.00), "c1": (0.90, 0.84, 1.60)},
+            {"t": "box", "c0": (0.16, 0.10, 0.40), "c1": (0.84, 0.20, 0.46), "ramp": "walnut"},
+            {"t": "box", "c0": (0.16, 0.10, 0.90), "c1": (0.84, 0.20, 0.96), "ramp": "walnut"},
+            {"t": "box", "c0": (0.20, 0.12, 0.46), "c1": (0.44, 0.18, 0.86), "ramp": "crimson"},
+            {"t": "box", "c0": (0.50, 0.12, 0.96), "c1": (0.74, 0.18, 1.36), "ramp": "teal"},
+        ],
+    },
+    "starter_wall_clock": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.28, 0.00, 2.30), "c1": (0.72, 0.08, 2.80), "bevel": 0.02},
+            {"t": "hcyl", "x": 0.5125, "y0": 0.08, "y1": 0.10, "z": 2.55, "r": 0.16,
+             "caps": False, "ramp": "ivory"},
+            {"t": "box", "c0": (0.496, 0.10, 2.55), "c1": (0.53, 0.12, 2.70), "ramp": "charcoal"},
+        ],
+    },
+    "starter_poster_set": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.30), "c1": (0.46, 0.05, 2.80), "ramp": "navy"},
+            {"t": "box", "c0": (0.54, 0.00, 2.30), "c1": (0.84, 0.05, 2.80), "ramp": "crimson"},
+        ],
+    },
+    "starter_wall_shelf": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.50), "c1": (0.84, 0.12, 2.56)},
+            {"t": "box", "c0": (0.42, 0.02, 2.56), "c1": (0.58, 0.10, 2.80), "ramp": "fern"},
+        ],
+    },
+    # ---- wave A1: cafe (blitz task 6) ----
+    "cafe_espresso_machine": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.20, 0.00), "c1": (0.84, 0.80, 0.90), "bevel": 0.02},
+            {"t": "box", "c0": (0.24, 0.14, 0.60), "c1": (0.76, 0.24, 0.72), "ramp": "gold"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.20, "rx": 0.05, "ry": 0.05, "z0": 0.40, "z1": 0.60,
+             "ramp": "gold"},
+            {"t": "box", "c0": (0.20, 0.10, 0.90), "c1": (0.80, 0.70, 1.00), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.78, "cy": 0.5, "rx": 0.02, "ry": 0.02, "z0": 0.60, "z1": 0.90,
+             "ramp": "gold"},
+        ],
+    },
+    "cafe_bakery_island": {
+        "w": 2, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.20, 0.00), "c1": (1.90, 0.80, 0.80)},
+            {"t": "box", "c0": (0.06, 0.16, 0.80), "c1": (1.94, 0.84, 0.90), "ramp": "ivory"},
+            {"t": "box", "c0": (0.30, 0.30, 0.90), "c1": (1.70, 0.70, 1.20), "ramp": "ivory"},
+            {"t": "box", "c0": (0.50, 0.40, 0.92), "c1": (0.80, 0.60, 1.02), "ramp": "sand"},
+            {"t": "box", "c0": (1.10, 0.40, 0.92), "c1": (1.40, 0.60, 1.02), "ramp": "crimson"},
+        ],
+    },
+    "cafe_bistro_table": {
+        "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.36, "ry": 0.36, "z0": 0.70, "z1": 0.76,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.05, "ry": 0.05, "z0": 0.06, "z1": 0.70},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.22, "ry": 0.22, "z0": 0.0, "z1": 0.06},
+        ],
+    },
+    "cafe_bistro_chair": {
+        "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.20, 0.00), "c1": (0.30, 0.30, 0.44)},
+            {"t": "box", "c0": (0.70, 0.20, 0.00), "c1": (0.80, 0.30, 0.44)},
+            {"t": "box", "c0": (0.20, 0.70, 0.00), "c1": (0.30, 0.80, 0.44)},
+            {"t": "box", "c0": (0.70, 0.70, 0.00), "c1": (0.80, 0.80, 0.44)},
+            {"t": "box", "c0": (0.18, 0.18, 0.44), "c1": (0.82, 0.82, 0.52), "bevel": 0.03,
+             "ramp": "teal", "seat": True},
+            {"t": "box", "c0": (0.18, 0.68, 0.52), "c1": (0.82, 0.84, 1.00), "bevel": 0.03},
+        ],
+    },
+    "cafe_pastry_case": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.12, 0.20, 0.00), "c1": (0.88, 0.80, 0.70)},
+            {"t": "box", "c0": (0.14, 0.14, 0.70), "c1": (0.86, 0.86, 1.10), "ramp": "ivory"},
+            {"t": "box", "c0": (0.30, 0.16, 0.74), "c1": (0.70, 0.20, 1.04), "ramp": "teal"},
+        ],
+    },
+    "cafe_barista_stool": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.05, "ry": 0.05, "z0": 0.0, "z1": 0.62},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.26, "ry": 0.26, "z0": 0.62, "z1": 0.70,
+             "ramp": "crimson", "seat": True},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.18, "ry": 0.18, "z0": 0.0, "z1": 0.04},
+        ],
+    },
+    "cafe_potted_herb": {
+        "w": 1, "l": 1, "ramp": "fern",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.22, "ry": 0.22, "z0": 0.0, "z1": 0.30,
+             "taper": 0.7, "ramp": "sand"},
+            {"t": "sphere", "c": (0.50, 0.50, 0.52), "r": 0.22},
+            {"t": "sphere", "c": (0.38, 0.44, 0.42), "r": 0.15},
+            {"t": "sphere", "c": (0.62, 0.54, 0.44), "r": 0.16},
+        ],
+    },
+    "cafe_woven_rug": {
+        "w": 2, "l": 2, "ramp": "sand",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.04, 0.00), "c1": (1.96, 1.96, 0.05), "ramp": "sand"},
+            {"t": "box", "c0": (0.40, 0.40, 0.05), "c1": (1.60, 1.60, 0.06), "ramp": "crimson"},
+        ],
+    },
+    "cafe_menu_board": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.00, 2.20), "c1": (0.86, 0.06, 2.90)},
+            {"t": "box", "c0": (0.20, 0.06, 2.30), "c1": (0.80, 0.08, 2.80), "ramp": "charcoal"},
+            {"t": "box", "c0": (0.26, 0.08, 2.62), "c1": (0.60, 0.09, 2.66), "ramp": "ivory"},
+            {"t": "box", "c0": (0.26, 0.08, 2.46), "c1": (0.70, 0.09, 2.50), "ramp": "ivory"},
+        ],
+    },
+    "cafe_chalk_art": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "charcoal",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.30), "c1": (0.80, 0.05, 2.80), "ramp": "charcoal"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.06, "rx": 0.14, "ry": 0.02, "z0": 2.5, "z1": 2.52,
+             "ramp": "ivory"},
+        ],
+    },
+    "cafe_cup_shelf": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.44), "c1": (0.84, 0.14, 2.50)},
+            {"t": "cyl", "cx": 0.30, "cy": 0.08, "rx": 0.06, "ry": 0.06, "z0": 2.50, "z1": 2.64,
+             "ramp": "ivory"},
+            {"t": "cyl", "cx": 0.52, "cy": 0.08, "rx": 0.06, "ry": 0.06, "z0": 2.50, "z1": 2.64,
+             "ramp": "teal"},
+            {"t": "cyl", "cx": 0.72, "cy": 0.08, "rx": 0.06, "ry": 0.06, "z0": 2.50, "z1": 2.64,
+             "ramp": "crimson"},
+        ],
+    },
+    "cafe_neon_cup": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "teal",
+        "prims": [
+            {"t": "box", "c0": (0.34, 0.00, 2.36), "c1": (0.66, 0.05, 2.72), "ramp": "teal"},
+            {"t": "box", "c0": (0.42, 0.05, 2.46), "c1": (0.58, 0.07, 2.62), "ramp": "ivory"},
+        ],
+    },
+    "cafe_tile_mural": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.00, 2.20), "c1": (0.86, 0.04, 2.90), "ramp": "ivory"},
+            {"t": "box", "c0": (0.20, 0.04, 2.30), "c1": (0.44, 0.06, 2.54), "ramp": "teal"},
+            {"t": "box", "c0": (0.50, 0.04, 2.50), "c1": (0.74, 0.06, 2.74), "ramp": "crimson"},
+        ],
+    },
+    "cafe_herb_pressing": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.28, 0.00, 2.30), "c1": (0.72, 0.05, 2.80)},
+            {"t": "box", "c0": (0.34, 0.05, 2.38), "c1": (0.66, 0.07, 2.72), "ramp": "ivory"},
+            {"t": "sphere", "c": (0.50, 0.10, 2.55), "r": 0.08, "ramp": "fern"},
+        ],
+    },
+    # ---- wave A1: bedroom (blitz task 6) ----
+    "bedroom_bed_frame": {
+        "w": 1, "l": 2, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.06, 0.00), "c1": (0.90, 0.16, 0.90)},
+            {"t": "box", "c0": (0.12, 0.14, 0.20), "c1": (0.88, 1.90, 0.46), "bevel": 0.03,
+             "ramp": "navy", "seat": True},
+            {"t": "box", "c0": (0.20, 0.22, 0.46), "c1": (0.80, 0.50, 0.60), "ramp": "ivory"},
+        ],
+    },
+    "bedroom_dresser": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.12, 0.20, 0.00), "c1": (0.88, 0.80, 0.90), "bevel": 0.02},
+            {"t": "box", "c0": (0.20, 0.14, 0.56), "c1": (0.80, 0.20, 0.72), "ramp": "oak"},
+            {"t": "box", "c0": (0.20, 0.14, 0.28), "c1": (0.80, 0.20, 0.44), "ramp": "oak"},
+        ],
+    },
+    "bedroom_nightstand": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.24, 0.00), "c1": (0.80, 0.76, 0.50), "bevel": 0.02},
+            {"t": "box", "c0": (0.28, 0.18, 0.24), "c1": (0.72, 0.24, 0.36), "ramp": "oak"},
+        ],
+    },
+    "bedroom_wardrobe": {
+        "w": 2, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.08, 0.24, 0.00), "c1": (1.92, 0.80, 2.10), "bevel": 0.02},
+            {"t": "box", "c0": (0.16, 0.18, 0.20), "c1": (0.96, 0.24, 1.90), "ramp": "oak"},
+            {"t": "box", "c0": (1.04, 0.18, 0.20), "c1": (1.84, 0.24, 1.90), "ramp": "oak"},
+        ],
+    },
+    "bedroom_vanity": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.30, 0.00), "c1": (0.84, 0.76, 0.60), "bevel": 0.02},
+            {"t": "box", "c0": (0.24, 0.50, 0.60), "c1": (0.76, 0.60, 1.30), "ramp": "ivory"},
+            {"t": "box", "c0": (0.30, 0.52, 0.70), "c1": (0.70, 0.56, 1.20), "ramp": "slate"},
+        ],
+    },
+    "bedroom_rug": {
+        "w": 2, "l": 2, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.04, 0.04, 0.00), "c1": (1.96, 1.96, 0.05), "ramp": "plum"},
+            {"t": "box", "c0": (0.44, 0.44, 0.05), "c1": (1.56, 1.56, 0.06), "ramp": "ivory"},
+        ],
+    },
+    "bedroom_table_lamp": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.06, "z1": 0.60},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.20, "ry": 0.20, "z0": 0.60, "z1": 0.86,
+             "taper": 0.7, "ramp": "ivory"},
+        ],
+    },
+    "bedroom_bench": {
+        "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.24, 0.00), "c1": (0.26, 0.76, 0.36)},
+            {"t": "box", "c0": (0.74, 0.24, 0.00), "c1": (0.84, 0.76, 0.36)},
+            {"t": "box", "c0": (0.10, 0.22, 0.36), "c1": (0.90, 0.78, 0.46), "bevel": 0.03,
+             "ramp": "plum", "seat": True},
+        ],
+    },
+    "bedroom_reading_chair": {
+        "w": 1, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.00), "c1": (0.86, 0.86, 0.16), "ramp": "walnut"},
+            {"t": "box", "c0": (0.12, 0.12, 0.16), "c1": (0.88, 0.88, 0.44), "bevel": 0.04,
+             "ramp": "plum", "seat": True},
+            {"t": "box", "c0": (0.12, 0.64, 0.44), "c1": (0.88, 0.90, 1.20), "bevel": 0.05},
+        ],
+    },
+    "bedroom_desk": {
+        "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.20, 0.66), "c1": (0.90, 0.80, 0.74), "bevel": 0.02},
+            {"t": "box", "c0": (0.14, 0.24, 0.00), "c1": (0.24, 0.76, 0.66)},
+            {"t": "box", "c0": (0.76, 0.24, 0.00), "c1": (0.86, 0.76, 0.66)},
+            {"t": "box", "c0": (0.56, 0.24, 0.40), "c1": (0.86, 0.76, 0.62), "ramp": "walnut"},
+        ],
+    },
+    "bedroom_mirror": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.30, 0.00, 2.10), "c1": (0.70, 0.06, 2.90)},
+            {"t": "box", "c0": (0.36, 0.06, 2.18), "c1": (0.64, 0.08, 2.82), "ramp": "slate"},
+        ],
+    },
+    "bedroom_photo_wall": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.44), "c1": (0.42, 0.04, 2.72), "ramp": "navy"},
+            {"t": "box", "c0": (0.58, 0.00, 2.44), "c1": (0.80, 0.04, 2.72), "ramp": "crimson"},
+            {"t": "box", "c0": (0.40, 0.00, 2.44), "c1": (0.60, 0.04, 2.72), "ramp": "teal"},
+        ],
+    },
+    "bedroom_wall_sconce": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "box", "c0": (0.44, 0.00, 2.30), "c1": (0.56, 0.06, 2.60)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.10, "ry": 0.06, "z0": 2.60, "z1": 2.76,
+             "taper": 0.7, "ramp": "ivory"},
+        ],
+    },
+    "bedroom_tapestry": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "plum",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.20), "c1": (0.80, 0.05, 2.90), "ramp": "plum"},
+            {"t": "box", "c0": (0.30, 0.05, 2.36), "c1": (0.70, 0.07, 2.60), "ramp": "gold"},
+        ],
+    },
+    "bedroom_shelf": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "oak",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.00, 2.46), "c1": (0.84, 0.12, 2.52)},
+            {"t": "box", "c0": (0.42, 0.02, 2.52), "c1": (0.58, 0.10, 2.74), "ramp": "navy"},
+        ],
+    },
+    "bedroom_clock": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "ivory",
+        "prims": [
+            {"t": "hcyl", "x": 0.5, "y0": 0.02, "y1": 0.06, "z": 2.55, "r": 0.22,
+             "caps": False, "ramp": "ivory"},
+            {"t": "box", "c0": (0.486, 0.06, 2.55), "c1": (0.514, 0.08, 2.70), "ramp": "charcoal"},
+        ],
+    },
+    "bedroom_dream_print": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "navy",
+        "prims": [
+            {"t": "box", "c0": (0.26, 0.00, 2.30), "c1": (0.74, 0.05, 2.80), "ramp": "navy"},
+            {"t": "sphere", "c": (0.50, 0.10, 2.62), "r": 0.08, "ramp": "ivory"},
+        ],
+    },
     # ---- Bannerhold pilots (blitz task 5) ----
     # A trestle bench: two solid trestle ends, a thick plank, and a low stretcher. Reads as a
     # bench (long, backless) rather than a sofa or a stool; oak plank over walnut trestles is the
@@ -3559,6 +3896,36 @@ FIGURE_PARTS = {
              "c1": (6.0, 7.6, 21.4)},
             {"t": "box", "bone": "spine", "slot": 1, "c0": (-6.0, -7.6, 19.6),
              "c1": (-2.6, 7.6, 21.4)},
+        ],
+    },
+    # Puff Muffler (set 82, one slot). The lace ruff 76 is a horizontal plate lying at the chin.
+    # This is the same idea stood upright: a vertical tube round the neck, 7 px tall, symmetric,
+    # with nothing hanging below it.
+    #
+    # Its radius is 8.6 and not the intent's 6.0, and the reason is bd1 rather than taste. The torso
+    # box runs x +/-7.5 by y +/-6.0 all the way up to spine z 21, so a tube of radius 6 spanning
+    # z 15-22 is inside the body for six of its seven px. Built that way and rendered, it came out
+    # at 24 lit pixels per dir-frame, all of them in rows 43-46 — a collar sliver above the
+    # shoulders, not a muffler. 8.6 clears the torso by 1.1 in x and 2.6 in y, and it stays 0.8
+    # inside the ruff's own 9.4, which is what keeps this one hugging the neck where 76 rings it.
+    #
+    # Above the shoulders the skull is the thing to clear instead, and it grows fast: 4.21 at spine
+    # z 22, 6.93 at 24, 7.75 at 25. So the tube tops out at 24 and a squashed ball carries it the
+    # last px to about 24.9, which is where 8.5 finally drops inside the skull. The ball is 8.5
+    # against the cylinder's 8.6 on purpose — equal radii would put two surfaces on the same
+    # cylinder at z 24 and z-fight along the whole ring — and it rounds the top, which a flat cap
+    # on a part named for softness should not be.
+    #
+    # The back of the top ring is the edge that needed checking, the way the ruff 76's did. It
+    # projects UPWARD to row 36, the nose's own row, in the columns the face draws in. The holdout
+    # is what makes that safe: at spine z 24 the skull still carries 6.5 px of depth and sits nearer
+    # than the ring's back at y -8.6, so it wins those pixels outright.
+    "ca82": {
+        "prims": [
+            {"t": "cone", "bone": "spine", "slot": 0, "z0": 24.0, "len": 6.0,
+             "r0": 8.6, "r1": 8.6},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 0.0, 24.0), "r": 8.5,
+             "squash": (1.0, 1.0, 0.304)},
         ],
     },
 }

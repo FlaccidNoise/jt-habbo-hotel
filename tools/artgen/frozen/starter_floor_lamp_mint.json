@@ -1,0 +1,32 @@
+{
+  "defId": "starter_floor_lamp_mint",
+  "archetype": "artgen",
+  "sheet": "starter_floor_lamp_mint.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1977da0d6b049e7e",
+  "recipeHash": "1977da0d6b049e7e7a7d02435b5589032a6a1f331fdefed3708f44e7044b3d2a",
+  "pixelHash": "b18c4822c13b79b68f5e3dd856159b7f2ec5e2ad627c3ee3b20aa57076af3f52"
+}

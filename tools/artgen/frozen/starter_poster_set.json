@@ -1,0 +1,37 @@
+{
+  "defId": "starter_poster_set",
+  "archetype": "artgen",
+  "sheet": "starter_poster_set.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 17,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.05
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ae69e70268bbf880",
+  "recipeHash": "ae69e70268bbf880588f9009f5c1d94bb76581ebdc9ea5a3e0a9bbdeadebe200",
+  "pixelHash": "798be03ede99cf8f1a3d0b696190a2f463a147e98d08566ae5ebe4a500d70954"
+}

@@ -220,6 +220,26 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // Bannerhold pilot colorway (blitz task 5): the oak plank goes slate for dusk; the walnut
   // trestles stay, so the colorway is a different object, not a relabel.
   bannerhold_oak_bench_dusk: { base: "bannerhold_oak_bench", ramps: { oak: "slate" } },
+  // Wave A1 colorways (blitz task 6).
+  starter_armchair_sky: {  base: "starter_armchair", ramps: {"sand": "navy" }  },
+  starter_coffee_table_walnut: {  base: "starter_coffee_table", ramps: {"walnut": "oak" }  },
+  starter_entry_mat_sunny: {  base: "starter_entry_mat", ramps: {"crimson": "gold" }  },
+  starter_floor_lamp_mint: {  base: "starter_floor_lamp", ramps: {"ivory": "fern" }  },
+  cafe_espresso_machine_copper: {  base: "cafe_espresso_machine", ramps: {"charcoal": "sand" }  },
+  cafe_bakery_island_sage: {  base: "cafe_bakery_island", ramps: {"ivory": "fern" }  },
+  cafe_bistro_table_terracotta: {  base: "cafe_bistro_table", ramps: {"ivory": "crimson" }  },
+  cafe_bistro_chair_cream: {  base: "cafe_bistro_chair", ramps: {"teal": "ivory" }  },
+  cafe_pastry_case_walnut: {  base: "cafe_pastry_case", ramps: {"walnut": "charcoal" }  },
+  cafe_barista_stool_honey: {  base: "cafe_barista_stool", ramps: {"crimson": "gold" }  },
+  bedroom_bed_frame_blush: {  base: "bedroom_bed_frame", ramps: {"navy": "crimson" }  },
+  bedroom_dresser_ivory: {  base: "bedroom_dresser", ramps: {"oak": "ivory" }  },
+  bedroom_nightstand_walnut: {  base: "bedroom_nightstand", ramps: {"oak": "walnut" }  },
+  bedroom_wardrobe_mist: {  base: "bedroom_wardrobe", ramps: {"oak": "slate" }  },
+  bedroom_vanity_ivory: {  base: "bedroom_vanity", ramps: {"walnut": "ivory" }  },
+  bedroom_rug_dusk: {  base: "bedroom_rug", ramps: {"plum": "navy" }  },
+  bedroom_table_lamp_sage: {  base: "bedroom_table_lamp", ramps: {"ivory": "fern" }  },
+  bedroom_bench_linen: {  base: "bedroom_bench", ramps: {"plum": "ivory" }  },
+  bedroom_reading_chair_plum: {  base: "bedroom_reading_chair", ramps: {"plum": "crimson" }  },
 };
 
 function recolor(base: PartMeta, remap: Record<string, string>): PartMeta {

@@ -1,0 +1,37 @@
+{
+  "defId": "bedroom_clock",
+  "archetype": "artgen",
+  "sheet": "bedroom_clock.png",
+  "frameW": 64,
+  "frameH": 123,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 107,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.84375,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 16,
+    "planeH": 13,
+    "mountU": 6,
+    "mountV": 41,
+    "gap": 0.02,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:410ef080cd21c559",
+  "recipeHash": "410ef080cd21c55994986cb62692c1534eb83769a334f10e57f42c4d9c9b90ce",
+  "pixelHash": "d47f7967002af84215fab2212dceec6ab0b3a4ccd47e1aa75d11925dafb9429f"
+}

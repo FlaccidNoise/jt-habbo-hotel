@@ -1,0 +1,32 @@
+{
+  "defId": "starter_coffee_table",
+  "archetype": "artgen",
+  "sheet": "starter_coffee_table.png",
+  "frameW": 64,
+  "frameH": 45,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 29,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:05c20e0022bb8677",
+  "recipeHash": "05c20e0022bb86778a730c42b32558759c5fefe405a87dab55444e1c7b2b62af",
+  "pixelHash": "da8795fba4fdded51e13f98a5ebc7e208a728f699964dd440f058f9fb94f90d0"
+}

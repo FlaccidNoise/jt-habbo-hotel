@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_bistro_table",
+  "archetype": "artgen",
+  "sheet": "cafe_bistro_table.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b5aedeaf0da692b3",
+  "recipeHash": "b5aedeaf0da692b31d6b593adf497a3f6ecdf56ca9016bcd2abe6cc9cc55f790",
+  "pixelHash": "70b7d8201cf7db819bee5aee1a6d71856b7ff5511ec4a5ec6bcbb6cb6cc7c67f"
+}

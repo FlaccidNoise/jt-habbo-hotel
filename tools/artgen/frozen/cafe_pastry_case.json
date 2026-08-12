@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_pastry_case",
+  "archetype": "artgen",
+  "sheet": "cafe_pastry_case.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:fec612ed61b0c150",
+  "recipeHash": "fec612ed61b0c150eaa8a57cef08f391c96c8b60f289d745f01c18b8108729a1",
+  "pixelHash": "51af7b30eb27c2d3b4c069f0449ab59a662638d1c9a6fcf587fc1612d1b05f91"
+}

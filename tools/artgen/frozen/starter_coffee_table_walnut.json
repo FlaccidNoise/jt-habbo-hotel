@@ -1,0 +1,32 @@
+{
+  "defId": "starter_coffee_table_walnut",
+  "archetype": "artgen",
+  "sheet": "starter_coffee_table_walnut.png",
+  "frameW": 64,
+  "frameH": 45,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 29,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8700b0ee82901ec0",
+  "recipeHash": "8700b0ee82901ec04ba15d66881919a5cde5ef4074263b583343bc671a7cf11a",
+  "pixelHash": "595031b30a9deac87302a34e9e0e387b9e78bd7377f2e9922953713d35e753a6"
+}

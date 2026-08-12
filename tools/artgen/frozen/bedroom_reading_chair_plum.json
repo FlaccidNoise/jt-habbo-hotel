@@ -1,0 +1,34 @@
+{
+  "defId": "bedroom_reading_chair_plum",
+  "archetype": "artgen",
+  "sheet": "bedroom_reading_chair_plum.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "bedroom_reading_chair_plum.near.png",
+  "nearHash": "12619970d218b87e496c237b03af83b036498fc05cdad93ed8fdbc8c4c677080",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ae9bd04aa51aca51",
+  "recipeHash": "ae9bd04aa51aca515f28b741a964ec8fd78311f5e345fdf2cc643d3e5d7f417e",
+  "pixelHash": "939a75ce37951f07e2a4ad93300af2a1bcd1ff3f2c4ece35ca74d82bf9512aad"
+}

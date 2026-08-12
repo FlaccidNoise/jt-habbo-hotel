@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_nightstand_walnut",
+  "archetype": "artgen",
+  "sheet": "bedroom_nightstand_walnut.png",
+  "frameW": 64,
+  "frameH": 48,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 32,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:00b129eac5c16849",
+  "recipeHash": "00b129eac5c168492bd2bcd93d624ffd71c7eec96bdda7f1aa815a4def013a0e",
+  "pixelHash": "6295e8d96bfda6d6e24d32935efc6313a1e1050d9ad1dfd81f63491dd754eb43"
+}

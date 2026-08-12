@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_dresser",
+  "archetype": "artgen",
+  "sheet": "bedroom_dresser.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7eb3212a394880b4",
+  "recipeHash": "7eb3212a394880b49f1b4d2b8fabbee92de3f6a738c121c3a0240232006f5548",
+  "pixelHash": "dcc8cda28b625226f59a519451f2c7b37073a4c073d0ce3bd57b92ba189add50"
+}

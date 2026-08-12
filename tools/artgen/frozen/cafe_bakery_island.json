@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_bakery_island",
+  "archetype": "artgen",
+  "sheet": "cafe_bakery_island.png",
+  "frameW": 96,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ba2b9c2eb296cbf8",
+  "recipeHash": "ba2b9c2eb296cbf8daa8e43d1959db4d9bbbb9fb3cd5255bf5468429267d2801",
+  "pixelHash": "8e1e11edfedb2eab2b838c84a17bce04fd493e7b23887e48fd912319bd5c7472"
+}

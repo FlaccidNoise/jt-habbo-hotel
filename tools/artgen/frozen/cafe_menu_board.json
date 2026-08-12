@@ -1,0 +1,37 @@
+{
+  "defId": "cafe_menu_board",
+  "archetype": "artgen",
+  "sheet": "cafe_menu_board.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 23,
+    "mountU": 2,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2807752e7a960e0c",
+  "recipeHash": "2807752e7a960e0c0bf54baa8b08aa29a54dc5967f41c2cc4e14efc8c55c1fa7",
+  "pixelHash": "2713635e81c5500e7247856c7b03c9bae169cd17dd439849b2f12336d1dd3bfe"
+}

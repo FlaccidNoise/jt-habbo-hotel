@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_table_lamp",
+  "archetype": "artgen",
+  "sheet": "bedroom_table_lamp.png",
+  "frameW": 64,
+  "frameH": 60,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 44,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b577b0ecc5e0e34d",
+  "recipeHash": "b577b0ecc5e0e34da0a3109a2b5496813f846da45505e5e2f9fa188813d345c7",
+  "pixelHash": "6670636e2f7cff11dbf3d65e4751825bd848f3080b606e114884f5a2eb789938"
+}

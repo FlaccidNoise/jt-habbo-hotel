@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_potted_herb",
+  "archetype": "artgen",
+  "sheet": "cafe_potted_herb.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5118a596fe52f4c1",
+  "recipeHash": "5118a596fe52f4c1a684157d7ce5c5639077b1d9d7e5e2edd5c667887c523d67",
+  "pixelHash": "477bde8d718acbc6587c2186f63bb73d6ae5529a861fc3a2260b4633ca68b7d5"
+}

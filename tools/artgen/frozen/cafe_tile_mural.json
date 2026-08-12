@@ -1,0 +1,37 @@
+{
+  "defId": "cafe_tile_mural",
+  "archetype": "artgen",
+  "sheet": "cafe_tile_mural.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 23,
+    "mountU": 2,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.06
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:17c261fcbc4be37d",
+  "recipeHash": "17c261fcbc4be37d3c1cab8867dee7520f003c4b0925b5e2b234d98c671228fc",
+  "pixelHash": "478be9c6630a2f58941651278c43f5d921f099731ea908c05f6099076c430b5f"
+}

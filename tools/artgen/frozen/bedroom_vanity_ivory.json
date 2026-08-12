@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_vanity_ivory",
+  "archetype": "artgen",
+  "sheet": "bedroom_vanity_ivory.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e816aece34c06a85",
+  "recipeHash": "e816aece34c06a851bf50e94907713b2041085e7a93d5ffbd6ad6c024b884058",
+  "pixelHash": "8a24a45363a954d8564a184a67cdd82d41532762a734529868b4404ba5181a93"
+}

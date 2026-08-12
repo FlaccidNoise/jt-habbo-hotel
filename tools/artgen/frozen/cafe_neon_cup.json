@@ -1,0 +1,37 @@
+{
+  "defId": "cafe_neon_cup",
+  "archetype": "artgen",
+  "sheet": "cafe_neon_cup.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 12,
+    "mountU": 8,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0a2ae7b98d830a68",
+  "recipeHash": "0a2ae7b98d830a68e68f5ec373e94a8d5149376071326a78dc3a8905a6bc7241",
+  "pixelHash": "25aa12ff3a1cf9dec7768d2fd73ff09dd9f78242d005e365fd81e0713ac777aa"
+}

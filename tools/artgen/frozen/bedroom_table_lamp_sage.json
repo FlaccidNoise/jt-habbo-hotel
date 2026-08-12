@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_table_lamp_sage",
+  "archetype": "artgen",
+  "sheet": "bedroom_table_lamp_sage.png",
+  "frameW": 64,
+  "frameH": 60,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 44,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f6ad5ae5d99f7cc5",
+  "recipeHash": "f6ad5ae5d99f7cc565d4ed48f447f9350afb0729512ae8916bc280eae469f32d",
+  "pixelHash": "346a271f5c9834cb697db3ae877f0b954381478badb4ce05a7dd4136a238f8cd"
+}

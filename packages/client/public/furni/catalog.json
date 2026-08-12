@@ -3465,6 +3465,752 @@
       "recipeHash": "0f425ee14f89d7fc219aa71ca1904037f2a107b8f81943183f5de100a7073608",
       "pixelHash": "986fde8d4d1be11969f55b5fb0ca7e25d48e9090fb6a0f07769b8ad738c8eaac"
     },
+    "starter_armchair": {
+      "defId": "starter_armchair",
+      "archetype": "artgen",
+      "sheet": "starter_armchair.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "starter_armchair.near.png",
+      "nearHash": "affff149d74b2854856410c069f801af308856cff684ae766348796eee1d0b74",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d1d644d3b8361b12",
+      "recipeHash": "d1d644d3b8361b12f52c1265ec5377127ce9b90c05d01a2e6007ba5d22b858dd",
+      "pixelHash": "e6f28507939984f8c7bf29371ab854737ec805c97dfe89ae9bc5a2f17deeda07"
+    },
+    "starter_coffee_table": {
+      "defId": "starter_coffee_table",
+      "archetype": "artgen",
+      "sheet": "starter_coffee_table.png",
+      "frameW": 64,
+      "frameH": 45,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 29,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:05c20e0022bb8677",
+      "recipeHash": "05c20e0022bb86778a730c42b32558759c5fefe405a87dab55444e1c7b2b62af",
+      "pixelHash": "da8795fba4fdded51e13f98a5ebc7e208a728f699964dd440f058f9fb94f90d0"
+    },
+    "starter_entry_mat": {
+      "defId": "starter_entry_mat",
+      "archetype": "artgen",
+      "sheet": "starter_entry_mat.png",
+      "frameW": 64,
+      "frameH": 34,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:91a105c643289be1",
+      "recipeHash": "91a105c643289be1237c577d1bd1f698c21bd02fe8c0ffc6e7db805e99c879af",
+      "pixelHash": "7f835f62b3721c9002bb0546ba1dcb70c831d2695d5fe0ba931bda6b3af34018"
+    },
+    "starter_floor_lamp": {
+      "defId": "starter_floor_lamp",
+      "archetype": "artgen",
+      "sheet": "starter_floor_lamp.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2619269ef9aa50c2",
+      "recipeHash": "2619269ef9aa50c2c197a6cfccdd2e3e9db8f7d979d205719d20b23fb9f712e7",
+      "pixelHash": "23612271ff77e70a071a71f2d0d12c7c70924bd8a3220bf07840785e5cb280a6"
+    },
+    "starter_bookcase": {
+      "defId": "starter_bookcase",
+      "archetype": "artgen",
+      "sheet": "starter_bookcase.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:33b8874e0d945a1c",
+      "recipeHash": "33b8874e0d945a1c228e95283ff7e785f66a1502dddab367c84bc70d80bd678d",
+      "pixelHash": "822a3b27d0806ae0af713c130cf69cd394beed92e0896c30682f9644eb90ad4b"
+    },
+    "cafe_espresso_machine": {
+      "defId": "cafe_espresso_machine",
+      "archetype": "artgen",
+      "sheet": "cafe_espresso_machine.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bb5a6530ad275259",
+      "recipeHash": "bb5a6530ad2752597973cd30b38b06298e053f07b31556b8305705f12a1db11e",
+      "pixelHash": "169cacb833ceca98f6db30c8105eddf1f6dcb89693136144c745235b183d9cfd"
+    },
+    "cafe_bakery_island": {
+      "defId": "cafe_bakery_island",
+      "archetype": "artgen",
+      "sheet": "cafe_bakery_island.png",
+      "frameW": 96,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ba2b9c2eb296cbf8",
+      "recipeHash": "ba2b9c2eb296cbf8daa8e43d1959db4d9bbbb9fb3cd5255bf5468429267d2801",
+      "pixelHash": "8e1e11edfedb2eab2b838c84a17bce04fd493e7b23887e48fd912319bd5c7472"
+    },
+    "cafe_bistro_table": {
+      "defId": "cafe_bistro_table",
+      "archetype": "artgen",
+      "sheet": "cafe_bistro_table.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b5aedeaf0da692b3",
+      "recipeHash": "b5aedeaf0da692b31d6b593adf497a3f6ecdf56ca9016bcd2abe6cc9cc55f790",
+      "pixelHash": "70b7d8201cf7db819bee5aee1a6d71856b7ff5511ec4a5ec6bcbb6cb6cc7c67f"
+    },
+    "cafe_bistro_chair": {
+      "defId": "cafe_bistro_chair",
+      "archetype": "artgen",
+      "sheet": "cafe_bistro_chair.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "cafe_bistro_chair.near.png",
+      "nearHash": "8c3e87245e377f68516181380224889f964605da923e94f47367e75507adfbfe",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6d14f22aa1b62173",
+      "recipeHash": "6d14f22aa1b621734a31128364723fa9bfc7baadd0f38d7beae09d77e1cd3d7b",
+      "pixelHash": "de133c2f8b6acb9f487ba6b9e54246bbb6592aa459e3da331ce94171aa16bcda"
+    },
+    "cafe_pastry_case": {
+      "defId": "cafe_pastry_case",
+      "archetype": "artgen",
+      "sheet": "cafe_pastry_case.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:fec612ed61b0c150",
+      "recipeHash": "fec612ed61b0c150eaa8a57cef08f391c96c8b60f289d745f01c18b8108729a1",
+      "pixelHash": "51af7b30eb27c2d3b4c069f0449ab59a662638d1c9a6fcf587fc1612d1b05f91"
+    },
+    "cafe_barista_stool": {
+      "defId": "cafe_barista_stool",
+      "archetype": "artgen",
+      "sheet": "cafe_barista_stool.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": 0.7,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3421462a2b897a66",
+      "recipeHash": "3421462a2b897a660904b2b7d96785c514a8ad6a242f302df22413a118566504",
+      "pixelHash": "6a6cb09cafa3930853366e2c02611f04a0b10283ef5a33397876ab776c4fea87"
+    },
+    "cafe_potted_herb": {
+      "defId": "cafe_potted_herb",
+      "archetype": "artgen",
+      "sheet": "cafe_potted_herb.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5118a596fe52f4c1",
+      "recipeHash": "5118a596fe52f4c1a684157d7ce5c5639077b1d9d7e5e2edd5c667887c523d67",
+      "pixelHash": "477bde8d718acbc6587c2186f63bb73d6ae5529a861fc3a2260b4633ca68b7d5"
+    },
+    "cafe_woven_rug": {
+      "defId": "cafe_woven_rug",
+      "archetype": "artgen",
+      "sheet": "cafe_woven_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9d27739ea001fc6d",
+      "recipeHash": "9d27739ea001fc6d502d8a3a3c1e049e4e8f47bd048be48b8e9046f4078d34ae",
+      "pixelHash": "7c6d9f3c02a84ad36a30326495d8f41c79a730d53dc110708131a92ab2ec35c5"
+    },
+    "bedroom_bed_frame": {
+      "defId": "bedroom_bed_frame",
+      "archetype": "artgen",
+      "sheet": "bedroom_bed_frame.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "bedroom_bed_frame.near.png",
+      "nearHash": "6a5c10fcffacf3d459a6c762b0d66f9ff1fca8be750db0e4798e6b18ef50de1e",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6219b09f9ec527c6",
+      "recipeHash": "6219b09f9ec527c697c4e61ecbe2a76a32233dca546dfa90b00bdf6f4cceabbe",
+      "pixelHash": "6ee2ebb8eeaf80877a26f7f7ae8607660e74d4dbc10a85e33e0d0f0c3f69283b"
+    },
+    "bedroom_dresser": {
+      "defId": "bedroom_dresser",
+      "archetype": "artgen",
+      "sheet": "bedroom_dresser.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7eb3212a394880b4",
+      "recipeHash": "7eb3212a394880b49f1b4d2b8fabbee92de3f6a738c121c3a0240232006f5548",
+      "pixelHash": "dcc8cda28b625226f59a519451f2c7b37073a4c073d0ce3bd57b92ba189add50"
+    },
+    "bedroom_nightstand": {
+      "defId": "bedroom_nightstand",
+      "archetype": "artgen",
+      "sheet": "bedroom_nightstand.png",
+      "frameW": 64,
+      "frameH": 48,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 32,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bfae245f1698a4cc",
+      "recipeHash": "bfae245f1698a4cc1bdf77e5104702efc68662bfb22d6ae4d8368d331aad7b4a",
+      "pixelHash": "55e09977ba685a6307c50b508ed1d5ce154fc32e16078fc6dc20410485db115d"
+    },
+    "bedroom_wardrobe": {
+      "defId": "bedroom_wardrobe",
+      "archetype": "artgen",
+      "sheet": "bedroom_wardrobe.png",
+      "frameW": 96,
+      "frameH": 116,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 84,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ea329818c71e792a",
+      "recipeHash": "ea329818c71e792a541305a126cfaf5ba16fca8e0696ca205d9007f37454d849",
+      "pixelHash": "8f870490c671603c650a196cfbd7a97146b0d13d7c6f3c613ca8f69ab9812163"
+    },
+    "bedroom_vanity": {
+      "defId": "bedroom_vanity",
+      "archetype": "artgen",
+      "sheet": "bedroom_vanity.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:69ddd26d5544bf52",
+      "recipeHash": "69ddd26d5544bf52c897d6596163f31f444e51dbcc04668718667cac45b1a9cb",
+      "pixelHash": "dda97a558ad56c81f06896622ca82719f935d41306984127086bcdacea7dc3d9"
+    },
+    "bedroom_rug": {
+      "defId": "bedroom_rug",
+      "archetype": "artgen",
+      "sheet": "bedroom_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5c65a4f30a95206c",
+      "recipeHash": "5c65a4f30a95206ceab9d4822adb0f186d801518c0d5fbae4e474ccb4f660606",
+      "pixelHash": "fc7b829ce19d93f77e183a0b3985acd92a00a1a620e5344d109bc4b49e7d18af"
+    },
+    "bedroom_table_lamp": {
+      "defId": "bedroom_table_lamp",
+      "archetype": "artgen",
+      "sheet": "bedroom_table_lamp.png",
+      "frameW": 64,
+      "frameH": 60,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 44,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b577b0ecc5e0e34d",
+      "recipeHash": "b577b0ecc5e0e34da0a3109a2b5496813f846da45505e5e2f9fa188813d345c7",
+      "pixelHash": "6670636e2f7cff11dbf3d65e4751825bd848f3080b606e114884f5a2eb789938"
+    },
+    "bedroom_bench": {
+      "defId": "bedroom_bench",
+      "archetype": "artgen",
+      "sheet": "bedroom_bench.png",
+      "frameW": 64,
+      "frameH": 47,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 31,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.46875,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "bedroom_bench.near.png",
+      "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7a8a414844fb7f4d",
+      "recipeHash": "7a8a414844fb7f4d6714585b34e2ffc5062ac140003b92147ae4dee1e97d829b",
+      "pixelHash": "37c8aad2d85da9952a249d520cb894b5ce89d5ab77e48bda83031e2a225b0858"
+    },
+    "bedroom_reading_chair": {
+      "defId": "bedroom_reading_chair",
+      "archetype": "artgen",
+      "sheet": "bedroom_reading_chair.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "bedroom_reading_chair.near.png",
+      "nearHash": "1c4156dfdf557c9170d57ee1b094dc7b1a3b7c8f2531c44fd6c67bb02e6b9c79",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1a88f5d8639d8fbf",
+      "recipeHash": "1a88f5d8639d8fbf3e24daf07c5cc99d718d84693800ecd8665ab709b73ffc4f",
+      "pixelHash": "529b19a6fa244afeb4710f4b319e5bf51dda3b5a7cdc521af26ec0165338f842"
+    },
+    "bedroom_desk": {
+      "defId": "bedroom_desk",
+      "archetype": "artgen",
+      "sheet": "bedroom_desk.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bff91643b49e701b",
+      "recipeHash": "bff91643b49e701b5e26beb870c6ea07f09eb0ebd876d484d334e8be22334db4",
+      "pixelHash": "604769cb189344773c0e340c1c7ae2c19aa830afa3bbe40d83cf54b5785fb5db"
+    },
     "bannerhold_oak_bench": {
       "defId": "bannerhold_oak_bench",
       "archetype": "artgen",
@@ -3532,6 +4278,624 @@
       "partLibraryHash": "artgen:ab474f75df4e79a6",
       "recipeHash": "ab474f75df4e79a64f8c5909c6717e14b5725332b9078597ef629fe63f2e3257",
       "pixelHash": "f6ecf84155021a90dcacecbfcd52ed45067b279662dcb771030f65566d757cf9"
+    },
+    "starter_armchair_sky": {
+      "defId": "starter_armchair_sky",
+      "archetype": "artgen",
+      "sheet": "starter_armchair_sky.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "starter_armchair_sky.near.png",
+      "nearHash": "9e790883b34ffb51a5f4da17ef091f219d3375105fd4805d119054cc72a6bb95",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3adf6ca9a89a7b1b",
+      "recipeHash": "3adf6ca9a89a7b1bb98399cb051868e983c76f7011f662f6cfd6facb8ccd56cf",
+      "pixelHash": "296fa00680d5e510678b00636ac2639510707638ba8d15c45a33a99e15ea8e89"
+    },
+    "starter_coffee_table_walnut": {
+      "defId": "starter_coffee_table_walnut",
+      "archetype": "artgen",
+      "sheet": "starter_coffee_table_walnut.png",
+      "frameW": 64,
+      "frameH": 45,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 29,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8700b0ee82901ec0",
+      "recipeHash": "8700b0ee82901ec04ba15d66881919a5cde5ef4074263b583343bc671a7cf11a",
+      "pixelHash": "595031b30a9deac87302a34e9e0e387b9e78bd7377f2e9922953713d35e753a6"
+    },
+    "starter_entry_mat_sunny": {
+      "defId": "starter_entry_mat_sunny",
+      "archetype": "artgen",
+      "sheet": "starter_entry_mat_sunny.png",
+      "frameW": 64,
+      "frameH": 34,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:aa9b3b4018b0279e",
+      "recipeHash": "aa9b3b4018b0279ee7d1ad8e92770bf272f9090d8946c5a8362e1c76a86b1d04",
+      "pixelHash": "76e1d99c1a43f7f31522ac0317472fe07ba7c60c89ef95619b7764819980fb3a"
+    },
+    "starter_floor_lamp_mint": {
+      "defId": "starter_floor_lamp_mint",
+      "archetype": "artgen",
+      "sheet": "starter_floor_lamp_mint.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1977da0d6b049e7e",
+      "recipeHash": "1977da0d6b049e7e7a7d02435b5589032a6a1f331fdefed3708f44e7044b3d2a",
+      "pixelHash": "b18c4822c13b79b68f5e3dd856159b7f2ec5e2ad627c3ee3b20aa57076af3f52"
+    },
+    "cafe_espresso_machine_copper": {
+      "defId": "cafe_espresso_machine_copper",
+      "archetype": "artgen",
+      "sheet": "cafe_espresso_machine_copper.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:eabe450826d0728d",
+      "recipeHash": "eabe450826d0728dd9017a2366e65f12aa024924892974186e4568f9498412da",
+      "pixelHash": "b3c02ae2158a8abe75eec2b882b42e22406b068c0552a26e488790c760a4e228"
+    },
+    "cafe_bakery_island_sage": {
+      "defId": "cafe_bakery_island_sage",
+      "archetype": "artgen",
+      "sheet": "cafe_bakery_island_sage.png",
+      "frameW": 96,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3e179d31a97cf894",
+      "recipeHash": "3e179d31a97cf894f02d3816fe884039bb047bc11936b4eb38837b2ff5fd3ff4",
+      "pixelHash": "347f5d91439e60ce77c408e3bb495114b1937c7cd08fc41bf4d63ec2285d8ff5"
+    },
+    "cafe_bistro_table_terracotta": {
+      "defId": "cafe_bistro_table_terracotta",
+      "archetype": "artgen",
+      "sheet": "cafe_bistro_table_terracotta.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d382af97dd5a09dc",
+      "recipeHash": "d382af97dd5a09dc687be581e546870dd5a60868643879a9a43020ebdeae9671",
+      "pixelHash": "477664370335fd55ec386039fa9f0cbdb3deaa22d574e8288670c1c8284493e8"
+    },
+    "cafe_bistro_chair_cream": {
+      "defId": "cafe_bistro_chair_cream",
+      "archetype": "artgen",
+      "sheet": "cafe_bistro_chair_cream.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "cafe_bistro_chair_cream.near.png",
+      "nearHash": "c711cc38cbec2a03d795741b0f35f38b80c83fe517f0dc05c0ff5f6381f626ac",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:00fc12ae665da9e5",
+      "recipeHash": "00fc12ae665da9e543258ff47df39a31ce0fb7389920d1b5859f179d880d797e",
+      "pixelHash": "1e7bd443dfab2df21d59428d05c6983ec043a782fe65a4fdc89937b252a482f2"
+    },
+    "cafe_pastry_case_walnut": {
+      "defId": "cafe_pastry_case_walnut",
+      "archetype": "artgen",
+      "sheet": "cafe_pastry_case_walnut.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3605f03ae9dffee1",
+      "recipeHash": "3605f03ae9dffee1882c8679d131ef23603e086cdace76b0a199dbaab9b7cdc5",
+      "pixelHash": "6517979b34c4cb21518f014f8579264329ea96a747b772b70f7dd2b6c4308d7e"
+    },
+    "cafe_barista_stool_honey": {
+      "defId": "cafe_barista_stool_honey",
+      "archetype": "artgen",
+      "sheet": "cafe_barista_stool_honey.png",
+      "frameW": 64,
+      "frameH": 55,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 39,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.71875,
+      "seatZ": 0.7,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a62954fa297b0e94",
+      "recipeHash": "a62954fa297b0e94d9e731b9b71e4c0707da6f92aa85012d82406049bafcdb5c",
+      "pixelHash": "2bbe0d944ec3e83dbff388fd9d1f8bd639d2c4bb66d423641f249951ccf0cde1"
+    },
+    "bedroom_bed_frame_blush": {
+      "defId": "bedroom_bed_frame_blush",
+      "archetype": "artgen",
+      "sheet": "bedroom_bed_frame_blush.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "bedroom_bed_frame_blush.near.png",
+      "nearHash": "6a5c10fcffacf3d459a6c762b0d66f9ff1fca8be750db0e4798e6b18ef50de1e",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5c582708f61fb38c",
+      "recipeHash": "5c582708f61fb38cc65bd40f7aed8f9762f045812f350ce09e524d1fbd888244",
+      "pixelHash": "bdf57be13e48a94f9075d3674b6e6a94b3382df1880e1c8b9cfde3a28dff65b2"
+    },
+    "bedroom_dresser_ivory": {
+      "defId": "bedroom_dresser_ivory",
+      "archetype": "artgen",
+      "sheet": "bedroom_dresser_ivory.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4ff9da85afedc74f",
+      "recipeHash": "4ff9da85afedc74f54d61466038641a91e5ceecf347c563aaa6013836a0d58e4",
+      "pixelHash": "216b24356f779db80d3eb6d8a4c131daef3e2fcb85585948074741fc79cb9e49"
+    },
+    "bedroom_nightstand_walnut": {
+      "defId": "bedroom_nightstand_walnut",
+      "archetype": "artgen",
+      "sheet": "bedroom_nightstand_walnut.png",
+      "frameW": 64,
+      "frameH": 48,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 32,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:00b129eac5c16849",
+      "recipeHash": "00b129eac5c168492bd2bcd93d624ffd71c7eec96bdda7f1aa815a4def013a0e",
+      "pixelHash": "6295e8d96bfda6d6e24d32935efc6313a1e1050d9ad1dfd81f63491dd754eb43"
+    },
+    "bedroom_wardrobe_mist": {
+      "defId": "bedroom_wardrobe_mist",
+      "archetype": "artgen",
+      "sheet": "bedroom_wardrobe_mist.png",
+      "frameW": 96,
+      "frameH": 116,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 84,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 2.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7355df656451af2c",
+      "recipeHash": "7355df656451af2ca30eeb8382c5e70b6986b51699f51c6db732a5944c9ceddb",
+      "pixelHash": "eed60fa99e67143df3d0fc42ec1d1dbbef1bed82eb00ad1e7725b8d906ecc494"
+    },
+    "bedroom_vanity_ivory": {
+      "defId": "bedroom_vanity_ivory",
+      "archetype": "artgen",
+      "sheet": "bedroom_vanity_ivory.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e816aece34c06a85",
+      "recipeHash": "e816aece34c06a851bf50e94907713b2041085e7a93d5ffbd6ad6c024b884058",
+      "pixelHash": "8a24a45363a954d8564a184a67cdd82d41532762a734529868b4404ba5181a93"
+    },
+    "bedroom_rug_dusk": {
+      "defId": "bedroom_rug_dusk",
+      "archetype": "artgen",
+      "sheet": "bedroom_rug_dusk.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0dbcfc63cd823ee8",
+      "recipeHash": "0dbcfc63cd823ee8938be7cbd0570b913985dc4515945cb9b48398a155f82ebe",
+      "pixelHash": "e459bcf74ecca31511c2ba4d7d16f143093de55f76a08bc2360ad2b39daae7a5"
+    },
+    "bedroom_table_lamp_sage": {
+      "defId": "bedroom_table_lamp_sage",
+      "archetype": "artgen",
+      "sheet": "bedroom_table_lamp_sage.png",
+      "frameW": 64,
+      "frameH": 60,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 44,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f6ad5ae5d99f7cc5",
+      "recipeHash": "f6ad5ae5d99f7cc565d4ed48f447f9350afb0729512ae8916bc280eae469f32d",
+      "pixelHash": "346a271f5c9834cb697db3ae877f0b954381478badb4ce05a7dd4136a238f8cd"
+    },
+    "bedroom_bench_linen": {
+      "defId": "bedroom_bench_linen",
+      "archetype": "artgen",
+      "sheet": "bedroom_bench_linen.png",
+      "frameW": 64,
+      "frameH": 47,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 31,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.46875,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "bedroom_bench_linen.near.png",
+      "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:21f13f26d52fc73e",
+      "recipeHash": "21f13f26d52fc73e69c55cd6143a55cab0db45984e4098239871aef5b9f9f4eb",
+      "pixelHash": "df77e5a8b7df4d63ecc1237dd4d24b90d8e2757bd65d3332794e0afe7f9ef21a"
+    },
+    "bedroom_reading_chair_plum": {
+      "defId": "bedroom_reading_chair_plum",
+      "archetype": "artgen",
+      "sheet": "bedroom_reading_chair_plum.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "bedroom_reading_chair_plum.near.png",
+      "nearHash": "12619970d218b87e496c237b03af83b036498fc05cdad93ed8fdbc8c4c677080",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ae9bd04aa51aca51",
+      "recipeHash": "ae9bd04aa51aca515f28b741a964ec8fd78311f5e345fdf2cc643d3e5d7f417e",
+      "pixelHash": "939a75ce37951f07e2a4ad93300af2a1bcd1ff3f2c4ece35ca74d82bf9512aad"
     },
     "wall_art": {
       "defId": "wall_art",
@@ -4013,6 +5377,598 @@
       "partLibraryHash": "artgen:7466572f768804d2",
       "recipeHash": "7466572f768804d2f62f4654631cf08f5b8428fb8f9065b1ddaf473ca8b8f6ee",
       "pixelHash": "cd5901d195b9db120c6801e2e017996b0c11b86d6788774e2fba517d9bf5b5f2"
+    },
+    "starter_wall_clock": {
+      "defId": "starter_wall_clock",
+      "archetype": "artgen",
+      "sheet": "starter_wall_clock.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 40,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f7f2dd7ab085786f",
+      "recipeHash": "f7f2dd7ab085786ff6615e26bd0bce80d2f0bff35bf17c947011091d835b0aba",
+      "pixelHash": "1f1788071080ff9456d8b4aad266eef8478edc5ef63d7a0fca2c661e76711c79"
+    },
+    "starter_poster_set": {
+      "defId": "starter_poster_set",
+      "archetype": "artgen",
+      "sheet": "starter_poster_set.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 17,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.05
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ae69e70268bbf880",
+      "recipeHash": "ae69e70268bbf880588f9009f5c1d94bb76581ebdc9ea5a3e0a9bbdeadebe200",
+      "pixelHash": "798be03ede99cf8f1a3d0b696190a2f463a147e98d08566ae5ebe4a500d70954"
+    },
+    "cafe_menu_board": {
+      "defId": "cafe_menu_board",
+      "archetype": "artgen",
+      "sheet": "cafe_menu_board.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 23,
+        "mountU": 2,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2807752e7a960e0c",
+      "recipeHash": "2807752e7a960e0c0bf54baa8b08aa29a54dc5967f41c2cc4e14efc8c55c1fa7",
+      "pixelHash": "2713635e81c5500e7247856c7b03c9bae169cd17dd439849b2f12336d1dd3bfe"
+    },
+    "cafe_chalk_art": {
+      "defId": "cafe_chalk_art",
+      "archetype": "artgen",
+      "sheet": "cafe_chalk_art.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1bd3245e11447aee",
+      "recipeHash": "1bd3245e11447aee7743763884f80d5b3cbf13686521dbc3af7f7ab51b2d670a",
+      "pixelHash": "8689338b8fa903331fdb405e70fe671cf9d4e2816b44b89077565476b9531b61"
+    },
+    "cafe_cup_shelf": {
+      "defId": "cafe_cup_shelf",
+      "archetype": "artgen",
+      "sheet": "cafe_cup_shelf.png",
+      "frameW": 64,
+      "frameH": 117,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 101,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 6,
+        "mountU": 0,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.14
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f64f20291bd95620",
+      "recipeHash": "f64f20291bd956206717e35b0ed912476cf397bfb04c901328fe24135056e1f4",
+      "pixelHash": "42be437d9a38084578a4750181f2060b8b7607e53c6ef1229d6ce1d8cf6ebce4"
+    },
+    "cafe_tile_mural": {
+      "defId": "cafe_tile_mural",
+      "archetype": "artgen",
+      "sheet": "cafe_tile_mural.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 23,
+        "mountU": 2,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:17c261fcbc4be37d",
+      "recipeHash": "17c261fcbc4be37d3c1cab8867dee7520f003c4b0925b5e2b234d98c671228fc",
+      "pixelHash": "478be9c6630a2f58941651278c43f5d921f099731ea908c05f6099076c430b5f"
+    },
+    "cafe_herb_pressing": {
+      "defId": "cafe_herb_pressing",
+      "archetype": "artgen",
+      "sheet": "cafe_herb_pressing.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 17,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b8a6e8f5e7138491",
+      "recipeHash": "b8a6e8f5e7138491c802ac748cc894b16a9d8cc4c05a754a3717360bcedb6453",
+      "pixelHash": "f880eafec2e8de6f67e4265b7a70fee8165b66497277685eb26f59c82b04bbfd"
+    },
+    "bedroom_mirror": {
+      "defId": "bedroom_mirror",
+      "archetype": "artgen",
+      "sheet": "bedroom_mirror.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 26,
+        "mountU": 8,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7cca49a8931ea23d",
+      "recipeHash": "7cca49a8931ea23d9fac44c77e4fc353348d86165935999e54b97b44729fd729",
+      "pixelHash": "b38030ef263a611660f37bb673dc2168fb19c1ad8a230f7e4de8f6dad325798a"
+    },
+    "bedroom_wall_sconce": {
+      "defId": "bedroom_wall_sconce",
+      "archetype": "artgen",
+      "sheet": "bedroom_wall_sconce.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 13,
+        "mountU": 8,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c5b8e9cf77146e3b",
+      "recipeHash": "c5b8e9cf77146e3bf3ab224f4cc91e76c4df510bbb7109b788ca018ab2ad58f7",
+      "pixelHash": "14e39a54e27f5346e7b224c0c0e0b9751bbdf911c5b86b190a0c7323d1dd6ad4"
+    },
+    "bedroom_tapestry": {
+      "defId": "bedroom_tapestry",
+      "archetype": "artgen",
+      "sheet": "bedroom_tapestry.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 23,
+        "mountU": 4,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:90915af52efda799",
+      "recipeHash": "90915af52efda799625b919380bd83d7fd90bd0a761c0b8e480dca85ee7131b4",
+      "pixelHash": "a29c077730c21a21be964b4aa7b1115f5a448b9991c7cac52f482718403e06b0"
+    },
+    "bedroom_clock": {
+      "defId": "bedroom_clock",
+      "archetype": "artgen",
+      "sheet": "bedroom_clock.png",
+      "frameW": 64,
+      "frameH": 123,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 107,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 16,
+        "planeH": 13,
+        "mountU": 6,
+        "mountV": 41,
+        "gap": 0.02,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:410ef080cd21c559",
+      "recipeHash": "410ef080cd21c55994986cb62692c1534eb83769a334f10e57f42c4d9c9b90ce",
+      "pixelHash": "d47f7967002af84215fab2212dceec6ab0b3a4ccd47e1aa75d11925dafb9429f"
+    },
+    "bedroom_dream_print": {
+      "defId": "bedroom_dream_print",
+      "archetype": "artgen",
+      "sheet": "bedroom_dream_print.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:beb0849df5796f83",
+      "recipeHash": "beb0849df5796f83bf4c777d560a95b96a65b2dd939c4102f9bbeb6e2b9640be",
+      "pixelHash": "c0983fb77115fbb40889b850c807d3838017623c65c72c6b37b13b55b6d90e0f"
+    },
+    "starter_wall_shelf": {
+      "defId": "starter_wall_shelf",
+      "archetype": "artgen",
+      "sheet": "starter_wall_shelf.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 5,
+        "mountU": 0,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:656ada6790fd9ac1",
+      "recipeHash": "656ada6790fd9ac1f6f110827bf214fbb9b2ec482c1bb523a05042e5d4bc5651",
+      "pixelHash": "827b51561ca79ad80d9383148d6b9ca3955e68673328d2cc19491ab48af4a7d5"
+    },
+    "cafe_neon_cup": {
+      "defId": "cafe_neon_cup",
+      "archetype": "artgen",
+      "sheet": "cafe_neon_cup.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 12,
+        "mountU": 8,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0a2ae7b98d830a68",
+      "recipeHash": "0a2ae7b98d830a68e68f5ec373e94a8d5149376071326a78dc3a8905a6bc7241",
+      "pixelHash": "25aa12ff3a1cf9dec7768d2fd73ff09dd9f78242d005e365fd81e0713ac777aa"
+    },
+    "bedroom_photo_wall": {
+      "defId": "bedroom_photo_wall",
+      "archetype": "artgen",
+      "sheet": "bedroom_photo_wall.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 9,
+        "mountU": 4,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.04
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:accb333340c7001f",
+      "recipeHash": "accb333340c7001ff869022de24aad089bf71b19abc08f7637f7c16091311e5e",
+      "pixelHash": "507271673ecba7925a1f286d7fda1bda3e6c1de3fe8bdbf06823387db02edb2c"
+    },
+    "bedroom_shelf": {
+      "defId": "bedroom_shelf",
+      "archetype": "artgen",
+      "sheet": "bedroom_shelf.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 4,
+        "mountU": 0,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:15930e8aaf0e13ed",
+      "recipeHash": "15930e8aaf0e13eddbaa260a3f35dbc3affbc6b0ae55df150d3365f05800fa5c",
+      "pixelHash": "a21fd825f013324b43807765f2149c899af470060924f55bf6d3f9116914708d"
     },
     "bannerhold_crest_banner": {
       "defId": "bannerhold_crest_banner",

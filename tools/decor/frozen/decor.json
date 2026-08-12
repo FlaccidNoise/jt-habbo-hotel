@@ -233,6 +233,188 @@
       },
       "styleVersion": 3,
       "pixelHash": "e0f3df4c2b49168e8e0722ffd4c710819ad7085cfb001ac384df195e7852743e"
+    },
+    {
+      "id": "floor_starter_oak",
+      "kind": "floor",
+      "sheet": "floor_starter_oak.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "a740a9bdfa479657dcf2aa8d084b5b6e8824f57ec1e48d5d5538e61a70b95052"
+    },
+    {
+      "id": "floor_starter_sand_check",
+      "kind": "floor",
+      "sheet": "floor_starter_sand_check.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "a07a301bc0bf1f0f2767f513820719eea124539c9448c265a0feb901856f3945"
+    },
+    {
+      "id": "wall_starter_plaster_blue",
+      "kind": "wall",
+      "sheet": "wall_starter_plaster_blue.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "f132ed119034edc3a9117b1095a9e0b5d01152494a4231acce6b6277317e99d2"
+    },
+    {
+      "id": "wall_starter_pinstripe",
+      "kind": "wall",
+      "sheet": "wall_starter_pinstripe.png",
+      "tileW": 16,
+      "tileH": 32,
+      "source": {
+        "w": 32,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "45c7a10e2eb28134c060e98780fbf74157648b1299490a0548feebd19e8e514a"
+    },
+    {
+      "id": "floor_cafe_checker_cream",
+      "kind": "floor",
+      "sheet": "floor_cafe_checker_cream.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "6250501e45f27d2ff650f93d534e4e850629fac9341205afc8b944cf8d8f3fe5"
+    },
+    {
+      "id": "floor_cafe_terracotta",
+      "kind": "floor",
+      "sheet": "floor_cafe_terracotta.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "c67fc3d16fc2126c423288ab0497a167e6f40dd8b6cb7d18857517a8dd2e4d9b"
+    },
+    {
+      "id": "wall_cafe_subway_tile",
+      "kind": "wall",
+      "sheet": "wall_cafe_subway_tile.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "0dd4d02b2541beaa7c69ae2e1653b3b76bec45176a7e6a7cdee370ac99a70e87"
+    },
+    {
+      "id": "wall_cafe_awning_stripe",
+      "kind": "wall",
+      "sheet": "wall_cafe_awning_stripe.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "c95e87f9ec1a401f094754c7f5d140a06491bfb44bd5079f085750876edf73cb"
+    },
+    {
+      "id": "floor_bedroom_oak_herringbone",
+      "kind": "floor",
+      "sheet": "floor_bedroom_oak_herringbone.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "f0c437a58ec59d3ed5b99c4c52b3a3599b1182aba82f715c7249d5f8d666aa48"
+    },
+    {
+      "id": "floor_bedroom_soft_check",
+      "kind": "floor",
+      "sheet": "floor_bedroom_soft_check.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "0a6a3c372443ef5a5184bd455ade949f0743b2d152d8a167f1ed26a17490e7cf"
+    },
+    {
+      "id": "floor_bedroom_moon_inlay",
+      "kind": "floor",
+      "sheet": "floor_bedroom_moon_inlay.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "68de4354f9b9b92f219eae38408a40716fddddebbcce90b3fff6f422cb23efa5"
+    },
+    {
+      "id": "wall_bedroom_linen",
+      "kind": "wall",
+      "sheet": "wall_bedroom_linen.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "941c24d68f5a34cc227201eeae808fad9848f0651ee7dd2fd6fc524e020ed1c6"
+    },
+    {
+      "id": "wall_bedroom_cloud",
+      "kind": "wall",
+      "sheet": "wall_bedroom_cloud.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "e661dc7da61d3ad550b1ffe847350e45d15d53a3d4d3bc15faca5d51fe2a9ed2"
+    },
+    {
+      "id": "wall_bedroom_pinstripe",
+      "kind": "wall",
+      "sheet": "wall_bedroom_pinstripe.png",
+      "tileW": 16,
+      "tileH": 32,
+      "source": {
+        "w": 32,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "072bcde3b2e577fb82bedd27066c28887ca86f65f3cf100a32831a6ed8b03453"
     }
   ]
 }

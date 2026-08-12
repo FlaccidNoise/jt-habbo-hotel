@@ -1,0 +1,34 @@
+{
+  "defId": "cafe_bistro_chair",
+  "archetype": "artgen",
+  "sheet": "cafe_bistro_chair.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "nearSheet": "cafe_bistro_chair.near.png",
+  "nearHash": "8c3e87245e377f68516181380224889f964605da923e94f47367e75507adfbfe",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6d14f22aa1b62173",
+  "recipeHash": "6d14f22aa1b621734a31128364723fa9bfc7baadd0f38d7beae09d77e1cd3d7b",
+  "pixelHash": "de133c2f8b6acb9f487ba6b9e54246bbb6592aa459e3da331ce94171aa16bcda"
+}

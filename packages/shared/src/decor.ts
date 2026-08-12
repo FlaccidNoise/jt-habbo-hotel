@@ -196,6 +196,21 @@ export const DECOR_CATALOG: DecorDef[] = [
     tile: { w: 64, h: 32 },
     sides: { left: 0x3f5e9e, right: 0x527acd },
   },
+  // Wave A1 decor (blitz task 6): starter/cafe/bedroom floors and walls.
+  { kind: "floor", id: "floor_starter_oak", name: "Starter Oak", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
+  { kind: "floor", id: "floor_starter_sand_check", name: "Starter Sand Check", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0xcbc0ac } },
+  { kind: "wall", id: "wall_starter_plaster_blue", name: "Starter Plaster Blue", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_starter_pinstripe", name: "Starter Pinstripe", tile: { w: 16, h: 32 }, cap: 0xcbc0ac },
+  { kind: "floor", id: "floor_cafe_checker_cream", name: "Café Cream Checker", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_cafe_terracotta", name: "Café Terracotta", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0xb55a19 } },
+  { kind: "wall", id: "wall_cafe_subway_tile", name: "Café Subway Tile", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_cafe_awning_stripe", name: "Café Awning Stripe", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "floor", id: "floor_bedroom_oak_herringbone", name: "Bedroom Oak Herringbone", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
+  { kind: "floor", id: "floor_bedroom_soft_check", name: "Bedroom Soft Check", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_bedroom_moon_inlay", name: "Bedroom Moon Inlay", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xcbc0ac } },
+  { kind: "wall", id: "wall_bedroom_linen", name: "Bedroom Linen", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_bedroom_cloud", name: "Bedroom Cloud", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_bedroom_pinstripe", name: "Bedroom Pinstripe", tile: { w: 16, h: 32 }, cap: 0xcbc0ac },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

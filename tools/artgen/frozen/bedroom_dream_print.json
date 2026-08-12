@@ -1,0 +1,37 @@
+{
+  "defId": "bedroom_dream_print",
+  "archetype": "artgen",
+  "sheet": "bedroom_dream_print.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 16,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:beb0849df5796f83",
+  "recipeHash": "beb0849df5796f83bf4c777d560a95b96a65b2dd939c4102f9bbeb6e2b9640be",
+  "pixelHash": "c0983fb77115fbb40889b850c807d3838017623c65c72c6b37b13b55b6d90e0f"
+}

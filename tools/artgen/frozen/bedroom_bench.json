@@ -1,0 +1,34 @@
+{
+  "defId": "bedroom_bench",
+  "archetype": "artgen",
+  "sheet": "bedroom_bench.png",
+  "frameW": 64,
+  "frameH": 47,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 31,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.46875,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "bedroom_bench.near.png",
+  "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7a8a414844fb7f4d",
+  "recipeHash": "7a8a414844fb7f4d6714585b34e2ffc5062ac140003b92147ae4dee1e97d829b",
+  "pixelHash": "37c8aad2d85da9952a249d520cb894b5ce89d5ab77e48bda83031e2a225b0858"
+}

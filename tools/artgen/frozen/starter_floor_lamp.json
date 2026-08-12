@@ -1,0 +1,32 @@
+{
+  "defId": "starter_floor_lamp",
+  "archetype": "artgen",
+  "sheet": "starter_floor_lamp.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2619269ef9aa50c2",
+  "recipeHash": "2619269ef9aa50c2c197a6cfccdd2e3e9db8f7d979d205719d20b23fb9f712e7",
+  "pixelHash": "23612271ff77e70a071a71f2d0d12c7c70924bd8a3220bf07840785e5cb280a6"
+}

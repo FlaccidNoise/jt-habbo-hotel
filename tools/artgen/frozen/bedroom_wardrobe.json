@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_wardrobe",
+  "archetype": "artgen",
+  "sheet": "bedroom_wardrobe.png",
+  "frameW": 96,
+  "frameH": 116,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 84,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 2.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ea329818c71e792a",
+  "recipeHash": "ea329818c71e792a541305a126cfaf5ba16fca8e0696ca205d9007f37454d849",
+  "pixelHash": "8f870490c671603c650a196cfbd7a97146b0d13d7c6f3c613ca8f69ab9812163"
+}

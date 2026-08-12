@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_pastry_case_walnut",
+  "archetype": "artgen",
+  "sheet": "cafe_pastry_case_walnut.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3605f03ae9dffee1",
+  "recipeHash": "3605f03ae9dffee1882c8679d131ef23603e086cdace76b0a199dbaab9b7cdc5",
+  "pixelHash": "6517979b34c4cb21518f014f8579264329ea96a747b772b70f7dd2b6c4308d7e"
+}

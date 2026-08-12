@@ -1,0 +1,34 @@
+{
+  "defId": "bedroom_bed_frame_blush",
+  "archetype": "artgen",
+  "sheet": "bedroom_bed_frame_blush.png",
+  "frameW": 96,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "bedroom_bed_frame_blush.near.png",
+  "nearHash": "6a5c10fcffacf3d459a6c762b0d66f9ff1fca8be750db0e4798e6b18ef50de1e",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5c582708f61fb38c",
+  "recipeHash": "5c582708f61fb38cc65bd40f7aed8f9762f045812f350ce09e524d1fbd888244",
+  "pixelHash": "bdf57be13e48a94f9075d3674b6e6a94b3382df1880e1c8b9cfde3a28dff65b2"
+}

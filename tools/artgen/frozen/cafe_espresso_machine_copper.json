@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_espresso_machine_copper",
+  "archetype": "artgen",
+  "sheet": "cafe_espresso_machine_copper.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:eabe450826d0728d",
+  "recipeHash": "eabe450826d0728dd9017a2366e65f12aa024924892974186e4568f9498412da",
+  "pixelHash": "b3c02ae2158a8abe75eec2b882b42e22406b068c0552a26e488790c760a4e228"
+}

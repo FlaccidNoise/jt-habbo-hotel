@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_vanity",
+  "archetype": "artgen",
+  "sheet": "bedroom_vanity.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:69ddd26d5544bf52",
+  "recipeHash": "69ddd26d5544bf52c897d6596163f31f444e51dbcc04668718667cac45b1a9cb",
+  "pixelHash": "dda97a558ad56c81f06896622ca82719f935d41306984127086bcdacea7dc3d9"
+}

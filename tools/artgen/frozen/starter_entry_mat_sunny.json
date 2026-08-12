@@ -1,0 +1,32 @@
+{
+  "defId": "starter_entry_mat_sunny",
+  "archetype": "artgen",
+  "sheet": "starter_entry_mat_sunny.png",
+  "frameW": 64,
+  "frameH": 34,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:aa9b3b4018b0279e",
+  "recipeHash": "aa9b3b4018b0279ee7d1ad8e92770bf272f9090d8946c5a8362e1c76a86b1d04",
+  "pixelHash": "76e1d99c1a43f7f31522ac0317472fe07ba7c60c89ef95619b7764819980fb3a"
+}

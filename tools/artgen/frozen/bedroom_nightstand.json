@@ -1,0 +1,32 @@
+{
+  "defId": "bedroom_nightstand",
+  "archetype": "artgen",
+  "sheet": "bedroom_nightstand.png",
+  "frameW": 64,
+  "frameH": 48,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 32,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bfae245f1698a4cc",
+  "recipeHash": "bfae245f1698a4cc1bdf77e5104702efc68662bfb22d6ae4d8368d331aad7b4a",
+  "pixelHash": "55e09977ba685a6307c50b508ed1d5ce154fc32e16078fc6dc20410485db115d"
+}

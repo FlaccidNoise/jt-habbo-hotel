@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_woven_rug",
+  "archetype": "artgen",
+  "sheet": "cafe_woven_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9d27739ea001fc6d",
+  "recipeHash": "9d27739ea001fc6d502d8a3a3c1e049e4e8f47bd048be48b8e9046f4078d34ae",
+  "pixelHash": "7c6d9f3c02a84ad36a30326495d8f41c79a730d53dc110708131a92ab2ec35c5"
+}

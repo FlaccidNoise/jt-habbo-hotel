@@ -1,0 +1,37 @@
+{
+  "defId": "bedroom_shelf",
+  "archetype": "artgen",
+  "sheet": "bedroom_shelf.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 28,
+    "planeH": 4,
+    "mountU": 0,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.12
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:15930e8aaf0e13ed",
+  "recipeHash": "15930e8aaf0e13eddbaa260a3f35dbc3affbc6b0ae55df150d3365f05800fa5c",
+  "pixelHash": "a21fd825f013324b43807765f2149c899af470060924f55bf6d3f9116914708d"
+}

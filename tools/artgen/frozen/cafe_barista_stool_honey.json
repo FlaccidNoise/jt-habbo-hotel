@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_barista_stool_honey",
+  "archetype": "artgen",
+  "sheet": "cafe_barista_stool_honey.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": 0.7,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a62954fa297b0e94",
+  "recipeHash": "a62954fa297b0e94d9e731b9b71e4c0707da6f92aa85012d82406049bafcdb5c",
+  "pixelHash": "2bbe0d944ec3e83dbff388fd9d1f8bd639d2c4bb66d423641f249951ccf0cde1"
+}

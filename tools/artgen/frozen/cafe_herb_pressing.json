@@ -1,0 +1,37 @@
+{
+  "defId": "cafe_herb_pressing",
+  "archetype": "artgen",
+  "sheet": "cafe_herb_pressing.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 17,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b8a6e8f5e7138491",
+  "recipeHash": "b8a6e8f5e7138491c802ac748cc894b16a9d8cc4c05a754a3717360bcedb6453",
+  "pixelHash": "f880eafec2e8de6f67e4265b7a70fee8165b66497277685eb26f59c82b04bbfd"
+}

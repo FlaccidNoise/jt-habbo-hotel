@@ -1,0 +1,32 @@
+{
+  "defId": "starter_entry_mat",
+  "archetype": "artgen",
+  "sheet": "starter_entry_mat.png",
+  "frameW": 64,
+  "frameH": 34,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:91a105c643289be1",
+  "recipeHash": "91a105c643289be1237c577d1bd1f698c21bd02fe8c0ffc6e7db805e99c879af",
+  "pixelHash": "7f835f62b3721c9002bb0546ba1dcb70c831d2695d5fe0ba931bda6b3af34018"
+}

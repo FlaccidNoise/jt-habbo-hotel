@@ -1,0 +1,34 @@
+{
+  "defId": "starter_armchair_sky",
+  "archetype": "artgen",
+  "sheet": "starter_armchair_sky.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "starter_armchair_sky.near.png",
+  "nearHash": "9e790883b34ffb51a5f4da17ef091f219d3375105fd4805d119054cc72a6bb95",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3adf6ca9a89a7b1b",
+  "recipeHash": "3adf6ca9a89a7b1bb98399cb051868e983c76f7011f662f6cfd6facb8ccd56cf",
+  "pixelHash": "296fa00680d5e510678b00636ac2639510707638ba8d15c45a33a99e15ea8e89"
+}

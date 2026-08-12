@@ -1,0 +1,34 @@
+{
+  "defId": "bedroom_bench_linen",
+  "archetype": "artgen",
+  "sheet": "bedroom_bench_linen.png",
+  "frameW": 64,
+  "frameH": 47,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 31,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.46875,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "bedroom_bench_linen.near.png",
+  "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:21f13f26d52fc73e",
+  "recipeHash": "21f13f26d52fc73e69c55cd6143a55cab0db45984e4098239871aef5b9f9f4eb",
+  "pixelHash": "df77e5a8b7df4d63ecc1237dd4d24b90d8e2757bd65d3332794e0afe7f9ef21a"
+}

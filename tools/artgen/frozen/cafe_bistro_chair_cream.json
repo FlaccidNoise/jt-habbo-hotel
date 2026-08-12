@@ -1,0 +1,34 @@
+{
+  "defId": "cafe_bistro_chair_cream",
+  "archetype": "artgen",
+  "sheet": "cafe_bistro_chair_cream.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "nearSheet": "cafe_bistro_chair_cream.near.png",
+  "nearHash": "c711cc38cbec2a03d795741b0f35f38b80c83fe517f0dc05c0ff5f6381f626ac",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:00fc12ae665da9e5",
+  "recipeHash": "00fc12ae665da9e543258ff47df39a31ce0fb7389920d1b5859f179d880d797e",
+  "pixelHash": "1e7bd443dfab2df21d59428d05c6983ec043a782fe65a4fdc89937b252a482f2"
+}

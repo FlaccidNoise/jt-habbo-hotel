@@ -1,0 +1,34 @@
+{
+  "defId": "bedroom_reading_chair",
+  "archetype": "artgen",
+  "sheet": "bedroom_reading_chair.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "bedroom_reading_chair.near.png",
+  "nearHash": "1c4156dfdf557c9170d57ee1b094dc7b1a3b7c8f2531c44fd6c67bb02e6b9c79",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1a88f5d8639d8fbf",
+  "recipeHash": "1a88f5d8639d8fbf3e24daf07c5cc99d718d84693800ecd8665ab709b73ffc4f",
+  "pixelHash": "529b19a6fa244afeb4710f4b319e5bf51dda3b5a7cdc521af26ec0165338f842"
+}

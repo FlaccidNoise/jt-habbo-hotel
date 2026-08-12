@@ -1,0 +1,32 @@
+{
+  "defId": "cafe_barista_stool",
+  "archetype": "artgen",
+  "sheet": "cafe_barista_stool.png",
+  "frameW": 64,
+  "frameH": 55,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 39,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.71875,
+  "seatZ": 0.7,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3421462a2b897a66",
+  "recipeHash": "3421462a2b897a660904b2b7d96785c514a8ad6a242f302df22413a118566504",
+  "pixelHash": "6a6cb09cafa3930853366e2c02611f04a0b10283ef5a33397876ab776c4fea87"
+}

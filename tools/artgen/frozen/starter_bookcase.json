@@ -1,0 +1,32 @@
+{
+  "defId": "starter_bookcase",
+  "archetype": "artgen",
+  "sheet": "starter_bookcase.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:33b8874e0d945a1c",
+  "recipeHash": "33b8874e0d945a1c228e95283ff7e785f66a1502dddab367c84bc70d80bd678d",
+  "pixelHash": "822a3b27d0806ae0af713c130cf69cd394beed92e0896c30682f9644eb90ad4b"
+}

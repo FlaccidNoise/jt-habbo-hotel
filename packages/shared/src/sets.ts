@@ -31,6 +31,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_casino",
   },
   {
+    id: "suite",
+    name: "The Suite Basics Set",
+    members: ["bedroom_bed_frame", "bedroom_dresser", "bedroom_wardrobe", "bedroom_vanity"],
+    reward: "bedroom_vanity_ivory",
+    badge: "set_suite",
+  },
+  {
     id: "gallery",
     name: "The Gallery",
     members: ["wall_art", "poster", "record_trophy", "wall_shelf"],
