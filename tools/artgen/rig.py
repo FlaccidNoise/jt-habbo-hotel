@@ -5064,6 +5064,52 @@ FIGURE_PARTS = {
              "c1": (4.2, 7.6, -12.8)},
         ],
     },
+    # Rolled-Sleeve Shirt (set 105, two slots). `ch` is the most crowded layer in the wardrobe at
+    # 17 shipped sets, and every plain body box is taken — 7.6 through 9.0 in x, 6.2 through 7.2 in
+    # y, in steps of a tenth. So the separator is a FEATURE, twice over: a sleeve that stops at the
+    # elbow inside a roll, and a hem that is 5 px lower at the front than at the back.
+    #
+    # Three builds, measured against every shipped `ch`:
+    #
+    #   sleeve 11.0 r 4.0, roll 5.6, hem front -1.0 / back 3.0  -> 0.8356 vs the TRIM SHIRT 6
+    #   sleeve 11.0 r 4.2, roll 6.4, hem front -2.0 / back 4.0  -> 0.7972 vs 6
+    #   sleeve 11.0 r 4.2, roll 6.4, hem front -3.0 / back 2.0  -> the build below, 0.8104 vs 6
+    #
+    # The first build is the ledger's numbers and it is 0.018 off the 0.854 bar. Its body is the
+    # tee 5's and the trim shirt 6's within a tenth, and neither the ledger's 5.6 roll nor a 4 px
+    # hem step is enough to pull away from a body that close. The arm is what moved it: a sleeve
+    # is the one part of a `ch` that lies outside the torso in every direction (the middy 99's
+    # finding), so widening the tube to 4.2 and the roll to 6.4 — 2.2 proud, where 6's own cuff
+    # ball is 0.2 proud of its sleeve and reads flush — took 0.0384 off in one step.
+    #
+    # The third build exists because the second one's back hem was wrong on the figure rather than
+    # in the numbers. At z 4.0 it sits ABOVE every shipped `lg` hip box, which top out at 2.6 to
+    # 3.4, so a 1.4 px band of bd1's back showed between the shirt and the trousers at dirs 6/7/0
+    # and read as the shirt riding up. Dropping the pair to -3.0 and 2.0 tucks the back hem under
+    # all of them and keeps the step at 5 px, at a cost of 0.0132 in IoU.
+    #
+    # 11.0 is the elbow: ARM_LEN is 22 and the bone runs from the shoulder. The tee 5 stops at 8.0
+    # with no cuff, the trim shirt 6 at 13.0, and the vest + shirt 40 the ledger names at 16.0 —
+    # which measured 0.7849, so the named sibling was not the tightest one here either.
+    #
+    # Face clearance is the trim shirt 6's, unchanged: 0 face pixels painted over, and 1 clear row
+    # from BELOW at wave0 d2, where the raised arm's roll comes up beside the jaw.
+    "ch105": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, -0.2, -3.0),
+             "c1": (8.0, 6.4, 20.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.0, -6.4, 2.0),
+             "c1": (8.0, 0.2, 20.0)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 11.0, "r": 4.2},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 11.0, "r": 4.2},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -11.0), "r": 6.4,
+             "squash": (1.0, 1.0, 0.52)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -11.0), "r": 6.4,
+             "squash": (1.0, 1.0, 0.52)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (2.4, 6.4, 8.6),
+             "c1": (6.0, 7.2, 13.2)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
