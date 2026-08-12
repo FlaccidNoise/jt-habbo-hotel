@@ -4884,6 +4884,52 @@ FIGURE_PARTS = {
              "c1": (3.2, 7.6, 16.8)},
         ],
     },
+    # Rope Belt (set 100, one slot). The belt 15 is one flat 2.8 px box with a straight top and
+    # bottom edge. This is the chain 62's idiom moved to the hip: overlapping balls, so both edges
+    # are scalloped in all eight directions, plus a knot and two tails 15 has nothing like.
+    #
+    # NINE balls, not the row's eight. The waist is a box, not a circle — a rope has to clear
+    # x +/-7.5 and y +/-6.0 — and its perimeter is 47 px, so eight 3.6 px balls sit 5 px apart and
+    # read as beads. Each ball is stretched 1.5 along its own run instead (x on the front and back
+    # faces, y on the sides), which keeps the rope 3.6 px THICK, the number the row names, and
+    # closes every gap on screen; the ninth fills the back centre, because the front centre gets
+    # the knot and the back would otherwise open a 5 px hole at dirs 6/7/0.
+    #
+    # The side pair sits at y +/-4.4 rather than on the waist's own centre line. bd1's arm hangs
+    # at x 9.5 with r 3.2, so a ball at x 8.3 and y 0 is inside the arm's own y band and loses its
+    # front half to the holdout; pushed to 4.4 its near face is at 7.1 against the arm's 3.2 and
+    # it wins those pixels outright, which is the potion belt 92's measurement unchanged.
+    #
+    # The tails are 3.0 wide because the chain 62's floor applies to them too, and 1.4 thick,
+    # which is the star stole 94's panel — thinner loses its edge at dirs 1 and 5.
+    "wa100": {
+        "prims": [
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (5.2, 6.6, 1.2), "r": 1.8,
+             "squash": (1.5, 0.9, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-5.2, 6.6, 1.2), "r": 1.8,
+             "squash": (1.5, 0.9, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (8.3, 4.4, 1.2), "r": 1.8,
+             "squash": (0.9, 1.5, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-8.3, 4.4, 1.2), "r": 1.8,
+             "squash": (0.9, 1.5, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (8.3, -4.4, 1.2), "r": 1.8,
+             "squash": (0.9, 1.5, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-8.3, -4.4, 1.2), "r": 1.8,
+             "squash": (0.9, 1.5, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (5.2, -6.6, 1.2), "r": 1.8,
+             "squash": (1.5, 0.9, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-5.2, -6.6, 1.2), "r": 1.8,
+             "squash": (1.5, 0.9, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, -6.8, 1.2), "r": 1.8,
+             "squash": (1.5, 0.9, 1.0)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 6.9, 1.2), "r": 2.6,
+             "squash": (1.0, 0.78, 0.85)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-3.4, 6.2, -7.0),
+             "c1": (-0.4, 7.6, 1.2)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (0.4, 6.2, -7.0),
+             "c1": (3.4, 7.6, 1.2)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

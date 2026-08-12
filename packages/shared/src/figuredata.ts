@@ -203,6 +203,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 97,  type: "lg", name: "Rolled Deck Trousers", slots: 2, family: "material", hides: [], retired: false },
   { id: 98,  type: "sh", name: "Sea Boots",            slots: 1, family: "material", hides: [], retired: false },
   { id: 99,  type: "ch", name: "Sailor Middy",         slots: 2, family: "material", hides: [], retired: false },
+  { id: 100, type: "wa", name: "Rope Belt",            slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -358,6 +359,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 96, price: 400, theme: "fablewood" },   // Pointed Hat
   { set: 93, price: 450, theme: "fablewood" },   // Wizard Robe
   { set: 97,  price: 150, theme: "tidal" },      // Rolled Deck Trousers
+  { set: 100, price: 150, theme: "tidal" },      // Rope Belt
   { set: 98,  price: 300, theme: "tidal" },      // Sea Boots
   { set: 99,  price: 300, theme: "tidal" },      // Sailor Middy
 ];

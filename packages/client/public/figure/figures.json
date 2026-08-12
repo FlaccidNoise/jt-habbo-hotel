@@ -4963,6 +4963,54 @@
       "figuredataVersion": 1,
       "recipeHash": "61fb7253969109539be0756eec19347a6a5492095f1fc21b9d0f85560a87a3f9",
       "pixelHash": "e15662869a549d9209173eac4cbd97cff370e7bd5960b7e2bc908b30cb672493"
+    },
+    {
+      "partId": "wa100",
+      "setId": 100,
+      "type": "wa",
+      "name": "Rope Belt",
+      "slots": 1,
+      "hides": [],
+      "sheet": "wa100.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "1424d09964a4c8f3fddd79e7574dbf3fa2ffa5c3ea58c2da28e8a4a819eb9982",
+      "pixelHash": "d7e8aeaa54852b97c97de3428a3d6a4fec3689ee2eab7afb6ffd99bd8fcb11b1"
     }
   ]
 }
