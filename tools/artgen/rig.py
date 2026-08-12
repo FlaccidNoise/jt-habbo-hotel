@@ -4369,6 +4369,49 @@ FIGURE_PARTS = {
              "r0": 6.6, "r1": 6.6},
         ],
     },
+    # Mag Boots (set 85, two slots). The boots 50 put their mark up the shin — a shaft to -9.4
+    # closed by a cuff band — and this one stops at the ankle and spends everything on the floor.
+    #
+    # The sibling that actually binds is the SNEAKERS 49, not 50. 49 is already tread, flared
+    # midsole and upper: three stacked boxes with the flare in the middle one, which is the same
+    # sentence the intent writes for this boot. Built to the intent's numbers — a 2.4 slab out to
+    # x 5.2 and y 8.8 over a loafer-footprint tread — the pair measured 0.8757 IoU, over the 0.854
+    # bar, because 49's midsole already reaches x 4.9 and y 8.4 and its upper already sits where
+    # this one's ankle shell does. Two shoes cannot both be "a flare between a tread and an upper".
+    #
+    # So the slab stops being a midsole and becomes a PLATE: x 6.2 and y -5.6..9.6, which is
+    # 1.3 px wider and 1.2 px longer than anything 49 puts there and 2.4 px past the toe of the
+    # loafer 9 the tread is cut to. That drops the pair to 0.7442, and the plate is then the
+    # largest single mass on the shoe layer rather than a step inside it.
+    #
+    # The plate is paid for in lift, the same arithmetic the sneakers 49 record. A frame's deepest
+    # row is (|x| + |y|) / 2.828 below the prim's own z; this plate overhangs the loafer footprint
+    # by 2.0 in x and 2.4 in y at its worst corner, which is 1.56 rows, so it starts at -16.2 —
+    # 1.8 px off the ground plane — and lands 0.24 px ABOVE the tread's own row instead of under
+    # it. Measured, the walk-contact frames put it on row 110 with the gate failing at 111.
+    #
+    # Slot 1 is the plate alone. It is the whole read of the boot, so it is the half a second ramp
+    # is spent on.
+    "sh85": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -16.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.2, -3.5, -float(SHIN_LEN)),
+             "c1": (4.2, 7.2, -16.2)},
+            {"t": "box", "bone": "knee_l", "slot": 1, "c0": (-6.2, -5.6, -16.2),
+             "c1": (6.2, 9.6, -13.8)},
+            {"t": "box", "bone": "knee_r", "slot": 1, "c0": (-6.2, -5.6, -16.2),
+             "c1": (6.2, 9.6, -13.8)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.4, -3.7, -13.8),
+             "c1": (4.4, 6.6, -11.4)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.4, -3.7, -13.8),
+             "c1": (4.4, 6.6, -11.4)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-4.0, 4.8, -13.8),
+             "c1": (4.0, 7.8, -12.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-4.0, 4.8, -13.8),
+             "c1": (4.0, 7.8, -12.2)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

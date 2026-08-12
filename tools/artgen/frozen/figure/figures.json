@@ -4237,6 +4237,54 @@
       "figuredataVersion": 1,
       "recipeHash": "5a0a9cfae7045e211de49a07df9c7b67c27f36d9ecc4d921fea2982410424a7c",
       "pixelHash": "01530aababb4bbffdd6ce84ce6ae12a6f7ff7bd28f1079291919ca935ccf8a39"
+    },
+    {
+      "partId": "sh85",
+      "setId": 85,
+      "type": "sh",
+      "name": "Mag Boots",
+      "slots": 2,
+      "hides": [],
+      "sheet": "sh85.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b48355c3032b1601d5e1c208a83f077c3e2156a6fe0f82a0ff4cb72641596257",
+      "pixelHash": "9217089e522e189e548a8f547887d81f00d06b874050bcc98255fbc53587f04b"
     }
   ]
 }
