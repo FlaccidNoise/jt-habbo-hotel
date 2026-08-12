@@ -63,6 +63,24 @@ describe("publish sync (#423)", () => {
     }
   });
 
+  // #451: the same document written two ways. A scoped freeze (`--freeze --only <part>`) merges one
+  // layer into the frozen document, an unscoped one rewrites it from this run's build order, and
+  // while those paths ordered the array differently a layer's position recorded which kind of
+  // freeze last touched it. Any cross-session mix of the two reordered figures.json without moving
+  // a pixel, and the byte-compare above then failed on a tree that had tested green. figurepass
+  // sorts every write by setId, so the committed document is its own canonical order.
+  test("figures.json is ordered by setId, whichever freeze wrote it", () => {
+    const doc = JSON.parse(readFileSync(join(FROZEN_DIR, "figure", "figures.json"), "utf8")) as {
+      layers: Array<{ partId: string; setId: number }>;
+    };
+    const ids = doc.layers.map((l) => l.setId);
+    expect(new Set(ids).size, "two layers share a setId, so setId cannot order them").toBe(ids.length);
+    expect(
+      doc.layers.map((l) => l.partId),
+      "figures.json is out of setId order — a freeze appended instead of sorting",
+    ).toEqual([...doc.layers].sort((a, b) => a.setId - b.setId).map((l) => l.partId));
+  });
+
   test("every decor tile is published byte-identical", () => {
     const doc = JSON.parse(readFileSync(join(DECOR_FROZEN_DIR, "decor.json"), "utf8")) as {
       decor: Array<{ id: string; sheet: string }>;

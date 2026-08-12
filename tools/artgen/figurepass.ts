@@ -1017,7 +1017,14 @@ if (freeze && failures === 0) {
     const merged = scope && frozenDoc
       ? [...frozenDoc.layers.map((l) => written.get(l.partId as string) ?? l),
          ...write.filter((b) => !frozenDoc.layers.some((l) => l.partId === b.partId))]
-      : bundles;
+      : [...bundles];
+    // One order for both paths (#451). A scoped freeze merges into the frozen document and an
+    // unscoped one rewrites it in this run's build order, so a layer's position used to record
+    // which kind of freeze last touched it: two sessions freezing the same wardrobe different ways
+    // produced files that disagreed on order alone, and the published copy then failed #423's
+    // byte-compare on a tree that had tested green. setId is the layer's identity — globally
+    // unique, and what the client keys its atlas on — so it is the order every freeze writes.
+    merged.sort((a, b) => (a.setId as number) - (b.setId as number));
     freezeFile(figuresPath, Buffer.from(JSON.stringify({ canvas, palette, layers: merged }, null, 2)),
       "figures.json");
     console.log(`froze ${write.length} figure layer(s) to tools/artgen/frozen/figure/`);
