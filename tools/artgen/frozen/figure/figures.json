@@ -5301,6 +5301,54 @@
       "figuredataVersion": 1,
       "recipeHash": "05127ee78d6bab0cc20b9364b9dd362eb6d156b46eb3b2bb6ad92dc44807a562",
       "pixelHash": "3d7a0310f880c44ce6fdcc9c501702fc2d0990e871af98c1c44a56b6c5e134ce"
+    },
+    {
+      "partId": "ca107",
+      "setId": 107,
+      "type": "ca",
+      "name": "Seed Satchel",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ca107.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "bbb622f564531a3c633389d954cbf4b1593c9527fbc6600ab8309ff797f920b7",
+      "pixelHash": "34b4e493ed946ff1da0376531a7fbe1c148649ddf2fe3a8fd8dd724199eadfa5"
     }
   ]
 }

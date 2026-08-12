@@ -5145,6 +5145,46 @@ FIGURE_PARTS = {
              "c1": (5.9, 7.8, 7.0)},
         ],
     },
+    # Seed Satchel (set 107, two slots). The oxygen line 87 is a run of round 3.4 links crossing
+    # the chest with nothing at its end. This is a FLAT band — 1.4 thick, the star stole 94's
+    # panel, because thinner loses its edge at dirs 1 and 5 — and it terminates in a box three
+    # times its width.
+    #
+    # The strap is a staircase because a box cannot be rotated: the sash 63's idiom, six steps of
+    # 3.0 x 4.8 lapping 0.8 in x and 0.4 in z, so the run is one island at every direction.
+    #
+    # The bag is FORWARD of the arm, not behind it. The row puts its outer edge at x 9.0 and
+    # bd1's arm owns x 6.3 to 12.7 — a capsule r 3.2 on a bone at x 9.5 — so 2.7 px of the bag's
+    # width sits inside the arm's own columns. On the body's centre plane the holdout would take
+    # that strip at every direction. At y 3.8 the bag's nearest face is 0.6 clear of the arm's
+    # 3.2, which is the sword belt 67's number for its scabbard spur, so the bag wins those pixels
+    # outright at dirs 2/3/4 and the body hides it at 6/7/0 — 26, 2 and 1 px survive there against
+    # the star stole 94's own 4, 4 and 0, so a front-worn `ca` vanishing at the back is the
+    # shipped shape rather than a hole.
+    #
+    # The bag also hangs BELOW the hip at z -13.0 to -6.0 rather than on it. That is what keeps it
+    # off the tool roll 106's plate, which owns z -6.0 to 0.0 across the same front face: `ca`
+    # draws after `wa`, so a bag on the hip line would have eaten the belt this shelf sells beside
+    # it. The strap lands outboard for the same reason — its bottom steps run x 2.6 to 8.0, past
+    # the belt's three nubs at x -5.9 to 5.9, so it crosses only 1.3 px of the middle one.
+    "ca107": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.0, 6.2, 15.6),
+             "c1": (-4.0, 7.6, 20.4)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-4.6, 6.2, 11.2),
+             "c1": (-1.6, 7.6, 16.0)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-2.2, 6.2, 6.8),
+             "c1": (0.8, 7.6, 11.6)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (0.2, 6.2, 2.4),
+             "c1": (3.2, 7.6, 7.2)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (2.6, 6.2, -2.0),
+             "c1": (5.6, 7.6, 2.8)},
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (5.0, 6.2, -6.4),
+             "c1": (8.0, 7.6, -1.6)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (0.0, 3.8, -13.0),
+             "c1": (9.0, 7.8, -6.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
