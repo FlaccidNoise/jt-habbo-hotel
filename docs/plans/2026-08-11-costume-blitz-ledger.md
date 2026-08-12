@@ -19,7 +19,7 @@ Grounded against `packages/shared/src/figuredata.ts`, `tools/artgen/rig.py`,
 | Theme string | The furniture theme name **exactly**: `bannerhold` `nocturne` `mochi` `starliner` `fablewood` `tidal` `verdant` `clockwork` `penthouse` `pool` | Folio chapters merge furniture and costume on purpose. The client derives shelf tabs from `WEARABLE_SHELF.theme` (#438), so a new theme costs no UI edit. |
 | Ramps | The 12 `MATERIAL` ramps only | `rose`, `signal` and `aether` arrive with the furniture plan's `STYLE_VERSION=4` and do not exist yet. Where a pack wants one it is named a **future colorway**, never a dependency. |
 | Colour slots | 1 or 2, family `material` | Slot 1 buys a second ramp only where it lands somewhere a player sees. Flat trim that never breaks the outline still earns a slot (the ch44 zip idiom). |
-| `hides` | `cc` hides `ch`. A hat that replaces hair hides `hr`. Nothing else hides. | The shipped pattern. It keeps the holdout set at size one. The Fascinator 121 is the one hat worn WITH hair. |
+| `hides` | `cc` hides `ch`. A hat that replaces hair hides `hr`. Nothing else hides. | The shipped pattern. It keeps the holdout set at size one. The Fascinator 121 is the only hat in packs 1-9 worn WITH hair (ha55 Headphones and ha56 Visor already ship `hides: []`). |
 | Prices | 150-450 on the shipped rungs 150/200/250/300/350/400/450 | Same band as the #440 shelves and under the 600 daily earn ceiling. Basics low, outline-changing statement pieces high. |
 | Shipping | One pack at a time, one commit per part | Each pack is a revert unit. A pack lands complete or not at all. |
 | Hair | No new `hr` sets | `hr` is already 12 and sells on its own shelf. A costume pack is garments. |
