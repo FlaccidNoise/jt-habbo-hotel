@@ -873,7 +873,8 @@ test("no blitz id ever enters the registration grant", () => {
 });
 
 // A colorway is the same mesh remapped, so a landed one must match its base def exactly on
-// everything the room reads: footprint, stack heights, seat surface, interaction payload.
+// everything the room reads: footprint, stack heights, seat surface, walk and stack rules,
+// interaction payload.
 test("landed colorways share their base's price and geometry", () => {
   for (const id of LANDED_BLITZ_IDS) {
     const entry = byId.get(id);
@@ -890,6 +891,8 @@ test("landed colorways share their base's price and geometry", () => {
     expect(def.l, id).toBe(baseDef.l);
     expect(def.stackHeights, id).toEqual(baseDef.stackHeights);
     expect(def.seatHeight, id).toBe(baseDef.seatHeight);
+    expect(def.canWalk, id).toBe(baseDef.canWalk);
+    expect(def.canStackOn, id).toBe(baseDef.canStackOn);
     expect(def.interaction ?? null, id).toBe(baseDef.interaction ?? null);
     expect(def.vend ?? null, id).toEqual(baseDef.vend ?? null);
   }

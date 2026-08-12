@@ -278,26 +278,29 @@ describe("use: the other counters", () => {
   // A def naming a hand item the room has no line for would vend in silence — nothing said, and a
   // Stars row labelled "vend" rather than what was bought. Every vending def in the catalog is
   // walked here, not only the four the tests above name by hand.
+  //
+  // One counter tile and one purse, both reused. Standing the catalog up in a row spent three
+  // floor tiles per def and walked off the 16-wide café at the seventh vending def (#453); a flat
+  // 100 Stars would have run out the same way a few defs later. The walk cannot spend a budget
+  // that the catalog grows past, so it places and takes back one counter and funds the exact bill.
   test("every vending def in the catalog has a line and a reason of its own", () => {
+    const vending = PROTOTYPE_CATALOG.flatMap((d) => (d.vend ? [{ id: d.id, vend: d.vend }] : []));
     const alice = account("alice");
     room.join(alice, "alice");
-    fund(alice, 100);
+    fund(alice, vending.reduce((bill, d) => bill + d.vend.price, 0));
+    stand(alice, 0, 4);   // beside the counter tile, and off every footprint it will hold
 
-    let x = 0;
     let said = 0;
-    for (const def of PROTOTYPE_CATALOG) {
-      const vend = def.vend;
-      if (!vend) continue;
-      const counter = install(alice, def.id, x, 3);
-      stand(alice, x, 4);
+    for (const { id, vend } of vending) {
+      const counter = install(alice, id, 0, 3);
       room.useFurni(alice, counter);
 
       said++;
-      expect(to(alice, "notice"), def.id).toHaveLength(said);
-      expect(handOf(alice), def.id).toMatchObject({ item: vend.item });
-      if (vend.price > 0) expect(to(alice, "stars").at(-1)?.reason, def.id).not.toBe("vend");
+      expect(to(alice, "notice"), id).toHaveLength(said);
+      expect(handOf(alice), id).toMatchObject({ item: vend.item });
+      if (vend.price > 0) expect(to(alice, "stars").at(-1)?.reason, id).not.toBe("vend");
       vi.advanceTimersByTime(HAND_MS);   // the hand empties and the cooldown lapses
-      x += 3;
+      room.pickup(alice, counter);       // and the tile comes free for the next def
     }
     expect(said).toBeGreaterThan(1);
   });
