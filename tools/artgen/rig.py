@@ -5001,6 +5001,40 @@ FIGURE_PARTS = {
              "squash": (1.05, 0.86, 0.13)},
         ],
     },
+    # ---- costume pack 7: verdant (#457) ----
+    # Gardener. Working clothes, cut and cropped. Every row here ends its garment on a row the
+    # wardrobe has left empty, and the cut is the separator rather than anything added on top.
+    #
+    # Gathered Culottes (set 103, one slot). TWO cones, one per LEG bone, where every skirt in the
+    # wardrobe is one cone on the hip. That is the whole separator against the pleated skirt 8,
+    # and it exists only in the walk: a hip cone cannot split, and at walk0 and walk2 the legs
+    # swing 22 degrees apart and these two go with them.
+    #
+    # r0 5.8 at the hip to r1 7.4 at the hem, run 21 px down a 19 px thigh, so the flat cut lands
+    # 2 px below the knee joint and bd1's shin is bare from there to the shoe. The flare is 1.6
+    # clear of the thigh at the top and 3.7 clear of the shin at the hem, so the body never wins
+    # the depth test inside it.
+    #
+    # The hem is 7.4 against the ledger's 8.6, and the split is what forced it. At walk0 a leg
+    # swings 22 degrees, so a hem 21 px down the bone moves 21*sin22 = 7.87 px fore or aft; with
+    # the bones 8 px apart that puts the two hem discs' screen centres 16.79 px apart at dirs 0
+    # and 4. A disc of radius r spans +/-0.964r across the screen there, so 8.6 leaves the pair
+    # overlapping 0.2 px — they meet in one outline, and at 2x the frame reads as one wide skirt
+    # with a crease in it rather than as two legs. 7.4 opens 2.5 px of daylight, and the notch
+    # between the legs measures 25 rows against 20 at the intent's number.
+    #
+    # The hem hangs off leg_l/leg_r rather than knee_l/knee_r — the breeches 64's cuff ring does
+    # the opposite for the opposite reason. A cuff BUCKLED below the knee follows the shin; a
+    # culotte hem is loose cloth 2 px past the joint, and hung on the shin it would swing away
+    # from the thigh cone above it and tear the layer into two islands at walk1 and walk3.
+    "lg103": {
+        "prims": [
+            {"t": "box",  "bone": "hip",   "slot": 0, "c0": (-8.0, -6.4, -2.0),
+             "c1": (8.0, 6.4, 2.6)},
+            {"t": "cone", "bone": "leg_l", "slot": 0, "len": 21.0, "r0": 5.8, "r1": 7.4},
+            {"t": "cone", "bone": "leg_r", "slot": 0, "len": 21.0, "r0": 5.8, "r1": 7.4},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

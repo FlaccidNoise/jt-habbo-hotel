@@ -5109,6 +5109,54 @@
       "figuredataVersion": 1,
       "recipeHash": "073fdaf3d52cd40f574fa05f4d64bae611ca739d44dfcf95076500006be23d73",
       "pixelHash": "c36873ef8cd5a5e23e2adc32341ed77fced9c41fd6fc7d21a9ce2a23ef87b6ee"
+    },
+    {
+      "partId": "lg103",
+      "setId": 103,
+      "type": "lg",
+      "name": "Gathered Culottes",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg103.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "2f1982e33dc48e9274d4b52e105f8c7c4d0ee5bdbd32841cc4e548abf54ddb50",
+      "pixelHash": "c1346306b6d6d11ae5a39d82a0fac33d5cbe2f743eb558ff3959e87491941241"
     }
   ]
 }
