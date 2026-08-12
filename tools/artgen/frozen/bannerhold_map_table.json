@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_map_table",
+  "archetype": "artgen",
+  "sheet": "bannerhold_map_table.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:99413d66d38bd654",
+  "recipeHash": "99413d66d38bd654d813d075b5127b97dc34192fdf5e8ead7347e543bf5a9a5b",
+  "pixelHash": "d73b41f28908505a2b12e70edf9959db0f1c1a85e79772f76b1fd7276ff29c7a"
+}

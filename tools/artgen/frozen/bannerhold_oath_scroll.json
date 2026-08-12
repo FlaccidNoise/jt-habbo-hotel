@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_oath_scroll",
+  "archetype": "artgen",
+  "sheet": "bannerhold_oath_scroll.png",
+  "frameW": 64,
+  "frameH": 121,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 105,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 11,
+    "mountU": 8,
+    "mountV": 41,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e1d13e5a4da05fc9",
+  "recipeHash": "e1d13e5a4da05fc91ec16f4a574e30e8e7a596561fb8a0c761fb3bcb9aff4554",
+  "pixelHash": "22d47e3c4c4ee7701c54aa888e78ed2a6c26b39b192f5be479a7196c8be740e1"
+}

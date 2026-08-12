@@ -5605,6 +5605,908 @@
       "recipeHash": "14d15a759f0516b0b2d77ad7e485a10cc265a8e39128465de334e9d680e730a8",
       "pixelHash": "61c4403882d53f53fb655b66e60d80e7675cdfb2047bee866eff521f5e0ea402"
     },
+    "bannerhold_feast_table_crimson": {
+      "defId": "bannerhold_feast_table_crimson",
+      "archetype": "artgen",
+      "sheet": "bannerhold_feast_table_crimson.png",
+      "frameW": 128,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1947ae434e1f2a21",
+      "recipeHash": "1947ae434e1f2a21d21fb87059a1c02f02a6f8a882a37b3f8659eff12274d585",
+      "pixelHash": "ad4b5ae38d70ad4ea1471711c9f2c92887047bcef3dd2084f960c1c50eb1a0db"
+    },
+    "bannerhold_high_seat_azure": {
+      "defId": "bannerhold_high_seat_azure",
+      "archetype": "artgen",
+      "sheet": "bannerhold_high_seat_azure.png",
+      "frameW": 64,
+      "frameH": 81,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "bannerhold_high_seat_azure.near.png",
+      "nearHash": "450aa93efba4b2537f231c657cbc883228bbeef2f5996ea16e3db2b42e6c6474",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:78915adf222aacf7",
+      "recipeHash": "78915adf222aacf7d6f7723910e92c9705f783ab9a204b4d8893790548b17bb0",
+      "pixelHash": "7041c2ec3e8aca693864c5f0729a3dda6c2c1bae88c95d11d40a26df1ca161a7"
+    },
+    "bannerhold_war_table_sable": {
+      "defId": "bannerhold_war_table_sable",
+      "archetype": "artgen",
+      "sheet": "bannerhold_war_table_sable.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3646bf97d74be09b",
+      "recipeHash": "3646bf97d74be09bee4f643e2cf26d304998aab894970a8d798e54a6ddbe84b0",
+      "pixelHash": "234b1b4edabff2500eb96aa0f6ab239308a67701d6bbb1e528d968bb11269ef7"
+    },
+    "bannerhold_armor_stand_gold": {
+      "defId": "bannerhold_armor_stand_gold",
+      "archetype": "artgen",
+      "sheet": "bannerhold_armor_stand_gold.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e904150b016d6245",
+      "recipeHash": "e904150b016d62452c600666d0ec948e96584c0bd07cd22a61144689ec64a023",
+      "pixelHash": "b86233286fce7e87a11c0afd88043094797f2abeb724e560973d542c84ba8d4c"
+    },
+    "bannerhold_hearth_brazier_forest": {
+      "defId": "bannerhold_hearth_brazier_forest",
+      "archetype": "artgen",
+      "sheet": "bannerhold_hearth_brazier_forest.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:64abd5bae3a3cc02",
+      "recipeHash": "64abd5bae3a3cc0203c68a02b6a230e4aaa20c9536ad878fe4b484e9d8b95e01",
+      "pixelHash": "d8c878db38e53a105da24b933b79ff195f955ad8e8a59c658049b93cd68bb9ad"
+    },
+    "bannerhold_map_table_ivory": {
+      "defId": "bannerhold_map_table_ivory",
+      "archetype": "artgen",
+      "sheet": "bannerhold_map_table_ivory.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c6b498231415b19a",
+      "recipeHash": "c6b498231415b19a664db5d466eb38e7785ba04d4e57125013246d54069b79b8",
+      "pixelHash": "b16fdc30054d208af09a4bc078d42cc900523f41571b8f51afc4ba98c2917371"
+    },
+    "bannerhold_banner_pole_royal": {
+      "defId": "bannerhold_banner_pole_royal",
+      "archetype": "artgen",
+      "sheet": "bannerhold_banner_pole_royal.png",
+      "frameW": 64,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 71,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7a818323c002caee",
+      "recipeHash": "7a818323c002caeeddd19f99c7c41a13a7c84304b335f927ad2ac20705f65380",
+      "pixelHash": "da85be951be42c17b80c7d393e9d16b0203d1eaa92d16c653a5d221b6360cc7a"
+    },
+    "bannerhold_shield_rack_ash": {
+      "defId": "bannerhold_shield_rack_ash",
+      "archetype": "artgen",
+      "sheet": "bannerhold_shield_rack_ash.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4a6cb762e16f1e86",
+      "recipeHash": "4a6cb762e16f1e86aeed57c08e60f844404000d867e97c4f91a0aae8c4617a26",
+      "pixelHash": "952c563703947a40824079bb5786c2d0b579a48ad877678ebac96c5e8499a334"
+    },
+    "bannerhold_candle_stand_rust": {
+      "defId": "bannerhold_candle_stand_rust",
+      "archetype": "artgen",
+      "sheet": "bannerhold_candle_stand_rust.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:dbe9c1f0de0dea1a",
+      "recipeHash": "dbe9c1f0de0dea1a88b802c8082a43ec7973c28e514bea49850a2c25e334d6f6",
+      "pixelHash": "2a056aa3b8f545885e2d4eb327e336c2b9ece6ca5e18d4dcfca425980898aaf5"
+    },
+    "bannerhold_rug_runner_sage": {
+      "defId": "bannerhold_rug_runner_sage",
+      "archetype": "artgen",
+      "sheet": "bannerhold_rug_runner_sage.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2085ca0d4c31cfdf",
+      "recipeHash": "2085ca0d4c31cfdf3e605e00d18fe7387b54a412a85dfddb497ddee7c16a0ede",
+      "pixelHash": "46847524ad53ad611f0e002b935ebcebbbb6ac49b49a7bf20adc73dcbf92d8c1"
+    },
+    "bannerhold_spear_rack_bone": {
+      "defId": "bannerhold_spear_rack_bone",
+      "archetype": "artgen",
+      "sheet": "bannerhold_spear_rack_bone.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c5d7008af1b8f046",
+      "recipeHash": "c5d7008af1b8f0460fcd3c2516e1b2bf74c0cda7354ec262c641401a8a19cd80",
+      "pixelHash": "7bbf2384990223395200c8a978089f6ea8a96a3e3c922e8a991dd4817faebbe3"
+    },
+    "bannerhold_feast_table_scarlet": {
+      "defId": "bannerhold_feast_table_scarlet",
+      "archetype": "artgen",
+      "sheet": "bannerhold_feast_table_scarlet.png",
+      "frameW": 128,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2a817f35201e604f",
+      "recipeHash": "2a817f35201e604fa7cafb6b630647236baad2830022473b833af5a682f5d63b",
+      "pixelHash": "facd759e6d8eb97c4d3166e64d57e7b6b3c945f184ebf8b62aa52692a55a5f88"
+    },
+    "bannerhold_high_seat_navy": {
+      "defId": "bannerhold_high_seat_navy",
+      "archetype": "artgen",
+      "sheet": "bannerhold_high_seat_navy.png",
+      "frameW": 64,
+      "frameH": 81,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "bannerhold_high_seat_navy.near.png",
+      "nearHash": "450aa93efba4b2537f231c657cbc883228bbeef2f5996ea16e3db2b42e6c6474",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:385b11d85a51e5f5",
+      "recipeHash": "385b11d85a51e5f5aa7d31092f755baf62fa878e424b61d144c99ac7a3768262",
+      "pixelHash": "079c8fb71a53b507ec83c4f6e23e40925e942f73f4e04df41e9cddb2bd8ae91f"
+    },
+    "bannerhold_war_table_bronze": {
+      "defId": "bannerhold_war_table_bronze",
+      "archetype": "artgen",
+      "sheet": "bannerhold_war_table_bronze.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:04c7453d169299d5",
+      "recipeHash": "04c7453d169299d5b1aebf7ba10d220b5dc9d19d2692aeed09b6e4ebed5bcaca",
+      "pixelHash": "06c6ed5780260289a170020d7c41284c7dca5c317f9273d69d716f5367b2e2dc"
+    },
+    "bannerhold_armor_stand_moss": {
+      "defId": "bannerhold_armor_stand_moss",
+      "archetype": "artgen",
+      "sheet": "bannerhold_armor_stand_moss.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5a95844280ff5537",
+      "recipeHash": "5a95844280ff5537da8187d594a641335e5b5e942e18186a79638c669bdb1c7c",
+      "pixelHash": "04942b678b55c3f1d2e266ae35faf6adc7fbd54cb6a672cde029bc55c35ccd2e"
+    },
+    "bannerhold_hearth_brazier_storm": {
+      "defId": "bannerhold_hearth_brazier_storm",
+      "archetype": "artgen",
+      "sheet": "bannerhold_hearth_brazier_storm.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9087aa64843eb8c0",
+      "recipeHash": "9087aa64843eb8c0c2d4ec2285ce4fdec882fd1f873d406b6107d93bbde453de",
+      "pixelHash": "513025b687cc628a317fae192cf9501f256811b79349f69ac14dd9fa31eea451"
+    },
+    "bannerhold_map_table_wine": {
+      "defId": "bannerhold_map_table_wine",
+      "archetype": "artgen",
+      "sheet": "bannerhold_map_table_wine.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:435edef08b842829",
+      "recipeHash": "435edef08b842829a59cc8f48a3c2e1ba063b4af13bd677feb91e653f54f15d8",
+      "pixelHash": "478321efbb9498035a9a5b4475dacca7bda2e40c7fdfa4d5c0199cc0e3e9c90c"
+    },
+    "bannerhold_feast_table": {
+      "defId": "bannerhold_feast_table",
+      "archetype": "artgen",
+      "sheet": "bannerhold_feast_table.png",
+      "frameW": 128,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7a62daa9293e5fdc",
+      "recipeHash": "7a62daa9293e5fdcf32bddcf491e3a0666317f727cd342f41a71cf202c02859c",
+      "pixelHash": "b432c926390f9c633bcec0982056e2fd88c8a0e16994e0bd0ddf789f20ffb4e7"
+    },
+    "bannerhold_high_seat": {
+      "defId": "bannerhold_high_seat",
+      "archetype": "artgen",
+      "sheet": "bannerhold_high_seat.png",
+      "frameW": 64,
+      "frameH": 81,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 65,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.53125,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "bannerhold_high_seat.near.png",
+      "nearHash": "aed862abb4514e964af9ba9e12c41f130808daf2e869e2ca57adb2338c64f5d2",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4b59545be7c38645",
+      "recipeHash": "4b59545be7c3864509ae4fc211e2bbdd1497b609f38024986e26292f37ae2e11",
+      "pixelHash": "dca69ee3b6c5d2eb6d0e562e9285248328d98a8aac67befd171d8c93fc3a899f"
+    },
+    "bannerhold_war_table": {
+      "defId": "bannerhold_war_table",
+      "archetype": "artgen",
+      "sheet": "bannerhold_war_table.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:38f0f674ff671069",
+      "recipeHash": "38f0f674ff671069b57a951aa8696303967f9feba899f21c98fe4de5b27541c3",
+      "pixelHash": "8d142c389737e4244a317506ae26a3a76a5e7935df7ecf88e513c3d1c36fd26d"
+    },
+    "bannerhold_armor_stand": {
+      "defId": "bannerhold_armor_stand",
+      "archetype": "artgen",
+      "sheet": "bannerhold_armor_stand.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6d1baa4764af1d6e",
+      "recipeHash": "6d1baa4764af1d6e876f244689b5dad4152eb2725b49369d6ba7daa61f03cd5b",
+      "pixelHash": "e0cca17b81b456dddc4c3ce6759b620365cb4dd86ea68ca39e7aaeb4b2651c74"
+    },
+    "bannerhold_hearth_brazier": {
+      "defId": "bannerhold_hearth_brazier",
+      "archetype": "artgen",
+      "sheet": "bannerhold_hearth_brazier.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:68ca9de250b7fc77",
+      "recipeHash": "68ca9de250b7fc77b193ac74903e2f2fe18db3e17203748a80fed336f255c107",
+      "pixelHash": "ce7605aaf35cbf39a45415c9e1fa233a364ad22401f675c22756090f05211b4a"
+    },
+    "bannerhold_map_table": {
+      "defId": "bannerhold_map_table",
+      "archetype": "artgen",
+      "sheet": "bannerhold_map_table.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:99413d66d38bd654",
+      "recipeHash": "99413d66d38bd654d813d075b5127b97dc34192fdf5e8ead7347e543bf5a9a5b",
+      "pixelHash": "d73b41f28908505a2b12e70edf9959db0f1c1a85e79772f76b1fd7276ff29c7a"
+    },
+    "bannerhold_banner_pole": {
+      "defId": "bannerhold_banner_pole",
+      "archetype": "artgen",
+      "sheet": "bannerhold_banner_pole.png",
+      "frameW": 64,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 71,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:62766641f06528c1",
+      "recipeHash": "62766641f06528c1169cd81864968dbb2300d0f7f2e92ee30676e37ad0e3023d",
+      "pixelHash": "18aaf70f1c568c44dbba52e924d627d0a8b3775a6e716bf7ee49dbc9e6eaa3bd"
+    },
+    "bannerhold_shield_rack": {
+      "defId": "bannerhold_shield_rack",
+      "archetype": "artgen",
+      "sheet": "bannerhold_shield_rack.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ec3c0e7c2f34ca6c",
+      "recipeHash": "ec3c0e7c2f34ca6cae4fc62fde8607d487cd9a86837f5407f865233f2b12363a",
+      "pixelHash": "2c252abbbb40c264204356c02ee52a852e3b1e3db03d36d95c0ed4445b6efecc"
+    },
+    "bannerhold_candle_stand": {
+      "defId": "bannerhold_candle_stand",
+      "archetype": "artgen",
+      "sheet": "bannerhold_candle_stand.png",
+      "frameW": 64,
+      "frameH": 75,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:99d8ea7ec5075a01",
+      "recipeHash": "99d8ea7ec5075a013412e0bd6cb9d6f7bb16298b1ed2fac1025e38d904665f23",
+      "pixelHash": "4d4635c753efed52a822a5f351854d4d80af956c93a08403d1535ea17461b4ef"
+    },
+    "bannerhold_rug_runner": {
+      "defId": "bannerhold_rug_runner",
+      "archetype": "artgen",
+      "sheet": "bannerhold_rug_runner.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ce4a31846620291c",
+      "recipeHash": "ce4a31846620291c96ae3128377e00731ec2cccb334b2fe907af1813c8180360",
+      "pixelHash": "6a17d720ad06f791d445ddbd3ce6881d57bc219ab257e1a358ceadf30a2d8480"
+    },
+    "bannerhold_spear_rack": {
+      "defId": "bannerhold_spear_rack",
+      "archetype": "artgen",
+      "sheet": "bannerhold_spear_rack.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:95061782f2a894f2",
+      "recipeHash": "95061782f2a894f2be430335879869083fda21d3a814e264cc6d4ddecb148e56",
+      "pixelHash": "aadc0a5426603540c58a304567219e853582da7b91cec52a450314bde8b6cbfe"
+    },
     "penthouse_sofa": {
       "defId": "penthouse_sofa",
       "archetype": "artgen",
@@ -9528,6 +10430,339 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "bannerhold_sword_display": {
+      "defId": "bannerhold_sword_display",
+      "archetype": "artgen",
+      "sheet": "bannerhold_sword_display.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 8,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0a8d69d7bbf85f18",
+      "recipeHash": "0a8d69d7bbf85f180b51f0bcb5b3fdb731dc3308387eec951a177ce4b212750b",
+      "pixelHash": "b4ee7e10b8796fa72e35525885a209d94bde99d0110fd274a0900301db794c0a"
+    },
+    "bannerhold_shield_mount": {
+      "defId": "bannerhold_shield_mount",
+      "archetype": "artgen",
+      "sheet": "bannerhold_shield_mount.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 12,
+        "mountU": 8,
+        "mountV": 40,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9239dcde8b311075",
+      "recipeHash": "9239dcde8b31107511d70510fe18d47745edf61abf6e6042ff74160d242d54be",
+      "pixelHash": "1bdbfa05303784848bddaef8540fa8682395b94c66df57d365ba022d0e6e52f4"
+    },
+    "bannerhold_heraldry_tapestry": {
+      "defId": "bannerhold_heraldry_tapestry",
+      "archetype": "artgen",
+      "sheet": "bannerhold_heraldry_tapestry.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 23,
+        "mountU": 4,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:293fd4ca767c09f0",
+      "recipeHash": "293fd4ca767c09f044f836723e8be9ef138f9b47420847701438abee69f324e1",
+      "pixelHash": "8c39c3373f365ecff6d68e8b3bb935f821ee920c336ca55bfea7a402b891e575"
+    },
+    "bannerhold_torch_sconce": {
+      "defId": "bannerhold_torch_sconce",
+      "archetype": "artgen",
+      "sheet": "bannerhold_torch_sconce.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 8,
+        "planeH": 9,
+        "mountU": 10,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0e432d67d1cc12eb",
+      "recipeHash": "0e432d67d1cc12ebcd9d3f6b6ed81cfcc5a74555165fe62a5db6babfa899e7c8",
+      "pixelHash": "081190d1d68dc11f61718d0893d8e6f065d48f1b865cbb56b240cfeace9361d8"
+    },
+    "bannerhold_oath_scroll": {
+      "defId": "bannerhold_oath_scroll",
+      "archetype": "artgen",
+      "sheet": "bannerhold_oath_scroll.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 11,
+        "mountU": 8,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e1d13e5a4da05fc9",
+      "recipeHash": "e1d13e5a4da05fc91ec16f4a574e30e8e7a596561fb8a0c761fb3bcb9aff4554",
+      "pixelHash": "22d47e3c4c4ee7701c54aa888e78ed2a6c26b39b192f5be479a7196c8be740e1"
+    },
+    "bannerhold_arrow_slit_panel": {
+      "defId": "bannerhold_arrow_slit_panel",
+      "archetype": "artgen",
+      "sheet": "bannerhold_arrow_slit_panel.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 23,
+        "mountU": 6,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8c3e2b0a22aac257",
+      "recipeHash": "8c3e2b0a22aac257b5be1b49f8a6cc80cd5893bc2564a1f1cc68c195e02c1fc2",
+      "pixelHash": "ba994a5a4597fe1a6798a945b4829cd992d235a7a4af66c0c5aae11b1991c065"
+    },
+    "bannerhold_drum_mount": {
+      "defId": "bannerhold_drum_mount",
+      "archetype": "artgen",
+      "sheet": "bannerhold_drum_mount.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 12,
+        "mountU": 6,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.2
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8a64836ab219410d",
+      "recipeHash": "8a64836ab219410df2be76884933ff660628117acf21d5266950883ecc040d57",
+      "pixelHash": "69fe85e5988d0a108c4a23e22832ae266b385695309cbef02db4ceb38a3863b3"
+    },
+    "bannerhold_chain_curtain": {
+      "defId": "bannerhold_chain_curtain",
+      "archetype": "artgen",
+      "sheet": "bannerhold_chain_curtain.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 19,
+        "mountU": 4,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.09000000000000001
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:81dc3c5132deb7f6",
+      "recipeHash": "81dc3c5132deb7f635bb1d71c2509f27e24fe026a11ee7aa407f9a7bfa2be5de",
+      "pixelHash": "772f966d4d7fd629c3315bd60919ea9025d723ef96017247c8605379216e7729"
+    },
+    "bannerhold_sigil_plate": {
+      "defId": "bannerhold_sigil_plate",
+      "archetype": "artgen",
+      "sheet": "bannerhold_sigil_plate.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 11,
+        "mountU": 8,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2467656b3cb71c58",
+      "recipeHash": "2467656b3cb71c582cf534603e39eac8319614ad8c2f066ac13f6c7090716cf1",
+      "pixelHash": "496f5da1809793cbb4079ec04292118e04de08b9509d23dc0309edf6a6ff5206"
     },
     "penthouse_skyline_art": {
       "defId": "penthouse_skyline_art",

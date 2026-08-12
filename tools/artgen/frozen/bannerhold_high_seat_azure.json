@@ -1,0 +1,34 @@
+{
+  "defId": "bannerhold_high_seat_azure",
+  "archetype": "artgen",
+  "sheet": "bannerhold_high_seat_azure.png",
+  "frameW": 64,
+  "frameH": 81,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "bannerhold_high_seat_azure.near.png",
+  "nearHash": "450aa93efba4b2537f231c657cbc883228bbeef2f5996ea16e3db2b42e6c6474",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:78915adf222aacf7",
+  "recipeHash": "78915adf222aacf7d6f7723910e92c9705f783ab9a204b4d8893790548b17bb0",
+  "pixelHash": "7041c2ec3e8aca693864c5f0729a3dda6c2c1bae88c95d11d40a26df1ca161a7"
+}

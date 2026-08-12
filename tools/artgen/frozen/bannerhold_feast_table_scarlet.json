@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_feast_table_scarlet",
+  "archetype": "artgen",
+  "sheet": "bannerhold_feast_table_scarlet.png",
+  "frameW": 128,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2a817f35201e604f",
+  "recipeHash": "2a817f35201e604fa7cafb6b630647236baad2830022473b833af5a682f5d63b",
+  "pixelHash": "facd759e6d8eb97c4d3166e64d57e7b6b3c945f184ebf8b62aa52692a55a5f88"
+}

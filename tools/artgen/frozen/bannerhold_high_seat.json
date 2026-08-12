@@ -1,0 +1,34 @@
+{
+  "defId": "bannerhold_high_seat",
+  "archetype": "artgen",
+  "sheet": "bannerhold_high_seat.png",
+  "frameW": 64,
+  "frameH": 81,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "bannerhold_high_seat.near.png",
+  "nearHash": "aed862abb4514e964af9ba9e12c41f130808daf2e869e2ca57adb2338c64f5d2",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4b59545be7c38645",
+  "recipeHash": "4b59545be7c3864509ae4fc211e2bbdd1497b609f38024986e26292f37ae2e11",
+  "pixelHash": "dca69ee3b6c5d2eb6d0e562e9285248328d98a8aac67befd171d8c93fc3a899f"
+}

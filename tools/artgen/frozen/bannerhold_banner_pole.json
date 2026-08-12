@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_banner_pole",
+  "archetype": "artgen",
+  "sheet": "bannerhold_banner_pole.png",
+  "frameW": 64,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 71,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:62766641f06528c1",
+  "recipeHash": "62766641f06528c1169cd81864968dbb2300d0f7f2e92ee30676e37ad0e3023d",
+  "pixelHash": "18aaf70f1c568c44dbba52e924d627d0a8b3775a6e716bf7ee49dbc9e6eaa3bd"
+}

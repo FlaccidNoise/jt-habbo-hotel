@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_spear_rack",
+  "archetype": "artgen",
+  "sheet": "bannerhold_spear_rack.png",
+  "frameW": 64,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:95061782f2a894f2",
+  "recipeHash": "95061782f2a894f2be430335879869083fda21d3a814e264cc6d4ddecb148e56",
+  "pixelHash": "aadc0a5426603540c58a304567219e853582da7b91cec52a450314bde8b6cbfe"
+}

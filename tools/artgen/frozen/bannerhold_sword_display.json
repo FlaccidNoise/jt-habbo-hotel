@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_sword_display",
+  "archetype": "artgen",
+  "sheet": "bannerhold_sword_display.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 8,
+    "mountU": 4,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0a8d69d7bbf85f18",
+  "recipeHash": "0a8d69d7bbf85f180b51f0bcb5b3fdb731dc3308387eec951a177ce4b212750b",
+  "pixelHash": "b4ee7e10b8796fa72e35525885a209d94bde99d0110fd274a0900301db794c0a"
+}

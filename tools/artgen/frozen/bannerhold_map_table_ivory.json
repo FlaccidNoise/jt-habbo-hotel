@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_map_table_ivory",
+  "archetype": "artgen",
+  "sheet": "bannerhold_map_table_ivory.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c6b498231415b19a",
+  "recipeHash": "c6b498231415b19a664db5d466eb38e7785ba04d4e57125013246d54069b79b8",
+  "pixelHash": "b16fdc30054d208af09a4bc078d42cc900523f41571b8f51afc4ba98c2917371"
+}

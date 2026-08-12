@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_hearth_brazier_storm",
+  "archetype": "artgen",
+  "sheet": "bannerhold_hearth_brazier_storm.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9087aa64843eb8c0",
+  "recipeHash": "9087aa64843eb8c0c2d4ec2285ce4fdec882fd1f873d406b6107d93bbde453de",
+  "pixelHash": "513025b687cc628a317fae192cf9501f256811b79349f69ac14dd9fa31eea451"
+}

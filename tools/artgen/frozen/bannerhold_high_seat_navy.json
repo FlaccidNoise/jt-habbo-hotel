@@ -1,0 +1,34 @@
+{
+  "defId": "bannerhold_high_seat_navy",
+  "archetype": "artgen",
+  "sheet": "bannerhold_high_seat_navy.png",
+  "frameW": 64,
+  "frameH": 81,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 65,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.53125,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "bannerhold_high_seat_navy.near.png",
+  "nearHash": "450aa93efba4b2537f231c657cbc883228bbeef2f5996ea16e3db2b42e6c6474",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:385b11d85a51e5f5",
+  "recipeHash": "385b11d85a51e5f5aa7d31092f755baf62fa878e424b61d144c99ac7a3768262",
+  "pixelHash": "079c8fb71a53b507ec83c4f6e23e40925e942f73f4e04df41e9cddb2bd8ae91f"
+}

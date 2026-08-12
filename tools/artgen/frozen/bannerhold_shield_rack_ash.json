@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_shield_rack_ash",
+  "archetype": "artgen",
+  "sheet": "bannerhold_shield_rack_ash.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4a6cb762e16f1e86",
+  "recipeHash": "4a6cb762e16f1e86aeed57c08e60f844404000d867e97c4f91a0aae8c4617a26",
+  "pixelHash": "952c563703947a40824079bb5786c2d0b579a48ad877678ebac96c5e8499a334"
+}

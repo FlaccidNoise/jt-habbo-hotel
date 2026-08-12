@@ -2071,6 +2071,163 @@ PARTS = {
             {"t": "box", "c0": (0.06, 0.62, 0.40), "c1": (0.60, 0.86, 0.80), "bevel": 0.04, "ramp": "crimson"},
         ],
     },
+    # ---- wave B1: Bannerhold (blitz task 10) ----
+    "bannerhold_feast_table": {
+        "w": 2, "l": 2, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.30, 0.60), "c1": (1.90, 1.70, 0.74), "ramp": "oak"},
+            {"t": "box", "c0": (0.20, 0.40, 0.00), "c1": (0.36, 1.60, 0.60)},
+            {"t": "box", "c0": (1.64, 0.40, 0.00), "c1": (1.80, 1.60, 0.60)},
+        ],
+    },
+    "bannerhold_high_seat": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.18, 0.18, 0.00), "c1": (0.82, 0.82, 0.44), "bevel": 0.03, "ramp": "crimson", "seat": True},
+            {"t": "box", "c0": (0.18, 0.66, 0.44), "c1": (0.82, 0.82, 1.40), "ramp": "walnut"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.74, "rx": 0.08, "ry": 0.08, "z0": 1.40, "z1": 1.52, "ramp": "gold"},
+        ],
+    },
+    "bannerhold_war_table": {
+        "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.60), "c1": (0.86, 0.86, 0.72), "ramp": "slate"},
+            {"t": "box", "c0": (0.20, 0.20, 0.00), "c1": (0.32, 0.80, 0.60), "ramp": "walnut"},
+            {"t": "box", "c0": (0.68, 0.20, 0.00), "c1": (0.80, 0.80, 0.60), "ramp": "walnut"},
+        ],
+    },
+    "bannerhold_armor_stand": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.24, "ry": 0.24, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.20},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.20, "ry": 0.20, "z0": 0.80, "z1": 1.10, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.12, "ry": 0.12, "z0": 1.10, "z1": 1.30, "ramp": "slate"},
+        ],
+    },
+    "bannerhold_hearth_brazier": {
+        "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.28, "ry": 0.28, "z0": 0.30, "z1": 0.44, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 0.0, "z1": 0.30},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.14, "ry": 0.14, "z0": 0.44, "z1": 0.66, "taper": 0.4, "ramp": "crimson"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.08, "ry": 0.08, "z0": 0.60, "z1": 0.80, "taper": 0.3, "ramp": "gold"},
+        ],
+    },
+    "bannerhold_map_table": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.14, 0.14, 0.66), "c1": (0.86, 0.86, 0.78), "ramp": "sand"},
+            {"t": "box", "c0": (0.20, 0.20, 0.00), "c1": (0.80, 0.80, 0.66), "ramp": "walnut"},
+        ],
+    },
+    "bannerhold_banner_pole": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.0, "z1": 0.06},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 0.06, "z1": 1.70},
+            {"t": "box", "c0": (0.52, 0.44, 1.00), "c1": (0.56, 0.56, 1.60), "ramp": "crimson"},
+        ],
+    },
+    "bannerhold_shield_rack": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.30, 0.00), "c1": (0.84, 0.70, 0.80)},
+            {"t": "box", "c0": (0.24, 0.24, 0.30), "c1": (0.44, 0.34, 0.70), "ramp": "slate"},
+            {"t": "box", "c0": (0.56, 0.24, 0.30), "c1": (0.76, 0.34, 0.70), "ramp": "crimson"},
+        ],
+    },
+    "bannerhold_candle_stand": {
+        "w": 1, "l": 1, "ramp": "gold",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.16, "ry": 0.16, "z0": 0.0, "z1": 0.05},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.03, "ry": 0.03, "z0": 0.05, "z1": 1.10},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.06, "ry": 0.06, "z0": 1.10, "z1": 1.24, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.5, "cy": 0.5, "rx": 0.04, "ry": 0.04, "z0": 1.24, "z1": 1.34, "taper": 0.3, "ramp": "gold"},
+        ],
+    },
+    "bannerhold_rug_runner": {
+        "w": 1, "l": 2, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.10, 0.04, 0.00), "c1": (0.90, 1.96, 0.05), "ramp": "crimson"},
+            {"t": "box", "c0": (0.30, 0.30, 0.05), "c1": (0.70, 1.70, 0.06), "ramp": "gold"},
+        ],
+    },
+    "bannerhold_spear_rack": {
+        "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.16, 0.36, 0.00), "c1": (0.84, 0.64, 0.50)},
+            {"t": "cyl", "cx": 0.30, "cy": 0.5, "rx": 0.02, "ry": 0.02, "z0": 0.50, "z1": 1.40, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.5, "rx": 0.02, "ry": 0.02, "z0": 0.50, "z1": 1.40, "ramp": "sand"},
+            {"t": "cyl", "cx": 0.70, "cy": 0.5, "rx": 0.02, "ry": 0.02, "z0": 0.50, "z1": 1.40, "ramp": "sand"},
+        ],
+    },
+    "bannerhold_sword_display": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.40), "c1": (0.80, 0.05, 2.52)},
+            {"t": "box", "c0": (0.46, 0.05, 2.30), "c1": (0.54, 0.09, 2.80), "ramp": "slate"},
+            {"t": "box", "c0": (0.36, 0.05, 2.52), "c1": (0.64, 0.08, 2.58), "ramp": "gold"},
+        ],
+    },
+    "bannerhold_shield_mount": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.32, 0.00, 2.40), "c1": (0.68, 0.06, 2.80), "ramp": "crimson"},
+            {"t": "box", "c0": (0.40, 0.06, 2.48), "c1": (0.60, 0.09, 2.72), "ramp": "gold"},
+        ],
+    },
+    "bannerhold_heraldry_tapestry": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "crimson",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.20), "c1": (0.80, 0.05, 2.90), "ramp": "crimson"},
+            {"t": "box", "c0": (0.36, 0.05, 2.40), "c1": (0.64, 0.07, 2.66), "ramp": "gold"},
+        ],
+    },
+    "bannerhold_torch_sconce": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.44, 0.00, 2.40), "c1": (0.56, 0.06, 2.60)},
+            {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.06, "ry": 0.06, "z0": 2.60, "z1": 2.74, "taper": 0.5, "ramp": "gold"},
+        ],
+    },
+    "bannerhold_oath_scroll": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "sand",
+        "prims": [
+            {"t": "box", "c0": (0.30, 0.00, 2.40), "c1": (0.70, 0.05, 2.76), "ramp": "sand"},
+            {"t": "box", "c0": (0.36, 0.05, 2.46), "c1": (0.64, 0.07, 2.70), "ramp": "walnut"},
+        ],
+    },
+    "bannerhold_arrow_slit_panel": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.24, 0.00, 2.20), "c1": (0.76, 0.06, 2.90), "ramp": "slate"},
+            {"t": "box", "c0": (0.46, 0.06, 2.34), "c1": (0.54, 0.09, 2.76), "ramp": "walnut"},
+        ],
+    },
+    "bannerhold_drum_mount": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "walnut",
+        "prims": [
+            {"t": "cyl", "cx": 0.5, "cy": 0.10, "rx": 0.16, "ry": 0.10, "z0": 2.44, "z1": 2.74, "ramp": "sand"},
+            {"t": "box", "c0": (0.44, 0.00, 2.40), "c1": (0.56, 0.05, 2.80)},
+        ],
+    },
+    "bannerhold_chain_curtain": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.20, 0.00, 2.80), "c1": (0.80, 0.05, 2.90)},
+            {"t": "cyl", "cx": 0.30, "cy": 0.07, "rx": 0.02, "ry": 0.02, "z0": 2.30, "z1": 2.80, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.50, "cy": 0.07, "rx": 0.02, "ry": 0.02, "z0": 2.30, "z1": 2.80, "ramp": "slate"},
+            {"t": "cyl", "cx": 0.70, "cy": 0.07, "rx": 0.02, "ry": 0.02, "z0": 2.30, "z1": 2.80, "ramp": "slate"},
+        ],
+    },
+    "bannerhold_sigil_plate": {
+        "surface": "wall", "w": 1, "l": 1, "ramp": "slate",
+        "prims": [
+            {"t": "box", "c0": (0.30, 0.00, 2.40), "c1": (0.70, 0.05, 2.76), "ramp": "slate"},
+            {"t": "box", "c0": (0.42, 0.05, 2.50), "c1": (0.58, 0.08, 2.66), "ramp": "gold"},
+        ],
+    },
     # ---- Bannerhold pilots (blitz task 5) ----
     # A trestle bench: two solid trestle ends, a thick plank, and a low stretcher. Reads as a
     # bench (long, backless) rather than a sofa or a stool; oak plank over walnut trestles is the

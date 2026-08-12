@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_candle_stand_rust",
+  "archetype": "artgen",
+  "sheet": "bannerhold_candle_stand_rust.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:dbe9c1f0de0dea1a",
+  "recipeHash": "dbe9c1f0de0dea1a88b802c8082a43ec7973c28e514bea49850a2c25e334d6f6",
+  "pixelHash": "2a056aa3b8f545885e2d4eb327e336c2b9ece6ca5e18d4dcfca425980898aaf5"
+}

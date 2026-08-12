@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_shield_rack",
+  "archetype": "artgen",
+  "sheet": "bannerhold_shield_rack.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ec3c0e7c2f34ca6c",
+  "recipeHash": "ec3c0e7c2f34ca6cae4fc62fde8607d487cd9a86837f5407f865233f2b12363a",
+  "pixelHash": "2c252abbbb40c264204356c02ee52a852e3b1e3db03d36d95c0ed4445b6efecc"
+}

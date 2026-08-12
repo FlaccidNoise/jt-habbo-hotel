@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_banner_pole_royal",
+  "archetype": "artgen",
+  "sheet": "bannerhold_banner_pole_royal.png",
+  "frameW": 64,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 71,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7a818323c002caee",
+  "recipeHash": "7a818323c002caeeddd19f99c7c41a13a7c84304b335f927ad2ac20705f65380",
+  "pixelHash": "da85be951be42c17b80c7d393e9d16b0203d1eaa92d16c653a5d221b6360cc7a"
+}

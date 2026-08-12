@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_feast_table_crimson",
+  "archetype": "artgen",
+  "sheet": "bannerhold_feast_table_crimson.png",
+  "frameW": 128,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1947ae434e1f2a21",
+  "recipeHash": "1947ae434e1f2a21d21fb87059a1c02f02a6f8a882a37b3f8659eff12274d585",
+  "pixelHash": "ad4b5ae38d70ad4ea1471711c9f2c92887047bcef3dd2084f960c1c50eb1a0db"
+}

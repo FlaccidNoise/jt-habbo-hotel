@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_war_table_bronze",
+  "archetype": "artgen",
+  "sheet": "bannerhold_war_table_bronze.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:04c7453d169299d5",
+  "recipeHash": "04c7453d169299d5b1aebf7ba10d220b5dc9d19d2692aeed09b6e4ebed5bcaca",
+  "pixelHash": "06c6ed5780260289a170020d7c41284c7dca5c317f9273d69d716f5367b2e2dc"
+}

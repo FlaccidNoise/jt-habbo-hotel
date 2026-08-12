@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_candle_stand",
+  "archetype": "artgen",
+  "sheet": "bannerhold_candle_stand.png",
+  "frameW": 64,
+  "frameH": 75,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:99d8ea7ec5075a01",
+  "recipeHash": "99d8ea7ec5075a013412e0bd6cb9d6f7bb16298b1ed2fac1025e38d904665f23",
+  "pixelHash": "4d4635c753efed52a822a5f351854d4d80af956c93a08403d1535ea17461b4ef"
+}

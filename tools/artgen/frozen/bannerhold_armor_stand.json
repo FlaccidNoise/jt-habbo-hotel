@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_armor_stand",
+  "archetype": "artgen",
+  "sheet": "bannerhold_armor_stand.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6d1baa4764af1d6e",
+  "recipeHash": "6d1baa4764af1d6e876f244689b5dad4152eb2725b49369d6ba7daa61f03cd5b",
+  "pixelHash": "e0cca17b81b456dddc4c3ce6759b620365cb4dd86ea68ca39e7aaeb4b2651c74"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_spear_rack_bone",
+  "archetype": "artgen",
+  "sheet": "bannerhold_spear_rack_bone.png",
+  "frameW": 64,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c5d7008af1b8f046",
+  "recipeHash": "c5d7008af1b8f0460fcd3c2516e1b2bf74c0cda7354ec262c641401a8a19cd80",
+  "pixelHash": "7bbf2384990223395200c8a978089f6ea8a96a3e3c922e8a991dd4817faebbe3"
+}

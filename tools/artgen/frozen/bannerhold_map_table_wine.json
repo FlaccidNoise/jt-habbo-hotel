@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_map_table_wine",
+  "archetype": "artgen",
+  "sheet": "bannerhold_map_table_wine.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:435edef08b842829",
+  "recipeHash": "435edef08b842829a59cc8f48a3c2e1ba063b4af13bd677feb91e653f54f15d8",
+  "pixelHash": "478321efbb9498035a9a5b4475dacca7bda2e40c7fdfa4d5c0199cc0e3e9c90c"
+}

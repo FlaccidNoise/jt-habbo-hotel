@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_heraldry_tapestry",
+  "archetype": "artgen",
+  "sheet": "bannerhold_heraldry_tapestry.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 23,
+    "mountU": 4,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:293fd4ca767c09f0",
+  "recipeHash": "293fd4ca767c09f044f836723e8be9ef138f9b47420847701438abee69f324e1",
+  "pixelHash": "8c39c3373f365ecff6d68e8b3bb935f821ee920c336ca55bfea7a402b891e575"
+}

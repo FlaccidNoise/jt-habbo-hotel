@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_rug_runner_sage",
+  "archetype": "artgen",
+  "sheet": "bannerhold_rug_runner_sage.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2085ca0d4c31cfdf",
+  "recipeHash": "2085ca0d4c31cfdf3e605e00d18fe7387b54a412a85dfddb497ddee7c16a0ede",
+  "pixelHash": "46847524ad53ad611f0e002b935ebcebbbb6ac49b49a7bf20adc73dcbf92d8c1"
+}

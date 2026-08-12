@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_war_table",
+  "archetype": "artgen",
+  "sheet": "bannerhold_war_table.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:38f0f674ff671069",
+  "recipeHash": "38f0f674ff671069b57a951aa8696303967f9feba899f21c98fe4de5b27541c3",
+  "pixelHash": "8d142c389737e4244a317506ae26a3a76a5e7935df7ecf88e513c3d1c36fd26d"
+}

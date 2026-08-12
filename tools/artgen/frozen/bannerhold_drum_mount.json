@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_drum_mount",
+  "archetype": "artgen",
+  "sheet": "bannerhold_drum_mount.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 12,
+    "mountU": 6,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.2
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8a64836ab219410d",
+  "recipeHash": "8a64836ab219410df2be76884933ff660628117acf21d5266950883ecc040d57",
+  "pixelHash": "69fe85e5988d0a108c4a23e22832ae266b385695309cbef02db4ceb38a3863b3"
+}

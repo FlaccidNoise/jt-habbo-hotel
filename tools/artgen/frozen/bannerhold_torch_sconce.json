@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_torch_sconce",
+  "archetype": "artgen",
+  "sheet": "bannerhold_torch_sconce.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 8,
+    "planeH": 9,
+    "mountU": 10,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0e432d67d1cc12eb",
+  "recipeHash": "0e432d67d1cc12ebcd9d3f6b6ed81cfcc5a74555165fe62a5db6babfa899e7c8",
+  "pixelHash": "081190d1d68dc11f61718d0893d8e6f065d48f1b865cbb56b240cfeace9361d8"
+}

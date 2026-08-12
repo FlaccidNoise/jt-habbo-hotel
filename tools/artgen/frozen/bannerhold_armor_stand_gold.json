@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_armor_stand_gold",
+  "archetype": "artgen",
+  "sheet": "bannerhold_armor_stand_gold.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e904150b016d6245",
+  "recipeHash": "e904150b016d62452c600666d0ec948e96584c0bd07cd22a61144689ec64a023",
+  "pixelHash": "b86233286fce7e87a11c0afd88043094797f2abeb724e560973d542c84ba8d4c"
+}

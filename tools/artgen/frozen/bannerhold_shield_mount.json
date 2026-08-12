@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_shield_mount",
+  "archetype": "artgen",
+  "sheet": "bannerhold_shield_mount.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 12,
+    "mountU": 8,
+    "mountV": 40,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9239dcde8b311075",
+  "recipeHash": "9239dcde8b31107511d70510fe18d47745edf61abf6e6042ff74160d242d54be",
+  "pixelHash": "1bdbfa05303784848bddaef8540fa8682395b94c66df57d365ba022d0e6e52f4"
+}

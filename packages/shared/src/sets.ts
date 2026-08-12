@@ -38,6 +38,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "bannerhold",
+    name: "The Bannerhold Set",
+    members: ["bannerhold_feast_table", "bannerhold_high_seat", "bannerhold_armor_stand", "bannerhold_hearth_brazier"],
+    reward: "bannerhold_high_seat_navy",
+    badge: "set_bannerhold",
+  },
+  {
     id: "deco_suite",
     name: "The Deco Suite Set",
     members: ["penthouse_sofa", "penthouse_marble_table", "penthouse_dining_chair", "penthouse_bar"],

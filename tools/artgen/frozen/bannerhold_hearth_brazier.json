@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_hearth_brazier",
+  "archetype": "artgen",
+  "sheet": "bannerhold_hearth_brazier.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:68ca9de250b7fc77",
+  "recipeHash": "68ca9de250b7fc77b193ac74903e2f2fe18db3e17203748a80fed336f255c107",
+  "pixelHash": "ce7605aaf35cbf39a45415c9e1fa233a364ad22401f675c22756090f05211b4a"
+}

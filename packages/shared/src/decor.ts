@@ -238,6 +238,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "floor", id: "floor_lounge_stage_star", name: "Lounge Stage Star", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0xdaa520 } },
   { kind: "wall", id: "wall_lounge_velvet_panel", name: "Lounge Velvet Panel", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
   { kind: "wall", id: "wall_lounge_music_note", name: "Lounge Music Note", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  // Wave B1 decor (blitz task 10): Bannerhold.
+  { kind: "floor", id: "floor_bannerhold_flagstone", name: "Bannerhold Flagstone", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0x9c9484 } },
+  { kind: "floor", id: "floor_bannerhold_oak", name: "Bannerhold Oak", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
+  { kind: "floor", id: "floor_bannerhold_rush", name: "Bannerhold Rush", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0x656056 } },
+  { kind: "floor", id: "floor_bannerhold_sigil", name: "Bannerhold Sigil", tile: { w: 64, h: 32 }, sides: { left: 0xaa3333, right: 0xdaa520 } },
+  { kind: "wall", id: "wall_bannerhold_castle_block", name: "Bannerhold Castle Block", tile: { w: 32, h: 32 }, cap: 0x9c9484 },
+  { kind: "wall", id: "wall_bannerhold_plaster", name: "Bannerhold Plaster", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_bannerhold_tapestry", name: "Bannerhold Tapestry", tile: { w: 32, h: 32 }, cap: 0xaa3333 },
+  { kind: "wall", id: "wall_bannerhold_oak_panel", name: "Bannerhold Oak Panel", tile: { w: 32, h: 32 }, cap: 0xb55a19 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

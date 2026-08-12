@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_war_table_sable",
+  "archetype": "artgen",
+  "sheet": "bannerhold_war_table_sable.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3646bf97d74be09b",
+  "recipeHash": "3646bf97d74be09bee4f643e2cf26d304998aab894970a8d798e54a6ddbe84b0",
+  "pixelHash": "234b1b4edabff2500eb96aa0f6ab239308a67701d6bbb1e528d968bb11269ef7"
+}

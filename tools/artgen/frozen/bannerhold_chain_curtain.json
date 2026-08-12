@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_chain_curtain",
+  "archetype": "artgen",
+  "sheet": "bannerhold_chain_curtain.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 19,
+    "mountU": 4,
+    "mountV": 35,
+    "gap": 0,
+    "depth": 0.09000000000000001
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:81dc3c5132deb7f6",
+  "recipeHash": "81dc3c5132deb7f635bb1d71c2509f27e24fe026a11ee7aa407f9a7bfa2be5de",
+  "pixelHash": "772f966d4d7fd629c3315bd60919ea9025d723ef96017247c8605379216e7729"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "bannerhold_hearth_brazier_forest",
+  "archetype": "artgen",
+  "sheet": "bannerhold_hearth_brazier_forest.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:64abd5bae3a3cc02",
+  "recipeHash": "64abd5bae3a3cc0203c68a02b6a230e4aaa20c9536ad878fe4b484e9d8b95e01",
+  "pixelHash": "d8c878db38e53a105da24b933b79ff195f955ad8e8a59c658049b93cd68bb9ad"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "bannerhold_arrow_slit_panel",
+  "archetype": "artgen",
+  "sheet": "bannerhold_arrow_slit_panel.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 23,
+    "mountU": 6,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8c3e2b0a22aac257",
+  "recipeHash": "8c3e2b0a22aac257b5be1b49f8a6cc80cd5893bc2564a1f1cc68c195e02c1fc2",
+  "pixelHash": "ba994a5a4597fe1a6798a945b4829cd992d235a7a4af66c0c5aae11b1991c065"
+}

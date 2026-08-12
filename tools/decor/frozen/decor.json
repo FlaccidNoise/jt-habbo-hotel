@@ -727,6 +727,110 @@
       },
       "styleVersion": 3,
       "pixelHash": "181cce343a71db1dfd0c3dbbce4f40103695591da69239e41d3fe7f5a7b7a46d"
+    },
+    {
+      "id": "floor_bannerhold_flagstone",
+      "kind": "floor",
+      "sheet": "floor_bannerhold_flagstone.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "c7fd76ed7d1a4f79307144be4483ae05f99325a72e6dcec77c57353b0a3dd362"
+    },
+    {
+      "id": "floor_bannerhold_oak",
+      "kind": "floor",
+      "sheet": "floor_bannerhold_oak.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "a740a9bdfa479657dcf2aa8d084b5b6e8824f57ec1e48d5d5538e61a70b95052"
+    },
+    {
+      "id": "floor_bannerhold_rush",
+      "kind": "floor",
+      "sheet": "floor_bannerhold_rush.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "271cd1728c204523d35183d10952938a1efb203fdf327944eb1f37ec0dde3e63"
+    },
+    {
+      "id": "floor_bannerhold_sigil",
+      "kind": "floor",
+      "sheet": "floor_bannerhold_sigil.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "56238b4e1a99ae31fe5b057aec5fee8f6ed0cfde795b6e7f37e7c2765e6d94a9"
+    },
+    {
+      "id": "wall_bannerhold_castle_block",
+      "kind": "wall",
+      "sheet": "wall_bannerhold_castle_block.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "32252fafc3c25beef4744b99f72e9e5c6e3e0386813521b30ce67ef37589a869"
+    },
+    {
+      "id": "wall_bannerhold_plaster",
+      "kind": "wall",
+      "sheet": "wall_bannerhold_plaster.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "b6c153bf1bb867113b07873d7e635edbcf001755107028fdfed10570d3f3a569"
+    },
+    {
+      "id": "wall_bannerhold_tapestry",
+      "kind": "wall",
+      "sheet": "wall_bannerhold_tapestry.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "b223617a8e186e759e08ed0db53adfcbc54934756e0a4944d0940ae71f16ad56"
+    },
+    {
+      "id": "wall_bannerhold_oak_panel",
+      "kind": "wall",
+      "sheet": "wall_bannerhold_oak_panel.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 3,
+      "pixelHash": "51a72ca721516ba11beccf856b03150ace6b2f8da30a9d2f387302db90dd778e"
     }
   ]
 }
