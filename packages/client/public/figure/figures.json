@@ -4139,6 +4139,56 @@
       "figuredataVersion": 1,
       "recipeHash": "711fc88d710810e32403e4898a788177743453cbe8820b6224e10fd349065d4e",
       "pixelHash": "d111101f68cb6befdb255a7b0de5b2ca94e61523e7842f9f26f948586f4c8d9e"
+    },
+    {
+      "partId": "ha83",
+      "setId": 83,
+      "type": "ha",
+      "name": "Sleep Cap",
+      "slots": 2,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha83.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "1d7aa8bde1f053c097074ed10b6aa91ee860df9e560323b62abc7876d8d4a351",
+      "pixelHash": "8a8b8a0fd06ab7c904c7354995d013de0b3200a4dda37e74dc4032f4571b81f5"
     }
   ]
 }

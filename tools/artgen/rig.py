@@ -3928,6 +3928,44 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.0, 0.304)},
         ],
     },
+    # Sleep Cap (set 83, two slots, hides hr). The top hat 54 is a straight-sided cylinder with a
+    # flat lid and a 26 px brim. This has no brim at all and narrows the whole way up, so its
+    # profile is a triangle where 54's is a rectangle.
+    #
+    # The taper cannot be the whole hat. The intent bases its cone at head z 23, and the skull tops
+    # out at 22 — a cone starting there hangs in the air over a bald head, because this set hides
+    # the hair that would otherwise fill the gap. So a crown dome carries the cap down onto the
+    # skull and the cone grows out of it, which is the mourning hat 77's construction with the brim
+    # taken off.
+    #
+    # The dome is SHALLOW — 5.58 of z radius against its 9.0 in x — and that ratio is the whole
+    # read. Drawn round, at 7.02, the dome carried the silhouette to head z 27.6 and the taper only
+    # showed for the last six px: a beanie with a knob on it, not the triangle the row asks for.
+    # Flattened, the cone takes over at 24.6 instead, so 11 px of the cap is taper and 8 is crown.
+    #
+    # The hem is where the dome's own radius overtakes the skull's, and that is what has to clear
+    # the face. At head z 18 the dome holds 8.05 against the skull's 7.81 and at 17.5 the skull's
+    # 8.16 has taken it back, so the cap stops at about 17.9. Measured on the frozen sheet: lowest
+    # lit row 29 standing and 32 on walk0 and walk2, where the down-step drops the root 2.5 px
+    # against an integer headShift of 2. The mourning hat 77 ships at 30 and 32 measured the same
+    # way, and against all eight eyed heads over all 64 dir-frames this paints over 0 face pixels.
+    #
+    # The cone emerges from the dome rather than sitting on it, so there is no step where they
+    # meet, and its base ring at head z 22 is 7.3 against the dome's 8.67 — the taper contributes
+    # no edge at all down where the crown is doing the work.
+    #
+    # Slot 1 is the tip: a ball r 3.0 sat on the cone's own 3.4 top, so it caps the point instead of
+    # widening it, and its crown lands on row 8 — thirteen rows clear of the 21 the skull tops out
+    # at, and inside the free rows the top hat 54 also lives in.
+    "ha83": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, 20.5), "r": 9.0,
+             "squash": (1.0, 0.97, 0.62)},
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 33.0, "len": 11.0,
+             "r0": 3.4, "r1": 7.3},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, 0.0, 33.0), "r": 3.0},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
