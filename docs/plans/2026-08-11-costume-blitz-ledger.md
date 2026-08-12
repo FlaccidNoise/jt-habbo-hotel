@@ -57,6 +57,10 @@ Read this before modelling anything. The numbers are `rig.py`, not taste.
 - **Cone prim.** Truncated, down local -Z, `r0` at `z0` and `r1` at `z0 - len`. `z0` moves it off
   the bone, equal radii make a cylinder, and the widest ring may be at either end. This is how
   upward geometry exists (Top Hat 54) and how a brim tilts up instead of down.
+- **Some rows write cones in VISUAL order, not prim order** (pack 5 finding: ha96's row read
+  literally buried the point in the skull; sh98's row is written ankle-up the same way). Author
+  the SOLID the row describes — the prim's `r0` is always at `z0` running down; when a row says
+  "r0 at the bottom", flip it into prim notation before modelling.
 - **Skin is free.** A garment that covers less is not a cheaper garment. `bd1` renders underneath.
 - **A `wa` band beats a same-height `ch` detail on the diagonal** (pack 2 finding). A box band's
   corners out-reach an ellipsoid flare in every direction but face-on — wa74 over ch73 left the
