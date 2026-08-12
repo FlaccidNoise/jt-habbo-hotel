@@ -3703,6 +3703,54 @@
       "figuredataVersion": 1,
       "recipeHash": "af2af91907b1525f11099662d2de464b9e47de3d5c66d817fa472a9bade39bbd",
       "pixelHash": "e89b7a5a2e4614946f10c844eb93f4e01aadea806896a55f2335d76575d43394"
+    },
+    {
+      "partId": "wa74",
+      "setId": 74,
+      "type": "wa",
+      "name": "Waist Cincher",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa74.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "dbb939321d3e8707f3dc5dfbda5e487aff5c0ccad4b9380f1da6c768325f4687",
+      "pixelHash": "99b2730954c2b977e6b11916c3cc2b3ba2af81461c542fc5d1df65d55cd19c08"
     }
   ]
 }

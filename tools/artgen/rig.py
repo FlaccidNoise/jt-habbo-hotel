@@ -3300,6 +3300,29 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.837, 0.304)},
         ],
     },
+    # Waist Cincher (set 74, two slots). The belt 15 is one 2.8 px box and the separator is height:
+    # 7 px against 2.8 is a band against a line at 64 px. The sash 67 established what the number
+    # has to be — drawn at 3.4 it quantised onto the belt's own rows and came out pixel-identical
+    # in a back frame — and 7 puts three clear rows between them everywhere.
+    #
+    # It runs 8.4 wide rather than the 8.1 both shipped wa bands use, because it is the first one
+    # to reach BELOW the hip. bd1's thigh limbs are capsules with a top cap, so each is a sphere
+    # at x +/-4.0 with r 4.2 that bulges to x 8.2 at z 0 and holds 8.08 at z -1. A band at 8.1 has
+    # its own side buried in that bulge for the bottom px of its run, which is a notch bitten out
+    # of the outline at exactly the height the garment is named for. 8.4 clears the sphere at
+    # every z the band occupies.
+    #
+    # Slot 1 is the lacing plate, 4.2 wide and 1.0 proud of the band's front. Proud is what buys
+    # it: the zip on the tracksuit 44 reads at 0.1 because a second ramp is a colour rather than a
+    # ridge, and a px of relief on top of that puts a shade boundary down both its edges as well.
+    "wa74": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.4, -6.6, -1.0),
+             "c1": (8.4, 6.6, 6.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-2.1, 6.6, -0.4),
+             "c1": (2.1, 7.6, 5.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
