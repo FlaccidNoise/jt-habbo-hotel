@@ -4830,6 +4830,60 @@ FIGURE_PARTS = {
              "c1": (4.5, 7.6, -SHIN_LEN + 4.4)},
         ],
     },
+    # Sailor Middy (set 99, two slots). The first garment in the wardrobe whose silhouette event
+    # is entirely BEHIND the figure — the trained gown 116's train is the other one planned. Dirs
+    # 2/3/4 read as a plain top on purpose; dirs 6/7/0 carry a plate standing off the shoulders.
+    #
+    # The ledger's flap is x +/-7.0, y -6.2..-7.6, and 1.4 px of it flush with the body's own back
+    # face is not a silhouette event: measured against the layer's own alpha it adds 0.7 rows and
+    # zero columns, which is a shading difference. The polo 41 the row names is separated by area,
+    # but the pack's bar is IoU, and IoU sees outline.
+    #
+    # `ch` is the most crowded layer in the wardrobe at 16 shipped sets, and it took three builds to
+    # find a body no sibling already owns. The measurements, because they are the reason for every
+    # number below:
+    #
+    #   body 7.9 x 6.2, hem z 1.0, sleeve 12.0    -> 0.8662 vs the TRIM SHIRT 6
+    #   body 8.2 x 6.3, hem z -1.6, sleeve 15.0   -> 0.8771 vs the VEST + SHIRT 40, and 6 at 0.7517
+    #   body 8.2 x 6.3, hem z -1.6, sleeve 11.0   -> the build below
+    #
+    # Neither of the first two named the polo 41 the ledger row does. The hem row is what moved 6:
+    # dropping to -1.6 runs a band of alpha right round the figure at every direction where 6, 5
+    # and 41 all stop 3 px higher. The sleeve is what moved 40, which reaches -20.4 with its cuff
+    # ball against this one's -11.0 — nine px on each arm, and an arm is the one part of a `ch`
+    # that lies outside the torso in every direction.
+    #
+    # The collar carries the rest, and it is 19.6 x 4.2 x 17.2 rather than the ledger's
+    # 14 x 1.4 x 8.0. A flap flush with the body's back face is not a silhouette event: measured
+    # against the layer's own alpha it adds 0.7 rows and zero columns, which is a shading
+    # difference. At 4.2 deep and 2.1 px outboard of the body it draws above the shoulder line at
+    # every direction and past the body's edge at every direction, which is what IoU can see.
+    #
+    # The collar's top is the number held still through all three builds. At y -10.4 and z 20.2 its
+    # highest row is 40, and rows 31 to 39 are the face. It may reach that row at all only because
+    # dirs 0, 6 and 7 draw no face and dirs 2, 3 and 4 hold it out behind the skull.
+    #
+    # The front V is a staircase because a box cannot be rotated — the sash 63's idiom, four steps
+    # instead of six, each 3.2 wide because anything under 3 px is pure outline with no interior
+    # shade left. Slot 1 is the collar and the V together: the two places a middy's contrast lands.
+    "ch99": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-8.2, -6.3, -1.6),
+             "c1": (8.2, 6.3, 20.2)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 11.0, "r": 3.8},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 11.0, "r": 3.8},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-9.8, -10.4, 3.0),
+             "c1": (9.8, -6.3, 20.2)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-5.6, 6.3, 16.2),
+             "c1": (-2.4, 7.6, 20.0)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (2.4, 6.3, 16.2),
+             "c1": (5.6, 7.6, 20.0)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-3.2, 6.3, 12.6),
+             "c1": (0.4, 7.6, 16.8)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-0.4, 6.3, 12.6),
+             "c1": (3.2, 7.6, 16.8)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

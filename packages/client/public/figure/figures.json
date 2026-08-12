@@ -4915,6 +4915,54 @@
       "figuredataVersion": 1,
       "recipeHash": "6ef041e613d4248f2ac007318d7cb453fddedcccac37f58fa4ac0f8269f81098",
       "pixelHash": "12fe40ece72b46c633d6f98cbd2fe88077faa6c9b4c9928de4032dd7a02442a5"
+    },
+    {
+      "partId": "ch99",
+      "setId": 99,
+      "type": "ch",
+      "name": "Sailor Middy",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ch99.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "61fb7253969109539be0756eec19347a6a5492095f1fc21b9d0f85560a87a3f9",
+      "pixelHash": "e15662869a549d9209173eac4cbd97cff370e7bd5960b7e2bc908b30cb672493"
     }
   ]
 }
