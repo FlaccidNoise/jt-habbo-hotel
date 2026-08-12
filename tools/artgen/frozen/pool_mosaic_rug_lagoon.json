@@ -1,0 +1,32 @@
+{
+  "defId": "pool_mosaic_rug_lagoon",
+  "archetype": "artgen",
+  "sheet": "pool_mosaic_rug_lagoon.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ab50effd67482626",
+  "recipeHash": "ab50effd674826261a5de941c802e4042c27d158fe46725c01444e5f4bb1a2a4",
+  "pixelHash": "e459bcf74ecca31511c2ba4d7d16f143093de55f76a08bc2360ad2b39daae7a5"
+}

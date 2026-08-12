@@ -38,6 +38,20 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "hearthside",
+    name: "The Hearthside Set",
+    members: ["lodge_log_bed", "lodge_wood_table", "lodge_wood_stove", "lodge_lantern"],
+    reward: "lodge_wood_stove_slate",
+    badge: "set_hearthside",
+  },
+  {
+    id: "poolside",
+    name: "The Poolside Set",
+    members: ["pool_hanging_chair", "pool_shade_sail", "pool_float_rack", "pool_towel_cart"],
+    reward: "pool_mosaic_rug_lagoon",
+    badge: "set_poolside",
+  },
+  {
     id: "gallery",
     name: "The Gallery",
     members: ["wall_art", "poster", "record_trophy", "wall_shelf"],

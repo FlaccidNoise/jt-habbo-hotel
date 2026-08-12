@@ -1,0 +1,32 @@
+{
+  "defId": "pool_mosaic_rug",
+  "archetype": "artgen",
+  "sheet": "pool_mosaic_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:69aa172d45ca79a8",
+  "recipeHash": "69aa172d45ca79a83193a25ebf347dedb84a31da571447f9b8af8e81ddadedef",
+  "pixelHash": "48672f1a68236916eb9e11163a54ee283eb66bcfd4ea91d8fc2081e208ef09b4"
+}

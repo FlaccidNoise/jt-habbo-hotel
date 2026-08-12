@@ -1,0 +1,34 @@
+{
+  "defId": "lodge_antler_chair_russet",
+  "archetype": "artgen",
+  "sheet": "lodge_antler_chair_russet.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "lodge_antler_chair_russet.near.png",
+  "nearHash": "566313785dc80a78a5c59fb74e6c4ae246fcfc90fc635dbca83b272a9f1c0294",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:04c60b1c4c5935f0",
+  "recipeHash": "04c60b1c4c5935f06054c365b28c97e52583084865b7cab454a0bb67b39b5e5f",
+  "pixelHash": "f418249d27954fae30a91a26d8e02d49d461adda435b14d0940f86d682f278ad"
+}

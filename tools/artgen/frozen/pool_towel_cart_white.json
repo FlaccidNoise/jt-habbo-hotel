@@ -1,0 +1,32 @@
+{
+  "defId": "pool_towel_cart_white",
+  "archetype": "artgen",
+  "sheet": "pool_towel_cart_white.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9ed355537cb942ea",
+  "recipeHash": "9ed355537cb942ea5a80260e1d176c9f12f49cdcf9a71bc73a54a7e5839f7caf",
+  "pixelHash": "5c2ad0ebb9252311591da8d18eeffe61e5432ff136a8e2fd6eaf18796a37be0e"
+}

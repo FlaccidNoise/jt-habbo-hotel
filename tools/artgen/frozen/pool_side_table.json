@@ -1,0 +1,32 @@
+{
+  "defId": "pool_side_table",
+  "archetype": "artgen",
+  "sheet": "pool_side_table.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5d26a082ab3c622f",
+  "recipeHash": "5d26a082ab3c622ff691993b5a3eaf9ead1bcf260ad2fd46962842a217ddc90a",
+  "pixelHash": "f8bb4e6fc6d23746ca3a474b2b71b9ca8f2ae71ad8cd31d474d41696b0647029"
+}

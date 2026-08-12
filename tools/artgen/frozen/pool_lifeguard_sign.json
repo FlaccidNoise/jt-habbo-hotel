@@ -1,0 +1,37 @@
+{
+  "defId": "pool_lifeguard_sign",
+  "archetype": "artgen",
+  "sheet": "pool_lifeguard_sign.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 10,
+    "mountU": 8,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:51d23cf6dd52d587",
+  "recipeHash": "51d23cf6dd52d5877a78d0f1f25a2a239c32a62c013e763835de72161ef1f559",
+  "pixelHash": "6f363fb5bc243993d32414a0482569bdc5ce0708545d1a7f51b4a0fcc34b3faa"
+}

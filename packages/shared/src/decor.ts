@@ -220,6 +220,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "floor", id: "floor_gallery_oak", name: "Gallery Oak", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
   { kind: "wall", id: "wall_gallery_canvas", name: "Gallery Canvas", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_gallery_picture_rail", name: "Gallery Picture Rail", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
+  // Wave A3 decor (blitz task 8): lodge + pool.
+  { kind: "floor", id: "floor_lodge_flagstone", name: "Lodge Flagstone", tile: { w: 64, h: 32 }, sides: { left: 0x656056, right: 0x9c9484 } },
+  { kind: "floor", id: "floor_lodge_pine", name: "Lodge Pine", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
+  { kind: "wall", id: "wall_lodge_plank", name: "Lodge Plank", tile: { w: 32, h: 32 }, cap: 0xb55a19 },
+  { kind: "wall", id: "wall_lodge_compass", name: "Lodge Compass", tile: { w: 32, h: 32 }, cap: 0xc2a36b },
+  { kind: "floor", id: "floor_pool_shell_tile", name: "Pool Shell Tile", tile: { w: 64, h: 32 }, sides: { left: 0x2f8f8f, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_pool_wave_mosaic", name: "Pool Wave Mosaic", tile: { w: 64, h: 32 }, sides: { left: 0x2f8f8f, right: 0x8d9eb1 } },
+  { kind: "wall", id: "wall_pool_cabana_stripe", name: "Pool Cabana Stripe", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_pool_sun_tile", name: "Pool Sun Tile", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

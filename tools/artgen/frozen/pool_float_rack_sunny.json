@@ -1,0 +1,32 @@
+{
+  "defId": "pool_float_rack_sunny",
+  "archetype": "artgen",
+  "sheet": "pool_float_rack_sunny.png",
+  "frameW": 64,
+  "frameH": 58,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 42,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:22d39c5e48f7966e",
+  "recipeHash": "22d39c5e48f7966ea93bf3056ef82b314a40dba273e5879e2e9b5fc788ad3621",
+  "pixelHash": "70819e05cf50075f96de2dd45c4527447f4988df2f48151dac679ca4b1279b2d"
+}

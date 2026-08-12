@@ -1,0 +1,32 @@
+{
+  "defId": "lodge_lantern_copper",
+  "archetype": "artgen",
+  "sheet": "lodge_lantern_copper.png",
+  "frameW": 64,
+  "frameH": 52,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 36,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d6bac0dfd884558c",
+  "recipeHash": "d6bac0dfd884558c1c332e1e334b167810ae45218fc911254f9bd7c8a5c21f05",
+  "pixelHash": "5a49680cb08c1cf7dc37500e398860343b5a317e6b1367772fda17b0392e2749"
+}

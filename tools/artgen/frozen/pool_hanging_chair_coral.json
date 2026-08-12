@@ -1,0 +1,32 @@
+{
+  "defId": "pool_hanging_chair_coral",
+  "archetype": "artgen",
+  "sheet": "pool_hanging_chair_coral.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": 0.86,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:40735d7037d3f34a",
+  "recipeHash": "40735d7037d3f34aeeb2b6b91cce0c569587996e6589e6ae5042afaef5f6d86f",
+  "pixelHash": "244fc5f872cfa055cb57abf2ebece7c98914435c0bc6736be64e4ab5817a4031"
+}

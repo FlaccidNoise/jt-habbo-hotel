@@ -1,0 +1,32 @@
+{
+  "defId": "pool_shade_sail",
+  "archetype": "artgen",
+  "sheet": "pool_shade_sail.png",
+  "frameW": 64,
+  "frameH": 73,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1b95c10727904e9c",
+  "recipeHash": "1b95c10727904e9c7586170e92be3f9a931b4765351c62afc49c35013bd63945",
+  "pixelHash": "58ab0bae6f9c1744f6c3d72562f62e194e907956eb32385c6b8d4d0df061a9af"
+}

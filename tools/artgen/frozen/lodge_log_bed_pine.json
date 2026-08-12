@@ -1,0 +1,34 @@
+{
+  "defId": "lodge_log_bed_pine",
+  "archetype": "artgen",
+  "sheet": "lodge_log_bed_pine.png",
+  "frameW": 96,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "lodge_log_bed_pine.near.png",
+  "nearHash": "d69bc878b15886f7637eab0b3c803f30c3e2a9280e91f56515af8524b09168c2",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6696ec0af7cd2f1f",
+  "recipeHash": "6696ec0af7cd2f1f187ecd66ebc5f056c6c096ef07f166fd56b4909a191a3c35",
+  "pixelHash": "cb55e6657548996a94a8df74acd111c7bbc77d8cc1dbd105a53e979a14716668"
+}

@@ -4697,6 +4697,816 @@
       "recipeHash": "b1931e76525610dd798f394fdc002bd2cc94a1918b57aa0fabf16931114be0fa",
       "pixelHash": "f4d9cad4145f63a6b568963f017f01f8f5f18d1af5d5d4824dc4eb1ce9bc7977"
     },
+    "lodge_wood_stove_slate": {
+      "defId": "lodge_wood_stove_slate",
+      "archetype": "artgen",
+      "sheet": "lodge_wood_stove_slate.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f9cf14256de3b7e7",
+      "recipeHash": "f9cf14256de3b7e79d9b44fa3696d3ac9b310b9419ec720ec40df2ab9a78b832",
+      "pixelHash": "4bbc23f34c9169a563a73f195e7987d41a131f57e35a7a94aae63342df1b37cb"
+    },
+    "lodge_log_bed_pine": {
+      "defId": "lodge_log_bed_pine",
+      "archetype": "artgen",
+      "sheet": "lodge_log_bed_pine.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "lodge_log_bed_pine.near.png",
+      "nearHash": "d69bc878b15886f7637eab0b3c803f30c3e2a9280e91f56515af8524b09168c2",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6696ec0af7cd2f1f",
+      "recipeHash": "6696ec0af7cd2f1f187ecd66ebc5f056c6c096ef07f166fd56b4909a191a3c35",
+      "pixelHash": "cb55e6657548996a94a8df74acd111c7bbc77d8cc1dbd105a53e979a14716668"
+    },
+    "lodge_antler_chair_russet": {
+      "defId": "lodge_antler_chair_russet",
+      "archetype": "artgen",
+      "sheet": "lodge_antler_chair_russet.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "lodge_antler_chair_russet.near.png",
+      "nearHash": "566313785dc80a78a5c59fb74e6c4ae246fcfc90fc635dbca83b272a9f1c0294",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:04c60b1c4c5935f0",
+      "recipeHash": "04c60b1c4c5935f06054c365b28c97e52583084865b7cab454a0bb67b39b5e5f",
+      "pixelHash": "f418249d27954fae30a91a26d8e02d49d461adda435b14d0940f86d682f278ad"
+    },
+    "lodge_wood_table_cedar": {
+      "defId": "lodge_wood_table_cedar",
+      "archetype": "artgen",
+      "sheet": "lodge_wood_table_cedar.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6028194ef8103389",
+      "recipeHash": "6028194ef8103389a8959ae355ef634850aaf6a2083b8d5b1b73cc6c5eb5b7fb",
+      "pixelHash": "3c5c6300beb89a859c27ba3c2bced41e2a520643e7b4dfaecad7f5c98918791f"
+    },
+    "lodge_fur_rug_grey": {
+      "defId": "lodge_fur_rug_grey",
+      "archetype": "artgen",
+      "sheet": "lodge_fur_rug_grey.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9237d7c833f9cadd",
+      "recipeHash": "9237d7c833f9cadd7b7bd08568ce3fe4d3f609553fbb22fc8c5bd6ba2f445e7b",
+      "pixelHash": "c9f591a64cb53c67c676a9f14dc954c53b24ae30e145de8e90c5cc8ac06c57a4"
+    },
+    "lodge_lantern_copper": {
+      "defId": "lodge_lantern_copper",
+      "archetype": "artgen",
+      "sheet": "lodge_lantern_copper.png",
+      "frameW": 64,
+      "frameH": 52,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 36,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d6bac0dfd884558c",
+      "recipeHash": "d6bac0dfd884558c1c332e1e334b167810ae45218fc911254f9bd7c8a5c21f05",
+      "pixelHash": "5a49680cb08c1cf7dc37500e398860343b5a317e6b1367772fda17b0392e2749"
+    },
+    "pool_hanging_chair_coral": {
+      "defId": "pool_hanging_chair_coral",
+      "archetype": "artgen",
+      "sheet": "pool_hanging_chair_coral.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": 0.86,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:40735d7037d3f34a",
+      "recipeHash": "40735d7037d3f34aeeb2b6b91cce0c569587996e6589e6ae5042afaef5f6d86f",
+      "pixelHash": "244fc5f872cfa055cb57abf2ebece7c98914435c0bc6736be64e4ab5817a4031"
+    },
+    "pool_side_table_teal": {
+      "defId": "pool_side_table_teal",
+      "archetype": "artgen",
+      "sheet": "pool_side_table_teal.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:241e62bf078a8837",
+      "recipeHash": "241e62bf078a8837bcd011a4c93c795892fd55e705d6b48edf5f929180145229",
+      "pixelHash": "b3a6b46b9316d212cd479168a01e1fae314185a65013dfcc7aea1032b8745f49"
+    },
+    "pool_float_rack_sunny": {
+      "defId": "pool_float_rack_sunny",
+      "archetype": "artgen",
+      "sheet": "pool_float_rack_sunny.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:22d39c5e48f7966e",
+      "recipeHash": "22d39c5e48f7966ea93bf3056ef82b314a40dba273e5879e2e9b5fc788ad3621",
+      "pixelHash": "70819e05cf50075f96de2dd45c4527447f4988df2f48151dac679ca4b1279b2d"
+    },
+    "pool_towel_cart_white": {
+      "defId": "pool_towel_cart_white",
+      "archetype": "artgen",
+      "sheet": "pool_towel_cart_white.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9ed355537cb942ea",
+      "recipeHash": "9ed355537cb942ea5a80260e1d176c9f12f49cdcf9a71bc73a54a7e5839f7caf",
+      "pixelHash": "5c2ad0ebb9252311591da8d18eeffe61e5432ff136a8e2fd6eaf18796a37be0e"
+    },
+    "pool_mosaic_rug_lagoon": {
+      "defId": "pool_mosaic_rug_lagoon",
+      "archetype": "artgen",
+      "sheet": "pool_mosaic_rug_lagoon.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ab50effd67482626",
+      "recipeHash": "ab50effd674826261a5de941c802e4042c27d158fe46725c01444e5f4bb1a2a4",
+      "pixelHash": "e459bcf74ecca31511c2ba4d7d16f143093de55f76a08bc2360ad2b39daae7a5"
+    },
+    "pool_shade_sail": {
+      "defId": "pool_shade_sail",
+      "archetype": "artgen",
+      "sheet": "pool_shade_sail.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1b95c10727904e9c",
+      "recipeHash": "1b95c10727904e9c7586170e92be3f9a931b4765351c62afc49c35013bd63945",
+      "pixelHash": "58ab0bae6f9c1744f6c3d72562f62e194e907956eb32385c6b8d4d0df061a9af"
+    },
+    "pool_shade_sail_aqua": {
+      "defId": "pool_shade_sail_aqua",
+      "archetype": "artgen",
+      "sheet": "pool_shade_sail_aqua.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b2d319ec84b5b3cf",
+      "recipeHash": "b2d319ec84b5b3cf62a05e8f8cb0461e4265b1a0fab90f6a7e8216ab63d46bab",
+      "pixelHash": "dec164ef3319acc41448d86c3f20147868a552ed0623f70dad8b5051f9f8cbc2"
+    },
+    "lodge_wood_stove": {
+      "defId": "lodge_wood_stove",
+      "archetype": "artgen",
+      "sheet": "lodge_wood_stove.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6bb16a5147d91099",
+      "recipeHash": "6bb16a5147d91099e9f2a2c1682632eb16ae5123049e02e9780d865b2079692c",
+      "pixelHash": "8dd48503d9ca282353b4258de90dc521f354f7f4bcb1faaa50bb2c5646eff6e4"
+    },
+    "lodge_log_bed": {
+      "defId": "lodge_log_bed",
+      "archetype": "artgen",
+      "sheet": "lodge_log_bed.png",
+      "frameW": 96,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        32,
+        64,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 2
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "lodge_log_bed.near.png",
+      "nearHash": "7900590c8e682efe3edf292ec5375f556906b0beda1f99f6aff34947e1275b9d",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1abaf157dcb09de0",
+      "recipeHash": "1abaf157dcb09de00074dfdf53304db3259d6731d7a31a71c15a4bbdf93580a4",
+      "pixelHash": "72659052aeae72e93008cdd202f8ed196be58a1cd1f8f0c6ae13ae3e5a239ae1"
+    },
+    "lodge_antler_chair": {
+      "defId": "lodge_antler_chair",
+      "archetype": "artgen",
+      "sheet": "lodge_antler_chair.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "lodge_antler_chair.near.png",
+      "nearHash": "566313785dc80a78a5c59fb74e6c4ae246fcfc90fc635dbca83b272a9f1c0294",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:976b20747fcb443f",
+      "recipeHash": "976b20747fcb443f8b07f461607d4170bf39aafc9c31afe7f76f1996eef8fee8",
+      "pixelHash": "f5cefd56235295132a2053b3e68516a03e373afefe98246cc083cbccb24cbcf4"
+    },
+    "lodge_wood_table": {
+      "defId": "lodge_wood_table",
+      "archetype": "artgen",
+      "sheet": "lodge_wood_table.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:32f2e9b5abf3cf85",
+      "recipeHash": "32f2e9b5abf3cf8552181c736d1d7f612742031104b3a547030c35893e11de45",
+      "pixelHash": "ce4ef34451f530c7e7e9a304e9d92c5cf556b812d609d9392ff0d8f6c502d19c"
+    },
+    "lodge_fur_rug": {
+      "defId": "lodge_fur_rug",
+      "archetype": "artgen",
+      "sheet": "lodge_fur_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cb000f2c4cc016d4",
+      "recipeHash": "cb000f2c4cc016d4a7965375369b7c457a31229fe3eb0b9ec455689eb33db644",
+      "pixelHash": "f0242dd85e4cc3162db3974e2979b3a6769362d1b92741d3ed26caa7a50daf71"
+    },
+    "lodge_lantern": {
+      "defId": "lodge_lantern",
+      "archetype": "artgen",
+      "sheet": "lodge_lantern.png",
+      "frameW": 64,
+      "frameH": 52,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 36,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:abd995c813468ba0",
+      "recipeHash": "abd995c813468ba0db6b5008e1536428a02dd8b76d36be254229d6c4901eb442",
+      "pixelHash": "a80aba38e6addf770f9400c25dbcb9b35ae0556d69a8a8e8582f4a8f8d0d4b72"
+    },
+    "lodge_bench": {
+      "defId": "lodge_bench",
+      "archetype": "artgen",
+      "sheet": "lodge_bench.png",
+      "frameW": 64,
+      "frameH": 47,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 31,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.46875,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "lodge_bench.near.png",
+      "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d11e6d94d015d7b4",
+      "recipeHash": "d11e6d94d015d7b4ac88f42b47c77185578a6c6e772c987fdee9f00da63b027e",
+      "pixelHash": "8fd90ac6d7c17231e03e1627a54c352b5c729c4f64e6109c8a8d4ab2c0700b0b"
+    },
+    "pool_hanging_chair": {
+      "defId": "pool_hanging_chair",
+      "archetype": "artgen",
+      "sheet": "pool_hanging_chair.png",
+      "frameW": 64,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 68,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.625,
+      "seatZ": 0.86,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:65d2feef3bfa5e27",
+      "recipeHash": "65d2feef3bfa5e2793c13c61f5f78b030ffeee336959c2c4592b4909032dea72",
+      "pixelHash": "aa53770551a4a5634823a3650ebd86a6d8dcf61189bebbcaeb4d44dbbe4681a3"
+    },
+    "pool_side_table": {
+      "defId": "pool_side_table",
+      "archetype": "artgen",
+      "sheet": "pool_side_table.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5d26a082ab3c622f",
+      "recipeHash": "5d26a082ab3c622ff691993b5a3eaf9ead1bcf260ad2fd46962842a217ddc90a",
+      "pixelHash": "f8bb4e6fc6d23746ca3a474b2b71b9ca8f2ae71ad8cd31d474d41696b0647029"
+    },
+    "pool_float_rack": {
+      "defId": "pool_float_rack",
+      "archetype": "artgen",
+      "sheet": "pool_float_rack.png",
+      "frameW": 64,
+      "frameH": 58,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 42,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e2ae2586f3a344e7",
+      "recipeHash": "e2ae2586f3a344e72dfdacdfc444add74896b3916d0672a1ca5ac7ffddbfe048",
+      "pixelHash": "f5b879aa9659e56b297a50b5ae7b01c98d6072f4f25de68f5d2cad390f318612"
+    },
+    "pool_towel_cart": {
+      "defId": "pool_towel_cart",
+      "archetype": "artgen",
+      "sheet": "pool_towel_cart.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3563c31afe5c1d9f",
+      "recipeHash": "3563c31afe5c1d9f2ec843884d9d126cc123b53e4826244cf4bbea9083715c66",
+      "pixelHash": "54ff6d7c830ea1fa3d688f6b2a542f2bd1c276db015681d5ab2394a7263bfb86"
+    },
+    "pool_mosaic_rug": {
+      "defId": "pool_mosaic_rug",
+      "archetype": "artgen",
+      "sheet": "pool_mosaic_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:69aa172d45ca79a8",
+      "recipeHash": "69aa172d45ca79a83193a25ebf347dedb84a31da571447f9b8af8e81ddadedef",
+      "pixelHash": "48672f1a68236916eb9e11163a54ee283eb66bcfd4ea91d8fc2081e208ef09b4"
+    },
     "bannerhold_oak_bench": {
       "defId": "bannerhold_oak_bench",
       "archetype": "artgen",
@@ -7676,6 +8486,339 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "lodge_antler_mount": {
+      "defId": "lodge_antler_mount",
+      "archetype": "artgen",
+      "sheet": "lodge_antler_mount.png",
+      "frameW": 64,
+      "frameH": 123,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 107,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 12,
+        "planeH": 12,
+        "mountU": 8,
+        "mountV": 40,
+        "gap": 0,
+        "depth": 0.13
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:93d7072e96aa6957",
+      "recipeHash": "93d7072e96aa69570817904911d77b816eb202c17cecf84cd99f086fa5f37c98",
+      "pixelHash": "054c811f3d2ebfe1527dfdf391ab185bb9585570b486319b839367ff665c18a8"
+    },
+    "lodge_tapestry": {
+      "defId": "lodge_tapestry",
+      "archetype": "artgen",
+      "sheet": "lodge_tapestry.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 23,
+        "mountU": 4,
+        "mountV": 35,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:66b4fa8e21592215",
+      "recipeHash": "66b4fa8e2159221521aab0bad7d5092046399264740148804086bddf4e541776",
+      "pixelHash": "0aa7fdb861c48d7c455ec8491484c87aad87534b8394db3aac3e20b1e0b7c9f1"
+    },
+    "lodge_wall_lantern": {
+      "defId": "lodge_wall_lantern",
+      "archetype": "artgen",
+      "sheet": "lodge_wall_lantern.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 8,
+        "planeH": 5,
+        "mountU": 10,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8b9e94e124ce2860",
+      "recipeHash": "8b9e94e124ce2860f530295bf91be8f59199f16ca3c45c4db875497e63d75101",
+      "pixelHash": "8d95e2eaef401b8f7f0456ee3dacaa042645e004d474d2e7fe49ac8a548c2857"
+    },
+    "lodge_map_frame": {
+      "defId": "lodge_map_frame",
+      "archetype": "artgen",
+      "sheet": "lodge_map_frame.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 17,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ecb24b842c0f4291",
+      "recipeHash": "ecb24b842c0f42914db8e641cbe44e7634b1816a669a4bdd258026979efc2e59",
+      "pixelHash": "f6600bcc487cf0f0e49676719311e5660e72ab5750c4672cbccc4e866b0b23e8"
+    },
+    "lodge_wood_carving": {
+      "defId": "lodge_wood_carving",
+      "archetype": "artgen",
+      "sheet": "lodge_wood_carving.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 17,
+        "mountU": 8,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4df87c8487e81d8a",
+      "recipeHash": "4df87c8487e81d8ab3378a04163de2036b970d1d67148f6ec0e4d7ac8aa2e766",
+      "pixelHash": "93bb846ac4df738bdb2788fbe0ee98d14db7b802b51e7b40ee44e88f137cceea"
+    },
+    "pool_tile_mural": {
+      "defId": "pool_tile_mural",
+      "archetype": "artgen",
+      "sheet": "pool_tile_mural.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 23,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a51bfece57d43a9b",
+      "recipeHash": "a51bfece57d43a9b7a03dae0d2388947572df352adebdca4d14d13b3d9438958",
+      "pixelHash": "83ae7271f3075c89239c5d807498cd0b9fdbf9995b11d770d20995d8054ecc65"
+    },
+    "pool_lifeguard_sign": {
+      "defId": "pool_lifeguard_sign",
+      "archetype": "artgen",
+      "sheet": "pool_lifeguard_sign.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 14,
+        "planeH": 10,
+        "mountU": 8,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:51d23cf6dd52d587",
+      "recipeHash": "51d23cf6dd52d5877a78d0f1f25a2a239c32a62c013e763835de72161ef1f559",
+      "pixelHash": "6f363fb5bc243993d32414a0482569bdc5ce0708545d1a7f51b4a0fcc34b3faa"
+    },
+    "pool_wave_art": {
+      "defId": "pool_wave_art",
+      "archetype": "artgen",
+      "sheet": "pool_wave_art.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9a19db9278141fe1",
+      "recipeHash": "9a19db9278141fe1510c61759b4dacf35ded45ec3b07be317b7e5595292d890d",
+      "pixelHash": "4deb75fbfe5303eafa7afb47bfad46df945ba89a201990d84125c022330d129b"
+    },
+    "pool_sconce": {
+      "defId": "pool_sconce",
+      "archetype": "artgen",
+      "sheet": "pool_sconce.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 9,
+        "mountU": 8,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5d07e63526c3c602",
+      "recipeHash": "5d07e63526c3c602114ad64dfa6be48a3b9bebfd4ed3e1408e1ef2a4256a0855",
+      "pixelHash": "1d7b74d79d09dd3928b72568bf8ca4b2b4d4487ac3879d63b7daa030a43afefd"
     },
     "bannerhold_crest_banner": {
       "defId": "bannerhold_crest_banner",

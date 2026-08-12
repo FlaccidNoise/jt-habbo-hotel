@@ -1,0 +1,37 @@
+{
+  "defId": "lodge_wall_lantern",
+  "archetype": "artgen",
+  "sheet": "lodge_wall_lantern.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 8,
+    "planeH": 5,
+    "mountU": 10,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8b9e94e124ce2860",
+  "recipeHash": "8b9e94e124ce2860f530295bf91be8f59199f16ca3c45c4db875497e63d75101",
+  "pixelHash": "8d95e2eaef401b8f7f0456ee3dacaa042645e004d474d2e7fe49ac8a548c2857"
+}

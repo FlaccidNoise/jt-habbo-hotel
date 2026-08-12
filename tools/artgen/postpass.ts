@@ -220,6 +220,19 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // Bannerhold pilot colorway (blitz task 5): the oak plank goes slate for dusk; the walnut
   // trestles stay, so the colorway is a different object, not a relabel.
   bannerhold_oak_bench_dusk: { base: "bannerhold_oak_bench", ramps: { oak: "slate" } },
+  // Wave A3 colorways (blitz task 8).
+  lodge_wood_stove_slate: {  base: "lodge_wood_stove", ramps: {'charcoal': 'slate' }  },
+  lodge_log_bed_pine: {  base: "lodge_log_bed", ramps: {'walnut': 'fern' }  },
+  lodge_antler_chair_russet: {  base: "lodge_antler_chair", ramps: {'sand': 'crimson' }  },
+  lodge_wood_table_cedar: {  base: "lodge_wood_table", ramps: {'oak': 'sand' }  },
+  lodge_fur_rug_grey: {  base: "lodge_fur_rug", ramps: {'sand': 'slate', 'ivory': 'slate' }  },
+  lodge_lantern_copper: {  base: "lodge_lantern", ramps: {'gold': 'sand' }  },
+  pool_hanging_chair_coral: {  base: "pool_hanging_chair", ramps: {'ivory': 'crimson' }  },
+  pool_shade_sail_aqua: {  base: "pool_shade_sail", ramps: {'ivory': 'teal' }  },
+  pool_side_table_teal: {  base: "pool_side_table", ramps: {'ivory': 'teal' }  },
+  pool_float_rack_sunny: {  base: "pool_float_rack", ramps: {'crimson': 'gold' }  },
+  pool_towel_cart_white: {  base: "pool_towel_cart", ramps: {'crimson': 'ivory' }  },
+  pool_mosaic_rug_lagoon: {  base: "pool_mosaic_rug", ramps: {'teal': 'navy' }  },
   // Wave A2 colorways (blitz task 7).
   casino_card_table_emerald: {  base: "casino_card_table", ramps: {'walnut': 'oak' }  },
   casino_dice_table_noir: {  base: "casino_dice_table", ramps: {'teal': 'charcoal' }  },

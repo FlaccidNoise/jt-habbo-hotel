@@ -1,0 +1,37 @@
+{
+  "defId": "pool_sconce",
+  "archetype": "artgen",
+  "sheet": "pool_sconce.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 10,
+    "planeH": 9,
+    "mountU": 8,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5d07e63526c3c602",
+  "recipeHash": "5d07e63526c3c602114ad64dfa6be48a3b9bebfd4ed3e1408e1ef2a4256a0855",
+  "pixelHash": "1d7b74d79d09dd3928b72568bf8ca4b2b4d4487ac3879d63b7daa030a43afefd"
+}

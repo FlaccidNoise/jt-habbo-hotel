@@ -1,0 +1,32 @@
+{
+  "defId": "lodge_wood_stove_slate",
+  "archetype": "artgen",
+  "sheet": "lodge_wood_stove_slate.png",
+  "frameW": 64,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 68,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f9cf14256de3b7e7",
+  "recipeHash": "f9cf14256de3b7e79d9b44fa3696d3ac9b310b9419ec720ec40df2ab9a78b832",
+  "pixelHash": "4bbc23f34c9169a563a73f195e7987d41a131f57e35a7a94aae63342df1b37cb"
+}

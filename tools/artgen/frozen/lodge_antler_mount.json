@@ -1,0 +1,37 @@
+{
+  "defId": "lodge_antler_mount",
+  "archetype": "artgen",
+  "sheet": "lodge_antler_mount.png",
+  "frameW": 64,
+  "frameH": 123,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 107,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.84375,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 12,
+    "planeH": 12,
+    "mountU": 8,
+    "mountV": 40,
+    "gap": 0,
+    "depth": 0.13
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:93d7072e96aa6957",
+  "recipeHash": "93d7072e96aa69570817904911d77b816eb202c17cecf84cd99f086fa5f37c98",
+  "pixelHash": "054c811f3d2ebfe1527dfdf391ab185bb9585570b486319b839367ff665c18a8"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "lodge_bench",
+  "archetype": "artgen",
+  "sheet": "lodge_bench.png",
+  "frameW": 64,
+  "frameH": 47,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 31,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.46875,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "lodge_bench.near.png",
+  "nearHash": "c6a2c3275d0a304b392021a48089ab761e9ec0245726e4da57e74fc0f182a4c2",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d11e6d94d015d7b4",
+  "recipeHash": "d11e6d94d015d7b4ac88f42b47c77185578a6c6e772c987fdee9f00da63b027e",
+  "pixelHash": "8fd90ac6d7c17231e03e1627a54c352b5c729c4f64e6109c8a8d4ab2c0700b0b"
+}

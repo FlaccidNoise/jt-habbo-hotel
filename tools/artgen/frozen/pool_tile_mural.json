@@ -1,0 +1,37 @@
+{
+  "defId": "pool_tile_mural",
+  "archetype": "artgen",
+  "sheet": "pool_tile_mural.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 23,
+    "mountU": 4,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.06
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a51bfece57d43a9b",
+  "recipeHash": "a51bfece57d43a9b7a03dae0d2388947572df352adebdca4d14d13b3d9438958",
+  "pixelHash": "83ae7271f3075c89239c5d807498cd0b9fdbf9995b11d770d20995d8054ecc65"
+}

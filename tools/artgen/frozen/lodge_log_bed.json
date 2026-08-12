@@ -1,0 +1,34 @@
+{
+  "defId": "lodge_log_bed",
+  "archetype": "artgen",
+  "sheet": "lodge_log_bed.png",
+  "frameW": 96,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    32,
+    64,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 2
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "lodge_log_bed.near.png",
+  "nearHash": "7900590c8e682efe3edf292ec5375f556906b0beda1f99f6aff34947e1275b9d",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1abaf157dcb09de0",
+  "recipeHash": "1abaf157dcb09de00074dfdf53304db3259d6731d7a31a71c15a4bbdf93580a4",
+  "pixelHash": "72659052aeae72e93008cdd202f8ed196be58a1cd1f8f0c6ae13ae3e5a239ae1"
+}

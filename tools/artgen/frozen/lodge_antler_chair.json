@@ -1,0 +1,34 @@
+{
+  "defId": "lodge_antler_chair",
+  "archetype": "artgen",
+  "sheet": "lodge_antler_chair.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "lodge_antler_chair.near.png",
+  "nearHash": "566313785dc80a78a5c59fb74e6c4ae246fcfc90fc635dbca83b272a9f1c0294",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:976b20747fcb443f",
+  "recipeHash": "976b20747fcb443f8b07f461607d4170bf39aafc9c31afe7f76f1996eef8fee8",
+  "pixelHash": "f5cefd56235295132a2053b3e68516a03e373afefe98246cc083cbccb24cbcf4"
+}

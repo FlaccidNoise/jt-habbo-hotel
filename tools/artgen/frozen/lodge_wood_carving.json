@@ -1,0 +1,37 @@
+{
+  "defId": "lodge_wood_carving",
+  "archetype": "artgen",
+  "sheet": "lodge_wood_carving.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 14,
+    "planeH": 17,
+    "mountU": 8,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4df87c8487e81d8a",
+  "recipeHash": "4df87c8487e81d8ab3378a04163de2036b970d1d67148f6ec0e4d7ac8aa2e766",
+  "pixelHash": "93bb846ac4df738bdb2788fbe0ee98d14db7b802b51e7b40ee44e88f137cceea"
+}

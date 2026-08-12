@@ -1,0 +1,32 @@
+{
+  "defId": "pool_side_table_teal",
+  "archetype": "artgen",
+  "sheet": "pool_side_table_teal.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:241e62bf078a8837",
+  "recipeHash": "241e62bf078a8837bcd011a4c93c795892fd55e705d6b48edf5f929180145229",
+  "pixelHash": "b3a6b46b9316d212cd479168a01e1fae314185a65013dfcc7aea1032b8745f49"
+}

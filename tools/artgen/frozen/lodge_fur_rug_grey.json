@@ -1,0 +1,32 @@
+{
+  "defId": "lodge_fur_rug_grey",
+  "archetype": "artgen",
+  "sheet": "lodge_fur_rug_grey.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9237d7c833f9cadd",
+  "recipeHash": "9237d7c833f9cadd7b7bd08568ce3fe4d3f609553fbb22fc8c5bd6ba2f445e7b",
+  "pixelHash": "c9f591a64cb53c67c676a9f14dc954c53b24ae30e145de8e90c5cc8ac06c57a4"
+}
