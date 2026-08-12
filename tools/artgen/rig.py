@@ -3268,6 +3268,38 @@ FIGURE_PARTS = {
              "c1": (3.2, -3.0, -12.8)},
         ],
     },
+    # Corset Bodice (set 73, two slots). The tank 43 is the nearest thing on the most crowded
+    # layer in the wardrobe, and it is separated on both of the things this set does: 43 carries
+    # two 3.6 straps over the shoulders with a 6.4 gap between them, and it stops at the waist.
+    # This has no straps at all, and it gains a hip flare 43 has nothing like.
+    #
+    # The top edge is flat and straight across at z 15.6 — above the arm bones' own 15, but the
+    # shoulder a player reads is the torso box's top at 21 and the arm's cap at 18.2, so the edge
+    # lands mid-chest and the shoulders stay bd1's skin. Skin is free: a garment that covers less
+    # is not a cheaper garment.
+    #
+    # The body is 7.8 by 6.3 against the tank's 7.9 by 6.4 — fitted rather than hung, and still
+    # 0.3 clear of the torso it covers, which is the floor. Inside that the body wins the depth
+    # test and the layer renders as nothing.
+    #
+    # The peplum is slot 1 and it is one squashed ball at the hem, r 9.2, which is 1.7 past the
+    # torso and 1.4 past the bodice's own side. It is centred at z 1.4 with 2.8 px of half-height,
+    # so it overlaps the body's own hem and the layer stays one island.
+    #
+    # The body stops at 2.4 rather than at the hem itself, and that px is what makes the peplum a
+    # ring instead of a lip. The flare is only visible between the body's hem and the height where
+    # bd1's own thigh caps overtake it — those spheres sit at x +/-4.0 with r 4.2, so they hold
+    # 8.2 at z 0 and swallow the ellipsoid's lower pole, which has narrowed to 7.97 by then.
+    # Drawn with the body down at 1.4 that left 1.1 px of exposed ring, and at dirs 1 and 5 it was
+    # two pixels; lifting the hem doubles it without moving the flare the ledger specified.
+    "ch73": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.8, -6.3, 2.4),
+             "c1": (7.8, 6.3, 15.6)},
+            {"t": "ball", "bone": "spine", "slot": 1, "c": (0.0, 0.0, 1.4), "r": 9.2,
+             "squash": (1.0, 0.837, 0.304)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
