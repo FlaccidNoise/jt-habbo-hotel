@@ -68,6 +68,11 @@ Same-type siblings stay **below 0.854 silhouette IoU**, measured over the render
 sibling among sets 1-127 and the geometric feature that separates them. If a separator cannot be
 stated as geometry, **change the part**. Palette is never a separator.
 
+**The named sibling is a hint, not the bar** (pack 4 finding: 3 of 6 rows named the wrong nearest —
+lg84's true tightest was Trousers 7 at 0.847-as-specced, not Cargo 47). Always measure against
+EVERY shipped same-type sibling; the named one is where to look first, never where to stop.
+Unpurchasable pairs (Staff Blazer 16) may exceed the bar — no player can own both.
+
 ---
 
 ## Pack 1 — bannerhold (7)
