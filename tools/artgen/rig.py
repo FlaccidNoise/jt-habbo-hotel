@@ -4315,6 +4315,60 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, 0.0, 33.0), "r": 3.0},
         ],
     },
+    # ---- costume pack 4: starliner (#454) ----
+    # Spacefarer. The first three packs shaped the figure — padded, cut, curved — and this one
+    # bolts hardware to it: rings round the limbs, a right angle at the shoulder, and gear that
+    # stands off the body far enough to throw its own outline.
+    #
+    # Pressure Leggings (set 84, two slots). The cargo 47 breaks its outline with four pocket
+    # boxes on the outboard and front faces only, so it reads differently from every direction.
+    # This one is the opposite discipline: three full-circumference bands on a slim tube, which
+    # look the same from all eight.
+    #
+    # The bands are CYLINDERS, not squashed balls. A ball ring is only proud at its own centre
+    # plane — the bloomer 78's cuff spends 2.64 px of z to hold 0.6 px of step — and a band that
+    # is proud at one row and flush two rows later is a shading change, not a silhouette. A cone
+    # with equal radii holds its radius across its whole height, so all three bulges are the same
+    # depth at every row they cover.
+    #
+    # The tube is 4.5, which clears bd1's 4.2 thigh by 0.3 and its 3.7 shin by 0.8, and is 1.0
+    # slimmer than the cargo's thigh. Slot 1 is the three bands.
+    #
+    # The bands are 6.6 and 3.4 tall, not the intent's 5.8 and 3.0, and the trousers 7 are what
+    # moved them. 47 is not the nearest sibling here — 7 is, because it is the other full-length
+    # tube: 4.7 at the thigh against this one's 4.5 and 4.3 at the shin against 4.5, which is a
+    # tenth of a pixel of difference over the whole leg. At the intent's 5.8 the bands stood only
+    # 1.1 px proud of 7's own outline and the pair measured 0.8472 IoU — inside the 0.854 bar by
+    # seven thousandths, which is not a separator, it is a coincidence. At 6.6 they stand 1.9 proud
+    # of 7 and carry 3.4 px of height each, and that pair drops to 0.7971.
+    #
+    # Measured against all nine shipped lg sets, the tightest is now the cargo 47 at 0.8208 — the
+    # sibling the row names, which is the right shape for the pair to be in. Flares 46 sit at
+    # 0.8029 and everything else is under 0.55.
+    "lg84": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.0, -6.4, -2.4),
+             "c1": (8.0, 6.4, 2.2)},
+            {"t": "limb", "bone": "leg_l",  "slot": 0, "len": float(THIGH_LEN), "r": 4.5},
+            {"t": "limb", "bone": "leg_r",  "slot": 0, "len": float(THIGH_LEN), "r": 4.5},
+            {"t": "limb", "bone": "knee_l", "slot": 0, "len": float(SHIN_LEN), "r": 4.5,
+             "caps": "top"},
+            {"t": "limb", "bone": "knee_r", "slot": 0, "len": float(SHIN_LEN), "r": 4.5,
+             "caps": "top"},
+            {"t": "cone", "bone": "leg_l",  "slot": 1, "z0": -5.5, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "cone", "bone": "leg_r",  "slot": 1, "z0": -5.5, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "cone", "bone": "knee_l", "slot": 1, "z0": -0.5, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "cone", "bone": "knee_r", "slot": 1, "z0": -0.5, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "cone", "bone": "knee_l", "slot": 1, "z0": -8.0, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "cone", "bone": "knee_r", "slot": 1, "z0": -8.0, "len": 3.4,
+             "r0": 6.6, "r1": 6.6},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

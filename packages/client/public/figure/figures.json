@@ -4189,6 +4189,54 @@
       "figuredataVersion": 1,
       "recipeHash": "1d7aa8bde1f053c097074ed10b6aa91ee860df9e560323b62abc7876d8d4a351",
       "pixelHash": "8a8b8a0fd06ab7c904c7354995d013de0b3200a4dda37e74dc4032f4571b81f5"
+    },
+    {
+      "partId": "lg84",
+      "setId": 84,
+      "type": "lg",
+      "name": "Pressure Leggings",
+      "slots": 2,
+      "hides": [],
+      "sheet": "lg84.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "5a0a9cfae7045e211de49a07df9c7b67c27f36d9ecc4d921fea2982410424a7c",
+      "pixelHash": "01530aababb4bbffdd6ce84ce6ae12a6f7ff7bd28f1079291919ca935ccf8a39"
     }
   ]
 }

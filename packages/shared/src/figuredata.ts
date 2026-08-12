@@ -174,6 +174,10 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 81, type: "wa", name: "Pinafore Apron",  slots: 2, family: "material", hides: [], retired: false },
   { id: 82, type: "ca", name: "Puff Muffler",    slots: 1, family: "material", hides: [], retired: false },
   { id: 83, type: "ha", name: "Sleep Cap",       slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 4 — starliner (#454). Spacefarer: ringed limbs, a hard shoulder, and gear that
+  // stands off the body. The helmet is the only set here that hides anything, and it hides `hr`
+  // for the shipped reason — it replaces the hair rather than sitting on it.
+  { id: 84, type: "lg", name: "Pressure Leggings", slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -315,6 +319,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 81, price: 250, theme: "mochi" },       // Pinafore Apron
   { set: 80, price: 300, theme: "mochi" },       // Cloud Cardigan
   { set: 83, price: 300, theme: "mochi" },       // Sleep Cap
+  { set: 84, price: 200, theme: "starliner" },   // Pressure Leggings
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
