@@ -58,6 +58,10 @@ Read this before modelling anything. The numbers are `rig.py`, not taste.
   the bone, equal radii make a cylinder, and the widest ring may be at either end. This is how
   upward geometry exists (Top Hat 54) and how a brim tilts up instead of down.
 - **Skin is free.** A garment that covers less is not a cheaper garment. `bd1` renders underneath.
+- **A `wa` band beats a same-height `ch` detail on the diagonal** (pack 2 finding). A box band's
+  corners out-reach an ellipsoid flare in every direction but face-on — wa74 over ch73 left the
+  peplum ~1 px per frame. A `ch` detail that must survive a worn `wa` needs to beat the band's
+  DIAGONAL, not its face. Applies to packs 7 and 9 (Tool Roll 106, Peplum Belt 118 vs Halter 117).
 
 Same-type siblings stay **below 0.854 silhouette IoU**, measured over the rendered alpha across all
 64 dir-frames the way the Tracksuit Top 44's sleeves were. Every row names its nearest same-type
