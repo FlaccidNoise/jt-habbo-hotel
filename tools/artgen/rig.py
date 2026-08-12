@@ -5742,6 +5742,38 @@ FIGURE_PARTS = {
              "c1": (6.7, 6.5, 20.6)},
         ],
     },
+    # Towel Wrap (set 125, two slots). The tallest `wa` in the wardrobe at 14 px, against the
+    # cincher 74's 7 — and where 74 stops at the waist this reaches past the hip to z -12.0, so it
+    # reads as a garment rather than a band.
+    #
+    # 8.4 half-width is 74's, and it is a floor rather than a choice: bd1's thigh limbs are r 4.2
+    # capsules on bones at x +/-4.0, so the leg holds x 8.2 for its whole length. 74 only overlaps
+    # that for its bottom px; this wrap covers 12 px of it, so the 0.2 clearance has to hold down
+    # the whole drop or the thigh notches the hem.
+    #
+    # The band is z 6.0..-8.0 and not the row's 2.0..-12.0. The height is the row's 14 px exactly
+    # and the hem still clears the hip by 8, but the whole wrap moves up 4 px, because at 2.0 the
+    # garment had no pixels at all at sit d3. The sit pose lays the thighs almost horizontal out of
+    # the hip, so bd1 fills z -4.2..4.2 forward of the spine for 19 px, and a band topping at 2.0
+    # is behind all of it — measured EMPTY over the whole cell, against the cincher 74's 53 px and
+    # the peplum 118's 48 in the same cell. A top at 6.0 puts 1.8 px of band above the thigh, which
+    # is what 74 survives on, and the wrap comes back at 51 px there.
+    #
+    # The move costs IoU and stays inside the bar: against the peplum 118 it goes 0.4507 to 0.7829
+    # and against 74 itself 0.1906 to 0.5269, because 74's whole 7 px band now sits inside this
+    # one's span. 118 is the tightest `wa` pair in the wardrobe at 0.7829 and the geometry still
+    # parts cleanly — 118 is a cone flaring to 11.4 over 7 px, this is a straight 8.4 box over 14.
+    # Deepest row 86 at sit d0, against the bounds gate's 111.
+    #
+    # Slot 1 is the tucked corner fold, off-centre because a towel tucks at one hip.
+    "wa125": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-8.4, -6.6, -8.0),
+             "c1": (8.4, 6.6, 6.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (2.4, 6.6, 1.6),
+             "c1": (6.4, 7.7, 5.6)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

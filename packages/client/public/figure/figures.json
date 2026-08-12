@@ -6173,6 +6173,54 @@
       "figuredataVersion": 1,
       "recipeHash": "48224c0cc41c485737150045913e63045d6ee03bc68e16cfa7788f8fe2600a65",
       "pixelHash": "6c942c38a9668bf5427122dcb8c840859ec7ec54dfad3a3459b0f5bde5f936b6"
+    },
+    {
+      "partId": "wa125",
+      "setId": 125,
+      "type": "wa",
+      "name": "Towel Wrap",
+      "slots": 2,
+      "hides": [],
+      "sheet": "wa125.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "b67d6b80e57bdfb07a4c37c0dcdaf939737dad273ffa52efe5b34abec57a5a26",
+      "pixelHash": "c9fe3fd74bb9f6958f549e764072641f97c57f984a7c84d09eae3a6925106a1a"
     }
   ]
 }
