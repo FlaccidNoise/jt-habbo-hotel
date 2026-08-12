@@ -4582,6 +4582,43 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.9, 1.0)},
         ],
     },
+    # ---- costume pack 5: fablewood (#455) ----
+    # Wizard. Where starliner bolted hardware to the figure, this one drapes it: the only sleeve
+    # in the wardrobe that changes width, the longest hem, and the tallest thing on a head.
+    #
+    # Sage Trousers (set 90, one slot). Every other lg here is a taper or a step. This one is a
+    # column: the same width at the ankle as at the hip, so its profile is two parallel lines.
+    # The flares 46 are slim at the thigh (4.5) and bell to 7.4 on the knee bone only, so the two
+    # share no part of their outline — this is 1.9 wider than 46 at the thigh and 0.6 narrower at
+    # the hem.
+    #
+    # It takes four cones because a leg is two bones. A single 37 px cone on leg_l would not
+    # follow the knee, and the breeches 64 measured what that costs — a cuff authored on the thigh
+    # bone tears away from its own hem at the 28-degree bend in walk1 and walk3. So the thigh
+    # cone runs the leg bone's full 19 px and the shin cone hangs off the knee, with "z0": 1.0
+    # lapping it 1 px into the thigh's flat end so the layer stays one island through that bend.
+    #
+    # The hem stops at knee-local -16.5 of the shin's 18, which is the flares 46's reason
+    # unchanged: a leg that reaches the floor swallows the shoe layer whole. Measured against the
+    # bounds gate on the deepest forward stride, walk0 d3, the hem ring's near edge lands on row
+    # 108 — the ring is tilted 17 degrees with the shin, which is what puts it 3 rows below where
+    # the ring's own centre draws.
+    #
+    # The two legs interpenetrate at rest: 6.4 either side of bones 8 px apart is 4.8 px of
+    # overlap, so standing they read as one column and the walk frames are what split them. That
+    # is the garment — a robe-maker's trouser, not a pair of tubes.
+    "lg90": {
+        "prims": [
+            {"t": "box",  "bone": "hip",    "slot": 0, "c0": (-8.2, -6.6, -2.4),
+             "c1": (8.2, 6.6, 2.6)},
+            {"t": "cone", "bone": "leg_l",  "slot": 0, "len": 19.0, "r0": 6.4, "r1": 6.6},
+            {"t": "cone", "bone": "leg_r",  "slot": 0, "len": 19.0, "r0": 6.4, "r1": 6.6},
+            {"t": "cone", "bone": "knee_l", "slot": 0, "z0": 1.0, "len": 17.5,
+             "r0": 6.6, "r1": 6.8},
+            {"t": "cone", "bone": "knee_r", "slot": 0, "z0": 1.0, "len": 17.5,
+             "r0": 6.6, "r1": 6.8},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

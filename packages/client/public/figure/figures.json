@@ -4479,6 +4479,54 @@
       "figuredataVersion": 1,
       "recipeHash": "3b2d263189ed9a8a5e6184aadbe2105b17a12174dba61d5a8acd6ad9224ff496",
       "pixelHash": "49726b72c6d84bdaf9e309b80e714bff433a55aef830ca18282fbf07bc3471e0"
+    },
+    {
+      "partId": "lg90",
+      "setId": 90,
+      "type": "lg",
+      "name": "Sage Trousers",
+      "slots": 1,
+      "hides": [],
+      "sheet": "lg90.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "393decc752abb155bceefda291e57199a5a4b388f81512e78202ccae8eedb3d3",
+      "pixelHash": "b18cfedcbfc80efba7bbf1c9f4783de24c2b93dd13e0a56c250f803dab05ea91"
     }
   ]
 }

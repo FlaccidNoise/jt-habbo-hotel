@@ -183,6 +183,11 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 87, type: "ca", name: "Oxygen Line",     slots: 2, family: "material", hides: [], retired: false },
   { id: 88, type: "ea", name: "Pressure Goggles", slots: 2, family: "material", hides: [], retired: false },
   { id: 89, type: "ha", name: "Flight Helmet",   slots: 2, family: "material", hides: ["hr"], retired: false },
+  // Costume pack 5 — fablewood (#455). Wizard: the only bell sleeves in the wardrobe, the longest
+  // robe and the tallest hat. The robe hides the shirt it is worn over and the hat replaces hair,
+  // which is the shipped `hides` pattern and nothing more. The beard 95 is the first set in the
+  // blitz with no mesh — it is a stamp on facedata.ts's `beard` axis, like 25-27.
+  { id: 90, type: "lg", name: "Sage Trousers",   slots: 1, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -330,6 +335,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 86, price: 300, theme: "starliner" },   // Flight Suit
   { set: 88, price: 350, theme: "starliner" },   // Pressure Goggles
   { set: 89, price: 400, theme: "starliner" },   // Flight Helmet
+  { set: 90, price: 200, theme: "fablewood" },   // Sage Trousers
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
