@@ -62,6 +62,15 @@ Read this before modelling anything. The numbers are `rig.py`, not taste.
   the SOLID the row describes — the prim's `r0` is always at `z0` running down; when a row says
   "r0 at the bottom", flip it into prim notation before modelling.
 - **Skin is free.** A garment that covers less is not a cheaper garment. `bd1` renders underneath.
+- **A stamp-path part freezes BEFORE its pack's meshes** (pack 8 finding). A scoped mesh freeze
+  rebuilds every face layer to gate against and refuses while an authored-but-unfrozen stamp part
+  disagrees with the frozen tree. Freeze the fa part first (`--only hd2` scopes to hd2 + face
+  layers), then the meshes.
+- **A cone on a limb bone needs an explicit joint ball** (pack 8 finding). bd1's limbs are capsules
+  whose joints are sphere caps; a cone ends in a flat disc, so a specced-tight cone pair leaves an
+  empty band at the joint and splits the layer into islands (lg109 needed a r4.6 ball per knee).
+  Corollary: a ch arm feature only reaches the silhouette at dirs 2/3/4 — at the profiles the arms
+  sit inside the body's own depth and no arm geometry can show.
 - **A `wa` band beats a same-height `ch` detail on the diagonal** (pack 2 finding). A box band's
   corners out-reach an ellipsoid flare in every direction but face-on — wa74 over ch73 left the
   peplum ~1 px per frame. A `ch` detail that must survive a worn `wa` needs to beat the band's
