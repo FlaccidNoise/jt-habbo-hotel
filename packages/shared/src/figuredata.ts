@@ -193,6 +193,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 93, type: "cc", name: "Wizard Robe",     slots: 2, family: "material", hides: ["ch"], retired: false },
   { id: 94, type: "ca", name: "Star Stole",      slots: 2, family: "material", hides: [], retired: false },
   { id: 95, type: "fa", name: "Sage Beard",      slots: 1, family: "material", hides: [], retired: false },
+  { id: 96, type: "ha", name: "Pointed Hat",     slots: 2, family: "material", hides: ["hr"], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -345,6 +346,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 92, price: 250, theme: "fablewood" },   // Potion Belt
   { set: 94, price: 250, theme: "fablewood" },   // Star Stole
   { set: 91, price: 300, theme: "fablewood" },   // Rune Tunic
+  { set: 96, price: 400, theme: "fablewood" },   // Pointed Hat
   { set: 93, price: 450, theme: "fablewood" },   // Wizard Robe
 ];
 

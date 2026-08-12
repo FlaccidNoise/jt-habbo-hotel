@@ -4739,6 +4739,35 @@ FIGURE_PARTS = {
              "c1": (-2.0, 7.8, 5.4)},
         ],
     },
+    # Set 95 is the Sage Beard and has no mesh: it is a stamp, authored as pixels on the `beard`
+    # axis in tools/artgen/facedata.ts, and figurepass builds it off hd2's own render.
+    #
+    # Pointed Hat (set 96, two slots, hides hr). The top hat 54 is a straight cylinder with a flat
+    # lid and a 26 px brim. This narrows 6 px on the way up to a point and its brim is 4 px wider.
+    #
+    # The cone is authored top-down, which is what the prim is: "z0" is the r0 end. So r0 2.2 sits
+    # at head z 37.5 and r1 8.2 at 20.0, and the tip ball caps the 2.2 opening rather than
+    # widening it. A ball of radius r reaches 1.118r rows above its own centre under this camera —
+    # not r/2, which is the flat-disc number — so the tip crowns on row 3.6 against the top hat's
+    # 4.85 and the bounds gate's 0.
+    #
+    # The brim is an ellipsoid, and that is the whole reason its forward edge clears the brow. A
+    # 30 px disc 3 px thick on plane z 21.6 puts its lowest ink at 44 - 21.6 + sqrt(7.125^2 + 1.5^2)
+    # = row 29.4; a cylinder of the same size would put its BOTTOM face out at the same y and land
+    # on row 31, in the eyes. The top hat 54's brim is the same prim one size down.
+    #
+    # The cone's base ring at z 20 is 8.2 against the skull's own 5.81 at that height, so the hat
+    # ends in a hard rim and the bare skull carries on below it — the hides rule takes the hair, so
+    # there is nothing else to fill that gap and nothing that needs to.
+    "ha96": {
+        "prims": [
+            {"t": "cone", "bone": "head", "slot": 0, "z0": 37.5, "len": 17.5,
+             "r0": 2.2, "r1": 8.2},
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, 0.0, 37.5), "r": 2.6},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, -0.6, 21.6), "r": 15.0,
+             "squash": (1.0, 0.95, 0.10)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

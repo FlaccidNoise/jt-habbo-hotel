@@ -4769,6 +4769,56 @@
       "figuredataVersion": 1,
       "recipeHash": "c3ab0a4431989e68218574ef5046805e9899392f351d824f63ad0f32a141bb4f",
       "pixelHash": "0e04d5933b1f4d1b53e252dfbf11147f08a54659349780ace83d6225a1952f2d"
+    },
+    {
+      "partId": "ha96",
+      "setId": 96,
+      "type": "ha",
+      "name": "Pointed Hat",
+      "slots": 2,
+      "hides": [
+        "hr"
+      ],
+      "sheet": "ha96.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "d73e2dc7ea9e3a685521db5b83be10d155171d2e0004b522f8bb5ffdb94b4f05",
+      "pixelHash": "2184c78188a3a6d833854c9dbbd1553e58bd4781f2a61ae223678706ea2a81f7"
     }
   ]
 }
