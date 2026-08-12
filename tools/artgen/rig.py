@@ -4545,6 +4545,43 @@ FIGURE_PARTS = {
              "squash": (1.0, 1.1, 1.0)},
         ],
     },
+    # Flight Helmet (set 89, two slots, hides hr). The beanie 53 stops at the temples and closes
+    # with a 0.6-proud cuff ledge at z 20.2. This has no ledge and no cuff — one smooth shell,
+    # wider than it is tall, carried down over the ears and the nape.
+    #
+    # The face is kept clear by pushing the shell BACK, not by cutting it. Its y radius is 9.35
+    # about a centre at -3.2, so the front of the ellipsoid is at 6.15 and the skull's own front
+    # is 9.46: the whole forward half is buried, and what draws at the front is the line where
+    # the shell climbs out of the skull near the crown. That is the crested helm 70's mechanism
+    # and the only one available — there is no cut prim, so a brow edge is a burial depth.
+    #
+    # The offset is -3.5 and not -3.2. At -3.2 the shell climbed out of the skull low enough to
+    # put its front edge on row 30; at -3.5 it emerges at row 29, against the row 28 the intent
+    # asks for and the row 30 the ledger holds all head geometry above. The last row is not worth
+    # a third render: measured against all eight eyed heads over all 64 dir-frames this paints
+    # over ZERO face pixels, and the tightest SAME-COLUMN margin anywhere on the sheet is 2 rows
+    # — hd17 walk0 d2, column 30, helmet bottom at row 31 against the brow at 33. The walk
+    # down-step is already inside that number, which is why it is measured per column and per
+    # frame rather than off the stand silhouette.
+    #
+    # Measured shape at stand: rows 16-29 at dir 3 and 19-38 at dirs 0 and 7, so the crown is 13
+    # rows above the brow line and the nape hangs 9 rows below it. Against the nine shipped ha
+    # sets the tightest pair is the crested helm 70 at 0.7042 — the other helmet, and the one the
+    # ledger did not name — and the beanie 53 the row DOES name is at 0.3984. 70 keeps its
+    # distance on the crest fin, which stands 6 px over its crown where this shell simply stops.
+    #
+    # Slot 1 is the nub, and it is at the back because the temple is inside the corridor. The
+    # shell's own nape already reaches y -11.4 at z 19, so a nub at the intent's -8.6 would sit
+    # 2.8 px INSIDE it and never draw; it is at -11.8 to stand proud of the shell it is bolted
+    # to, and it draws 980 px over the 64 dir-frames.
+    "ha89": {
+        "prims": [
+            {"t": "ball", "bone": "head", "slot": 0, "c": (0.0, -3.5, 16.2), "r": 11.0,
+             "squash": (1.06, 0.85, 0.74)},
+            {"t": "ball", "bone": "head", "slot": 1, "c": (0.0, -11.8, 19.2), "r": 2.8,
+             "squash": (1.0, 0.9, 1.0)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -182,6 +182,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 86, type: "ch", name: "Flight Suit",     slots: 2, family: "material", hides: [], retired: false },
   { id: 87, type: "ca", name: "Oxygen Line",     slots: 2, family: "material", hides: [], retired: false },
   { id: 88, type: "ea", name: "Pressure Goggles", slots: 2, family: "material", hides: [], retired: false },
+  { id: 89, type: "ha", name: "Flight Helmet",   slots: 2, family: "material", hides: ["hr"], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -328,6 +329,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 85, price: 300, theme: "starliner" },   // Mag Boots
   { set: 86, price: 300, theme: "starliner" },   // Flight Suit
   { set: 88, price: 350, theme: "starliner" },   // Pressure Goggles
+  { set: 89, price: 400, theme: "starliner" },   // Flight Helmet
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here
