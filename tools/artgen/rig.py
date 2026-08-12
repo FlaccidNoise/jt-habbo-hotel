@@ -4452,6 +4452,52 @@ FIGURE_PARTS = {
              "c1": (7.8, 7.3, 12.8)},
         ],
     },
+    # Oxygen Line (set 87, two slots). The chain 62 is a symmetric seven-link arc that stops at
+    # x 5.4 and never drops below z 15.4. This one crosses the whole chest on the diagonal and
+    # ends at the hip, 11 px lower, so the two share neither an axis nor an endpoint.
+    #
+    # FIVE links, not the intent's four. The run is from the left collar at (5.4, 17.4) to the
+    # right hip at (-5.4, 3.8), which is 17.4 px of path; four links 3.4 px across would sit 5.8
+    # apart and read as four separate dots with the torso between them. Five at 3.4 leave 0.7 px
+    # of x overlap and 2.2 px of z overlap between neighbours, so the run is one island through
+    # every walk frame. The link stays 3.4 px across as specced — it is the count that moved.
+    #
+    # Each link is a ball stretched in z (radius 1.7 / 1.7 / 2.8), because the run is 14 px of
+    # drop against 11 of travel and a round link would need eight of them. Stretched, the joins
+    # overlap along the direction the run actually goes, which is what makes it read corrugated
+    # rather than beaded.
+    #
+    # They sit at y 7.4, so the front of each link is at 9.1 — 3.1 px proud of bd1's torso at 6.0
+    # and 1.8 proud of the flight suit 86's own chest rig band at 7.3. `ca` draws after `ch`, so
+    # the line is never overdrawn; standing that far off is what keeps it from reading as printed
+    # ON the suit. Measured over the pack composited on one figure, all 5286 of this layer's
+    # pixels survive with 86 worn under it — 2636 of them the links, 41 per frame — and the ten
+    # dir-frames that carry none are dirs 6 and 7, where a run across the CHEST is behind the
+    # figure and is meant to be gone.
+    #
+    # Against the seven shipped ca sets the tightest pair is the scarf 60 at 0.4908; the chain 62
+    # the row names is at 0.0814, which is what a diagonal costs against an arc.
+    #
+    # Slot 1 is the neck ring: a 6.6 collar at z 19.2-22.4. It is proud of the torso in y (6.6
+    # against 6.0) and of the skull above z 21, where the head ball's own radius is still under
+    # 5.0 — a ring narrower than 6.6 would be swallowed by the shoulders at one end or the jaw at
+    # the other.
+    "ca87": {
+        "prims": [
+            {"t": "cone", "bone": "spine", "slot": 1, "z0": 22.4, "len": 3.2,
+             "r0": 6.6, "r1": 6.6},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (5.4, 7.4, 17.4), "r": 1.7,
+             "squash": (1.0, 1.0, 1.647)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (2.7, 7.4, 14.0), "r": 1.7,
+             "squash": (1.0, 1.0, 1.647)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (0.0, 7.4, 10.6), "r": 1.7,
+             "squash": (1.0, 1.0, 1.647)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-2.7, 7.4, 7.2), "r": 1.7,
+             "squash": (1.0, 1.0, 1.647)},
+            {"t": "ball", "bone": "spine", "slot": 0, "c": (-5.4, 7.4, 3.8), "r": 1.7,
+             "squash": (1.0, 1.0, 1.647)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

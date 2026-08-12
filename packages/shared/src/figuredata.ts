@@ -180,6 +180,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   { id: 84, type: "lg", name: "Pressure Leggings", slots: 2, family: "material", hides: [], retired: false },
   { id: 85, type: "sh", name: "Mag Boots",       slots: 2, family: "material", hides: [], retired: false },
   { id: 86, type: "ch", name: "Flight Suit",     slots: 2, family: "material", hides: [], retired: false },
+  { id: 87, type: "ca", name: "Oxygen Line",     slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -322,6 +323,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 80, price: 300, theme: "mochi" },       // Cloud Cardigan
   { set: 83, price: 300, theme: "mochi" },       // Sleep Cap
   { set: 84, price: 200, theme: "starliner" },   // Pressure Leggings
+  { set: 87, price: 250, theme: "starliner" },   // Oxygen Line
   { set: 85, price: 300, theme: "starliner" },   // Mag Boots
   { set: 86, price: 300, theme: "starliner" },   // Flight Suit
 ];

@@ -4333,6 +4333,54 @@
       "figuredataVersion": 1,
       "recipeHash": "e2041338d87117f71a0a11f866cb054f85218db2468cc0967f51a6e1f60784a2",
       "pixelHash": "d80ab2f069b7e75a7fb17a4fe4b29bcb6e74dc7706537533bf685704257f6126"
+    },
+    {
+      "partId": "ca87",
+      "setId": 87,
+      "type": "ca",
+      "name": "Oxygen Line",
+      "slots": 2,
+      "hides": [],
+      "sheet": "ca87.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "5549021c94678622f9b10b4a2802cafb38fe3412449cfa3b96fbce0124736e6f",
+      "pixelHash": "1635cc940f7b199919c8f7039389518cc5ba284ae1d7a8f59f0b7314394310a9"
     }
   ]
 }
