@@ -211,6 +211,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_bedroom_linen", name: "Bedroom Linen", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_bedroom_cloud", name: "Bedroom Cloud", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_bedroom_pinstripe", name: "Bedroom Pinstripe", tile: { w: 16, h: 32 }, cap: 0xcbc0ac },
+  // Wave A2 decor (blitz task 7): casino + gallery.
+  { kind: "floor", id: "floor_casino_felt_diamond", name: "Casino Felt Diamond", tile: { w: 64, h: 32 }, sides: { left: 0x2e8b57, right: 0x2f8f8f } },
+  { kind: "floor", id: "floor_casino_card_suit", name: "Casino Card Suit", tile: { w: 64, h: 32 }, sides: { left: 0xaa3333, right: 0xcbc0ac } },
+  { kind: "wall", id: "wall_casino_deco_fan", name: "Casino Deco Fan", tile: { w: 32, h: 32 }, cap: 0xc2a36b },
+  { kind: "wall", id: "wall_casino_crimson_panel", name: "Casino Crimson Panel", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "floor", id: "floor_gallery_terrazzo", name: "Gallery Terrazzo", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_gallery_oak", name: "Gallery Oak", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xb55a19 } },
+  { kind: "wall", id: "wall_gallery_canvas", name: "Gallery Canvas", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
+  { kind: "wall", id: "wall_gallery_picture_rail", name: "Gallery Picture Rail", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

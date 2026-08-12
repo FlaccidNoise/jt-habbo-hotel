@@ -1,0 +1,32 @@
+{
+  "defId": "casino_pendant_lamp_brass",
+  "archetype": "artgen",
+  "sheet": "casino_pendant_lamp_brass.png",
+  "frameW": 64,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 71,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:12011ff3f0dd99d9",
+  "recipeHash": "12011ff3f0dd99d9fb0c7d26787c9711d07540c4d88c5dc7cd05b6260245615e",
+  "pixelHash": "72ebfca2315cc96614a7bc65ac19f366510d5c51c4731adddecea07b76b167ac"
+}

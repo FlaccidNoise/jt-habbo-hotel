@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_lumen",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_lumen.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:99d290dc1285f48d",
+  "recipeHash": "99d290dc1285f48d32b7312031c54d910979d36be5b78f0f1d9a2bd344f9e90b",
+  "pixelHash": "8f8608fc06ddf02d5a14e18e6bb1303484667b61c852a4d55370b83133053fe7"
+}

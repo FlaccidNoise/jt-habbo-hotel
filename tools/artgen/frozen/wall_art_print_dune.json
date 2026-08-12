@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_dune",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_dune.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3079088e5ea12e6a",
+  "recipeHash": "3079088e5ea12e6afd874c89da9c776bf88792a96f57077380c507532bd483be",
+  "pixelHash": "7bee8dcb42424a5463c8477a0d11ef232fa4bb8a2ca5472553583714072f621d"
+}

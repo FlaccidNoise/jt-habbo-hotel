@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_fjord",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_fjord.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f2d57ee5b0033099",
+  "recipeHash": "f2d57ee5b0033099faa78536dfd11571f32d7815de5c78051fb1cea35fefc40f",
+  "pixelHash": "bf312e9213ff79f02fb75ac5d3a27b7cad11515064b91e87556ea79bc1ba2109"
+}

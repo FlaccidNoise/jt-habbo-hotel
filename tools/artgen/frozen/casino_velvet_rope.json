@@ -1,0 +1,32 @@
+{
+  "defId": "casino_velvet_rope",
+  "archetype": "artgen",
+  "sheet": "casino_velvet_rope.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1863f03b5fccb6be",
+  "recipeHash": "1863f03b5fccb6be6125b2a10ac97dd00e9cf636dd3ed0748ee15e5c41019dfb",
+  "pixelHash": "6151351af6bf7abe3e2ee0805cf76d98f840e9ea2a41641092ad54a489b7e850"
+}

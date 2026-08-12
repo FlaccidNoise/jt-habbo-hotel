@@ -1,0 +1,32 @@
+{
+  "defId": "casino_pendant_lamp",
+  "archetype": "artgen",
+  "sheet": "casino_pendant_lamp.png",
+  "frameW": 64,
+  "frameH": 87,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 71,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d257be2995bc3bea",
+  "recipeHash": "d257be2995bc3beaade9b694a05b557d8c5ca756a2a1e83c87a1eb94f31b41e5",
+  "pixelHash": "8a7762e91660ea78584ccc7512b2f54f8ee7d7ef38ecda913fd3e588890daad2"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "casino_dealer_chair",
+  "archetype": "artgen",
+  "sheet": "casino_dealer_chair.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.68,
+  "occlusion": null,
+  "nearSheet": "casino_dealer_chair.near.png",
+  "nearHash": "85bdab5827f8bd417e76be204561848f69cdc158739a02a158081408e972ba12",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7cd6d9b7956a263c",
+  "recipeHash": "7cd6d9b7956a263c80860580af797fd1c9f72f6743564dd9a46a1af97709106b",
+  "pixelHash": "c9a8590d5917c8c728e475854ccbe3782066db3dfec9269011fd073c2b144051"
+}

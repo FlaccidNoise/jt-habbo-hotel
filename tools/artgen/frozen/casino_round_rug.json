@@ -1,0 +1,32 @@
+{
+  "defId": "casino_round_rug",
+  "archetype": "artgen",
+  "sheet": "casino_round_rug.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7db3986eca14bd17",
+  "recipeHash": "7db3986eca14bd174c0882295f0f0d4d141cae568fd34dbc33ce18e4214afa62",
+  "pixelHash": "2e6ff78fffffbe4b59369794b486413d5f528611c0a209c3b9d9dae77da95874"
+}

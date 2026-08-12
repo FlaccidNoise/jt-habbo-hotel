@@ -220,6 +220,14 @@ const VARIANTS: Record<string, { base: string; ramps: Record<string, string> }> 
   // Bannerhold pilot colorway (blitz task 5): the oak plank goes slate for dusk; the walnut
   // trestles stay, so the colorway is a different object, not a relabel.
   bannerhold_oak_bench_dusk: { base: "bannerhold_oak_bench", ramps: { oak: "slate" } },
+  // Wave A2 colorways (blitz task 7).
+  casino_card_table_emerald: {  base: "casino_card_table", ramps: {'walnut': 'oak' }  },
+  casino_dice_table_noir: {  base: "casino_dice_table", ramps: {'teal': 'charcoal' }  },
+  casino_chip_rack_gold: {  base: "casino_chip_rack", ramps: {'walnut': 'gold' }  },
+  casino_dealer_chair_oxblood: {  base: "casino_dealer_chair", ramps: {'charcoal': 'walnut' }  },
+  casino_velvet_rope_crimson: {  base: "casino_velvet_rope", ramps: {'gold': 'charcoal' }  },
+  casino_round_rug_onyx: {  base: "casino_round_rug", ramps: {'crimson': 'charcoal' }  },
+  casino_pendant_lamp_brass: {  base: "casino_pendant_lamp", ramps: {'gold': 'sand' }  },
   // Wave A1 colorways (blitz task 6).
   starter_armchair_sky: {  base: "starter_armchair", ramps: {"sand": "navy" }  },
   starter_coffee_table_walnut: {  base: "starter_coffee_table", ramps: {"walnut": "oak" }  },

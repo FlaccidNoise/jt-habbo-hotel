@@ -1,0 +1,37 @@
+{
+  "defId": "casino_velvet_drape",
+  "archetype": "artgen",
+  "sheet": "casino_velvet_drape.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 25,
+    "mountU": 4,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ecabb1fb4516d97c",
+  "recipeHash": "ecabb1fb4516d97c203521dc159459b07d4375560332e1f3ca73d30b06a260a0",
+  "pixelHash": "568e4a213edb763dc6d964e9fbcaac534ff1e9b44bc7fada7c847b60a328c70a"
+}

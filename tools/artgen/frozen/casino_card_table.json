@@ -1,0 +1,32 @@
+{
+  "defId": "casino_card_table",
+  "archetype": "artgen",
+  "sheet": "casino_card_table.png",
+  "frameW": 128,
+  "frameH": 103,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:776166d236ea2c1f",
+  "recipeHash": "776166d236ea2c1fdb6dcfa22e49679f13e6507acaa95fca5c45e93e1a260390",
+  "pixelHash": "f4e0ec3789a264b729f0c69e6378d4daf5a6ddcf8869e0d27e58fb9cd4c85341"
+}

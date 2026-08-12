@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_sol",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_sol.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4c71f8518abce4b2",
+  "recipeHash": "4c71f8518abce4b29bf4087db91b9fbb23bc36681e4f7929c47b81fcb650b17c",
+  "pixelHash": "f4846a2b34cf1325b66b1203111727ba90f296db3a9bb8ad8bb9423697cf6f50"
+}

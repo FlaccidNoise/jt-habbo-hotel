@@ -1,0 +1,32 @@
+{
+  "defId": "casino_velvet_rope_crimson",
+  "archetype": "artgen",
+  "sheet": "casino_velvet_rope_crimson.png",
+  "frameW": 64,
+  "frameH": 62,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d6b995b0f3330fc2",
+  "recipeHash": "d6b995b0f3330fc24c870efbd6d44830c747b213542032c7e189a1d8c9ee2ae6",
+  "pixelHash": "6eeb476db07b8c361be2380b32e16e905e1782e3cac43cf36392870ff06a08f3"
+}

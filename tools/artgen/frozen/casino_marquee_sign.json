@@ -1,0 +1,37 @@
+{
+  "defId": "casino_marquee_sign",
+  "archetype": "artgen",
+  "sheet": "casino_marquee_sign.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 40,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4c4fbcfbc9c11ea6",
+  "recipeHash": "4c4fbcfbc9c11ea6203b8c8a1517a168546df22d7dc7fbb6409e1f21c01765d3",
+  "pixelHash": "68be7bd7237d14d15a022b9097b3eca753b4b71492208b70aca3dc5a87c7339b"
+}

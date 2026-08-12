@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_iris",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_iris.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e9d1afc789542b6d",
+  "recipeHash": "e9d1afc789542b6dc48983a28f9eae558b298b119712fbe75bded1bbed9a3c5b",
+  "pixelHash": "ed8d4c0f65d2c4c98bebddcf37e6bf0f8c83cc7499755eb12ab70ca922afb56b"
+}

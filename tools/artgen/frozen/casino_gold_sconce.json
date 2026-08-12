@@ -1,0 +1,37 @@
+{
+  "defId": "casino_gold_sconce",
+  "archetype": "artgen",
+  "sheet": "casino_gold_sconce.png",
+  "frameW": 64,
+  "frameH": 121,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 105,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 10,
+    "planeH": 13,
+    "mountU": 8,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.16
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bb27ddc5f6e4eece",
+  "recipeHash": "bb27ddc5f6e4eeced27991e423d2a03465d013995ccdc53e7427ba88a676750e",
+  "pixelHash": "14e39a54e27f5346e7b224c0c0e0b9751bbdf911c5b86b190a0c7323d1dd6ad4"
+}

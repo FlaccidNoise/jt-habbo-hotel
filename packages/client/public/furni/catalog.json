@@ -4211,6 +4211,492 @@
       "recipeHash": "bff91643b49e701b5e26beb870c6ea07f09eb0ebd876d484d334e8be22334db4",
       "pixelHash": "604769cb189344773c0e340c1c7ae2c19aa830afa3bbe40d83cf54b5785fb5db"
     },
+    "casino_card_table_emerald": {
+      "defId": "casino_card_table_emerald",
+      "archetype": "artgen",
+      "sheet": "casino_card_table_emerald.png",
+      "frameW": 128,
+      "frameH": 103,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:493adf7cc87887c2",
+      "recipeHash": "493adf7cc87887c21aed093e2f38d7403b3587afc159c596205e998795702beb",
+      "pixelHash": "df3b585519b33353ce671c2428fcb2ca6feb46da972b8f910ebd538d83b64376"
+    },
+    "casino_dice_table_noir": {
+      "defId": "casino_dice_table_noir",
+      "archetype": "artgen",
+      "sheet": "casino_dice_table_noir.png",
+      "frameW": 128,
+      "frameH": 104,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:73337d883dc766ec",
+      "recipeHash": "73337d883dc766ec24018b5ea1d8fa6ed6d6ff2cc67048017ade3a49330b037d",
+      "pixelHash": "c53226bc4c975e02c7bba189f1d133437bed22773f4aa0d7a6ac800b4a5688d1"
+    },
+    "casino_chip_rack_gold": {
+      "defId": "casino_chip_rack_gold",
+      "archetype": "artgen",
+      "sheet": "casino_chip_rack_gold.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9d9a5155a1553722",
+      "recipeHash": "9d9a5155a15537229813d46c0d8ceef6479fc3800b2ccb6ebbb4e6f9b54d373a",
+      "pixelHash": "f29a513fc95e27449857f80025eb75b2be9acb7f5df10985f72c21ebd95f042d"
+    },
+    "casino_dealer_chair_oxblood": {
+      "defId": "casino_dealer_chair_oxblood",
+      "archetype": "artgen",
+      "sheet": "casino_dealer_chair_oxblood.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.68,
+      "occlusion": null,
+      "nearSheet": "casino_dealer_chair_oxblood.near.png",
+      "nearHash": "6dc0a40694968c61d0047a8402a11f07d54800310340305444df7433b366d7bf",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6302fcfa63d7dc78",
+      "recipeHash": "6302fcfa63d7dc78146521959e6d61bf88f1894284c773634f36395926832f51",
+      "pixelHash": "273d9b26a6639a6abac6543c9e357b2421357a9bec03732fbbd9e469f2bc6939"
+    },
+    "casino_velvet_rope_crimson": {
+      "defId": "casino_velvet_rope_crimson",
+      "archetype": "artgen",
+      "sheet": "casino_velvet_rope_crimson.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d6b995b0f3330fc2",
+      "recipeHash": "d6b995b0f3330fc24c870efbd6d44830c747b213542032c7e189a1d8c9ee2ae6",
+      "pixelHash": "6eeb476db07b8c361be2380b32e16e905e1782e3cac43cf36392870ff06a08f3"
+    },
+    "casino_round_rug_onyx": {
+      "defId": "casino_round_rug_onyx",
+      "archetype": "artgen",
+      "sheet": "casino_round_rug_onyx.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6ecf79beef3bd5d7",
+      "recipeHash": "6ecf79beef3bd5d79d53eec35191a30bbc9005d376bf5ff66d05179ed36e9b94",
+      "pixelHash": "dc70fcde1b0903db5a256146f30d1a83786db5e79f116e39ccf35b11fcb22ebd"
+    },
+    "casino_pendant_lamp_brass": {
+      "defId": "casino_pendant_lamp_brass",
+      "archetype": "artgen",
+      "sheet": "casino_pendant_lamp_brass.png",
+      "frameW": 64,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 71,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:12011ff3f0dd99d9",
+      "recipeHash": "12011ff3f0dd99d9fb0c7d26787c9711d07540c4d88c5dc7cd05b6260245615e",
+      "pixelHash": "72ebfca2315cc96614a7bc65ac19f366510d5c51c4731adddecea07b76b167ac"
+    },
+    "casino_card_table": {
+      "defId": "casino_card_table",
+      "archetype": "artgen",
+      "sheet": "casino_card_table.png",
+      "frameW": 128,
+      "frameH": 103,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:776166d236ea2c1f",
+      "recipeHash": "776166d236ea2c1fdb6dcfa22e49679f13e6507acaa95fca5c45e93e1a260390",
+      "pixelHash": "f4e0ec3789a264b729f0c69e6378d4daf5a6ddcf8869e0d27e58fb9cd4c85341"
+    },
+    "casino_dice_table": {
+      "defId": "casino_dice_table",
+      "archetype": "artgen",
+      "sheet": "casino_dice_table.png",
+      "frameW": 128,
+      "frameH": 104,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:da0ba2fea4c39342",
+      "recipeHash": "da0ba2fea4c393422a14c8be1d38d3c09727ad98a1ec0e78481d05459cd11a41",
+      "pixelHash": "f4bc876823054c255f3298dc1effd419f739dc52c8f911b8d129303ec427e519"
+    },
+    "casino_chip_rack": {
+      "defId": "casino_chip_rack",
+      "archetype": "artgen",
+      "sheet": "casino_chip_rack.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a474d3c1a10fe10f",
+      "recipeHash": "a474d3c1a10fe10ff6063679ba0fd6cbd9050abcc99c76ae079a7b431d63d46b",
+      "pixelHash": "e5fd82a04e61cc361a698a8146f7a7ac3e19f7d2ee59a99a43a0bd929c71cb15"
+    },
+    "casino_dealer_chair": {
+      "defId": "casino_dealer_chair",
+      "archetype": "artgen",
+      "sheet": "casino_dealer_chair.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.68,
+      "occlusion": null,
+      "nearSheet": "casino_dealer_chair.near.png",
+      "nearHash": "85bdab5827f8bd417e76be204561848f69cdc158739a02a158081408e972ba12",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7cd6d9b7956a263c",
+      "recipeHash": "7cd6d9b7956a263c80860580af797fd1c9f72f6743564dd9a46a1af97709106b",
+      "pixelHash": "c9a8590d5917c8c728e475854ccbe3782066db3dfec9269011fd073c2b144051"
+    },
+    "casino_velvet_rope": {
+      "defId": "casino_velvet_rope",
+      "archetype": "artgen",
+      "sheet": "casino_velvet_rope.png",
+      "frameW": 64,
+      "frameH": 62,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 46,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.9375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1863f03b5fccb6be",
+      "recipeHash": "1863f03b5fccb6be6125b2a10ac97dd00e9cf636dd3ed0748ee15e5c41019dfb",
+      "pixelHash": "6151351af6bf7abe3e2ee0805cf76d98f840e9ea2a41641092ad54a489b7e850"
+    },
+    "casino_round_rug": {
+      "defId": "casino_round_rug",
+      "archetype": "artgen",
+      "sheet": "casino_round_rug.png",
+      "frameW": 128,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        64,
+        64,
+        64,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 2
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7db3986eca14bd17",
+      "recipeHash": "7db3986eca14bd174c0882295f0f0d4d141cae568fd34dbc33ce18e4214afa62",
+      "pixelHash": "2e6ff78fffffbe4b59369794b486413d5f528611c0a209c3b9d9dae77da95874"
+    },
+    "casino_pendant_lamp": {
+      "defId": "casino_pendant_lamp",
+      "archetype": "artgen",
+      "sheet": "casino_pendant_lamp.png",
+      "frameW": 64,
+      "frameH": 87,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 71,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d257be2995bc3bea",
+      "recipeHash": "d257be2995bc3beaade9b694a05b557d8c5ca756a2a1e83c87a1eb94f31b41e5",
+      "pixelHash": "8a7762e91660ea78584ccc7512b2f54f8ee7d7ef38ecda913fd3e588890daad2"
+    },
+    "casino_banquette": {
+      "defId": "casino_banquette",
+      "archetype": "artgen",
+      "sheet": "casino_banquette.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "casino_banquette.near.png",
+      "nearHash": "70f6f62f2d508f142d107e32bfeb6c63759eeddcc9e30f6c6ebc784a26ed8315",
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b1931e76525610dd",
+      "recipeHash": "b1931e76525610dd798f394fdc002bd2cc94a1918b57aa0fabf16931114be0fa",
+      "pixelHash": "f4d9cad4145f63a6b568963f017f01f8f5f18d1af5d5d4824dc4eb1ce9bc7977"
+    },
     "bannerhold_oak_bench": {
       "defId": "bannerhold_oak_bench",
       "archetype": "artgen",
@@ -5969,6 +6455,1227 @@
       "partLibraryHash": "artgen:15930e8aaf0e13ed",
       "recipeHash": "15930e8aaf0e13eddbaa260a3f35dbc3affbc6b0ae55df150d3365f05800fa5c",
       "pixelHash": "a21fd825f013324b43807765f2149c899af470060924f55bf6d3f9116914708d"
+    },
+    "casino_neon_dice": {
+      "defId": "casino_neon_dice",
+      "archetype": "artgen",
+      "sheet": "casino_neon_dice.png",
+      "frameW": 64,
+      "frameH": 117,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 101,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 9,
+        "mountU": 10,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:012cf05405d07820",
+      "recipeHash": "012cf05405d07820a459c41c56ae49192e5b0efb7bf36fa4ffca59392a79d049",
+      "pixelHash": "906979dccff8e8f7c2446b0f4f2eb54b954e218bfd7c6155f262d95a9675b2b9"
+    },
+    "casino_card_mural": {
+      "defId": "casino_card_mural",
+      "archetype": "artgen",
+      "sheet": "casino_card_mural.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 23,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.06
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d757a3bc86ed9f56",
+      "recipeHash": "d757a3bc86ed9f56668897f2cb4b3a22cf7e3c521ae88090539d5c61251130c7",
+      "pixelHash": "df2584c0e35b866f39b636d00cf362b4a4230bca12575469b236af2bc9cb2115"
+    },
+    "casino_gold_sconce": {
+      "defId": "casino_gold_sconce",
+      "archetype": "artgen",
+      "sheet": "casino_gold_sconce.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 13,
+        "mountU": 8,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bb27ddc5f6e4eece",
+      "recipeHash": "bb27ddc5f6e4eeced27991e423d2a03465d013995ccdc53e7427ba88a676750e",
+      "pixelHash": "14e39a54e27f5346e7b224c0c0e0b9751bbdf911c5b86b190a0c7323d1dd6ad4"
+    },
+    "casino_velvet_drape": {
+      "defId": "casino_velvet_drape",
+      "archetype": "artgen",
+      "sheet": "casino_velvet_drape.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 25,
+        "mountU": 4,
+        "mountV": 36,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ecabb1fb4516d97c",
+      "recipeHash": "ecabb1fb4516d97c203521dc159459b07d4375560332e1f3ca73d30b06a260a0",
+      "pixelHash": "568e4a213edb763dc6d964e9fbcaac534ff1e9b44bc7fada7c847b60a328c70a"
+    },
+    "casino_marquee_sign": {
+      "defId": "casino_marquee_sign",
+      "archetype": "artgen",
+      "sheet": "casino_marquee_sign.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 40,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4c4fbcfbc9c11ea6",
+      "recipeHash": "4c4fbcfbc9c11ea6203b8c8a1517a168546df22d7dc7fbb6409e1f21c01765d3",
+      "pixelHash": "68be7bd7237d14d15a022b9097b3eca753b4b71492208b70aca3dc5a87c7339b"
+    },
+    "wall_art_print_aurora": {
+      "defId": "wall_art_print_aurora",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_aurora.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:aff9865f319d1809",
+      "recipeHash": "aff9865f319d18095ed47a8bc4c8ab95969d250efc11f5b51776179e8b802f63",
+      "pixelHash": "cf5fc10b625c513623a0f3219d22a144fd8a0c7a3d7ab3ae8d25796962605d71"
+    },
+    "wall_art_print_bloom": {
+      "defId": "wall_art_print_bloom",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_bloom.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:254bc86c71d38e20",
+      "recipeHash": "254bc86c71d38e20e018e9315a67810f260383e6da2b0cd81274f2487f2cb3ca",
+      "pixelHash": "6aeefc7e781d39e8b956d08a37c4933886ecb68d6d5d42c4631dc5c59e38ad01"
+    },
+    "wall_art_print_circuit": {
+      "defId": "wall_art_print_circuit",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_circuit.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9aaf9d2acd4bbddc",
+      "recipeHash": "9aaf9d2acd4bbddc4ad05d6a3397976a2b0f55947b146527deb4cca51335590d",
+      "pixelHash": "948c496c949da79b7e7a3190ed674ea191a34b988af255b69f36508d550b1d02"
+    },
+    "wall_art_print_dune": {
+      "defId": "wall_art_print_dune",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_dune.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3079088e5ea12e6a",
+      "recipeHash": "3079088e5ea12e6afd874c89da9c776bf88792a96f57077380c507532bd483be",
+      "pixelHash": "7bee8dcb42424a5463c8477a0d11ef232fa4bb8a2ca5472553583714072f621d"
+    },
+    "wall_art_print_ember": {
+      "defId": "wall_art_print_ember",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_ember.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3eea69431e8127ed",
+      "recipeHash": "3eea69431e8127ed7fa9bd6ba2b71e362b30798fbe259d8bb364ef9ff98e563a",
+      "pixelHash": "4d52c47f6a829a3d40aba593748c33ed087f1541e18dbd43ce3276dd38e025b4"
+    },
+    "wall_art_print_fjord": {
+      "defId": "wall_art_print_fjord",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_fjord.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f2d57ee5b0033099",
+      "recipeHash": "f2d57ee5b0033099faa78536dfd11571f32d7815de5c78051fb1cea35fefc40f",
+      "pixelHash": "bf312e9213ff79f02fb75ac5d3a27b7cad11515064b91e87556ea79bc1ba2109"
+    },
+    "wall_art_print_grove": {
+      "defId": "wall_art_print_grove",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_grove.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1ad38bad7e17e66a",
+      "recipeHash": "1ad38bad7e17e66ae5a0b0718fd696c3670613c37a349f2327145e687507172c",
+      "pixelHash": "921ea01f195037894ee6e3dba5393b0b392c9d3ebf1c152da0ee7b216653178b"
+    },
+    "wall_art_print_harbor": {
+      "defId": "wall_art_print_harbor",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_harbor.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1592035cef88bad3",
+      "recipeHash": "1592035cef88bad345035cb8e79bf8964db68ecafaab2ce94753e758c731e560",
+      "pixelHash": "292ba37706367b096e1137aafc786c9e8f98c54f1a426b60b1cef0e34e254108"
+    },
+    "wall_art_print_iris": {
+      "defId": "wall_art_print_iris",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_iris.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e9d1afc789542b6d",
+      "recipeHash": "e9d1afc789542b6dc48983a28f9eae558b298b119712fbe75bded1bbed9a3c5b",
+      "pixelHash": "ed8d4c0f65d2c4c98bebddcf37e6bf0f8c83cc7499755eb12ab70ca922afb56b"
+    },
+    "wall_art_print_juniper": {
+      "defId": "wall_art_print_juniper",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_juniper.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f12599479287de12",
+      "recipeHash": "f12599479287de123d89f26dc38eea0424875cfde9f9ff23979dc15bd72b4e7b",
+      "pixelHash": "ed6b69f1eb47ebafd476d2802bf82e1ffeaf78268f7bcdddeebd18913120ae1e"
+    },
+    "wall_art_print_kelp": {
+      "defId": "wall_art_print_kelp",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_kelp.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2f166ef35d1ae522",
+      "recipeHash": "2f166ef35d1ae522a5636c9a81dc7c0e5786def10c128f4f81d6461d9f7f28c4",
+      "pixelHash": "8ce9c6f014d697513931a3b02a535893a46902b39671a5191132a1bd0352aefd"
+    },
+    "wall_art_print_lumen": {
+      "defId": "wall_art_print_lumen",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_lumen.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:99d290dc1285f48d",
+      "recipeHash": "99d290dc1285f48d32b7312031c54d910979d36be5b78f0f1d9a2bd344f9e90b",
+      "pixelHash": "8f8608fc06ddf02d5a14e18e6bb1303484667b61c852a4d55370b83133053fe7"
+    },
+    "wall_art_print_mesa": {
+      "defId": "wall_art_print_mesa",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_mesa.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3d5a4de7d259fb54",
+      "recipeHash": "3d5a4de7d259fb54ca4de2505592c9a9fce424a5a3889d7ad1622153ad940475",
+      "pixelHash": "a8cc2a2543eb712b503cfe55f09b8fd6b25cae89d1001fce8fbefb7d9e0d500b"
+    },
+    "wall_art_print_north": {
+      "defId": "wall_art_print_north",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_north.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cc1f236bde06c850",
+      "recipeHash": "cc1f236bde06c850ea4197d9f689463fb109be972c02ff593dab83fadcd99bc5",
+      "pixelHash": "b0cfa8ce524652290ab1dba134905d5ca2af75c4c0899916ed06f0b962f8117a"
+    },
+    "wall_art_print_onyx": {
+      "defId": "wall_art_print_onyx",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_onyx.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d0aff35619acfb35",
+      "recipeHash": "d0aff35619acfb3510e750934153cd3fbed652e9ec622a0f7665733cf63a452b",
+      "pixelHash": "076a1666c70205b70cabb4cdf505288693298f4f7ef3f6776afc5303dba06cc8"
+    },
+    "wall_art_print_prism": {
+      "defId": "wall_art_print_prism",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_prism.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3e59a8301cbe6fb4",
+      "recipeHash": "3e59a8301cbe6fb432502f67667329e61063f719f8094610ce5f5f672d1cec6c",
+      "pixelHash": "2b6d1ff13caa29012be568251c4fd346ab0521a4f5ece7475221fc1d8e03dce8"
+    },
+    "wall_art_print_quill": {
+      "defId": "wall_art_print_quill",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_quill.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:35cc8cdb374434f7",
+      "recipeHash": "35cc8cdb374434f765273b591954f7f68e8d3e14e1275feaad3198b383586acb",
+      "pixelHash": "26b4d95881cd6545d8ec99e5d4e143f51149c0140df39cf78a1e1d98a6039a2c"
+    },
+    "wall_art_print_ridge": {
+      "defId": "wall_art_print_ridge",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_ridge.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3c5ba37ed2e186eb",
+      "recipeHash": "3c5ba37ed2e186ebf10012fbb484b5a70a15b8d9f5edee84ec539a70a2befd45",
+      "pixelHash": "3bc809eefb897027a71d8807a404b8f853f56eb3ec90156b817ef9ebe54853a5"
+    },
+    "wall_art_print_sol": {
+      "defId": "wall_art_print_sol",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_sol.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4c71f8518abce4b2",
+      "recipeHash": "4c71f8518abce4b29bf4087db91b9fbb23bc36681e4f7929c47b81fcb650b17c",
+      "pixelHash": "f4846a2b34cf1325b66b1203111727ba90f296db3a9bb8ad8bb9423697cf6f50"
+    },
+    "wall_art_print_tide": {
+      "defId": "wall_art_print_tide",
+      "archetype": "artgen",
+      "sheet": "wall_art_print_tide.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:43f84d028c83e4ff",
+      "recipeHash": "43f84d028c83e4ff8657f4c4ac2f38a92357c28ec9e81615f8cf318111c7044e",
+      "pixelHash": "a9fbb712dae4462a74fe69ee9aaa30741f2f681b29ca28344a90655cdb63149d"
+    },
+    "wall_art_triptych_aurora_left": {
+      "defId": "wall_art_triptych_aurora_left",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_aurora_left.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1dcb891860ca8329",
+      "recipeHash": "1dcb891860ca8329c4aff184db1a88de1d24b33a9ad413ff075e8ccb5287bc26",
+      "pixelHash": "c2d92b21ccb9e3ac269836c5a61ce1dafb422df1703e9ebf61412c68c8f3f934"
+    },
+    "wall_art_triptych_aurora_center": {
+      "defId": "wall_art_triptych_aurora_center",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_aurora_center.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ed02e0e25474df67",
+      "recipeHash": "ed02e0e25474df6737e8f04fa0698c3bd08ac6645ea7e2b7c0d6a12d11abc881",
+      "pixelHash": "c2d92b21ccb9e3ac269836c5a61ce1dafb422df1703e9ebf61412c68c8f3f934"
+    },
+    "wall_art_triptych_aurora_right": {
+      "defId": "wall_art_triptych_aurora_right",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_aurora_right.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3e7558bd0fb5ef56",
+      "recipeHash": "3e7558bd0fb5ef567f98e2f231cfc0034490db38f6b0d53416481039044ab60d",
+      "pixelHash": "c2d92b21ccb9e3ac269836c5a61ce1dafb422df1703e9ebf61412c68c8f3f934"
+    },
+    "wall_art_triptych_tide_left": {
+      "defId": "wall_art_triptych_tide_left",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_tide_left.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:af37661ce4c89388",
+      "recipeHash": "af37661ce4c89388bd0d9babc0d5f9bc72935d4a1ad4cad181304d444a876046",
+      "pixelHash": "dd3fd26146c424f0d0d2cb515641c07cdd58dad2afe085b863e19490333f02aa"
+    },
+    "wall_art_triptych_tide_center": {
+      "defId": "wall_art_triptych_tide_center",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_tide_center.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3b28893ca892a6a6",
+      "recipeHash": "3b28893ca892a6a614236a96a800deedc66206633a3aec3d436e1630f05e81c6",
+      "pixelHash": "dd3fd26146c424f0d0d2cb515641c07cdd58dad2afe085b863e19490333f02aa"
+    },
+    "wall_art_triptych_tide_right": {
+      "defId": "wall_art_triptych_tide_right",
+      "archetype": "artgen",
+      "sheet": "wall_art_triptych_tide_right.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 16,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:043a61be07df3e5f",
+      "recipeHash": "043a61be07df3e5f04f5567d27011cc5f84fe1c4ad050723e406897bd025e700",
+      "pixelHash": "dd3fd26146c424f0d0d2cb515641c07cdd58dad2afe085b863e19490333f02aa"
+    },
+    "wall_art_gallery_clock": {
+      "defId": "wall_art_gallery_clock",
+      "archetype": "artgen",
+      "sheet": "wall_art_gallery_clock.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 18,
+        "planeH": 17,
+        "mountU": 6,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:75ef2f312f9c1409",
+      "recipeHash": "75ef2f312f9c1409365905cbc32cd7294afbd7ce3d90b0a2f754542406c18486",
+      "pixelHash": "e4ab1930387b3606356ea856c04726e7b561cb0768728d7c93b69003b1c62862"
+    },
+    "wall_art_sculpture_relief": {
+      "defId": "wall_art_sculpture_relief",
+      "archetype": "artgen",
+      "sheet": "wall_art_sculpture_relief.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:37a2e6a4e9649344",
+      "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
+      "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
     },
     "bannerhold_crest_banner": {
       "defId": "bannerhold_crest_banner",

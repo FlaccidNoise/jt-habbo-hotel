@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_grove",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_grove.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1ad38bad7e17e66a",
+  "recipeHash": "1ad38bad7e17e66ae5a0b0718fd696c3670613c37a349f2327145e687507172c",
+  "pixelHash": "921ea01f195037894ee6e3dba5393b0b392c9d3ebf1c152da0ee7b216653178b"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_mesa",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_mesa.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3d5a4de7d259fb54",
+  "recipeHash": "3d5a4de7d259fb54ca4de2505592c9a9fce424a5a3889d7ad1622153ad940475",
+  "pixelHash": "a8cc2a2543eb712b503cfe55f09b8fd6b25cae89d1001fce8fbefb7d9e0d500b"
+}

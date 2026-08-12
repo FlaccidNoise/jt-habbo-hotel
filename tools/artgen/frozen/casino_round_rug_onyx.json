@@ -1,0 +1,32 @@
+{
+  "defId": "casino_round_rug_onyx",
+  "archetype": "artgen",
+  "sheet": "casino_round_rug_onyx.png",
+  "frameW": 128,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6ecf79beef3bd5d7",
+  "recipeHash": "6ecf79beef3bd5d79d53eec35191a30bbc9005d376bf5ff66d05179ed36e9b94",
+  "pixelHash": "dc70fcde1b0903db5a256146f30d1a83786db5e79f116e39ccf35b11fcb22ebd"
+}

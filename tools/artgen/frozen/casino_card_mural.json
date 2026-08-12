@@ -1,0 +1,37 @@
+{
+  "defId": "casino_card_mural",
+  "archetype": "artgen",
+  "sheet": "casino_card_mural.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 23,
+    "mountU": 4,
+    "mountV": 36,
+    "gap": 0,
+    "depth": 0.06
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d757a3bc86ed9f56",
+  "recipeHash": "d757a3bc86ed9f56668897f2cb4b3a22cf7e3c521ae88090539d5c61251130c7",
+  "pixelHash": "df2584c0e35b866f39b636d00cf362b4a4230bca12575469b236af2bc9cb2115"
+}

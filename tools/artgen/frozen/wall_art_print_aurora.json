@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_aurora",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_aurora.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:aff9865f319d1809",
+  "recipeHash": "aff9865f319d18095ed47a8bc4c8ab95969d250efc11f5b51776179e8b802f63",
+  "pixelHash": "cf5fc10b625c513623a0f3219d22a144fd8a0c7a3d7ab3ae8d25796962605d71"
+}

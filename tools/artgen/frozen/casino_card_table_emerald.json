@@ -1,0 +1,32 @@
+{
+  "defId": "casino_card_table_emerald",
+  "archetype": "artgen",
+  "sheet": "casino_card_table_emerald.png",
+  "frameW": 128,
+  "frameH": 103,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:493adf7cc87887c2",
+  "recipeHash": "493adf7cc87887c21aed093e2f38d7403b3587afc159c596205e998795702beb",
+  "pixelHash": "df3b585519b33353ce671c2428fcb2ca6feb46da972b8f910ebd538d83b64376"
+}

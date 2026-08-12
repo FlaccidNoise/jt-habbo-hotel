@@ -1,0 +1,34 @@
+{
+  "defId": "casino_dealer_chair_oxblood",
+  "archetype": "artgen",
+  "sheet": "casino_dealer_chair_oxblood.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.68,
+  "occlusion": null,
+  "nearSheet": "casino_dealer_chair_oxblood.near.png",
+  "nearHash": "6dc0a40694968c61d0047a8402a11f07d54800310340305444df7433b366d7bf",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6302fcfa63d7dc78",
+  "recipeHash": "6302fcfa63d7dc78146521959e6d61bf88f1894284c773634f36395926832f51",
+  "pixelHash": "273d9b26a6639a6abac6543c9e357b2421357a9bec03732fbbd9e469f2bc6939"
+}

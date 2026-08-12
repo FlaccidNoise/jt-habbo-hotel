@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_triptych_aurora_left",
+  "archetype": "artgen",
+  "sheet": "wall_art_triptych_aurora_left.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 16,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1dcb891860ca8329",
+  "recipeHash": "1dcb891860ca8329c4aff184db1a88de1d24b33a9ad413ff075e8ccb5287bc26",
+  "pixelHash": "c2d92b21ccb9e3ac269836c5a61ce1dafb422df1703e9ebf61412c68c8f3f934"
+}

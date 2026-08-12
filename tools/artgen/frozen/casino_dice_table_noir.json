@@ -1,0 +1,32 @@
+{
+  "defId": "casino_dice_table_noir",
+  "archetype": "artgen",
+  "sheet": "casino_dice_table_noir.png",
+  "frameW": 128,
+  "frameH": 104,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:73337d883dc766ec",
+  "recipeHash": "73337d883dc766ec24018b5ea1d8fa6ed6d6ff2cc67048017ade3a49330b037d",
+  "pixelHash": "c53226bc4c975e02c7bba189f1d133437bed22773f4aa0d7a6ac800b4a5688d1"
+}

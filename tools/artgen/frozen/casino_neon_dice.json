@@ -1,0 +1,37 @@
+{
+  "defId": "casino_neon_dice",
+  "archetype": "artgen",
+  "sheet": "casino_neon_dice.png",
+  "frameW": 64,
+  "frameH": 117,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 101,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.65625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 10,
+    "planeH": 9,
+    "mountU": 10,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:012cf05405d07820",
+  "recipeHash": "012cf05405d07820a459c41c56ae49192e5b0efb7bf36fa4ffca59392a79d049",
+  "pixelHash": "906979dccff8e8f7c2446b0f4f2eb54b954e218bfd7c6155f262d95a9675b2b9"
+}

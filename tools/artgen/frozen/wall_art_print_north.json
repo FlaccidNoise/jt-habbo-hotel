@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_north",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_north.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cc1f236bde06c850",
+  "recipeHash": "cc1f236bde06c850ea4197d9f689463fb109be972c02ff593dab83fadcd99bc5",
+  "pixelHash": "b0cfa8ce524652290ab1dba134905d5ca2af75c4c0899916ed06f0b962f8117a"
+}

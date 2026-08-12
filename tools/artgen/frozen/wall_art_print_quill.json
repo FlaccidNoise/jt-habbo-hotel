@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_quill",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_quill.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:35cc8cdb374434f7",
+  "recipeHash": "35cc8cdb374434f765273b591954f7f68e8d3e14e1275feaad3198b383586acb",
+  "pixelHash": "26b4d95881cd6545d8ec99e5d4e143f51149c0140df39cf78a1e1d98a6039a2c"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "casino_chip_rack",
+  "archetype": "artgen",
+  "sheet": "casino_chip_rack.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a474d3c1a10fe10f",
+  "recipeHash": "a474d3c1a10fe10ff6063679ba0fd6cbd9050abcc99c76ae079a7b431d63d46b",
+  "pixelHash": "e5fd82a04e61cc361a698a8146f7a7ac3e19f7d2ee59a99a43a0bd929c71cb15"
+}

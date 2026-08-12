@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_triptych_tide_center",
+  "archetype": "artgen",
+  "sheet": "wall_art_triptych_tide_center.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 16,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3b28893ca892a6a6",
+  "recipeHash": "3b28893ca892a6a614236a96a800deedc66206633a3aec3d436e1630f05e81c6",
+  "pixelHash": "dd3fd26146c424f0d0d2cb515641c07cdd58dad2afe085b863e19490333f02aa"
+}

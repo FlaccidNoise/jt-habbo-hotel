@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_gallery_clock",
+  "archetype": "artgen",
+  "sheet": "wall_art_gallery_clock.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 18,
+    "planeH": 17,
+    "mountU": 6,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:75ef2f312f9c1409",
+  "recipeHash": "75ef2f312f9c1409365905cbc32cd7294afbd7ce3d90b0a2f754542406c18486",
+  "pixelHash": "e4ab1930387b3606356ea856c04726e7b561cb0768728d7c93b69003b1c62862"
+}

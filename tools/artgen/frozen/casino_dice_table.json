@@ -1,0 +1,32 @@
+{
+  "defId": "casino_dice_table",
+  "archetype": "artgen",
+  "sheet": "casino_dice_table.png",
+  "frameW": 128,
+  "frameH": 104,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    64,
+    64,
+    64,
+    64
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 2,
+    "l": 2
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:da0ba2fea4c39342",
+  "recipeHash": "da0ba2fea4c393422a14c8be1d38d3c09727ad98a1ec0e78481d05459cd11a41",
+  "pixelHash": "f4bc876823054c255f3298dc1effd419f739dc52c8f911b8d129303ec427e519"
+}

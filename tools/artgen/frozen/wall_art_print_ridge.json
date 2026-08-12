@@ -1,0 +1,37 @@
+{
+  "defId": "wall_art_print_ridge",
+  "archetype": "artgen",
+  "sheet": "wall_art_print_ridge.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3c5ba37ed2e186eb",
+  "recipeHash": "3c5ba37ed2e186ebf10012fbb484b5a70a15b8d9f5edee84ec539a70a2befd45",
+  "pixelHash": "3bc809eefb897027a71d8807a404b8f853f56eb3ec90156b817ef9ebe54853a5"
+}

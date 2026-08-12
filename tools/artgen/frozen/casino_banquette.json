@@ -1,0 +1,34 @@
+{
+  "defId": "casino_banquette",
+  "archetype": "artgen",
+  "sheet": "casino_banquette.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "casino_banquette.near.png",
+  "nearHash": "70f6f62f2d508f142d107e32bfeb6c63759eeddcc9e30f6c6ebc784a26ed8315",
+  "styleVersion": 3,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b1931e76525610dd",
+  "recipeHash": "b1931e76525610dd798f394fdc002bd2cc94a1918b57aa0fabf16931114be0fa",
+  "pixelHash": "f4d9cad4145f63a6b568963f017f01f8f5f18d1af5d5d4824dc4eb1ce9bc7977"
+}
