@@ -247,6 +247,7 @@ export const FIGURE_SETS: readonly FigureSet[] = [
   // snorkel, the only `ea` whose geometry leaves the face at all.
   { id: 122, type: "lg", name: "Swim Trunks",          slots: 2, family: "material", hides: [], retired: false },
   { id: 123, type: "sh", name: "Pool Slides",          slots: 1, family: "material", hides: [], retired: false },
+  { id: 124, type: "ch", name: "Swim Top",             slots: 2, family: "material", hides: [], retired: false },
 ];
 
 const BY_ID = new Map(FIGURE_SETS.map((s) => [s.id, s]));
@@ -428,6 +429,7 @@ export const WEARABLE_SHELF: readonly { set: number; price: number; theme: strin
   { set: 119, price: 450, theme: "penthouse" },  // Opera Cape
   { set: 122, price: 150, theme: "pool" },       // Swim Trunks
   { set: 123, price: 150, theme: "pool" },       // Pool Slides
+  { set: 124, price: 200, theme: "pool" },       // Swim Top
 ];
 
 /** What a set costs, for the buy path and the creator's locked-garment badges. A set missing here

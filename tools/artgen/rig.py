@@ -5716,6 +5716,32 @@ FIGURE_PARTS = {
              "c1": (3.9, 5.4, -12.2)},
         ],
     },
+    # Swim Top (set 124, two slots). The tank 43's body runs from z 14.2 down to the waist at 0.8.
+    # This keeps 43's straps and deletes everything below the chest — the separator is subtraction,
+    # not a new feature, and no other `ch` leaves the midriff bare.
+    #
+    # The straps stand 0.1 proud of the band in y so slot 1 wins the depth test where the two
+    # overlap and the strap reads as running over the cup rather than stopping at it. That is the
+    # tracksuit top 44's flat-zip idiom: trim that never breaks the outline still earns its slot.
+    #
+    # 3.4 is the authored strap width and it survives the quantiser: measured at stand d3 each
+    # strap is four columns carrying a two-px interior run, so at 2x it is eight px with four lit
+    # inside the outline rather than a pair of hairlines. The chain 62's 3 px floor is the number
+    # that governs, and 3.4 clears it.
+    #
+    # Subtraction leaves this the loosest `ch` in a layer of twenty: 0.2226 against the tee 5 is
+    # the tightest pair on the sheet, and 43 — the row's named sibling and the set this is cut
+    # down FROM — sits at 0.1800.
+    "ch124": {
+        "prims": [
+            {"t": "box", "bone": "spine", "slot": 0, "c0": (-7.9, -6.4, 13.0),
+             "c1": (7.9, 6.4, 18.0)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (-6.7, -6.5, 16.6),
+             "c1": (-3.3, 6.5, 20.6)},
+            {"t": "box", "bone": "spine", "slot": 1, "c0": (3.3, -6.5, 16.6),
+             "c1": (6.7, 6.5, 20.6)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
