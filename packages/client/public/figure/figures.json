@@ -5591,6 +5591,56 @@
       "figuredataVersion": 1,
       "recipeHash": "e073796e548fd3c46d77195441dd9c5b75311ad9e36d7e511f28791173a59945",
       "pixelHash": "10d87b10aa5dc1a0fa1ae09cf262c5deebf33404b8781159ef7b65b0fcb68de3"
+    },
+    {
+      "partId": "cc112",
+      "setId": 112,
+      "type": "cc",
+      "name": "Frock Coat",
+      "slots": 2,
+      "hides": [
+        "ch"
+      ],
+      "sheet": "cc112.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "67a5df13dde479db452043a034891905dfc8549cf4e4b724cd0fdf8017e2bbae",
+      "pixelHash": "80008e56b2ff4229dca2d87e67e5fabe27ba167c4af76353800a94b316b8e751"
     }
   ]
 }

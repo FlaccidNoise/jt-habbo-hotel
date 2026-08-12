@@ -5355,6 +5355,56 @@ FIGURE_PARTS = {
              "squash": (1.0, 0.60, 1.3)},
         ],
     },
+    # Frock Coat (set 112, two slots, hides ch). No flare cone at all: the hem is the same 7.8 the
+    # chest is, and the back OPENS. The overcoat 11's whole read is its hip flare and the tailcoat
+    # 75 has a bare hip in front with two 1.4 px tails behind, so below the waist this shares no
+    # profile with either — 0.8185 against 75, 0.7044 against 11, 0.5636 against the robe 93.
+    #
+    # The vent is four boxes, not two. A skirt split only at the back needs a bridge across the
+    # front, so the left and right panels run the full 12.8 px depth and a 2.4 px box joins them at
+    # y 0.0 to 6.4. What is left open is x -1.2..1.2 at y < 0 from z -2.0 down, exactly the row's
+    # numbers.
+    #
+    # Measured at stand: d7 carries no ink at columns 31-32 for rows 70-74, and d3 fills 30-32 at
+    # the same rows. What shows through the slot is bd1 — at x 1.2 the thigh capsule reaches
+    # y -3.13, nearer than the bridge's own back face at y 0, so the holdout takes those pixels and
+    # the vent is genuinely open rather than a recess of coat behind coat.
+    #
+    # d6 and d0 show the vent as an outline seam and not as daylight, and that is geometry rather
+    # than tuning: a 2.4 px slot through a 12.8 px deep skirt only opens along its own axis, so
+    # widening it enough to see through at 45 degrees would mean a 12.8 px gap and no coat.
+    #
+    # The collar is 7.9 wide because a narrow one does not survive the holdout. At x 4.8 it sits
+    # INSIDE bd1's 7.5 torso, so the body wins every pixel of it below the torso top at z 21 and
+    # the collar came out as a 20-32 px island one row clear of the shoulder at dirs 1 and 5.
+    # Overlapping it into the body, matching its depth, and raising the body to z 21.0 all left the
+    # island; standing it 0.4 proud of bd1 and 0.1 proud of the coat's own body removed the cause,
+    # and the layer is one island at every direction on stand, walk0 and sit.
+    #
+    # Sit: the skirt's deepest corner is y 6.4 at z -8.0 and the hip IS the sit anchor at row 74,
+    # so it lands on row 85.2, twenty-six clear of the 111 the bounds gate fails at.
+    #
+    # Slot 1 is the collar and the cuffs.
+    "cc112": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.8, -6.4, -2.0),
+             "c1": (7.8, 6.4, 20.4)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.8, -6.4, -8.0),
+             "c1": (-1.2, 6.4, -2.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (1.2, -6.4, -8.0),
+             "c1": (7.8, 6.4, -2.0)},
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-1.2, 0.0, -8.0),
+             "c1": (1.2, 6.4, -2.0)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 21.0, "r": 4.2},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 4.2},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.9, -6.6, 19.8),
+             "c1": (7.9, 6.6, 22.8)},
+            {"t": "ball", "bone": "arm_l", "slot": 1, "c": (0.0, 0.0, -21.0), "r": 4.8,
+             "squash": (1.0, 1.0, 0.44)},
+            {"t": "ball", "bone": "arm_r", "slot": 1, "c": (0.0, 0.0, -21.0), "r": 4.8,
+             "squash": (1.0, 1.0, 0.44)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
