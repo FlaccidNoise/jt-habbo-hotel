@@ -5688,6 +5688,34 @@ FIGURE_PARTS = {
             {"t": "ball", "bone": "hip",   "slot": 1, "c": (0.0, 6.9, 2.0), "r": 1.8},
         ],
     },
+    # Pool Slides (set 123, one slot). The sandals 52 are a sole overhanging the foot 0.7 in x and
+    # 2.3 past the toe under TWO narrow cross bands. This is one wide band on a sole that never
+    # leaves the foot's own footprint — 0.2 proud all round, which is the minimum that renders at
+    # all rather than an overhang.
+    #
+    # The band straddles the foot box's -14.6 top edge because 52 established that a strap laid
+    # across the instep below that line is inside the foot and draws nothing.
+    #
+    # The nearest shoe is NOT 52 — it is the garden clogs 104 at 0.5505, with 52 behind it at
+    # 0.5021, which is the ledger's own warning that a named sibling is where to look first and
+    # never where to stop. Both part on the same axis anyway: 104 is a solid block over the toes
+    # and this is a strap over an open foot, so 104 holds 300-450 px per dir that this does not.
+    #
+    # Deepest row 110 at walk0 d6, which is exactly where 52 and 104 both land and one row inside
+    # the bounds gate. The sole is 0.2 proud rather than flush because a surface level with the
+    # prim it covers loses the depth test and draws nothing at all.
+    "sh123": {
+        "prims": [
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.9, -3.1, -float(SHIN_LEN)),
+             "c1": (3.9, 6.5, -16.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.9, -3.1, -float(SHIN_LEN)),
+             "c1": (3.9, 6.5, -16.2)},
+            {"t": "box", "bone": "knee_l", "slot": 0, "c0": (-3.9, -0.2, -15.4),
+             "c1": (3.9, 5.4, -12.2)},
+            {"t": "box", "bone": "knee_r", "slot": 0, "c0": (-3.9, -0.2, -15.4),
+             "c1": (3.9, 5.4, -12.2)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the

@@ -6077,6 +6077,54 @@
       "figuredataVersion": 1,
       "recipeHash": "2ad7cef3fcb0b65f72176cc6780728a985e5f8092a13125e75bab661d6274fbe",
       "pixelHash": "d46b959d60a312f1bf98f038d908117b93140196fe5a3eb569cf9ffd899ace09"
+    },
+    {
+      "partId": "sh123",
+      "setId": 123,
+      "type": "sh",
+      "name": "Pool Slides",
+      "slots": 1,
+      "hides": [],
+      "sheet": "sh123.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "db27265c3752a0c23e056369211998827002566cd735cf704a38c3e34c4550c2",
+      "pixelHash": "a1e4e780ce03a44fd1e738a41196803e77cc1b771c94872b43ccaf8c1e30ee07"
     }
   ]
 }
