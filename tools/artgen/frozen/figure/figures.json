@@ -6221,6 +6221,56 @@
       "figuredataVersion": 1,
       "recipeHash": "b67d6b80e57bdfb07a4c37c0dcdaf939737dad273ffa52efe5b34abec57a5a26",
       "pixelHash": "c9fe3fd74bb9f6958f549e764072641f97c57f984a7c84d09eae3a6925106a1a"
+    },
+    {
+      "partId": "cc126",
+      "setId": 126,
+      "type": "cc",
+      "name": "Beach Robe",
+      "slots": 2,
+      "hides": [
+        "ch"
+      ],
+      "sheet": "cc126.png",
+      "frameW": 64,
+      "frameH": 112,
+      "frames": [
+        "stand",
+        "walk0",
+        "walk1",
+        "walk2",
+        "walk3",
+        "sit",
+        "wave0",
+        "wave1"
+      ],
+      "dirs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchorX": 32,
+      "anchorY": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        74,
+        102,
+        102
+      ],
+      "figureHeight": 80,
+      "styleVersion": 3,
+      "generatorVersion": 2,
+      "figuredataVersion": 1,
+      "recipeHash": "e7f226f83a46017e0315c86ee1da48f79246b6f656d49b2c9bfb6b97b9e3e045",
+      "pixelHash": "cbf64c7b63905d20ce30cf16278b9306d823356f917e1ae7e96696da7ae571b8"
     }
   ]
 }

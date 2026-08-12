@@ -5774,6 +5774,38 @@ FIGURE_PARTS = {
              "c1": (6.4, 7.7, 5.6)},
         ],
     },
+    # Beach Robe (set 126, two slots, hides ch). The frock coat 112 is the other straight-box `cc`
+    # and the ledger flags the pair as the closest in the wardrobe. Three things separate them:
+    # this hangs to z -14.0 against 112's -8.0, its back is closed where 112 vents, and the shawl
+    # collar rolls proud of the front edge for the garment's whole height where 112 carries a flat
+    # stand collar at the neck alone. The sleeves are r 5.0 against 112's 4.2.
+    #
+    # The roll stands 3.2 proud and not the row's 2.0, and the opera cape 119's collar measured the
+    # reason: at dirs 1 and 5 the x axis IS the depth axis, so a collar's screen width there is its
+    # y-thickness and nothing else. At 2.0 it came out four columns carrying a SINGLE interior
+    # pixel, the rest outline — the wardrobe's 3 px floor stated exactly. At 3.2, which is what 119
+    # settled on for the same measurement, it carries a two-px interior run at both profiles.
+    #
+    # It pays for itself twice: 112 is very nearly a subset of this coat, so IoU is driven by how
+    # much alpha the robe holds that 112 does not, and the thicker roll is the cheapest of the
+    # three separators to buy. Measured 0.8260 against 112 at 2.0 proud and 0.7957 at 3.2, against
+    # a 0.854 bar — the closest `cc` pair in the wardrobe either way, which is what the ledger
+    # flagged it as. Only 12-47 px per dir belong to 112 and not to this coat, so the pair is
+    # separated by what the robe ADDS, and per dir it runs 0.74 at the profiles to 0.83 face-on.
+    "cc126": {
+        "prims": [
+            {"t": "box",  "bone": "spine", "slot": 0, "c0": (-7.8, -6.4, -14.0),
+             "c1": (7.8, 6.4, 20.4)},
+            {"t": "limb", "bone": "arm_l", "slot": 0, "len": 21.0, "r": 5.0},
+            {"t": "limb", "bone": "arm_r", "slot": 0, "len": 21.0, "r": 5.0},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-8.0, -6.8, 18.0),
+             "c1": (8.0, 9.6, 21.8)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (-7.4, 6.2, -14.0),
+             "c1": (-2.6, 9.6, 18.4)},
+            {"t": "box",  "bone": "spine", "slot": 1, "c0": (2.6, 6.2, -14.0),
+             "c1": (7.4, 9.6, 18.4)},
+        ],
+    },
 }
 
 # A pose is joint angles in degrees plus where the figure's own origin sits relative to the
