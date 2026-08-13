@@ -39,6 +39,14 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
   },
 
   {
+    id: "clockwork",
+    name: "The Clockwork Set",
+    members: ["clockwork_brass_bed", "clockwork_gauge_console", "clockwork_winding_desk", "clockwork_escapement_cabinet"],
+    reward: "clockwork_brass_bed_verdigris",
+    badge: "set_clockwork",
+  },
+
+  {
     id: "verdant",
     name: "The Verdant Set",
     members: ["verdant_canopy_bed", "verdant_potting_bench", "verdant_terrarium_case", "verdant_trellis_screen"],

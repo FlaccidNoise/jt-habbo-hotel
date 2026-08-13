@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_piston_chair_mahogany",
+  "archetype": "artgen",
+  "sheet": "clockwork_piston_chair_mahogany.png",
+  "frameW": 64,
+  "frameH": 73,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": 0.54,
+  "occlusion": null,
+  "nearSheet": "clockwork_piston_chair_mahogany.near.png",
+  "nearHash": "fab4b829c91d3e630ee28742190422e877fe3ae9a6a6ff2dbc11fd91af06c889",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6caf12a5012e92af",
+  "recipeHash": "6caf12a5012e92af0fc64d9ef1146d093ad0b07ba4f3b8f09f807b2817bedf09",
+  "pixelHash": "8ac040f6d013fdf8a68408fc9d5f646a539b1cc5c71d088b47e34d916d0da29f"
+}

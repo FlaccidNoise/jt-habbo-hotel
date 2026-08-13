@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_escapement_cabinet_pearl",
+  "archetype": "artgen",
+  "sheet": "clockwork_escapement_cabinet_pearl.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0cb067e16c898e10",
+  "recipeHash": "0cb067e16c898e10ca00156a708d14f91c277f019b2121b945f31c0c23e105d8",
+  "pixelHash": "66780afe87e538edb8976d30f69ca247b096df5a15d3686c57149aba9f5d3f98"
+}

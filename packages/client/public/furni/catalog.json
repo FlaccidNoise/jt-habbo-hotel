@@ -8509,6 +8509,986 @@
       "recipeHash": "44f9e2447e14a62b3bad28909daf03d7ec78dfb133c4351cbb73c4938345bc34",
       "pixelHash": "a41ec0b6e604c88042b92bebc9ac89042156e81852917ca66ab2cb682c6b8636"
     },
+    "clockwork_brass_bed_brass": {
+      "defId": "clockwork_brass_bed_brass",
+      "archetype": "artgen",
+      "sheet": "clockwork_brass_bed_brass.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "clockwork_brass_bed_brass.near.png",
+      "nearHash": "1a14de263b4fc668b2d1bf9ac6bdbac74e1d244555d261b9890dea31b9a6eec2",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bce534cb9ce63e20",
+      "recipeHash": "bce534cb9ce63e2015c058b127f8f98ab506e64691f0dd36a947ae3bb0b5c036",
+      "pixelHash": "0e0b0fa3276de443c16cc5ad72c7a7e7148f0cc05ffc36c621677c3fd335f94d"
+    },
+    "clockwork_gauge_console_copper": {
+      "defId": "clockwork_gauge_console_copper",
+      "archetype": "artgen",
+      "sheet": "clockwork_gauge_console_copper.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:be5cf305da006d74",
+      "recipeHash": "be5cf305da006d746247c0e9d81d070e47695cda9049105df19f25798567649e",
+      "pixelHash": "83be0a749911521049613266bc935503838038527fc1741c7f5078c55b436378"
+    },
+    "clockwork_winding_desk_iron": {
+      "defId": "clockwork_winding_desk_iron",
+      "archetype": "artgen",
+      "sheet": "clockwork_winding_desk_iron.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4804320b609c8d43",
+      "recipeHash": "4804320b609c8d431d9a7ec83f071977fe37d03bf5a9b3f69e17e5b067e5764d",
+      "pixelHash": "ee1396ea5664a8500d103473e3ca020f9de730d8a3ab1bf48b47ff2506f26a99"
+    },
+    "clockwork_boiler_cart_steam": {
+      "defId": "clockwork_boiler_cart_steam",
+      "archetype": "artgen",
+      "sheet": "clockwork_boiler_cart_steam.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5e5cda63afde4ed1",
+      "recipeHash": "5e5cda63afde4ed19f6251d78ad0f147398989e3829803d2aa5e647d9e1c7139",
+      "pixelHash": "4300a4f5a126197d62d85d5ddf11a712376a4db0b549e843e13c2bc5392095b3"
+    },
+    "clockwork_piston_chair_oil": {
+      "defId": "clockwork_piston_chair_oil",
+      "archetype": "artgen",
+      "sheet": "clockwork_piston_chair_oil.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": 0.54,
+      "occlusion": null,
+      "nearSheet": "clockwork_piston_chair_oil.near.png",
+      "nearHash": "408fc4fbb7028767bbb9f2a80f93470f48311bb801e50502c825fd9838e0b7e6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:31ead3f449b456e9",
+      "recipeHash": "31ead3f449b456e92cd571b4b7bc65a7451b3f3ba46180d1254c1150ad6bf56a",
+      "pixelHash": "7068f8bf6511a3e8856a063656100de711355a0de98c15c0f05fddf432396fd7"
+    },
+    "clockwork_escapement_cabinet_rust": {
+      "defId": "clockwork_escapement_cabinet_rust",
+      "archetype": "artgen",
+      "sheet": "clockwork_escapement_cabinet_rust.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3587f9151e7c975f",
+      "recipeHash": "3587f9151e7c975f9852b4b50b77ce3c1280a32b35abbaf2235d1b2cafae384c",
+      "pixelHash": "c74613363fe168465248ffca0a0c3bd048266cb99a6c124efdd6017966a415ce"
+    },
+    "clockwork_mainspring_bench_ivory": {
+      "defId": "clockwork_mainspring_bench_ivory",
+      "archetype": "artgen",
+      "sheet": "clockwork_mainspring_bench_ivory.png",
+      "frameW": 96,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.38,
+      "occlusion": null,
+      "nearSheet": "clockwork_mainspring_bench_ivory.near.png",
+      "nearHash": "9e93fc03108c4b1ecbdb1f600cc70ed626328acca446b80f6746c8152a1e1055",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9074425e7ebb78a5",
+      "recipeHash": "9074425e7ebb78a5b7cd240fec1903eea675ce7ea9959517c40932fa07de37ca",
+      "pixelHash": "1a8c93a8e6a8b78f12bafd631e1847a3783ad7cfffb77c6a5793a089055b9a35"
+    },
+    "clockwork_pipe_shelf_cobalt": {
+      "defId": "clockwork_pipe_shelf_cobalt",
+      "archetype": "artgen",
+      "sheet": "clockwork_pipe_shelf_cobalt.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:23342991dc68ae93",
+      "recipeHash": "23342991dc68ae933d804d5d2f19eb15d6ed1dd522b7de58122c5ba757cd842a",
+      "pixelHash": "b6bdbcad286aa22b24d47e57aac8d80abf6fc01501dc5f928a7df1ecc6a50d74"
+    },
+    "clockwork_gear_table_ember": {
+      "defId": "clockwork_gear_table_ember",
+      "archetype": "artgen",
+      "sheet": "clockwork_gear_table_ember.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a4f2a0f1299db711",
+      "recipeHash": "a4f2a0f1299db71148d6f6adabef94f09f7299fb62c08bdd9758240ed832032f",
+      "pixelHash": "8f6a4c5114af23632322b36197c6b221b18c7b43661bc237fcc68e5ccefd31e5"
+    },
+    "clockwork_steam_lamp_ash": {
+      "defId": "clockwork_steam_lamp_ash",
+      "archetype": "artgen",
+      "sheet": "clockwork_steam_lamp_ash.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ef405940215f34c0",
+      "recipeHash": "ef405940215f34c0d8617b297ab7e746dba1ba0c4c51af7a1ddc7fc033bf1b91",
+      "pixelHash": "499d5e30e6e973515ca17a82e9b8503661d1eea67d1666b3a92f9eb7a659c426"
+    },
+    "clockwork_copper_rug_gold": {
+      "defId": "clockwork_copper_rug_gold",
+      "archetype": "artgen",
+      "sheet": "clockwork_copper_rug_gold.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d08fcd00ecee9121",
+      "recipeHash": "d08fcd00ecee9121e3430a97daafb7a85f77daeca6c7ed90a25236159f760783",
+      "pixelHash": "fb0db7a0f0a66c61a70d9b6885603aad344c00e5136965ac71929029c2316be6"
+    },
+    "clockwork_cog_stool_slate": {
+      "defId": "clockwork_cog_stool_slate",
+      "archetype": "artgen",
+      "sheet": "clockwork_cog_stool_slate.png",
+      "frameW": 64,
+      "frameH": 45,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 29,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.40625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "clockwork_cog_stool_slate.near.png",
+      "nearHash": "38a2361fc78aec0911f8a7cb612aa22b2a1899f5bfa894f8ca7054eec1f90f5e",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:50baba1e0cb7c3ca",
+      "recipeHash": "50baba1e0cb7c3ca74577be6884feb1230a9bc070a900af942108bff4958f5c0",
+      "pixelHash": "98e0fc287aad9f647a36f5af3f819a8347541a3036903cc15d02b178d9143a46"
+    },
+    "clockwork_brass_bed_verdigris": {
+      "defId": "clockwork_brass_bed_verdigris",
+      "archetype": "artgen",
+      "sheet": "clockwork_brass_bed_verdigris.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "clockwork_brass_bed_verdigris.near.png",
+      "nearHash": "4d359e7f3d6eaf5e227db312c51b98879037df1da79f62fda036d4ac6e988f09",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:98478d8dc406b105",
+      "recipeHash": "98478d8dc406b105c121abbc1a210627c3cc22db969fceaacc14858e295ce7c4",
+      "pixelHash": "5971b214d72fba59c39b0a1ddede56b5ff61a42ee65b011423a0c048d5109944"
+    },
+    "clockwork_gauge_console_coal": {
+      "defId": "clockwork_gauge_console_coal",
+      "archetype": "artgen",
+      "sheet": "clockwork_gauge_console_coal.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2f8c3ecf1978ca86",
+      "recipeHash": "2f8c3ecf1978ca861eb7fb5417e407aaaa88e7e7389b5ece0d9209080de53b31",
+      "pixelHash": "3bb7a24c05cf823b7007cf1062d6eeb652f3cc2474d8deb98af4c79f5955f43f"
+    },
+    "clockwork_winding_desk_amber": {
+      "defId": "clockwork_winding_desk_amber",
+      "archetype": "artgen",
+      "sheet": "clockwork_winding_desk_amber.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:26b31cc84f9e0ef7",
+      "recipeHash": "26b31cc84f9e0ef7530bcdc8738666366982703a73e5f1b826f792954b333472",
+      "pixelHash": "c9e8198a7216e8f6401bb996419cc7ac7891cc15b4c31c35e96a2f5cd4192cfc"
+    },
+    "clockwork_boiler_cart_tin": {
+      "defId": "clockwork_boiler_cart_tin",
+      "archetype": "artgen",
+      "sheet": "clockwork_boiler_cart_tin.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5a622ff9bfdb4827",
+      "recipeHash": "5a622ff9bfdb4827c9ef8ffa06a1ca6844f740913f3b0362f2d82014cb8177f6",
+      "pixelHash": "50b506d5bec9db454a500971354f625fcbaecc2f97dda86cea9e9bd153fad17d"
+    },
+    "clockwork_piston_chair_mahogany": {
+      "defId": "clockwork_piston_chair_mahogany",
+      "archetype": "artgen",
+      "sheet": "clockwork_piston_chair_mahogany.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": 0.54,
+      "occlusion": null,
+      "nearSheet": "clockwork_piston_chair_mahogany.near.png",
+      "nearHash": "fab4b829c91d3e630ee28742190422e877fe3ae9a6a6ff2dbc11fd91af06c889",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6caf12a5012e92af",
+      "recipeHash": "6caf12a5012e92af0fc64d9ef1146d093ad0b07ba4f3b8f09f807b2817bedf09",
+      "pixelHash": "8ac040f6d013fdf8a68408fc9d5f646a539b1cc5c71d088b47e34d916d0da29f"
+    },
+    "clockwork_escapement_cabinet_pearl": {
+      "defId": "clockwork_escapement_cabinet_pearl",
+      "archetype": "artgen",
+      "sheet": "clockwork_escapement_cabinet_pearl.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0cb067e16c898e10",
+      "recipeHash": "0cb067e16c898e10ca00156a708d14f91c277f019b2121b945f31c0c23e105d8",
+      "pixelHash": "66780afe87e538edb8976d30f69ca247b096df5a15d3686c57149aba9f5d3f98"
+    },
+    "clockwork_brass_bed": {
+      "defId": "clockwork_brass_bed",
+      "archetype": "artgen",
+      "sheet": "clockwork_brass_bed.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "clockwork_brass_bed.near.png",
+      "nearHash": "133bfd2b8e51231e35ef5e3790fecdec0e00331d27a7efa98133718069c8eb1f",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:008740312bd45f23",
+      "recipeHash": "008740312bd45f23eccdecffd17de6ee0e10250d7e912b4b8fb6bbf0d5d2a122",
+      "pixelHash": "e66b8b6da81954d04b93ac0f9ff142217606642142089bc170d6c8302ea41d58"
+    },
+    "clockwork_gauge_console": {
+      "defId": "clockwork_gauge_console",
+      "archetype": "artgen",
+      "sheet": "clockwork_gauge_console.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d1f6769bc99818f8",
+      "recipeHash": "d1f6769bc99818f805f40abcdae20d63cc7791c8bfb33c4efaa161d6375d4ea5",
+      "pixelHash": "33f8ec168390a0c64faf83651366c4f15f8f1fa7e141bc72f83b87b3cb6bcfc9"
+    },
+    "clockwork_winding_desk": {
+      "defId": "clockwork_winding_desk",
+      "archetype": "artgen",
+      "sheet": "clockwork_winding_desk.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:befc868d82daea1b",
+      "recipeHash": "befc868d82daea1bd6c5acc89abfdbb5205fcf001748f0509c54fef76efd9d90",
+      "pixelHash": "446727d1e814bb2ecc460450840947e20422e0a329d9b07adc1a24d3faea1766"
+    },
+    "clockwork_boiler_cart": {
+      "defId": "clockwork_boiler_cart",
+      "archetype": "artgen",
+      "sheet": "clockwork_boiler_cart.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:833ff8705b8af7c4",
+      "recipeHash": "833ff8705b8af7c478bea1aaa751d1219c177a5a02787474bff077459305ee30",
+      "pixelHash": "6f68426645a106982676ac8fa4aa657834f70e59dbdfe35bd2116ec11e9dc2d0"
+    },
+    "clockwork_piston_chair": {
+      "defId": "clockwork_piston_chair",
+      "archetype": "artgen",
+      "sheet": "clockwork_piston_chair.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": 0.54,
+      "occlusion": null,
+      "nearSheet": "clockwork_piston_chair.near.png",
+      "nearHash": "2ff11b299ae5acf77564f6699dc838ef915222cc74e1a035b008b8f35f6e57b5",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2cc87364b72708e3",
+      "recipeHash": "2cc87364b72708e3c1a4afae9d27db76a37fd9619c85adb46337c127c269d0af",
+      "pixelHash": "35f4375a21da864ce953e986fd4ac8e93459c48150b5a33e20ec14fea8abe427"
+    },
+    "clockwork_escapement_cabinet": {
+      "defId": "clockwork_escapement_cabinet",
+      "archetype": "artgen",
+      "sheet": "clockwork_escapement_cabinet.png",
+      "frameW": 64,
+      "frameH": 57,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 41,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ffbdba036206efe0",
+      "recipeHash": "ffbdba036206efe09de6b8b17755c7f4897252da94d74e3f031da090eb5b071a",
+      "pixelHash": "ab400636b966d72945abbec927804238e2604c4d7a48ddfb1ddefc4cf19d3510"
+    },
+    "clockwork_mainspring_bench": {
+      "defId": "clockwork_mainspring_bench",
+      "archetype": "artgen",
+      "sheet": "clockwork_mainspring_bench.png",
+      "frameW": 96,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.38,
+      "occlusion": null,
+      "nearSheet": "clockwork_mainspring_bench.near.png",
+      "nearHash": "9e93fc03108c4b1ecbdb1f600cc70ed626328acca446b80f6746c8152a1e1055",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:952cc2fb53195b1e",
+      "recipeHash": "952cc2fb53195b1e5b28d2a2da71b4c59339ec59b6e0d7d172802f2f5f46f2c2",
+      "pixelHash": "b886241d82214d7849e476ff1903f643298c8a418a19345aa1182a1bf6214e91"
+    },
+    "clockwork_pipe_shelf": {
+      "defId": "clockwork_pipe_shelf",
+      "archetype": "artgen",
+      "sheet": "clockwork_pipe_shelf.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d5ebea83ed164a76",
+      "recipeHash": "d5ebea83ed164a76905b3282aa439b66aed951f3884597457006c45670cd0f8d",
+      "pixelHash": "41fc5c5d1738b36624557ba81fb36f3b9db201539e32b0214203d007ef3c05f6"
+    },
+    "clockwork_gear_table": {
+      "defId": "clockwork_gear_table",
+      "archetype": "artgen",
+      "sheet": "clockwork_gear_table.png",
+      "frameW": 64,
+      "frameH": 61,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 45,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a3795ab41b12e233",
+      "recipeHash": "a3795ab41b12e233e43ecda9440db4e45b734fb74e277221c0d90745074cff50",
+      "pixelHash": "0f8e0f2306016462217fc9624d47ebb35ec506186987a613aa98bc52400d1195"
+    },
+    "clockwork_steam_lamp": {
+      "defId": "clockwork_steam_lamp",
+      "archetype": "artgen",
+      "sheet": "clockwork_steam_lamp.png",
+      "frameW": 64,
+      "frameH": 73,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:027c4992005b5dc3",
+      "recipeHash": "027c4992005b5dc31822eddc65a773d047d8c1910530dae476e51b10c6c49d67",
+      "pixelHash": "80e9a939fd2d2c5fbe4d15acae5424c23326774d66f6882cde19c930d74b2c35"
+    },
+    "clockwork_copper_rug": {
+      "defId": "clockwork_copper_rug",
+      "archetype": "artgen",
+      "sheet": "clockwork_copper_rug.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8c5d1ef8409f4072",
+      "recipeHash": "8c5d1ef8409f40729dd6cb0eba2403bdc008b36aef55809fb65f2e1cd766b477",
+      "pixelHash": "fb0db7a0f0a66c61a70d9b6885603aad344c00e5136965ac71929029c2316be6"
+    },
+    "clockwork_cog_stool": {
+      "defId": "clockwork_cog_stool",
+      "archetype": "artgen",
+      "sheet": "clockwork_cog_stool.png",
+      "frameW": 64,
+      "frameH": 45,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 29,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.40625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "clockwork_cog_stool.near.png",
+      "nearHash": "6e996257a5337163350faebd54395485048085aad32ca7c59f20011f54c2426f",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:87b23e8a5dde45d2",
+      "recipeHash": "87b23e8a5dde45d218a0d8a45b16924bad1a5377f2f27d5d5f47e089de720511",
+      "pixelHash": "0c1d1296aad73a052d2b3d4fbb7ebfeeac8f13a164c799732f857d7bc20ecdc0"
+    },
     "verdant_canopy_bed_fern": {
       "defId": "verdant_canopy_bed_fern",
       "archetype": "artgen",
@@ -16302,6 +17282,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "clockwork_gear_clock": {
+      "defId": "clockwork_gear_clock",
+      "archetype": "artgen",
+      "sheet": "clockwork_gear_clock.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 15,
+        "mountU": 4,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a885f19edf5eb5aa",
+      "recipeHash": "a885f19edf5eb5aa9e10ac9df9cfb5310a6ce400dd21689791397c9c67335102",
+      "pixelHash": "20649212780f6e3561ceffc8ac64d25c85302499445e687b331d2163b1c670ad"
+    },
+    "clockwork_gauge_panel": {
+      "defId": "clockwork_gauge_panel",
+      "archetype": "artgen",
+      "sheet": "clockwork_gauge_panel.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 19,
+        "mountU": 2,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:eec3e8c63f4eb1f7",
+      "recipeHash": "eec3e8c63f4eb1f7b95e8dee4f34bf4aabebc959fc48a3b839ee52ae2f7826fb",
+      "pixelHash": "98c594983103d53cf59c5758317f97980620b1d7cf20dfac9e4afb9135cb2d67"
+    },
+    "clockwork_blueprint_frame": {
+      "defId": "clockwork_blueprint_frame",
+      "archetype": "artgen",
+      "sheet": "clockwork_blueprint_frame.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:82169aabd61db2b3",
+      "recipeHash": "82169aabd61db2b3e03feeebee9f95431c62e7f430fac2ae223ef75992da06f0",
+      "pixelHash": "4e05fc213b7f7e42394640141ea8d5d761b325c8b570fe1f408ad154aa6d9b25"
+    },
+    "clockwork_pipe_rail": {
+      "defId": "clockwork_pipe_rail",
+      "archetype": "artgen",
+      "sheet": "clockwork_pipe_rail.png",
+      "frameW": 64,
+      "frameH": 111,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 95,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 30,
+        "planeH": 11,
+        "mountU": 0,
+        "mountV": 51,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a70df0c2e4d7f3e6",
+      "recipeHash": "a70df0c2e4d7f3e656c57e7eb13077cf17d2d3a720e135065d74df9192f62b20",
+      "pixelHash": "676b1837ff6f315b3052f5257e1ee87f30143fa004bfeeccd1a514f0f544834c"
+    },
+    "clockwork_valve_hooks": {
+      "defId": "clockwork_valve_hooks",
+      "archetype": "artgen",
+      "sheet": "clockwork_valve_hooks.png",
+      "frameW": 64,
+      "frameH": 111,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 95,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 11,
+        "mountU": 2,
+        "mountV": 51,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2c4839fd4bb33806",
+      "recipeHash": "2c4839fd4bb33806cb2bef735de39f1d496f21fbd80db1cce466b93d8f62b487",
+      "pixelHash": "e72f8692d5f9eac960582add94df1639d0e2348e7904f3110a389ab648dabd33"
+    },
+    "clockwork_piston_relief": {
+      "defId": "clockwork_piston_relief",
+      "archetype": "artgen",
+      "sheet": "clockwork_piston_relief.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 21,
+        "mountU": 2,
+        "mountV": 41,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:da99a061127e83b2",
+      "recipeHash": "da99a061127e83b20b7750e9b45ff5761b42e3559ee2edfd3344d6017248fe96",
+      "pixelHash": "6e162778d481d692cb1af65f761e663b191b2da1e34d771c30d40abce0f0e8c6"
+    },
+    "clockwork_brass_sconce": {
+      "defId": "clockwork_brass_sconce",
+      "archetype": "artgen",
+      "sheet": "clockwork_brass_sconce.png",
+      "frameW": 64,
+      "frameH": 117,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 101,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 12,
+        "planeH": 15,
+        "mountU": 8,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:305567514f5463d9",
+      "recipeHash": "305567514f5463d933efe7ee7aa67b76a78c80095847381b4b5fcb182c2fd04a",
+      "pixelHash": "4aedc5b45274ad5eacaaaba02a80e3c28c584384c719b448e3a268fc62717aca"
+    },
+    "clockwork_rivet_panel": {
+      "defId": "clockwork_rivet_panel",
+      "archetype": "artgen",
+      "sheet": "clockwork_rivet_panel.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b3b3599e90e3fe44",
+      "recipeHash": "b3b3599e90e3fe44230ad44631be396733c4e287559322a9214406302f19da0e",
+      "pixelHash": "ae4e42320ad9f8c7402e8f8756b98bc36ebc398017a6af1c091dcd9efa6b6a26"
+    },
+    "clockwork_escapement_diagram": {
+      "defId": "clockwork_escapement_diagram",
+      "archetype": "artgen",
+      "sheet": "clockwork_escapement_diagram.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5a4841a2c21149a9",
+      "recipeHash": "5a4841a2c21149a9e4570676aae554558408c8d272a5e2b2fdaad9f7f8183211",
+      "pixelHash": "671a06f72e0292af1bad4f98bd5d1d8ea06ff86400ab9d0904a2dba2ef645cff"
+    },
+    "clockwork_oil_lantern_hook": {
+      "defId": "clockwork_oil_lantern_hook",
+      "archetype": "artgen",
+      "sheet": "clockwork_oil_lantern_hook.png",
+      "frameW": 64,
+      "frameH": 112,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 96,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 10,
+        "planeH": 11,
+        "mountU": 10,
+        "mountV": 51,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9680e034b769cec6",
+      "recipeHash": "9680e034b769cec662ad83e0b91ac42b42d823fb05dfa63737c14281926d6480",
+      "pixelHash": "21a1187b048487571238648d117cbb9843ebbb0428a9bc0c666fdb09bc6f8e27"
     },
     "verdant_trellis_panel": {
       "defId": "verdant_trellis_panel",

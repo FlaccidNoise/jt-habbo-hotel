@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_mainspring_bench",
+  "archetype": "artgen",
+  "sheet": "clockwork_mainspring_bench.png",
+  "frameW": 96,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.38,
+  "occlusion": null,
+  "nearSheet": "clockwork_mainspring_bench.near.png",
+  "nearHash": "9e93fc03108c4b1ecbdb1f600cc70ed626328acca446b80f6746c8152a1e1055",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:952cc2fb53195b1e",
+  "recipeHash": "952cc2fb53195b1e5b28d2a2da71b4c59339ec59b6e0d7d172802f2f5f46f2c2",
+  "pixelHash": "b886241d82214d7849e476ff1903f643298c8a418a19345aa1182a1bf6214e91"
+}

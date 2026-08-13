@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_winding_desk_iron",
+  "archetype": "artgen",
+  "sheet": "clockwork_winding_desk_iron.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4804320b609c8d43",
+  "recipeHash": "4804320b609c8d431d9a7ec83f071977fe37d03bf5a9b3f69e17e5b067e5764d",
+  "pixelHash": "ee1396ea5664a8500d103473e3ca020f9de730d8a3ab1bf48b47ff2506f26a99"
+}

@@ -1455,6 +1455,110 @@
       },
       "styleVersion": 4,
       "pixelHash": "0a145096e4b10d3d59dbf720ee8543ef862fcd5212b7ca572d9c3a29f48b0307"
+    },
+    {
+      "id": "floor_clockwork_brass_plate",
+      "kind": "floor",
+      "sheet": "floor_clockwork_brass_plate.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "89e8e45a8774eb889c638157fad1cd1c91c66d5a510c27939918ae9f4a4e7880"
+    },
+    {
+      "id": "floor_clockwork_gear",
+      "kind": "floor",
+      "sheet": "floor_clockwork_gear.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "481fb82a66efd70819db7d8e3c289dc1596342ecc2add615eebee862a1f7d4b4"
+    },
+    {
+      "id": "floor_clockwork_rivet",
+      "kind": "floor",
+      "sheet": "floor_clockwork_rivet.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "d9aa2ac65c13ff81d6874e681a228ec24675f2bc9d9dff3e208941b7da5cc550"
+    },
+    {
+      "id": "floor_clockwork_blueprint",
+      "kind": "floor",
+      "sheet": "floor_clockwork_blueprint.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "89814b71741fc42ce0a28faf303a65296862fc12e709ebdda0ea3c7ed62d116a"
+    },
+    {
+      "id": "wall_clockwork_pipe_grid",
+      "kind": "wall",
+      "sheet": "wall_clockwork_pipe_grid.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "d89b5331c12a89b4460d05ea78219421763829de1595820317c91c4568f1aefe"
+    },
+    {
+      "id": "wall_clockwork_gauge",
+      "kind": "wall",
+      "sheet": "wall_clockwork_gauge.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "957e64972e5e71bbdddd20c5c7ced0a2547b0b151476f3e32269d856fa524b44"
+    },
+    {
+      "id": "wall_clockwork_gear",
+      "kind": "wall",
+      "sheet": "wall_clockwork_gear.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "6e9ced0645a02aa9043cb86d8119d9948e2cb77d28d6c0dc8fd566a1463f76fb"
+    },
+    {
+      "id": "wall_clockwork_verdigris_panel",
+      "kind": "wall",
+      "sheet": "wall_clockwork_verdigris_panel.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "e5084276d048e11a65c983ab772a0550ab6fb77a2559324924a0de05beac3aa7"
     }
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_winding_desk_amber",
+  "archetype": "artgen",
+  "sheet": "clockwork_winding_desk_amber.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:26b31cc84f9e0ef7",
+  "recipeHash": "26b31cc84f9e0ef7530bcdc8738666366982703a73e5f1b826f792954b333472",
+  "pixelHash": "c9e8198a7216e8f6401bb996419cc7ac7891cc15b4c31c35e96a2f5cd4192cfc"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_brass_sconce",
+  "archetype": "artgen",
+  "sheet": "clockwork_brass_sconce.png",
+  "frameW": 64,
+  "frameH": 117,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 101,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.65625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 12,
+    "planeH": 15,
+    "mountU": 8,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:305567514f5463d9",
+  "recipeHash": "305567514f5463d933efe7ee7aa67b76a78c80095847381b4b5fcb182c2fd04a",
+  "pixelHash": "4aedc5b45274ad5eacaaaba02a80e3c28c584384c719b448e3a268fc62717aca"
+}

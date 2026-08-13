@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_gauge_console_coal",
+  "archetype": "artgen",
+  "sheet": "clockwork_gauge_console_coal.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2f8c3ecf1978ca86",
+  "recipeHash": "2f8c3ecf1978ca861eb7fb5417e407aaaa88e7e7389b5ece0d9209080de53b31",
+  "pixelHash": "3bb7a24c05cf823b7007cf1062d6eeb652f3cc2474d8deb98af4c79f5955f43f"
+}

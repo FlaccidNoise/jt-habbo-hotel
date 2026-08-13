@@ -319,6 +319,38 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "fablewood_spellbook_shelf_petal", name: "Petal Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "read", vend: { item: "book", price: 0 } },
   { id: "fablewood_aether_throne_stone", name: "Stone Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x9c9484 },
   // Wave B5 (blitz task 15): Fablewood bases.
+  // Wave B8 colorways (blitz task 18).
+  { id: "clockwork_brass_bed_brass", name: "Brass Bed", theme: "clockwork", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0xdaa520 },
+  { id: "clockwork_gauge_console_copper", name: "Copper Gauge Console", theme: "clockwork", w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  { id: "clockwork_winding_desk_iron", name: "Iron Winding Desk", theme: "clockwork", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "clockwork_boiler_cart_steam", name: "Steam Boiler Cart", theme: "clockwork", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
+  { id: "clockwork_piston_chair_oil", name: "Oil Piston Chair", theme: "clockwork", w: 1, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: 0.54, color: 0x4a4d55 },
+  { id: "clockwork_escapement_cabinet_rust", name: "Rust Escapement Cabinet", theme: "clockwork", w: 1, l: 1, stackHeights: [0.78125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "clockwork_mainspring_bench_ivory", name: "Ivory Mainspring Bench", theme: "clockwork", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.38, color: 0x9c9484 },
+  { id: "clockwork_pipe_shelf_cobalt", name: "Cobalt Pipe Shelf", theme: "clockwork", w: 1, l: 1, stackHeights: [0.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "clockwork_gear_table_ember", name: "Ember Gear Table", theme: "clockwork", w: 1, l: 1, stackHeights: [0.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "clockwork_steam_lamp_ash", name: "Ash Steam Lamp", theme: "clockwork", w: 1, l: 1, stackHeights: [1.28125, 1.28125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672, interaction: "toggle" },
+  { id: "clockwork_copper_rug_gold", name: "Gold Copper Rug", theme: "clockwork", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "clockwork_cog_stool_slate", name: "Slate Cog Stool", theme: "clockwork", w: 1, l: 1, stackHeights: [0.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x5b6672 },
+  { id: "clockwork_brass_bed_verdigris", name: "Verdigris Brass Bed", theme: "clockwork", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x2e8b57 },
+  { id: "clockwork_gauge_console_coal", name: "Coal Gauge Console", theme: "clockwork", w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "clockwork_winding_desk_amber", name: "Amber Winding Desk", theme: "clockwork", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "clockwork_boiler_cart_tin", name: "Tin Boiler Cart", theme: "clockwork", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "clockwork_piston_chair_mahogany", name: "Mahogany Piston Chair", theme: "clockwork", w: 1, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: 0.54, color: 0x8b4513 },
+  { id: "clockwork_escapement_cabinet_pearl", name: "Pearl Escapement Cabinet", theme: "clockwork", w: 1, l: 1, stackHeights: [0.78125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  // Wave B8 (blitz task 18): Clockwork Workshop bases.
+  { id: "clockwork_brass_bed", name: "Brass Bed", theme: "clockwork", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0xb5651d },
+  { id: "clockwork_gauge_console", name: "Gauge Console", theme: "clockwork", w: 1, l: 1, stackHeights: [1.03125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
+  { id: "clockwork_winding_desk", name: "Winding Desk", theme: "clockwork", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  { id: "clockwork_boiler_cart", name: "Boiler Cart", theme: "clockwork", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "clockwork_piston_chair", name: "Piston Chair", theme: "clockwork", w: 1, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: 0.54, color: 0x5b6672 },
+  { id: "clockwork_escapement_cabinet", name: "Escapement Cabinet", theme: "clockwork", w: 1, l: 1, stackHeights: [0.78125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  { id: "clockwork_mainspring_bench", name: "Mainspring Bench", theme: "clockwork", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.38, color: 0x5b6672 },
+  { id: "clockwork_pipe_shelf", name: "Pipe Shelf", theme: "clockwork", w: 1, l: 1, stackHeights: [0.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x4a4d55 },
+  { id: "clockwork_gear_table", name: "Gear Table", theme: "clockwork", w: 1, l: 1, stackHeights: [0.90625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  { id: "clockwork_steam_lamp", name: "Steam Lamp", theme: "clockwork", w: 1, l: 1, stackHeights: [1.28125, 1.28125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
+  { id: "clockwork_copper_rug", name: "Copper Rug", theme: "clockwork", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "clockwork_cog_stool", name: "Cog Stool", theme: "clockwork", w: 1, l: 1, stackHeights: [0.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x5b6672 },
   // Wave B7 colorways (blitz task 17).
   { id: "verdant_canopy_bed_fern", name: "Fern Canopy Bed", theme: "verdant", w: 2, l: 1, stackHeights: [1.375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x2f8f8f },
   { id: "verdant_potting_bench_moss", name: "Moss Potting Bench", theme: "verdant", w: 2, l: 1, stackHeights: [1.1875], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
@@ -576,6 +608,18 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "wall_art_sculpture_relief", name: "Sculpture Relief", theme: "wall_art", span: 1, plane: { w: 22, h: 16 }, mount: { u: 4, v: 39 }, color: 0x5b6672 },
   // Wave B5 (blitz task 15): Fablewood walls.
   // Wave B6 (blitz task 16): Tidal walls.
+  // Wave B8 (blitz task 18): Clockwork walls.
+  { id: "clockwork_gear_clock", name: "Gear Clock", theme: "clockwork", span: 1, plane: { w: 22, h: 15 }, mount: { u: 4, v: 45 }, color: 0xdaa520 },
+  { id: "clockwork_gauge_panel", name: "Gauge Panel", theme: "clockwork", span: 1, plane: { w: 26, h: 19 }, mount: { u: 2, v: 42 }, color: 0x5b6672 },
+  { id: "clockwork_blueprint_frame", name: "Blueprint Frame", theme: "clockwork", span: 1, plane: { w: 24, h: 16 }, mount: { u: 4, v: 43 }, color: 0x9c9484 },
+  { id: "clockwork_pipe_rail", name: "Pipe Rail", theme: "clockwork", span: 1, plane: { w: 30, h: 11 }, mount: { u: 0, v: 51 }, color: 0x4a4d55 },
+  { id: "clockwork_valve_hooks", name: "Valve Hooks", theme: "clockwork", span: 1, plane: { w: 28, h: 11 }, mount: { u: 2, v: 51 }, color: 0xdaa520 },
+  { id: "clockwork_piston_relief", name: "Piston Relief", theme: "clockwork", span: 1, plane: { w: 26, h: 21 }, mount: { u: 2, v: 41 }, color: 0x5b6672 },
+  { id: "clockwork_brass_sconce", name: "Brass Sconce", theme: "clockwork", span: 1, plane: { w: 12, h: 15 }, mount: { u: 8, v: 47 }, color: 0xdaa520 },
+  { id: "clockwork_rivet_panel", name: "Rivet Panel", theme: "clockwork", span: 1, plane: { w: 24, h: 16 }, mount: { u: 4, v: 44 }, color: 0x5b6672 },
+  { id: "clockwork_escapement_diagram", name: "Escapement Diagram", theme: "clockwork", span: 1, plane: { w: 24, h: 13 }, mount: { u: 4, v: 44 }, color: 0x9c9484 },
+  { id: "clockwork_oil_lantern_hook", name: "Oil Lantern Hook", theme: "clockwork", span: 1, plane: { w: 10, h: 11 }, mount: { u: 10, v: 51 }, color: 0xdaa520 },
+  // Wave B7 (blitz task 17): Verdant walls.
   // Wave B7 (blitz task 17): Verdant walls.
   { id: "verdant_trellis_panel", name: "Trellis Panel", theme: "verdant", span: 1, plane: { w: 26, h: 19 }, mount: { u: 2, v: 42 }, color: 0xc2a36b },
   { id: "verdant_herb_pressing_frame", name: "Herb Pressing Frame", theme: "verdant", span: 1, plane: { w: 26, h: 16 }, mount: { u: 2, v: 42 }, color: 0x8b4513 },
@@ -1267,6 +1311,47 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["verdant_watering_cart_rose", 150],
   ["verdant_trellis_screen_mint", 150],
   ["verdant_herb_table_bark", 150],
+
+  // Wave B8 (blitz task 18): Clockwork Workshop. Reward unpriced. No prestige this wave.
+  ["clockwork_brass_bed", 300],
+  ["clockwork_gauge_console", 250],
+  ["clockwork_winding_desk", 250],
+  ["clockwork_boiler_cart", 250],
+  ["clockwork_piston_chair", 150],
+  ["clockwork_escapement_cabinet", 150],
+  ["clockwork_mainspring_bench", 150],
+  ["clockwork_pipe_shelf", 75],
+  ["clockwork_gear_table", 150],
+  ["clockwork_steam_lamp", 75],
+  ["clockwork_copper_rug", 75],
+  ["clockwork_cog_stool", 50],
+  ["clockwork_gear_clock", 75],
+  ["clockwork_gauge_panel", 75],
+  ["clockwork_blueprint_frame", 75],
+  ["clockwork_pipe_rail", 50],
+  ["clockwork_valve_hooks", 50],
+  ["clockwork_piston_relief", 50],
+  ["clockwork_brass_sconce", 50],
+  ["clockwork_rivet_panel", 25],
+  ["clockwork_escapement_diagram", 25],
+  ["clockwork_oil_lantern_hook", 25],
+  ["clockwork_brass_bed_brass", 300],
+  ["clockwork_gauge_console_copper", 250],
+  ["clockwork_winding_desk_iron", 250],
+  ["clockwork_boiler_cart_steam", 250],
+  ["clockwork_piston_chair_oil", 150],
+  ["clockwork_escapement_cabinet_rust", 150],
+  ["clockwork_mainspring_bench_ivory", 150],
+  ["clockwork_pipe_shelf_cobalt", 75],
+  ["clockwork_gear_table_ember", 150],
+  ["clockwork_steam_lamp_ash", 75],
+  ["clockwork_copper_rug_gold", 75],
+  ["clockwork_cog_stool_slate", 50],
+  ["clockwork_gauge_console_coal", 250],
+  ["clockwork_winding_desk_amber", 250],
+  ["clockwork_boiler_cart_tin", 250],
+  ["clockwork_piston_chair_mahogany", 150],
+  ["clockwork_escapement_cabinet_pearl", 150],
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
@@ -1307,6 +1392,8 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "tidal_shell_bed_dusk",
   // Verdant Set reward (blitz task 17): minted on set completion, never sold.
   "verdant_canopy_bed_rain",
+  // Clockwork Set reward (blitz task 18): minted on set completion, never sold.
+  "clockwork_brass_bed_verdigris",
 ]);
 
 /** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
@@ -1682,6 +1769,19 @@ export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([
   "verdant_vine_lamp_amber", "verdant_moss_rug_ivy", "verdant_garden_stool_petal", "verdant_seed_drawers_stone",
   "verdant_canopy_bed_rain", "verdant_potting_bench_honey", "verdant_terrarium_case_olive", "verdant_watering_cart_rose",
   "verdant_trellis_screen_mint", "verdant_herb_table_bark",
+
+  // Task 18 wave B8.
+  "clockwork_brass_bed", "clockwork_gauge_console", "clockwork_winding_desk", "clockwork_boiler_cart",
+  "clockwork_piston_chair", "clockwork_escapement_cabinet", "clockwork_mainspring_bench", "clockwork_pipe_shelf",
+  "clockwork_gear_table", "clockwork_steam_lamp", "clockwork_copper_rug", "clockwork_cog_stool",
+  "clockwork_gear_clock", "clockwork_gauge_panel", "clockwork_blueprint_frame", "clockwork_pipe_rail",
+  "clockwork_valve_hooks", "clockwork_piston_relief", "clockwork_brass_sconce", "clockwork_rivet_panel",
+  "clockwork_escapement_diagram", "clockwork_oil_lantern_hook",
+  "clockwork_brass_bed_brass", "clockwork_gauge_console_copper", "clockwork_winding_desk_iron", "clockwork_boiler_cart_steam",
+  "clockwork_piston_chair_oil", "clockwork_escapement_cabinet_rust", "clockwork_mainspring_bench_ivory", "clockwork_pipe_shelf_cobalt",
+  "clockwork_gear_table_ember", "clockwork_steam_lamp_ash", "clockwork_copper_rug_gold", "clockwork_cog_stool_slate",
+  "clockwork_brass_bed_verdigris", "clockwork_gauge_console_coal", "clockwork_winding_desk_amber", "clockwork_boiler_cart_tin",
+  "clockwork_piston_chair_mahogany", "clockwork_escapement_cabinet_pearl",
 ]);
 /** Landed blitz decor tiles (the plan's Appendix B). */
 export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
@@ -1785,6 +1885,16 @@ export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
   "wall_verdant_trellis",
   "wall_verdant_botanical",
   "wall_verdant_dew",
+
+  // Task 18 wave B8: Clockwork.
+  "floor_clockwork_brass_plate",
+  "floor_clockwork_gear",
+  "floor_clockwork_rivet",
+  "floor_clockwork_blueprint",
+  "wall_clockwork_pipe_grid",
+  "wall_clockwork_gauge",
+  "wall_clockwork_gear",
+  "wall_clockwork_verdigris_panel",
 ]);
 /** The staged prestige line: the eight blitz prestige fixtures land together but surface in the
  *  catalog one per wave. An id here is priced in CATALOG_PRICES; an id absent is staged in

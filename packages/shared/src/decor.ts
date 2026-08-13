@@ -300,6 +300,14 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_verdant_trellis", name: "Verdant Trellis", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
   { kind: "wall", id: "wall_verdant_botanical", name: "Verdant Botanical", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
   { kind: "wall", id: "wall_verdant_dew", name: "Verdant Dew", tile: { w: 32, h: 32 }, cap: 0x2f8f8f },
+  { kind: "floor", id: "floor_clockwork_brass_plate", name: "Clockwork Brass Plate", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0xdaa520 } },
+  { kind: "floor", id: "floor_clockwork_gear", name: "Clockwork Gear", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_clockwork_rivet", name: "Clockwork Rivet", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_clockwork_blueprint", name: "Clockwork Blueprint", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0x3f5e9e } },
+  { kind: "wall", id: "wall_clockwork_pipe_grid", name: "Clockwork Pipe Grid", tile: { w: 32, h: 32 }, cap: 0x9c9484 },
+  { kind: "wall", id: "wall_clockwork_gauge", name: "Clockwork Gauge", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  { kind: "wall", id: "wall_clockwork_gear", name: "Clockwork Gear", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  { kind: "wall", id: "wall_clockwork_verdigris_panel", name: "Clockwork Verdigris Panel", tile: { w: 32, h: 32 }, cap: 0x2f8f8f },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

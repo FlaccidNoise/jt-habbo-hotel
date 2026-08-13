@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_copper_rug",
+  "archetype": "artgen",
+  "sheet": "clockwork_copper_rug.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8c5d1ef8409f4072",
+  "recipeHash": "8c5d1ef8409f40729dd6cb0eba2403bdc008b36aef55809fb65f2e1cd766b477",
+  "pixelHash": "fb0db7a0f0a66c61a70d9b6885603aad344c00e5136965ac71929029c2316be6"
+}

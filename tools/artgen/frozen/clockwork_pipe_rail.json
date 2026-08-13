@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_pipe_rail",
+  "archetype": "artgen",
+  "sheet": "clockwork_pipe_rail.png",
+  "frameW": 64,
+  "frameH": 111,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 95,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.46875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 30,
+    "planeH": 11,
+    "mountU": 0,
+    "mountV": 51,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a70df0c2e4d7f3e6",
+  "recipeHash": "a70df0c2e4d7f3e656c57e7eb13077cf17d2d3a720e135065d74df9192f62b20",
+  "pixelHash": "676b1837ff6f315b3052f5257e1ee87f30143fa004bfeeccd1a514f0f544834c"
+}

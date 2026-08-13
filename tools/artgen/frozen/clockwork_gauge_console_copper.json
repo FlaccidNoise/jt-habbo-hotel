@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_gauge_console_copper",
+  "archetype": "artgen",
+  "sheet": "clockwork_gauge_console_copper.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:be5cf305da006d74",
+  "recipeHash": "be5cf305da006d746247c0e9d81d070e47695cda9049105df19f25798567649e",
+  "pixelHash": "83be0a749911521049613266bc935503838038527fc1741c7f5078c55b436378"
+}

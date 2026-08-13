@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_gear_table_ember",
+  "archetype": "artgen",
+  "sheet": "clockwork_gear_table_ember.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a4f2a0f1299db711",
+  "recipeHash": "a4f2a0f1299db71148d6f6adabef94f09f7299fb62c08bdd9758240ed832032f",
+  "pixelHash": "8f6a4c5114af23632322b36197c6b221b18c7b43661bc237fcc68e5ccefd31e5"
+}

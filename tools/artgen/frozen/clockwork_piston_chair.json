@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_piston_chair",
+  "archetype": "artgen",
+  "sheet": "clockwork_piston_chair.png",
+  "frameW": 64,
+  "frameH": 73,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": 0.54,
+  "occlusion": null,
+  "nearSheet": "clockwork_piston_chair.near.png",
+  "nearHash": "2ff11b299ae5acf77564f6699dc838ef915222cc74e1a035b008b8f35f6e57b5",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2cc87364b72708e3",
+  "recipeHash": "2cc87364b72708e3c1a4afae9d27db76a37fd9619c85adb46337c127c269d0af",
+  "pixelHash": "35f4375a21da864ce953e986fd4ac8e93459c48150b5a33e20ec14fea8abe427"
+}

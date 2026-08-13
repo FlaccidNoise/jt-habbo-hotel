@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_rivet_panel",
+  "archetype": "artgen",
+  "sheet": "clockwork_rivet_panel.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 16,
+    "mountU": 4,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b3b3599e90e3fe44",
+  "recipeHash": "b3b3599e90e3fe44230ad44631be396733c4e287559322a9214406302f19da0e",
+  "pixelHash": "ae4e42320ad9f8c7402e8f8756b98bc36ebc398017a6af1c091dcd9efa6b6a26"
+}

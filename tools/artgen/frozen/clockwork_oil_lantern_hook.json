@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_oil_lantern_hook",
+  "archetype": "artgen",
+  "sheet": "clockwork_oil_lantern_hook.png",
+  "frameW": 64,
+  "frameH": 112,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 96,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 10,
+    "planeH": 11,
+    "mountU": 10,
+    "mountV": 51,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9680e034b769cec6",
+  "recipeHash": "9680e034b769cec662ad83e0b91ac42b42d823fb05dfa63737c14281926d6480",
+  "pixelHash": "21a1187b048487571238648d117cbb9843ebbb0428a9bc0c666fdb09bc6f8e27"
+}

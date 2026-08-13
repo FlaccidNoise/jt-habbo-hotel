@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_cog_stool_slate",
+  "archetype": "artgen",
+  "sheet": "clockwork_cog_stool_slate.png",
+  "frameW": 64,
+  "frameH": 45,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 29,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.40625,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "clockwork_cog_stool_slate.near.png",
+  "nearHash": "38a2361fc78aec0911f8a7cb612aa22b2a1899f5bfa894f8ca7054eec1f90f5e",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:50baba1e0cb7c3ca",
+  "recipeHash": "50baba1e0cb7c3ca74577be6884feb1230a9bc070a900af942108bff4958f5c0",
+  "pixelHash": "98e0fc287aad9f647a36f5af3f819a8347541a3036903cc15d02b178d9143a46"
+}

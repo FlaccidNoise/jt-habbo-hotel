@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_pipe_shelf_cobalt",
+  "archetype": "artgen",
+  "sheet": "clockwork_pipe_shelf_cobalt.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:23342991dc68ae93",
+  "recipeHash": "23342991dc68ae933d804d5d2f19eb15d6ed1dd522b7de58122c5ba757cd842a",
+  "pixelHash": "b6bdbcad286aa22b24d47e57aac8d80abf6fc01501dc5f928a7df1ecc6a50d74"
+}

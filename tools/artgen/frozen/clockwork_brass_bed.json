@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_brass_bed",
+  "archetype": "artgen",
+  "sheet": "clockwork_brass_bed.png",
+  "frameW": 96,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "clockwork_brass_bed.near.png",
+  "nearHash": "133bfd2b8e51231e35ef5e3790fecdec0e00331d27a7efa98133718069c8eb1f",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:008740312bd45f23",
+  "recipeHash": "008740312bd45f23eccdecffd17de6ee0e10250d7e912b4b8fb6bbf0d5d2a122",
+  "pixelHash": "e66b8b6da81954d04b93ac0f9ff142217606642142089bc170d6c8302ea41d58"
+}

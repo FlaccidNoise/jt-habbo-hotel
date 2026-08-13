@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_piston_chair_oil",
+  "archetype": "artgen",
+  "sheet": "clockwork_piston_chair_oil.png",
+  "frameW": 64,
+  "frameH": 73,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": 0.54,
+  "occlusion": null,
+  "nearSheet": "clockwork_piston_chair_oil.near.png",
+  "nearHash": "408fc4fbb7028767bbb9f2a80f93470f48311bb801e50502c825fd9838e0b7e6",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:31ead3f449b456e9",
+  "recipeHash": "31ead3f449b456e92cd571b4b7bc65a7451b3f3ba46180d1254c1150ad6bf56a",
+  "pixelHash": "7068f8bf6511a3e8856a063656100de711355a0de98c15c0f05fddf432396fd7"
+}

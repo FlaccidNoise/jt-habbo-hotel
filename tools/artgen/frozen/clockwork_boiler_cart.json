@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_boiler_cart",
+  "archetype": "artgen",
+  "sheet": "clockwork_boiler_cart.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:833ff8705b8af7c4",
+  "recipeHash": "833ff8705b8af7c478bea1aaa751d1219c177a5a02787474bff077459305ee30",
+  "pixelHash": "6f68426645a106982676ac8fa4aa657834f70e59dbdfe35bd2116ec11e9dc2d0"
+}

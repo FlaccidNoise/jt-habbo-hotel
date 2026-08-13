@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_piston_relief",
+  "archetype": "artgen",
+  "sheet": "clockwork_piston_relief.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 21,
+    "mountU": 2,
+    "mountV": 41,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:da99a061127e83b2",
+  "recipeHash": "da99a061127e83b20b7750e9b45ff5761b42e3559ee2edfd3344d6017248fe96",
+  "pixelHash": "6e162778d481d692cb1af65f761e663b191b2da1e34d771c30d40abce0f0e8c6"
+}

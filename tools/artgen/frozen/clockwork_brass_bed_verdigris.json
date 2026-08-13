@@ -1,0 +1,34 @@
+{
+  "defId": "clockwork_brass_bed_verdigris",
+  "archetype": "artgen",
+  "sheet": "clockwork_brass_bed_verdigris.png",
+  "frameW": 96,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "clockwork_brass_bed_verdigris.near.png",
+  "nearHash": "4d359e7f3d6eaf5e227db312c51b98879037df1da79f62fda036d4ac6e988f09",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:98478d8dc406b105",
+  "recipeHash": "98478d8dc406b105c121abbc1a210627c3cc22db969fceaacc14858e295ce7c4",
+  "pixelHash": "5971b214d72fba59c39b0a1ddede56b5ff61a42ee65b011423a0c048d5109944"
+}

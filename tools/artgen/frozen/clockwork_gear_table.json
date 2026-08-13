@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_gear_table",
+  "archetype": "artgen",
+  "sheet": "clockwork_gear_table.png",
+  "frameW": 64,
+  "frameH": 61,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 45,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a3795ab41b12e233",
+  "recipeHash": "a3795ab41b12e233e43ecda9440db4e45b734fb74e277221c0d90745074cff50",
+  "pixelHash": "0f8e0f2306016462217fc9624d47ebb35ec506186987a613aa98bc52400d1195"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "clockwork_escapement_cabinet_rust",
+  "archetype": "artgen",
+  "sheet": "clockwork_escapement_cabinet_rust.png",
+  "frameW": 64,
+  "frameH": 57,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 41,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3587f9151e7c975f",
+  "recipeHash": "3587f9151e7c975f9852b4b50b77ce3c1280a32b35abbaf2235d1b2cafae384c",
+  "pixelHash": "c74613363fe168465248ffca0a0c3bd048266cb99a6c124efdd6017966a415ce"
+}

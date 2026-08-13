@@ -1,0 +1,37 @@
+{
+  "defId": "clockwork_gear_clock",
+  "archetype": "artgen",
+  "sheet": "clockwork_gear_clock.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 15,
+    "mountU": 4,
+    "mountV": 45,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a885f19edf5eb5aa",
+  "recipeHash": "a885f19edf5eb5aa9e10ac9df9cfb5310a6ce400dd21689791397c9c67335102",
+  "pixelHash": "20649212780f6e3561ceffc8ac64d25c85302499445e687b331d2163b1c670ad"
+}
