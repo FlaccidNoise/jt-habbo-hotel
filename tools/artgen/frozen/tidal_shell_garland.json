@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_shell_garland",
+  "archetype": "artgen",
+  "sheet": "tidal_shell_garland.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 4,
+    "mountU": 2,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2ad7549712feb6c0",
+  "recipeHash": "2ad7549712feb6c08df976eded24d38a2ad10c0b09a8c632881c6c1f954d4053",
+  "pixelHash": "c4a931aaa20ec3779aebc9fb3a63e6245916d6d4d849f5d770619741e6f7fcfe"
+}

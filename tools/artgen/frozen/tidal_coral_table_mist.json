@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_coral_table_mist",
+  "archetype": "artgen",
+  "sheet": "tidal_coral_table_mist.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4b7fc291fe7a3b54",
+  "recipeHash": "4b7fc291fe7a3b54e0f6209a8625593484a7c679b472a526a48470c87037f233",
+  "pixelHash": "7028c3fb79864ddf1621f3dae795867b153072ee05d570bfbe9103d2c79bd851"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_kelp_planter",
+  "archetype": "artgen",
+  "sheet": "tidal_kelp_planter.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4d2b5f057ceb38d1",
+  "recipeHash": "4d2b5f057ceb38d1057587dddf8680db1de75f14f44e89d620dafffe8f4c14f5",
+  "pixelHash": "ef7273fd391beab3ed3bc000dd261b857ec0904625ffee49f5838319e75f7713"
+}

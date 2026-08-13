@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_chart_desk_kelp",
+  "archetype": "artgen",
+  "sheet": "tidal_chart_desk_kelp.png",
+  "frameW": 96,
+  "frameH": 89,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7cd82c42f00a66b6",
+  "recipeHash": "7cd82c42f00a66b629f8ebef38d792b7f198a78f628d64592b38145e40ac3a8c",
+  "pixelHash": "0e5c2cdb93436aaf5f9dcff862dcb7f46f681ebc81b8e05beded89c0da230141"
+}

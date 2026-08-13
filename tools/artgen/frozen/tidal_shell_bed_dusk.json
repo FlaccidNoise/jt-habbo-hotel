@@ -1,0 +1,34 @@
+{
+  "defId": "tidal_shell_bed_dusk",
+  "archetype": "artgen",
+  "sheet": "tidal_shell_bed_dusk.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "tidal_shell_bed_dusk.near.png",
+  "nearHash": "a9644527bfb6c5428a0229bceb7950ecb074bc912cc3756d44b22936d51ab36e",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:52b55d6e6ae56cf2",
+  "recipeHash": "52b55d6e6ae56cf2eb5c140cf4d4c75cc6d97703cc8ea086eefc83a1ec9fdd2f",
+  "pixelHash": "092cb186038fc468d22944212dc78ae79b413603f6ddc96d209e5394fd7228da"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_tide_pool_bar",
+  "archetype": "artgen",
+  "sheet": "tidal_tide_pool_bar.png",
+  "frameW": 96,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:73668535422fb8cd",
+  "recipeHash": "73668535422fb8cde50e4b96f6bda7f6e7d51415f197b54a80b756cce88ad8d8",
+  "pixelHash": "16b5c6f935f1a85bce297a8af5287e467ada750ae3f7f09e4101716dc6a8e5c8"
+}

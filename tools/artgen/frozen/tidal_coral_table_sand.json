@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_coral_table_sand",
+  "archetype": "artgen",
+  "sheet": "tidal_coral_table_sand.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9975bcabc86d9e97",
+  "recipeHash": "9975bcabc86d9e97c7bad7e28069fbea332d36d6a3334ffc07e1e0459e9988bd",
+  "pixelHash": "a7f9d91c91a8d8c4908948c76acebf81e1e1bcce035c4145452338fc96aaf726"
+}

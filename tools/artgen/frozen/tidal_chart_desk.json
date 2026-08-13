@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_chart_desk",
+  "archetype": "artgen",
+  "sheet": "tidal_chart_desk.png",
+  "frameW": 96,
+  "frameH": 89,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 57,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.28125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3f0b597540749d02",
+  "recipeHash": "3f0b597540749d02afbda45399ef268d23c81040b4420b302faabc6388c04d16",
+  "pixelHash": "3e5fbe3be90799ff3ac5007503bc8650ae56f717f23f52fdf32d9291e25ca9ca"
+}

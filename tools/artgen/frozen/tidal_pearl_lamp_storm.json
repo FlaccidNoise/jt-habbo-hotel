@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_pearl_lamp_storm",
+  "archetype": "artgen",
+  "sheet": "tidal_pearl_lamp_storm.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:444e5c041d8e2f6a",
+  "recipeHash": "444e5c041d8e2f6a943bf0506274ffc10b769da8c47159026dab166f957071b1",
+  "pixelHash": "e1880c9f79540f7af93db2518a51837600fbc5ec0418707a2077bc1021b5b2f0"
+}

@@ -1,0 +1,34 @@
+{
+  "defId": "tidal_net_hammock_reef",
+  "archetype": "artgen",
+  "sheet": "tidal_net_hammock_reef.png",
+  "frameW": 96,
+  "frameH": 93,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "tidal_net_hammock_reef.near.png",
+  "nearHash": "ae750095a4c55b51a488eb82bfa7c03062bc8f000a18789c6333789529bb59b6",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:28ef413fd374f892",
+  "recipeHash": "28ef413fd374f892a24c4439f476cf67783e70a079d10c0728b55bb630cd422f",
+  "pixelHash": "3ca4dbabd507e092be0f52e6b09294335ae62230d6b5a3383651ceb6a344d95e"
+}

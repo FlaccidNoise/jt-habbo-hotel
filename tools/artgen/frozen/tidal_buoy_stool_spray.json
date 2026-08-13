@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_buoy_stool_spray",
+  "archetype": "artgen",
+  "sheet": "tidal_buoy_stool_spray.png",
+  "frameW": 64,
+  "frameH": 49,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 33,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.53125,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7b8e40e515f70c2f",
+  "recipeHash": "7b8e40e515f70c2f3afc8d562cac50366eb4ebe18e545b36bb73b8c852563cac",
+  "pixelHash": "6b71f75441492300e8ef8bfcd5cb4091100d4bc7ee8692268282c3231c7f272c"
+}

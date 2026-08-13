@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_shell_vanity",
+  "archetype": "artgen",
+  "sheet": "tidal_shell_vanity.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:57ec4ac1c74a5b0d",
+  "recipeHash": "57ec4ac1c74a5b0d0fa1b9ac7ccf550ff9ae1efc753e398f7e6921f19e2a6f40",
+  "pixelHash": "732762c10e9e0a3e46a10c4ddb8a435054f097ecce7ab057668e5377de841962"
+}

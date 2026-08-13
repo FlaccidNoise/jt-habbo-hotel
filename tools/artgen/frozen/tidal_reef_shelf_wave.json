@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_reef_shelf_wave",
+  "archetype": "artgen",
+  "sheet": "tidal_reef_shelf_wave.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:0958efa7afbbaa2a",
+  "recipeHash": "0958efa7afbbaa2a9a0395f8f9d3d0b84047af42ec6f417b21114c6a69dccf82",
+  "pixelHash": "039b15523642e8fc3a10a4a3eb9d18c923e92098e79010ac66302c4e2d56c8be"
+}

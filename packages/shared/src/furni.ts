@@ -319,6 +319,38 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "fablewood_spellbook_shelf_petal", name: "Petal Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "read", vend: { item: "book", price: 0 } },
   { id: "fablewood_aether_throne_stone", name: "Stone Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x9c9484 },
   // Wave B5 (blitz task 15): Fablewood bases.
+  // Wave B6 colorways (blitz task 16).
+  { id: "tidal_shell_bed_aqua", name: "Aqua Shell Bed", theme: "tidal", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.42, color: 0x2f8f8f },
+  { id: "tidal_net_hammock_coral", name: "Coral Net Hammock", theme: "tidal", w: 2, l: 1, stackHeights: [1.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0xaa3333 },
+  { id: "tidal_tide_pool_bar_pearl", name: "Pearl Tide Pool Bar", theme: "tidal", w: 2, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xcbc0ac },
+  { id: "tidal_chart_desk_kelp", name: "Kelp Chart Desk", theme: "tidal", w: 2, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "tidal_coral_table_sand", name: "Sand Coral Table", theme: "tidal", w: 1, l: 1, stackHeights: [0.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "tidal_reef_shelf_foam", name: "Foam Reef Shelf", theme: "tidal", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xcbc0ac },
+  { id: "tidal_shell_vanity_lagoon", name: "Lagoon Shell Vanity", theme: "tidal", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "tidal_driftwood_bench_drift", name: "Drift Bench", theme: "tidal", w: 2, l: 1, stackHeights: [0.625], canWalk: false, canStackOn: false, seatHeight: 0.62, color: 0xb55a19 },
+  { id: "tidal_pearl_lamp_storm", name: "Storm Pearl Lamp", theme: "tidal", w: 1, l: 1, stackHeights: [1.25], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "tidal_kelp_planter_shell", name: "Shell Kelp Planter", theme: "tidal", w: 1, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: null, color: 0xcbc0ac },
+  { id: "tidal_wave_rug_deep", name: "Deep Wave Rug", theme: "tidal", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "tidal_buoy_stool_spray", name: "Spray Buoy Stool", theme: "tidal", w: 1, l: 1, stackHeights: [0.53125], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x8d9eb1 },
+  { id: "tidal_shell_bed_dusk", name: "Dusk Shell Bed", theme: "tidal", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.42, color: 0x3f5e9e },
+  { id: "tidal_net_hammock_reef", name: "Reef Net Hammock", theme: "tidal", w: 2, l: 1, stackHeights: [1.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x2e8b57 },
+  { id: "tidal_tide_pool_bar_brine", name: "Brine Tide Pool Bar", theme: "tidal", w: 2, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "tidal_chart_desk_sun", name: "Sun Chart Desk", theme: "tidal", w: 2, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "tidal_coral_table_mist", name: "Mist Coral Table", theme: "tidal", w: 1, l: 1, stackHeights: [0.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8d9eb1 },
+  { id: "tidal_reef_shelf_wave", name: "Wave Reef Shelf", theme: "tidal", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  // Wave B6 (blitz task 16): Tidal bases.
+  { id: "tidal_shell_bed", name: "Shell Bed", theme: "tidal", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.42, color: 0xcbc0ac },
+  { id: "tidal_net_hammock", name: "Net Hammock", theme: "tidal", w: 2, l: 1, stackHeights: [1.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0xc2a36b },
+  { id: "tidal_tide_pool_bar", name: "Tide Pool Bar", theme: "tidal", w: 2, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "tidal_chart_desk", name: "Chart Desk", theme: "tidal", w: 2, l: 1, stackHeights: [1.28125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "tidal_coral_table", name: "Coral Table", theme: "tidal", w: 1, l: 1, stackHeights: [0.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "tidal_reef_shelf", name: "Reef Shelf", theme: "tidal", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "tidal_shell_vanity", name: "Shell Vanity", theme: "tidal", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xcbc0ac },
+  { id: "tidal_driftwood_bench", name: "Driftwood Bench", theme: "tidal", w: 2, l: 1, stackHeights: [0.625], canWalk: false, canStackOn: false, seatHeight: 0.62, color: 0x8b4513 },
+  { id: "tidal_pearl_lamp", name: "Pearl Lamp", theme: "tidal", w: 1, l: 1, stackHeights: [1.25], canWalk: false, canStackOn: false, seatHeight: null, color: 0xcbc0ac },
+  { id: "tidal_kelp_planter", name: "Kelp Planter", theme: "tidal", w: 1, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "tidal_wave_rug", name: "Wave Rug", theme: "tidal", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "tidal_buoy_stool", name: "Buoy Stool", theme: "tidal", w: 1, l: 1, stackHeights: [0.53125], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x2f8f8f },
   { id: "fablewood_moss_bed", name: "Verdant Bed", theme: "fablewood", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.6, color: 0x2e8b57 },
   { id: "fablewood_wizard_desk", name: "Wizard Desk", theme: "fablewood", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
   { id: "fablewood_alchemy_bench", name: "Alchemy Bench", theme: "fablewood", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.56, color: 0xc2a36b },
@@ -511,6 +543,17 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "wall_art_gallery_clock", name: "Gallery Clock", theme: "wall_art", span: 1, plane: { w: 18, h: 17 }, mount: { u: 6, v: 39 }, color: 0xb5651d },
   { id: "wall_art_sculpture_relief", name: "Sculpture Relief", theme: "wall_art", span: 1, plane: { w: 22, h: 16 }, mount: { u: 4, v: 39 }, color: 0x5b6672 },
   // Wave B5 (blitz task 15): Fablewood walls.
+  // Wave B6 (blitz task 16): Tidal walls.
+  { id: "tidal_porthole_frame", name: "Porthole Frame", theme: "tidal", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 43 }, color: 0xc2a36b },
+  { id: "tidal_net_drape", name: "Net Drape", theme: "tidal", span: 1, plane: { w: 26, h: 15 }, mount: { u: 2, v: 47 }, color: 0x2f8f8f },
+  { id: "tidal_shell_garland", name: "Shell Garland", theme: "tidal", span: 1, plane: { w: 26, h: 4 }, mount: { u: 2, v: 47 }, color: 0xcbc0ac },
+  { id: "tidal_tide_clock", name: "Tide Clock", theme: "tidal", span: 1, plane: { w: 20, h: 13 }, mount: { u: 6, v: 43 }, color: 0x9c9484 },
+  { id: "tidal_coral_relief", name: "Coral Relief", theme: "tidal", span: 1, plane: { w: 22, h: 16 }, mount: { u: 4, v: 42 }, color: 0x2f8f8f },
+  { id: "tidal_wave_print", name: "Wave Print", theme: "tidal", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 43 }, color: 0x3f5e9e },
+  { id: "tidal_buoy_hooks", name: "Buoy Hooks", theme: "tidal", span: 1, plane: { w: 24, h: 6 }, mount: { u: 2, v: 47 }, color: 0x2f8f8f },
+  { id: "tidal_kelp_curtain", name: "Kelp Curtain", theme: "tidal", span: 1, plane: { w: 26, h: 14 }, mount: { u: 2, v: 47 }, color: 0x2e8b57 },
+  { id: "tidal_lighthouse_print", name: "Lighthouse Print", theme: "tidal", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 43 }, color: 0xc2a36b },
+  { id: "tidal_foam_sconce", name: "Foam Sconce", theme: "tidal", span: 1, plane: { w: 22, h: 13 }, mount: { u: 4, v: 42 }, color: 0xcbc0ac },
   { id: "fablewood_vine_garland", name: "Vine Garland", theme: "fablewood", span: 1, plane: { w: 28, h: 9 }, mount: { u: 0, v: 50 }, color: 0x2e8b57 },
   { id: "fablewood_mushroom_shelf", name: "Mushroom Shelf", theme: "fablewood", span: 1, plane: { w: 26, h: 7 }, mount: { u: 0, v: 51 }, color: 0x8b4513 },
   { id: "fablewood_owl_print", name: "Owl Print", theme: "fablewood", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 45 }, color: 0xc2a36b },
@@ -1098,6 +1141,47 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["fablewood_root_chair_rust", 150],
   ["fablewood_spellbook_shelf_petal", 150],
 
+  // Wave B6 (blitz task 16): Tidal Observatory. Reward unpriced. Prestige moonstone fountain released.
+  ["prestige_marble_fountain_moonstone", 3300],
+  ["tidal_shell_bed", 300],
+  ["tidal_net_hammock", 250],
+  ["tidal_tide_pool_bar", 250],
+  ["tidal_chart_desk", 250],
+  ["tidal_coral_table", 150],
+  ["tidal_reef_shelf", 150],
+  ["tidal_shell_vanity", 150],
+  ["tidal_driftwood_bench", 75],
+  ["tidal_pearl_lamp", 75],
+  ["tidal_kelp_planter", 75],
+  ["tidal_wave_rug", 75],
+  ["tidal_buoy_stool", 50],
+  ["tidal_porthole_frame", 75],
+  ["tidal_net_drape", 75],
+  ["tidal_shell_garland", 75],
+  ["tidal_tide_clock", 50],
+  ["tidal_coral_relief", 50],
+  ["tidal_wave_print", 50],
+  ["tidal_buoy_hooks", 50],
+  ["tidal_kelp_curtain", 25],
+  ["tidal_lighthouse_print", 25],
+  ["tidal_foam_sconce", 25],
+  ["tidal_shell_bed_aqua", 300],
+  ["tidal_net_hammock_coral", 250],
+  ["tidal_tide_pool_bar_pearl", 250],
+  ["tidal_chart_desk_kelp", 250],
+  ["tidal_coral_table_sand", 150],
+  ["tidal_reef_shelf_foam", 150],
+  ["tidal_shell_vanity_lagoon", 150],
+  ["tidal_driftwood_bench_drift", 75],
+  ["tidal_pearl_lamp_storm", 75],
+  ["tidal_kelp_planter_shell", 75],
+  ["tidal_wave_rug_deep", 75],
+  ["tidal_buoy_stool_spray", 50],
+  ["tidal_net_hammock_reef", 250],
+  ["tidal_tide_pool_bar_brine", 250],
+  ["tidal_chart_desk_sun", 250],
+  ["tidal_coral_table_mist", 150],
+  ["tidal_reef_shelf_wave", 150],
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
@@ -1125,7 +1209,6 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "penthouse_telescope_copper",
   "lounge_vibraphone_ivory",
 
-  "prestige_marble_fountain_moonstone",
   "prestige_crystal_screen_amber",
   "bannerhold_high_seat_navy",
   "nocturne_coffin_daybed_slate",
@@ -1135,6 +1218,8 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "starliner_holo_projector_astro",
   // Fablewood Set reward (blitz task 15): minted on set completion, never sold.
   "fablewood_aether_throne_stone",
+  // Tidal Set reward (blitz task 16): minted on set completion, never sold.
+  "tidal_shell_bed_dusk",
 ]);
 
 /** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
@@ -1485,6 +1570,18 @@ export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([
   "fablewood_moss_bed_dusk", "fablewood_wizard_desk_honey", "fablewood_alchemy_bench_sage", "fablewood_root_chair_rust",
   "fablewood_spellbook_shelf_petal", "fablewood_aether_throne_stone",
 
+  // Task 16 wave B6.
+  "tidal_shell_bed", "tidal_net_hammock", "tidal_tide_pool_bar", "tidal_chart_desk",
+  "tidal_coral_table", "tidal_reef_shelf", "tidal_shell_vanity", "tidal_driftwood_bench",
+  "tidal_pearl_lamp", "tidal_kelp_planter", "tidal_wave_rug", "tidal_buoy_stool",
+  "tidal_porthole_frame", "tidal_net_drape", "tidal_shell_garland", "tidal_tide_clock",
+  "tidal_coral_relief", "tidal_wave_print", "tidal_buoy_hooks", "tidal_kelp_curtain",
+  "tidal_lighthouse_print", "tidal_foam_sconce",
+  "tidal_shell_bed_aqua", "tidal_net_hammock_coral", "tidal_tide_pool_bar_pearl", "tidal_chart_desk_kelp",
+  "tidal_coral_table_sand", "tidal_reef_shelf_foam", "tidal_shell_vanity_lagoon", "tidal_driftwood_bench_drift",
+  "tidal_pearl_lamp_storm", "tidal_kelp_planter_shell", "tidal_wave_rug_deep", "tidal_buoy_stool_spray",
+  "tidal_shell_bed_dusk", "tidal_net_hammock_reef", "tidal_tide_pool_bar_brine", "tidal_chart_desk_sun",
+  "tidal_coral_table_mist", "tidal_reef_shelf_wave",
 ]);
 /** Landed blitz decor tiles (the plan's Appendix B). */
 export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
@@ -1569,7 +1666,15 @@ export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
   "wall_fablewood_vine",
   "wall_fablewood_storybook",
   "wall_fablewood_crystal",
-
+  // Task 16 wave B6: Tidal.
+  "floor_tidal_reef_tile",
+  "floor_tidal_wave",
+  "floor_tidal_driftwood",
+  "floor_tidal_shell_inlay",
+  "wall_tidal_observatory_panel",
+  "wall_tidal_bubble",
+  "wall_tidal_kelp",
+  "wall_tidal_porthole",
 ]);
 /** The staged prestige line: the eight blitz prestige fixtures land together but surface in the
  *  catalog one per wave. An id here is priced in CATALOG_PRICES; an id absent is staged in
@@ -1580,5 +1685,6 @@ export const RELEASED_PRESTIGE_IDS: ReadonlySet<string> = new Set<string>([  "pr
   "prestige_obsidian_table",
   "prestige_velvet_daybed",
   "prestige_gold_throne_onyx",
+  "prestige_marble_fountain_moonstone",
 
 ]);

@@ -1,0 +1,34 @@
+{
+  "defId": "tidal_driftwood_bench_drift",
+  "archetype": "artgen",
+  "sheet": "tidal_driftwood_bench_drift.png",
+  "frameW": 96,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 36,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.625,
+  "seatZ": 0.62,
+  "occlusion": null,
+  "nearSheet": "tidal_driftwood_bench_drift.near.png",
+  "nearHash": "89424f23c007e6ba989e6cfb5d768abf433afdb094e68249988f7c40efc2e4f3",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7657424a4c9c1e0d",
+  "recipeHash": "7657424a4c9c1e0de19c2d6763711d8a4ec43d02f0d63576b035fa9fb9f0ceb8",
+  "pixelHash": "1c8c180c41af50d5adeff2364bdcab7225f731ea3e90546b38decc87e673a1f2"
+}

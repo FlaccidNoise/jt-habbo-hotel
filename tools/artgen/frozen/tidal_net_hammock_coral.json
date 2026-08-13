@@ -1,0 +1,34 @@
+{
+  "defId": "tidal_net_hammock_coral",
+  "archetype": "artgen",
+  "sheet": "tidal_net_hammock_coral.png",
+  "frameW": 96,
+  "frameH": 93,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "tidal_net_hammock_coral.near.png",
+  "nearHash": "ae750095a4c55b51a488eb82bfa7c03062bc8f000a18789c6333789529bb59b6",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3455ec182e3157ca",
+  "recipeHash": "3455ec182e3157ca29d04fc7ff17a75d9be7575492914eade1bde7f091c0aa72",
+  "pixelHash": "62caea03a08747437659c498d84a0e24133f19da5da6f01da09a90baa23e3ae4"
+}

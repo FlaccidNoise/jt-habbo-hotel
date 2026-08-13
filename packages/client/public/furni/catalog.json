@@ -8509,6 +8509,982 @@
       "recipeHash": "44f9e2447e14a62b3bad28909daf03d7ec78dfb133c4351cbb73c4938345bc34",
       "pixelHash": "a41ec0b6e604c88042b92bebc9ac89042156e81852917ca66ab2cb682c6b8636"
     },
+    "tidal_shell_bed_aqua": {
+      "defId": "tidal_shell_bed_aqua",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_bed_aqua.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "tidal_shell_bed_aqua.near.png",
+      "nearHash": "5d720bf0e411b809b4cdcb40bfb3bba67924978aec23ec06ff641371d7edde39",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cc309e72a9799e96",
+      "recipeHash": "cc309e72a9799e96ea073cb3e90e73247a2b308e3dc1e937868c768ddf717ffe",
+      "pixelHash": "5debd84d68e3fedbd648f0d71c8144ce54248475fc68502d55f53c421613bc49"
+    },
+    "tidal_net_hammock_coral": {
+      "defId": "tidal_net_hammock_coral",
+      "archetype": "artgen",
+      "sheet": "tidal_net_hammock_coral.png",
+      "frameW": 96,
+      "frameH": 93,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "tidal_net_hammock_coral.near.png",
+      "nearHash": "ae750095a4c55b51a488eb82bfa7c03062bc8f000a18789c6333789529bb59b6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3455ec182e3157ca",
+      "recipeHash": "3455ec182e3157ca29d04fc7ff17a75d9be7575492914eade1bde7f091c0aa72",
+      "pixelHash": "62caea03a08747437659c498d84a0e24133f19da5da6f01da09a90baa23e3ae4"
+    },
+    "tidal_tide_pool_bar_pearl": {
+      "defId": "tidal_tide_pool_bar_pearl",
+      "archetype": "artgen",
+      "sheet": "tidal_tide_pool_bar_pearl.png",
+      "frameW": 96,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:04f0a8c7ff8e9b7e",
+      "recipeHash": "04f0a8c7ff8e9b7ee1407e15dcd850de230b2edd13b5082c4eaf75db04c478f6",
+      "pixelHash": "38e28e4c44f8f7398a1de87a4859ae46a01f41552a15cf7ee84a20f16372ad1a"
+    },
+    "tidal_chart_desk_kelp": {
+      "defId": "tidal_chart_desk_kelp",
+      "archetype": "artgen",
+      "sheet": "tidal_chart_desk_kelp.png",
+      "frameW": 96,
+      "frameH": 89,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7cd82c42f00a66b6",
+      "recipeHash": "7cd82c42f00a66b629f8ebef38d792b7f198a78f628d64592b38145e40ac3a8c",
+      "pixelHash": "0e5c2cdb93436aaf5f9dcff862dcb7f46f681ebc81b8e05beded89c0da230141"
+    },
+    "tidal_coral_table_sand": {
+      "defId": "tidal_coral_table_sand",
+      "archetype": "artgen",
+      "sheet": "tidal_coral_table_sand.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9975bcabc86d9e97",
+      "recipeHash": "9975bcabc86d9e97c7bad7e28069fbea332d36d6a3334ffc07e1e0459e9988bd",
+      "pixelHash": "a7f9d91c91a8d8c4908948c76acebf81e1e1bcce035c4145452338fc96aaf726"
+    },
+    "tidal_reef_shelf_foam": {
+      "defId": "tidal_reef_shelf_foam",
+      "archetype": "artgen",
+      "sheet": "tidal_reef_shelf_foam.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:fe28db03f94e56ef",
+      "recipeHash": "fe28db03f94e56ef195bfc6ff9d3469ed111d6622244433330a38868b00e0c5c",
+      "pixelHash": "7b8776dbbdbabb705eaf5370b8e7f1c8b4dc80e439608f4365f14688e108a3e1"
+    },
+    "tidal_shell_vanity_lagoon": {
+      "defId": "tidal_shell_vanity_lagoon",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_vanity_lagoon.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5fc8a319beaf6bb0",
+      "recipeHash": "5fc8a319beaf6bb03b8de2820b67994ddaebe95bdee2e96140f074bd56cb82a8",
+      "pixelHash": "9951efb6316f17243bc32bd0cbec2d2b4b72a29a3565fff482eedf424fd7c381"
+    },
+    "tidal_driftwood_bench_drift": {
+      "defId": "tidal_driftwood_bench_drift",
+      "archetype": "artgen",
+      "sheet": "tidal_driftwood_bench_drift.png",
+      "frameW": 96,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 36,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.625,
+      "seatZ": 0.62,
+      "occlusion": null,
+      "nearSheet": "tidal_driftwood_bench_drift.near.png",
+      "nearHash": "89424f23c007e6ba989e6cfb5d768abf433afdb094e68249988f7c40efc2e4f3",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7657424a4c9c1e0d",
+      "recipeHash": "7657424a4c9c1e0de19c2d6763711d8a4ec43d02f0d63576b035fa9fb9f0ceb8",
+      "pixelHash": "1c8c180c41af50d5adeff2364bdcab7225f731ea3e90546b38decc87e673a1f2"
+    },
+    "tidal_pearl_lamp_storm": {
+      "defId": "tidal_pearl_lamp_storm",
+      "archetype": "artgen",
+      "sheet": "tidal_pearl_lamp_storm.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:444e5c041d8e2f6a",
+      "recipeHash": "444e5c041d8e2f6a943bf0506274ffc10b769da8c47159026dab166f957071b1",
+      "pixelHash": "e1880c9f79540f7af93db2518a51837600fbc5ec0418707a2077bc1021b5b2f0"
+    },
+    "tidal_kelp_planter_shell": {
+      "defId": "tidal_kelp_planter_shell",
+      "archetype": "artgen",
+      "sheet": "tidal_kelp_planter_shell.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d8deba5f9757e4f7",
+      "recipeHash": "d8deba5f9757e4f70f67a71dc2affd1bf6241a4ef081215ef2a546adee4c90a5",
+      "pixelHash": "70ce270feb1386f1dcc9c9428438bfbdd5a64a46104035a47387595cf27daa6c"
+    },
+    "tidal_wave_rug_deep": {
+      "defId": "tidal_wave_rug_deep",
+      "archetype": "artgen",
+      "sheet": "tidal_wave_rug_deep.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ddfd0e5b100a718f",
+      "recipeHash": "ddfd0e5b100a718f62b65b10bb7b83211273cb1af768df76c3385f65d3c19621",
+      "pixelHash": "6a192e7fbd7225ae6b448a6696166ca9724fd6a8f11b58e25fe08be1062a7b7c"
+    },
+    "tidal_buoy_stool_spray": {
+      "defId": "tidal_buoy_stool_spray",
+      "archetype": "artgen",
+      "sheet": "tidal_buoy_stool_spray.png",
+      "frameW": 64,
+      "frameH": 49,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 33,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.53125,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7b8e40e515f70c2f",
+      "recipeHash": "7b8e40e515f70c2f3afc8d562cac50366eb4ebe18e545b36bb73b8c852563cac",
+      "pixelHash": "6b71f75441492300e8ef8bfcd5cb4091100d4bc7ee8692268282c3231c7f272c"
+    },
+    "tidal_shell_bed_dusk": {
+      "defId": "tidal_shell_bed_dusk",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_bed_dusk.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "tidal_shell_bed_dusk.near.png",
+      "nearHash": "a9644527bfb6c5428a0229bceb7950ecb074bc912cc3756d44b22936d51ab36e",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:52b55d6e6ae56cf2",
+      "recipeHash": "52b55d6e6ae56cf2eb5c140cf4d4c75cc6d97703cc8ea086eefc83a1ec9fdd2f",
+      "pixelHash": "092cb186038fc468d22944212dc78ae79b413603f6ddc96d209e5394fd7228da"
+    },
+    "tidal_net_hammock_reef": {
+      "defId": "tidal_net_hammock_reef",
+      "archetype": "artgen",
+      "sheet": "tidal_net_hammock_reef.png",
+      "frameW": 96,
+      "frameH": 93,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "tidal_net_hammock_reef.near.png",
+      "nearHash": "ae750095a4c55b51a488eb82bfa7c03062bc8f000a18789c6333789529bb59b6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:28ef413fd374f892",
+      "recipeHash": "28ef413fd374f892a24c4439f476cf67783e70a079d10c0728b55bb630cd422f",
+      "pixelHash": "3ca4dbabd507e092be0f52e6b09294335ae62230d6b5a3383651ceb6a344d95e"
+    },
+    "tidal_tide_pool_bar_brine": {
+      "defId": "tidal_tide_pool_bar_brine",
+      "archetype": "artgen",
+      "sheet": "tidal_tide_pool_bar_brine.png",
+      "frameW": 96,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b4a0d526fad0daf4",
+      "recipeHash": "b4a0d526fad0daf43405ce8dae1dbbe3c76e1c488ec7192e78ff6f0ca962cc13",
+      "pixelHash": "bc3cc688221fd217cc06667e47c0c8990e5c121d702373811e45dfef67d1847e"
+    },
+    "tidal_chart_desk_sun": {
+      "defId": "tidal_chart_desk_sun",
+      "archetype": "artgen",
+      "sheet": "tidal_chart_desk_sun.png",
+      "frameW": 96,
+      "frameH": 89,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a68a56c0a2dc84e1",
+      "recipeHash": "a68a56c0a2dc84e1966a72f31140c82e726447f60949fc0d2d138a8987a302aa",
+      "pixelHash": "b666154a79431825f46bf3bb40f410c20d705e4fee9275db38e45238a809f0f3"
+    },
+    "tidal_coral_table_mist": {
+      "defId": "tidal_coral_table_mist",
+      "archetype": "artgen",
+      "sheet": "tidal_coral_table_mist.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4b7fc291fe7a3b54",
+      "recipeHash": "4b7fc291fe7a3b54e0f6209a8625593484a7c679b472a526a48470c87037f233",
+      "pixelHash": "7028c3fb79864ddf1621f3dae795867b153072ee05d570bfbe9103d2c79bd851"
+    },
+    "tidal_reef_shelf_wave": {
+      "defId": "tidal_reef_shelf_wave",
+      "archetype": "artgen",
+      "sheet": "tidal_reef_shelf_wave.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0958efa7afbbaa2a",
+      "recipeHash": "0958efa7afbbaa2a9a0395f8f9d3d0b84047af42ec6f417b21114c6a69dccf82",
+      "pixelHash": "039b15523642e8fc3a10a4a3eb9d18c923e92098e79010ac66302c4e2d56c8be"
+    },
+    "tidal_shell_bed": {
+      "defId": "tidal_shell_bed",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_bed.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "tidal_shell_bed.near.png",
+      "nearHash": "654fd5a2203e073d9e9cd0309ced43f22f217567e41a30183a24256441adea88",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8b9f638eb4339b06",
+      "recipeHash": "8b9f638eb4339b0620f32025c0a0ae3f576cca89fbcbdbc4d64d4d90b18b4336",
+      "pixelHash": "2bbbcf7c7165d7c044d8ddcbdb2ab6eb63480859728f41e257593a0c856f6fec"
+    },
+    "tidal_net_hammock": {
+      "defId": "tidal_net_hammock",
+      "archetype": "artgen",
+      "sheet": "tidal_net_hammock.png",
+      "frameW": 96,
+      "frameH": 93,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "tidal_net_hammock.near.png",
+      "nearHash": "ae750095a4c55b51a488eb82bfa7c03062bc8f000a18789c6333789529bb59b6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0c88c8ec6b13ca98",
+      "recipeHash": "0c88c8ec6b13ca984568dfd7877dacc6245acce5024bf13ac4811c58d372e840",
+      "pixelHash": "03f28a5f703fb75007a1bc8525ab1a10b96d71d060f1ae2ba2314a336e64d942"
+    },
+    "tidal_tide_pool_bar": {
+      "defId": "tidal_tide_pool_bar",
+      "archetype": "artgen",
+      "sheet": "tidal_tide_pool_bar.png",
+      "frameW": 96,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:73668535422fb8cd",
+      "recipeHash": "73668535422fb8cde50e4b96f6bda7f6e7d51415f197b54a80b756cce88ad8d8",
+      "pixelHash": "16b5c6f935f1a85bce297a8af5287e467ada750ae3f7f09e4101716dc6a8e5c8"
+    },
+    "tidal_chart_desk": {
+      "defId": "tidal_chart_desk",
+      "archetype": "artgen",
+      "sheet": "tidal_chart_desk.png",
+      "frameW": 96,
+      "frameH": 89,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 57,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.28125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3f0b597540749d02",
+      "recipeHash": "3f0b597540749d02afbda45399ef268d23c81040b4420b302faabc6388c04d16",
+      "pixelHash": "3e5fbe3be90799ff3ac5007503bc8650ae56f717f23f52fdf32d9291e25ca9ca"
+    },
+    "tidal_coral_table": {
+      "defId": "tidal_coral_table",
+      "archetype": "artgen",
+      "sheet": "tidal_coral_table.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:34a3dabb20698005",
+      "recipeHash": "34a3dabb2069800578458d080d1d0d08e4f11d7f1db0c1fb2eb71a318046aa63",
+      "pixelHash": "35a6899511290c827e24a2b0b2cedeb5f5ed4b14a281625ae7c9d1071eaabbe3"
+    },
+    "tidal_reef_shelf": {
+      "defId": "tidal_reef_shelf",
+      "archetype": "artgen",
+      "sheet": "tidal_reef_shelf.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b1cf5776c4ea511e",
+      "recipeHash": "b1cf5776c4ea511e0e71675f0e4adae8668a6d98aae959caa31d6591a8db957a",
+      "pixelHash": "7b8776dbbdbabb705eaf5370b8e7f1c8b4dc80e439608f4365f14688e108a3e1"
+    },
+    "tidal_shell_vanity": {
+      "defId": "tidal_shell_vanity",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_vanity.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:57ec4ac1c74a5b0d",
+      "recipeHash": "57ec4ac1c74a5b0d0fa1b9ac7ccf550ff9ae1efc753e398f7e6921f19e2a6f40",
+      "pixelHash": "732762c10e9e0a3e46a10c4ddb8a435054f097ecce7ab057668e5377de841962"
+    },
+    "tidal_driftwood_bench": {
+      "defId": "tidal_driftwood_bench",
+      "archetype": "artgen",
+      "sheet": "tidal_driftwood_bench.png",
+      "frameW": 96,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 36,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.625,
+      "seatZ": 0.62,
+      "occlusion": null,
+      "nearSheet": "tidal_driftwood_bench.near.png",
+      "nearHash": "7a95227a4b9f7041fcfe853340ba70e9cfc25290cec6a9af9c8519345a5c49c6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b63109b21f522918",
+      "recipeHash": "b63109b21f5229184080f072cc71405858780171f7d2d90aa5c33a9e8fb3643d",
+      "pixelHash": "516d9749c5655a5bb0fd90a03e158f3f54c39791f99d6b8bbfca67014f3f7b53"
+    },
+    "tidal_pearl_lamp": {
+      "defId": "tidal_pearl_lamp",
+      "archetype": "artgen",
+      "sheet": "tidal_pearl_lamp.png",
+      "frameW": 64,
+      "frameH": 72,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 56,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.25,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:697b30179c5c2d28",
+      "recipeHash": "697b30179c5c2d2866cdc3f1881fd762cf179d819c4c06f4c35230b9b23ce962",
+      "pixelHash": "3b2526fa232e0d7a7ef5d220642c0d1504fabaf02883f9285aeb06cff7b77f70"
+    },
+    "tidal_kelp_planter": {
+      "defId": "tidal_kelp_planter",
+      "archetype": "artgen",
+      "sheet": "tidal_kelp_planter.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4d2b5f057ceb38d1",
+      "recipeHash": "4d2b5f057ceb38d1057587dddf8680db1de75f14f44e89d620dafffe8f4c14f5",
+      "pixelHash": "ef7273fd391beab3ed3bc000dd261b857ec0904625ffee49f5838319e75f7713"
+    },
+    "tidal_wave_rug": {
+      "defId": "tidal_wave_rug",
+      "archetype": "artgen",
+      "sheet": "tidal_wave_rug.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b7e84b09f7898c6b",
+      "recipeHash": "b7e84b09f7898c6b15deab01f24fa6b2df4dd7bdb6987d0eb2fd2db2e7bcea54",
+      "pixelHash": "3b510d764f3720c32fd5d65e87bb43ae05f97b5eb7889f072149664d4d631a90"
+    },
+    "tidal_buoy_stool": {
+      "defId": "tidal_buoy_stool",
+      "archetype": "artgen",
+      "sheet": "tidal_buoy_stool.png",
+      "frameW": 64,
+      "frameH": 49,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 33,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.53125,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e877900f944482c8",
+      "recipeHash": "e877900f944482c8dcac143945253d559dc4da867dd79cc403d1a3fcb8ff3a20",
+      "pixelHash": "c9c9c9cbaee2fd21f4437b8733d969773a535729326edd54204a6c1bee791617"
+    },
     "fablewood_moss_bed": {
       "defId": "fablewood_moss_bed",
       "archetype": "artgen",
@@ -14352,6 +15328,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "tidal_porthole_frame": {
+      "defId": "tidal_porthole_frame",
+      "archetype": "artgen",
+      "sheet": "tidal_porthole_frame.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ac2582adc9229e96",
+      "recipeHash": "ac2582adc9229e96fbae235845fbf113c8dc33b86ec0cc95bf8491cc2e875fd2",
+      "pixelHash": "9f2030da2e04852e55238f425e84944b8c72cf92dce3f41e24eb7a930bb15322"
+    },
+    "tidal_net_drape": {
+      "defId": "tidal_net_drape",
+      "archetype": "artgen",
+      "sheet": "tidal_net_drape.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 15,
+        "mountU": 2,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.15000000000000002
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:67b21f14881b5af6",
+      "recipeHash": "67b21f14881b5af6206e79a433023b152870ea01ee39891e0a7ee1548149d2a5",
+      "pixelHash": "d12dcdaa885f976042aea91f820f533ef5484117198afd333539bc0a2ee8cde6"
+    },
+    "tidal_shell_garland": {
+      "defId": "tidal_shell_garland",
+      "archetype": "artgen",
+      "sheet": "tidal_shell_garland.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 4,
+        "mountU": 2,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2ad7549712feb6c0",
+      "recipeHash": "2ad7549712feb6c08df976eded24d38a2ad10c0b09a8c632881c6c1f954d4053",
+      "pixelHash": "c4a931aaa20ec3779aebc9fb3a63e6245916d6d4d849f5d770619741e6f7fcfe"
+    },
+    "tidal_tide_clock": {
+      "defId": "tidal_tide_clock",
+      "archetype": "artgen",
+      "sheet": "tidal_tide_clock.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 20,
+        "planeH": 13,
+        "mountU": 6,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.13
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:51164ec975ee4495",
+      "recipeHash": "51164ec975ee4495761b976989dbd78b30894e46819d61bd8ce339780f45d6e9",
+      "pixelHash": "1ab0eb3025a702e718d98f931f4beb576fe978b51e0b9d06e6603ffc5a79ee44"
+    },
+    "tidal_coral_relief": {
+      "defId": "tidal_coral_relief",
+      "archetype": "artgen",
+      "sheet": "tidal_coral_relief.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 16,
+        "mountU": 4,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.11
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5702a7357ae0fac9",
+      "recipeHash": "5702a7357ae0fac9d1881cde67e979957ae0390ac4fd3257a35a42b192ff41b9",
+      "pixelHash": "bb4cadd8c20d51abd4790cd3893b266a0e19da543415ffdc97e7fa18ab8faaa7"
+    },
+    "tidal_wave_print": {
+      "defId": "tidal_wave_print",
+      "archetype": "artgen",
+      "sheet": "tidal_wave_print.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b297d618a57c45ef",
+      "recipeHash": "b297d618a57c45eff32851c6dedc50fa9d0d67ef26c3d3bae33274b32bccbbc3",
+      "pixelHash": "184d38212099677880aa1e146c6291e0f3e54fdafaa2244627da774985213e20"
+    },
+    "tidal_buoy_hooks": {
+      "defId": "tidal_buoy_hooks",
+      "archetype": "artgen",
+      "sheet": "tidal_buoy_hooks.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 6,
+        "mountU": 2,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:28d8161f0ddc6699",
+      "recipeHash": "28d8161f0ddc66996ce47b813c16167c80326eb3adf6296efa1b6831cc2810f6",
+      "pixelHash": "f6d36ba958a264e4b5380eb2139d88f105a40e5b00e9610f35baacdf7fcc2334"
+    },
+    "tidal_kelp_curtain": {
+      "defId": "tidal_kelp_curtain",
+      "archetype": "artgen",
+      "sheet": "tidal_kelp_curtain.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 14,
+        "mountU": 2,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:861d1f974a8d1150",
+      "recipeHash": "861d1f974a8d1150ac99cf45724c77469ff5464abe9ae11cf1fe9193ba6ec6e3",
+      "pixelHash": "b44032838a73bd87cd95776d32cde8f52880cca2c91014caeb8b890ed74fdc73"
+    },
+    "tidal_lighthouse_print": {
+      "defId": "tidal_lighthouse_print",
+      "archetype": "artgen",
+      "sheet": "tidal_lighthouse_print.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:45277d5e91e14f6d",
+      "recipeHash": "45277d5e91e14f6dbd74d78da665d3d74e7b4c88d181c7c0c592524f4c207f09",
+      "pixelHash": "4514aed120d2f0942960bbf98f1a0895b5e92d17a7ff7c06b7ec2a2e6eea4160"
+    },
+    "tidal_foam_sconce": {
+      "defId": "tidal_foam_sconce",
+      "archetype": "artgen",
+      "sheet": "tidal_foam_sconce.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.16999999999999998
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c042fedbc319d3e2",
+      "recipeHash": "c042fedbc319d3e289f20f25f543331056d802a0dca34e0d3fee02013dc40d15",
+      "pixelHash": "81119e0b0520aa8c07849c9e4ebf4905cede2f78a8f8d9b68f8cbe694b561fc7"
     },
     "fablewood_vine_garland": {
       "defId": "fablewood_vine_garland",

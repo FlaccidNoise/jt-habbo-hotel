@@ -1247,6 +1247,110 @@
       },
       "styleVersion": 4,
       "pixelHash": "85a10441b2ed26160817e659c0fb208e7c67e60e506053296dc8f2d683407ebe"
+    },
+    {
+      "id": "floor_tidal_reef_tile",
+      "kind": "floor",
+      "sheet": "floor_tidal_reef_tile.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "2e146f15125e952d08a5d6dc0a7af46680f8608e7b54fddb99c8ba75e3b74bef"
+    },
+    {
+      "id": "floor_tidal_wave",
+      "kind": "floor",
+      "sheet": "floor_tidal_wave.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "81b2ec457a6b01f5899e74544f98348c8ddc6a2d6bec3e2a5ca59e4e064c1427"
+    },
+    {
+      "id": "floor_tidal_driftwood",
+      "kind": "floor",
+      "sheet": "floor_tidal_driftwood.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "ba021ae0f452c640a65d74cc48ed3486d600e6d405b20c294e183206904507a6"
+    },
+    {
+      "id": "floor_tidal_shell_inlay",
+      "kind": "floor",
+      "sheet": "floor_tidal_shell_inlay.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "39eac334490ac6cbeea914ea359bb1865ffecbddb70b7a4f8afa4547563ff4bb"
+    },
+    {
+      "id": "wall_tidal_observatory_panel",
+      "kind": "wall",
+      "sheet": "wall_tidal_observatory_panel.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "85df427bda00a43426674db4b79b97f5664ca6e776fd4d5ad60fca9f8cdfe455"
+    },
+    {
+      "id": "wall_tidal_bubble",
+      "kind": "wall",
+      "sheet": "wall_tidal_bubble.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "783da11cc24b6a231b101bf95505f64be0a42f93eb7644f9257ba91c3ec1290b"
+    },
+    {
+      "id": "wall_tidal_kelp",
+      "kind": "wall",
+      "sheet": "wall_tidal_kelp.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "8eef3a4ba78995a65b21f7ff3c8a5993c71bca0fa1333ac672903a13ca88f97f"
+    },
+    {
+      "id": "wall_tidal_porthole",
+      "kind": "wall",
+      "sheet": "wall_tidal_porthole.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "9c95e2c49459711d2bb8609ec28fd080e641b8f6f9730d4b1c55d9950d2a0333"
     }
   ]
 }

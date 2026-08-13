@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_lighthouse_print",
+  "archetype": "artgen",
+  "sheet": "tidal_lighthouse_print.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:45277d5e91e14f6d",
+  "recipeHash": "45277d5e91e14f6dbd74d78da665d3d74e7b4c88d181c7c0c592524f4c207f09",
+  "pixelHash": "4514aed120d2f0942960bbf98f1a0895b5e92d17a7ff7c06b7ec2a2e6eea4160"
+}

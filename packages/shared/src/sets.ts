@@ -38,6 +38,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "tidal",
+    name: "The Tidal Set",
+    members: ["tidal_shell_bed", "tidal_chart_desk", "tidal_coral_table", "tidal_reef_shelf"],
+    reward: "tidal_shell_bed_dusk",
+    badge: "set_tidal",
+  },
+  {
     id: "fablewood",
     name: "The Fablewood Set",
     members: ["fablewood_wizard_desk", "fablewood_alchemy_bench", "fablewood_crystal_orb", "fablewood_aether_throne"],

@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_pearl_lamp",
+  "archetype": "artgen",
+  "sheet": "tidal_pearl_lamp.png",
+  "frameW": 64,
+  "frameH": 72,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 56,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.25,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:697b30179c5c2d28",
+  "recipeHash": "697b30179c5c2d2866cdc3f1881fd762cf179d819c4c06f4c35230b9b23ce962",
+  "pixelHash": "3b2526fa232e0d7a7ef5d220642c0d1504fabaf02883f9285aeb06cff7b77f70"
+}

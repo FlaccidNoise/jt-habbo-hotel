@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_tide_pool_bar_brine",
+  "archetype": "artgen",
+  "sheet": "tidal_tide_pool_bar_brine.png",
+  "frameW": 96,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b4a0d526fad0daf4",
+  "recipeHash": "b4a0d526fad0daf43405ce8dae1dbbe3c76e1c488ec7192e78ff6f0ca962cc13",
+  "pixelHash": "bc3cc688221fd217cc06667e47c0c8990e5c121d702373811e45dfef67d1847e"
+}

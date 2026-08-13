@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_buoy_stool",
+  "archetype": "artgen",
+  "sheet": "tidal_buoy_stool.png",
+  "frameW": 64,
+  "frameH": 49,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 33,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.53125,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e877900f944482c8",
+  "recipeHash": "e877900f944482c8dcac143945253d559dc4da867dd79cc403d1a3fcb8ff3a20",
+  "pixelHash": "c9c9c9cbaee2fd21f4437b8733d969773a535729326edd54204a6c1bee791617"
+}

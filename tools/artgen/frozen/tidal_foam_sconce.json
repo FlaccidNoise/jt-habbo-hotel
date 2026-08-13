@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_foam_sconce",
+  "archetype": "artgen",
+  "sheet": "tidal_foam_sconce.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 13,
+    "mountU": 4,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.16999999999999998
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c042fedbc319d3e2",
+  "recipeHash": "c042fedbc319d3e289f20f25f543331056d802a0dca34e0d3fee02013dc40d15",
+  "pixelHash": "81119e0b0520aa8c07849c9e4ebf4905cede2f78a8f8d9b68f8cbe694b561fc7"
+}

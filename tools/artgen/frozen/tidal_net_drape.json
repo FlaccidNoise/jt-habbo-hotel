@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_net_drape",
+  "archetype": "artgen",
+  "sheet": "tidal_net_drape.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 15,
+    "mountU": 2,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.15000000000000002
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:67b21f14881b5af6",
+  "recipeHash": "67b21f14881b5af6206e79a433023b152870ea01ee39891e0a7ee1548149d2a5",
+  "pixelHash": "d12dcdaa885f976042aea91f820f533ef5484117198afd333539bc0a2ee8cde6"
+}

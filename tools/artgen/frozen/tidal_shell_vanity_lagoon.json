@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_shell_vanity_lagoon",
+  "archetype": "artgen",
+  "sheet": "tidal_shell_vanity_lagoon.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5fc8a319beaf6bb0",
+  "recipeHash": "5fc8a319beaf6bb03b8de2820b67994ddaebe95bdee2e96140f074bd56cb82a8",
+  "pixelHash": "9951efb6316f17243bc32bd0cbec2d2b4b72a29a3565fff482eedf424fd7c381"
+}

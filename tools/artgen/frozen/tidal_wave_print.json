@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_wave_print",
+  "archetype": "artgen",
+  "sheet": "tidal_wave_print.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b297d618a57c45ef",
+  "recipeHash": "b297d618a57c45eff32851c6dedc50fa9d0d67ef26c3d3bae33274b32bccbbc3",
+  "pixelHash": "184d38212099677880aa1e146c6291e0f3e54fdafaa2244627da774985213e20"
+}

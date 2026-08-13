@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_wave_rug",
+  "archetype": "artgen",
+  "sheet": "tidal_wave_rug.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b7e84b09f7898c6b",
+  "recipeHash": "b7e84b09f7898c6b15deab01f24fa6b2df4dd7bdb6987d0eb2fd2db2e7bcea54",
+  "pixelHash": "3b510d764f3720c32fd5d65e87bb43ae05f97b5eb7889f072149664d4d631a90"
+}

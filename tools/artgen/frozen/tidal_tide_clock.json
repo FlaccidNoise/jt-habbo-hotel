@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_tide_clock",
+  "archetype": "artgen",
+  "sheet": "tidal_tide_clock.png",
+  "frameW": 64,
+  "frameH": 119,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 103,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 20,
+    "planeH": 13,
+    "mountU": 6,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.13
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:51164ec975ee4495",
+  "recipeHash": "51164ec975ee4495761b976989dbd78b30894e46819d61bd8ce339780f45d6e9",
+  "pixelHash": "1ab0eb3025a702e718d98f931f4beb576fe978b51e0b9d06e6603ffc5a79ee44"
+}

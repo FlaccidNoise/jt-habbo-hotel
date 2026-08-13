@@ -1,0 +1,32 @@
+{
+  "defId": "tidal_wave_rug_deep",
+  "archetype": "artgen",
+  "sheet": "tidal_wave_rug_deep.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ddfd0e5b100a718f",
+  "recipeHash": "ddfd0e5b100a718f62b65b10bb7b83211273cb1af768df76c3385f65d3c19621",
+  "pixelHash": "6a192e7fbd7225ae6b448a6696166ca9724fd6a8f11b58e25fe08be1062a7b7c"
+}

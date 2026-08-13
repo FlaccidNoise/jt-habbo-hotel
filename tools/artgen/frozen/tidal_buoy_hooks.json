@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_buoy_hooks",
+  "archetype": "artgen",
+  "sheet": "tidal_buoy_hooks.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 6,
+    "mountU": 2,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:28d8161f0ddc6699",
+  "recipeHash": "28d8161f0ddc66996ce47b813c16167c80326eb3adf6296efa1b6831cc2810f6",
+  "pixelHash": "f6d36ba958a264e4b5380eb2139d88f105a40e5b00e9610f35baacdf7fcc2334"
+}

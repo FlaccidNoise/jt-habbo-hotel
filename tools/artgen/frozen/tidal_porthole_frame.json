@@ -1,0 +1,37 @@
+{
+  "defId": "tidal_porthole_frame",
+  "archetype": "artgen",
+  "sheet": "tidal_porthole_frame.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:ac2582adc9229e96",
+  "recipeHash": "ac2582adc9229e96fbae235845fbf113c8dc33b86ec0cc95bf8491cc2e875fd2",
+  "pixelHash": "9f2030da2e04852e55238f425e84944b8c72cf92dce3f41e24eb7a930bb15322"
+}

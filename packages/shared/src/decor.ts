@@ -284,6 +284,14 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_fablewood_storybook", name: "Fablewood Storybook", tile: { w: 32, h: 32 }, cap: 0x9c9484 },
   { kind: "wall", id: "wall_fablewood_crystal", name: "Fablewood Crystal", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
 
+  { kind: "floor", id: "floor_tidal_reef_tile", name: "Tidal Reef Tile", tile: { w: 64, h: 32 }, sides: { left: 0x2f8f8f, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_tidal_wave", name: "Tidal Wave", tile: { w: 64, h: 32 }, sides: { left: 0x3f5e9e, right: 0xcbc0ac } },
+  { kind: "floor", id: "floor_tidal_driftwood", name: "Tidal Driftwood", tile: { w: 64, h: 32 }, sides: { left: 0x8b4513, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_tidal_shell_inlay", name: "Tidal Shell Inlay", tile: { w: 64, h: 32 }, sides: { left: 0xcbc0ac, right: 0x2f8f8f } },
+  { kind: "wall", id: "wall_tidal_observatory_panel", name: "Tidal Observatory Panel", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
+  { kind: "wall", id: "wall_tidal_bubble", name: "Tidal Bubble", tile: { w: 32, h: 32 }, cap: 0x2f8f8f },
+  { kind: "wall", id: "wall_tidal_kelp", name: "Tidal Kelp", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
+  { kind: "wall", id: "wall_tidal_porthole", name: "Tidal Porthole", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));
