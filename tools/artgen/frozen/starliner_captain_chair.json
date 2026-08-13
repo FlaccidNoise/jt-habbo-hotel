@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_captain_chair",
+  "archetype": "artgen",
+  "sheet": "starliner_captain_chair.png",
+  "frameW": 64,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "nearSheet": "starliner_captain_chair.near.png",
+  "nearHash": "13f11fe86313b02bc71e34c6819c853cd3fab949f0a25b967440092ce2fed89a",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:86f5250f4cbcd72a",
+  "recipeHash": "86f5250f4cbcd72a945fbf8ba665a00e67b23d6a974eb67e371ed776fb980bae",
+  "pixelHash": "d57cdecb0288dc522aa66ef43446ae57f0600b97538de55344f30b585ad81e41"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_conduit_strip",
+  "archetype": "artgen",
+  "sheet": "starliner_conduit_strip.png",
+  "frameW": 64,
+  "frameH": 113,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 97,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 28,
+    "planeH": 3,
+    "mountU": 0,
+    "mountV": 49,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:c0b2e913634f6ea1",
+  "recipeHash": "c0b2e913634f6ea15fa755bd92e0a61558ad47d2d72a39247d6f77a82b46eef9",
+  "pixelHash": "5f888727114f0bb70e75dc5219210218262563eaad2323b60b32da43373cee8c"
+}

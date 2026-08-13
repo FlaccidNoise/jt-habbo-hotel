@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_captain_chair_solar",
+  "archetype": "artgen",
+  "sheet": "starliner_captain_chair_solar.png",
+  "frameW": 64,
+  "frameH": 77,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 61,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.40625,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "nearSheet": "starliner_captain_chair_solar.near.png",
+  "nearHash": "13f11fe86313b02bc71e34c6819c853cd3fab949f0a25b967440092ce2fed89a",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:60bd1ccb925da137",
+  "recipeHash": "60bd1ccb925da1374aac253fb71fb1b9f41bdc3fde2346fe5d65b6614fafdb63",
+  "pixelHash": "7abd49ba86240e93630dd5703923f8b946049a468d6b2597c6cacd191390d0c2"
+}

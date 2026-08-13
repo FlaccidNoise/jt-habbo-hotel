@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_navigation_desk",
+  "archetype": "artgen",
+  "sheet": "starliner_navigation_desk.png",
+  "frameW": 96,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d0eda1327c21bf49",
+  "recipeHash": "d0eda1327c21bf49d8fb61001979da333ea886497da2610ef533a4dcd01a8bc3",
+  "pixelHash": "30f671c199765b55945890f49598aa06379393f8c14a0bef36a951ae8ed39250"
+}

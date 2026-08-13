@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_navigation_desk_xenon",
+  "archetype": "artgen",
+  "sheet": "starliner_navigation_desk_xenon.png",
+  "frameW": 96,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:31b6b842133af30b",
+  "recipeHash": "31b6b842133af30b1e6971fad52e8046eff0bffded05af5314e2dd623b0856fb",
+  "pixelHash": "30f671c199765b55945890f49598aa06379393f8c14a0bef36a951ae8ed39250"
+}

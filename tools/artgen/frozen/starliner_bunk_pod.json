@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_bunk_pod",
+  "archetype": "artgen",
+  "sheet": "starliner_bunk_pod.png",
+  "frameW": 96,
+  "frameH": 85,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 53,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.15625,
+  "seatZ": 0.42,
+  "occlusion": null,
+  "nearSheet": "starliner_bunk_pod.near.png",
+  "nearHash": "49bc82823753019fdc09bbb4c41ab5815833d1723019de6c1cda3f89eaa25da4",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cea786db56d1b870",
+  "recipeHash": "cea786db56d1b870c2409d2f1555657278347f4a539d7e058e4971c7a4f682cf",
+  "pixelHash": "21145701fef83cc1afd2f54cfbda24abbcdc575a54a727b979834dc19e1df01c"
+}

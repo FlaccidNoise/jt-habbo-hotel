@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_navigation_desk_nova",
+  "archetype": "artgen",
+  "sheet": "starliner_navigation_desk_nova.png",
+  "frameW": 96,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d2588366f9b605a3",
+  "recipeHash": "d2588366f9b605a398dda13d04e6b15e56c4ae42a90d06d10cbdf7dc21d2a6e9",
+  "pixelHash": "56e751cc599749b27ce3c73bda8245b3c328b684f7fdaf64ce8c79ac53367df3"
+}

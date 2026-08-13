@@ -7327,6 +7327,986 @@
       "recipeHash": "5c0ae08f9c8e0693202e3f1302f6023a6c4822b093cb4a0c54a2f18ba7177205",
       "pixelHash": "bfe1201118576ebf0c7a2c12f72a3c77ab2dad14c4c90984f364ebe1e0ae6e19"
     },
+    "starliner_bunk_pod_chrome": {
+      "defId": "starliner_bunk_pod_chrome",
+      "archetype": "artgen",
+      "sheet": "starliner_bunk_pod_chrome.png",
+      "frameW": 96,
+      "frameH": 85,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 53,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.15625,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "starliner_bunk_pod_chrome.near.png",
+      "nearHash": "d3dd9f55bc0079326009a679d9d36599661cf87903080fd443dcf196e23a89de",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0a6548b104c0609d",
+      "recipeHash": "0a6548b104c0609de6249e8c56c21ec2b973ec65176e9986d3fb9e33bb26dfaf",
+      "pixelHash": "88a17cb0392ff58dace01f01719d8a1cc39347f0cddcba262e3684e80a932eaa"
+    },
+    "starliner_console_nebula": {
+      "defId": "starliner_console_nebula",
+      "archetype": "artgen",
+      "sheet": "starliner_console_nebula.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:31ae6c5de243e57c",
+      "recipeHash": "31ae6c5de243e57c06e72869b388cb468e58d076ec7fbda10bf49cd791d5e04e",
+      "pixelHash": "968cc46c017d0c5370b92d19b365949797142b7668f745921e1f90cda2c1002b"
+    },
+    "starliner_captain_chair_solar": {
+      "defId": "starliner_captain_chair_solar",
+      "archetype": "artgen",
+      "sheet": "starliner_captain_chair_solar.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "starliner_captain_chair_solar.near.png",
+      "nearHash": "13f11fe86313b02bc71e34c6819c853cd3fab949f0a25b967440092ce2fed89a",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:60bd1ccb925da137",
+      "recipeHash": "60bd1ccb925da1374aac253fb71fb1b9f41bdc3fde2346fe5d65b6614fafdb63",
+      "pixelHash": "7abd49ba86240e93630dd5703923f8b946049a468d6b2597c6cacd191390d0c2"
+    },
+    "starliner_navigation_desk_nova": {
+      "defId": "starliner_navigation_desk_nova",
+      "archetype": "artgen",
+      "sheet": "starliner_navigation_desk_nova.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d2588366f9b605a3",
+      "recipeHash": "d2588366f9b605a398dda13d04e6b15e56c4ae42a90d06d10cbdf7dc21d2a6e9",
+      "pixelHash": "56e751cc599749b27ce3c73bda8245b3c328b684f7fdaf64ce8c79ac53367df3"
+    },
+    "starliner_galley_counter_comet": {
+      "defId": "starliner_galley_counter_comet",
+      "archetype": "artgen",
+      "sheet": "starliner_galley_counter_comet.png",
+      "frameW": 96,
+      "frameH": 83,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:23003e182e291cd8",
+      "recipeHash": "23003e182e291cd830524e16e7bd92da2526efbb0e9d147de0e1b600c34b0921",
+      "pixelHash": "d2c95f513e6ef843ec9d06efbbe403e26d36e4676dd731a96ee64c668af7dfef"
+    },
+    "starliner_holo_projector_ion": {
+      "defId": "starliner_holo_projector_ion",
+      "archetype": "artgen",
+      "sheet": "starliner_holo_projector_ion.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:552fd4553484ce2d",
+      "recipeHash": "552fd4553484ce2d9355356ed52375fd641c79f2da7fa92d258f1004167e2a47",
+      "pixelHash": "9332b429d8180fbdd483affa2eb623cc26e29a5bf5474563184ba5845d902519"
+    },
+    "starliner_viewport_seat_orbit": {
+      "defId": "starliner_viewport_seat_orbit",
+      "archetype": "artgen",
+      "sheet": "starliner_viewport_seat_orbit.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "starliner_viewport_seat_orbit.near.png",
+      "nearHash": "38f639cb5c2fb1ee66d3ba5af02fdb31809b240aa94fd10203dbe4ddbaa2686d",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:738c762e99be80c8",
+      "recipeHash": "738c762e99be80c8cdadb69dc0da9e266e0a5c485890d339412147a2b1e8e617",
+      "pixelHash": "8374ae11b2885d4f3d014e7023f5ba74cd2a2eeb63ce9da57a8c58e09d4c7b0e"
+    },
+    "starliner_corridor_light_lunar": {
+      "defId": "starliner_corridor_light_lunar",
+      "archetype": "artgen",
+      "sheet": "starliner_corridor_light_lunar.png",
+      "frameW": 64,
+      "frameH": 79,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 63,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:85cf2f53b47e82d9",
+      "recipeHash": "85cf2f53b47e82d94aeceb646817b4923e115471a9eb19a41909e605fecbcab9",
+      "pixelHash": "ec6eece5927db1c8bccd4d641067a3c46b4c82b00533815a67d2dc7cb86a4eed"
+    },
+    "starliner_docking_bench_ember": {
+      "defId": "starliner_docking_bench_ember",
+      "archetype": "artgen",
+      "sheet": "starliner_docking_bench_ember.png",
+      "frameW": 96,
+      "frameH": 79,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 47,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.96875,
+      "seatZ": 0.56,
+      "occlusion": null,
+      "nearSheet": "starliner_docking_bench_ember.near.png",
+      "nearHash": "f546d20eeb6066aa37634741554ad4b5976df7caad691c8b9b53341458759bb2",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a619a63e3ecbdd87",
+      "recipeHash": "a619a63e3ecbdd87335ecbab544737ee761e6daa4272bfea2e575fb507b23d6a",
+      "pixelHash": "200f2f3c36597d90485cd019aca62b804e03937812287e651ae39565921955b6"
+    },
+    "starliner_orbit_table_void": {
+      "defId": "starliner_orbit_table_void",
+      "archetype": "artgen",
+      "sheet": "starliner_orbit_table_void.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:37454442b808e829",
+      "recipeHash": "37454442b808e829b81260a737f370f42b6fd009ffdc2e889b8752b3bc1582e2",
+      "pixelHash": "ead24098c5f4166fdf0fbf80839ae0ba2c18747db9430c99b9e33e36ff1d73d0"
+    },
+    "starliner_suit_rack_aurora": {
+      "defId": "starliner_suit_rack_aurora",
+      "archetype": "artgen",
+      "sheet": "starliner_suit_rack_aurora.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f9e6da01f5ab0218",
+      "recipeHash": "f9e6da01f5ab0218e5ac763c82c69d4f2dd1d2eb98d63abad8346f2dc58a1199",
+      "pixelHash": "3b0d8db246c33c01d5d5504e2b3d1175569ff86043cefc4a7a432a490fb1b536"
+    },
+    "starliner_cargo_crate_pulse": {
+      "defId": "starliner_cargo_crate_pulse",
+      "archetype": "artgen",
+      "sheet": "starliner_cargo_crate_pulse.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:237a7a7589ed9ea8",
+      "recipeHash": "237a7a7589ed9ea8b61b8609e96b646d43ab55f5afa78acb49e4d8badd245450",
+      "pixelHash": "5179118ea09b11ed57904f8a44fd3ad07e6161b532c3f7080f78baed4ad971b1"
+    },
+    "starliner_bunk_pod_drift": {
+      "defId": "starliner_bunk_pod_drift",
+      "archetype": "artgen",
+      "sheet": "starliner_bunk_pod_drift.png",
+      "frameW": 96,
+      "frameH": 85,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 53,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.15625,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "starliner_bunk_pod_drift.near.png",
+      "nearHash": "fcb76432470a2f70de04b304380160a940ca7b00c0299db11d12530679e570d6",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7431293d8970e07e",
+      "recipeHash": "7431293d8970e07e1ad49af1fded97fce10e71f58ba9aa5b5c8f6685b32557d5",
+      "pixelHash": "f4552e223813e7d83c4f6ba44a2f316d8c710219583af091f74feefbe2a61b7c"
+    },
+    "starliner_console_flare": {
+      "defId": "starliner_console_flare",
+      "archetype": "artgen",
+      "sheet": "starliner_console_flare.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a88ded3ffd866706",
+      "recipeHash": "a88ded3ffd866706181c267164aa46481fb255724d3f3260da23650f94663519",
+      "pixelHash": "0e449e49280dd4cc51f5dad7cfd5d3ddc809fc032b976f077ab9dbe832e9cca5"
+    },
+    "starliner_captain_chair_cosmic": {
+      "defId": "starliner_captain_chair_cosmic",
+      "archetype": "artgen",
+      "sheet": "starliner_captain_chair_cosmic.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "starliner_captain_chair_cosmic.near.png",
+      "nearHash": "2dc65009ff622108623076a0c368f00a9a582ad8debbc7ad537ef4e986cc01b3",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b882275a67e05e5e",
+      "recipeHash": "b882275a67e05e5e6df28c0a51be62234bdd73de510f34f14d34112aa9f50c67",
+      "pixelHash": "2e1b0bbb4d3e49a3e5122428dadffcb3ed973d12ae5caee4da2d070fbf34a804"
+    },
+    "starliner_navigation_desk_xenon": {
+      "defId": "starliner_navigation_desk_xenon",
+      "archetype": "artgen",
+      "sheet": "starliner_navigation_desk_xenon.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:31b6b842133af30b",
+      "recipeHash": "31b6b842133af30b1e6971fad52e8046eff0bffded05af5314e2dd623b0856fb",
+      "pixelHash": "30f671c199765b55945890f49598aa06379393f8c14a0bef36a951ae8ed39250"
+    },
+    "starliner_galley_counter_radar": {
+      "defId": "starliner_galley_counter_radar",
+      "archetype": "artgen",
+      "sheet": "starliner_galley_counter_radar.png",
+      "frameW": 96,
+      "frameH": 83,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:92ecfcffe0ba2d2d",
+      "recipeHash": "92ecfcffe0ba2d2d1703a853ca5ab7f9765924691c99b526fc789cf54deb763f",
+      "pixelHash": "393c542f842b6a30a7e678242d354b169192708316f4fc68def419b8c21f1463"
+    },
+    "starliner_holo_projector_astro": {
+      "defId": "starliner_holo_projector_astro",
+      "archetype": "artgen",
+      "sheet": "starliner_holo_projector_astro.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ed393fae7a65f043",
+      "recipeHash": "ed393fae7a65f043120333ddb8efc331b5c42cb7e871920bcf58fe23c760dab9",
+      "pixelHash": "001e281d6171361bd4f575700e3869d57318ac2228b2f84df9e258ad24927ce2"
+    },
+    "starliner_bunk_pod": {
+      "defId": "starliner_bunk_pod",
+      "archetype": "artgen",
+      "sheet": "starliner_bunk_pod.png",
+      "frameW": 96,
+      "frameH": 85,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 53,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.15625,
+      "seatZ": 0.42,
+      "occlusion": null,
+      "nearSheet": "starliner_bunk_pod.near.png",
+      "nearHash": "49bc82823753019fdc09bbb4c41ab5815833d1723019de6c1cda3f89eaa25da4",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cea786db56d1b870",
+      "recipeHash": "cea786db56d1b870c2409d2f1555657278347f4a539d7e058e4971c7a4f682cf",
+      "pixelHash": "21145701fef83cc1afd2f54cfbda24abbcdc575a54a727b979834dc19e1df01c"
+    },
+    "starliner_console": {
+      "defId": "starliner_console",
+      "archetype": "artgen",
+      "sheet": "starliner_console.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8ecedeaa12fc090b",
+      "recipeHash": "8ecedeaa12fc090bbc122180becbca798a76f3adca17c7795c3c5c3270ccf711",
+      "pixelHash": "2ef7992e52793d8609665d7c0b11d70da82ed0f37d6db9795ced62ea1befeae4"
+    },
+    "starliner_captain_chair": {
+      "defId": "starliner_captain_chair",
+      "archetype": "artgen",
+      "sheet": "starliner_captain_chair.png",
+      "frameW": 64,
+      "frameH": 77,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 61,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.40625,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "starliner_captain_chair.near.png",
+      "nearHash": "13f11fe86313b02bc71e34c6819c853cd3fab949f0a25b967440092ce2fed89a",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:86f5250f4cbcd72a",
+      "recipeHash": "86f5250f4cbcd72a945fbf8ba665a00e67b23d6a974eb67e371ed776fb980bae",
+      "pixelHash": "d57cdecb0288dc522aa66ef43446ae57f0600b97538de55344f30b585ad81e41"
+    },
+    "starliner_navigation_desk": {
+      "defId": "starliner_navigation_desk",
+      "archetype": "artgen",
+      "sheet": "starliner_navigation_desk.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d0eda1327c21bf49",
+      "recipeHash": "d0eda1327c21bf49d8fb61001979da333ea886497da2610ef533a4dcd01a8bc3",
+      "pixelHash": "30f671c199765b55945890f49598aa06379393f8c14a0bef36a951ae8ed39250"
+    },
+    "starliner_galley_counter": {
+      "defId": "starliner_galley_counter",
+      "archetype": "artgen",
+      "sheet": "starliner_galley_counter.png",
+      "frameW": 96,
+      "frameH": 83,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f62aa481a6ea60d6",
+      "recipeHash": "f62aa481a6ea60d639be00aac9f493ffa498d4c2e25860a0aae0be81b34de828",
+      "pixelHash": "8632aec2923bb90155fdd1410af3cc20e34c339f1a6e26273cba185514d0156e"
+    },
+    "starliner_holo_projector": {
+      "defId": "starliner_holo_projector",
+      "archetype": "artgen",
+      "sheet": "starliner_holo_projector.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:244d9a9863465862",
+      "recipeHash": "244d9a9863465862236643347e42177600d05b097bede2275d0dfd3ddfbc0262",
+      "pixelHash": "188e099a48c84f831ef59fd046ba575baadc72e667130d2de9035f944277551a"
+    },
+    "starliner_viewport_seat": {
+      "defId": "starliner_viewport_seat",
+      "archetype": "artgen",
+      "sheet": "starliner_viewport_seat.png",
+      "frameW": 64,
+      "frameH": 68,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.44,
+      "occlusion": null,
+      "nearSheet": "starliner_viewport_seat.near.png",
+      "nearHash": "38f639cb5c2fb1ee66d3ba5af02fdb31809b240aa94fd10203dbe4ddbaa2686d",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:50ab88bbd3ec6299",
+      "recipeHash": "50ab88bbd3ec629952be816a0c1007f7e9c60eb6db3cf3da52bad3d995aa1817",
+      "pixelHash": "8097bb75b92158347865363a8cc654824e3eb1a9a3d61a66bcd8480ee929440c"
+    },
+    "starliner_corridor_light": {
+      "defId": "starliner_corridor_light",
+      "archetype": "artgen",
+      "sheet": "starliner_corridor_light.png",
+      "frameW": 64,
+      "frameH": 79,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 63,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0afa056d365c0635",
+      "recipeHash": "0afa056d365c063516cd25f1af34f834d7b233f9d5aad61348ae074234a72824",
+      "pixelHash": "ec6eece5927db1c8bccd4d641067a3c46b4c82b00533815a67d2dc7cb86a4eed"
+    },
+    "starliner_docking_bench": {
+      "defId": "starliner_docking_bench",
+      "archetype": "artgen",
+      "sheet": "starliner_docking_bench.png",
+      "frameW": 96,
+      "frameH": 79,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 47,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.96875,
+      "seatZ": 0.56,
+      "occlusion": null,
+      "nearSheet": "starliner_docking_bench.near.png",
+      "nearHash": "f546d20eeb6066aa37634741554ad4b5976df7caad691c8b9b53341458759bb2",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3961237ba0ae8700",
+      "recipeHash": "3961237ba0ae870032df56ea10802b977413bf62687a76421856a8376efbe0b0",
+      "pixelHash": "24f3f2e8b4f4eaaebcc3d24816306ce783fa2ecfb6b5f6e1afb6d8bec52bbb00"
+    },
+    "starliner_orbit_table": {
+      "defId": "starliner_orbit_table",
+      "archetype": "artgen",
+      "sheet": "starliner_orbit_table.png",
+      "frameW": 64,
+      "frameH": 65,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 49,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.03125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:eb20e72f9f6b6705",
+      "recipeHash": "eb20e72f9f6b6705b436ce993cb23f62baa85f5e3e40512c93fc0f6da329c625",
+      "pixelHash": "1618e089e24f39179722aec3a77d27ad4857cfa6981a2d36ff5bf9356ef557ab"
+    },
+    "starliner_suit_rack": {
+      "defId": "starliner_suit_rack",
+      "archetype": "artgen",
+      "sheet": "starliner_suit_rack.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:55d513790855d7d2",
+      "recipeHash": "55d513790855d7d204be9e69a8ba33e0a1423c36992018bc55653b093fd4784e",
+      "pixelHash": "c1c8a0be86053c99ca040b2a80a601fdd4a2cb5defc5b4dee0e283bf5c4c746e"
+    },
+    "starliner_cargo_crate": {
+      "defId": "starliner_cargo_crate",
+      "archetype": "artgen",
+      "sheet": "starliner_cargo_crate.png",
+      "frameW": 64,
+      "frameH": 59,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 43,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.84375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4c311e7c32ca6530",
+      "recipeHash": "4c311e7c32ca6530a05e0769e2968a4a4c086504cc7f636562ea9b45363288f8",
+      "pixelHash": "b01ba51a4bd137530d6a242df2ad2540f378e7917921d8f85114aa6b7902edff"
+    },
     "mochi_day_bed": {
       "defId": "mochi_day_bed",
       "archetype": "artgen",
@@ -12384,6 +13364,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "starliner_viewport_panel": {
+      "defId": "starliner_viewport_panel",
+      "archetype": "artgen",
+      "sheet": "starliner_viewport_panel.png",
+      "frameW": 64,
+      "frameH": 113,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 97,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 5,
+        "mountU": 4,
+        "mountV": 49,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e543f27cc5112b2f",
+      "recipeHash": "e543f27cc5112b2f3179a311afc9d0e7054b0e29e1e9790603f933e5fe36ec56",
+      "pixelHash": "c4a969a175646ec379ff1cdfc67a304604052b71b613f9cd3dbc7b37af5c3ff7"
+    },
+    "starliner_star_chart": {
+      "defId": "starliner_star_chart",
+      "archetype": "artgen",
+      "sheet": "starliner_star_chart.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 18,
+        "mountU": 2,
+        "mountV": 39,
+        "gap": 0,
+        "depth": 0.175
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f93dc851a48867a9",
+      "recipeHash": "f93dc851a48867a953ede705a404187d7f5b8dd5023cf3bb4a360dcfbd169286",
+      "pixelHash": "0114c1c03eac8d7c072f2847159d1a56c51bb9933fbfd8baf229fe528019161a"
+    },
+    "starliner_warning_placard": {
+      "defId": "starliner_warning_placard",
+      "archetype": "artgen",
+      "sheet": "starliner_warning_placard.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:47740a13954511fe",
+      "recipeHash": "47740a13954511fe07768b7557429972292759e51f7734664b3570f8736ee77e",
+      "pixelHash": "3d10ce0b955f9fd443ee4ee2a303ee4276f958db912842c2213cce2000819803"
+    },
+    "starliner_conduit_strip": {
+      "defId": "starliner_conduit_strip",
+      "archetype": "artgen",
+      "sheet": "starliner_conduit_strip.png",
+      "frameW": 64,
+      "frameH": 113,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 97,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.53125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 3,
+        "mountU": 0,
+        "mountV": 49,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c0b2e913634f6ea1",
+      "recipeHash": "c0b2e913634f6ea15fa755bd92e0a61558ad47d2d72a39247d6f77a82b46eef9",
+      "pixelHash": "5f888727114f0bb70e75dc5219210218262563eaad2323b60b32da43373cee8c"
+    },
+    "starliner_mission_patch_board": {
+      "defId": "starliner_mission_patch_board",
+      "archetype": "artgen",
+      "sheet": "starliner_mission_patch_board.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 10,
+        "mountU": 2,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.19
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a788a055e14d5206",
+      "recipeHash": "a788a055e14d5206c2692af9d03e75f9a760eef61df1f38bb5c7e28614929b26",
+      "pixelHash": "73d894c514e6399a0d69be9035f1d749577d5dee828aa5863bc17b7b3d6640c8"
+    },
+    "starliner_neon_orbit_sign": {
+      "defId": "starliner_neon_orbit_sign",
+      "archetype": "artgen",
+      "sheet": "starliner_neon_orbit_sign.png",
+      "frameW": 64,
+      "frameH": 114,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 4,
+        "mountU": 2,
+        "mountV": 48,
+        "gap": 0,
+        "depth": 0.19
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:29b3d1f561e20939",
+      "recipeHash": "29b3d1f561e20939f466f723965b7ff9d98c874af35c6633ec3f818dc85dcac6",
+      "pixelHash": "7645be5a5a87cf332d96afa98a2091b9dd41367bc7cb5f86fc48a26c808dc79c"
+    },
+    "starliner_planet_poster": {
+      "defId": "starliner_planet_poster",
+      "archetype": "artgen",
+      "sheet": "starliner_planet_poster.png",
+      "frameW": 64,
+      "frameH": 122,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 106,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.8125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 12,
+        "mountU": 2,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.2
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1d3ceb47930e3c03",
+      "recipeHash": "1d3ceb47930e3c0359541b7fbcbbf0b7153108baaa3128f7180dbae866d78ff7",
+      "pixelHash": "6116d1a741724a0fd9e6aa7132272b935d086e460c168d87bd99913f559b2f74"
+    },
+    "starliner_airvent_grille": {
+      "defId": "starliner_airvent_grille",
+      "archetype": "artgen",
+      "sheet": "starliner_airvent_grille.png",
+      "frameW": 64,
+      "frameH": 117,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 101,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 9,
+        "mountU": 2,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3cb39a0eddeb7da2",
+      "recipeHash": "3cb39a0eddeb7da2aa6681c0d9d5879c4de8b7a8c2df211be65dc2472b892abe",
+      "pixelHash": "e4b34f2d51695b2995a34bcc779c1fe2c833691eaa02c629ac4dc459c90211cb"
+    },
+    "starliner_docking_schedule": {
+      "defId": "starliner_docking_schedule",
+      "archetype": "artgen",
+      "sheet": "starliner_docking_schedule.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.07
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3350b41cdeaafcc5",
+      "recipeHash": "3350b41cdeaafcc555e2a9c7777a9668d93ee5d0dede715d86acc5d7bb48376c",
+      "pixelHash": "380ba03afeec4b38b3c8dcdeb99f4d72cdf8785d3523d88cafa910cbead8f237"
+    },
+    "starliner_comet_print": {
+      "defId": "starliner_comet_print",
+      "archetype": "artgen",
+      "sheet": "starliner_comet_print.png",
+      "frameW": 64,
+      "frameH": 117,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 101,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 7,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.19
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3a746f6f4f9d0529",
+      "recipeHash": "3a746f6f4f9d05294175cfa239065dd39a841340bd7757bd28e22435b4f3765c",
+      "pixelHash": "d4a8d24f97478eeca0a68cc5abecd7f030bd0e15d840d82214d68169e3c9bb04"
     },
     "mochi_boba_menu": {
       "defId": "mochi_boba_menu",

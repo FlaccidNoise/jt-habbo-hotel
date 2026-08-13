@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_galley_counter_radar",
+  "archetype": "artgen",
+  "sheet": "starliner_galley_counter_radar.png",
+  "frameW": 96,
+  "frameH": 83,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:92ecfcffe0ba2d2d",
+  "recipeHash": "92ecfcffe0ba2d2d1703a853ca5ab7f9765924691c99b526fc789cf54deb763f",
+  "pixelHash": "393c542f842b6a30a7e678242d354b169192708316f4fc68def419b8c21f1463"
+}

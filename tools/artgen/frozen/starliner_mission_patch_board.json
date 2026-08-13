@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_mission_patch_board",
+  "archetype": "artgen",
+  "sheet": "starliner_mission_patch_board.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 10,
+    "mountU": 2,
+    "mountV": 45,
+    "gap": 0,
+    "depth": 0.19
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a788a055e14d5206",
+  "recipeHash": "a788a055e14d5206c2692af9d03e75f9a760eef61df1f38bb5c7e28614929b26",
+  "pixelHash": "73d894c514e6399a0d69be9035f1d749577d5dee828aa5863bc17b7b3d6640c8"
+}

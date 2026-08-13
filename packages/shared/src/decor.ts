@@ -265,6 +265,15 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_mochi_cloud", name: "Mochi Cloud", tile: { w: 32, h: 32 }, cap: 0x8d9eb1 },
   { kind: "wall", id: "wall_mochi_charm", name: "Mochi Charm", tile: { w: 32, h: 32 }, cap: 0xcbc0ac },
   { kind: "wall", id: "wall_mochi_soft_stripe", name: "Mochi Soft Stripe", tile: { w: 32, h: 32 }, cap: 0xc2a36b },
+  // Starliner (blitz task 14).
+  { kind: "floor", id: "floor_starliner_deck_plate", name: "Starliner Deck Plate", tile: { w: 64, h: 32 }, sides: { left: 0x8d9eb1, right: 0x656056 } },
+  { kind: "floor", id: "floor_starliner_orbit_grid", name: "Starliner Orbit Grid", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0x3f5e9e } },
+  { kind: "floor", id: "floor_starliner_docking_marks", name: "Starliner Docking Marks", tile: { w: 64, h: 32 }, sides: { left: 0x8d9eb1, right: 0xdaa520 } },
+  { kind: "floor", id: "floor_starliner_comet", name: "Starliner Comet", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0x2f8f8f } },
+  { kind: "wall", id: "wall_starliner_panel_grid", name: "Starliner Panel Grid", tile: { w: 32, h: 32 }, cap: 0x8d9eb1 },
+  { kind: "wall", id: "wall_starliner_conduit", name: "Starliner Conduit", tile: { w: 32, h: 32 }, cap: 0x656056 },
+  { kind: "wall", id: "wall_starliner_starfield", name: "Starliner Starfield", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
+  { kind: "wall", id: "wall_starliner_signal_stripe", name: "Starliner Signal Stripe", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

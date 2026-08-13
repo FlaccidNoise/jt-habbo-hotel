@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_suit_rack_aurora",
+  "archetype": "artgen",
+  "sheet": "starliner_suit_rack_aurora.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f9e6da01f5ab0218",
+  "recipeHash": "f9e6da01f5ab0218e5ac763c82c69d4f2dd1d2eb98d63abad8346f2dc58a1199",
+  "pixelHash": "3b0d8db246c33c01d5d5504e2b3d1175569ff86043cefc4a7a432a490fb1b536"
+}

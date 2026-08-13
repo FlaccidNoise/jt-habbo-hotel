@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_holo_projector_ion",
+  "archetype": "artgen",
+  "sheet": "starliner_holo_projector_ion.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:552fd4553484ce2d",
+  "recipeHash": "552fd4553484ce2d9355356ed52375fd641c79f2da7fa92d258f1004167e2a47",
+  "pixelHash": "9332b429d8180fbdd483affa2eb623cc26e29a5bf5474563184ba5845d902519"
+}

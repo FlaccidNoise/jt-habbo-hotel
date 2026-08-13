@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_docking_bench_ember",
+  "archetype": "artgen",
+  "sheet": "starliner_docking_bench_ember.png",
+  "frameW": 96,
+  "frameH": 79,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 47,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.96875,
+  "seatZ": 0.56,
+  "occlusion": null,
+  "nearSheet": "starliner_docking_bench_ember.near.png",
+  "nearHash": "f546d20eeb6066aa37634741554ad4b5976df7caad691c8b9b53341458759bb2",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a619a63e3ecbdd87",
+  "recipeHash": "a619a63e3ecbdd87335ecbab544737ee761e6daa4272bfea2e575fb507b23d6a",
+  "pixelHash": "200f2f3c36597d90485cd019aca62b804e03937812287e651ae39565921955b6"
+}

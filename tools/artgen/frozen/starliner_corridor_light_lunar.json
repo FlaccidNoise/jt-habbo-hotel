@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_corridor_light_lunar",
+  "archetype": "artgen",
+  "sheet": "starliner_corridor_light_lunar.png",
+  "frameW": 64,
+  "frameH": 79,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 63,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.46875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:85cf2f53b47e82d9",
+  "recipeHash": "85cf2f53b47e82d94aeceb646817b4923e115471a9eb19a41909e605fecbcab9",
+  "pixelHash": "ec6eece5927db1c8bccd4d641067a3c46b4c82b00533815a67d2dc7cb86a4eed"
+}

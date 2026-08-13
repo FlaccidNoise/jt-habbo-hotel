@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_star_chart",
+  "archetype": "artgen",
+  "sheet": "starliner_star_chart.png",
+  "frameW": 64,
+  "frameH": 122,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 106,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 18,
+    "mountU": 2,
+    "mountV": 39,
+    "gap": 0,
+    "depth": 0.175
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f93dc851a48867a9",
+  "recipeHash": "f93dc851a48867a953ede705a404187d7f5b8dd5023cf3bb4a360dcfbd169286",
+  "pixelHash": "0114c1c03eac8d7c072f2847159d1a56c51bb9933fbfd8baf229fe528019161a"
+}

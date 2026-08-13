@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_console_flare",
+  "archetype": "artgen",
+  "sheet": "starliner_console_flare.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a88ded3ffd866706",
+  "recipeHash": "a88ded3ffd866706181c267164aa46481fb255724d3f3260da23650f94663519",
+  "pixelHash": "0e449e49280dd4cc51f5dad7cfd5d3ddc809fc032b976f077ab9dbe832e9cca5"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_neon_orbit_sign",
+  "archetype": "artgen",
+  "sheet": "starliner_neon_orbit_sign.png",
+  "frameW": 64,
+  "frameH": 114,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 98,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 4,
+    "mountU": 2,
+    "mountV": 48,
+    "gap": 0,
+    "depth": 0.19
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:29b3d1f561e20939",
+  "recipeHash": "29b3d1f561e20939f466f723965b7ff9d98c874af35c6633ec3f818dc85dcac6",
+  "pixelHash": "7645be5a5a87cf332d96afa98a2091b9dd41367bc7cb5f86fc48a26c808dc79c"
+}

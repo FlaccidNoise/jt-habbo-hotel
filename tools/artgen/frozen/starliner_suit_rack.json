@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_suit_rack",
+  "archetype": "artgen",
+  "sheet": "starliner_suit_rack.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:55d513790855d7d2",
+  "recipeHash": "55d513790855d7d204be9e69a8ba33e0a1423c36992018bc55653b093fd4784e",
+  "pixelHash": "c1c8a0be86053c99ca040b2a80a601fdd4a2cb5defc5b4dee0e283bf5c4c746e"
+}

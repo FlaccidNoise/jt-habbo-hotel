@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_galley_counter_comet",
+  "archetype": "artgen",
+  "sheet": "starliner_galley_counter_comet.png",
+  "frameW": 96,
+  "frameH": 83,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:23003e182e291cd8",
+  "recipeHash": "23003e182e291cd830524e16e7bd92da2526efbb0e9d147de0e1b600c34b0921",
+  "pixelHash": "d2c95f513e6ef843ec9d06efbbe403e26d36e4676dd731a96ee64c668af7dfef"
+}

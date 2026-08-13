@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_docking_bench",
+  "archetype": "artgen",
+  "sheet": "starliner_docking_bench.png",
+  "frameW": 96,
+  "frameH": 79,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 47,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.96875,
+  "seatZ": 0.56,
+  "occlusion": null,
+  "nearSheet": "starliner_docking_bench.near.png",
+  "nearHash": "f546d20eeb6066aa37634741554ad4b5976df7caad691c8b9b53341458759bb2",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3961237ba0ae8700",
+  "recipeHash": "3961237ba0ae870032df56ea10802b977413bf62687a76421856a8376efbe0b0",
+  "pixelHash": "24f3f2e8b4f4eaaebcc3d24816306ce783fa2ecfb6b5f6e1afb6d8bec52bbb00"
+}

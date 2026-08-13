@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_orbit_table",
+  "archetype": "artgen",
+  "sheet": "starliner_orbit_table.png",
+  "frameW": 64,
+  "frameH": 65,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 49,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.03125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:eb20e72f9f6b6705",
+  "recipeHash": "eb20e72f9f6b6705b436ce993cb23f62baa85f5e3e40512c93fc0f6da329c625",
+  "pixelHash": "1618e089e24f39179722aec3a77d27ad4857cfa6981a2d36ff5bf9356ef557ab"
+}

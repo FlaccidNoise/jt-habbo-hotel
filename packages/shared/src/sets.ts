@@ -38,6 +38,13 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "starliner",
+    name: "The Starliner Set",
+    members: ["starliner_bunk_pod", "starliner_console", "starliner_captain_chair", "starliner_holo_projector"],
+    reward: "starliner_holo_projector_astro",
+    badge: "set_starliner",
+  },
+  {
     id: "mochi",
     name: "The Mochi Set",
     members: ["mochi_day_bed", "mochi_boba_cart", "mochi_mallow_plush", "mochi_cloud_sofa"],

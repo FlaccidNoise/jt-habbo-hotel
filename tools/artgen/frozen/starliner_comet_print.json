@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_comet_print",
+  "archetype": "artgen",
+  "sheet": "starliner_comet_print.png",
+  "frameW": 64,
+  "frameH": 117,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 101,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.65625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 7,
+    "mountU": 4,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.19
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3a746f6f4f9d0529",
+  "recipeHash": "3a746f6f4f9d05294175cfa239065dd39a841340bd7757bd28e22435b4f3765c",
+  "pixelHash": "d4a8d24f97478eeca0a68cc5abecd7f030bd0e15d840d82214d68169e3c9bb04"
+}

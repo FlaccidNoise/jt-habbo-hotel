@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_viewport_panel",
+  "archetype": "artgen",
+  "sheet": "starliner_viewport_panel.png",
+  "frameW": 64,
+  "frameH": 113,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 97,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.53125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 5,
+    "mountU": 4,
+    "mountV": 49,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e543f27cc5112b2f",
+  "recipeHash": "e543f27cc5112b2f3179a311afc9d0e7054b0e29e1e9790603f933e5fe36ec56",
+  "pixelHash": "c4a969a175646ec379ff1cdfc67a304604052b71b613f9cd3dbc7b37af5c3ff7"
+}

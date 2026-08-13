@@ -1,0 +1,34 @@
+{
+  "defId": "starliner_viewport_seat_orbit",
+  "archetype": "artgen",
+  "sheet": "starliner_viewport_seat_orbit.png",
+  "frameW": 64,
+  "frameH": 68,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.44,
+  "occlusion": null,
+  "nearSheet": "starliner_viewport_seat_orbit.near.png",
+  "nearHash": "38f639cb5c2fb1ee66d3ba5af02fdb31809b240aa94fd10203dbe4ddbaa2686d",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:738c762e99be80c8",
+  "recipeHash": "738c762e99be80c8cdadb69dc0da9e266e0a5c485890d339412147a2b1e8e617",
+  "pixelHash": "8374ae11b2885d4f3d014e7023f5ba74cd2a2eeb63ce9da57a8c58e09d4c7b0e"
+}

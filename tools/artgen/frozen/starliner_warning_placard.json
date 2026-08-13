@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_warning_placard",
+  "archetype": "artgen",
+  "sheet": "starliner_warning_placard.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:47740a13954511fe",
+  "recipeHash": "47740a13954511fe07768b7557429972292759e51f7734664b3570f8736ee77e",
+  "pixelHash": "3d10ce0b955f9fd443ee4ee2a303ee4276f958db912842c2213cce2000819803"
+}

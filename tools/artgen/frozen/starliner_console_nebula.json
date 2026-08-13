@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_console_nebula",
+  "archetype": "artgen",
+  "sheet": "starliner_console_nebula.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:31ae6c5de243e57c",
+  "recipeHash": "31ae6c5de243e57c06e72869b388cb468e58d076ec7fbda10bf49cd791d5e04e",
+  "pixelHash": "968cc46c017d0c5370b92d19b365949797142b7668f745921e1f90cda2c1002b"
+}

@@ -1,0 +1,37 @@
+{
+  "defId": "starliner_docking_schedule",
+  "archetype": "artgen",
+  "sheet": "starliner_docking_schedule.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.07
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:3350b41cdeaafcc5",
+  "recipeHash": "3350b41cdeaafcc555e2a9c7777a9668d93ee5d0dede715d86acc5d7bb48376c",
+  "pixelHash": "380ba03afeec4b38b3c8dcdeb99f4d72cdf8785d3523d88cafa910cbead8f237"
+}

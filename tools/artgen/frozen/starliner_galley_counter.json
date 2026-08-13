@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_galley_counter",
+  "archetype": "artgen",
+  "sheet": "starliner_galley_counter.png",
+  "frameW": 96,
+  "frameH": 83,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f62aa481a6ea60d6",
+  "recipeHash": "f62aa481a6ea60d639be00aac9f493ffa498d4c2e25860a0aae0be81b34de828",
+  "pixelHash": "8632aec2923bb90155fdd1410af3cc20e34c339f1a6e26273cba185514d0156e"
+}

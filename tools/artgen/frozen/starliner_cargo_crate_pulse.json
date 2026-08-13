@@ -1,0 +1,32 @@
+{
+  "defId": "starliner_cargo_crate_pulse",
+  "archetype": "artgen",
+  "sheet": "starliner_cargo_crate_pulse.png",
+  "frameW": 64,
+  "frameH": 59,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 43,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.84375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:237a7a7589ed9ea8",
+  "recipeHash": "237a7a7589ed9ea8b61b8609e96b646d43ab55f5afa78acb49e4d8badd245450",
+  "pixelHash": "5179118ea09b11ed57904f8a44fd3ad07e6161b532c3f7080f78baed4ad971b1"
+}
