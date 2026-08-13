@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_mist_rail",
+  "archetype": "artgen",
+  "sheet": "verdant_mist_rail.png",
+  "frameW": 64,
+  "frameH": 111,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 95,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.46875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 28,
+    "planeH": 8,
+    "mountU": 2,
+    "mountV": 54,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:016692c45f79fa40",
+  "recipeHash": "016692c45f79fa4020bdc72ae8aec81826104e72bd1408ce9221ce136656225f",
+  "pixelHash": "5da460d1553b4e3833f3aa76c517e29ebdd723564d4cdbbf2d4f5aee440bc526"
+}

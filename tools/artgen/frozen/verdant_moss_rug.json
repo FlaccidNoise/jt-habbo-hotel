@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_moss_rug",
+  "archetype": "artgen",
+  "sheet": "verdant_moss_rug.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f716e25a42cef3bb",
+  "recipeHash": "f716e25a42cef3bb84fbd60503633fc4eec66de42df0b81b14d4ef53d049d4a3",
+  "pixelHash": "16320e2cb43fde32e1c349b15f9515950d316c1f8307bd56c5365786128c6958"
+}

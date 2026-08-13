@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_terrarium_case",
+  "archetype": "artgen",
+  "sheet": "verdant_terrarium_case.png",
+  "frameW": 64,
+  "frameH": 67,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:773cd56693c22034",
+  "recipeHash": "773cd56693c220348913cebb59595a0b610e0557121eee8ea267a59d47ef4874",
+  "pixelHash": "cdcd6f13597bea8bc6441a2c903fadc465c865b73c52879192ae565b48617cf2"
+}

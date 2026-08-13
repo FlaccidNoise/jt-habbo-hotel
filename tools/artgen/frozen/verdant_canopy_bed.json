@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_canopy_bed",
+  "archetype": "artgen",
+  "sheet": "verdant_canopy_bed.png",
+  "frameW": 96,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.375,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "verdant_canopy_bed.near.png",
+  "nearHash": "51fa7833cfa7f965efbebe158aed58573573e54490647020269e0e71184d6599",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:43ab5118e977edbc",
+  "recipeHash": "43ab5118e977edbc2d0dfb63adaf2cca2d4b7fecfdb47eb786316c4e6889eff2",
+  "pixelHash": "222776c56eec45dccde80058e4a91649b05230195f7cf150dc67ed5c1839a167"
+}

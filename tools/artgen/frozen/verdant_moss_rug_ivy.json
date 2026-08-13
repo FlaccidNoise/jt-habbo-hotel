@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_moss_rug_ivy",
+  "archetype": "artgen",
+  "sheet": "verdant_moss_rug_ivy.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:627d160cd5b3af30",
+  "recipeHash": "627d160cd5b3af30d3323bf51d60db08c8c716d52b26dea184a127c1b6467aa1",
+  "pixelHash": "8e48aa9a529f1741ab5e7d60547c1b44bd6271f051d42db90e37795fb0f54727"
+}

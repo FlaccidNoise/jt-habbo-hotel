@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_herb_table_bark",
+  "archetype": "artgen",
+  "sheet": "verdant_herb_table_bark.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4da84068cd9126f1",
+  "recipeHash": "4da84068cd9126f15f0447016f93e8846d87d6fe0e6913292ab40dfe1b0db961",
+  "pixelHash": "f73fbf9542e149983f5ca1be12a86ce1295b205057436d3cc4d49316f04a4f56"
+}

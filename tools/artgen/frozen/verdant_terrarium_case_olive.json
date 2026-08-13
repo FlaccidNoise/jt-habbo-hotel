@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_terrarium_case_olive",
+  "archetype": "artgen",
+  "sheet": "verdant_terrarium_case_olive.png",
+  "frameW": 64,
+  "frameH": 67,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:33a5ef9609053299",
+  "recipeHash": "33a5ef960905329917cbecdca37e9fc0f022acb3c7d9914e38b5e10e3b247229",
+  "pixelHash": "0fe29aebcde29f5fc76b2f0bbf811b090cb115217599d26cd642029f953d706c"
+}

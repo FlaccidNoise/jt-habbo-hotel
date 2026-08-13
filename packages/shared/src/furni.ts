@@ -319,6 +319,38 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "fablewood_spellbook_shelf_petal", name: "Petal Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "read", vend: { item: "book", price: 0 } },
   { id: "fablewood_aether_throne_stone", name: "Stone Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x9c9484 },
   // Wave B5 (blitz task 15): Fablewood bases.
+  // Wave B7 colorways (blitz task 17).
+  { id: "verdant_canopy_bed_fern", name: "Fern Canopy Bed", theme: "verdant", w: 2, l: 1, stackHeights: [1.375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x2f8f8f },
+  { id: "verdant_potting_bench_moss", name: "Moss Potting Bench", theme: "verdant", w: 2, l: 1, stackHeights: [1.1875], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "verdant_terrarium_case_sage", name: "Sage Terrarium Case", theme: "verdant", w: 1, l: 1, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "verdant_watering_cart_bloom", name: "Bloom Watering Cart", theme: "verdant", w: 1, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8d9eb1 },
+  { id: "verdant_trellis_screen_clay", name: "Clay Trellis Screen", theme: "verdant", w: 2, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "verdant_herb_table_dew", name: "Dew Herb Table", theme: "verdant", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "verdant_wicker_chair_cedar", name: "Cedar Wicker Chair", theme: "verdant", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.36, color: 0xc2a36b },
+  { id: "verdant_plant_stand_sprout", name: "Sprout Plant Stand", theme: "verdant", w: 1, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "verdant_vine_lamp_amber", name: "Amber Vine Lamp", theme: "verdant", w: 1, l: 1, stackHeights: [1.4375, 1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
+  { id: "verdant_moss_rug_ivy", name: "Ivy Moss Rug", theme: "verdant", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "verdant_garden_stool_petal", name: "Petal Garden Stool", theme: "verdant", w: 1, l: 1, stackHeights: [0.46875], canWalk: false, canStackOn: false, seatHeight: 0.46, color: 0xaa3333 },
+  { id: "verdant_seed_drawers_stone", name: "Stone Seed Drawers", theme: "verdant", w: 1, l: 1, stackHeights: [0.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "verdant_canopy_bed_rain", name: "Rain Canopy Bed", theme: "verdant", w: 2, l: 1, stackHeights: [1.375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x3f5e9e },
+  { id: "verdant_potting_bench_honey", name: "Honey Potting Bench", theme: "verdant", w: 2, l: 1, stackHeights: [1.1875], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "verdant_terrarium_case_olive", name: "Olive Terrarium Case", theme: "verdant", w: 1, l: 1, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb55a19 },
+  { id: "verdant_watering_cart_rose", name: "Rose Watering Cart", theme: "verdant", w: 1, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "verdant_trellis_screen_mint", name: "Mint Trellis Screen", theme: "verdant", w: 2, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "verdant_herb_table_bark", name: "Bark Herb Table", theme: "verdant", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xb55a19 },
+  // Wave B7 (blitz task 17): Verdant conservatory bases.
+  { id: "verdant_canopy_bed", name: "Canopy Bed", theme: "verdant", w: 2, l: 1, stackHeights: [1.375], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0x2e8b57 },
+  { id: "verdant_potting_bench", name: "Potting Bench", theme: "verdant", w: 2, l: 1, stackHeights: [1.1875], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "verdant_terrarium_case", name: "Terrarium Case", theme: "verdant", w: 1, l: 1, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2f8f8f },
+  { id: "verdant_watering_cart", name: "Watering Cart", theme: "verdant", w: 1, l: 1, stackHeights: [1.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333 },
+  { id: "verdant_trellis_screen", name: "Trellis Screen", theme: "verdant", w: 2, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b },
+  { id: "verdant_herb_table", name: "Herb Table", theme: "verdant", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
+  { id: "verdant_wicker_chair", name: "Wicker Chair", theme: "verdant", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.36, color: 0xc2a36b },
+  { id: "verdant_plant_stand", name: "Plant Stand", theme: "verdant", w: 1, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "verdant_vine_lamp", name: "Vine Lamp", theme: "verdant", w: 1, l: 1, stackHeights: [1.4375, 1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
+  { id: "verdant_moss_rug", name: "Moss Rug", theme: "verdant", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "verdant_garden_stool", name: "Garden Stool", theme: "verdant", w: 1, l: 1, stackHeights: [0.46875], canWalk: false, canStackOn: false, seatHeight: 0.46, color: 0xc2a36b },
+  { id: "verdant_seed_drawers", name: "Seed Drawers", theme: "verdant", w: 1, l: 1, stackHeights: [0.75], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
   // Wave B6 colorways (blitz task 16).
   { id: "tidal_shell_bed_aqua", name: "Aqua Shell Bed", theme: "tidal", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.42, color: 0x2f8f8f },
   { id: "tidal_net_hammock_coral", name: "Coral Net Hammock", theme: "tidal", w: 2, l: 1, stackHeights: [1.40625], canWalk: false, canStackOn: false, seatHeight: 0.4, color: 0xaa3333 },
@@ -543,6 +575,18 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "wall_art_gallery_clock", name: "Gallery Clock", theme: "wall_art", span: 1, plane: { w: 18, h: 17 }, mount: { u: 6, v: 39 }, color: 0xb5651d },
   { id: "wall_art_sculpture_relief", name: "Sculpture Relief", theme: "wall_art", span: 1, plane: { w: 22, h: 16 }, mount: { u: 4, v: 39 }, color: 0x5b6672 },
   // Wave B5 (blitz task 15): Fablewood walls.
+  // Wave B6 (blitz task 16): Tidal walls.
+  // Wave B7 (blitz task 17): Verdant walls.
+  { id: "verdant_trellis_panel", name: "Trellis Panel", theme: "verdant", span: 1, plane: { w: 26, h: 19 }, mount: { u: 2, v: 42 }, color: 0xc2a36b },
+  { id: "verdant_herb_pressing_frame", name: "Herb Pressing Frame", theme: "verdant", span: 1, plane: { w: 26, h: 16 }, mount: { u: 2, v: 42 }, color: 0x8b4513 },
+  { id: "verdant_seed_chart", name: "Seed Chart", theme: "verdant", span: 1, plane: { w: 26, h: 13 }, mount: { u: 2, v: 44 }, color: 0x9c9484 },
+  { id: "verdant_vine_mirror", name: "Vine Mirror", theme: "verdant", span: 1, plane: { w: 26, h: 12 }, mount: { u: 0, v: 45 }, color: 0x2f8f8f },
+  { id: "verdant_glass_shelf", name: "Glass Shelf", theme: "verdant", span: 1, plane: { w: 30, h: 10 }, mount: { u: 0, v: 52 }, color: 0x2f8f8f },
+  { id: "verdant_botanical_print", name: "Botanical Print", theme: "verdant", span: 1, plane: { w: 24, h: 13 }, mount: { u: 4, v: 44 }, color: 0x2e8b57 },
+  { id: "verdant_mist_rail", name: "Mist Rail", theme: "verdant", span: 1, plane: { w: 28, h: 8 }, mount: { u: 2, v: 54 }, color: 0x2f8f8f },
+  { id: "verdant_leaf_decal", name: "Leaf Decal", theme: "verdant", span: 1, plane: { w: 24, h: 15 }, mount: { u: 4, v: 42 }, color: 0x2e8b57 },
+  { id: "verdant_grow_light_bar", name: "Grow Light Bar", theme: "verdant", span: 1, plane: { w: 28, h: 4 }, mount: { u: 0, v: 53 }, color: 0xdaa520 },
+  { id: "verdant_bee_hotel", name: "Bee Hotel", theme: "verdant", span: 1, plane: { w: 22, h: 14 }, mount: { u: 4, v: 46 }, color: 0xc2a36b },
   // Wave B6 (blitz task 16): Tidal walls.
   { id: "tidal_porthole_frame", name: "Porthole Frame", theme: "tidal", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 43 }, color: 0xc2a36b },
   { id: "tidal_net_drape", name: "Net Drape", theme: "tidal", span: 1, plane: { w: 26, h: 15 }, mount: { u: 2, v: 47 }, color: 0x2f8f8f },
@@ -1182,6 +1226,47 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["tidal_chart_desk_sun", 250],
   ["tidal_coral_table_mist", 150],
   ["tidal_reef_shelf_wave", 150],
+  // Wave B7 (blitz task 17): Verdant conservatory. Reward unpriced. Prestige crystal screen amber released.
+  ["prestige_crystal_screen_amber", 1800],
+  ["verdant_canopy_bed", 300],
+  ["verdant_potting_bench", 250],
+  ["verdant_terrarium_case", 250],
+  ["verdant_watering_cart", 150],
+  ["verdant_trellis_screen", 150],
+  ["verdant_herb_table", 150],
+  ["verdant_wicker_chair", 75],
+  ["verdant_plant_stand", 75],
+  ["verdant_vine_lamp", 75],
+  ["verdant_moss_rug", 75],
+  ["verdant_garden_stool", 50],
+  ["verdant_seed_drawers", 75],
+  ["verdant_trellis_panel", 75],
+  ["verdant_herb_pressing_frame", 75],
+  ["verdant_seed_chart", 75],
+  ["verdant_vine_mirror", 50],
+  ["verdant_glass_shelf", 50],
+  ["verdant_botanical_print", 50],
+  ["verdant_mist_rail", 50],
+  ["verdant_leaf_decal", 25],
+  ["verdant_grow_light_bar", 25],
+  ["verdant_bee_hotel", 25],
+  ["verdant_canopy_bed_fern", 300],
+  ["verdant_potting_bench_moss", 250],
+  ["verdant_terrarium_case_sage", 250],
+  ["verdant_watering_cart_bloom", 150],
+  ["verdant_trellis_screen_clay", 150],
+  ["verdant_herb_table_dew", 150],
+  ["verdant_wicker_chair_cedar", 75],
+  ["verdant_plant_stand_sprout", 75],
+  ["verdant_vine_lamp_amber", 75],
+  ["verdant_moss_rug_ivy", 75],
+  ["verdant_garden_stool_petal", 50],
+  ["verdant_seed_drawers_stone", 75],
+  ["verdant_potting_bench_honey", 250],
+  ["verdant_terrarium_case_olive", 250],
+  ["verdant_watering_cart_rose", 150],
+  ["verdant_trellis_screen_mint", 150],
+  ["verdant_herb_table_bark", 150],
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
@@ -1209,7 +1294,6 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "penthouse_telescope_copper",
   "lounge_vibraphone_ivory",
 
-  "prestige_crystal_screen_amber",
   "bannerhold_high_seat_navy",
   "nocturne_coffin_daybed_slate",
   // Mochi Suite reward (blitz task 13): minted on set completion, never sold.
@@ -1220,6 +1304,9 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "fablewood_aether_throne_stone",
   // Tidal Set reward (blitz task 16): minted on set completion, never sold.
   "tidal_shell_bed_dusk",
+  "tidal_shell_bed_dusk",
+  // Verdant Set reward (blitz task 17): minted on set completion, never sold.
+  "verdant_canopy_bed_rain",
 ]);
 
 /** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
@@ -1582,6 +1669,19 @@ export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([
   "tidal_pearl_lamp_storm", "tidal_kelp_planter_shell", "tidal_wave_rug_deep", "tidal_buoy_stool_spray",
   "tidal_shell_bed_dusk", "tidal_net_hammock_reef", "tidal_tide_pool_bar_brine", "tidal_chart_desk_sun",
   "tidal_coral_table_mist", "tidal_reef_shelf_wave",
+
+  // Task 17 wave B7.
+  "verdant_canopy_bed", "verdant_potting_bench", "verdant_terrarium_case", "verdant_watering_cart",
+  "verdant_trellis_screen", "verdant_herb_table", "verdant_wicker_chair", "verdant_plant_stand",
+  "verdant_vine_lamp", "verdant_moss_rug", "verdant_garden_stool", "verdant_seed_drawers",
+  "verdant_trellis_panel", "verdant_herb_pressing_frame", "verdant_seed_chart", "verdant_vine_mirror",
+  "verdant_glass_shelf", "verdant_botanical_print", "verdant_mist_rail", "verdant_leaf_decal",
+  "verdant_grow_light_bar", "verdant_bee_hotel",
+  "verdant_canopy_bed_fern", "verdant_potting_bench_moss", "verdant_terrarium_case_sage", "verdant_watering_cart_bloom",
+  "verdant_trellis_screen_clay", "verdant_herb_table_dew", "verdant_wicker_chair_cedar", "verdant_plant_stand_sprout",
+  "verdant_vine_lamp_amber", "verdant_moss_rug_ivy", "verdant_garden_stool_petal", "verdant_seed_drawers_stone",
+  "verdant_canopy_bed_rain", "verdant_potting_bench_honey", "verdant_terrarium_case_olive", "verdant_watering_cart_rose",
+  "verdant_trellis_screen_mint", "verdant_herb_table_bark",
 ]);
 /** Landed blitz decor tiles (the plan's Appendix B). */
 export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
@@ -1675,6 +1775,16 @@ export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
   "wall_tidal_bubble",
   "wall_tidal_kelp",
   "wall_tidal_porthole",
+
+  // Task 17 wave B7: Verdant.
+  "floor_verdant_greenhouse_tile",
+  "floor_verdant_moss",
+  "floor_verdant_seed",
+  "floor_verdant_terracotta",
+  "wall_verdant_glass_grid",
+  "wall_verdant_trellis",
+  "wall_verdant_botanical",
+  "wall_verdant_dew",
 ]);
 /** The staged prestige line: the eight blitz prestige fixtures land together but surface in the
  *  catalog one per wave. An id here is priced in CATALOG_PRICES; an id absent is staged in
@@ -1687,4 +1797,5 @@ export const RELEASED_PRESTIGE_IDS: ReadonlySet<string> = new Set<string>([  "pr
   "prestige_gold_throne_onyx",
   "prestige_marble_fountain_moonstone",
 
+  "prestige_crystal_screen_amber",
 ]);

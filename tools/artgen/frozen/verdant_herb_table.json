@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_herb_table",
+  "archetype": "artgen",
+  "sheet": "verdant_herb_table.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e54ba4eef3cbf927",
+  "recipeHash": "e54ba4eef3cbf9276d03a9839e143c8b9fba92140ce577b73643a66487ee6f52",
+  "pixelHash": "0ce06555e04354fa4053ee390d1873c022e84424ea509d2e485bacde2c68eb47"
+}

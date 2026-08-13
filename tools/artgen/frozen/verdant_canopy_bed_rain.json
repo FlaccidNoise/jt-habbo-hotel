@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_canopy_bed_rain",
+  "archetype": "artgen",
+  "sheet": "verdant_canopy_bed_rain.png",
+  "frameW": 96,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.375,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "verdant_canopy_bed_rain.near.png",
+  "nearHash": "5d9f496c1a62988a098da25904de380dbcb0f921c6450c4dd1911df005aad3bd",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9e9c28b5af958203",
+  "recipeHash": "9e9c28b5af95820346f5553c973d28572f0756168a10cc62e5637f1bc0d25407",
+  "pixelHash": "fb764699049b288200a54421bfa4f05e4863efed398b1832ae3c59ee9eae38b2"
+}

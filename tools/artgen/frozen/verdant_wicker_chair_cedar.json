@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_wicker_chair_cedar",
+  "archetype": "artgen",
+  "sheet": "verdant_wicker_chair_cedar.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.36,
+  "occlusion": null,
+  "nearSheet": "verdant_wicker_chair_cedar.near.png",
+  "nearHash": "63ca19306050f1341f47dc39f07321e44db76cb67cef458f2020b642223f0a10",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f662ae31d5fcb423",
+  "recipeHash": "f662ae31d5fcb4233d59e9bb11afd2b23377b46defea26ce57c2e45d4bb1b947",
+  "pixelHash": "4c452dfd6b6e0012152c53a7ca9280ca282a77fb93a22776a4cd9f5262bf5206"
+}

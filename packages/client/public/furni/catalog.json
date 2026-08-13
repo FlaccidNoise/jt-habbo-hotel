@@ -8509,6 +8509,980 @@
       "recipeHash": "44f9e2447e14a62b3bad28909daf03d7ec78dfb133c4351cbb73c4938345bc34",
       "pixelHash": "a41ec0b6e604c88042b92bebc9ac89042156e81852917ca66ab2cb682c6b8636"
     },
+    "verdant_canopy_bed_fern": {
+      "defId": "verdant_canopy_bed_fern",
+      "archetype": "artgen",
+      "sheet": "verdant_canopy_bed_fern.png",
+      "frameW": 96,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "verdant_canopy_bed_fern.near.png",
+      "nearHash": "56c4523cb7d2ef6bb6439c705068f4f55e89ed2a2e1760bba5a1015026a9432d",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1e960fc209db5bda",
+      "recipeHash": "1e960fc209db5bda0fc593d2cf73a5e49bfb6892f600140c1a942441c59941f7",
+      "pixelHash": "6d9f28edab4f6fc738f1a78a0bab4ab01b826e39ac06e49526e7a1c6de309658"
+    },
+    "verdant_potting_bench_moss": {
+      "defId": "verdant_potting_bench_moss",
+      "archetype": "artgen",
+      "sheet": "verdant_potting_bench_moss.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:97f578be60bc1e53",
+      "recipeHash": "97f578be60bc1e539c1bdaa7537d7e18dec3be65ba6428d60e244501393d0f2b",
+      "pixelHash": "b4f88487b724b17caac52c1e07d2488f395fd76340ec612253b96016c55972f2"
+    },
+    "verdant_terrarium_case_sage": {
+      "defId": "verdant_terrarium_case_sage",
+      "archetype": "artgen",
+      "sheet": "verdant_terrarium_case_sage.png",
+      "frameW": 64,
+      "frameH": 67,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4995872c261004ab",
+      "recipeHash": "4995872c261004ab91eeecad5f128de039e13e8650515150b4d8814377c87980",
+      "pixelHash": "49a770d6d1564c882bcb861e9e778a955f3bc3faa9d16d3fa843e212fa42a04f"
+    },
+    "verdant_watering_cart_bloom": {
+      "defId": "verdant_watering_cart_bloom",
+      "archetype": "artgen",
+      "sheet": "verdant_watering_cart_bloom.png",
+      "frameW": 64,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:2427012d907f4e0f",
+      "recipeHash": "2427012d907f4e0f0dff4d42c01867f44ed5b848961fa0d5e5c79d5b87fa8df4",
+      "pixelHash": "251296438747ca6441c48fa61b6a6c8a2c8dfe944e1afc96565f398f0086983f"
+    },
+    "verdant_trellis_screen_clay": {
+      "defId": "verdant_trellis_screen_clay",
+      "archetype": "artgen",
+      "sheet": "verdant_trellis_screen_clay.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:673e8ac4116c4924",
+      "recipeHash": "673e8ac4116c49245b6a85bb6655177ef6e0eff04266ddd17716dc3fdf7aff9b",
+      "pixelHash": "b241f00dcb2c5a510e5d2c5245987c9cdf24f0cbdfdad0ca41021fc243ad9371"
+    },
+    "verdant_herb_table_dew": {
+      "defId": "verdant_herb_table_dew",
+      "archetype": "artgen",
+      "sheet": "verdant_herb_table_dew.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e06fdd22d04ddd6a",
+      "recipeHash": "e06fdd22d04ddd6a3eaefd0b78dcbb774c43e97a7c48385cd6ecad235523e4df",
+      "pixelHash": "747d8ad130af74eaa949aa479cdfc96c4f6c0906409fd857b0ebcdb65fab6ccc"
+    },
+    "verdant_wicker_chair_cedar": {
+      "defId": "verdant_wicker_chair_cedar",
+      "archetype": "artgen",
+      "sheet": "verdant_wicker_chair_cedar.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.36,
+      "occlusion": null,
+      "nearSheet": "verdant_wicker_chair_cedar.near.png",
+      "nearHash": "63ca19306050f1341f47dc39f07321e44db76cb67cef458f2020b642223f0a10",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f662ae31d5fcb423",
+      "recipeHash": "f662ae31d5fcb4233d59e9bb11afd2b23377b46defea26ce57c2e45d4bb1b947",
+      "pixelHash": "4c452dfd6b6e0012152c53a7ca9280ca282a77fb93a22776a4cd9f5262bf5206"
+    },
+    "verdant_plant_stand_sprout": {
+      "defId": "verdant_plant_stand_sprout",
+      "archetype": "artgen",
+      "sheet": "verdant_plant_stand_sprout.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:b3cf74a649583b2a",
+      "recipeHash": "b3cf74a649583b2aebe7331c7453d6473623cbcce6212d2f49c4ea858df1a4af",
+      "pixelHash": "738c31786a1b638a18e1556bc2781fa2e7fea869640825b757e623d03520ad09"
+    },
+    "verdant_vine_lamp_amber": {
+      "defId": "verdant_vine_lamp_amber",
+      "archetype": "artgen",
+      "sheet": "verdant_vine_lamp_amber.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9b0863b6d2e813c3",
+      "recipeHash": "9b0863b6d2e813c36f0d8598df7b18757c9cf6cccba9cc074118179745767157",
+      "pixelHash": "744fd90bec613146bdc3628d3d3d8779e0a1a53e581ca0f907339f09fe25be9d"
+    },
+    "verdant_moss_rug_ivy": {
+      "defId": "verdant_moss_rug_ivy",
+      "archetype": "artgen",
+      "sheet": "verdant_moss_rug_ivy.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:627d160cd5b3af30",
+      "recipeHash": "627d160cd5b3af30d3323bf51d60db08c8c716d52b26dea184a127c1b6467aa1",
+      "pixelHash": "8e48aa9a529f1741ab5e7d60547c1b44bd6271f051d42db90e37795fb0f54727"
+    },
+    "verdant_garden_stool_petal": {
+      "defId": "verdant_garden_stool_petal",
+      "archetype": "artgen",
+      "sheet": "verdant_garden_stool_petal.png",
+      "frameW": 64,
+      "frameH": 47,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 31,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.46875,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "verdant_garden_stool_petal.near.png",
+      "nearHash": "aeeea406210b92693cf1a5e530eadfba5c0c6f4a96b098913b0a4def47fe1572",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5550cea921eca050",
+      "recipeHash": "5550cea921eca050a057fc692153411ee8675f8018066ba28cc0a934928258e0",
+      "pixelHash": "9776f74467eae3a702e1dc3711bc2d40841b73140326e0a299a0149bebe3ac74"
+    },
+    "verdant_seed_drawers_stone": {
+      "defId": "verdant_seed_drawers_stone",
+      "archetype": "artgen",
+      "sheet": "verdant_seed_drawers_stone.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a8c837b1eb8f78b7",
+      "recipeHash": "a8c837b1eb8f78b78a7c7e3f99b6e520097794c7dd049e9c5343f9ec39891969",
+      "pixelHash": "a450284315a5eb29e02f259752f05af5af68b85d30f027b0567ab88e31a0eb06"
+    },
+    "verdant_canopy_bed_rain": {
+      "defId": "verdant_canopy_bed_rain",
+      "archetype": "artgen",
+      "sheet": "verdant_canopy_bed_rain.png",
+      "frameW": 96,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "verdant_canopy_bed_rain.near.png",
+      "nearHash": "5d9f496c1a62988a098da25904de380dbcb0f921c6450c4dd1911df005aad3bd",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9e9c28b5af958203",
+      "recipeHash": "9e9c28b5af95820346f5553c973d28572f0756168a10cc62e5637f1bc0d25407",
+      "pixelHash": "fb764699049b288200a54421bfa4f05e4863efed398b1832ae3c59ee9eae38b2"
+    },
+    "verdant_potting_bench_honey": {
+      "defId": "verdant_potting_bench_honey",
+      "archetype": "artgen",
+      "sheet": "verdant_potting_bench_honey.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e3a8184bc505b89d",
+      "recipeHash": "e3a8184bc505b89d9d51f32346bd23ef2edd8dfb56438debb7e26a14cf8363d4",
+      "pixelHash": "3263b6b30dadea43d1c51d3c97f95aa7d1ace3c54c42d38909c9f606f7996825"
+    },
+    "verdant_terrarium_case_olive": {
+      "defId": "verdant_terrarium_case_olive",
+      "archetype": "artgen",
+      "sheet": "verdant_terrarium_case_olive.png",
+      "frameW": 64,
+      "frameH": 67,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:33a5ef9609053299",
+      "recipeHash": "33a5ef960905329917cbecdca37e9fc0f022acb3c7d9914e38b5e10e3b247229",
+      "pixelHash": "0fe29aebcde29f5fc76b2f0bbf811b090cb115217599d26cd642029f953d706c"
+    },
+    "verdant_watering_cart_rose": {
+      "defId": "verdant_watering_cart_rose",
+      "archetype": "artgen",
+      "sheet": "verdant_watering_cart_rose.png",
+      "frameW": 64,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1876df87adc894d5",
+      "recipeHash": "1876df87adc894d506fccc300bc5d51de783d9d480585c7e38b67ff18a17c56b",
+      "pixelHash": "12e1d4aa7640db3c7c8fc316d22035a61e997f375cb868ed6b793d3e8000cd5d"
+    },
+    "verdant_trellis_screen_mint": {
+      "defId": "verdant_trellis_screen_mint",
+      "archetype": "artgen",
+      "sheet": "verdant_trellis_screen_mint.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bede42677de9ad7a",
+      "recipeHash": "bede42677de9ad7a9d6810832f8926ed608f6de70af497c9d2262261262f22f2",
+      "pixelHash": "75481e0d8beca14ba485933482966b58a25738839fd997c625da6a0a09b15862"
+    },
+    "verdant_herb_table_bark": {
+      "defId": "verdant_herb_table_bark",
+      "archetype": "artgen",
+      "sheet": "verdant_herb_table_bark.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4da84068cd9126f1",
+      "recipeHash": "4da84068cd9126f15f0447016f93e8846d87d6fe0e6913292ab40dfe1b0db961",
+      "pixelHash": "f73fbf9542e149983f5ca1be12a86ce1295b205057436d3cc4d49316f04a4f56"
+    },
+    "verdant_canopy_bed": {
+      "defId": "verdant_canopy_bed",
+      "archetype": "artgen",
+      "sheet": "verdant_canopy_bed.png",
+      "frameW": 96,
+      "frameH": 92,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 60,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.375,
+      "seatZ": 0.4,
+      "occlusion": null,
+      "nearSheet": "verdant_canopy_bed.near.png",
+      "nearHash": "51fa7833cfa7f965efbebe158aed58573573e54490647020269e0e71184d6599",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:43ab5118e977edbc",
+      "recipeHash": "43ab5118e977edbc2d0dfb63adaf2cca2d4b7fecfdb47eb786316c4e6889eff2",
+      "pixelHash": "222776c56eec45dccde80058e4a91649b05230195f7cf150dc67ed5c1839a167"
+    },
+    "verdant_potting_bench": {
+      "defId": "verdant_potting_bench",
+      "archetype": "artgen",
+      "sheet": "verdant_potting_bench.png",
+      "frameW": 96,
+      "frameH": 86,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 54,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.1875,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:37fc86da1cab37a0",
+      "recipeHash": "37fc86da1cab37a0a26c020ba73956eb12608f0d3176ecf2ce621d424e7a869a",
+      "pixelHash": "45f243aa119257ca44014e76a282a7b54268c7d6b294f7efa7df23334ce812f4"
+    },
+    "verdant_terrarium_case": {
+      "defId": "verdant_terrarium_case",
+      "archetype": "artgen",
+      "sheet": "verdant_terrarium_case.png",
+      "frameW": 64,
+      "frameH": 67,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 51,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.09375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:773cd56693c22034",
+      "recipeHash": "773cd56693c220348913cebb59595a0b610e0557121eee8ea267a59d47ef4874",
+      "pixelHash": "cdcd6f13597bea8bc6441a2c903fadc465c865b73c52879192ae565b48617cf2"
+    },
+    "verdant_watering_cart": {
+      "defId": "verdant_watering_cart",
+      "archetype": "artgen",
+      "sheet": "verdant_watering_cart.png",
+      "frameW": 64,
+      "frameH": 66,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 50,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0d17a9c82181e1ed",
+      "recipeHash": "0d17a9c82181e1ed5cb05171b67f002c924f7ce33016fe7280401a10fde331a4",
+      "pixelHash": "24b0429dde81a448f9466356803bdd0988cc1d5155a6279b05744147760037e1"
+    },
+    "verdant_trellis_screen": {
+      "defId": "verdant_trellis_screen",
+      "archetype": "artgen",
+      "sheet": "verdant_trellis_screen.png",
+      "frameW": 96,
+      "frameH": 94,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7c2ed371b660b995",
+      "recipeHash": "7c2ed371b660b99509ddb27420f3f17958871aa6f7dc8d11d16bbbc81a146f62",
+      "pixelHash": "55554ee295b6cfae4bcd234a03da84c44af2c9f1a83551d67f6c0de5f4b5ad06"
+    },
+    "verdant_herb_table": {
+      "defId": "verdant_herb_table",
+      "archetype": "artgen",
+      "sheet": "verdant_herb_table.png",
+      "frameW": 64,
+      "frameH": 74,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 58,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.3125,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e54ba4eef3cbf927",
+      "recipeHash": "e54ba4eef3cbf9276d03a9839e143c8b9fba92140ce577b73643a66487ee6f52",
+      "pixelHash": "0ce06555e04354fa4053ee390d1873c022e84424ea509d2e485bacde2c68eb47"
+    },
+    "verdant_wicker_chair": {
+      "defId": "verdant_wicker_chair",
+      "archetype": "artgen",
+      "sheet": "verdant_wicker_chair.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.36,
+      "occlusion": null,
+      "nearSheet": "verdant_wicker_chair.near.png",
+      "nearHash": "5ef884d715ba299a8da85c9b6c761561162616e1019dfa7d1663f8a911cb17e2",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:487ea8008c27d4a1",
+      "recipeHash": "487ea8008c27d4a11e22659d21c292805eb4dba93572343bef8401d9d5a4e255",
+      "pixelHash": "6bcb005ec1243714f434b507fca5d1f0a3790f0816b1746a01933dfe6a73197a"
+    },
+    "verdant_plant_stand": {
+      "defId": "verdant_plant_stand",
+      "archetype": "artgen",
+      "sheet": "verdant_plant_stand.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:76bef39226bcf9be",
+      "recipeHash": "76bef39226bcf9be513c634bb5169fe2a504396db8e25870662743764ef50ad9",
+      "pixelHash": "fffd4b112c701a1ec34587ca917e7b960abc8f5389cd677aa67383360040f6fe"
+    },
+    "verdant_vine_lamp": {
+      "defId": "verdant_vine_lamp",
+      "archetype": "artgen",
+      "sheet": "verdant_vine_lamp.png",
+      "frameW": 64,
+      "frameH": 78,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 62,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.4375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bbe07e6fed88cd25",
+      "recipeHash": "bbe07e6fed88cd25333bcc9d03c4d639cd33227e7b5a780876b99097f5548d48",
+      "pixelHash": "386be83c64c0a866235f9f58860337a2c803e39507e3cd7cd1e9838c1bc9cecd"
+    },
+    "verdant_moss_rug": {
+      "defId": "verdant_moss_rug",
+      "archetype": "artgen",
+      "sheet": "verdant_moss_rug.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f716e25a42cef3bb",
+      "recipeHash": "f716e25a42cef3bb84fbd60503633fc4eec66de42df0b81b14d4ef53d049d4a3",
+      "pixelHash": "16320e2cb43fde32e1c349b15f9515950d316c1f8307bd56c5365786128c6958"
+    },
+    "verdant_garden_stool": {
+      "defId": "verdant_garden_stool",
+      "archetype": "artgen",
+      "sheet": "verdant_garden_stool.png",
+      "frameW": 64,
+      "frameH": 47,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 31,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.46875,
+      "seatZ": 0.46,
+      "occlusion": null,
+      "nearSheet": "verdant_garden_stool.near.png",
+      "nearHash": "aeeea406210b92693cf1a5e530eadfba5c0c6f4a96b098913b0a4def47fe1572",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c7978ddd1f9de151",
+      "recipeHash": "c7978ddd1f9de15168d3eab73df86bb2bc67c8a92bec0ab7d1529a09390cb7e2",
+      "pixelHash": "15c4c9dd4aff1fa04b6b9ee6926e2b536e148f7403efa93e794a8f01a1bc1202"
+    },
+    "verdant_seed_drawers": {
+      "defId": "verdant_seed_drawers",
+      "archetype": "artgen",
+      "sheet": "verdant_seed_drawers.png",
+      "frameW": 64,
+      "frameH": 56,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 40,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.75,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8e48acbe959f33d6",
+      "recipeHash": "8e48acbe959f33d6ef2eeb94fc4f51a3226b0110d4b8dcbd14c7504581103e3f",
+      "pixelHash": "44b24126b601e02e3be170a7ec6827c56e42209eb06c0da4e53c98bbe94ea4e6"
+    },
     "tidal_shell_bed_aqua": {
       "defId": "tidal_shell_bed_aqua",
       "archetype": "artgen",
@@ -15328,6 +16302,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "verdant_trellis_panel": {
+      "defId": "verdant_trellis_panel",
+      "archetype": "artgen",
+      "sheet": "verdant_trellis_panel.png",
+      "frameW": 64,
+      "frameH": 120,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 104,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.75,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 19,
+        "mountU": 2,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:85ab3f308682fc31",
+      "recipeHash": "85ab3f308682fc31d49baf186e161591cf512692a0f3f73f78a8beb9a1402cf9",
+      "pixelHash": "7346116525d1d6ac56e32198b159ebc03f1ff13d19c679681ef4512c6bed60d6"
+    },
+    "verdant_herb_pressing_frame": {
+      "defId": "verdant_herb_pressing_frame",
+      "archetype": "artgen",
+      "sheet": "verdant_herb_pressing_frame.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 16,
+        "mountU": 2,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:339258826846cd15",
+      "recipeHash": "339258826846cd15d5d264144f799ba6c453b89604d4e9ed3b4422b3d87fd919",
+      "pixelHash": "c2d2d9701e67631bdb30a7605dde4768d4bada7c1d1d8e3edfaa5ee557671fe4"
+    },
+    "verdant_seed_chart": {
+      "defId": "verdant_seed_chart",
+      "archetype": "artgen",
+      "sheet": "verdant_seed_chart.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 13,
+        "mountU": 2,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:4728a764c71e5b5f",
+      "recipeHash": "4728a764c71e5b5f3dc480f6b0f4d4c5ecbdf8ccaef9f2f690ba3fe3d413ef3b",
+      "pixelHash": "7c59f204f032975a423aeb330a8253ace68e5ab75c81dd7e87374c9ba356771b"
+    },
+    "verdant_vine_mirror": {
+      "defId": "verdant_vine_mirror",
+      "archetype": "artgen",
+      "sheet": "verdant_vine_mirror.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 12,
+        "mountU": 0,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5aef3aaea56f13a3",
+      "recipeHash": "5aef3aaea56f13a3d0fac238f0a9d886a641d55bf753eacbf55d798d7ae38a1f",
+      "pixelHash": "32cbe65dd384d9fd665ec9dce0b6447cc40d92fbca46a93f2d500b65f4417109"
+    },
+    "verdant_glass_shelf": {
+      "defId": "verdant_glass_shelf",
+      "archetype": "artgen",
+      "sheet": "verdant_glass_shelf.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 30,
+        "planeH": 10,
+        "mountU": 0,
+        "mountV": 52,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:256b78524c37bcdf",
+      "recipeHash": "256b78524c37bcdfceef008ccca0f6ddd503dac49125f22babc00c7195f084e8",
+      "pixelHash": "2b23dcf3ed7426d40d7b67e371784b08d75c456a9a7a1beddaf8956fcde91e3e"
+    },
+    "verdant_botanical_print": {
+      "defId": "verdant_botanical_print",
+      "archetype": "artgen",
+      "sheet": "verdant_botanical_print.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 44,
+        "gap": 0,
+        "depth": 0.09
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:06fcff7a2208dc89",
+      "recipeHash": "06fcff7a2208dc891308d8bba7d5b76a86ce38de33eff2d38ddb98a21874c98b",
+      "pixelHash": "6eee3f5330c614914d9a46d7757affaeb7b2f6a9d43bffb7f681cf5e48af60a3"
+    },
+    "verdant_mist_rail": {
+      "defId": "verdant_mist_rail",
+      "archetype": "artgen",
+      "sheet": "verdant_mist_rail.png",
+      "frameW": 64,
+      "frameH": 111,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 95,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 8,
+        "mountU": 2,
+        "mountV": 54,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:016692c45f79fa40",
+      "recipeHash": "016692c45f79fa4020bdc72ae8aec81826104e72bd1408ce9221ce136656225f",
+      "pixelHash": "5da460d1553b4e3833f3aa76c517e29ebdd723564d4cdbbf2d4f5aee440bc526"
+    },
+    "verdant_leaf_decal": {
+      "defId": "verdant_leaf_decal",
+      "archetype": "artgen",
+      "sheet": "verdant_leaf_decal.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 15,
+        "mountU": 4,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.08
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d2f80ab49a50751d",
+      "recipeHash": "d2f80ab49a50751db7e512bdf3c755710d6124d40e95ac2a29100aab22f053f0",
+      "pixelHash": "c1612ea583839081b741326b70970b1dd17e1c113916e2494ea22f585d261b1d"
+    },
+    "verdant_grow_light_bar": {
+      "defId": "verdant_grow_light_bar",
+      "archetype": "artgen",
+      "sheet": "verdant_grow_light_bar.png",
+      "frameW": 64,
+      "frameH": 111,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 95,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.46875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 4,
+        "mountU": 0,
+        "mountV": 53,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cbb76d288a3e6561",
+      "recipeHash": "cbb76d288a3e6561ad8221ff8a0caa10da97653fadcc4ef3d31bd83abd54f506",
+      "pixelHash": "6377d870b9a69207e48ce515ce30ecf72b949068c4e7c65aec43f744b92a1769"
+    },
+    "verdant_bee_hotel": {
+      "defId": "verdant_bee_hotel",
+      "archetype": "artgen",
+      "sheet": "verdant_bee_hotel.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 14,
+        "mountU": 4,
+        "mountV": 46,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:15b044f1a4ab7cc5",
+      "recipeHash": "15b044f1a4ab7cc549df53c7c7f8a3581b6096490620f6e35dd93b5ea5900a46",
+      "pixelHash": "ca57fb751e437335eef241d1f7d3f273a840a64f646405537151c2314355e3ee"
     },
     "tidal_porthole_frame": {
       "defId": "tidal_porthole_frame",

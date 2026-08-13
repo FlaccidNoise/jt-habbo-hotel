@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_seed_chart",
+  "archetype": "artgen",
+  "sheet": "verdant_seed_chart.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 13,
+    "mountU": 2,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4728a764c71e5b5f",
+  "recipeHash": "4728a764c71e5b5f3dc480f6b0f4d4c5ecbdf8ccaef9f2f690ba3fe3d413ef3b",
+  "pixelHash": "7c59f204f032975a423aeb330a8253ace68e5ab75c81dd7e87374c9ba356771b"
+}

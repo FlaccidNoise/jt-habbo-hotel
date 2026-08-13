@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_botanical_print",
+  "archetype": "artgen",
+  "sheet": "verdant_botanical_print.png",
+  "frameW": 64,
+  "frameH": 118,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 102,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.6875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 13,
+    "mountU": 4,
+    "mountV": 44,
+    "gap": 0,
+    "depth": 0.09
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:06fcff7a2208dc89",
+  "recipeHash": "06fcff7a2208dc891308d8bba7d5b76a86ce38de33eff2d38ddb98a21874c98b",
+  "pixelHash": "6eee3f5330c614914d9a46d7757affaeb7b2f6a9d43bffb7f681cf5e48af60a3"
+}

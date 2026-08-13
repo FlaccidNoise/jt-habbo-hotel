@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_potting_bench",
+  "archetype": "artgen",
+  "sheet": "verdant_potting_bench.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:37fc86da1cab37a0",
+  "recipeHash": "37fc86da1cab37a0a26c020ba73956eb12608f0d3176ecf2ce621d424e7a869a",
+  "pixelHash": "45f243aa119257ca44014e76a282a7b54268c7d6b294f7efa7df23334ce812f4"
+}

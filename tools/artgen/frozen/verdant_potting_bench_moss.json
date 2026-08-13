@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_potting_bench_moss",
+  "archetype": "artgen",
+  "sheet": "verdant_potting_bench_moss.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:97f578be60bc1e53",
+  "recipeHash": "97f578be60bc1e539c1bdaa7537d7e18dec3be65ba6428d60e244501393d0f2b",
+  "pixelHash": "b4f88487b724b17caac52c1e07d2488f395fd76340ec612253b96016c55972f2"
+}

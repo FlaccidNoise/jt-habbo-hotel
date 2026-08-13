@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_bee_hotel",
+  "archetype": "artgen",
+  "sheet": "verdant_bee_hotel.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 14,
+    "mountU": 4,
+    "mountV": 46,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:15b044f1a4ab7cc5",
+  "recipeHash": "15b044f1a4ab7cc549df53c7c7f8a3581b6096490620f6e35dd93b5ea5900a46",
+  "pixelHash": "ca57fb751e437335eef241d1f7d3f273a840a64f646405537151c2314355e3ee"
+}

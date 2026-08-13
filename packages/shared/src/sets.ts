@@ -37,6 +37,14 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     reward: "bedroom_vanity_ivory",
     badge: "set_suite",
   },
+
+  {
+    id: "verdant",
+    name: "The Verdant Set",
+    members: ["verdant_canopy_bed", "verdant_potting_bench", "verdant_terrarium_case", "verdant_trellis_screen"],
+    reward: "verdant_canopy_bed_rain",
+    badge: "set_verdant",
+  },
   {
     id: "tidal",
     name: "The Tidal Set",

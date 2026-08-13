@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_seed_drawers",
+  "archetype": "artgen",
+  "sheet": "verdant_seed_drawers.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8e48acbe959f33d6",
+  "recipeHash": "8e48acbe959f33d6ef2eeb94fc4f51a3226b0110d4b8dcbd14c7504581103e3f",
+  "pixelHash": "44b24126b601e02e3be170a7ec6827c56e42209eb06c0da4e53c98bbe94ea4e6"
+}

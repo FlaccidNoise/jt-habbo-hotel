@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_plant_stand_sprout",
+  "archetype": "artgen",
+  "sheet": "verdant_plant_stand_sprout.png",
+  "frameW": 64,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:b3cf74a649583b2a",
+  "recipeHash": "b3cf74a649583b2aebe7331c7453d6473623cbcce6212d2f49c4ea858df1a4af",
+  "pixelHash": "738c31786a1b638a18e1556bc2781fa2e7fea869640825b757e623d03520ad09"
+}

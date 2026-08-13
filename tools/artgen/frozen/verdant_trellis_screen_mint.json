@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_trellis_screen_mint",
+  "archetype": "artgen",
+  "sheet": "verdant_trellis_screen_mint.png",
+  "frameW": 96,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bede42677de9ad7a",
+  "recipeHash": "bede42677de9ad7a9d6810832f8926ed608f6de70af497c9d2262261262f22f2",
+  "pixelHash": "75481e0d8beca14ba485933482966b58a25738839fd997c625da6a0a09b15862"
+}

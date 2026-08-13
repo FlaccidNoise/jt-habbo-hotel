@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_watering_cart_rose",
+  "archetype": "artgen",
+  "sheet": "verdant_watering_cart_rose.png",
+  "frameW": 64,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1876df87adc894d5",
+  "recipeHash": "1876df87adc894d506fccc300bc5d51de783d9d480585c7e38b67ff18a17c56b",
+  "pixelHash": "12e1d4aa7640db3c7c8fc316d22035a61e997f375cb868ed6b793d3e8000cd5d"
+}

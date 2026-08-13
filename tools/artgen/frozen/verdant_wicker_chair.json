@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_wicker_chair",
+  "archetype": "artgen",
+  "sheet": "verdant_wicker_chair.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.36,
+  "occlusion": null,
+  "nearSheet": "verdant_wicker_chair.near.png",
+  "nearHash": "5ef884d715ba299a8da85c9b6c761561162616e1019dfa7d1663f8a911cb17e2",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:487ea8008c27d4a1",
+  "recipeHash": "487ea8008c27d4a11e22659d21c292805eb4dba93572343bef8401d9d5a4e255",
+  "pixelHash": "6bcb005ec1243714f434b507fca5d1f0a3790f0816b1746a01933dfe6a73197a"
+}

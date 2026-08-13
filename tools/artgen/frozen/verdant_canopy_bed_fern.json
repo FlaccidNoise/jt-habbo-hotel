@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_canopy_bed_fern",
+  "archetype": "artgen",
+  "sheet": "verdant_canopy_bed_fern.png",
+  "frameW": 96,
+  "frameH": 92,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 60,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.375,
+  "seatZ": 0.4,
+  "occlusion": null,
+  "nearSheet": "verdant_canopy_bed_fern.near.png",
+  "nearHash": "56c4523cb7d2ef6bb6439c705068f4f55e89ed2a2e1760bba5a1015026a9432d",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1e960fc209db5bda",
+  "recipeHash": "1e960fc209db5bda0fc593d2cf73a5e49bfb6892f600140c1a942441c59941f7",
+  "pixelHash": "6d9f28edab4f6fc738f1a78a0bab4ab01b826e39ac06e49526e7a1c6de309658"
+}

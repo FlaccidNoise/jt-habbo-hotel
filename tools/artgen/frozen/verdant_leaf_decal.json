@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_leaf_decal",
+  "archetype": "artgen",
+  "sheet": "verdant_leaf_decal.png",
+  "frameW": 64,
+  "frameH": 119,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 103,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 15,
+    "mountU": 4,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d2f80ab49a50751d",
+  "recipeHash": "d2f80ab49a50751db7e512bdf3c755710d6124d40e95ac2a29100aab22f053f0",
+  "pixelHash": "c1612ea583839081b741326b70970b1dd17e1c113916e2494ea22f585d261b1d"
+}

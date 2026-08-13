@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_vine_lamp",
+  "archetype": "artgen",
+  "sheet": "verdant_vine_lamp.png",
+  "frameW": 64,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bbe07e6fed88cd25",
+  "recipeHash": "bbe07e6fed88cd25333bcc9d03c4d639cd33227e7b5a780876b99097f5548d48",
+  "pixelHash": "386be83c64c0a866235f9f58860337a2c803e39507e3cd7cd1e9838c1bc9cecd"
+}

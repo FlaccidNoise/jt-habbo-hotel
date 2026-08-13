@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_seed_drawers_stone",
+  "archetype": "artgen",
+  "sheet": "verdant_seed_drawers_stone.png",
+  "frameW": 64,
+  "frameH": 56,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 40,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.75,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a8c837b1eb8f78b7",
+  "recipeHash": "a8c837b1eb8f78b78a7c7e3f99b6e520097794c7dd049e9c5343f9ec39891969",
+  "pixelHash": "a450284315a5eb29e02f259752f05af5af68b85d30f027b0567ab88e31a0eb06"
+}

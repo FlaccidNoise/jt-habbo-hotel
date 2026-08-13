@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_trellis_panel",
+  "archetype": "artgen",
+  "sheet": "verdant_trellis_panel.png",
+  "frameW": 64,
+  "frameH": 120,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 104,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.75,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 19,
+    "mountU": 2,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.08
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:85ab3f308682fc31",
+  "recipeHash": "85ab3f308682fc31d49baf186e161591cf512692a0f3f73f78a8beb9a1402cf9",
+  "pixelHash": "7346116525d1d6ac56e32198b159ebc03f1ff13d19c679681ef4512c6bed60d6"
+}

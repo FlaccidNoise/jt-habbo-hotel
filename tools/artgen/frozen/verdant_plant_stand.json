@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_plant_stand",
+  "archetype": "artgen",
+  "sheet": "verdant_plant_stand.png",
+  "frameW": 64,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:76bef39226bcf9be",
+  "recipeHash": "76bef39226bcf9be513c634bb5169fe2a504396db8e25870662743764ef50ad9",
+  "pixelHash": "fffd4b112c701a1ec34587ca917e7b960abc8f5389cd677aa67383360040f6fe"
+}

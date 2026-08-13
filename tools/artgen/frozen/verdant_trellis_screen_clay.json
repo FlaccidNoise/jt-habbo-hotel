@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_trellis_screen_clay",
+  "archetype": "artgen",
+  "sheet": "verdant_trellis_screen_clay.png",
+  "frameW": 96,
+  "frameH": 94,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:673e8ac4116c4924",
+  "recipeHash": "673e8ac4116c49245b6a85bb6655177ef6e0eff04266ddd17716dc3fdf7aff9b",
+  "pixelHash": "b241f00dcb2c5a510e5d2c5245987c9cdf24f0cbdfdad0ca41021fc243ad9371"
+}

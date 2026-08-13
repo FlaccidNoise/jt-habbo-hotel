@@ -1351,6 +1351,110 @@
       },
       "styleVersion": 4,
       "pixelHash": "9c95e2c49459711d2bb8609ec28fd080e641b8f6f9730d4b1c55d9950d2a0333"
+    },
+    {
+      "id": "floor_verdant_greenhouse_tile",
+      "kind": "floor",
+      "sheet": "floor_verdant_greenhouse_tile.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "e59b2d44b98094b9afd6f25badf7dc65e21b60d554996d659bbbed6c5afd925b"
+    },
+    {
+      "id": "floor_verdant_moss",
+      "kind": "floor",
+      "sheet": "floor_verdant_moss.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "b5de65c42bc59fabe8709ca845d6873ae4435f2895f92dbb91301e09f0a0791b"
+    },
+    {
+      "id": "floor_verdant_seed",
+      "kind": "floor",
+      "sheet": "floor_verdant_seed.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "d5da04366d81ac120fbbb88dd3098bafc32bf739ec66bca9999f9f75df912ae4"
+    },
+    {
+      "id": "floor_verdant_terracotta",
+      "kind": "floor",
+      "sheet": "floor_verdant_terracotta.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "f918af5bc581c494a6a7cb74942521ececafce46510a73ef1ef8dc9afd7865a0"
+    },
+    {
+      "id": "wall_verdant_glass_grid",
+      "kind": "wall",
+      "sheet": "wall_verdant_glass_grid.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "ab316894641970bd623f0565f4131da3b7c7e151aed893bc50173794ba055af2"
+    },
+    {
+      "id": "wall_verdant_trellis",
+      "kind": "wall",
+      "sheet": "wall_verdant_trellis.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "a2e318c53b48a093ef62b39dc226d26ec1516530a03d1c1d64ba6c2dc8e9de78"
+    },
+    {
+      "id": "wall_verdant_botanical",
+      "kind": "wall",
+      "sheet": "wall_verdant_botanical.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "13791fb9e56655a637915665c485c78fccffc9b2bc8f4165b6806f5be28883a2"
+    },
+    {
+      "id": "wall_verdant_dew",
+      "kind": "wall",
+      "sheet": "wall_verdant_dew.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "0a145096e4b10d3d59dbf720ee8543ef862fcd5212b7ca572d9c3a29f48b0307"
     }
   ]
 }

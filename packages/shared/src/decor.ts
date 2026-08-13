@@ -292,6 +292,14 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_tidal_bubble", name: "Tidal Bubble", tile: { w: 32, h: 32 }, cap: 0x2f8f8f },
   { kind: "wall", id: "wall_tidal_kelp", name: "Tidal Kelp", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
   { kind: "wall", id: "wall_tidal_porthole", name: "Tidal Porthole", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
+  { kind: "floor", id: "floor_verdant_greenhouse_tile", name: "Verdant Greenhouse Tile", tile: { w: 64, h: 32 }, sides: { left: 0x2e8b57, right: 0x8d9eb1 } },
+  { kind: "floor", id: "floor_verdant_moss", name: "Verdant Moss", tile: { w: 64, h: 32 }, sides: { left: 0x2e8b57, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_verdant_seed", name: "Verdant Seed", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0x9c9484 } },
+  { kind: "floor", id: "floor_verdant_terracotta", name: "Verdant Terracotta", tile: { w: 64, h: 32 }, sides: { left: 0xb55a19, right: 0x656056 } },
+  { kind: "wall", id: "wall_verdant_glass_grid", name: "Verdant Glass Grid", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
+  { kind: "wall", id: "wall_verdant_trellis", name: "Verdant Trellis", tile: { w: 32, h: 32 }, cap: 0x8b4513 },
+  { kind: "wall", id: "wall_verdant_botanical", name: "Verdant Botanical", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
+  { kind: "wall", id: "wall_verdant_dew", name: "Verdant Dew", tile: { w: 32, h: 32 }, cap: 0x2f8f8f },
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

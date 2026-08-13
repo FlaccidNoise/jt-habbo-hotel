@@ -1,0 +1,34 @@
+{
+  "defId": "verdant_garden_stool_petal",
+  "archetype": "artgen",
+  "sheet": "verdant_garden_stool_petal.png",
+  "frameW": 64,
+  "frameH": 47,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 31,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.46875,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "verdant_garden_stool_petal.near.png",
+  "nearHash": "aeeea406210b92693cf1a5e530eadfba5c0c6f4a96b098913b0a4def47fe1572",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5550cea921eca050",
+  "recipeHash": "5550cea921eca050a057fc692153411ee8675f8018066ba28cc0a934928258e0",
+  "pixelHash": "9776f74467eae3a702e1dc3711bc2d40841b73140326e0a299a0149bebe3ac74"
+}

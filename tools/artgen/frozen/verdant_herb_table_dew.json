@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_herb_table_dew",
+  "archetype": "artgen",
+  "sheet": "verdant_herb_table_dew.png",
+  "frameW": 64,
+  "frameH": 74,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 58,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e06fdd22d04ddd6a",
+  "recipeHash": "e06fdd22d04ddd6a3eaefd0b78dcbb774c43e97a7c48385cd6ecad235523e4df",
+  "pixelHash": "747d8ad130af74eaa949aa479cdfc96c4f6c0906409fd857b0ebcdb65fab6ccc"
+}

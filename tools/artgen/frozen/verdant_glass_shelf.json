@@ -1,0 +1,37 @@
+{
+  "defId": "verdant_glass_shelf",
+  "archetype": "artgen",
+  "sheet": "verdant_glass_shelf.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 30,
+    "planeH": 10,
+    "mountU": 0,
+    "mountV": 52,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:256b78524c37bcdf",
+  "recipeHash": "256b78524c37bcdfceef008ccca0f6ddd503dac49125f22babc00c7195f084e8",
+  "pixelHash": "2b23dcf3ed7426d40d7b67e371784b08d75c456a9a7a1beddaf8956fcde91e3e"
+}

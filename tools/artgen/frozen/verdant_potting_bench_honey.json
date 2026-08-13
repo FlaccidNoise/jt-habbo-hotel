@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_potting_bench_honey",
+  "archetype": "artgen",
+  "sheet": "verdant_potting_bench_honey.png",
+  "frameW": 96,
+  "frameH": 86,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 54,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.1875,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e3a8184bc505b89d",
+  "recipeHash": "e3a8184bc505b89d9d51f32346bd23ef2edd8dfb56438debb7e26a14cf8363d4",
+  "pixelHash": "3263b6b30dadea43d1c51d3c97f95aa7d1ace3c54c42d38909c9f606f7996825"
+}

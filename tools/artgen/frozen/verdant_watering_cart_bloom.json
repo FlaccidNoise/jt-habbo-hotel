@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_watering_cart_bloom",
+  "archetype": "artgen",
+  "sheet": "verdant_watering_cart_bloom.png",
+  "frameW": 64,
+  "frameH": 66,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 50,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:2427012d907f4e0f",
+  "recipeHash": "2427012d907f4e0f0dff4d42c01867f44ed5b848961fa0d5e5c79d5b87fa8df4",
+  "pixelHash": "251296438747ca6441c48fa61b6a6c8a2c8dfe944e1afc96565f398f0086983f"
+}

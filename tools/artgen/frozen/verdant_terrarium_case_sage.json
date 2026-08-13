@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_terrarium_case_sage",
+  "archetype": "artgen",
+  "sheet": "verdant_terrarium_case_sage.png",
+  "frameW": 64,
+  "frameH": 67,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 51,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.09375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:4995872c261004ab",
+  "recipeHash": "4995872c261004ab91eeecad5f128de039e13e8650515150b4d8814377c87980",
+  "pixelHash": "49a770d6d1564c882bcb861e9e778a955f3bc3faa9d16d3fa843e212fa42a04f"
+}

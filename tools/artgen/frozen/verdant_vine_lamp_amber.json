@@ -1,0 +1,32 @@
+{
+  "defId": "verdant_vine_lamp_amber",
+  "archetype": "artgen",
+  "sheet": "verdant_vine_lamp_amber.png",
+  "frameW": 64,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 62,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.4375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9b0863b6d2e813c3",
+  "recipeHash": "9b0863b6d2e813c36f0d8598df7b18757c9cf6cccba9cc074118179745767157",
+  "pixelHash": "744fd90bec613146bdc3628d3d3d8779e0a1a53e581ca0f907339f09fe25be9d"
+}
