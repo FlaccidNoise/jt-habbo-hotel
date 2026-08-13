@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_root_chair_bark",
+  "archetype": "artgen",
+  "sheet": "fablewood_root_chair_bark.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.5,
+  "occlusion": null,
+  "nearSheet": "fablewood_root_chair_bark.near.png",
+  "nearHash": "c9827873c153509a8182d6c7c76f9e338476c394d999bd9e0317f468e7cdb91e",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cd1eed204d24dd1b",
+  "recipeHash": "cd1eed204d24dd1b3b10b2c2e22b2e2fe1e9e2bcf45db44fdc5f9785ee115fb1",
+  "pixelHash": "793c4bcc202619ed0f55c4935b8863a08d92055b9af15056a0c36b01bc54464b"
+}

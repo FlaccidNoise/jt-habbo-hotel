@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_wizard_desk",
+  "archetype": "artgen",
+  "sheet": "fablewood_wizard_desk.png",
+  "frameW": 96,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:914a2e9ee8138cac",
+  "recipeHash": "914a2e9ee8138cacdf8424704af80b3daa57a63d45b9e1cf430e558abb9baa18",
+  "pixelHash": "029a7e6600495cc2c94096bf5796eb792706598e5754ab33599230f1231e8a34"
+}

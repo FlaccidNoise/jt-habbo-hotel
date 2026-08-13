@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_mushroom_stool",
+  "archetype": "artgen",
+  "sheet": "fablewood_mushroom_stool.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": 0.5,
+  "occlusion": null,
+  "nearSheet": "fablewood_mushroom_stool.near.png",
+  "nearHash": "72edbfed942d62e4b0ab43584bfe19b70077453d06aaa887aa3c72730d2e4367",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bdc0391cebb12a60",
+  "recipeHash": "bdc0391cebb12a60ed952b774c990e1f4bd0084de2d4a8e3716328621fb7e946",
+  "pixelHash": "49638820ae81da637197d6f6a45df5c81850d295a7b065b7b8462a2dc2fd49aa"
+}

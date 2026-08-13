@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_spellbook_shelf_dawn",
+  "archetype": "artgen",
+  "sheet": "fablewood_spellbook_shelf_dawn.png",
+  "frameW": 64,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 64,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8aba73d3faa18079",
+  "recipeHash": "8aba73d3faa18079065a891de7284920d80e1146b112e33c1f6759ccb2583de1",
+  "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+}

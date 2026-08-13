@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_root_chair",
+  "archetype": "artgen",
+  "sheet": "fablewood_root_chair.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.5,
+  "occlusion": null,
+  "nearSheet": "fablewood_root_chair.near.png",
+  "nearHash": "22d37bd5a8d661e365d6eab9ce73c9e2d67a7695a8f263a1c11628283206b18e",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:61947efe57e0cb76",
+  "recipeHash": "61947efe57e0cb769778ab379bcb3a5fedf393f0cefb64b530bef38302415128",
+  "pixelHash": "2c828fb1dc79857799adf55239616e8264af9aaf80452ba38e5f1858112e7769"
+}

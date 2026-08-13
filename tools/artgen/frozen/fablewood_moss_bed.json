@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_moss_bed",
+  "archetype": "artgen",
+  "sheet": "fablewood_moss_bed.png",
+  "frameW": 96,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": 0.6,
+  "occlusion": null,
+  "nearSheet": "fablewood_moss_bed.near.png",
+  "nearHash": "f5f009743d20d364a270ccc6a2f4fd376a3b6011779079b48a06302f8303116b",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:be40c76b67528c63",
+  "recipeHash": "be40c76b67528c63c7c90d684cf7116c6398556f65a0d440d18db2c101e37f56",
+  "pixelHash": "592af001425ed6e95a8990583e7d574c5327798302e3cad85105bf09223bb89e"
+}

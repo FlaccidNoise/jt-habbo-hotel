@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_alchemy_bench_fern",
+  "archetype": "artgen",
+  "sheet": "fablewood_alchemy_bench_fern.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.56,
+  "occlusion": null,
+  "nearSheet": "fablewood_alchemy_bench_fern.near.png",
+  "nearHash": "2946096dd9c1b73f5c005481160976c43429d4512540efd2d51e24a7a6e3f9d1",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d4eb3756c9d13933",
+  "recipeHash": "d4eb3756c9d1393383c3ee8e2a0844a4c7345938367b0487e91dbec5be68fb1c",
+  "pixelHash": "91c07e1abfa664219e44b490e21cd5dda4fd35639448ea8b3c7e1904cae60bb2"
+}

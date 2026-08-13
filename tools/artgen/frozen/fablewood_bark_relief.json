@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_bark_relief",
+  "archetype": "artgen",
+  "sheet": "fablewood_bark_relief.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 13,
+    "mountU": 4,
+    "mountV": 45,
+    "gap": 0,
+    "depth": 0.1
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7a9e11b510102c49",
+  "recipeHash": "7a9e11b510102c496e4684dbbb1fa6a84df1251df2f5a90dcba0976b834bf509",
+  "pixelHash": "f42c6436c92856fa764be70962ec96eee371d1e116fc1ee1a5e6d8cee47efcfe"
+}

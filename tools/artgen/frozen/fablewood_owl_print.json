@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_owl_print",
+  "archetype": "artgen",
+  "sheet": "fablewood_owl_print.png",
+  "frameW": 64,
+  "frameH": 116,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 100,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 12,
+    "mountU": 4,
+    "mountV": 45,
+    "gap": 0,
+    "depth": 0.19
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:97e753c047b3a9e6",
+  "recipeHash": "97e753c047b3a9e61379eec501acc203bc493b95418581001be398054cafa1b1",
+  "pixelHash": "814720771be1a151653e4a914b144d1851a1a85737deb7c7904c6813df7e5a88"
+}

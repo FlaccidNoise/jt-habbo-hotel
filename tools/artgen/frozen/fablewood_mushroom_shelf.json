@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_mushroom_shelf",
+  "archetype": "artgen",
+  "sheet": "fablewood_mushroom_shelf.png",
+  "frameW": 64,
+  "frameH": 114,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 98,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 26,
+    "planeH": 7,
+    "mountU": 0,
+    "mountV": 51,
+    "gap": 0,
+    "depth": 0.2
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:25ef7491f7eb4e9c",
+  "recipeHash": "25ef7491f7eb4e9ccf42b4510d3cf353dc3ecb15b27094556f10bef386463e8b",
+  "pixelHash": "a30a202998e4f0cd1c3a39c007c17747c02fd930ce6f7dd632d45759c509f69a"
+}

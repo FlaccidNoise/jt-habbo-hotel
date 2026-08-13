@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_firefly_lantern",
+  "archetype": "artgen",
+  "sheet": "fablewood_firefly_lantern.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:463f5090b1f5e7ea",
+  "recipeHash": "463f5090b1f5e7ea7f96a3bd94884513353748ec14fc8efae780586d7ceee4c5",
+  "pixelHash": "8fa844bea33c103506927106905b0b04c1121815890e31def0602a988b602023"
+}

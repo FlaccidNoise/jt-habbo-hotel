@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_runestone_mist",
+  "archetype": "artgen",
+  "sheet": "fablewood_runestone_mist.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:923ffbb32917210e",
+  "recipeHash": "923ffbb32917210e5b1c0c1e58197fc7fe38df79c28397f8199f7a60d0c7d690",
+  "pixelHash": "fb0bc65f8a04c4c828df676df047c65b170351f8dc7249cb07980f933ce0d04d"
+}

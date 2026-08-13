@@ -7915,6 +7915,994 @@
       "recipeHash": "ed393fae7a65f043120333ddb8efc331b5c42cb7e871920bcf58fe23c760dab9",
       "pixelHash": "001e281d6171361bd4f575700e3869d57318ac2228b2f84df9e258ad24927ce2"
     },
+    "fablewood_moss_bed_moss": {
+      "defId": "fablewood_moss_bed_moss",
+      "archetype": "artgen",
+      "sheet": "fablewood_moss_bed_moss.png",
+      "frameW": 96,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.6,
+      "occlusion": null,
+      "nearSheet": "fablewood_moss_bed_moss.near.png",
+      "nearHash": "eb5acf3365a1f01f87e6f0908fc355b39813cbcf82ba7ff3dbe228967d6bbec0",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:3bc43ed5f535e8c0",
+      "recipeHash": "3bc43ed5f535e8c0f8b7cd0c00029d8d99ad39ceeab0a2f00b5dc6644cc106ae",
+      "pixelHash": "cbe0828f0b2b374b6d39e59d5ee2105271ae65fbdf54e292265aa39b1e107aec"
+    },
+    "fablewood_wizard_desk_acorn": {
+      "defId": "fablewood_wizard_desk_acorn",
+      "archetype": "artgen",
+      "sheet": "fablewood_wizard_desk_acorn.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:1ff773e77e1f3450",
+      "recipeHash": "1ff773e77e1f34502dda5b1c3abab43578f4152cabc1e19ef790ea6778cf3553",
+      "pixelHash": "a3a0b3fb05a80ca2002a60e8388b989391ceffdf637eb9200b311182b72fc902"
+    },
+    "fablewood_alchemy_bench_fern": {
+      "defId": "fablewood_alchemy_bench_fern",
+      "archetype": "artgen",
+      "sheet": "fablewood_alchemy_bench_fern.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.56,
+      "occlusion": null,
+      "nearSheet": "fablewood_alchemy_bench_fern.near.png",
+      "nearHash": "2946096dd9c1b73f5c005481160976c43429d4512540efd2d51e24a7a6e3f9d1",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d4eb3756c9d13933",
+      "recipeHash": "d4eb3756c9d1393383c3ee8e2a0844a4c7345938367b0487e91dbec5be68fb1c",
+      "pixelHash": "91c07e1abfa664219e44b490e21cd5dda4fd35639448ea8b3c7e1904cae60bb2"
+    },
+    "fablewood_root_chair_bark": {
+      "defId": "fablewood_root_chair_bark",
+      "archetype": "artgen",
+      "sheet": "fablewood_root_chair_bark.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.5,
+      "occlusion": null,
+      "nearSheet": "fablewood_root_chair_bark.near.png",
+      "nearHash": "c9827873c153509a8182d6c7c76f9e338476c394d999bd9e0317f468e7cdb91e",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cd1eed204d24dd1b",
+      "recipeHash": "cd1eed204d24dd1b3b10b2c2e22b2e2fe1e9e2bcf45db44fdc5f9785ee115fb1",
+      "pixelHash": "793c4bcc202619ed0f55c4935b8863a08d92055b9af15056a0c36b01bc54464b"
+    },
+    "fablewood_spellbook_shelf_dawn": {
+      "defId": "fablewood_spellbook_shelf_dawn",
+      "archetype": "artgen",
+      "sheet": "fablewood_spellbook_shelf_dawn.png",
+      "frameW": 64,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 64,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8aba73d3faa18079",
+      "recipeHash": "8aba73d3faa18079065a891de7284920d80e1146b112e33c1f6759ccb2583de1",
+      "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+    },
+    "fablewood_crystal_orb_berry": {
+      "defId": "fablewood_crystal_orb_berry",
+      "archetype": "artgen",
+      "sheet": "fablewood_crystal_orb_berry.png",
+      "frameW": 64,
+      "frameH": 53,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 37,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:293fdc37e363af0a",
+      "recipeHash": "293fdc37e363af0a51e67fc048c11d9ad5197b66fa9ceea4e26fd504d2ff7835",
+      "pixelHash": "e924a6281d7a50578bb625f2a0624904c178822e4f7138992b9319517100eedc"
+    },
+    "fablewood_runestone_mist": {
+      "defId": "fablewood_runestone_mist",
+      "archetype": "artgen",
+      "sheet": "fablewood_runestone_mist.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:923ffbb32917210e",
+      "recipeHash": "923ffbb32917210e5b1c0c1e58197fc7fe38df79c28397f8199f7a60d0c7d690",
+      "pixelHash": "fb0bc65f8a04c4c828df676df047c65b170351f8dc7249cb07980f933ce0d04d"
+    },
+    "fablewood_firefly_lantern_clover": {
+      "defId": "fablewood_firefly_lantern_clover",
+      "archetype": "artgen",
+      "sheet": "fablewood_firefly_lantern_clover.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a0a23f6cde5d8981",
+      "recipeHash": "a0a23f6cde5d8981809c60dc5f28973c9c1ad44bd2daa0b408569f848ebe8803",
+      "pixelHash": "8fa844bea33c103506927106905b0b04c1121815890e31def0602a988b602023"
+    },
+    "fablewood_stump_table_amber": {
+      "defId": "fablewood_stump_table_amber",
+      "archetype": "artgen",
+      "sheet": "fablewood_stump_table_amber.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:9bcf4fa65c55edd9",
+      "recipeHash": "9bcf4fa65c55edd93300b92f26dba583f76afc79e0da132397c2e6586d931127",
+      "pixelHash": "6b7459e84f9b0acd7e23cc75f377c649dc35bdf2aa5429f4544f1ac2bdcd29d4"
+    },
+    "fablewood_leaf_rug_thorn": {
+      "defId": "fablewood_leaf_rug_thorn",
+      "archetype": "artgen",
+      "sheet": "fablewood_leaf_rug_thorn.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:10702a8a934f32cf",
+      "recipeHash": "10702a8a934f32cfd78073d85c5b00c4fbbfe411ba28f7db7223406bdcd97c3b",
+      "pixelHash": "743bafa79e1d7e19c08264aedb27e76ef06b36ad151d66e5e5a4731bd60a3d58"
+    },
+    "fablewood_mushroom_stool_willow": {
+      "defId": "fablewood_mushroom_stool_willow",
+      "archetype": "artgen",
+      "sheet": "fablewood_mushroom_stool_willow.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": 0.5,
+      "occlusion": null,
+      "nearSheet": "fablewood_mushroom_stool_willow.near.png",
+      "nearHash": "27bd2934b7cc7cd47bad8ad069777d1264bdebe38077576d8813ff33e20e0afc",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:d0a5c9fb4f9db657",
+      "recipeHash": "d0a5c9fb4f9db65799de4c87bf90a276a47b29b91214b8ae3fadea395e335ed1",
+      "pixelHash": "8d849770ff23ea3b3131e16cbe2e04e5c073427b179a56525f5870419cb08346"
+    },
+    "fablewood_aether_throne_brook": {
+      "defId": "fablewood_aether_throne_brook",
+      "archetype": "artgen",
+      "sheet": "fablewood_aether_throne_brook.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "fablewood_aether_throne_brook.near.png",
+      "nearHash": "f176ccc6a0bb64229cd4ffa4eae6d8ba5b15edfbc9a047438f5362bff917c551",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6a0028dfd79bf807",
+      "recipeHash": "6a0028dfd79bf8078166d27ffdcb4ff57d1adac63e8ea35651ed9f237eace855",
+      "pixelHash": "ab34c5549cf667a161104723fccd7f751bacbd8458f6cd4ce21ce7730b5089b3"
+    },
+    "fablewood_moss_bed_dusk": {
+      "defId": "fablewood_moss_bed_dusk",
+      "archetype": "artgen",
+      "sheet": "fablewood_moss_bed_dusk.png",
+      "frameW": 96,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.6,
+      "occlusion": null,
+      "nearSheet": "fablewood_moss_bed_dusk.near.png",
+      "nearHash": "f892cb00a4f7c5d2f1d49656da9010281767bcf6b80b397228e02e0b18bf0f99",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6b384c96a7a78e87",
+      "recipeHash": "6b384c96a7a78e87ad23131f0f45c010e3b6ad8840072eb1c3eb2eaa390969ea",
+      "pixelHash": "5647f07e27c223798dd5906fc3194048044e6c0d81a228f7a0dd426a6dfecb91"
+    },
+    "fablewood_wizard_desk_honey": {
+      "defId": "fablewood_wizard_desk_honey",
+      "archetype": "artgen",
+      "sheet": "fablewood_wizard_desk_honey.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:271586fe632b93b9",
+      "recipeHash": "271586fe632b93b9741df643f5bab68e742c720653228288f845404ada8702c2",
+      "pixelHash": "20c52a3ae0495ec3baeabfd72fff5032911ff2c26b69d1107f85064285c87cf5"
+    },
+    "fablewood_alchemy_bench_sage": {
+      "defId": "fablewood_alchemy_bench_sage",
+      "archetype": "artgen",
+      "sheet": "fablewood_alchemy_bench_sage.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.56,
+      "occlusion": null,
+      "nearSheet": "fablewood_alchemy_bench_sage.near.png",
+      "nearHash": "abbdf08af451cb00802f2132039c7e5c6df4c5970a31fc320a55855f59b958a1",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:ad6bd5fbf665b5d3",
+      "recipeHash": "ad6bd5fbf665b5d30da27d36d91f1a720aa9cced94754db47d976fa968eaf6c1",
+      "pixelHash": "4a96420e18a32fd22414bb6d38bab31d50601e239d4238215de3961b8a91851e"
+    },
+    "fablewood_root_chair_rust": {
+      "defId": "fablewood_root_chair_rust",
+      "archetype": "artgen",
+      "sheet": "fablewood_root_chair_rust.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.5,
+      "occlusion": null,
+      "nearSheet": "fablewood_root_chair_rust.near.png",
+      "nearHash": "4b973aca27799cfa2847f9a6c0b870af0dd1cad1b2c91b4d2f5dab67a39a72ee",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:5deab3ad9596edb3",
+      "recipeHash": "5deab3ad9596edb3e3c1103fb1d5e8043367ecd51daedf15aab58843fee7b18f",
+      "pixelHash": "cb9ac185c633f26a58cfe34fa35ab3dde08f602c676d199f93a8130f386b8cf3"
+    },
+    "fablewood_spellbook_shelf_petal": {
+      "defId": "fablewood_spellbook_shelf_petal",
+      "archetype": "artgen",
+      "sheet": "fablewood_spellbook_shelf_petal.png",
+      "frameW": 64,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 64,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6847a22681cd7da8",
+      "recipeHash": "6847a22681cd7da834d08225ff52c228b848d932c9f18e78d56d3ce4fad65b07",
+      "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+    },
+    "fablewood_aether_throne_stone": {
+      "defId": "fablewood_aether_throne_stone",
+      "archetype": "artgen",
+      "sheet": "fablewood_aether_throne_stone.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "fablewood_aether_throne_stone.near.png",
+      "nearHash": "f176ccc6a0bb64229cd4ffa4eae6d8ba5b15edfbc9a047438f5362bff917c551",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:44f9e2447e14a62b",
+      "recipeHash": "44f9e2447e14a62b3bad28909daf03d7ec78dfb133c4351cbb73c4938345bc34",
+      "pixelHash": "a41ec0b6e604c88042b92bebc9ac89042156e81852917ca66ab2cb682c6b8636"
+    },
+    "fablewood_moss_bed": {
+      "defId": "fablewood_moss_bed",
+      "archetype": "artgen",
+      "sheet": "fablewood_moss_bed.png",
+      "frameW": 96,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": 0.6,
+      "occlusion": null,
+      "nearSheet": "fablewood_moss_bed.near.png",
+      "nearHash": "f5f009743d20d364a270ccc6a2f4fd376a3b6011779079b48a06302f8303116b",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:be40c76b67528c63",
+      "recipeHash": "be40c76b67528c63c7c90d684cf7116c6398556f65a0d440d18db2c101e37f56",
+      "pixelHash": "592af001425ed6e95a8990583e7d574c5327798302e3cad85105bf09223bb89e"
+    },
+    "fablewood_wizard_desk": {
+      "defId": "fablewood_wizard_desk",
+      "archetype": "artgen",
+      "sheet": "fablewood_wizard_desk.png",
+      "frameW": 96,
+      "frameH": 91,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 59,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.34375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:914a2e9ee8138cac",
+      "recipeHash": "914a2e9ee8138cacdf8424704af80b3daa57a63d45b9e1cf430e558abb9baa18",
+      "pixelHash": "029a7e6600495cc2c94096bf5796eb792706598e5754ab33599230f1231e8a34"
+    },
+    "fablewood_alchemy_bench": {
+      "defId": "fablewood_alchemy_bench",
+      "archetype": "artgen",
+      "sheet": "fablewood_alchemy_bench.png",
+      "frameW": 96,
+      "frameH": 84,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 52,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 1.125,
+      "seatZ": 0.56,
+      "occlusion": null,
+      "nearSheet": "fablewood_alchemy_bench.near.png",
+      "nearHash": "abbdf08af451cb00802f2132039c7e5c6df4c5970a31fc320a55855f59b958a1",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:e9f5c807933c1cf0",
+      "recipeHash": "e9f5c807933c1cf0b5f56f6afca617526ea43603faca98bd5134ea770e4d33b4",
+      "pixelHash": "f1d4c7ce63c351a54fa957ea16601862326b0029ba436a0c344b94348a0f64e4"
+    },
+    "fablewood_root_chair": {
+      "defId": "fablewood_root_chair",
+      "archetype": "artgen",
+      "sheet": "fablewood_root_chair.png",
+      "frameW": 64,
+      "frameH": 71,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 55,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.21875,
+      "seatZ": 0.5,
+      "occlusion": null,
+      "nearSheet": "fablewood_root_chair.near.png",
+      "nearHash": "22d37bd5a8d661e365d6eab9ce73c9e2d67a7695a8f263a1c11628283206b18e",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:61947efe57e0cb76",
+      "recipeHash": "61947efe57e0cb769778ab379bcb3a5fedf393f0cefb64b530bef38302415128",
+      "pixelHash": "2c828fb1dc79857799adf55239616e8264af9aaf80452ba38e5f1858112e7769"
+    },
+    "fablewood_spellbook_shelf": {
+      "defId": "fablewood_spellbook_shelf",
+      "archetype": "artgen",
+      "sheet": "fablewood_spellbook_shelf.png",
+      "frameW": 64,
+      "frameH": 80,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 64,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:de8c22ce34a4bd06",
+      "recipeHash": "de8c22ce34a4bd06faae89c744e893f89c93206d1b6b2dea9cb2bef4c4e15721",
+      "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+    },
+    "fablewood_crystal_orb": {
+      "defId": "fablewood_crystal_orb",
+      "archetype": "artgen",
+      "sheet": "fablewood_crystal_orb.png",
+      "frameW": 64,
+      "frameH": 53,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 37,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.65625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:59b938d4aa15c135",
+      "recipeHash": "59b938d4aa15c1350ded098d41595203000b05e95b2979514446949db3750b31",
+      "pixelHash": "5ce5e179602f01d0489f22b791787a657e653793ac909cdee443608fb4c219b0"
+    },
+    "fablewood_runestone": {
+      "defId": "fablewood_runestone",
+      "archetype": "artgen",
+      "sheet": "fablewood_runestone.png",
+      "frameW": 64,
+      "frameH": 64,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 48,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7c7c19105f8ce675",
+      "recipeHash": "7c7c19105f8ce675efdc5c7454a31c7bd060b70d7c5fd46e460b4d7232f8ad47",
+      "pixelHash": "a37e8f81817b6b536c3800d856a75e130ed1e16478f2892283e5ebbbd69e58f7"
+    },
+    "fablewood_firefly_lantern": {
+      "defId": "fablewood_firefly_lantern",
+      "archetype": "artgen",
+      "sheet": "fablewood_firefly_lantern.png",
+      "frameW": 64,
+      "frameH": 82,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 66,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:463f5090b1f5e7ea",
+      "recipeHash": "463f5090b1f5e7ea7f96a3bd94884513353748ec14fc8efae780586d7ceee4c5",
+      "pixelHash": "8fa844bea33c103506927106905b0b04c1121815890e31def0602a988b602023"
+    },
+    "fablewood_stump_table": {
+      "defId": "fablewood_stump_table",
+      "archetype": "artgen",
+      "sheet": "fablewood_stump_table.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:f7ecff6e7a2cb651",
+      "recipeHash": "f7ecff6e7a2cb65177879d0296c45110ee2abfc9cc9500e5f86034171fe99df4",
+      "pixelHash": "cd22f4f60c3c3dbb74fd08349abaf0a3a61478ca65f923c79298be1626ae580f"
+    },
+    "fablewood_leaf_rug": {
+      "defId": "fablewood_leaf_rug",
+      "archetype": "artgen",
+      "sheet": "fablewood_leaf_rug.png",
+      "frameW": 96,
+      "frameH": 50,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        64,
+        32,
+        64
+      ],
+      "anchorY": 18,
+      "footprint": {
+        "w": 2,
+        "l": 1
+      },
+      "drawnHeight": 0.0625,
+      "seatZ": null,
+      "occlusion": null,
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bfacaf7cb4e4ddb6",
+      "recipeHash": "bfacaf7cb4e4ddb6024d33e47fc5e2f1e74b6eb49809bf1c8d1fc03a9778ec17",
+      "pixelHash": "d30c7f3fa54e8c2288e452d34a7db67b8d705cc2986c217d2739a7e01b4ef0b2"
+    },
+    "fablewood_mushroom_stool": {
+      "defId": "fablewood_mushroom_stool",
+      "archetype": "artgen",
+      "sheet": "fablewood_mushroom_stool.png",
+      "frameW": 64,
+      "frameH": 51,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 35,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 0.59375,
+      "seatZ": 0.5,
+      "occlusion": null,
+      "nearSheet": "fablewood_mushroom_stool.near.png",
+      "nearHash": "72edbfed942d62e4b0ab43584bfe19b70077453d06aaa887aa3c72730d2e4367",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:bdc0391cebb12a60",
+      "recipeHash": "bdc0391cebb12a60ed952b774c990e1f4bd0084de2d4a8e3716328621fb7e946",
+      "pixelHash": "49638820ae81da637197d6f6a45df5c81850d295a7b065b7b8462a2dc2fd49aa"
+    },
+    "fablewood_aether_throne": {
+      "defId": "fablewood_aether_throne",
+      "archetype": "artgen",
+      "sheet": "fablewood_aether_throne.png",
+      "frameW": 64,
+      "frameH": 88,
+      "dirs": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "anchorY": 72,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 1.75,
+      "seatZ": 0.52,
+      "occlusion": null,
+      "nearSheet": "fablewood_aether_throne.near.png",
+      "nearHash": "f176ccc6a0bb64229cd4ffa4eae6d8ba5b15edfbc9a047438f5362bff917c551",
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:a39f04a43fde3e8c",
+      "recipeHash": "a39f04a43fde3e8cc9bae887f2b924bffed57fffb03e0ef7b84ca51bb34b9204",
+      "pixelHash": "ab34c5549cf667a161104723fccd7f751bacbd8458f6cd4ce21ce7730b5089b3"
+    },
     "starliner_bunk_pod": {
       "defId": "starliner_bunk_pod",
       "archetype": "artgen",
@@ -13364,6 +14352,376 @@
       "partLibraryHash": "artgen:37a2e6a4e9649344",
       "recipeHash": "37a2e6a4e9649344e0899e0c7eb92ec179ae10aebb82e67ada2ceac4b798a1a8",
       "pixelHash": "881d48a106f56da4f21e418a70445ff9eb07fe01272744188860af6d473ee886"
+    },
+    "fablewood_vine_garland": {
+      "defId": "fablewood_vine_garland",
+      "archetype": "artgen",
+      "sheet": "fablewood_vine_garland.png",
+      "frameW": 64,
+      "frameH": 114,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 28,
+        "planeH": 9,
+        "mountU": 0,
+        "mountV": 50,
+        "gap": 0,
+        "depth": 0.16
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:0a15e7dd2e612092",
+      "recipeHash": "0a15e7dd2e6120926d4973117c08cc8244425be38d58d71d3263a51e980cb08b",
+      "pixelHash": "380cf7e81447b0306d7b41d7c1a716b3a08e8d855311279c0f013fcf5b7a7244"
+    },
+    "fablewood_mushroom_shelf": {
+      "defId": "fablewood_mushroom_shelf",
+      "archetype": "artgen",
+      "sheet": "fablewood_mushroom_shelf.png",
+      "frameW": 64,
+      "frameH": 114,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 98,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.5625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 26,
+        "planeH": 7,
+        "mountU": 0,
+        "mountV": 51,
+        "gap": 0,
+        "depth": 0.2
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:25ef7491f7eb4e9c",
+      "recipeHash": "25ef7491f7eb4e9ccf42b4510d3cf353dc3ecb15b27094556f10bef386463e8b",
+      "pixelHash": "a30a202998e4f0cd1c3a39c007c17747c02fd930ce6f7dd632d45759c509f69a"
+    },
+    "fablewood_owl_print": {
+      "defId": "fablewood_owl_print",
+      "archetype": "artgen",
+      "sheet": "fablewood_owl_print.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.19
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:97e753c047b3a9e6",
+      "recipeHash": "97e753c047b3a9e61379eec501acc203bc493b95418581001be398054cafa1b1",
+      "pixelHash": "814720771be1a151653e4a914b144d1851a1a85737deb7c7904c6813df7e5a88"
+    },
+    "fablewood_story_page_frame": {
+      "defId": "fablewood_story_page_frame",
+      "archetype": "artgen",
+      "sheet": "fablewood_story_page_frame.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:6b5048cdd90ce367",
+      "recipeHash": "6b5048cdd90ce367140068f568ffa897019a585c32417df37e6436f2d87b2c8d",
+      "pixelHash": "884c432e166a037e280d844d00778eb151725542bcc2d5cc4af038c6fc5c78e3"
+    },
+    "fablewood_moss_panel": {
+      "defId": "fablewood_moss_panel",
+      "archetype": "artgen",
+      "sheet": "fablewood_moss_panel.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 15,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:cda34d3a262bf4de",
+      "recipeHash": "cda34d3a262bf4decec838e43e85c4f9d55ccfb9590ddd520ed0da34c2ded3a0",
+      "pixelHash": "237d237c01857268aa59f938de50ee049d0cd96b9b3734fc9ea00575649208a9"
+    },
+    "fablewood_firefly_sconce": {
+      "defId": "fablewood_firefly_sconce",
+      "archetype": "artgen",
+      "sheet": "fablewood_firefly_sconce.png",
+      "frameW": 64,
+      "frameH": 125,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 109,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.90625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 42,
+        "gap": 0,
+        "depth": 0.18
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8503d9d400b6d38c",
+      "recipeHash": "8503d9d400b6d38c3c27f6a075d9a14eae15567e3a17ca5e6f7d67deaec03ee8",
+      "pixelHash": "f9038ad8d6747aa6361f7d9b20d0e32266e25ca39a18854d9564fa1a246eb777"
+    },
+    "fablewood_acorn_hooks": {
+      "defId": "fablewood_acorn_hooks",
+      "archetype": "artgen",
+      "sheet": "fablewood_acorn_hooks.png",
+      "frameW": 64,
+      "frameH": 119,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 103,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.71875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 24,
+        "planeH": 7,
+        "mountU": 2,
+        "mountV": 47,
+        "gap": 0,
+        "depth": 0.16999999999999998
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:8781bfd9feb54bd8",
+      "recipeHash": "8781bfd9feb54bd8bafdf51c62b90c28d7ba134cf5e927db929e8ebf91379f05",
+      "pixelHash": "a2da341912efedcce5e08dcad5422b8e89d72fb802c78eb773bd31f5b0b3ae02"
+    },
+    "fablewood_leaf_mobile": {
+      "defId": "fablewood_leaf_mobile",
+      "archetype": "artgen",
+      "sheet": "fablewood_leaf_mobile.png",
+      "frameW": 64,
+      "frameH": 121,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 105,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.78125,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 10,
+        "mountU": 4,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.19
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:725eaefcdf71bd2d",
+      "recipeHash": "725eaefcdf71bd2d02bcdfe3958b17bb87530f66a6fb47211a8d447b1024fadd",
+      "pixelHash": "940cffeea3cc9236110fefb5ed267d532ea999b4a53b70d4855bed0162eaba6b"
+    },
+    "fablewood_bark_relief": {
+      "defId": "fablewood_bark_relief",
+      "archetype": "artgen",
+      "sheet": "fablewood_bark_relief.png",
+      "frameW": 64,
+      "frameH": 116,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 100,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.625,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 13,
+        "mountU": 4,
+        "mountV": 45,
+        "gap": 0,
+        "depth": 0.1
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:7a9e11b510102c49",
+      "recipeHash": "7a9e11b510102c496e4684dbbb1fa6a84df1251df2f5a90dcba0976b834bf509",
+      "pixelHash": "f42c6436c92856fa764be70962ec96eee371d1e116fc1ee1a5e6d8cee47efcfe"
+    },
+    "fablewood_fern_pressing": {
+      "defId": "fablewood_fern_pressing",
+      "archetype": "artgen",
+      "sheet": "fablewood_fern_pressing.png",
+      "frameW": 64,
+      "frameH": 118,
+      "dirs": [
+        0,
+        6
+      ],
+      "anchorsX": [
+        32,
+        32
+      ],
+      "anchorY": 102,
+      "footprint": {
+        "w": 1,
+        "l": 1
+      },
+      "drawnHeight": 2.6875,
+      "seatZ": null,
+      "occlusion": null,
+      "wall": {
+        "span": 1,
+        "planeW": 22,
+        "planeH": 12,
+        "mountU": 4,
+        "mountV": 43,
+        "gap": 0,
+        "depth": 0.12
+      },
+      "styleVersion": 4,
+      "generatorVersion": 2,
+      "partLibraryHash": "artgen:c7ce32d04d483f56",
+      "recipeHash": "c7ce32d04d483f56524be160b99fb24c9aea8bc1bb3e3aa7094eac974116abc3",
+      "pixelHash": "630248606d6daa9a55c320b6e93870083e4a802a0efea4d0552a66e54b8bd8f1"
     },
     "starliner_viewport_panel": {
       "defId": "starliner_viewport_panel",

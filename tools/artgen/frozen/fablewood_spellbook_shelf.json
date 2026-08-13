@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_spellbook_shelf",
+  "archetype": "artgen",
+  "sheet": "fablewood_spellbook_shelf.png",
+  "frameW": 64,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 64,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:de8c22ce34a4bd06",
+  "recipeHash": "de8c22ce34a4bd06faae89c744e893f89c93206d1b6b2dea9cb2bef4c4e15721",
+  "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+}

@@ -274,6 +274,16 @@ export const DECOR_CATALOG: DecorDef[] = [
   { kind: "wall", id: "wall_starliner_conduit", name: "Starliner Conduit", tile: { w: 32, h: 32 }, cap: 0x656056 },
   { kind: "wall", id: "wall_starliner_starfield", name: "Starliner Starfield", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
   { kind: "wall", id: "wall_starliner_signal_stripe", name: "Starliner Signal Stripe", tile: { w: 32, h: 32 }, cap: 0xdaa520 },
+  // Fablewood (blitz task 15).
+  { kind: "floor", id: "floor_fablewood_moss_stone", name: "Fablewood Moss Stone", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0x2e8b57 } },
+  { kind: "floor", id: "floor_fablewood_rune", name: "Fablewood Rune", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0xc2a36b } },
+  { kind: "floor", id: "floor_fablewood_root", name: "Fablewood Root", tile: { w: 64, h: 32 }, sides: { left: 0xc2a36b, right: 0x656056 } },
+  { kind: "floor", id: "floor_fablewood_aether", name: "Fablewood Aether", tile: { w: 64, h: 32 }, sides: { left: 0x9c9484, right: 0x3f5e9e } },
+  { kind: "wall", id: "wall_fablewood_runic_frieze", name: "Fablewood Runic Frieze", tile: { w: 32, h: 32 }, cap: 0xc2a36b },
+  { kind: "wall", id: "wall_fablewood_vine", name: "Fablewood Vine", tile: { w: 32, h: 32 }, cap: 0x2e8b57 },
+  { kind: "wall", id: "wall_fablewood_storybook", name: "Fablewood Storybook", tile: { w: 32, h: 32 }, cap: 0x9c9484 },
+  { kind: "wall", id: "wall_fablewood_crystal", name: "Fablewood Crystal", tile: { w: 32, h: 32 }, cap: 0x3f5e9e },
+
 ];
 
 const FLOOR_IDS = new Set(DECOR_CATALOG.filter((d) => d.kind === "floor").map((d) => d.id));

@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_wizard_desk_honey",
+  "archetype": "artgen",
+  "sheet": "fablewood_wizard_desk_honey.png",
+  "frameW": 96,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:271586fe632b93b9",
+  "recipeHash": "271586fe632b93b9741df643f5bab68e742c720653228288f845404ada8702c2",
+  "pixelHash": "20c52a3ae0495ec3baeabfd72fff5032911ff2c26b69d1107f85064285c87cf5"
+}

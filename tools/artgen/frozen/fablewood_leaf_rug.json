@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_leaf_rug",
+  "archetype": "artgen",
+  "sheet": "fablewood_leaf_rug.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:bfacaf7cb4e4ddb6",
+  "recipeHash": "bfacaf7cb4e4ddb6024d33e47fc5e2f1e74b6eb49809bf1c8d1fc03a9778ec17",
+  "pixelHash": "d30c7f3fa54e8c2288e452d34a7db67b8d705cc2986c217d2739a7e01b4ef0b2"
+}

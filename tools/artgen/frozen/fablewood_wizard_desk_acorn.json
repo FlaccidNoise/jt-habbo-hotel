@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_wizard_desk_acorn",
+  "archetype": "artgen",
+  "sheet": "fablewood_wizard_desk_acorn.png",
+  "frameW": 96,
+  "frameH": 91,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 59,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.34375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:1ff773e77e1f3450",
+  "recipeHash": "1ff773e77e1f34502dda5b1c3abab43578f4152cabc1e19ef790ea6778cf3553",
+  "pixelHash": "a3a0b3fb05a80ca2002a60e8388b989391ceffdf637eb9200b311182b72fc902"
+}

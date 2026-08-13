@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_crystal_orb_berry",
+  "archetype": "artgen",
+  "sheet": "fablewood_crystal_orb_berry.png",
+  "frameW": 64,
+  "frameH": 53,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 37,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.65625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:293fdc37e363af0a",
+  "recipeHash": "293fdc37e363af0a51e67fc048c11d9ad5197b66fa9ceea4e26fd504d2ff7835",
+  "pixelHash": "e924a6281d7a50578bb625f2a0624904c178822e4f7138992b9319517100eedc"
+}

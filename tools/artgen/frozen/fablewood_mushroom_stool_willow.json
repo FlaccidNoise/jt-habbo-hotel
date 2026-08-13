@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_mushroom_stool_willow",
+  "archetype": "artgen",
+  "sheet": "fablewood_mushroom_stool_willow.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": 0.5,
+  "occlusion": null,
+  "nearSheet": "fablewood_mushroom_stool_willow.near.png",
+  "nearHash": "27bd2934b7cc7cd47bad8ad069777d1264bdebe38077576d8813ff33e20e0afc",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d0a5c9fb4f9db657",
+  "recipeHash": "d0a5c9fb4f9db65799de4c87bf90a276a47b29b91214b8ae3fadea395e335ed1",
+  "pixelHash": "8d849770ff23ea3b3131e16cbe2e04e5c073427b179a56525f5870419cb08346"
+}

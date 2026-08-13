@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_aether_throne",
+  "archetype": "artgen",
+  "sheet": "fablewood_aether_throne.png",
+  "frameW": 64,
+  "frameH": 88,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 72,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.75,
+  "seatZ": 0.52,
+  "occlusion": null,
+  "nearSheet": "fablewood_aether_throne.near.png",
+  "nearHash": "f176ccc6a0bb64229cd4ffa4eae6d8ba5b15edfbc9a047438f5362bff917c551",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a39f04a43fde3e8c",
+  "recipeHash": "a39f04a43fde3e8cc9bae887f2b924bffed57fffb03e0ef7b84ca51bb34b9204",
+  "pixelHash": "ab34c5549cf667a161104723fccd7f751bacbd8458f6cd4ce21ce7730b5089b3"
+}

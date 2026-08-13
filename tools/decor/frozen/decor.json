@@ -1143,6 +1143,110 @@
       },
       "styleVersion": 4,
       "pixelHash": "baec320df93124c26e975f6c984d1c70dc2016fe1df879253f4204a4645a10e3"
+    },
+    {
+      "id": "floor_fablewood_moss_stone",
+      "kind": "floor",
+      "sheet": "floor_fablewood_moss_stone.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "abd4121860391766ee0529e315f60b361351474d6f5253765b7e92ed80977fb6"
+    },
+    {
+      "id": "floor_fablewood_rune",
+      "kind": "floor",
+      "sheet": "floor_fablewood_rune.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "9e02e804db197cb2b61884719bb6554e3f2eb3cced6c6b26a01508191a299479"
+    },
+    {
+      "id": "floor_fablewood_root",
+      "kind": "floor",
+      "sheet": "floor_fablewood_root.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "077b886406f1517d2a84fc4a9eb79a85b25f70a83f485897e4f6ff807027d9f9"
+    },
+    {
+      "id": "floor_fablewood_aether",
+      "kind": "floor",
+      "sheet": "floor_fablewood_aether.png",
+      "tileW": 64,
+      "tileH": 32,
+      "source": {
+        "w": 128,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "f75208efbf3c36d50eddbbefd708b30089ee6a6af6d216c9c53726e153a46505"
+    },
+    {
+      "id": "wall_fablewood_runic_frieze",
+      "kind": "wall",
+      "sheet": "wall_fablewood_runic_frieze.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "5bad416a9751fa187f0481548e65ca99c25bdc9dcc58f7f30230e01ddbbe7bfb"
+    },
+    {
+      "id": "wall_fablewood_vine",
+      "kind": "wall",
+      "sheet": "wall_fablewood_vine.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "400c3332b85f9256e78b2f16417b322f6657d52d8d4deddee024f50735f17077"
+    },
+    {
+      "id": "wall_fablewood_storybook",
+      "kind": "wall",
+      "sheet": "wall_fablewood_storybook.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "e68d00ff89b296adf7bdda15e295b4fc590f3233ef5ae450e791417e5c8b4928"
+    },
+    {
+      "id": "wall_fablewood_crystal",
+      "kind": "wall",
+      "sheet": "wall_fablewood_crystal.png",
+      "tileW": 32,
+      "tileH": 32,
+      "source": {
+        "w": 64,
+        "h": 64
+      },
+      "styleVersion": 4,
+      "pixelHash": "85a10441b2ed26160817e659c0fb208e7c67e60e506053296dc8f2d683407ebe"
     }
   ]
 }

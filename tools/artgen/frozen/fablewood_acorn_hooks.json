@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_acorn_hooks",
+  "archetype": "artgen",
+  "sheet": "fablewood_acorn_hooks.png",
+  "frameW": 64,
+  "frameH": 119,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 103,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 24,
+    "planeH": 7,
+    "mountU": 2,
+    "mountV": 47,
+    "gap": 0,
+    "depth": 0.16999999999999998
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8781bfd9feb54bd8",
+  "recipeHash": "8781bfd9feb54bd8bafdf51c62b90c28d7ba134cf5e927db929e8ebf91379f05",
+  "pixelHash": "a2da341912efedcce5e08dcad5422b8e89d72fb802c78eb773bd31f5b0b3ae02"
+}

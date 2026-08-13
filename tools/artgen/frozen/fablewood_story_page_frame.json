@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_story_page_frame",
+  "archetype": "artgen",
+  "sheet": "fablewood_story_page_frame.png",
+  "frameW": 64,
+  "frameH": 119,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 103,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 13,
+    "mountU": 4,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.12
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6b5048cdd90ce367",
+  "recipeHash": "6b5048cdd90ce367140068f568ffa897019a585c32417df37e6436f2d87b2c8d",
+  "pixelHash": "884c432e166a037e280d844d00778eb151725542bcc2d5cc4af038c6fc5c78e3"
+}

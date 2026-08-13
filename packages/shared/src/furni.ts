@@ -299,6 +299,39 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "starliner_navigation_desk_xenon", name: "Xenon Navigation Desk", theme: "starliner", w: 2, l: 1, stackHeights: [1.4375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
   { id: "starliner_galley_counter_radar", name: "Radar Galley Counter", theme: "starliner", w: 2, l: 1, stackHeights: [1.09375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
   { id: "starliner_holo_projector_astro", name: "Astro Holo Projector", theme: "starliner", w: 1, l: 1, stackHeights: [1.3125, 1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0xa4642a, interaction: "toggle" },
+  // Wave B5 colorways (blitz task 15).
+  { id: "fablewood_moss_bed_moss", name: "Moss Verdant Bed", theme: "fablewood", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.6, color: 0x2e8b57 },
+  { id: "fablewood_wizard_desk_acorn", name: "Acorn Wizard Desk", theme: "fablewood", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
+  { id: "fablewood_alchemy_bench_fern", name: "Fern Alchemy Bench", theme: "fablewood", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.56, color: 0x2e8b57 },
+  { id: "fablewood_root_chair_bark", name: "Bark Root Chair", theme: "fablewood", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.5, color: 0x8b4513 },
+  { id: "fablewood_spellbook_shelf_dawn", name: "Dawn Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xc2a36b, interaction: "read", vend: { item: "book", price: 0 } },
+  { id: "fablewood_crystal_orb_berry", name: "Berry Crystal Orb", theme: "fablewood", w: 1, l: 1, stackHeights: [0.65625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "wish" },
+  { id: "fablewood_runestone_mist", name: "Mist Runestone", theme: "fablewood", w: 1, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8d9eb1 },
+  { id: "fablewood_firefly_lantern_clover", name: "Clover Firefly Lantern", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5625, 1.5625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57, interaction: "toggle" },
+  { id: "fablewood_stump_table_amber", name: "Amber Stump Table", theme: "fablewood", w: 1, l: 1, stackHeights: [0.59375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "fablewood_leaf_rug_thorn", name: "Thorn Leaf Rug", theme: "fablewood", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "fablewood_mushroom_stool_willow", name: "Willow Mushroom Stool", theme: "fablewood", w: 1, l: 1, stackHeights: [0.59375], canWalk: false, canStackOn: false, seatHeight: 0.5, color: 0x2f8f8f },
+  { id: "fablewood_aether_throne_brook", name: "Brook Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x2f8f8f },
+  { id: "fablewood_moss_bed_dusk", name: "Dusk Verdant Bed", theme: "fablewood", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.6, color: 0x3f5e9e },
+  { id: "fablewood_wizard_desk_honey", name: "Honey Wizard Desk", theme: "fablewood", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520 },
+  { id: "fablewood_alchemy_bench_sage", name: "Sage Alchemy Bench", theme: "fablewood", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.56, color: 0x2e8b57 },
+  { id: "fablewood_root_chair_rust", name: "Rust Root Chair", theme: "fablewood", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.5, color: 0xb55a19 },
+  { id: "fablewood_spellbook_shelf_petal", name: "Petal Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0xaa3333, interaction: "read", vend: { item: "book", price: 0 } },
+  { id: "fablewood_aether_throne_stone", name: "Stone Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x9c9484 },
+  // Wave B5 (blitz task 15): Fablewood bases.
+  { id: "fablewood_moss_bed", name: "Verdant Bed", theme: "fablewood", w: 2, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: 0.6, color: 0x2e8b57 },
+  { id: "fablewood_wizard_desk", name: "Wizard Desk", theme: "fablewood", w: 2, l: 1, stackHeights: [1.34375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
+  { id: "fablewood_alchemy_bench", name: "Alchemy Bench", theme: "fablewood", w: 2, l: 1, stackHeights: [1.125], canWalk: false, canStackOn: false, seatHeight: 0.56, color: 0xc2a36b },
+  { id: "fablewood_root_chair", name: "Root Chair", theme: "fablewood", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.5, color: 0x8b4513 },
+  { id: "fablewood_spellbook_shelf", name: "Spellbook Shelf", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513, interaction: "read", vend: { item: "book", price: 0 } },
+  { id: "fablewood_crystal_orb", name: "Crystal Orb", theme: "fablewood", w: 1, l: 1, stackHeights: [0.65625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e, interaction: "wish" },
+  { id: "fablewood_runestone", name: "Runestone", theme: "fablewood", w: 1, l: 1, stackHeights: [1], canWalk: false, canStackOn: false, seatHeight: null, color: 0x3f5e9e },
+  { id: "fablewood_firefly_lantern", name: "Firefly Lantern", theme: "fablewood", w: 1, l: 1, stackHeights: [1.5625, 1.5625], canWalk: false, canStackOn: false, seatHeight: null, color: 0xdaa520, interaction: "toggle" },
+  { id: "fablewood_stump_table", name: "Stump Table", theme: "fablewood", w: 1, l: 1, stackHeights: [0.59375], canWalk: false, canStackOn: false, seatHeight: null, color: 0x8b4513 },
+  { id: "fablewood_leaf_rug", name: "Leaf Rug", theme: "fablewood", w: 2, l: 1, stackHeights: [0.0625], canWalk: false, canStackOn: false, seatHeight: null, color: 0x2e8b57 },
+  { id: "fablewood_mushroom_stool", name: "Mushroom Stool", theme: "fablewood", w: 1, l: 1, stackHeights: [0.59375], canWalk: false, canStackOn: false, seatHeight: 0.5, color: 0x2e8b57 },
+  { id: "fablewood_aether_throne", name: "Aether Throne", theme: "fablewood", w: 1, l: 1, stackHeights: [1.75], canWalk: false, canStackOn: false, seatHeight: 0.52, color: 0x3f5e9e },
+
   // Wave B4 (blitz task 14): Starliner bases.
   { id: "starliner_bunk_pod", name: "Bunk Pod", theme: "starliner", w: 2, l: 1, stackHeights: [1.15625], canWalk: false, canStackOn: false, seatHeight: 0.42, color: 0x3f5e9e },
   { id: "starliner_console", name: "Console", theme: "starliner", w: 1, l: 1, stackHeights: [1.3125], canWalk: false, canStackOn: false, seatHeight: null, color: 0x5b6672 },
@@ -477,6 +510,18 @@ export const WALL_CATALOG: WallDef[] = [
   { id: "wall_art_triptych_tide_right", name: "Tide Triptych Right", theme: "wall_art", span: 1, plane: { w: 18, h: 16 }, mount: { u: 6, v: 39 }, color: 0xb5651d },
   { id: "wall_art_gallery_clock", name: "Gallery Clock", theme: "wall_art", span: 1, plane: { w: 18, h: 17 }, mount: { u: 6, v: 39 }, color: 0xb5651d },
   { id: "wall_art_sculpture_relief", name: "Sculpture Relief", theme: "wall_art", span: 1, plane: { w: 22, h: 16 }, mount: { u: 4, v: 39 }, color: 0x5b6672 },
+  // Wave B5 (blitz task 15): Fablewood walls.
+  { id: "fablewood_vine_garland", name: "Vine Garland", theme: "fablewood", span: 1, plane: { w: 28, h: 9 }, mount: { u: 0, v: 50 }, color: 0x2e8b57 },
+  { id: "fablewood_mushroom_shelf", name: "Mushroom Shelf", theme: "fablewood", span: 1, plane: { w: 26, h: 7 }, mount: { u: 0, v: 51 }, color: 0x8b4513 },
+  { id: "fablewood_owl_print", name: "Owl Print", theme: "fablewood", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 45 }, color: 0xc2a36b },
+  { id: "fablewood_story_page_frame", name: "Story Page Frame", theme: "fablewood", span: 1, plane: { w: 22, h: 13 }, mount: { u: 4, v: 43 }, color: 0xc2a36b },
+  { id: "fablewood_moss_panel", name: "Moss Panel", theme: "fablewood", span: 1, plane: { w: 22, h: 15 }, mount: { u: 4, v: 43 }, color: 0x2e8b57 },
+  { id: "fablewood_firefly_sconce", name: "Firefly Sconce", theme: "fablewood", span: 1, plane: { w: 22, h: 13 }, mount: { u: 4, v: 42 }, color: 0xdaa520 },
+  { id: "fablewood_acorn_hooks", name: "Acorn Hooks", theme: "fablewood", span: 1, plane: { w: 24, h: 7 }, mount: { u: 2, v: 47 }, color: 0x8b4513 },
+  { id: "fablewood_leaf_mobile", name: "Leaf Mobile", theme: "fablewood", span: 1, plane: { w: 22, h: 10 }, mount: { u: 4, v: 45 }, color: 0x2e8b57 },
+  { id: "fablewood_bark_relief", name: "Bark Relief", theme: "fablewood", span: 1, plane: { w: 22, h: 13 }, mount: { u: 4, v: 45 }, color: 0x8b4513 },
+  { id: "fablewood_fern_pressing", name: "Fern Pressing", theme: "fablewood", span: 1, plane: { w: 22, h: 12 }, mount: { u: 4, v: 43 }, color: 0x2e8b57 },
+
   // Wave B4 (blitz task 14): Starliner walls.
   { id: "starliner_viewport_panel", name: "Viewport Panel", theme: "starliner", span: 1, plane: { w: 22, h: 5 }, mount: { u: 4, v: 49 }, color: 0x5b6672 },
   { id: "starliner_star_chart", name: "Star Chart", theme: "starliner", span: 1, plane: { w: 24, h: 18 }, mount: { u: 2, v: 39 }, color: 0x3f5e9e },
@@ -1011,6 +1056,48 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["starliner_captain_chair_cosmic", 250],
   ["starliner_navigation_desk_xenon", 250],
   ["starliner_galley_counter_radar", 250],
+  // Wave B5 (blitz task 15): Fablewood Suite. Reward unpriced. Prestige onyx gold throne released.
+  ["prestige_gold_throne_onyx", 3300],
+  ["fablewood_moss_bed", 300],
+  ["fablewood_wizard_desk", 250],
+  ["fablewood_alchemy_bench", 250],
+  ["fablewood_root_chair", 150],
+  ["fablewood_spellbook_shelf", 150],
+  ["fablewood_crystal_orb", 150],
+  ["fablewood_runestone", 75],
+  ["fablewood_firefly_lantern", 75],
+  ["fablewood_stump_table", 75],
+  ["fablewood_leaf_rug", 75],
+  ["fablewood_mushroom_stool", 50],
+  ["fablewood_aether_throne", 250],
+  ["fablewood_vine_garland", 75],
+  ["fablewood_mushroom_shelf", 75],
+  ["fablewood_owl_print", 75],
+  ["fablewood_story_page_frame", 50],
+  ["fablewood_moss_panel", 50],
+  ["fablewood_firefly_sconce", 50],
+  ["fablewood_acorn_hooks", 50],
+  ["fablewood_leaf_mobile", 25],
+  ["fablewood_bark_relief", 25],
+  ["fablewood_fern_pressing", 25],
+  ["fablewood_moss_bed_moss", 300],
+  ["fablewood_wizard_desk_acorn", 250],
+  ["fablewood_alchemy_bench_fern", 250],
+  ["fablewood_root_chair_bark", 150],
+  ["fablewood_spellbook_shelf_dawn", 150],
+  ["fablewood_crystal_orb_berry", 150],
+  ["fablewood_runestone_mist", 75],
+  ["fablewood_firefly_lantern_clover", 75],
+  ["fablewood_stump_table_amber", 75],
+  ["fablewood_leaf_rug_thorn", 75],
+  ["fablewood_mushroom_stool_willow", 50],
+  ["fablewood_aether_throne_brook", 250],
+  ["fablewood_moss_bed_dusk", 300],
+  ["fablewood_wizard_desk_honey", 250],
+  ["fablewood_alchemy_bench_sage", 250],
+  ["fablewood_root_chair_rust", 150],
+  ["fablewood_spellbook_shelf_petal", 150],
+
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
@@ -1037,7 +1124,7 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "pool_mosaic_rug_lagoon",
   "penthouse_telescope_copper",
   "lounge_vibraphone_ivory",
-  "prestige_gold_throne_onyx",
+
   "prestige_marble_fountain_moonstone",
   "prestige_crystal_screen_amber",
   "bannerhold_high_seat_navy",
@@ -1046,6 +1133,8 @@ export const UNPRICED: ReadonlySet<string> = new Set([
   "mochi_mallow_plush_yuzu",
   // Starliner Set reward (blitz task 14): minted on set completion, never sold.
   "starliner_holo_projector_astro",
+  // Fablewood Set reward (blitz task 15): minted on set completion, never sold.
+  "fablewood_aether_throne_stone",
 ]);
 
 /** House fixtures (R-26, #429): placed by furnish.ts and by nothing else — no price, no prize, no
@@ -1383,6 +1472,19 @@ export const LANDED_BLITZ_IDS: ReadonlySet<string> = new Set<string>([
   "starliner_docking_bench_ember", "starliner_orbit_table_void", "starliner_suit_rack_aurora", "starliner_cargo_crate_pulse",
   "starliner_bunk_pod_drift", "starliner_console_flare", "starliner_captain_chair_cosmic", "starliner_navigation_desk_xenon",
   "starliner_galley_counter_radar", "starliner_holo_projector_astro",
+  // Task 15 wave B5.
+  "fablewood_moss_bed", "fablewood_wizard_desk", "fablewood_alchemy_bench", "fablewood_root_chair",
+  "fablewood_spellbook_shelf", "fablewood_crystal_orb", "fablewood_runestone", "fablewood_firefly_lantern",
+  "fablewood_stump_table", "fablewood_leaf_rug", "fablewood_mushroom_stool", "fablewood_aether_throne",
+  "fablewood_vine_garland", "fablewood_mushroom_shelf", "fablewood_owl_print", "fablewood_story_page_frame",
+  "fablewood_moss_panel", "fablewood_firefly_sconce", "fablewood_acorn_hooks", "fablewood_leaf_mobile",
+  "fablewood_bark_relief", "fablewood_fern_pressing",
+  "fablewood_moss_bed_moss", "fablewood_wizard_desk_acorn", "fablewood_alchemy_bench_fern", "fablewood_root_chair_bark",
+  "fablewood_spellbook_shelf_dawn", "fablewood_crystal_orb_berry", "fablewood_runestone_mist", "fablewood_firefly_lantern_clover",
+  "fablewood_stump_table_amber", "fablewood_leaf_rug_thorn", "fablewood_mushroom_stool_willow", "fablewood_aether_throne_brook",
+  "fablewood_moss_bed_dusk", "fablewood_wizard_desk_honey", "fablewood_alchemy_bench_sage", "fablewood_root_chair_rust",
+  "fablewood_spellbook_shelf_petal", "fablewood_aether_throne_stone",
+
 ]);
 /** Landed blitz decor tiles (the plan's Appendix B). */
 export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
@@ -1458,6 +1560,16 @@ export const LANDED_DECOR_IDS: ReadonlySet<string> = new Set<string>([
   "wall_starliner_conduit",
   "wall_starliner_starfield",
   "wall_starliner_signal_stripe",
+  // Task 15 wave B5: Fablewood.
+  "floor_fablewood_moss_stone",
+  "floor_fablewood_rune",
+  "floor_fablewood_root",
+  "floor_fablewood_aether",
+  "wall_fablewood_runic_frieze",
+  "wall_fablewood_vine",
+  "wall_fablewood_storybook",
+  "wall_fablewood_crystal",
+
 ]);
 /** The staged prestige line: the eight blitz prestige fixtures land together but surface in the
  *  catalog one per wave. An id here is priced in CATALOG_PRICES; an id absent is staged in
@@ -1467,4 +1579,6 @@ export const RELEASED_PRESTIGE_IDS: ReadonlySet<string> = new Set<string>([  "pr
   "prestige_crystal_screen",
   "prestige_obsidian_table",
   "prestige_velvet_daybed",
+  "prestige_gold_throne_onyx",
+
 ]);

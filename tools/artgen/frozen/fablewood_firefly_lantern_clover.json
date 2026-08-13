@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_firefly_lantern_clover",
+  "archetype": "artgen",
+  "sheet": "fablewood_firefly_lantern_clover.png",
+  "frameW": 64,
+  "frameH": 82,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 66,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:a0a23f6cde5d8981",
+  "recipeHash": "a0a23f6cde5d8981809c60dc5f28973c9c1ad44bd2daa0b408569f848ebe8803",
+  "pixelHash": "8fa844bea33c103506927106905b0b04c1121815890e31def0602a988b602023"
+}

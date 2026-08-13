@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_stump_table",
+  "archetype": "artgen",
+  "sheet": "fablewood_stump_table.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:f7ecff6e7a2cb651",
+  "recipeHash": "f7ecff6e7a2cb65177879d0296c45110ee2abfc9cc9500e5f86034171fe99df4",
+  "pixelHash": "cd22f4f60c3c3dbb74fd08349abaf0a3a61478ca65f923c79298be1626ae580f"
+}

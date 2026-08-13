@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_runestone",
+  "archetype": "artgen",
+  "sheet": "fablewood_runestone.png",
+  "frameW": 64,
+  "frameH": 64,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 48,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:7c7c19105f8ce675",
+  "recipeHash": "7c7c19105f8ce675efdc5c7454a31c7bd060b70d7c5fd46e460b4d7232f8ad47",
+  "pixelHash": "a37e8f81817b6b536c3800d856a75e130ed1e16478f2892283e5ebbbd69e58f7"
+}

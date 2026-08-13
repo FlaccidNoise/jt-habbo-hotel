@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_leaf_mobile",
+  "archetype": "artgen",
+  "sheet": "fablewood_leaf_mobile.png",
+  "frameW": 64,
+  "frameH": 121,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 105,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.78125,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 10,
+    "mountU": 4,
+    "mountV": 45,
+    "gap": 0,
+    "depth": 0.19
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:725eaefcdf71bd2d",
+  "recipeHash": "725eaefcdf71bd2d02bcdfe3958b17bb87530f66a6fb47211a8d447b1024fadd",
+  "pixelHash": "940cffeea3cc9236110fefb5ed267d532ea999b4a53b70d4855bed0162eaba6b"
+}

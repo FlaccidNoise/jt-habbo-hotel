@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_spellbook_shelf_petal",
+  "archetype": "artgen",
+  "sheet": "fablewood_spellbook_shelf_petal.png",
+  "frameW": 64,
+  "frameH": 80,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 64,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.5,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:6847a22681cd7da8",
+  "recipeHash": "6847a22681cd7da834d08225ff52c228b848d932c9f18e78d56d3ce4fad65b07",
+  "pixelHash": "7da4e03be630a572e0d5ad4fed7e8cb9f58064ca2d95f06046d1e82a31a5f431"
+}

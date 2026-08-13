@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_moss_panel",
+  "archetype": "artgen",
+  "sheet": "fablewood_moss_panel.png",
+  "frameW": 64,
+  "frameH": 119,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 103,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.71875,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 15,
+    "mountU": 4,
+    "mountV": 43,
+    "gap": 0,
+    "depth": 0.12
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:cda34d3a262bf4de",
+  "recipeHash": "cda34d3a262bf4decec838e43e85c4f9d55ccfb9590ddd520ed0da34c2ded3a0",
+  "pixelHash": "237d237c01857268aa59f938de50ee049d0cd96b9b3734fc9ea00575649208a9"
+}

@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_stump_table_amber",
+  "archetype": "artgen",
+  "sheet": "fablewood_stump_table_amber.png",
+  "frameW": 64,
+  "frameH": 51,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 35,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.59375,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:9bcf4fa65c55edd9",
+  "recipeHash": "9bcf4fa65c55edd93300b92f26dba583f76afc79e0da132397c2e6586d931127",
+  "pixelHash": "6b7459e84f9b0acd7e23cc75f377c649dc35bdf2aa5429f4544f1ac2bdcd29d4"
+}

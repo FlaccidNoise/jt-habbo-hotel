@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_leaf_rug_thorn",
+  "archetype": "artgen",
+  "sheet": "fablewood_leaf_rug_thorn.png",
+  "frameW": 96,
+  "frameH": 50,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 18,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.0625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:10702a8a934f32cf",
+  "recipeHash": "10702a8a934f32cfd78073d85c5b00c4fbbfe411ba28f7db7223406bdcd97c3b",
+  "pixelHash": "743bafa79e1d7e19c08264aedb27e76ef06b36ad151d66e5e5a4731bd60a3d58"
+}

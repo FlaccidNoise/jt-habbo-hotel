@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_alchemy_bench",
+  "archetype": "artgen",
+  "sheet": "fablewood_alchemy_bench.png",
+  "frameW": 96,
+  "frameH": 84,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 52,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 1.125,
+  "seatZ": 0.56,
+  "occlusion": null,
+  "nearSheet": "fablewood_alchemy_bench.near.png",
+  "nearHash": "abbdf08af451cb00802f2132039c7e5c6df4c5970a31fc320a55855f59b958a1",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e9f5c807933c1cf0",
+  "recipeHash": "e9f5c807933c1cf0b5f56f6afca617526ea43603faca98bd5134ea770e4d33b4",
+  "pixelHash": "f1d4c7ce63c351a54fa957ea16601862326b0029ba436a0c344b94348a0f64e4"
+}

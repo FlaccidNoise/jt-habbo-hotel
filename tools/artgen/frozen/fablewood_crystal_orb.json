@@ -1,0 +1,32 @@
+{
+  "defId": "fablewood_crystal_orb",
+  "archetype": "artgen",
+  "sheet": "fablewood_crystal_orb.png",
+  "frameW": 64,
+  "frameH": 53,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 37,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.65625,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:59b938d4aa15c135",
+  "recipeHash": "59b938d4aa15c1350ded098d41595203000b05e95b2979514446949db3750b31",
+  "pixelHash": "5ce5e179602f01d0489f22b791787a657e653793ac909cdee443608fb4c219b0"
+}

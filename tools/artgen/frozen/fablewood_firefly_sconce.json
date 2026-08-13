@@ -1,0 +1,37 @@
+{
+  "defId": "fablewood_firefly_sconce",
+  "archetype": "artgen",
+  "sheet": "fablewood_firefly_sconce.png",
+  "frameW": 64,
+  "frameH": 125,
+  "dirs": [
+    0,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32
+  ],
+  "anchorY": 109,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 2.90625,
+  "seatZ": null,
+  "occlusion": null,
+  "wall": {
+    "span": 1,
+    "planeW": 22,
+    "planeH": 13,
+    "mountU": 4,
+    "mountV": 42,
+    "gap": 0,
+    "depth": 0.18
+  },
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:8503d9d400b6d38c",
+  "recipeHash": "8503d9d400b6d38c3c27f6a075d9a14eae15567e3a17ca5e6f7d67deaec03ee8",
+  "pixelHash": "f9038ad8d6747aa6361f7d9b20d0e32266e25ca39a18854d9564fa1a246eb777"
+}

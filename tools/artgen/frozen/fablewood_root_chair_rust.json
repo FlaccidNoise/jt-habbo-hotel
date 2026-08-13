@@ -1,0 +1,34 @@
+{
+  "defId": "fablewood_root_chair_rust",
+  "archetype": "artgen",
+  "sheet": "fablewood_root_chair_rust.png",
+  "frameW": 64,
+  "frameH": 71,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 55,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.21875,
+  "seatZ": 0.5,
+  "occlusion": null,
+  "nearSheet": "fablewood_root_chair_rust.near.png",
+  "nearHash": "4b973aca27799cfa2847f9a6c0b870af0dd1cad1b2c91b4d2f5dab67a39a72ee",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:5deab3ad9596edb3",
+  "recipeHash": "5deab3ad9596edb3e3c1103fb1d5e8043367ecd51daedf15aab58843fee7b18f",
+  "pixelHash": "cb9ac185c633f26a58cfe34fa35ab3dde08f602c676d199f93a8130f386b8cf3"
+}

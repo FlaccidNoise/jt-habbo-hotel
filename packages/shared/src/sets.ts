@@ -38,6 +38,14 @@ export const COLLECTION_SETS: readonly CollectionSet[] = [
     badge: "set_suite",
   },
   {
+    id: "fablewood",
+    name: "The Fablewood Set",
+    members: ["fablewood_wizard_desk", "fablewood_alchemy_bench", "fablewood_crystal_orb", "fablewood_aether_throne"],
+    reward: "fablewood_aether_throne_stone",
+    badge: "set_fablewood",
+  },
+
+  {
     id: "starliner",
     name: "The Starliner Set",
     members: ["starliner_bunk_pod", "starliner_console", "starliner_captain_chair", "starliner_holo_projector"],
