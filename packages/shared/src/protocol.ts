@@ -117,10 +117,10 @@ export type WallItem = z.infer<typeof WallItemSchema>;
 const StepSchema = z.object({ x: z.number().int(), y: z.number().int(), z: z.number() });
 
 export const ClientMsgSchema = z.discriminatedUnion("t", [
-  z.object({ t: z.literal("join"), token: z.string(), roomId: z.number().int() }),
+  z.object({ t: z.literal("join"), token: z.string().max(128), roomId: z.number().int() }),
   z.object({ t: z.literal("move"), x: z.number().int(), y: z.number().int() }),
   z.object({ t: z.literal("chat"), mode: z.enum(["say", "shout"]), text: z.string().min(1).max(200) }),
-  z.object({ t: z.literal("whisper"), to: z.string(), text: z.string().min(1).max(200) }),
+  z.object({ t: z.literal("whisper"), to: z.string().max(32), text: z.string().min(1).max(200) }),
   z.object({ t: z.literal("place"), itemId: z.number().int(), x: z.number().int(),
              y: z.number().int(), dir: FurniDirSchema }),
   z.object({ t: z.literal("place_wall"), itemId: z.number().int(), side: WallSideSchema,
@@ -140,12 +140,12 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("set_figure"), figure: z.string().max(400) }),
   z.object({ t: z.literal("wave") }),
   // Trades are items-for-items only — Stars never appear in a trade (GAME.md §Currency).
-  z.object({ t: z.literal("trade_open"), to: z.string() }),
+  z.object({ t: z.literal("trade_open"), to: z.string().max(32) }),
   z.object({ t: z.literal("trade_offer"),
              itemIds: z.array(z.number().int()).max(MAX_TRADE_ITEMS) }),
   z.object({ t: z.literal("trade_accept") }),
   z.object({ t: z.literal("trade_cancel") }),
-  z.object({ t: z.literal("buy"), defId: z.string() }),
+  z.object({ t: z.literal("buy"), defId: z.string().max(64) }),
   // Buying a garment is not buying furni: a set is owned by the account, mints no item, and never
   // trades — so it is its own message rather than a defId the furni path would have to special-case.
   z.object({ t: z.literal("buy_set"), setId: z.number().int() }),
@@ -153,7 +153,7 @@ export const ClientMsgSchema = z.discriminatedUnion("t", [
   z.object({ t: z.literal("lever_pull") }),
   // The Grand Wheel (#429). Stake bounds stay off the schema like every other price: the server
   // refuses a bad one with a sentence the player can act on, which a schema rejection cannot say.
-  z.object({ t: z.literal("wheel_bet"), itemId: z.number().int(), segment: z.string(),
+  z.object({ t: z.literal("wheel_bet"), itemId: z.number().int(), segment: z.string().max(16),
              stake: z.number().int().min(1) }),
   // Donating is irreversible, so the client confirms before sending it (#210).
   z.object({ t: z.literal("donate"), itemId: z.number().int() }),

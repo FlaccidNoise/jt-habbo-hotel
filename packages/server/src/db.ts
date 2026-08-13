@@ -1,4 +1,5 @@
 import Database from "better-sqlite3";
+import { chmodSync } from "node:fs";
 import { RoomDecorSchema, STARTER_GRANT_SETS, decorRegionsFault, parseHeightmap } from "@grand/shared";
 import type { Door, RoomDecor } from "@grand/shared";
 import { LAYOUT_VERSION, clearHouseLayout, seedPublicFurni } from "./furnish.ts";
@@ -227,6 +228,17 @@ export function openDb(path: string): Database.Database {
   // #226. One bit, flagged by hand with `make staff USER=<username>`. It gates /api/metrics and
   // nothing else — the `staff` flag in the protocol describes NPC occupants, not accounts.
   addColumn(db, "accounts", "is_staff", "INTEGER NOT NULL DEFAULT 0");
+  // Sessions gained a TTL and hashed tokens (public-deploy hardening). Rows without an expiry
+  // are legacy plaintext-token rows: dead either way (lookup is by hash now), so drop them. Any
+  // expired row is dropped too — one cleanup, on open, no sweeper needed.
+  addColumn(db, "sessions", "expires_at", "INTEGER NOT NULL DEFAULT 0");
+  db.exec(`DELETE FROM sessions WHERE expires_at = 0 OR expires_at <= ${Date.now()}`);
+  // The database holds scrypt hashes and session token hashes: owner-only from birth.
+  try {
+    chmodSync(path, 0o600);
+  } catch {
+    // Best effort — exotic filesystems may refuse; world-readability is the thing to avoid.
+  }
   for (const [col, decl] of [
     ["wall_side", "TEXT"], ["wall_u", "INTEGER"], ["wall_v", "INTEGER"],
     // #210. `bound` is account-bound-forever: prestige fixtures, set pieces, museum donations.

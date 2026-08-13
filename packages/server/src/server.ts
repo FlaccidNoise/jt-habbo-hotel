@@ -61,6 +61,11 @@ interface Conn {
   username?: string;
   roomId?: number;
   handshake?: ReturnType<typeof setTimeout>;
+  /** Heartbeat: set on connect and on every pong; a missed interval means the socket is a ghost. */
+  isAlive?: boolean;
+  /** Token bucket: refilled per second, one token per inbound frame. */
+  tokens?: number;
+  tokensAt?: number;
 }
 
 interface RoomEntry {
@@ -91,11 +96,42 @@ export async function startServer(opts: {
   leverRoll?: () => number;
   /** Grand Wheel roll source in [0, 1). Tests pin it to land on a chosen slot. */
   wheelRoll?: () => number;
+  /** WebSocket frame size ceiling in bytes (default 16 KiB). ws's own default is 100 MiB per
+   *  frame, buffered and JSON.parsed before any schema check — a one-line memory-exhaustion DoS
+   *  on an unauthenticated socket. */
+  maxPayload?: number;
+  /** Ping every live socket on this interval and terminate any that misses a pong (default 30s,
+   *  0 disables). Without it a silently-dead TCP connection never fires `close`, so its occupant
+   *  squats a room slot and blocks the dispose sweep forever. */
+  wsHeartbeatMs?: number;
+  /** Per-socket message budget: `ratePerSec` sustained with a burst of `rateBurst` (defaults
+   *  10/sec and 20). A socket that empties its bucket is closed with 4408. `move` is an A* and
+   *  `nav_list` a DB scan per frame, so unbounded input is CPU/broadcast amplification. */
+  ratePerSec?: number;
+  rateBurst?: number;
+  /** Browser Origin allowlist for the WS upgrade. Sockets with no Origin header (curl, bots,
+   *  the test suite) always pass; a present-but-unlisted Origin is rejected. Undefined = accept
+   *  everything (local dev). Production passes the public site origin. */
+  allowedOrigins?: readonly string[];
+  /** Failed logins per username before a lockout (default 5) of this length (default 5 min).
+   *  In-memory on purpose: it throttles a live brute-force, it is not an audit log. */
+  loginMaxFailures?: number;
+  loginLockoutMs?: number;
 }): Promise<ServerHandle> {
   const db = openDb(opts.dbPath);
   const staticRoot = opts.staticDir ? resolve(opts.staticDir) : undefined;
   const handshakeMs = opts.handshakeMs ?? HANDSHAKE_MS;
   const disposeMs = opts.disposeMs ?? DISPOSE_MS;
+  const maxPayload = opts.maxPayload ?? 16 * 1024;
+  const wsHeartbeatMs = opts.wsHeartbeatMs ?? 30_000;
+  const ratePerSec = opts.ratePerSec ?? 10;
+  const rateBurst = opts.rateBurst ?? 20;
+  const loginMaxFailures = opts.loginMaxFailures ?? 5;
+  const loginLockoutMs = opts.loginLockoutMs ?? 5 * 60 * 1000;
+  // Per-username login throttle. Keyed on the lower-cased name rather than the IP: NAT makes an
+  // IP key punish a whole café, and a distributed botnet already rotates IPs.
+  const loginFailures = new Map<string, { fails: number; lockedUntil: number }>();
+
 
   const conns = new Map<WebSocket, Conn>();
   const byAccount = new Map<number, WebSocket>();
@@ -565,7 +601,24 @@ export async function startServer(opts: {
     }
   }
 
+  /** One frame = one token. Refill lazily on arrival so an idle socket always re-arms to the
+   *  full burst; a flooder empties the bucket and is cut, not queued. */
+  function spendToken(conn: Conn): boolean {
+    const now = Date.now();
+    const at = conn.tokensAt ?? now;
+    conn.tokens = Math.min(rateBurst, (conn.tokens ?? rateBurst) + ((now - at) / 1000) * ratePerSec);
+    conn.tokensAt = now;
+    if (conn.tokens < 1) return false;
+    conn.tokens -= 1;
+    return true;
+  }
+
   function onMessage(conn: Conn, data: RawData, isBinary: boolean): void {
+    if (!spendToken(conn)) {
+      log("rate_limited", { accountId: conn.accountId });
+      conn.ws.close(4408, "rate limited");
+      return;
+    }
     try {
       const msg = decode(data, isBinary);
       if (conn.accountId === undefined) {
@@ -594,6 +647,7 @@ export async function startServer(opts: {
     res.writeHead(status, {
       "content-type": "application/json",
       "content-length": Buffer.byteLength(payload),
+      "x-content-type-options": "nosniff",
     });
     res.end(payload);
   }
@@ -651,6 +705,12 @@ export async function startServer(opts: {
       "cache-control": pathname.startsWith("/assets/")
         ? "public, max-age=31536000, immutable"
         : "no-cache",
+      "x-content-type-options": "nosniff",
+      // The client talks to its own origin only: same-host assets and the /ws socket. Inline
+      // styles come from the UI panels; scripts are all bundled files.
+      "content-security-policy":
+        "default-src 'self'; connect-src 'self' ws: wss:; img-src 'self' data: blob:; " +
+        "style-src 'self' 'unsafe-inline'; script-src 'self'",
     });
     if (req.method === "HEAD") {
       res.end();
@@ -662,6 +722,9 @@ export async function startServer(opts: {
   }
 
   function handleMetrics(req: IncomingMessage, res: ServerResponse): void {
+    // Collusion and ledger internals are not for anyone's cache, shared or local — set it on
+    // every response from this endpoint, auth failures included.
+    res.setHeader("cache-control", "no-store");
     // Header only — a session token in the query string leaks through logs, history and
     // referrers.
     const auth = req.headers.authorization;
@@ -730,14 +793,34 @@ export async function startServer(opts: {
       json(res, 400, { error: "username and password are required" });
       return;
     }
+    // Lockout check precedes the scrypt work: a locked account answers instantly, so the
+    // throttle itself cannot be used as an oracle for which usernames exist.
+    const throttleKey = creds.data.username.toLowerCase();
+    const throttle = loginFailures.get(throttleKey);
+    if (throttle && throttle.lockedUntil > Date.now()) {
+      json(res, 429, { error: "too many attempts — try again in a few minutes" });
+      return;
+    }
     try {
       const result =
         path === "/api/register"
           ? await register(db, creds.data.username, creds.data.password)
           : await login(db, creds.data.username, creds.data.password);
+      loginFailures.delete(throttleKey);
       json(res, 200, result);
     } catch (e) {
       if (e instanceof AuthError) {
+        // Throttle the login path only: register failures are shape/uniqueness errors, not a
+        // password guess, and must not lock a real player out of creating their account.
+        if (path === "/api/login") {
+          const cur = loginFailures.get(throttleKey) ?? { fails: 0, lockedUntil: 0 };
+          cur.fails += 1;
+          if (cur.fails >= loginMaxFailures) {
+            cur.lockedUntil = Date.now() + loginLockoutMs;
+            cur.fails = 0;
+          }
+          loginFailures.set(throttleKey, cur);
+        }
         json(res, 400, { error: e.message });
         return;
       }
@@ -752,12 +835,24 @@ export async function startServer(opts: {
     socket.on("close", () => httpSockets.delete(socket));
   });
 
-  const wss = new WebSocketServer({ server: http, path: "/ws" });
+  const wss = new WebSocketServer({
+    server: http,
+    path: "/ws",
+    maxPayload,
+    // Cross-site WebSocket hijacking guard: a browser page on any origin can open a socket here,
+    // so when an allowlist is configured a present Origin must be on it. No Origin header means a
+    // non-browser client (curl, the test suite, a bot) and passes — the token does the auth.
+    verifyClient: opts.allowedOrigins
+      ? ({ origin }: { origin?: string }) =>
+          origin === undefined || opts.allowedOrigins!.includes(origin)
+      : undefined,
+  });
   wss.on("connection", (ws) => {
     wsStats.connects++;
-    const conn: Conn = { ws };
+    const conn: Conn = { ws, isAlive: true };
     conn.handshake = setTimeout(() => ws.close(4401, "handshake timeout"), handshakeMs);
     conns.set(ws, conn);
+    ws.on("pong", () => { conn.isAlive = true; });
     ws.on("message", (data, isBinary) => onMessage(conn, data, isBinary));
     ws.on("error", (e) => log("socket_error", { message: String(e) }));
     ws.on("close", () => {
@@ -769,6 +864,24 @@ export async function startServer(opts: {
       leaveRoom(conn);
     });
   });
+
+  // Ghost-socket sweep: ping everyone on the interval; whoever did not pong since the last sweep
+  // is a corpse the OS never told us about, so cut it. terminate(), not close() — the point is
+  // that the peer is unreachable, and a graceful close would hang waiting for it.
+  const heartbeat =
+    wsHeartbeatMs > 0
+      ? setInterval(() => {
+          for (const [sock, c] of conns) {
+            if (c.isAlive === false) {
+              sock.terminate();
+              continue;
+            }
+            c.isAlive = false;
+            sock.ping();
+          }
+        }, wsHeartbeatMs)
+      : undefined;
+  heartbeat?.unref();
 
   await new Promise<void>((resolve, reject) => {
     http.once("error", reject);
@@ -784,6 +897,7 @@ export async function startServer(opts: {
     lagSampler.stop();
     npcService.stop();
     tradeService.stop();
+    if (heartbeat) clearInterval(heartbeat);
     for (const conn of conns.values()) clearTimeout(conn.handshake);
     for (const client of wss.clients) client.terminate();
     await new Promise<void>((resolve, reject) => wss.close((e) => (e ? reject(e) : resolve())));

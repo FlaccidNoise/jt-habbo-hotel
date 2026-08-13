@@ -1,4 +1,4 @@
-import { randomBytes, scrypt, timingSafeEqual } from "node:crypto";
+import { createHash, randomBytes, scrypt, timingSafeEqual } from "node:crypto";
 import { z } from "zod";
 import type Database from "better-sqlite3";
 import { loadRuleset, hitsFilter } from "./filter.ts";
@@ -13,6 +13,11 @@ const KEYLEN = 64;
 const PW_PARAMS = `scrypt:N=${SCRYPT_N},r=${SCRYPT_R},p=${SCRYPT_P},len=${KEYLEN}`;
 
 const usernameRuleset = loadRuleset(new URL("../filter-words.txt", import.meta.url).pathname);
+
+/** Fixed salt for the timing-equalising dummy hash on the login miss path. Not a secret: the
+ *  work factor is the point, not the output. */
+const DUMMY_SALT = Buffer.from("grand-dummy-salt");
+
 
 export const CredentialsSchema = z.object({
   username: z.string().regex(/^[a-z0-9_-]{3,20}$/i),
@@ -38,12 +43,23 @@ function normalizeUsername(username: string): string {
     .replace(/[0135]/g, (d) => fold[d] ?? d);
 }
 
-function createSession(db: Database.Database, accountId: number): string {
+/** Sessions live 30 days, sliding: an active session renews when it passes the half-life, so a
+ *  regular player never sees a logout but an abandoned token dies. The DB stores only the
+ *  SHA-256 of the bearer token — a leaked database no longer leaks live sessions. */
+export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+function tokenHash(token: string): string {
+  return createHash("sha256").update(token).digest("hex");
+}
+
+function createSession(db: Database.Database, accountId: number, ttlMs = SESSION_TTL_MS): string {
   const token = randomBytes(32).toString("hex");
-  db.prepare("INSERT INTO sessions (token, account_id, created_at) VALUES (?, ?, ?)").run(
-    token,
+  const now = Date.now();
+  db.prepare("INSERT INTO sessions (token, account_id, created_at, expires_at) VALUES (?, ?, ?, ?)").run(
+    tokenHash(token),
     accountId,
-    Date.now(),
+    now,
+    now + ttlMs,
   );
   return token;
 }
@@ -100,9 +116,10 @@ export async function login(
   const row = db.prepare("SELECT id, pw_hash, pw_salt FROM accounts WHERE username = ?").get(username) as
     | { id: number; pw_hash: Buffer; pw_salt: Buffer }
     | undefined;
+  // Run scrypt even when the account does not exist, so the not-found path costs the same as a
+  // wrong password and a caller cannot enumerate usernames by timing.
+  const hash = await hashPassword(password, row ? row.pw_salt : DUMMY_SALT);
   if (!row) throw new AuthError("invalid username or password");
-
-  const hash = await hashPassword(password, row.pw_salt);
   if (hash.length !== row.pw_hash.length || !timingSafeEqual(hash, row.pw_hash)) {
     throw new AuthError("invalid username or password");
   }
@@ -112,13 +129,23 @@ export async function login(
 export function sessionAccount(
   db: Database.Database,
   token: string,
+  ttlMs = SESSION_TTL_MS,
 ): { id: number; username: string; isStaff: boolean } | null {
+  const now = Date.now();
   const row = db
     .prepare(
-      `SELECT accounts.id AS id, accounts.username AS username, accounts.is_staff AS is_staff
+      `SELECT sessions.account_id AS account_id, sessions.expires_at AS expiresAt,
+              accounts.id AS id, accounts.username AS username, accounts.is_staff AS is_staff
        FROM sessions JOIN accounts ON accounts.id = sessions.account_id
        WHERE sessions.token = ?`,
     )
-    .get(token) as { id: number; username: string; is_staff: number } | undefined;
-  return row ? { id: row.id, username: row.username, isStaff: row.is_staff === 1 } : null;
+    .get(tokenHash(token)) as
+    | { accountId: number; expiresAt: number; id: number; username: string; is_staff: number }
+    | undefined;
+  if (!row || row.expiresAt <= now) return null;
+  // Sliding renewal: past the half-life, an active session earns a fresh full TTL.
+  if (row.expiresAt - now < ttlMs / 2) {
+    db.prepare("UPDATE sessions SET expires_at = ? WHERE token = ?").run(now + ttlMs, tokenHash(token));
+  }
+  return { id: row.id, username: row.username, isStaff: row.is_staff === 1 };
 }

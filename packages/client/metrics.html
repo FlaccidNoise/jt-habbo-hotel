@@ -169,8 +169,16 @@
         }
       }
 
+      // Every interpolated value passes through here: op names and account fields are trusted
+      // today (ledger constants, numeric ids, locked-down usernames), but a page that only ever
+      // renders through innerHTML is one schema change away from stored XSS. Escape by default.
+      function esc(v) {
+        return String(v).replace(/[&<>"']/g, (c) =>
+          ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+      }
+
       function tile(value, label) {
-        return `<div class="tile"><div class="v">${value}</div><div class="k">${label}</div></div>`;
+        return `<div class="tile"><div class="v">${esc(value)}</div><div class="k">${esc(label)}</div></div>`;
       }
 
       function flowTable(el, day, week) {
@@ -182,7 +190,7 @@
         const by = (rows, op) => rows.find((r) => r.op === op)?.stars ?? 0;
         el.innerHTML =
           '<table><tr><th>op</th><th class="n">24h</th><th class="n">7d</th></tr>' +
-          ops.map((op) => `<tr><td>${op}</td><td class="n">${by(day, op)}</td><td class="n">${by(week, op)}</td></tr>`).join("") +
+          ops.map((op) => `<tr><td>${esc(op)}</td><td class="n">${by(day, op)}</td><td class="n">${by(week, op)}</td></tr>`).join("") +
           "</table>";
       }
 
@@ -263,11 +271,11 @@
           el.innerHTML = '<div class="empty">nothing flagged</div>';
           return;
         }
-        const head = headers.map((h, i) => `<th${i ? ' class="n"' : ""}>${h}</th>`).join("");
+        const head = headers.map((h, i) => `<th${i ? ' class="n"' : ""}>${esc(h)}</th>`).join("");
         el.innerHTML =
           `<table><tr>${head}</tr>` +
           data
-            .map((d) => `<tr>${cells(d).map((c, i) => `<td${i ? ' class="n"' : ""}>${c}</td>`).join("")}</tr>`)
+            .map((d) => `<tr>${cells(d).map((c, i) => `<td${i ? ' class="n"' : ""}>${esc(c)}</td>`).join("")}</tr>`)
             .join("") +
           "</table>";
       }
