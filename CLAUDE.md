@@ -4,6 +4,20 @@ The Grand — casino-resort social world. Spec: `docs/design/GAME.md` + `PIPELIN
 
 Economy and health graphs: `/metrics.html` (staff accounts only — `make staff USER=<username>` flips the bit, #226; `GET /api/metrics` wants the token in an `Authorization: Bearer` header and returns 403 to a non-staff session).
 
+## Deployment (joshtaylor.world)
+
+Live demo at `https://joshtaylor.world/demos/the-grand/` (static client on Netlify, from the
+personal-website repo's `public/demos/the-grand/`). The server runs on the VPS (`joshs-atlasassistant`,
+`/opt/grand/`, systemd `grand.service`: `git pull && systemctl restart grand` to update) behind
+tailscale funnel on **8443** (`https://joshs-atlasassistant.taile38f68.ts.net:8443` → 127.0.0.1:8080;
+443 stays tailnet-only for jtbug). The server binds loopback (`HOST` env to change), TLS ends at the
+funnel, and `GRAND_ALLOWED_ORIGINS=https://joshtaylor.world` gates both the WS upgrade and CORS on the
+auth endpoints. Demo client rebuild: `VITE_GRAND_SERVER=https://joshs-atlasassistant.taile38f68.ts.net:8443
+pnpm --filter @grand/client exec vite build --base=/demos/the-grand/`, then rsync `packages/client/dist/`
+into the site repo's `public/demos/the-grand/` and push. `?server=host` overrides the baked backend at
+runtime (persisted in localStorage).
+
+
 ## Bug tracking (jtbug)
 
 Work is tracked in jtbug, group `habbo`. The MCP server `jtbug` is registered via `.mcp.json` (actor `claude-habbo`). Check `briefing` at session start. File discovered problems with `bug_create` into group `habbo` instead of fixing out-of-scope things inline. Reference bugs as `#N` in commits.
