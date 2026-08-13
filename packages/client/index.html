@@ -360,10 +360,30 @@
         #folio .grid { grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); }
         #folio .detail { position: static; max-height: none; width: auto; }
       }
+      /* Loading overlay: boot pulls ~860 asset files before the first paint, so the wait needs a
+         face. Shown by start(), hidden once the HUD takes over. */
+      #loading {
+        position: fixed; inset: 0; z-index: 40; display: flex; align-items: center; justify-content: center;
+        background: #10121a;
+      }
+      #loading[hidden] { display: none; }
+      #loading .box { width: min(360px, 80vw); text-align: center; }
+      #loading h1 { color: #ffd76a; font-size: 22px; margin: 0 0 16px; }
+      #loading .bar { height: 8px; background: #1c1f2b; border: 1px solid #6a5a2e; border-radius: 4px; overflow: hidden; }
+      #loading-fill { height: 100%; width: 0%; background: #c9b27a; transition: width 0.15s ease-out; }
+      #loading-label { color: #9aa3b8; font-size: 13px; margin-top: 10px; }
     </style>
+
   </head>
   <body>
     <div id="stage"></div>
+    <div id="loading" hidden>
+      <div class="box">
+        <h1>The Grand</h1>
+        <div class="bar"><div id="loading-fill"></div></div>
+        <p id="loading-label">Furnishing the lobby…</p>
+      </div>
+    </div>
     <div id="bubbles"></div>
     <div id="room-name"></div>
     <div id="stars"></div>

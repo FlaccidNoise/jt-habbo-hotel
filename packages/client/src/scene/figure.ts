@@ -1,6 +1,7 @@
 import { Texture } from "pixi.js";
 import { resolveLayers, resolvedKey } from "@grand/shared";
 import type { Figure, Layer } from "@grand/shared";
+import { loadPool } from "./assets.ts";
 
 // Avatar figure rendering (#127). The frozen layer sheets are INDEXED, not RGB: each pixel
 // carries a colour slot in red and a shade index in green, because colour is per player and a
@@ -78,7 +79,7 @@ function readSheet(image: HTMLImageElement | ImageBitmap): Uint8ClampedArray {
 
 /** Null when the figure bundles are missing. The caller draws a loud missing-asset marker rather
  *  than a plausible-looking placeholder — a silent fallback hides a broken deploy. */
-export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
+export async function loadFigureAtlas(onProgress?: (done: number, total: number) => void): Promise<FigureAtlas | null> {
   try {
     const res = await fetch(`${import.meta.env.BASE_URL}figure/figures.json`);
     if (!res.ok) throw new Error(`figures.json: HTTP ${res.status}`);
@@ -89,7 +90,8 @@ export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
     };
     const layers = new Map<number, FigureLayerMeta>();
     const pixels = new Map<number, Uint8ClampedArray>();
-    for (const meta of doc.layers) {
+    let done = 0;
+    await loadPool(doc.layers, async (meta) => {
       const image = await new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
         img.onload = () => resolve(img);
@@ -98,7 +100,7 @@ export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
       });
       layers.set(meta.setId, meta);
       pixels.set(meta.setId, readSheet(image));
-    }
+    }, () => onProgress?.(++done, doc.layers.length));
     return { canvas: doc.canvas, palette: doc.palette, layers, pixels };
   } catch (e) {
     console.error("figure sprites unavailable:", e);

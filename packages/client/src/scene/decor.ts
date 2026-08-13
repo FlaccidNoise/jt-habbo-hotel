@@ -1,6 +1,7 @@
 import { Assets, Texture } from "pixi.js";
 import { DECOR_CATALOG } from "@grand/shared";
 import type { DecorDef, RoomDecor } from "@grand/shared";
+import { loadPool } from "./assets.ts";
 
 /** Flat decor (#260). One tile per pattern, repeated by the GPU — nothing here is pre-projected.
  *  The floor tile is laid straight down in screen space; the wall tile is carried onto the wall
@@ -83,9 +84,10 @@ export function waterlineAt(regions: readonly FloorRegion[], x: number, y: numbe
 
 /** Empty when the tiles are missing — every room then draws the colours it always did. A decor
  *  that fails to load must not take the room with it. */
-export async function loadDecorAssets(): Promise<DecorAssets> {
+export async function loadDecorAssets(onProgress?: (done: number, total: number) => void): Promise<DecorAssets> {
   const map = new Map<string, DecorAsset>();
-  for (const def of DECOR_CATALOG) {
+  let done = 0;
+  await loadPool(DECOR_CATALOG, async (def) => {
     try {
       const texture = await Assets.load<Texture>(`${import.meta.env.BASE_URL}decor/${def.id}.png`);
       texture.source.scaleMode = "nearest";   // pixel art: never smooth
@@ -94,6 +96,6 @@ export async function loadDecorAssets(): Promise<DecorAssets> {
     } catch (e) {
       console.warn(`decor ${def.id} unavailable:`, e);
     }
-  }
+  }, () => onProgress?.(++done, DECOR_CATALOG.length));
   return map;
 }

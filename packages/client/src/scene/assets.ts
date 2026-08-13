@@ -38,13 +38,34 @@ export function nearFrameTexture(asset: FurniAsset, spec: FrameSpec): Texture | 
 }
 
 /** Null when the bundles are missing or broken — the room falls back to placeholder slabs. */
-export async function loadFurniAssets(): Promise<FurniAssets | null> {
+/** Bounded-concurrency worker pool. Boot pulls ~860 sheets/tiles; a serial `for await` turned
+ *  that into ~860 round trips and a black stage for minutes on a cold cache (#loading). Sixteen
+ *  in flight keeps the browser's per-host queue full without drowning it. */
+export async function loadPool<T>(
+  items: readonly T[],
+  worker: (item: T) => Promise<void>,
+  onEach?: () => void,
+  concurrency = 16,
+): Promise<void> {
+  let next = 0;
+  const run = async (): Promise<void> => {
+    while (next < items.length) {
+      await worker(items[next++]!);
+      onEach?.();
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, run));
+}
+
+export async function loadFurniAssets(onProgress?: (done: number, total: number) => void): Promise<FurniAssets | null> {
   try {
     const res = await fetch(`${import.meta.env.BASE_URL}furni/catalog.json`);
     if (!res.ok) throw new Error(`catalog.json: HTTP ${res.status}`);
     const catalog = (await res.json()) as { defs: Record<string, FurniMeta> };
     const map = new Map<string, FurniAsset>();
-    for (const [defId, meta] of Object.entries(catalog.defs)) {
+    const entries = Object.entries(catalog.defs);
+    let done = 0;
+    await loadPool(entries, async ([defId, meta]) => {
       const base = await Assets.load<Texture>(`${import.meta.env.BASE_URL}furni/${meta.sheet}`);
       base.source.scaleMode = "nearest";   // pixel art: never smooth
       let near: Texture | null = null;
@@ -53,7 +74,7 @@ export async function loadFurniAssets(): Promise<FurniAssets | null> {
         near.source.scaleMode = "nearest";
       }
       map.set(defId, { base, meta, frames: new Map(), near, nearFrames: new Map() });
-    }
+    }, () => onProgress?.(++done, entries.length));
     return map;
   } catch (e) {
     console.warn("furni sprites unavailable, using placeholder slabs:", e);

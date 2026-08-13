@@ -1245,14 +1245,44 @@ function handle(msg: ServerMsg): void {
 }
 
 /** The renderer, the input wiring and the socket handlers — set up once, before the first join. */
+/** The boot overlay: one bar across the three asset phases. Each phase reports its own
+ *  done/total once its manifest lands; the bar is their sum. */
+function loadingUi(): {
+  furni: (d: number, t: number) => void;
+  decor: (d: number, t: number) => void;
+  figure: (d: number, t: number) => void;
+  done: () => void;
+} {
+  const overlay = el("loading");
+  const fill = el("loading-fill");
+  const label = el("loading-label");
+  overlay.hidden = false;
+  const phase = { furni: { d: 0, t: 0 }, decor: { d: 0, t: 0 }, figure: { d: 0, t: 0 } };
+  const paint = (): void => {
+    const d = phase.furni.d + phase.decor.d + phase.figure.d;
+    const t = phase.furni.t + phase.decor.t + phase.figure.t;
+    fill.style.width = t > 0 ? `${Math.min(100, (d / t) * 100)}%` : "2%";
+    label.textContent = t > 0 ? `Furnishing the lobby… ${d} / ${t}` : "Furnishing the lobby…";
+  };
+  return {
+    furni: (d, t) => { phase.furni = { d, t }; paint(); },
+    decor: (d, t) => { phase.decor = { d, t }; paint(); },
+    figure: (d, t) => { phase.figure = { d, t }; paint(); },
+    done: () => { overlay.hidden = true; },
+  };
+}
+
 async function boot(): Promise<void> {
   // Pixel art at 2x: every texture samples nearest, before the first one loads.
   TextureSource.defaultOptions.scaleMode = "nearest";
   app = new Application();
-  furniAssets = await loadFurniAssets();
-  decorAssets = await loadDecorAssets();
-  const atlas = await loadFigureAtlas();
+  // ~860 sheets/tiles/layers come down before the first paint; each loader ticks the overlay.
+  const loading = loadingUi();
+  furniAssets = await loadFurniAssets(loading.furni);
+  decorAssets = await loadDecorAssets(loading.decor);
+  const atlas = await loadFigureAtlas(loading.figure);
   figureBaker = atlas ? new FigureBaker(atlas) : null;
+  loading.done();
   await app.init({ background: 0x11131a, resizeTo: window, antialias: false });
   el("stage").appendChild(app.canvas);
   app.stage.eventMode = "static";
