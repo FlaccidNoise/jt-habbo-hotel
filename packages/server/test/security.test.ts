@@ -196,3 +196,30 @@ describe("http hardening", () => {
     expect(metrics.headers.get("cache-control")).toBe("no-store");
   });
 });
+
+describe("cors", () => {
+  test("auth endpoints answer cross-origin only to an allowlisted Origin", async () => {
+    const { port } = await start({ allowedOrigins: ["https://ok.example"] });
+    const preflight = await fetch(`http://127.0.0.1:${port}/api/login`, {
+      method: "OPTIONS",
+      headers: { origin: "https://ok.example", "access-control-request-method": "POST" },
+    });
+    expect(preflight.status).toBe(204);
+    expect(preflight.headers.get("access-control-allow-origin")).toBe("https://ok.example");
+
+    const evil = await fetch(`http://127.0.0.1:${port}/api/login`, {
+      method: "OPTIONS",
+      headers: { origin: "https://evil.example", "access-control-request-method": "POST" },
+    });
+    expect(evil.status).toBe(403);
+    expect(evil.headers.get("access-control-allow-origin")).toBeNull();
+
+    const reg = await fetch(`http://127.0.0.1:${port}/api/register`, {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "https://ok.example" },
+      body: JSON.stringify({ username: "alice", password: "password1" }),
+    });
+    expect(reg.status).toBe(200);
+    expect(reg.headers.get("access-control-allow-origin")).toBe("https://ok.example");
+  });
+});

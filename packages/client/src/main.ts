@@ -110,7 +110,21 @@ function el<T extends HTMLElement>(id: string): T {
 }
 
 const roomId = Number(new URLSearchParams(location.search).get("room")) || 1;
-const wsUrl = `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
+// Where the server lives. Same-origin for `make dev`/`make serve`; the statically-hosted build
+// (the /demos/grand/ deploy) bakes in VITE_GRAND_SERVER, and `?server=host` overrides at runtime
+// (persisted) so the deployed client can be pointed at another backend without a rebuild.
+const serverBase = (() => {
+  const q = new URLSearchParams(location.search).get("server");
+  if (q) localStorage.setItem("grand-server", q);
+  const raw = q ?? localStorage.getItem("grand-server") ??
+    (import.meta.env.VITE_GRAND_SERVER as string | undefined) ?? "";
+  const withScheme = raw && !/^https?:\/\//.test(raw) ? `https://${raw}` : raw;
+  return withScheme.replace(/\/+$/, "");
+})();
+const apiBase = serverBase;
+const wsUrl = serverBase
+  ? `${serverBase.replace(/^http/, "ws")}/ws`
+  : `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws`;
 const net = new Net();
 // sessionStorage, as on the metrics page: a reload keeps the session, closing the tab ends it.
 // That is also why there is no log-out button — the tab is the log-out.
@@ -1440,7 +1454,7 @@ function signedOut(message: string): void {
 }
 
 async function authenticate(path: string, username: string, password: string): Promise<string> {
-  const res = await fetch(path, {
+  const res = await fetch(apiBase + path, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ username, password }),

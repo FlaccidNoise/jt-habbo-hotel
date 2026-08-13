@@ -769,6 +769,31 @@ export async function startServer(opts: {
       handleMetrics(req, res);
       return;
     }
+    // CORS for the statically-hosted client: the demo lives on the site origin but its API and
+    // socket live here, so the two auth endpoints answer cross-origin when — and only when — the
+    // caller's Origin is on the same allowlist the WS upgrade uses. No allowlist, no CORS headers
+    // at all: a same-origin deployment never needed them.
+    const reqOrigin = req.headers.origin;
+    const corsOrigin = opts.allowedOrigins && reqOrigin && opts.allowedOrigins.includes(reqOrigin)
+      ? reqOrigin
+      : undefined;
+    if (corsOrigin) {
+      res.setHeader("access-control-allow-origin", corsOrigin);
+      res.setHeader("vary", "origin");
+    }
+    if (req.method === "OPTIONS" && (path === "/api/register" || path === "/api/login")) {
+      if (!corsOrigin) {
+        json(res, 403, { error: "origin not allowed" });
+        return;
+      }
+      res.writeHead(204, {
+        "access-control-allow-methods": "POST",
+        "access-control-allow-headers": "content-type",
+        "access-control-max-age": "86400",
+      });
+      res.end();
+      return;
+    }
     if (req.method !== "POST" || (path !== "/api/register" && path !== "/api/login")) {
       if (staticRoot && (req.method === "GET" || req.method === "HEAD") && !path.startsWith("/api")) {
         await serveStatic(req, res, staticRoot);
