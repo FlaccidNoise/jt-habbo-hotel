@@ -80,7 +80,7 @@ function readSheet(image: HTMLImageElement | ImageBitmap): Uint8ClampedArray {
  *  than a plausible-looking placeholder — a silent fallback hides a broken deploy. */
 export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
   try {
-    const res = await fetch("/figure/figures.json");
+    const res = await fetch(`${import.meta.env.BASE_URL}figure/figures.json`);
     if (!res.ok) throw new Error(`figures.json: HTTP ${res.status}`);
     const doc = (await res.json()) as {
       canvas: FigureAtlas["canvas"];
@@ -94,7 +94,7 @@ export async function loadFigureAtlas(): Promise<FigureAtlas | null> {
         const img = new Image();
         img.onload = () => resolve(img);
         img.onerror = () => reject(new Error(`figure sheet ${meta.sheet} failed to load`));
-        img.src = `/figure/${meta.sheet}`;
+        img.src = `${import.meta.env.BASE_URL}figure/${meta.sheet}`;
       });
       layers.set(meta.setId, meta);
       pixels.set(meta.setId, readSheet(image));

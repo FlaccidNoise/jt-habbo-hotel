@@ -87,7 +87,7 @@ export async function loadDecorAssets(): Promise<DecorAssets> {
   const map = new Map<string, DecorAsset>();
   for (const def of DECOR_CATALOG) {
     try {
-      const texture = await Assets.load<Texture>(`/decor/${def.id}.png`);
+      const texture = await Assets.load<Texture>(`${import.meta.env.BASE_URL}decor/${def.id}.png`);
       texture.source.scaleMode = "nearest";   // pixel art: never smooth
       texture.source.addressMode = "repeat";  // the tile IS the pattern; the GPU repeats it
       map.set(def.id, { def, texture });

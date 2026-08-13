@@ -502,7 +502,7 @@ export function furniThumb(
     return holder;
   }
   const img = document.createElement("img");
-  img.src = `/furni/${meta.sheet}`;
+  img.src = `${import.meta.env.BASE_URL}furni/${meta.sheet}`;
   img.alt = "";
   img.style.width = `${crop.sheetWidth}px`;
   img.style.left = `${crop.left}px`;

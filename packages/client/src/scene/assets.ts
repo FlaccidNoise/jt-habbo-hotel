@@ -40,16 +40,16 @@ export function nearFrameTexture(asset: FurniAsset, spec: FrameSpec): Texture | 
 /** Null when the bundles are missing or broken — the room falls back to placeholder slabs. */
 export async function loadFurniAssets(): Promise<FurniAssets | null> {
   try {
-    const res = await fetch("/furni/catalog.json");
+    const res = await fetch(`${import.meta.env.BASE_URL}furni/catalog.json`);
     if (!res.ok) throw new Error(`catalog.json: HTTP ${res.status}`);
     const catalog = (await res.json()) as { defs: Record<string, FurniMeta> };
     const map = new Map<string, FurniAsset>();
     for (const [defId, meta] of Object.entries(catalog.defs)) {
-      const base = await Assets.load<Texture>(`/furni/${meta.sheet}`);
+      const base = await Assets.load<Texture>(`${import.meta.env.BASE_URL}furni/${meta.sheet}`);
       base.source.scaleMode = "nearest";   // pixel art: never smooth
       let near: Texture | null = null;
       if (meta.nearSheet) {
-        near = await Assets.load<Texture>(`/furni/${meta.nearSheet}`);
+        near = await Assets.load<Texture>(`${import.meta.env.BASE_URL}furni/${meta.nearSheet}`);
         near.source.scaleMode = "nearest";
       }
       map.set(defId, { base, meta, frames: new Map(), near, nearFrames: new Map() });
