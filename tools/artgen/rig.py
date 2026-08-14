@@ -16,6 +16,7 @@
 import json
 import math
 import os
+import re
 import sys
 
 import bpy
@@ -4789,40 +4790,46 @@ PARTS = {
         ],
     },
     # ---- Kenney mesh parts (CC0, kenney.nl/assets/furniture-kit) ----
+    # span and height are set against shipped peers, not the kit's real-world proportions,
+    # which read doll-sized at house scale (#kenney audit): chair vs cafe_chair (seat 0.58,
+    # back 1.22), sofa vs the seatable band (shin length 0.5625), table between knee height
+    # and side_table's 0.75, bookcase vs starter_bookcase 1.625, lamp vs lamp_basic 2.22.
+    # seat_z transcribes the mesh's measured cushion plane after scaling (chair 0.24/0.47,
+    # sofa 0.23/0.46), not a guess — gateSeat holds the def to it.
     "kenney_chair": {
         "w": 1, "l": 1, "ramp": "walnut",
         "prims": [
-            {"t": "mesh", "file": "chair.glb", "height": 0.94,
+            {"t": "mesh", "file": "chair.glb", "span": 0.62, "height": 1.14,
              "materials": {"wood": "walnut"},
-             "seat": True, "seat_z": 0.48},
+             "seat": True, "seat_z": 0.58},
         ],
     },
     "kenney_sofa": {
         "w": 2, "l": 1, "ramp": "crimson",
         "prims": [
-            {"t": "mesh", "file": "loungeSofa.glb", "height": 0.92,
+            {"t": "mesh", "file": "loungeSofa.glb", "span": 1.94, "height": 1.10,
              "materials": {"carpet": "crimson", "wood": "walnut"},
-             "seat": True, "seat_z": 0.46},
+             "seat": True, "seat_z": 0.55},
         ],
     },
     "kenney_table": {
         "w": 1, "l": 1, "ramp": "oak",
         "prims": [
-            {"t": "mesh", "file": "tableCoffee.glb", "height": 0.30,
+            {"t": "mesh", "file": "tableCoffee.glb", "span": 0.94, "height": 0.50,
              "materials": {"wood": "oak"}},
         ],
     },
     "kenney_bookcase": {
         "w": 1, "l": 1, "ramp": "walnut",
         "prims": [
-            {"t": "mesh", "file": "bookcaseClosed.glb", "height": 1.80,
+            {"t": "mesh", "file": "bookcaseClosed.glb", "span": 0.88, "height": 1.80,
              "materials": {"wood": "walnut"}},
         ],
     },
     "kenney_lamp": {
         "w": 1, "l": 1, "ramp": "ivory",
         "prims": [
-            {"t": "mesh", "file": "lampRoundFloor.glb", "height": 1.70,
+            {"t": "mesh", "file": "lampRoundFloor.glb", "span": 0.46, "height": 2.05,
              "materials": {"metal": "charcoal", "lamp": "ivory"}},
         ],
     },
@@ -8540,6 +8547,9 @@ def load_kenney_mesh(filename):
         for poly in obj.data.polygons:
             mat = slots[poly.material_index] if 0 <= poly.material_index < len(slots) and slots[poly.material_index] else None
             mat_name = mat.name if mat else "_defaultMat"
+            # Blender suffixes a name the scene has seen before (chair.glb's "wood" makes
+            # loungeSofa.glb's import "wood.001"), which misses the part's "materials" ramp map.
+            mat_name = re.sub(r"\.\d+$", "", mat_name)
             entry = cleaned.setdefault(mat_name, {"verts": [], "faces": []})
             base = len(entry["verts"])
             entry["verts"].extend(tuple(obj.matrix_world @ obj.data.vertices[vi].co) for vi in poly.vertices)
@@ -8569,15 +8579,27 @@ def load_kenney_mesh(filename):
 
 
 def expand_mesh_prims(part):
-    """Expand {"t": "mesh"} prims into one box-like prim per material slot.
+    """Expand {"t": "mesh"} prims into box-like prims: per material slot, and for a seat, per
+    front/back half.
 
     Kenney models are ~1 m per tile, so the mesh is scaled so its largest footprint dimension
     spans the part's declared tile span (w or l), centred in the footprint and dropped onto the
-    floor. "height" overrides the scale, "offset" nudges the centred mesh in footprint coords,
-    "turns0" pre-rotates by quarter turns before the direction loop. Each material slot becomes
-    its own prim (its own mask index) with a ramp from the "materials" map, defaulting to the
-    prim's "ramp" or the part ramp. "seat_z" declares the sittable surface height directly —
-    the mesh's top is usually a backrest, not the seat.
+    floor. "span" sets the largest footprint dimension in tile units and "height" the drawn
+    height — Kenney proportions are real-world and the catalog's are chunky, so the two scales
+    decouple; either alone keeps the mesh uniform. "offset" nudges the centred mesh in footprint
+    coords, "turns0" pre-rotates by quarter turns before the direction loop. Each material slot
+    becomes its own prim (its own mask index) with a ramp from the "materials" map, defaulting
+    to the prim's "ramp" or the part ramp. "seat_z" declares the sittable surface height
+    directly — the mesh's top is usually a backrest, not the seat.
+
+    A seat mesh splits every material at the model's depth midline into a front and a back
+    chunk. Kenney materials span the whole model, so per-material centroids all tie with the
+    seat's and near_flags never puts anything in front of a sitter (the kenney_sofa near sheet
+    froze 80 px against sofa_lodge's 12,650). The halves carry distinct centroids, so the back
+    half lands over the occupant at the back-facing dirs the way every authored seat does. Only
+    the front half keeps the seat tag: measured against cafe_chair/sofa_lodge, the cushion and
+    everything in front of it stays under the sitter at the front-facing dirs. Both halves keep
+    the material's group, so no interior detail line cuts the object in two.
     """
     out = []
     for prim in part["prims"]:
@@ -8587,16 +8609,18 @@ def expand_mesh_prims(part):
         data = load_kenney_mesh(prim["file"])
         bx0, by0, bz0, bx1, by1, bz1 = data["bbox"]
         size_x, size_y, size_z = bx1 - bx0, by1 - by0, bz1 - bz0
-        if prim.get("height"):
-            s = prim["height"] / max(size_z, 1e-9)
+        if prim.get("span"):
+            s_xy = prim["span"] / max(size_x, size_y, 1e-9)
+        elif prim.get("height"):
+            s_xy = prim["height"] / max(size_z, 1e-9)
         else:
-            span = max(part["w"], part["l"])
-            s = span * 0.9 / max(size_x, size_y, 1e-9)
+            s_xy = max(part["w"], part["l"]) * 0.9 / max(size_x, size_y, 1e-9)
+        s_z = prim["height"] / max(size_z, 1e-9) if prim.get("height") else s_xy
         # Centre in the footprint, compensating for the model's bbox origin — Kenney pivots are
         # not consistent (tableCoffee starts at x -0.46, the chair at 0). Kenney +Y maps to fy;
         # if the model's long axis is X but the part is longer in Y, "turns0" fixes orientation.
-        offx = (part["w"] - size_x * s) / 2 - bx0 * s + prim.get("offset", (0, 0))[0]
-        offy = (part["l"] - size_y * s) / 2 - by0 * s + prim.get("offset", (0, 0))[1]
+        offx = (part["w"] - size_x * s_xy) / 2 - bx0 * s_xy + prim.get("offset", (0, 0))[0]
+        offy = (part["l"] - size_y * s_xy) / 2 - by0 * s_xy + prim.get("offset", (0, 0))[1]
         rot = []
         span_x, span_y = part["w"], part["l"]
         for _ in range(int(prim.get("turns0", 0)) % 4):
@@ -8604,32 +8628,54 @@ def expand_mesh_prims(part):
             span_x, span_y = span_y, span_x
 
         def placed(pt):
-            fx, fy, z = pt[0] * s + offx, pt[1] * s + offy, (pt[2] - bz0) * s
+            fx, fy, z = pt[0] * s_xy + offx, pt[1] * s_xy + offy, (pt[2] - bz0) * s_z
             for sy in rot:
                 fx, fy = sy - fy, fx
             return (fx, fy, z)
 
+        ycut = (by0 + by1) / 2 if prim.get("seat") else None
         ramps = prim.get("materials", {})
         default_ramp = prim.get("ramp", part["ramp"])
         for i, mat in enumerate(sorted(data["mats"])):
-            # Per-material bounds, not the whole model's: the near/far split for a seated
-            # occupant keys off each prim's centroid, so a wood frame and a cushion must carry
-            # their own centres or nothing ever lands in front of the sitter.
-            mbx0, mby0, mbz0, mbx1, mby1, mbz1 = data["mats"][mat]["bbox"]
-            c0 = placed((mbx0, mby0, mbz0))
-            c1 = placed((mbx1, mby1, mbz1))
-            out.append({
-                "t": "mesh", "file": prim["file"], "mat": mat,
-                "scale": s, "off": (offx, offy), "z0": bz0, "rot": list(rot),
-                "c0": (min(c0[0], c1[0]), min(c0[1], c1[1]), c0[2]),
-                "c1": (max(c0[0], c1[0]), max(c0[1], c1[1]), c1[2]),
-                "ramp": ramps.get(mat, default_ramp),
-                "group": prim.get("group", len(out)),
-                "smooth": prim.get("smooth", False),
-                "seat": bool(prim.get("seat")),
-                **({"seat_z": prim["seat_z"]} if "seat_z" in prim else {}),
-            })
+            mdata = data["mats"][mat]
+            halves = [None] if ycut is None else ["front", "back"]
+            for half in halves:
+                pts = [v for f in mdata["faces"]
+                       if half is None or (mesh_face_half(mdata, f, ycut) == half)
+                       for v in (mdata["verts"][idx] for idx in f)]
+                if not pts:
+                    continue
+                # A face that crosses the midline joins one chunk whole, so raw vertex extents
+                # drag both chunk bboxes to the full depth span and their centroids tie — which
+                # is the no-near-flags failure the split exists to fix. Clamp each chunk's depth
+                # extent to its own side; the centroid is what near_flags reads.
+                y_lo, y_hi = min(p[1] for p in pts), max(p[1] for p in pts)
+                if half == "front":
+                    y_hi = min(y_hi, ycut)
+                elif half == "back":
+                    y_lo = max(y_lo, ycut)
+                lo = placed((min(p[0] for p in pts), y_lo, min(p[2] for p in pts)))
+                hi = placed((max(p[0] for p in pts), y_hi, max(p[2] for p in pts)))
+                out.append({
+                    "t": "mesh", "file": prim["file"], "mat": mat,
+                    "scale": s_xy, "scale_z": s_z, "off": (offx, offy), "z0": bz0,
+                    "rot": list(rot),
+                    **({"ycut": ycut, "half": half} if half else {}),
+                    "c0": (min(lo[0], hi[0]), min(lo[1], hi[1]), lo[2]),
+                    "c1": (max(lo[0], hi[0]), max(lo[1], hi[1]), hi[2]),
+                    "ramp": ramps.get(mat, default_ramp),
+                    "group": prim.get("group", i),
+                    "smooth": prim.get("smooth", False),
+                    "seat": bool(prim.get("seat")) and half != "back",
+                    **({"seat_z": prim["seat_z"]} if "seat_z" in prim and half != "back" else {}),
+                })
     return out
+
+
+def mesh_face_half(mdata, face, ycut):
+    """Which side of the model's depth midline a face's centroid falls on."""
+    cy = sum(mdata["verts"][idx][1] for idx in face) / len(face)
+    return "front" if cy < ycut else "back"
 
 
 # ---- scene ---------------------------------------------------------------------------------
@@ -8745,17 +8791,21 @@ def add_prim(prim):
         # here, and world() does the axis swap + ZSCALE squash.
         data = load_kenney_mesh(prim["file"])["mats"][prim["mat"]]
         s = prim["scale"]
+        sz = prim.get("scale_z", s)
         ox, oy = prim["off"]
         z0 = prim.get("z0", 0.0)
+        faces = data["faces"]
+        if "half" in prim:
+            faces = [f for f in faces if mesh_face_half(data, f, prim["ycut"]) == prim["half"]]
         wverts = []
         for mx, my, mz in data["verts"]:
-            fx, fy, z = mx * s + ox, my * s + oy, (mz - z0) * s
+            fx, fy, z = mx * s + ox, my * s + oy, (mz - z0) * sz
             for span_y in prim.get("rot", ()):
                 fx, fy = span_y - fy, fx
             wverts.append(tuple(world((fx, fy, z))))
-        mname = f"kenney_{os.path.splitext(prim['file'])[0]}_{prim['mat']}"
+        mname = f"kenney_{os.path.splitext(prim['file'])[0]}_{prim['mat']}_{prim.get('half', 'all')}"
         meshdata = bpy.data.meshes.new(mname)
-        meshdata.from_pydata(wverts, [], [list(f) for f in data["faces"]])
+        meshdata.from_pydata(wverts, [], [list(f) for f in faces])
         meshdata.update()
         obj = bpy.data.objects.new(mname, meshdata)
         bpy.context.scene.collection.objects.link(obj)

@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "kenney_table.png",
   "frameW": 64,
-  "frameH": 42,
+  "frameH": 48,
   "dirs": [
     0,
     2,
@@ -16,17 +16,17 @@
     32,
     32
   ],
-  "anchorY": 26,
+  "anchorY": 32,
   "footprint": {
     "w": 1,
     "l": 1
   },
-  "drawnHeight": 0.3125,
+  "drawnHeight": 0.5,
   "seatZ": null,
   "occlusion": null,
   "styleVersion": 4,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:52a269774ceaa5c2",
-  "recipeHash": "52a269774ceaa5c2b9abedc8a9b179be92c715dbb5cbdf48307be20eed15c52f",
-  "pixelHash": "cc3f32154318e5b089b03c502329fac94838300042bbad14337d5905aec53299"
+  "partLibraryHash": "artgen:3c208da4d3d0793f",
+  "recipeHash": "3c208da4d3d0793fcbdc47a60cf11cb3743b32ecc6061cb8a5a63c4428c37a12",
+  "pixelHash": "b213892c60cb65938e440ed2790f97c94cbfc88b016f1dc68fa063f909337031"
 }

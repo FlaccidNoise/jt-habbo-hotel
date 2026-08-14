@@ -14994,7 +14994,7 @@
       "archetype": "artgen",
       "sheet": "kenney_chair.png",
       "frameW": 64,
-      "frameH": 63,
+      "frameH": 69,
       "dirs": [
         0,
         2,
@@ -15007,26 +15007,28 @@
         32,
         32
       ],
-      "anchorY": 47,
+      "anchorY": 53,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 0.96875,
-      "seatZ": 0.48,
+      "drawnHeight": 1.15625,
+      "seatZ": 0.58,
       "occlusion": null,
+      "nearSheet": "kenney_chair.near.png",
+      "nearHash": "134ff6d85d36aa257d732052eacb076286fc2054c4a3f2129149ed09262a92d3",
       "styleVersion": 4,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:548ead7527c45371",
-      "recipeHash": "548ead7527c4537175e0f207c13be00709b24e51b4ecfd50611b95fa2801c78d",
-      "pixelHash": "85e0133b7f8bf73f6531c59f9977776bc74417aebddcb39b784a210771bd42ce"
+      "partLibraryHash": "artgen:ed10971cf8c99607",
+      "recipeHash": "ed10971cf8c9960792a4d1d23b9502e9ab76defd422b8dfed1a2d6f7180bb34f",
+      "pixelHash": "8175ab03813e1a94085812bdbe9a08b769096213febff20e7861e415a52aa475"
     },
     "kenney_sofa": {
       "defId": "kenney_sofa",
       "archetype": "artgen",
       "sheet": "kenney_sofa.png",
       "frameW": 96,
-      "frameH": 78,
+      "frameH": 84,
       "dirs": [
         0,
         2,
@@ -15039,28 +15041,28 @@
         32,
         64
       ],
-      "anchorY": 46,
+      "anchorY": 52,
       "footprint": {
         "w": 2,
         "l": 1
       },
-      "drawnHeight": 0.9375,
-      "seatZ": 0.46,
+      "drawnHeight": 1.125,
+      "seatZ": 0.55,
       "occlusion": null,
       "nearSheet": "kenney_sofa.near.png",
-      "nearHash": "5ab0d9a2156c0af562642db6dcd22fba2a973413b53181142be4cca89681c951",
+      "nearHash": "63aa9f66077aa63bcddadfb1eb10134649dd919b416ab0ce3230816f9d619948",
       "styleVersion": 4,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:d8f465ea7448a59a",
-      "recipeHash": "d8f465ea7448a59ac99f8fed07d76968f254c742f5d59d2afea7e2a6ed011941",
-      "pixelHash": "45ce1bb25d46e6144cb0aa7785f722ecdb3fcde12fe78a084eeb66782a322d60"
+      "partLibraryHash": "artgen:576f543604e70e25",
+      "recipeHash": "576f543604e70e252e47e79cb042af6d53c3e3b1bfae58632fa9aa84e4c39630",
+      "pixelHash": "057f7f678163dae5dd793a34f68c72a38c1284541e96b129df9a01a361445fbd"
     },
     "kenney_table": {
       "defId": "kenney_table",
       "archetype": "artgen",
       "sheet": "kenney_table.png",
       "frameW": 64,
-      "frameH": 42,
+      "frameH": 48,
       "dirs": [
         0,
         2,
@@ -15073,19 +15075,19 @@
         32,
         32
       ],
-      "anchorY": 26,
+      "anchorY": 32,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 0.3125,
+      "drawnHeight": 0.5,
       "seatZ": null,
       "occlusion": null,
       "styleVersion": 4,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:52a269774ceaa5c2",
-      "recipeHash": "52a269774ceaa5c2b9abedc8a9b179be92c715dbb5cbdf48307be20eed15c52f",
-      "pixelHash": "cc3f32154318e5b089b03c502329fac94838300042bbad14337d5905aec53299"
+      "partLibraryHash": "artgen:3c208da4d3d0793f",
+      "recipeHash": "3c208da4d3d0793fcbdc47a60cf11cb3743b32ecc6061cb8a5a63c4428c37a12",
+      "pixelHash": "b213892c60cb65938e440ed2790f97c94cbfc88b016f1dc68fa063f909337031"
     },
     "kenney_bookcase": {
       "defId": "kenney_bookcase",
@@ -15115,16 +15117,16 @@
       "occlusion": null,
       "styleVersion": 4,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:e9e377391028dd68",
-      "recipeHash": "e9e377391028dd68a0672dec970eaaedc2be835c90debbb14c7eccae0b83dbd4",
-      "pixelHash": "99ef842214675e4637e13caaab811d31d80188c77d210c9831f226cf83ea0df0"
+      "partLibraryHash": "artgen:2fa4f9bac100711d",
+      "recipeHash": "2fa4f9bac100711d145f50110d5df8f85d1e12592806d0ee22eec3d6ef8aeab3",
+      "pixelHash": "b2d7d03a47dd2f3102adb5c3fffb309a3452d9f80b897fff17aa3728a1ed4880"
     },
     "kenney_lamp": {
       "defId": "kenney_lamp",
       "archetype": "artgen",
       "sheet": "kenney_lamp.png",
       "frameW": 64,
-      "frameH": 87,
+      "frameH": 98,
       "dirs": [
         0,
         2,
@@ -15137,19 +15139,19 @@
         32,
         32
       ],
-      "anchorY": 71,
+      "anchorY": 82,
       "footprint": {
         "w": 1,
         "l": 1
       },
-      "drawnHeight": 1.71875,
+      "drawnHeight": 2.0625,
       "seatZ": null,
       "occlusion": null,
       "styleVersion": 4,
       "generatorVersion": 2,
-      "partLibraryHash": "artgen:a7ba0267ae8b420b",
-      "recipeHash": "a7ba0267ae8b420b1bd58885e8ac415e2ed0a2c495c79212256d0c7c23235c05",
-      "pixelHash": "e0e1ce0f690cc7125150e4577e25cf3d36391feeffabc7811d3055db1f71e916"
+      "partLibraryHash": "artgen:0d13f4119b34477c",
+      "recipeHash": "0d13f4119b34477c7a3bb7c3329d0616caadf78bb4552b9f872811d08ee649d3",
+      "pixelHash": "58a1abe6dacc9a6496587ea4f4ad7d26fab534f79cc95f4b6fe8306204ca5c15"
     },
     "wall_art": {
       "defId": "wall_art",

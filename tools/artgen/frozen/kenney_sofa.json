@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "kenney_sofa.png",
   "frameW": 96,
-  "frameH": 78,
+  "frameH": 84,
   "dirs": [
     0,
     2,
@@ -16,19 +16,19 @@
     32,
     64
   ],
-  "anchorY": 46,
+  "anchorY": 52,
   "footprint": {
     "w": 2,
     "l": 1
   },
-  "drawnHeight": 0.9375,
-  "seatZ": 0.46,
+  "drawnHeight": 1.125,
+  "seatZ": 0.55,
   "occlusion": null,
   "nearSheet": "kenney_sofa.near.png",
-  "nearHash": "5ab0d9a2156c0af562642db6dcd22fba2a973413b53181142be4cca89681c951",
+  "nearHash": "63aa9f66077aa63bcddadfb1eb10134649dd919b416ab0ce3230816f9d619948",
   "styleVersion": 4,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:d8f465ea7448a59a",
-  "recipeHash": "d8f465ea7448a59ac99f8fed07d76968f254c742f5d59d2afea7e2a6ed011941",
-  "pixelHash": "45ce1bb25d46e6144cb0aa7785f722ecdb3fcde12fe78a084eeb66782a322d60"
+  "partLibraryHash": "artgen:576f543604e70e25",
+  "recipeHash": "576f543604e70e252e47e79cb042af6d53c3e3b1bfae58632fa9aa84e4c39630",
+  "pixelHash": "057f7f678163dae5dd793a34f68c72a38c1284541e96b129df9a01a361445fbd"
 }

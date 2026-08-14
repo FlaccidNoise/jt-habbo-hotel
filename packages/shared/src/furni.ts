@@ -534,11 +534,11 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "bedroom_reading_chair_plum", name: "Plum Reading Chair", theme: "bedroom", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.44, color: 0x7a3e9d },
   // Kenney furniture kit (CC0, kenney.nl): meshes imported through the Blender rig's "mesh"
   // prim — textures stripped, material slots remapped onto palette ramps in rig.py.
-  { id: "kenney_chair",    name: "Kenney Chair",        theme: "lodge", w: 1, l: 1, stackHeights: [0.96875], canWalk: false, canStackOn: false, seatHeight: 0.48, color: 0xb5651d },
-  { id: "kenney_sofa",     name: "Kenney Sofa",         theme: "lodge", w: 2, l: 1, stackHeights: [0.9375],  canWalk: false, canStackOn: false, seatHeight: 0.46, color: 0xaa3333 },
-  { id: "kenney_table",    name: "Kenney Coffee Table", theme: "lodge", w: 1, l: 1, stackHeights: [0.3125],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x8b4513 },
+  { id: "kenney_chair",    name: "Kenney Chair",        theme: "lodge", w: 1, l: 1, stackHeights: [1.15625], canWalk: false, canStackOn: false, seatHeight: 0.58, color: 0xb5651d },
+  { id: "kenney_sofa",     name: "Kenney Sofa",         theme: "lodge", w: 2, l: 1, stackHeights: [1.125],   canWalk: false, canStackOn: false, seatHeight: 0.55, color: 0xaa3333 },
+  { id: "kenney_table",    name: "Kenney Coffee Table", theme: "lodge", w: 1, l: 1, stackHeights: [0.5],     canWalk: false, canStackOn: true,  seatHeight: null, color: 0x8b4513 },
   { id: "kenney_bookcase", name: "Kenney Bookcase",     theme: "lodge", w: 1, l: 1, stackHeights: [1.8125],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
-  { id: "kenney_lamp",     name: "Kenney Floor Lamp",   theme: "lodge", w: 1, l: 1, stackHeights: [1.71875], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
+  { id: "kenney_lamp",     name: "Kenney Floor Lamp",   theme: "lodge", w: 1, l: 1, stackHeights: [2.0625],  canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
 ];
 
 // Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,

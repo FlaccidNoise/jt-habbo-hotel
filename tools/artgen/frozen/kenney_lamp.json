@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "kenney_lamp.png",
   "frameW": 64,
-  "frameH": 87,
+  "frameH": 98,
   "dirs": [
     0,
     2,
@@ -16,17 +16,17 @@
     32,
     32
   ],
-  "anchorY": 71,
+  "anchorY": 82,
   "footprint": {
     "w": 1,
     "l": 1
   },
-  "drawnHeight": 1.71875,
+  "drawnHeight": 2.0625,
   "seatZ": null,
   "occlusion": null,
   "styleVersion": 4,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:a7ba0267ae8b420b",
-  "recipeHash": "a7ba0267ae8b420b1bd58885e8ac415e2ed0a2c495c79212256d0c7c23235c05",
-  "pixelHash": "e0e1ce0f690cc7125150e4577e25cf3d36391feeffabc7811d3055db1f71e916"
+  "partLibraryHash": "artgen:0d13f4119b34477c",
+  "recipeHash": "0d13f4119b34477c7a3bb7c3329d0616caadf78bb4552b9f872811d08ee649d3",
+  "pixelHash": "58a1abe6dacc9a6496587ea4f4ad7d26fab534f79cc95f4b6fe8306204ca5c15"
 }

@@ -3,7 +3,7 @@
   "archetype": "artgen",
   "sheet": "kenney_chair.png",
   "frameW": 64,
-  "frameH": 63,
+  "frameH": 69,
   "dirs": [
     0,
     2,
@@ -16,17 +16,19 @@
     32,
     32
   ],
-  "anchorY": 47,
+  "anchorY": 53,
   "footprint": {
     "w": 1,
     "l": 1
   },
-  "drawnHeight": 0.96875,
-  "seatZ": 0.48,
+  "drawnHeight": 1.15625,
+  "seatZ": 0.58,
   "occlusion": null,
+  "nearSheet": "kenney_chair.near.png",
+  "nearHash": "134ff6d85d36aa257d732052eacb076286fc2054c4a3f2129149ed09262a92d3",
   "styleVersion": 4,
   "generatorVersion": 2,
-  "partLibraryHash": "artgen:548ead7527c45371",
-  "recipeHash": "548ead7527c4537175e0f207c13be00709b24e51b4ecfd50611b95fa2801c78d",
-  "pixelHash": "85e0133b7f8bf73f6531c59f9977776bc74417aebddcb39b784a210771bd42ce"
+  "partLibraryHash": "artgen:ed10971cf8c99607",
+  "recipeHash": "ed10971cf8c9960792a4d1d23b9502e9ab76defd422b8dfed1a2d6f7180bb34f",
+  "pixelHash": "8175ab03813e1a94085812bdbe9a08b769096213febff20e7861e415a52aa475"
 }
