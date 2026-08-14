@@ -4822,7 +4822,7 @@ PARTS = {
     "kenney_bookcase": {
         "w": 1, "l": 1, "ramp": "walnut",
         "prims": [
-            {"t": "mesh", "file": "bookcaseClosed.glb", "span": 0.88, "height": 1.80,
+            {"t": "mesh", "file": "bookcaseOpen.glb", "span": 0.88, "height": 1.80,
              "materials": {"wood": "walnut"}},
         ],
     },
