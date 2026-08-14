@@ -1,0 +1,34 @@
+{
+  "defId": "kenney_sofa",
+  "archetype": "artgen",
+  "sheet": "kenney_sofa.png",
+  "frameW": 96,
+  "frameH": 78,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    64,
+    32,
+    64
+  ],
+  "anchorY": 46,
+  "footprint": {
+    "w": 2,
+    "l": 1
+  },
+  "drawnHeight": 0.9375,
+  "seatZ": 0.46,
+  "occlusion": null,
+  "nearSheet": "kenney_sofa.near.png",
+  "nearHash": "5ab0d9a2156c0af562642db6dcd22fba2a973413b53181142be4cca89681c951",
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:d8f465ea7448a59a",
+  "recipeHash": "d8f465ea7448a59ac99f8fed07d76968f254c742f5d59d2afea7e2a6ed011941",
+  "pixelHash": "45ce1bb25d46e6144cb0aa7785f722ecdb3fcde12fe78a084eeb66782a322d60"
+}

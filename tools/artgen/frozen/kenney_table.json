@@ -1,0 +1,32 @@
+{
+  "defId": "kenney_table",
+  "archetype": "artgen",
+  "sheet": "kenney_table.png",
+  "frameW": 64,
+  "frameH": 42,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 26,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 0.3125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:52a269774ceaa5c2",
+  "recipeHash": "52a269774ceaa5c2b9abedc8a9b179be92c715dbb5cbdf48307be20eed15c52f",
+  "pixelHash": "cc3f32154318e5b089b03c502329fac94838300042bbad14337d5905aec53299"
+}

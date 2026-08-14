@@ -802,8 +802,13 @@ test("ids are lowercase snake case under their theme prefix", () => {
   for (const d of DECOR_BLITZ) expect(d.id, d.id).toMatch(/^[a-z][a-z0-9_]*$/);
 });
 
+// Five Kenney-kit adaptations (kenney_chair/_sofa/_table/_bookcase/_lamp) are post-blitz
+// floor content outside the 500-entry plan: they extend the CURRENT totals without moving
+// the release targets the other tests pin.
+const POST_BLITZ_FLOOR = 5;
+
 test("current totals equal the pre-blitz baseline plus landed waves", () => {
-  expect(PROTOTYPE_CATALOG.length).toBe(BASELINE_FLOOR + landedFloor);
+  expect(PROTOTYPE_CATALOG.length).toBe(BASELINE_FLOOR + landedFloor + POST_BLITZ_FLOOR);
   expect(WALL_CATALOG.length).toBe(BASELINE_WALL + landedWall);
   expect(DECOR_CATALOG.length).toBe(BASELINE_DECOR + LANDED_DECOR_IDS.size);
 });

@@ -1,0 +1,32 @@
+{
+  "defId": "kenney_bookcase",
+  "archetype": "artgen",
+  "sheet": "kenney_bookcase.png",
+  "frameW": 64,
+  "frameH": 90,
+  "dirs": [
+    0,
+    2,
+    4,
+    6
+  ],
+  "anchorsX": [
+    32,
+    32,
+    32,
+    32
+  ],
+  "anchorY": 74,
+  "footprint": {
+    "w": 1,
+    "l": 1
+  },
+  "drawnHeight": 1.8125,
+  "seatZ": null,
+  "occlusion": null,
+  "styleVersion": 4,
+  "generatorVersion": 2,
+  "partLibraryHash": "artgen:e9e377391028dd68",
+  "recipeHash": "e9e377391028dd68a0672dec970eaaedc2be835c90debbb14c7eccae0b83dbd4",
+  "pixelHash": "99ef842214675e4637e13caaab811d31d80188c77d210c9831f226cf83ea0df0"
+}

@@ -532,6 +532,13 @@ export const PROTOTYPE_CATALOG: FurniDef[] = [
   { id: "bedroom_table_lamp_sage", name: "Sage Table Lamp", theme: "bedroom", w: 1, l: 1, stackHeights: [0.875, 0.875], canWalk: false, canStackOn: false, seatHeight: null, interaction: "toggle", color: 0x2e8b57 },
   { id: "bedroom_bench_linen", name: "Linen Bedroom Bench", theme: "bedroom", w: 1, l: 1, stackHeights: [0.46875], canWalk: false, canStackOn: false, seatHeight: 0.46, color: 0x9c9484 },
   { id: "bedroom_reading_chair_plum", name: "Plum Reading Chair", theme: "bedroom", w: 1, l: 1, stackHeights: [1.21875], canWalk: false, canStackOn: false, seatHeight: 0.44, color: 0x7a3e9d },
+  // Kenney furniture kit (CC0, kenney.nl): meshes imported through the Blender rig's "mesh"
+  // prim — textures stripped, material slots remapped onto palette ramps in rig.py.
+  { id: "kenney_chair",    name: "Kenney Chair",        theme: "lodge", w: 1, l: 1, stackHeights: [0.96875], canWalk: false, canStackOn: false, seatHeight: 0.48, color: 0xb5651d },
+  { id: "kenney_sofa",     name: "Kenney Sofa",         theme: "lodge", w: 2, l: 1, stackHeights: [0.9375],  canWalk: false, canStackOn: false, seatHeight: 0.46, color: 0xaa3333 },
+  { id: "kenney_table",    name: "Kenney Coffee Table", theme: "lodge", w: 1, l: 1, stackHeights: [0.3125],  canWalk: false, canStackOn: true,  seatHeight: null, color: 0x8b4513 },
+  { id: "kenney_bookcase", name: "Kenney Bookcase",     theme: "lodge", w: 1, l: 1, stackHeights: [1.8125],  canWalk: false, canStackOn: false, seatHeight: null, color: 0xb5651d },
+  { id: "kenney_lamp",     name: "Kenney Floor Lamp",   theme: "lodge", w: 1, l: 1, stackHeights: [1.71875], canWalk: false, canStackOn: false, seatHeight: null, color: 0x9c9484 },
 ];
 
 // Wall items (#203). span, plane and mount are read off the render by tools/artgen/postpass.ts,
@@ -1352,6 +1359,12 @@ export const CATALOG_PRICES: ReadonlyMap<string, number> = new Map([
   ["clockwork_boiler_cart_tin", 250],
   ["clockwork_piston_chair_mahogany", 150],
   ["clockwork_escapement_cabinet_pearl", 150],
+  // Kenney kit (CC0): a seat is entry, a 1x1 prop is 75, a 2-wide or tall piece is median.
+  ["kenney_chair", 25],
+  ["kenney_sofa", 150],
+  ["kenney_table", 75],
+  ["kenney_bookcase", 150],
+  ["kenney_lamp", 75],
 ]);
 
 /** Every catalog id not in CATALOG_PRICES must be listed here with a reason — checked by
